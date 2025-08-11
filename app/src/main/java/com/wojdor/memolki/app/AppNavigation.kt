@@ -12,6 +12,8 @@ fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = Route.MENU) {
         composable(Route.MENU) { MenuScreen(navController = navController) }
+        composable(Route.CHOOSE_LEVEL) { TODO() }
+        composable(Route.OPTIONS) { TODO() }
     }
 }
 
@@ -21,4 +23,6 @@ fun NavController.navigateToMenu() {
 
 object Route {
     const val MENU = "menu"
+    const val CHOOSE_LEVEL = "chose_level"
+    const val OPTIONS = "options"
 }

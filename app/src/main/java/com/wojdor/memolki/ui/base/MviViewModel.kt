@@ -11,9 +11,9 @@ import kotlinx.coroutines.launch
 
 abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewModel() {
 
-    private val _uiIntent = Channel<I>(Channel.UNLIMITED)
+    private val _uiIntent = Channel<I>(Channel.BUFFERED)
 
-    private val _uiEffect = Channel<UiEffect>(Channel.UNLIMITED)
+    private val _uiEffect = Channel<UiEffect>(Channel.BUFFERED)
     val uiEffect: Flow<UiEffect>
         get() = _uiEffect.receiveAsFlow()
 
@@ -26,13 +26,13 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewMo
     }
 
     fun sendIntent(intent: I) {
-        viewModelScope.launch { _uiIntent.send(intent) }
+        _uiIntent.trySend(intent)
     }
 
     protected abstract fun onIntent(intent: I)
 
     protected fun sendEffect(effect: UiEffect) {
-        viewModelScope.launch { _uiEffect.send(effect) }
+        _uiEffect.trySend(effect)
     }
 
     protected fun sendState(state: S) {
