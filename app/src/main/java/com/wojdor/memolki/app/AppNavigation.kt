@@ -5,24 +5,37 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.wojdor.memolki.ui.menu.MenuScreen
+import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelScreen
+import com.wojdor.memolki.ui.feature.collection.CollectionScreen
+import com.wojdor.memolki.ui.feature.menu.MenuScreen
+import com.wojdor.memolki.ui.feature.settings.SettingsScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = Route.MENU) {
         composable(Route.MENU) { MenuScreen(navController = navController) }
-        composable(Route.CHOOSE_LEVEL) { TODO() }
-        composable(Route.OPTIONS) { TODO() }
+        composable(Route.CHOOSE_LEVEL) { ChooseLevelScreen(navController = navController) }
+        composable(Route.COLLECTION) { CollectionScreen(navController = navController) }
+        composable(Route.OPTIONS) { SettingsScreen(navController = navController) }
     }
 }
 
-fun NavController.navigateToMenu() {
-    navigate(Route.MENU)
+fun NavController.navigateToChooseLevel() {
+    navigate(Route.CHOOSE_LEVEL)
 }
 
-object Route {
+fun NavController.navigateToCollection() {
+    navigate(Route.COLLECTION)
+}
+
+fun NavController.navigateToOptions() {
+    navigate(Route.OPTIONS)
+}
+
+private object Route {
     const val MENU = "menu"
     const val CHOOSE_LEVEL = "chose_level"
+    const val COLLECTION = "collection"
     const val OPTIONS = "options"
 }

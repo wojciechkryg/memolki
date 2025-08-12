@@ -4,16 +4,20 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
+        android:appCategory="game"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Memolki" >
+        android:theme="@style/Theme.Memolki">
 
-        <activity android:name=".app.AppActivity"
-            android:exported="true">
+        <activity
+            android:name=".app.AppActivity"
+            android:theme="@style/Theme.Memolki.SplashScreen"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

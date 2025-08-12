@@ -59,6 +59,7 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.hilt.navigation.compose)
@@ -67,6 +68,8 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.material)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
