@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.menu
 
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClicked
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClicked
@@ -15,7 +16,7 @@ class MenuViewModel @Inject constructor() : MviViewModel<MenuIntent, MenuState>(
     override fun onIntent(intent: MenuIntent) {
         when (intent) {
             OnStartGameClicked -> sendEffect(OpenChooseLevelScreen)
-            OnCollectionClicked -> sendEffect(OpenSettingsScreen)
+            OnCollectionClicked -> sendEffect(OpenCollectionScreen)
             OnSettingsClicked -> sendEffect(OpenSettingsScreen)
         }
     }

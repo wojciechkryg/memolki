@@ -26,13 +26,13 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewMo
     }
 
     fun sendIntent(intent: I) {
-        _uiIntent.trySend(intent)
+        viewModelScope.launch { _uiIntent.send(intent) }
     }
 
     protected abstract fun onIntent(intent: I)
 
     protected fun sendEffect(effect: UiEffect) {
-        _uiEffect.trySend(effect)
+        viewModelScope.launch { _uiEffect.send(effect) }
     }
 
     protected fun sendState(state: S) {
