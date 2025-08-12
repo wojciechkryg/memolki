@@ -3,11 +3,11 @@
     android:height="108dp"
     android:viewportWidth="1080"
     android:viewportHeight="1080">
-  <path
-      android:pathData="M0,0h1080v1080h-1080z"
-      android:fillColor="#ffffff"
-      android:fillAlpha="0"/>
-  <path
-      android:pathData="M0,-0L1080,-0L1080,1080L0,1080L0,-0Z"
-      android:fillColor="#ffeaa1"/>
+    <path
+        android:pathData="M0,0h1080v1080h-1080z"
+        android:fillColor="#ffeaa1"
+        android:fillAlpha="0" />
+    <path
+        android:pathData="M0,0L1080,0L1080,1080L0,1080L0,0Z"
+        android:fillColor="#ffeaa1" />
 </vector>
