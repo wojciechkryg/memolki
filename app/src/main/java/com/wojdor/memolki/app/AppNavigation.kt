@@ -14,10 +14,40 @@ import com.wojdor.memolki.ui.feature.settings.SettingsScreen
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = Route.MENU) {
-        composable(Route.MENU) { MenuScreen(navController = navController) }
-        composable(Route.CHOOSE_LEVEL) { ChooseLevelScreen(navController = navController) }
-        composable(Route.COLLECTION) { CollectionScreen(navController = navController) }
-        composable(Route.OPTIONS) { SettingsScreen(navController = navController) }
+        composable(
+            route = Route.MENU,
+            exitTransition = {
+                when (targetState.destination.route) {
+                    Route.CHOOSE_LEVEL -> slideOutLeft
+                    Route.COLLECTION -> slideOutRight
+                    Route.OPTIONS -> slideOutTop
+                    else -> slideOutBottom
+                }
+            },
+            popEnterTransition = {
+                when (initialState.destination.route) {
+                    Route.CHOOSE_LEVEL -> slideInLeft
+                    Route.COLLECTION -> slideInRight
+                    Route.OPTIONS -> slideInTop
+                    else -> slideInBottom
+                }
+            }
+        ) { MenuScreen(navController = navController) }
+        composable(
+            route = Route.CHOOSE_LEVEL,
+            enterTransition = { slideInRight },
+            popExitTransition = { slideOutRight }
+        ) { ChooseLevelScreen(navController = navController) }
+        composable(
+            route = Route.COLLECTION,
+            enterTransition = { slideInLeft },
+            popExitTransition = { slideOutLeft }
+        ) { CollectionScreen(navController = navController) }
+        composable(
+            route = Route.OPTIONS,
+            enterTransition = { slideInBottom },
+            popExitTransition = { slideOutBottom }
+        ) { SettingsScreen(navController = navController) }
     }
 }
 

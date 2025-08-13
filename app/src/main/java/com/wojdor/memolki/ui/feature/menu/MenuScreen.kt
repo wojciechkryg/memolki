@@ -55,7 +55,7 @@ private fun HandleState(
     state: MenuState
 ) {
     val callbacks = MenuCallbacks(
-        onStartGameClick = { viewModel.sendIntent(MenuIntent.OnStartGameClicked) },
+        onNewGameClick = { viewModel.sendIntent(MenuIntent.OnNewGameClicked) },
         onCollectionClick = { viewModel.sendIntent(MenuIntent.OnCollectionClicked) },
         onSettingsClick = { viewModel.sendIntent(MenuIntent.OnSettingsClicked) },
     )
@@ -78,7 +78,7 @@ private fun MenuScreen(
             contentDescription = null
         )
         Spacer(modifier = Modifier.height(16.dp))
-        MenuItem(textId = R.string.start_game, onClick = callbacks.onStartGameClick)
+        MenuItem(textId = R.string.new_game, onClick = callbacks.onNewGameClick)
         Spacer(modifier = Modifier.height(16.dp))
         MenuItem(textId = R.string.collection, onClick = callbacks.onCollectionClick)
         Spacer(modifier = Modifier.height(16.dp))
