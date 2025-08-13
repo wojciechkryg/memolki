@@ -1,0 +1,7 @@
+<resources>
+    <string name="new_game">新游戏</string>
+    <string name="collection">收藏</string>
+    <string name="settings">设置</string>
+
+    <string name="choose_level">选择关卡</string>
+</resources>
