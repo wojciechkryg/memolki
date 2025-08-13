@@ -1,0 +1,7 @@
+<resources>
+    <string name="new_game">Нова гра</string>
+    <string name="collection">Колекція</string>
+    <string name="settings">Налаштування</string>
+
+    <string name="choose_level">Виберіть рівень</string>
+</resources>

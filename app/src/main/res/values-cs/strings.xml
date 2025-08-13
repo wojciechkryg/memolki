@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Nová hra</string>
+    <string name="collection">Kolekce</string>
+    <string name="settings">Nastavení</string>
+
+    <string name="choose_level">Vyberte úroveň</string>
+</resources>
