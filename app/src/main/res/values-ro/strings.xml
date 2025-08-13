@@ -1,0 +1,7 @@
+<resources>
+    <string name="new_game">Joc nou</string>
+    <string name="collection">Colecție</string>
+    <string name="settings">Setări</string>
+
+    <string name="choose_level">Alege nivelul</string>
+</resources>
