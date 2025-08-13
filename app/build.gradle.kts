@@ -56,6 +56,12 @@ android {
     }
 }
 
+androidComponents {
+    beforeVariants(selector().withBuildType("release")) {
+        it.enable = false
+    }
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -73,6 +79,8 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
