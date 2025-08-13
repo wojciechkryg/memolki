@@ -13,6 +13,7 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.AppTypography
 import com.wojdor.memolki.ui.theme.withColor
+import com.wojdor.memolki.ui.util.rememberThrottleClick
 
 @Composable
 fun MenuItem(
@@ -20,7 +21,7 @@ fun MenuItem(
     onClick: () -> Unit = {}
 ) {
     Button(
-        onClick = onClick,
+        onClick = rememberThrottleClick(onClick = onClick),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = colorResource(R.color.secondary)
