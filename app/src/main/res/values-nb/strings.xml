@@ -1,0 +1,7 @@
+<resources>
+    <string name="new_game">Nytt spill</string>
+    <string name="collection">Samling</string>
+    <string name="settings">Innstillinger</string>
+
+    <string name="choose_level">Velg nivå</string>
+</resources>

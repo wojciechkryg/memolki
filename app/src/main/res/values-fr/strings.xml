@@ -1,0 +1,7 @@
+<resources>
+    <string name="new_game">Nouvelle partie</string>
+    <string name="collection">Collection</string>
+    <string name="settings">Paramètres</string>
+
+    <string name="choose_level">Choisir le niveau</string>
+</resources>

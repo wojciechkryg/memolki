@@ -1,0 +1,7 @@
+<resources>
+<string name="new_game">Új játék</string>
+<string name="collection">Gyűjtemény</string>
+<string name="settings">Beállítások</string>
+
+<string name="choose_level">Válassz szintet</string>
+</resources>

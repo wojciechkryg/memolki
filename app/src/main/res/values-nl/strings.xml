@@ -1,0 +1,7 @@
+<resources>
+    <string name="new_game">Nieuw spel</string>
+    <string name="collection">Collectie</string>
+    <string name="settings">Instellingen</string>
+
+    <string name="choose_level">Kies niveau</string>
+</resources>
