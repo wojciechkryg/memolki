@@ -1,7 +1,10 @@
 package com.wojdor.memolki
 
+import io.mockk.MockKAnnotations
+import io.mockk.unmockkAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -11,15 +14,17 @@ import org.junit.Before
 @ExperimentalCoroutinesApi
 abstract class AppTest {
 
-    private val testDispatcher = StandardTestDispatcher()
+    protected val testDispatcher: TestDispatcher = StandardTestDispatcher()
 
     @Before
-    fun setup() {
+    open fun setup() {
         Dispatchers.setMain(testDispatcher)
+        MockKAnnotations.init(this)
     }
 
     @After
-    fun tearDown() {
+    open fun tearDown() {
+        unmockkAll()
         Dispatchers.resetMain()
     }
 }

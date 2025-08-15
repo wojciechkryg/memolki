@@ -2,7 +2,7 @@
 activityCompose = "1.10.1"
 agp = "8.12.0"
 appcompat = "1.7.1"
-coreKtx = "1.16.0"
+coreKtx = "1.17.0"
 espressoCore = "3.7.0"
 hilt = "2.57"
 hiltNavigationCompose = "1.2.0"
@@ -13,11 +13,12 @@ kotlinxCoroutines = "1.10.2"
 ksp = "2.0.0-1.0.21"
 material = "1.12.0"
 material3 = "1.3.2"
+mockk = "1.14.5"
 navigationCompose = "2.9.3"
-runtime = "1.8.3"
+runtime = "1.9.0"
 splashscreen = "1.2.0-rc01"
 turbine = "1.2.1"
-uiTooling = "1.8.3"
+uiTooling = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,8 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

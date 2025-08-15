@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">memolki</string>
-
     <string name="new_game">New Game</string>
     <string name="collection">Collection</string>
     <string name="settings">Settings</string>

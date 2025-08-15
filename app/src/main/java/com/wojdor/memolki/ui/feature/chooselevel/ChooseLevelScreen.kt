@@ -1,23 +1,105 @@
 package com.wojdor.memolki.ui.feature.chooselevel
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
+import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.ui.app.navigateToGame
+import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.chooselevel.component.ChooseLevelItem
+import com.wojdor.memolki.ui.feature.game.GameViewModel
+import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun ChooseLevelScreen(
+    viewModel: ChooseLevelViewModel = hiltViewModel(),
+    gameViewModel: GameViewModel = hiltViewModel(),
     navController: NavController
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = stringResource(R.string.choose_level)
+    val state by viewModel.uiState.collectAsState()
+    HandleEffect(viewModel, gameViewModel, navController)
+    HandleState(viewModel, state)
+}
+
+@Composable
+private fun HandleEffect(
+    viewModel: ChooseLevelViewModel,
+    gameViewModel: GameViewModel,
+    navController: NavController
+) {
+    CollectUiEffects(viewModel) {
+        when (it) {
+            is ChooseLevelEffect.OpenGameScreen -> openGameScreen(gameViewModel, navController, it.levelModel)
+        }
+    }
+}
+
+private fun openGameScreen(
+    gameViewModel: GameViewModel,
+    navController: NavController,
+    levelModel: LevelModel
+) {
+    gameViewModel.setLevel(levelModel)
+    navController.navigateToGame()
+}
+
+@Composable
+private fun HandleState(
+    viewModel: ChooseLevelViewModel,
+    state: ChooseLevelState
+) {
+    val callbacks = ChooseLevelCallbacks(
+        onLevelClick = { viewModel.sendIntent(ChooseLevelIntent.OnLevelClicked(it)) }
+    )
+    ChooseLevelScreen(state, callbacks)
+}
+
+@Composable
+private fun ChooseLevelScreen(
+    state: ChooseLevelState,
+    callbacks: ChooseLevelCallbacks
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        state.levels.forEach { level ->
+            Spacer(modifier = Modifier.height(24.dp))
+            ChooseLevelItem(
+                textId = level.textId,
+                onClick = { callbacks.onLevelClick(level) }
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ChooseLevelScreenPreview() {
+    AppTheme {
+        ChooseLevelScreen(
+            state = ChooseLevelState(
+                levels = listOf(
+                    LevelModel.Level2x3,
+                    LevelModel.Level3x4,
+                    LevelModel.Level4x4,
+                    LevelModel.Level4x5,
+                    LevelModel.Level5x6
+                )
+            ),
+            callbacks = ChooseLevelCallbacks()
         )
     }
 }
