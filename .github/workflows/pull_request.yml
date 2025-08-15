@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@e4a7a75220cde05e60d5b035176b61b7593c6f83 # v3
+        uses: gradle/actions/setup-gradle@41ad77ca97e46ee2e825d5e6b9a95d8169fcc44c # v4.4.2
 
       - name: Run unit tests
         run: ./gradlew testFruitHalfDebugUnitTest --no-daemon --build-cache
