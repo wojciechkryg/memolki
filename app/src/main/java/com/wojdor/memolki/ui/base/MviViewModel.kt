@@ -35,8 +35,8 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewMo
         viewModelScope.launch { _uiEffect.send(effect) }
     }
 
-    protected fun sendState(state: S) {
-        _uiState.value = state
+    protected fun sendState(update: S.() -> S) {
+        _uiState.value = _uiState.value.update()
     }
 
     private fun startCollectingIntents() {

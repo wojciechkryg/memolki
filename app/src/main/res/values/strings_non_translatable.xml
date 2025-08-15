@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">memolki</string>
+
+    <string name="empty" translatable="false" />
+
+    <string name="level2x3" translatable="false">2 x 3</string>
+    <string name="level3x4" translatable="false">3 x 4</string>
+    <string name="level4x4" translatable="false">4 x 4</string>
+    <string name="level4x5" translatable="false">4 x 5</string>
+    <string name="level5x6" translatable="false">5 x 6</string>
+</resources>

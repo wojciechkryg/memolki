@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".app.App"
+        android:name=".ui.app.App"
         android:allowBackup="true"
         android:appCategory="game"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Memolki">
 
         <activity
-            android:name=".app.AppActivity"
+            android:name=".ui.app.AppActivity"
             android:theme="@style/Theme.Memolki.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait">
