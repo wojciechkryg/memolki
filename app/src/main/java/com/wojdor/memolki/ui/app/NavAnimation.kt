@@ -1,4 +1,4 @@
-package com.wojdor.memolki.app
+package com.wojdor.memolki.ui.app
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally

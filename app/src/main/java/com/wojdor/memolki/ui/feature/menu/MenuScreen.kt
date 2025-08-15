@@ -18,11 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
-import com.wojdor.memolki.app.navigateToChooseLevel
-import com.wojdor.memolki.app.navigateToCollection
-import com.wojdor.memolki.app.navigateToOptions
+import com.wojdor.memolki.domain.model.MenuModel
+import com.wojdor.memolki.ui.app.navigateToChooseLevel
+import com.wojdor.memolki.ui.app.navigateToCollection
+import com.wojdor.memolki.ui.app.navigateToOptions
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.component.MenuItem
+import com.wojdor.memolki.ui.feature.menu.component.MenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
@@ -77,21 +78,40 @@ private fun MenuScreen(
             painter = painterResource(id = R.drawable.ic_logo),
             contentDescription = null
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        MenuItem(textId = R.string.new_game, onClick = callbacks.onNewGameClick)
-        Spacer(modifier = Modifier.height(16.dp))
-        MenuItem(textId = R.string.collection, onClick = callbacks.onCollectionClick)
-        Spacer(modifier = Modifier.height(16.dp))
-        MenuItem(textId = R.string.settings, onClick = callbacks.onSettingsClick)
+        state.menu.forEach { menuItem ->
+            Spacer(modifier = Modifier.height(16.dp))
+            when (menuItem) {
+                is MenuModel.NewGame -> MenuItem(
+                    textId = menuItem.textId,
+                    onClick = callbacks.onNewGameClick
+                )
+
+                is MenuModel.Collection -> MenuItem(
+                    textId = menuItem.textId,
+                    onClick = callbacks.onCollectionClick
+                )
+
+                is MenuModel.Settings -> MenuItem(
+                    textId = R.string.settings,
+                    onClick = callbacks.onSettingsClick
+                )
+            }
+        }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun MenuScreenPreview() {
     AppTheme {
         MenuScreen(
-            state = MenuState(),
+            state = MenuState(
+                listOf(
+                    MenuModel.NewGame,
+                    MenuModel.Collection,
+                    MenuModel.Settings
+                )
+            ),
             callbacks = MenuCallbacks()
         )
     }

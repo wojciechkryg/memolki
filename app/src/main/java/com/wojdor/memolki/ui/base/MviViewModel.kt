@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewModel() {
@@ -35,8 +36,8 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewMo
         viewModelScope.launch { _uiEffect.send(effect) }
     }
 
-    protected fun sendState(state: S) {
-        _uiState.value = state
+    protected fun sendState(update: S.() -> S) {
+        _uiState.update(update)
     }
 
     private fun startCollectingIntents() {

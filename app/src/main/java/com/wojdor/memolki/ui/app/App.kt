@@ -1,4 +1,4 @@
-package com.wojdor.memolki.app
+package com.wojdor.memolki.ui.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

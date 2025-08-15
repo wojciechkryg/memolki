@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.component
+package com.wojdor.memolki.ui.components
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.Button
@@ -16,8 +16,9 @@ import com.wojdor.memolki.ui.theme.withColor
 import com.wojdor.memolki.ui.util.rememberThrottleClick
 
 @Composable
-fun MenuItem(
+fun BaseMenuItem(
     @StringRes textId: Int,
+    isUppercase: Boolean = true,
     onClick: () -> Unit = {}
 ) {
     Button(
@@ -28,16 +29,30 @@ fun MenuItem(
         )
     ) {
         Text(
-            text = stringResource(textId).uppercase(),
+            text = stringResource(textId).run {
+                if (isUppercase) {
+                    uppercase()
+                } else {
+                    lowercase()
+                }
+            },
             style = AppTypography.displaySmall.withColor(colorResource(R.color.text_primary))
         )
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun MenuItemPreview() {
+private fun BaseMenuItemUppercasePreview() {
     AppTheme {
-        MenuItem(R.string.app_name)
+        BaseMenuItem(R.string.app_name)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BaseMenuItemLowercasePreview() {
+    AppTheme {
+        BaseMenuItem(R.string.app_name, isUppercase = false)
     }
 }
