@@ -6,4 +6,8 @@
     <string name="orange">Pomeranč</string>
     <string name="grape">Hroznové víno</string>
     <string name="watermelon">Vodní meloun</string>
+    <string name="mango">Mango</string>
+    <string name="peach">Broskyňa</string>
+    <string name="pineapple">Ananás</string>
+    <string name="blueberry">Čučoriedka</string>
 </resources>

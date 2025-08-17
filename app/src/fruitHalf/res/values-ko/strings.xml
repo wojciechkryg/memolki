@@ -6,4 +6,8 @@
     <string name="orange">오렌지</string>
     <string name="grape">포도</string>
     <string name="watermelon">수박</string>
+    <string name="mango">망고</string>
+    <string name="peach">복숭아</string>
+    <string name="pineapple">파인애플</string>
+    <string name="blueberry">블루베리</string>
 </resources>

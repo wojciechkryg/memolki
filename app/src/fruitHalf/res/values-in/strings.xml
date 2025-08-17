@@ -6,4 +6,8 @@
     <string name="orange">Jeruk</string>
     <string name="grape">Anggur</string>
     <string name="watermelon">Semangka</string>
+    <string name="mango">Mangga</string>
+    <string name="peach">Persik</string>
+    <string name="pineapple">Nanas</string>
+    <string name="blueberry">Blueberry</string>
 </resources>

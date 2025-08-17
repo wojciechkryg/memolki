@@ -6,4 +6,8 @@
     <string name="orange">برتقال</string>
     <string name="grape">عنب</string>
     <string name="watermelon">بطيخ</string>
+    <string name="mango">مانجو</string>
+    <string name="peach">خوخ</string>
+    <string name="pineapple">أناناس</string>
+    <string name="blueberry">توت أزرق</string>
 </resources>

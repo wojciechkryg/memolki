@@ -85,5 +85,57 @@ class CardPairsLocalDataSource {
                 )
             )
         ),
+        CardPairEntity(
+            id = "mango",
+            pair = Pair(
+                CardEntity.Image(
+                    textRes = R.string.mango,
+                    imageRes = R.drawable.img_mango_whole
+                ),
+                CardEntity.Image(
+                    textRes = R.string.watermelon,
+                    imageRes = R.drawable.img_mango_half
+                )
+            )
+        ),
+        CardPairEntity(
+            id = "peach",
+            pair = Pair(
+                CardEntity.Image(
+                    textRes = R.string.peach,
+                    imageRes = R.drawable.img_peach_whole
+                ),
+                CardEntity.Image(
+                    textRes = R.string.peach,
+                    imageRes = R.drawable.img_peach_half
+                )
+            )
+        ),
+        CardPairEntity(
+            id = "pineapple",
+            pair = Pair(
+                CardEntity.Image(
+                    textRes = R.string.pineapple,
+                    imageRes = R.drawable.img_pineapple_whole
+                ),
+                CardEntity.Image(
+                    textRes = R.string.pineapple,
+                    imageRes = R.drawable.img_pineapple_half
+                )
+            )
+        ),
+        CardPairEntity(
+            id = "blueberry",
+            pair = Pair(
+                CardEntity.Image(
+                    textRes = R.string.blueberry,
+                    imageRes = R.drawable.img_blueberry_whole
+                ),
+                CardEntity.Image(
+                    textRes = R.string.blueberry,
+                    imageRes = R.drawable.img_blueberry_half
+                )
+            )
+        ),
     )
 }

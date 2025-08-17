@@ -6,4 +6,8 @@
     <string name="orange">橙子</string>
     <string name="grape">葡萄</string>
     <string name="watermelon">西瓜</string>
+    <string name="mango">芒果</string>
+    <string name="peach">桃子</string>
+    <string name="pineapple">菠萝</string>
+    <string name="blueberry">蓝莓</string>
 </resources>

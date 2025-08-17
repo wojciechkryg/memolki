@@ -6,4 +6,8 @@
     <string name="orange">オレンジ</string>
     <string name="grape">ブドウ</string>
     <string name="watermelon">スイカ</string>
+    <string name="mango">マンゴー</string>
+    <string name="peach">モモ</string>
+    <string name="pineapple">パイナップル</string>
+    <string name="blueberry">ブルーベリー</string>
 </resources>

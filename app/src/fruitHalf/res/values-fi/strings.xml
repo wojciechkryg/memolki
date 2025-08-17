@@ -6,4 +6,8 @@
     <string name="orange">Appelsiini</string>
     <string name="grape">Rypäle</string>
     <string name="watermelon">Meloni</string>
+    <string name="mango">Mango</string>
+    <string name="peach">Persikka</string>
+    <string name="pineapple">Ananas</string>
+    <string name="blueberry">Mustikka</string>
 </resources>
