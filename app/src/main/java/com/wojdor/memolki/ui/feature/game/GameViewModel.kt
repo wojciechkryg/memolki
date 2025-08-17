@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GameViewModel @Inject constructor() : MviViewModel<GameIntent, GameState>(GameState()) {
 
     fun setLevel(levelModel: LevelModel) {
-        sendState { copy(levelModel = levelModel) }
+        sendState { copy(level = levelModel) }
     }
 
     override fun onIntent(intent: GameIntent) {

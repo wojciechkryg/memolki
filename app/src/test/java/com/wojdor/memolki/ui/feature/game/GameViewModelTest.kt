@@ -22,6 +22,6 @@ class GameViewModelTest : AppTest() {
         sut.setLevel(level)
 
         // then
-        assertEquals(level, sut.uiState.value.levelModel)
+        assertEquals(level, sut.uiState.value.level)
     }
 }

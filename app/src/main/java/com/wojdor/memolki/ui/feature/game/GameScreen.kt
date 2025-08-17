@@ -51,7 +51,7 @@ fun GameScreen(
     {
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = stringResource(state.levelModel.textId)
+            text = stringResource(state.level.textId)
         )
     }
 }
