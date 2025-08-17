@@ -93,7 +93,7 @@ class CardPairsLocalDataSource {
                     imageRes = R.drawable.img_mango_whole
                 ),
                 CardEntity.Image(
-                    textRes = R.string.watermelon,
+                    textRes = R.string.mango,
                     imageRes = R.drawable.img_mango_half
                 )
             )
