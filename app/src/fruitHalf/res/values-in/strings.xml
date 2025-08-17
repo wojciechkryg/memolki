@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="banana">केला</string>
+    <string name="apple">सेब</string>
+    <string name="strawberry">स्ट्रॉबेरी</string>
+    <string name="orange">संतरा</string>
+    <string name="grape">अंगूर</string>
+    <string name="watermelon">तरबूज</string>
+</resources>

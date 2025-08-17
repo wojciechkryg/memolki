@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="banana">Banan</string>
+    <string name="apple">Æble</string>
+    <string name="strawberry">Jordbær</string>
+    <string name="orange">Appelsin</string>
+    <string name="grape">Druer</string>
+    <string name="watermelon">Vandmelon</string>
+</resources>
