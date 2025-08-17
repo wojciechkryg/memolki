@@ -1,17 +1,15 @@
 package com.wojdor.memolki.ui.feature.game
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.game.component.CardsGrid
+import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun GameScreen(
@@ -47,11 +45,60 @@ fun GameScreen(
     state: GameState,
     callbacks: GameCallbacks
 ) {
-    Box(modifier = Modifier.fillMaxSize())
-    {
-        Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = stringResource(state.level.textId)
+    CardsGrid(state = state)
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun GameScreenGrid2x3Preview() {
+    AppTheme {
+        GameScreen(
+            state = GameState(LevelModel.Grid2x3),
+            callbacks = GameCallbacks()
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun GameScreenGrid3x4Preview() {
+    AppTheme {
+        GameScreen(
+            state = GameState(LevelModel.Grid3x4),
+            callbacks = GameCallbacks()
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun GameScreenGrid4x4Preview() {
+    AppTheme {
+        GameScreen(
+            state = GameState(LevelModel.Grid4x4),
+            callbacks = GameCallbacks()
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun GameScreenGrid4x5Preview() {
+    AppTheme {
+        GameScreen(
+            state = GameState(LevelModel.Grid4x5),
+            callbacks = GameCallbacks()
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun GameScreenGrid5x6Preview() {
+    AppTheme {
+        GameScreen(
+            state = GameState(LevelModel.Grid5x6),
+            callbacks = GameCallbacks()
         )
     }
 }

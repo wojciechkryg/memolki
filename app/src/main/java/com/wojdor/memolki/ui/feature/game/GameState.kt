@@ -4,5 +4,5 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.base.UiState
 
 data class GameState(
-    val level: LevelModel = LevelModel.NoLevel
+    val level: LevelModel = LevelModel.Empty
 ) : UiState

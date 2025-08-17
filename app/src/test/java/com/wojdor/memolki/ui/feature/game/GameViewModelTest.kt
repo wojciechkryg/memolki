@@ -16,7 +16,7 @@ class GameViewModelTest : AppTest() {
     @Test
     fun `when setLevel is called then state is updated with new level`() {
         // given
-        val level = LevelModel.Level2x3
+        val level = LevelModel.Grid2x3
 
         // when
         sut.setLevel(level)

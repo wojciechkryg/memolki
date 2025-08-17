@@ -37,7 +37,7 @@ class ChooseLevelViewModelTest : AppTest() {
         runTest {
             sut.uiEffect.test {
                 // given
-                val levelModel = LevelModel.Level2x3
+                val levelModel = LevelModel.Grid2x3
 
                 // when
                 sut.sendIntent(OnLevelClicked(levelModel))
