@@ -1,7 +1,6 @@
-package com.wojdo
+package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.AppTest
-import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.mockCardPairsLocalDataSource
