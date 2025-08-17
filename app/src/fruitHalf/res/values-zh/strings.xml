@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="banana">香蕉</string>
+    <string name="apple">苹果</string>
+    <string name="strawberry">草莓</string>
+    <string name="orange">橙子</string>
+    <string name="grape">葡萄</string>
+    <string name="watermelon">西瓜</string>
+</resources>
