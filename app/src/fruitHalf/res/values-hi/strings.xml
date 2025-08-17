@@ -6,4 +6,8 @@
     <string name="orange">संतरा</string>
     <string name="grape">अंगूर</string>
     <string name="watermelon">तरबूज</string>
+    <string name="mango">आम</string>
+    <string name="peach">आड़ू</string>
+    <string name="pineapple">अनानास</string>
+    <string name="blueberry">नीलबदरी</string>
 </resources>

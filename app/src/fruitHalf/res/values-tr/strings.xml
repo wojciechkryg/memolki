@@ -6,4 +6,8 @@
     <string name="orange">Portakal</string>
     <string name="grape">Üzüm</string>
     <string name="watermelon">Karpuz</string>
+    <string name="mango">Mango</string>
+    <string name="peach">Şeftali</string>
+    <string name="pineapple">Ananas</string>
+    <string name="blueberry">Yaban Mersini</string>
 </resources>

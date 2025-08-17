@@ -6,4 +6,8 @@
     <string name="orange">Narancs</string>
     <string name="grape">Szőlő</string>
     <string name="watermelon">Dinnye</string>
+    <string name="mango">Mangó</string>
+    <string name="peach">Őszibarack</string>
+    <string name="pineapple">Ananász</string>
+    <string name="blueberry">Áfonya</string>
 </resources>

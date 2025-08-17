@@ -6,4 +6,8 @@
     <string name="orange">Apelsin</string>
     <string name="grape">Druva</string>
     <string name="watermelon">Vattenmelon</string>
+    <string name="mango">Mango</string>
+    <string name="peach">Persika</string>
+    <string name="pineapple">Ananas</string>
+    <string name="blueberry">Blåbär</string>
 </resources>

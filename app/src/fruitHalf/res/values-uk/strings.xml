@@ -6,4 +6,8 @@
     <string name="orange">Апельсин</string>
     <string name="grape">Виноград</string>
     <string name="watermelon">Кавун</string>
+    <string name="mango">Манго</string>
+    <string name="peach">Персик</string>
+    <string name="pineapple">Ананас</string>
+    <string name="blueberry">Чорниця</string>
 </resources>
