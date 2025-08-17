@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="banana">Banán</string>
+    <string name="apple">Jablko</string>
+    <string name="strawberry">Jahoda</string>
+    <string name="orange">Pomeranč</string>
+    <string name="grape">Hroznové víno</string>
+    <string name="watermelon">Vodní meloun</string>
+</resources>

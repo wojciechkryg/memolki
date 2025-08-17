@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="banana">Банан</string>
+    <string name="apple">Яблуко</string>
+    <string name="strawberry">Полуниця</string>
+    <string name="orange">Апельсин</string>
+    <string name="grape">Виноград</string>
+    <string name="watermelon">Кавун</string>
+</resources>

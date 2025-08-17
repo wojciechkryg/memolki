@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="banana">バナナ</string>
+    <string name="apple">リンゴ</string>
+    <string name="strawberry">イチゴ</string>
+    <string name="orange">オレンジ</string>
+    <string name="grape">ブドウ</string>
+    <string name="watermelon">スイカ</string>
+</resources>
