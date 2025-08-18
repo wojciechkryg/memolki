@@ -1,5 +1,6 @@
 package com.wojdor.memolki.ui.feature.game.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,24 +17,24 @@ import kotlin.math.min
 @Composable
 fun CardsGrid(state: GameState) {
     BoxWithConstraints(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp),
         contentAlignment = Alignment.Center
     ) {
         val shorterEdge = maxWidth.coerceAtMost(maxHeight)
-        val padding = 4.dp
+        val spacing = 8.dp
         val columns = state.level.columns
         val rows = state.level.rows
-        val gridSize = min(columns, rows) + 1
-        val cardSize = (shorterEdge - padding * gridSize) / gridSize
+        val cellsOnShortEdge = min(columns, rows)
+        val cardSize = (shorterEdge - spacing * cellsOnShortEdge) / cellsOnShortEdge
 
-        Column {
+        Column(verticalArrangement = Arrangement.spacedBy(spacing)) {
             repeat(rows) {
-                Row {
+                Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
                     repeat(columns) {
                         BackCardItem(
-                            modifier = Modifier
-                                .padding(padding)
-                                .size(cardSize)
+                            modifier = Modifier.size(cardSize)
                         )
                     }
                 }

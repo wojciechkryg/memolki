@@ -1,5 +1,6 @@
 package com.wojdor.memolki.ui.feature.menu
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
@@ -16,8 +17,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MenuViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getMenuUseCase: GetMenuUseCase
-) : MviViewModel<MenuIntent, MenuState>(MenuState()) {
+) : MviViewModel<MenuIntent, MenuState>(
+    savedStateHandle,
+    MenuState()
+) {
 
     init {
         loadMenu()
