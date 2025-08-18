@@ -36,7 +36,7 @@ fun BaseMenuItem(
                     lowercase()
                 }
             },
-            style = AppTypography.displaySmall.withColor(colorResource(R.color.text_primary))
+            style = AppTypography.displaySmall.withColor(colorResource(R.color.font))
         )
     }
 }

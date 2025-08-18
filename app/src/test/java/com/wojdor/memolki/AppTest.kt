@@ -1,10 +1,10 @@
 package com.wojdor.memolki
 
+import androidx.lifecycle.SavedStateHandle
 import io.mockk.MockKAnnotations
 import io.mockk.unmockkAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -14,7 +14,8 @@ import org.junit.Before
 @ExperimentalCoroutinesApi
 abstract class AppTest {
 
-    protected val testDispatcher: TestDispatcher = StandardTestDispatcher()
+    protected val testDispatcher = StandardTestDispatcher()
+    protected val savedStateHandle = SavedStateHandle()
 
     @Before
     open fun setup() {

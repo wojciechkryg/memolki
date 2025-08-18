@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/primary" />
+        </shape>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="50%"
+            android:pivotY="50%">
+            <layer-list>
+                <!-- Horizontal lines -->
+                <item android:top="-320dp" android:bottom="320dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-300dp" android:bottom="300dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-280dp" android:bottom="280dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-260dp" android:bottom="260dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-240dp" android:bottom="240dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-220dp" android:bottom="220dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-200dp" android:bottom="200dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-180dp" android:bottom="180dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-160dp" android:bottom="160dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-140dp" android:bottom="140dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-120dp" android:bottom="120dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-100dp" android:bottom="100dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-80dp" android:bottom="80dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-60dp" android:bottom="60dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-40dp" android:bottom="40dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="-20dp" android:bottom="20dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="20dp" android:bottom="-20dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="40dp" android:bottom="-40dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="60dp" android:bottom="-60dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="80dp" android:bottom="-80dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="100dp" android:bottom="-100dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="120dp" android:bottom="-120dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="140dp" android:bottom="-140dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="160dp" android:bottom="-160dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="180dp" android:bottom="-180dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="200dp" android:bottom="-200dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="220dp" android:bottom="-220dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="240dp" android:bottom="-240dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="260dp" android:bottom="-260dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="280dp" android:bottom="-280dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="300dp" android:bottom="-300dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+                <item android:top="320dp" android:bottom="-320dp" android:left="-500dp" android:right="-500dp">
+                    <shape android:shape="line">
+                        <stroke
+                            android:width="8dp"
+                            android:color="@android:color/white" />
+                    </shape>
+                </item>
+
+                <!-- Vertical lines -->
+                <item>
+                    <rotate
+                        android:fromDegrees="90"
+                        android:pivotX="50%"
+                        android:pivotY="50%">
+                        <layer-list>
+                            <item android:top="-320dp" android:bottom="320dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-300dp" android:bottom="300dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-280dp" android:bottom="280dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-260dp" android:bottom="260dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-240dp" android:bottom="240dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-220dp" android:bottom="220dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-200dp" android:bottom="200dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-180dp" android:bottom="180dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-160dp" android:bottom="160dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-140dp" android:bottom="140dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-120dp" android:bottom="120dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-100dp" android:bottom="100dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-80dp" android:bottom="80dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-60dp" android:bottom="60dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-40dp" android:bottom="40dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="-20dp" android:bottom="20dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="20dp" android:bottom="-20dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="40dp" android:bottom="-40dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="60dp" android:bottom="-60dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="80dp" android:bottom="-80dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="100dp" android:bottom="-100dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="120dp" android:bottom="-120dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="140dp" android:bottom="-140dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="160dp" android:bottom="-160dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="180dp" android:bottom="-180dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="200dp" android:bottom="-200dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="220dp" android:bottom="-220dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="240dp" android:bottom="-240dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="260dp" android:bottom="-260dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="280dp" android:bottom="-280dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="300dp" android:bottom="-300dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                            <item android:top="320dp" android:bottom="-320dp" android:left="-500dp" android:right="-500dp">
+                                <shape android:shape="line">
+                                    <stroke
+                                        android:width="8dp"
+                                        android:color="@android:color/white" />
+                                </shape>
+                            </item>
+                        </layer-list>
+                    </rotate>
+                </item>
+            </layer-list>
+        </rotate>
+    </item>
+</layer-list>

@@ -1,3 +1,5 @@
 package com.wojdor.memolki.ui.base
 
-interface UiState
+import android.os.Parcelable
+
+interface UiState : Parcelable

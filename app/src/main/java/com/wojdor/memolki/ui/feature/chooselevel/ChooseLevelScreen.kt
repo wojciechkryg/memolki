@@ -92,11 +92,11 @@ private fun ChooseLevelScreenPreview() {
         ChooseLevelScreen(
             state = ChooseLevelState(
                 levels = listOf(
-                    LevelModel.Level2x3,
-                    LevelModel.Level3x4,
-                    LevelModel.Level4x4,
-                    LevelModel.Level4x5,
-                    LevelModel.Level5x6
+                    LevelModel.Grid2x3,
+                    LevelModel.Grid3x4,
+                    LevelModel.Grid4x4,
+                    LevelModel.Grid4x5,
+                    LevelModel.Grid5x6
                 )
             ),
             callbacks = ChooseLevelCallbacks()
