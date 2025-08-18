@@ -1,5 +1,6 @@
 package com.wojdor.memolki.ui.feature.chooselevel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
@@ -11,8 +12,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChooseLevelViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val getLevelsUseCase: GetLevelsUseCase
-) : MviViewModel<ChooseLevelIntent, ChooseLevelState>(ChooseLevelState()) {
+) : MviViewModel<ChooseLevelIntent, ChooseLevelState>(
+    savedStateHandle,
+    ChooseLevelState()
+) {
 
     init {
         loadLevels()

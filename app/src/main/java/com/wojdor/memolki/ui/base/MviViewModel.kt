@@ -1,5 +1,6 @@
 package com.wojdor.memolki.ui.base
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
@@ -10,7 +11,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewModel() {
+abstract class MviViewModel<I : UiIntent, S : UiState>(
+    private val savedStateHandle: SavedStateHandle,
+    initialState: S
+) : ViewModel() {
+
+    private val stateKey = this::class.simpleName ?: "state"
 
     private val _uiIntent = Channel<I>(Channel.BUFFERED)
 
@@ -18,7 +24,7 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewMo
     val uiEffect: Flow<UiEffect>
         get() = _uiEffect.receiveAsFlow()
 
-    private val _uiState = MutableStateFlow(initialState)
+    private val _uiState = MutableStateFlow(savedStateHandle[stateKey] ?: initialState)
     val uiState: StateFlow<S>
         get() = _uiState
 
@@ -38,6 +44,7 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(initialState: S) : ViewMo
 
     protected fun sendState(update: S.() -> S) {
         _uiState.update(update)
+        savedStateHandle[stateKey] = _uiState.value
     }
 
     private fun startCollectingIntents() {

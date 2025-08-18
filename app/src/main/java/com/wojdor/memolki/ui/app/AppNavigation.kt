@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,7 +25,7 @@ fun AppNavigation() {
             route = Route.MENU,
             enterTransition = {
                 when (initialState.destination.route) {
-                    Route.CHOOSE_LEVEL -> slideInLeft
+                    Route.CHOOSE_LEVEL, Route.GAME -> slideInLeft
                     Route.COLLECTION -> slideInRight
                     Route.OPTIONS -> slideInTop
                     else -> slideInBottom
@@ -32,7 +33,7 @@ fun AppNavigation() {
             },
             exitTransition = {
                 when (targetState.destination.route) {
-                    Route.CHOOSE_LEVEL -> slideOutLeft
+                    Route.CHOOSE_LEVEL, Route.GAME -> slideOutLeft
                     Route.COLLECTION -> slideOutRight
                     Route.OPTIONS -> slideOutTop
                     else -> slideOutBottom
@@ -100,7 +101,15 @@ fun NavController.navigateToOptions() {
 }
 
 fun NavController.navigateToGame() {
-    navigate(Route.GAME)
+    navigate(Route.GAME) {
+        removeFromBackStack(Route.CHOOSE_LEVEL)
+    }
+}
+
+private fun NavOptionsBuilder.removeFromBackStack(route: String) {
+    popUpTo(route) {
+        inclusive = true
+    }
 }
 
 @Composable

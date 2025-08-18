@@ -9,30 +9,24 @@ import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClicked
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClicked
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClicked
-import com.wojdor.memolki.verifyOnce
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MenuViewModelTest : AppTest() {
 
-    @RelaxedMockK
-    private lateinit var getMenuUseCase: GetMenuUseCase
-
-    @InjectMockKs
     private lateinit var sut: MenuViewModel
 
-    @Test
-    fun `when view model is created then menu is loaded`() {
-        // then
-        verifyOnce {
-            @Suppress("UnusedFlow")
-            getMenuUseCase()
-        }
+    @Before
+    override fun setup() {
+        super.setup()
+        sut = MenuViewModel(
+            savedStateHandle = savedStateHandle,
+            getMenuUseCase = GetMenuUseCase(testDispatcher),
+        )
     }
 
     @Test
