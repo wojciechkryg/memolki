@@ -1,8 +1,10 @@
 package com.wojdor.memolki.ui.feature.game
 
+import app.cash.turbine.test
 import com.wojdor.memolki.AppTest
 import com.wojdor.memolki.domain.model.LevelModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -15,20 +17,21 @@ class GameViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GameViewModel(
-            savedStateHandle = savedStateHandle,
-        )
+        sut = GameViewModel(savedStateHandle)
     }
 
     @Test
-    fun `when setLevel is called then state is updated with new level`() {
-        // given
-        val level = LevelModel.Grid2x3
+    fun `when OnLevelStart intent is sent then state is updated with new level`() = runTest {
+        sut.uiState.test {
+            // given
+            val level = LevelModel.Grid2x3
 
-        // when
-        sut.setLevel(level)
+            // when
+            sut.sendIntent(GameIntent.OnLevelStart(level))
 
-        // then
-        assertEquals(level, sut.uiState.value.level)
+            // then
+            assertEquals(LevelModel.Empty, awaitItem().level)
+            assertEquals(LevelModel.Grid2x3, awaitItem().level)
+        }
     }
 }

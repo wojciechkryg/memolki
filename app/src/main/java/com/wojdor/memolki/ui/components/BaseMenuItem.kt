@@ -25,7 +25,7 @@ fun BaseMenuItem(
         onClick = rememberThrottleClick(onClick = onClick),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = colorResource(R.color.secondary)
+            contentColor = Color.Black
         )
     ) {
         Text(

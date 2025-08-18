@@ -18,6 +18,7 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.app.navigateToGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.chooselevel.component.ChooseLevelItem
+import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
 
@@ -40,7 +41,11 @@ private fun HandleEffect(
 ) {
     CollectUiEffects(viewModel) {
         when (it) {
-            is ChooseLevelEffect.OpenGameScreen -> openGameScreen(gameViewModel, navController, it.levelModel)
+            is ChooseLevelEffect.OpenGameScreen -> openGameScreen(
+                gameViewModel,
+                navController,
+                it.levelModel
+            )
         }
     }
 }
@@ -50,7 +55,7 @@ private fun openGameScreen(
     navController: NavController,
     levelModel: LevelModel
 ) {
-    gameViewModel.setLevel(levelModel)
+    gameViewModel.sendIntent(GameIntent.OnLevelStart(levelModel))
     navController.navigateToGame()
 }
 
