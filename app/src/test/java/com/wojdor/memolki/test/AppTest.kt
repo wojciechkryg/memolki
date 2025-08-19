@@ -1,4 +1,4 @@
-package com.wojdor.memolki
+package com.wojdor.memolki.test
 
 import androidx.lifecycle.SavedStateHandle
 import io.mockk.MockKAnnotations

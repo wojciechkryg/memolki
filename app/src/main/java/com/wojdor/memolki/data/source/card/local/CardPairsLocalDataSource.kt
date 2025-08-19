@@ -4,9 +4,9 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
 
-class CardPairsLocalDataSource {
+class CardPairsLocalDataSource : CardPairsDataSource {
 
-    fun getCardPairs(): List<CardPairEntity> = listOf(
+    override fun getCardPairs(): Set<CardPairEntity> = setOf(
         CardPairEntity(
             id = "banana",
             pair = Pair(

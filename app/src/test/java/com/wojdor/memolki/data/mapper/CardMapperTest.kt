@@ -1,6 +1,6 @@
 package com.wojdor.memolki.data.mapper
 
-import com.wojdor.memolki.AppTest
+import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.domain.model.CardModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

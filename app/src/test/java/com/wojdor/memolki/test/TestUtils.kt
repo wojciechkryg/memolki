@@ -1,4 +1,4 @@
-package com.wojdor.memolki
+package com.wojdor.memolki.test
 
 import io.mockk.MockKVerificationScope
 import io.mockk.coVerify

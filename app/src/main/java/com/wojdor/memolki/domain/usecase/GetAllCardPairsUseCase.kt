@@ -8,13 +8,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetCardPairsUseCase @Inject constructor(
+class GetAllCardPairsUseCase @Inject constructor(
     @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository
-) : BaseUseCase<List<CardPairModel>>(coroutineDispatcher) {
+) : BaseUseCase<Set<CardPairModel>>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        val cardPairs = cardRepository.getCardPairs()
+        val cardPairs = cardRepository.getAllCardPairs()
         emit(Result.success(cardPairs))
     }
 }

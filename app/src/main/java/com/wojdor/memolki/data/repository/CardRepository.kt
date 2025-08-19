@@ -1,12 +1,12 @@
 package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.data.mapper.toModel
-import com.wojdor.memolki.data.source.card.local.CardPairsLocalDataSource
+import com.wojdor.memolki.data.source.card.local.CardPairsDataSource
 import javax.inject.Inject
 
 class CardRepository @Inject constructor(
-    private val cardPairsLocalDataSource: CardPairsLocalDataSource
+    private val cardPairsDataSource: CardPairsDataSource
 ) {
 
-    fun getCardPairs() = cardPairsLocalDataSource.getCardPairs().toModel()
+    fun getAllCardPairs() = cardPairsDataSource.getCardPairs().toModel()
 }
