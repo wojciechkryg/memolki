@@ -31,7 +31,7 @@ class UnlockedCardPairsSharedPreferencesTest : AppTest() {
         val result = sut.getUnlockedCardPairIds()
 
         // then
-        val expected = setOf(
+        val expected = listOf(
             "banana",
             "apple",
             "strawberry",
@@ -69,7 +69,7 @@ class UnlockedCardPairsSharedPreferencesTest : AppTest() {
         val result = sut.getUnlockedCardPairIds()
 
         // Then
-        val expected = setOf(
+        val expected = listOf(
             "banana",
             "apple",
             "strawberry",

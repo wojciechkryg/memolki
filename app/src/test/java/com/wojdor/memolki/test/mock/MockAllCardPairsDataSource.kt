@@ -6,7 +6,7 @@ import com.wojdor.memolki.data.source.card.local.AllCardPairsDataSource
 
 object MockAllCardPairsDataSource : AllCardPairsDataSource {
 
-    override fun getAllCardPairs() = linkedSetOf(
+    override fun getAllCardPairs() = listOf(
         CardPairEntity(
             "banana",
             CardEntity.Image(1, 1) to

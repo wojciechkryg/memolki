@@ -41,7 +41,7 @@ class GetCardPairsUseCaseTest : AppTest() {
             sut().test {
                 // then
                 val expected = Result.success(
-                    linkedSetOf(
+                    listOf(
                         CardPairModel(
                             CardModel.Image("banana", 1, 1) to
                                     CardModel.Image("banana", 1, 1)

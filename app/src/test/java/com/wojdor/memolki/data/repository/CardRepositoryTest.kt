@@ -33,7 +33,7 @@ class CardRepositoryTest : AppTest() {
         val result = sut.getAllCardPairs()
 
         // then
-        val expected = linkedSetOf(
+        val expected = listOf(
             CardPairModel(
                 CardModel.Image("banana", 1, 1) to
                         CardModel.Image("banana", 1, 1)

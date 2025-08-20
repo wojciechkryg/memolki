@@ -5,7 +5,6 @@ import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
-import com.wojdor.memolki.util.extension.toLinkedSet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -13,7 +12,7 @@ import javax.inject.Inject
 class GetShuffledUnlockedCards @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository
-) : BaseParameterUseCase<LevelModel, LinkedHashSet<LinkedHashSet<CardModel>>>(coroutineDispatcher) {
+) : BaseParameterUseCase<LevelModel, List<List<CardModel>>>(coroutineDispatcher) {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun execute(level: LevelModel) = flow {
@@ -25,8 +24,6 @@ class GetShuffledUnlockedCards @Inject constructor(
         }
             .flatMap { it.toList() }
             .chunked(level.columns)
-            .map { it.toLinkedSet() }
-            .toLinkedSet()
         emit(Result.success(shuffledCards))
     }
 }

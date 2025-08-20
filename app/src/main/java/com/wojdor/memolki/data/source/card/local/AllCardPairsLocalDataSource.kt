@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource {
 
-    override fun getAllCardPairs(): LinkedHashSet<CardPairEntity> = linkedSetOf(
+    override fun getAllCardPairs(): List<CardPairEntity> = listOf(
         CardPairEntity(
             id = "banana",
             pair = Pair(
