@@ -12,13 +12,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.ui.feature.game.GameCallbacks
 import com.wojdor.memolki.ui.feature.game.GameState
 import com.wojdor.memolki.ui.theme.AppTheme
 import kotlin.math.min
 
 @Composable
-fun GameCardsGrid(state: GameState) {
+fun GameCardsGrid(
+    state: GameState,
+    callbacks: GameCallbacks = GameCallbacks()
+) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -27,17 +32,19 @@ fun GameCardsGrid(state: GameState) {
     ) {
         val shorterEdge = maxWidth.coerceAtMost(maxHeight)
         val spacing = 8.dp
-        val columns = state.level.columns
-        val rows = state.level.rows
+        val columns = state.cards.size
+        val rows = state.cards.firstOrNull()?.size ?: 0
         val cellsOnShortEdge = min(columns, rows)
         val cardSize = (shorterEdge - spacing * cellsOnShortEdge) / cellsOnShortEdge
 
         Column(verticalArrangement = Arrangement.spacedBy(spacing)) {
-            repeat(rows) {
+            repeat(rows) { row ->
                 Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
-                    repeat(columns) {
-                        BackCardItem(
-                            modifier = Modifier.size(cardSize)
+                    repeat(columns) { colum ->
+                        CardItem(
+                            modifier = Modifier.size(cardSize),
+                            card = state.cards[colum][row],
+                            callbacks = callbacks
                         )
                     }
                 }
@@ -48,12 +55,52 @@ fun GameCardsGrid(state: GameState) {
 
 @Preview
 @Composable
+private fun EmptyCardsGridPreview() {
+    AppTheme {
+        GameCardsGrid(
+            state = GameState(),
+        )
+    }
+}
+
+@Preview
+@Composable
 private fun CardsGridPreview() {
     AppTheme {
         GameCardsGrid(
             state = GameState(
-                LevelModel.Grid2x3
-            )
+                level = LevelModel.Grid2x3,
+                cards = listOf(
+                    listOf(
+                        CardModel.Text(
+                            pairId = "banana",
+                            textRes = 0
+                        ),
+                        CardModel.Text(
+                            pairId = "apple",
+                            textRes = 0
+                        ),
+                        CardModel.Text(
+                            pairId = "strawberry",
+                            textRes = 0
+                        ),
+                    ),
+                    listOf(
+                        CardModel.Text(
+                            pairId = "orange",
+                            textRes = 0
+                        ),
+                        CardModel.Text(
+                            pairId = "grape",
+                            textRes = 0
+                        ),
+                        CardModel.Text(
+                            pairId = "watermelon",
+                            textRes = 0
+                        )
+                    )
+                )
+            ),
         )
     }
 }

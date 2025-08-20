@@ -6,9 +6,9 @@ import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
-import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClicked
-import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClicked
-import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClicked
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -34,7 +34,7 @@ class MenuViewModelTest : AppTest() {
         runTest {
             sut.uiEffect.test {
                 // when
-                sut.sendIntent(OnNewGameClicked)
+                sut.sendIntent(OnNewGameClick)
 
                 // then
                 assertEquals(OpenChooseLevelScreen, awaitItem())
@@ -46,7 +46,7 @@ class MenuViewModelTest : AppTest() {
         runTest {
             sut.uiEffect.test {
                 // when
-                sut.sendIntent(OnCollectionClicked)
+                sut.sendIntent(OnCollectionClick)
 
                 // then
                 assertEquals(OpenCollectionScreen, awaitItem())
@@ -58,7 +58,7 @@ class MenuViewModelTest : AppTest() {
         runTest {
             sut.uiEffect.test {
                 // when
-                sut.sendIntent(OnSettingsClicked)
+                sut.sendIntent(OnSettingsClick)
 
                 // then
                 assertEquals(OpenSettingsScreen, awaitItem())

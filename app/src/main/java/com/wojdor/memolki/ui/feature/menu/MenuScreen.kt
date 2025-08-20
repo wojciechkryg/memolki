@@ -56,9 +56,9 @@ private fun HandleState(
     state: MenuState
 ) {
     val callbacks = MenuCallbacks(
-        onNewGameClick = { viewModel.sendIntent(MenuIntent.OnNewGameClicked) },
-        onCollectionClick = { viewModel.sendIntent(MenuIntent.OnCollectionClicked) },
-        onSettingsClick = { viewModel.sendIntent(MenuIntent.OnSettingsClicked) },
+        onNewGameClick = { viewModel.sendIntent(MenuIntent.OnNewGameClick) },
+        onCollectionClick = { viewModel.sendIntent(MenuIntent.OnCollectionClick) },
+        onSettingsClick = { viewModel.sendIntent(MenuIntent.OnSettingsClick) },
     )
     MenuScreen(state, callbacks)
 }

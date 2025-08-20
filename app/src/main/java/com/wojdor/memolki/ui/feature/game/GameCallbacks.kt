@@ -1,3 +1,7 @@
 package com.wojdor.memolki.ui.feature.game
 
-class GameCallbacks()
+import com.wojdor.memolki.domain.model.CardModel
+
+data class GameCallbacks(
+    val onCardClick: (CardModel) -> Unit = {},
+)
