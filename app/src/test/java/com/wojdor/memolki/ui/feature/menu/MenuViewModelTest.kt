@@ -1,7 +1,7 @@
 package com.wojdor.memolki.ui.feature.menu
 
 import app.cash.turbine.test
-import com.wojdor.memolki.AppTest
+import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
@@ -15,7 +15,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class MenuViewModelTest : AppTest() {
 
     private lateinit var sut: MenuViewModel

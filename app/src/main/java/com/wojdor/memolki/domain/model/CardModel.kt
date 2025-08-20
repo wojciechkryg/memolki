@@ -1,9 +1,12 @@
 package com.wojdor.memolki.domain.model
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import kotlinx.parcelize.Parcelize
 
-sealed class CardModel {
+@Parcelize
+sealed class CardModel : Parcelable {
 
     abstract val pairId: String
     abstract val textRes: Int

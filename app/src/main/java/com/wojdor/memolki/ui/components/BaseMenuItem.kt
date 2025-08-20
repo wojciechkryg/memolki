@@ -13,7 +13,7 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.AppTypography
 import com.wojdor.memolki.ui.theme.withColor
-import com.wojdor.memolki.ui.util.rememberThrottleClick
+import com.wojdor.memolki.util.rememberThrottleClick
 
 @Composable
 fun BaseMenuItem(

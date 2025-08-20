@@ -10,12 +10,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.feature.game.GameState
+import com.wojdor.memolki.ui.theme.AppTheme
 import kotlin.math.min
 
 @Composable
-fun CardsGrid(state: GameState) {
+fun GameCardsGrid(state: GameState) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -40,5 +43,17 @@ fun CardsGrid(state: GameState) {
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun CardsGridPreview() {
+    AppTheme {
+        GameCardsGrid(
+            state = GameState(
+                LevelModel.Grid2x3
+            )
+        )
     }
 }

@@ -1,5 +1,6 @@
-package com.wojdor.memolki.ui.util
+package com.wojdor.memolki.util
 
+import android.os.SystemClock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
@@ -16,7 +17,7 @@ fun rememberThrottleClick(
     var lastClickTime by remember { mutableLongStateOf(0L) }
 
     return {
-        val currentTime = System.currentTimeMillis()
+        val currentTime = SystemClock.elapsedRealtime()
         if (currentTime - lastClickTime > throttleTimeMs) {
             lastClickTime = currentTime
             onClick()
