@@ -10,13 +10,14 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
 ) {
 
     fun getUnlockedCardPairIds(): List<String> {
-        return (sharedPreferences.getStringSet(UNLOCKED_CARD_PAIRS_KEY, null)
-            ?: allCardPairsDataSource.getAllCardPairs()
-                .take(DEFAULT_UNLOCKED_CARD_PAIRS_COUNT)
-                .map { it.id })
-            .also {
-                sharedPreferences.edit { putStringSet(UNLOCKED_CARD_PAIRS_KEY, it.toSet()) }
-            }.toList()
+        val defaultCardPairIds = allCardPairsDataSource.getAllCardPairs()
+            .take(DEFAULT_UNLOCKED_CARD_PAIRS_COUNT)
+            .map { it.id }
+            .toSet()
+        val unlockedCardPairIds =
+            sharedPreferences.getStringSet(UNLOCKED_CARD_PAIRS_KEY, defaultCardPairIds)
+        sharedPreferences.edit { putStringSet(UNLOCKED_CARD_PAIRS_KEY, unlockedCardPairIds) }
+        return unlockedCardPairIds?.toList() ?: defaultCardPairIds.toList()
     }
 
     fun addUnlockedCardPairId(unlockedCardPairId: String) {
