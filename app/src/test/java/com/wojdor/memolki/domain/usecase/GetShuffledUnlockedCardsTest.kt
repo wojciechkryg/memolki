@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -40,7 +41,7 @@ class GetShuffledUnlockedCardsTest : AppTest() {
         // when
         sut(level).test {
             // then
-            val result = awaitItem()
+            val result = awaitItem().getOrElse { linkedSetOf() }
             val notExpected = Result.success(
                 linkedSetOf(
                     linkedSetOf(
@@ -57,8 +58,9 @@ class GetShuffledUnlockedCardsTest : AppTest() {
                     )
                 )
             )
-            assertEquals(3, result.getOrNull()?.size)
-            assertNotEquals(notExpected.getOrNull(), result.getOrNull())
+            assertEquals(3, result.size)
+            assertNotEquals(notExpected.getOrNull(), result)
+            assertTrue(result.all { it.size == 2 })
             awaitComplete()
         }
     }

@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GameState(
     val level: LevelModel = LevelModel.Empty,
-    val cards: LinkedHashSet<LinkedHashSet<CardModel>> = linkedSetOf(linkedSetOf())
+    val cards: LinkedHashSet<LinkedHashSet<CardModel>> = linkedSetOf()
 ) : UiState
