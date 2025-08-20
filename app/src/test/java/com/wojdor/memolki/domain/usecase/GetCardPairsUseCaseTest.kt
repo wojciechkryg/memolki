@@ -2,17 +2,19 @@ package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.CardRepository
+import com.wojdor.memolki.data.source.card.local.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockCardPairsDataSource
+import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
+import com.wojdor.memolki.test.mock.MockSharedPreferences
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class GetCardPairsUseCaseTest : AppTest() {
 
     private lateinit var sut: GetAllCardPairsUseCase
@@ -22,7 +24,13 @@ class GetCardPairsUseCaseTest : AppTest() {
         super.setup()
         sut = GetAllCardPairsUseCase(
             testDispatcher,
-            CardRepository(MockCardPairsDataSource())
+            CardRepository(
+                MockAllCardPairsDataSource,
+                UnlockedCardPairsLocalDataSource(
+                    MockSharedPreferences(),
+                    MockAllCardPairsDataSource
+                )
+            )
         )
     }
 
@@ -33,7 +41,7 @@ class GetCardPairsUseCaseTest : AppTest() {
             sut().test {
                 // then
                 val expected = Result.success(
-                    setOf(
+                    linkedSetOf(
                         CardPairModel(
                             CardModel.Image("banana", 1, 1) to
                                     CardModel.Image("banana", 1, 1)

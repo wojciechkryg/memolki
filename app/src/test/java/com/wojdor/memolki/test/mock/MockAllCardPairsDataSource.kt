@@ -2,11 +2,11 @@ package com.wojdor.memolki.test.mock
 
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
-import com.wojdor.memolki.data.source.card.local.CardPairsDataSource
+import com.wojdor.memolki.data.source.card.local.AllCardPairsDataSource
 
-class MockCardPairsDataSource : CardPairsDataSource {
+object MockAllCardPairsDataSource : AllCardPairsDataSource {
 
-    override fun getCardPairs() = setOf(
+    override fun getAllCardPairs() = linkedSetOf(
         CardPairEntity(
             "banana",
             CardEntity.Image(1, 1) to

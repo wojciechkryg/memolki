@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.util
+package com.wojdor.memolki.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

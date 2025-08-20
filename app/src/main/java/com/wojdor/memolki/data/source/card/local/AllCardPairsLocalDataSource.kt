@@ -3,10 +3,11 @@ package com.wojdor.memolki.data.source.card.local
 import com.wojdor.memolki.R
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
+import javax.inject.Inject
 
-class CardPairsLocalDataSource : CardPairsDataSource {
+class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource {
 
-    override fun getCardPairs(): Set<CardPairEntity> = setOf(
+    override fun getAllCardPairs(): LinkedHashSet<CardPairEntity> = linkedSetOf(
         CardPairEntity(
             id = "banana",
             pair = Pair(

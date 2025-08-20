@@ -21,7 +21,7 @@ fun ChooseLevelItem(
 
 @Preview(showBackground = true)
 @Composable
-fun MenuItemPreview() {
+private fun MenuItemPreview() {
     AppTheme {
         ChooseLevelItem(R.string.app_name)
     }

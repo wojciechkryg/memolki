@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.feature.game.component.CardsGrid
+import com.wojdor.memolki.ui.feature.game.component.GameCardsGrid
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
@@ -45,7 +45,7 @@ fun GameScreen(
     state: GameState,
     callbacks: GameCallbacks
 ) {
-    CardsGrid(state = state)
+    GameCardsGrid(state = state)
 }
 
 @Composable

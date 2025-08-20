@@ -18,7 +18,7 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import kotlin.math.min
 
 @Composable
-fun CardsGrid(state: GameState) {
+fun GameCardsGrid(state: GameState) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -48,9 +48,9 @@ fun CardsGrid(state: GameState) {
 
 @Preview
 @Composable
-fun CardsGridPreview() {
+private fun CardsGridPreview() {
     AppTheme {
-        CardsGrid(
+        GameCardsGrid(
             state = GameState(
                 LevelModel.Grid2x3
             )

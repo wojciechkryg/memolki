@@ -1,15 +1,20 @@
 package com.wojdor.memolki.ui.feature.game
 
 import app.cash.turbine.test
-import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.data.repository.CardRepository
+import com.wojdor.memolki.data.source.card.local.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCards
+import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
+import com.wojdor.memolki.test.mock.MockSharedPreferences
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class GameViewModelTest : AppTest() {
 
     private lateinit var sut: GameViewModel
@@ -17,7 +22,17 @@ class GameViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GameViewModel(savedStateHandle)
+        sut = GameViewModel(
+            savedStateHandle,
+            GetShuffledUnlockedCards(
+                testDispatcher,
+                CardRepository(
+                    MockAllCardPairsDataSource, UnlockedCardPairsLocalDataSource(
+                        MockSharedPreferences(), MockAllCardPairsDataSource
+                    )
+                )
+            )
+        )
     }
 
     @Test

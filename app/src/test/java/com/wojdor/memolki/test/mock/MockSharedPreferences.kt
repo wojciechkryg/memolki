@@ -6,8 +6,6 @@ class MockSharedPreferences : SharedPreferences {
 
     private val map = mutableMapOf<String, Any?>()
 
-    private val editor = MockEditor()
-
     private inner class MockEditor : SharedPreferences.Editor {
         private val edits = mutableMapOf<String, Any?>()
         private var clear = false
@@ -16,9 +14,10 @@ class MockSharedPreferences : SharedPreferences {
             key?.let { edits[it] = value }
         }
 
-        override fun putStringSet(key: String?, values: Set<String>?): SharedPreferences.Editor = apply {
-            key?.let { edits[it] = values }
-        }
+        override fun putStringSet(key: String?, values: Set<String>?): SharedPreferences.Editor =
+            apply {
+                key?.let { edits[it] = values }
+            }
 
         override fun putInt(key: String?, value: Int): SharedPreferences.Editor = apply {
             key?.let { edits[it] = value }
@@ -61,6 +60,7 @@ class MockSharedPreferences : SharedPreferences {
                 }
             }
             edits.clear()
+            clear = false
         }
     }
 
@@ -69,7 +69,7 @@ class MockSharedPreferences : SharedPreferences {
     }
 
     override fun edit(): SharedPreferences.Editor {
-        return editor
+        return MockEditor()
     }
 
     override fun getAll(): Map<String, *> {
@@ -101,7 +101,8 @@ class MockSharedPreferences : SharedPreferences {
         p0: String?,
         p1: Set<String?>?
     ): Set<String?>? {
-        return map[p0] as? Set<String?> ?: p1
+        val set = map[p0] as? Set<String?> ?: return p1
+        return set.toSet()
     }
 
     override fun registerOnSharedPreferenceChangeListener(p0: SharedPreferences.OnSharedPreferenceChangeListener?) {

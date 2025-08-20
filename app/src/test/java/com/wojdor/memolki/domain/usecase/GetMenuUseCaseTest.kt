@@ -9,7 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class GetMenuUseCaseTest : AppTest() {
 
     private lateinit var sut: GetMenuUseCase
@@ -22,6 +22,7 @@ class GetMenuUseCaseTest : AppTest() {
 
     @Test
     fun `when called then returns list of menu items`() = runTest {
+        // when
         sut().test {
             // then
             val expected = Result.success(

@@ -1,6 +1,6 @@
 package com.wojdor.memolki.domain.usecase.base
 
-import com.wojdor.memolki.ui.util.extension.logE
+import com.wojdor.memolki.util.extension.logE
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

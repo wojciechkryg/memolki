@@ -1,7 +1,7 @@
 package com.wojdor.memolki.data.source.card.local
 
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockCardPairsDataSource
+import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
 import com.wojdor.memolki.test.mock.MockSharedPreferences
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
@@ -9,7 +9,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@ExperimentalCoroutinesApi
 class UnlockedCardPairsSharedPreferencesTest : AppTest() {
 
     private val sharedPreferences = MockSharedPreferences()
@@ -21,7 +21,7 @@ class UnlockedCardPairsSharedPreferencesTest : AppTest() {
         super.setup()
         sut = UnlockedCardPairsLocalDataSource(
             sharedPreferences,
-            MockCardPairsDataSource()
+            MockAllCardPairsDataSource
         )
     }
 

@@ -11,10 +11,9 @@ import javax.inject.Inject
 class GetAllCardPairsUseCase @Inject constructor(
     @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository
-) : BaseUseCase<Set<CardPairModel>>(coroutineDispatcher) {
+) : BaseUseCase<LinkedHashSet<CardPairModel>>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        val cardPairs = cardRepository.getAllCardPairs()
-        emit(Result.success(cardPairs))
+        emit(Result.success(cardRepository.getAllCardPairs()))
     }
 }

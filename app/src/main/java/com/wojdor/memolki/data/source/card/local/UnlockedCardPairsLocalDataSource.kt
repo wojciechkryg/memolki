@@ -2,22 +2,23 @@ package com.wojdor.memolki.data.source.card.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.wojdor.memolki.util.extension.toLinkedSet
 import javax.inject.Inject
 
 class UnlockedCardPairsLocalDataSource @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    private val cardPairsDataSource: CardPairsDataSource
+    private val allCardPairsDataSource: AllCardPairsDataSource
 ) {
 
-    fun getUnlockedCardPairIds(): Set<String> {
-        val defaultUnlockedIds = cardPairsDataSource.getCardPairs()
-            .take(DEFAULT_UNLOCKED_CARD_PAIRS_COUNT)
-            .map { it.id }
-            .toSet()
-        return (sharedPreferences.getStringSet(UNLOCKED_CARD_PAIRS_KEY, defaultUnlockedIds)
-            ?: defaultUnlockedIds).also {
-            sharedPreferences.edit { putStringSet(UNLOCKED_CARD_PAIRS_KEY, it) }
-        }
+    fun getUnlockedCardPairIds(): LinkedHashSet<String> {
+        return (sharedPreferences.getStringSet(UNLOCKED_CARD_PAIRS_KEY, null)
+            ?: allCardPairsDataSource.getAllCardPairs()
+                .take(DEFAULT_UNLOCKED_CARD_PAIRS_COUNT)
+                .map { it.id })
+            .toLinkedSet()
+            .also {
+                sharedPreferences.edit { putStringSet(UNLOCKED_CARD_PAIRS_KEY, it) }
+            }
     }
 
     fun addUnlockedCardPairId(unlockedCardPairId: String) {
