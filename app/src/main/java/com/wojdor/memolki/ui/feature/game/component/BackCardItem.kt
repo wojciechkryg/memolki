@@ -34,6 +34,6 @@ fun BackCardItem(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun BackCardItemPreview() {
+private fun BackCardItemPreview() {
     BackCardItem(Modifier.size(128.dp))
 }

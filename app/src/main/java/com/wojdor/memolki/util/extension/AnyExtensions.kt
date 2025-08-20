@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.util.extension
+package com.wojdor.memolki.util.extension
 
 import android.util.Log
 
