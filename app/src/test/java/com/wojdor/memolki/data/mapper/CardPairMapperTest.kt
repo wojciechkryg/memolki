@@ -26,8 +26,8 @@ class CardPairMapperTest : AppTest() {
 
         // then
         val expected = CardPairModel(
-            CardModel.Image("pairId", 123, 321) to
-                    CardModel.Text("pairId", 123)
+            CardModel.Image("id", "pairId", 123, 321) to
+                    CardModel.Text("id", "pairId", 123)
         )
         assertEquals(expected, result)
     }

@@ -1,8 +1,8 @@
 package com.wojdor.memolki.data.mapper
 
-import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.domain.model.CardModel
+import com.wojdor.memolki.test.AppTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -19,7 +19,7 @@ class CardMapperTest : AppTest() {
         val result = sut.toModel("pairId")
 
         // then
-        val expected = CardModel.Image("pairId", 123, 321)
+        val expected = CardModel.Image("id", "pairId", 123, 321)
         assertEquals(expected, result)
     }
 
@@ -32,7 +32,7 @@ class CardMapperTest : AppTest() {
         val result = sut.toModel("pairId")
 
         // then
-        val expected = CardModel.Text("pairId", 123)
+        val expected = CardModel.Text("id", "pairId", 123)
         assertEquals(expected, result)
     }
 }
