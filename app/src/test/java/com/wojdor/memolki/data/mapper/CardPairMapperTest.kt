@@ -1,10 +1,10 @@
 package com.wojdor.memolki.data.mapper
 
-import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
+import com.wojdor.memolki.test.AppTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -17,8 +17,8 @@ class CardPairMapperTest : AppTest() {
         // given
         val sut = CardPairEntity(
             id = "pairId",
-            pair = CardEntity.Image(123, 321) to
-                    CardEntity.Text(123)
+            pair = CardEntity.Image("id", 123, 321) to
+                    CardEntity.Text("id", 123)
         )
 
         // when

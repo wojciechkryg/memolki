@@ -13,7 +13,7 @@ class CardMapperTest : AppTest() {
     @Test
     fun `when map card entity image then return card model image`() {
         // given
-        val sut = CardEntity.Image(123, 321)
+        val sut = CardEntity.Image("id", 123, 321)
 
         // when
         val result = sut.toModel("pairId")
@@ -26,7 +26,7 @@ class CardMapperTest : AppTest() {
     @Test
     fun `when map card entity text then return card model text`() {
         // given
-        val sut = CardEntity.Text(123)
+        val sut = CardEntity.Text("id", 123)
 
         // when
         val result = sut.toModel("pairId")

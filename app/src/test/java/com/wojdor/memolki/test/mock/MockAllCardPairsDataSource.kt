@@ -9,53 +9,53 @@ object MockAllCardPairsDataSource : AllCardPairsDataSource {
     override fun getAllCardPairs() = listOf(
         CardPairEntity(
             "banana",
-            CardEntity.Image(1, 1) to
-                    CardEntity.Image(1, 1)
+            CardEntity.Image("banana_whole", 1, 1) to
+                    CardEntity.Image("banana_half", 1, 1)
         ),
         CardPairEntity(
             "apple",
-            CardEntity.Image(2, 2) to
-                    CardEntity.Text(2)
+            CardEntity.Image("apple_whole", 2, 2) to
+                    CardEntity.Text("apple_half", 2)
         ),
         CardPairEntity(
             "strawberry",
-            CardEntity.Text(3) to
-                    CardEntity.Text(3)
+            CardEntity.Text("strawberry_whole", 3) to
+                    CardEntity.Text("strawberry_half", 3)
         ),
         CardPairEntity(
             "orange",
-            CardEntity.Text(4) to
-                    CardEntity.Text(4)
+            CardEntity.Text("orange_whole", 4) to
+                    CardEntity.Text("orange_half", 4)
         ),
         CardPairEntity(
             "grape",
-            CardEntity.Text(5) to
-                    CardEntity.Text(5)
+            CardEntity.Text("grape_whole", 5) to
+                    CardEntity.Text("grape_half", 5)
         ),
         CardPairEntity(
             "watermelon",
-            CardEntity.Text(6) to
-                    CardEntity.Text(6)
+            CardEntity.Text("watermelon_whole", 6) to
+                    CardEntity.Text("watermelon_half", 6)
         ),
         CardPairEntity(
             "mango",
-            CardEntity.Text(7) to
-                    CardEntity.Text(7)
+            CardEntity.Text("mango_whole", 7) to
+                    CardEntity.Text("mango_half", 7)
         ),
         CardPairEntity(
             "peach",
-            CardEntity.Text(8) to
-                    CardEntity.Text(8)
+            CardEntity.Text("peach_whole", 8) to
+                    CardEntity.Text("peach_half", 8)
         ),
         CardPairEntity(
             "pineapple",
-            CardEntity.Text(9) to
-                    CardEntity.Text(9)
+            CardEntity.Text("pineapple_whole", 9) to
+                    CardEntity.Text("pineapple_half", 9)
         ),
         CardPairEntity(
             "blueberry",
-            CardEntity.Text(10) to
-                    CardEntity.Text(10)
+            CardEntity.Text("blueberry_whole", 10) to
+                    CardEntity.Text("blueberry_half", 10)
         )
     )
 }
