@@ -36,26 +36,28 @@ private fun HandleState(
     viewModel: GameViewModel,
     state: GameState
 ) {
-    val callbacks = GameCallbacks()
+    val callbacks = GameCallbacks(
+        onBackCardClick = { viewModel.sendIntent(GameIntent.OnBackCardClick(it)) }
+    )
     GameScreen(state, callbacks)
 }
 
 @Composable
 fun GameScreen(
     state: GameState,
-    callbacks: GameCallbacks
+    callbacks: GameCallbacks = GameCallbacks()
 ) {
-    GameCardsGrid(state = state)
+    GameCardsGrid(
+        state = state,
+        callbacks = callbacks
+    )
 }
 
 @Composable
 @Preview(showBackground = true)
 private fun GameScreenGrid2x3Preview() {
     AppTheme {
-        GameScreen(
-            state = GameState(LevelModel.Grid2x3),
-            callbacks = GameCallbacks()
-        )
+        GameScreen(state = GameState(LevelModel.Grid2x3))
     }
 }
 
@@ -63,10 +65,7 @@ private fun GameScreenGrid2x3Preview() {
 @Preview(showBackground = true)
 private fun GameScreenGrid3x4Preview() {
     AppTheme {
-        GameScreen(
-            state = GameState(LevelModel.Grid3x4),
-            callbacks = GameCallbacks()
-        )
+        GameScreen(state = GameState(LevelModel.Grid3x4))
     }
 }
 
@@ -74,10 +73,7 @@ private fun GameScreenGrid3x4Preview() {
 @Preview(showBackground = true)
 private fun GameScreenGrid4x4Preview() {
     AppTheme {
-        GameScreen(
-            state = GameState(LevelModel.Grid4x4),
-            callbacks = GameCallbacks()
-        )
+        GameScreen(state = GameState(LevelModel.Grid4x4))
     }
 }
 
@@ -85,10 +81,7 @@ private fun GameScreenGrid4x4Preview() {
 @Preview(showBackground = true)
 private fun GameScreenGrid4x5Preview() {
     AppTheme {
-        GameScreen(
-            state = GameState(LevelModel.Grid4x5),
-            callbacks = GameCallbacks()
-        )
+        GameScreen(state = GameState(LevelModel.Grid4x5))
     }
 }
 
@@ -96,9 +89,6 @@ private fun GameScreenGrid4x5Preview() {
 @Preview(showBackground = true)
 private fun GameScreenGrid5x6Preview() {
     AppTheme {
-        GameScreen(
-            state = GameState(LevelModel.Grid5x6),
-            callbacks = GameCallbacks()
-        )
+        GameScreen(state = GameState(LevelModel.Grid5x6))
     }
 }

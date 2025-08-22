@@ -65,7 +65,7 @@ private fun HandleState(
     state: ChooseLevelState
 ) {
     val callbacks = ChooseLevelCallbacks(
-        onLevelClick = { viewModel.sendIntent(ChooseLevelIntent.OnLevelClicked(it)) }
+        onLevelClick = { viewModel.sendIntent(ChooseLevelIntent.OnLevelClick(it)) }
     )
     ChooseLevelScreen(state, callbacks)
 }
