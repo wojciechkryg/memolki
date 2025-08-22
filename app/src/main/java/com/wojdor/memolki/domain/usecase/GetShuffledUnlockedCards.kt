@@ -8,7 +8,6 @@ import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import kotlin.math.min
 
 class GetShuffledUnlockedCards @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
@@ -25,7 +24,7 @@ class GetShuffledUnlockedCards @Inject constructor(
         }
             .flatMap { it.toList() }
             .shuffled()
-            .chunked(min(level.rows, level.columns))
+            .chunked(level.columns)
         emit(Result.success(shuffledCards))
     }
 }
