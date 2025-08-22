@@ -24,7 +24,7 @@ class GetShuffledUnlockedCards @Inject constructor(
         }
             .flatMap { it.toList() }
             .shuffled()
-            .chunked(level.rows)
+            .chunked(level.columns)
         emit(Result.success(shuffledCards))
     }
 }
