@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
@@ -32,18 +33,17 @@ fun GameCardsGrid(
     ) {
         val shorterEdge = maxWidth.coerceAtMost(maxHeight)
         val spacing = 8.dp
-        val columns = state.cards.size
-        val rows = state.cards.firstOrNull()?.size ?: 0
+        val rows = state.cards.size
+        val columns = state.cards.firstOrNull()?.size ?: 0
         val cellsOnShortEdge = min(columns, rows)
         val cardSize = (shorterEdge - spacing * cellsOnShortEdge) / cellsOnShortEdge
-
-        Column(verticalArrangement = Arrangement.spacedBy(spacing)) {
-            repeat(rows) { row ->
-                Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
-                    repeat(columns) { colum ->
+        Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
+            repeat(columns) { column ->
+                Column(verticalArrangement = Arrangement.spacedBy(spacing)) {
+                    repeat(rows) { row ->
                         AnimatedCardItem(
                             modifier = Modifier.size(cardSize),
-                            card = state.cards[colum][row],
+                            card = state.cards[row][column],
                             callbacks = callbacks
                         )
                     }
@@ -70,37 +70,16 @@ private fun CardsGridPreview() {
         GameCardsGrid(
             state = GameState(
                 level = LevelModel.Grid2x3,
-                cards = listOf(
-                    listOf(
+                cards = List(3) {
+                    List(2) {
                         CardModel.Text(
-                            pairId = "banana",
-                            textRes = 0
-                        ),
-                        CardModel.Text(
-                            pairId = "apple",
-                            textRes = 0
-                        ),
-                        CardModel.Text(
-                            pairId = "strawberry",
-                            textRes = 0
-                        ),
-                    ),
-                    listOf(
-                        CardModel.Text(
-                            pairId = "orange",
-                            textRes = 0
-                        ),
-                        CardModel.Text(
-                            pairId = "grape",
-                            textRes = 0
-                        ),
-                        CardModel.Text(
-                            pairId = "watermelon",
-                            textRes = 0
+                            id = "id",
+                            pairId = "pairId",
+                            textRes = R.string.empty
                         )
-                    )
-                )
-            ),
+                    }
+                }
+            )
         )
     }
 }

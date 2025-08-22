@@ -69,6 +69,7 @@ private fun FrontCardItemTextPreview() {
     FrontCardItem(
         Modifier.size(128.dp),
         CardModel.Text(
+            id = "banana",
             pairId = "banana",
             textRes = R.string.banana
         )
@@ -81,6 +82,7 @@ private fun FrontCardItemImagePreview() {
     FrontCardItem(
         Modifier.size(128.dp),
         CardModel.Image(
+            id = "banana",
             pairId = "banana",
             textRes = R.string.banana,
             imageRes = R.drawable.img_banana_whole

@@ -9,12 +9,16 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 sealed class CardModel : Parcelable {
 
+    abstract val id: String
     abstract val pairId: String
     abstract val textRes: Int
     abstract val isFlipped: Boolean
     abstract val isMatched: Boolean
 
     object Empty : CardModel() {
+        @IgnoredOnParcel
+        override val id: String = ""
+
         @IgnoredOnParcel
         override val pairId: String = ""
 
@@ -29,6 +33,7 @@ sealed class CardModel : Parcelable {
     }
 
     data class Text(
+        override val id: String,
         override val pairId: String,
         @StringRes override val textRes: Int,
         override val isFlipped: Boolean = false,
@@ -36,6 +41,7 @@ sealed class CardModel : Parcelable {
     ) : CardModel()
 
     data class Image(
+        override val id: String,
         override val pairId: String,
         @StringRes override val textRes: Int,
         @DrawableRes val imageRes: Int,

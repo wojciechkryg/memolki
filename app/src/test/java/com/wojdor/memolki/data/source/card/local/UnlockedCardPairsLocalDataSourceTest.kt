@@ -10,7 +10,7 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class UnlockedCardPairsSharedPreferencesTest : AppTest() {
+class UnlockedCardPairsLocalDataSourceTest : AppTest() {
 
     private val sharedPreferences = MockSharedPreferences()
 

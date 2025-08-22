@@ -43,44 +43,44 @@ class GetCardPairsUseCaseTest : AppTest() {
                 val expected = Result.success(
                     listOf(
                         CardPairModel(
-                            CardModel.Image("banana", 1, 1) to
-                                    CardModel.Image("banana", 1, 1)
+                            CardModel.Image("banana_whole", "banana", 1, 1) to
+                                    CardModel.Image("banana_half", "banana", 1, 1)
                         ),
                         CardPairModel(
-                            CardModel.Image("apple", 2, 2) to
-                                    CardModel.Text("apple", 2)
+                            CardModel.Image("apple_whole", "apple", 2, 2) to
+                                    CardModel.Text("apple_half", "apple", 2)
                         ),
                         CardPairModel(
-                            CardModel.Text("strawberry", 3) to
-                                    CardModel.Text("strawberry", 3)
+                            CardModel.Text("strawberry_whole", "strawberry", 3) to
+                                    CardModel.Text("strawberry_half", "strawberry", 3)
                         ),
                         CardPairModel(
-                            CardModel.Text("orange", 4) to
-                                    CardModel.Text("orange", 4)
+                            CardModel.Text("orange_whole", "orange", 4) to
+                                    CardModel.Text("orange_half", "orange", 4)
                         ),
                         CardPairModel(
-                            CardModel.Text("grape", 5) to
-                                    CardModel.Text("grape", 5)
+                            CardModel.Text("grape_whole", "grape", 5) to
+                                    CardModel.Text("grape_half", "grape", 5)
                         ),
                         CardPairModel(
-                            CardModel.Text("watermelon", 6) to
-                                    CardModel.Text("watermelon", 6)
+                            CardModel.Text("watermelon_whole", "watermelon", 6) to
+                                    CardModel.Text("watermelon_half", "watermelon", 6)
                         ),
                         CardPairModel(
-                            CardModel.Text("mango", 7) to
-                                    CardModel.Text("mango", 7)
+                            CardModel.Text("mango_whole", "mango", 7) to
+                                    CardModel.Text("mango_half", "mango", 7)
                         ),
                         CardPairModel(
-                            CardModel.Text("peach", 8) to
-                                    CardModel.Text("peach", 8)
+                            CardModel.Text("peach_whole", "peach", 8) to
+                                    CardModel.Text("peach_half", "peach", 8)
                         ),
                         CardPairModel(
-                            CardModel.Text("pineapple", 9) to
-                                    CardModel.Text("pineapple", 9)
+                            CardModel.Text("pineapple_whole", "pineapple", 9) to
+                                    CardModel.Text("pineapple_half", "pineapple", 9)
                         ),
                         CardPairModel(
-                            CardModel.Text("blueberry", 10) to
-                                    CardModel.Text("blueberry", 10)
+                            CardModel.Text("blueberry_whole", "blueberry", 10) to
+                                    CardModel.Text("blueberry_half", "blueberry", 10)
                         )
                     )
                 )

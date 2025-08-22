@@ -46,19 +46,21 @@ class GetShuffledUnlockedCardsTest : AppTest() {
                 listOf(
                     listOf(
                         "banana",
-                        "apple",
-                        "strawberry",
+                        "apple"
                     ),
                     listOf(
-                        "orange",
+                        "strawberry",
+                        "orange"
+                    ),
+                    listOf(
                         "grape",
                         "watermelon"
                     )
                 )
             )
-            assertEquals(2, result.size)
+            assertEquals(3, result.size)
             assertNotEquals(notExpected.getOrNull(), result)
-            assertTrue(result.all { it.size == 3 })
+            assertTrue(result.all { it.size == 2 })
             awaitComplete()
         }
     }
