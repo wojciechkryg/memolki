@@ -27,7 +27,7 @@ class ChooseLevelViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnLevelClicked intent is send then the OpenGameScreen effect is send`() =
+    fun `when OnLevelClick intent is send then the OpenGameScreen effect is send`() =
         runTest {
             sut.uiEffect.test {
                 // given

@@ -27,8 +27,8 @@ fun AutoSizeText(
     modifier: Modifier = Modifier,
     style: TextStyle = LocalTextStyle.current,
 ) {
-    var scaledTextStyle by remember { mutableStateOf(style) }
-    var readyToDraw by remember { mutableStateOf(false) }
+    var scaledTextStyle by remember(text, style) { mutableStateOf(style) }
+    var readyToDraw by remember(text, style) { mutableStateOf(false) }
 
     Box(
         modifier = modifier,
