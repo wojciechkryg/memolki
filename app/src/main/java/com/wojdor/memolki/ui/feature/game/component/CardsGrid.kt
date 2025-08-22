@@ -41,7 +41,7 @@ fun GameCardsGrid(
             repeat(rows) { row ->
                 Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
                     repeat(columns) { colum ->
-                        CardItem(
+                        AnimatedCardItem(
                             modifier = Modifier.size(cardSize),
                             card = state.cards[colum][row],
                             callbacks = callbacks

@@ -6,5 +6,5 @@ import com.wojdor.memolki.ui.base.UiIntent
 
 abstract class GameIntent : UiIntent {
     data class OnLevelStart(val levelModel: LevelModel) : GameIntent()
-    data class OnCardClick(val cardModel: CardModel) : GameIntent()
+    data class OnBackCardClick(val cardModel: CardModel) : GameIntent()
 }

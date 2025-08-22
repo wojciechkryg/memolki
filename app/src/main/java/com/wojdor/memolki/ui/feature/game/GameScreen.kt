@@ -37,7 +37,7 @@ private fun HandleState(
     state: GameState
 ) {
     val callbacks = GameCallbacks(
-        onCardClick = { viewModel.sendIntent(GameIntent.OnCardClick(it)) }
+        onBackCardClick = { viewModel.sendIntent(GameIntent.OnBackCardClick(it)) }
     )
     GameScreen(state, callbacks)
 }

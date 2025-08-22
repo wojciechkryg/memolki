@@ -22,12 +22,12 @@ class GameViewModel @Inject constructor(
 
     override fun onIntent(intent: GameIntent) {
         when (intent) {
-            is GameIntent.OnLevelStart -> onStartGame(intent.levelModel)
-            is GameIntent.OnCardClick -> onCardClick(intent.cardModel)
+            is GameIntent.OnLevelStart -> shuffleUnlockedCards(intent.levelModel)
+            is GameIntent.OnBackCardClick -> flipCard(intent.cardModel)
         }
     }
 
-    private fun onStartGame(level: LevelModel) {
+    private fun shuffleUnlockedCards(level: LevelModel) {
         getShuffledUnlockedCards(level).onEach {
             it.onSuccess { cards ->
                 sendState { copy(level = level, cards = cards) }
@@ -35,14 +35,14 @@ class GameViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun onCardClick(card: CardModel) {
+    private fun flipCard(card: CardModel) {
         uiState.value.cards.flatten().find { it == card }?.let { foundCard ->
             val cards = uiState.value.cards.map { row ->
                 row.map {
                     if (it == foundCard) {
                         when (it) {
-                            is CardModel.Text -> it.copy(isFlipped = !it.isFlipped)
-                            is CardModel.Image -> it.copy(isFlipped = !it.isFlipped)
+                            is CardModel.Text -> it.copy(isFlipped = true)
+                            is CardModel.Image -> it.copy(isFlipped = true)
                             CardModel.Empty -> it
                         }
                     } else {

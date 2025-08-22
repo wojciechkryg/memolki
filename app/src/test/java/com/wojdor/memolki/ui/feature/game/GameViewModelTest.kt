@@ -59,7 +59,7 @@ class GameViewModelTest : AppTest() {
             val cardToClick = awaitItem().cards[0][0]
 
             // when
-            sut.sendIntent(GameIntent.OnCardClick(cardToClick))
+            sut.sendIntent(GameIntent.OnBackCardClick(cardToClick))
 
             // then
             assertEquals(true, awaitItem().cards[0][0].isFlipped)

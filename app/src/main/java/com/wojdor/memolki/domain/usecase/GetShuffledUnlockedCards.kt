@@ -23,6 +23,7 @@ class GetShuffledUnlockedCards @Inject constructor(
             cardRepository.getCardPairById(it)?.pair
         }
             .flatMap { it.toList() }
+            .shuffled()
             .chunked(level.rows)
         emit(Result.success(shuffledCards))
     }
