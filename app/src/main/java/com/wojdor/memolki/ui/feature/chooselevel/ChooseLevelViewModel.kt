@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnLevelClicked
+import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnLevelClick
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,7 +25,7 @@ class ChooseLevelViewModel @Inject constructor(
 
     override fun onIntent(intent: ChooseLevelIntent) {
         when (intent) {
-            is OnLevelClicked -> sendEffect(
+            is OnLevelClick -> sendEffect(
                 ChooseLevelEffect.OpenGameScreen(levelModel = intent.levelModel)
             )
         }

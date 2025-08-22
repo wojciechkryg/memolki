@@ -8,5 +8,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GameState(
     val level: LevelModel = LevelModel.Empty,
-    val cards: List<List<CardModel>> = emptyList()
+    val cards: List<List<CardModel>> = emptyList(),
 ) : UiState

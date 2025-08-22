@@ -49,4 +49,20 @@ class GameViewModelTest : AppTest() {
             assertEquals(LevelModel.Grid2x3, awaitItem().level)
         }
     }
+
+    @Test
+    fun `when OnCardClick intent is sent then state is updated with flipped card`() = runTest {
+        sut.uiState.test {
+            // given
+            sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3))
+            skipItems(1)
+            val cardToClick = awaitItem().cards[0][0]
+
+            // when
+            sut.sendIntent(GameIntent.OnBackCardClick(cardToClick))
+
+            // then
+            assertEquals(true, awaitItem().cards[0][0].isFlipped)
+        }
+    }
 }

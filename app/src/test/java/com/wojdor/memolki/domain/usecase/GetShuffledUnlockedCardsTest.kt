@@ -41,26 +41,24 @@ class GetShuffledUnlockedCardsTest : AppTest() {
         // when
         sut(level).test {
             // then
-            val result = awaitItem().getOrElse { linkedSetOf() }
+            val result = awaitItem().getOrElse { listOf() }
             val notExpected = Result.success(
-                linkedSetOf(
-                    linkedSetOf(
+                listOf(
+                    listOf(
                         "banana",
-                        "apple"
-                    ),
-                    linkedSetOf(
+                        "apple",
                         "strawberry",
-                        "orange"
                     ),
-                    linkedSetOf(
+                    listOf(
+                        "orange",
                         "grape",
                         "watermelon"
                     )
                 )
             )
-            assertEquals(3, result.size)
+            assertEquals(2, result.size)
             assertNotEquals(notExpected.getOrNull(), result)
-            assertTrue(result.all { it.size == 2 })
+            assertTrue(result.all { it.size == 3 })
             awaitComplete()
         }
     }

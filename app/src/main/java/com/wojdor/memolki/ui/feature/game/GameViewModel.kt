@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.game
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCards
 import com.wojdor.memolki.ui.base.MviViewModel
@@ -21,15 +22,35 @@ class GameViewModel @Inject constructor(
 
     override fun onIntent(intent: GameIntent) {
         when (intent) {
-            is GameIntent.OnLevelStart -> startGame(intent.levelModel)
+            is GameIntent.OnLevelStart -> shuffleUnlockedCards(intent.levelModel)
+            is GameIntent.OnBackCardClick -> flipCard(intent.cardModel)
         }
     }
 
-    private fun startGame(level: LevelModel) {
+    private fun shuffleUnlockedCards(level: LevelModel) {
         getShuffledUnlockedCards(level).onEach {
             it.onSuccess { cards ->
                 sendState { copy(level = level, cards = cards) }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun flipCard(card: CardModel) {
+        uiState.value.cards.flatten().find { it == card }?.let { foundCard ->
+            val cards = uiState.value.cards.map { row ->
+                row.map {
+                    if (it == foundCard) {
+                        when (it) {
+                            is CardModel.Text -> it.copy(isFlipped = true)
+                            is CardModel.Image -> it.copy(isFlipped = true)
+                            CardModel.Empty -> it
+                        }
+                    } else {
+                        it
+                    }
+                }
+            }
+            sendState { copy(cards = cards) }
+        }
     }
 }
