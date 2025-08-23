@@ -7,8 +7,11 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCards
 import com.wojdor.memolki.ui.base.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,10 +23,12 @@ class GameViewModel @Inject constructor(
     GameState()
 ) {
 
+    private var flipToBackJob: Job? = null
+
     override fun onIntent(intent: GameIntent) {
         when (intent) {
             is GameIntent.OnLevelStart -> shuffleUnlockedCards(intent.levelModel)
-            is GameIntent.OnBackCardClick -> flipCard(intent.cardModel)
+            is GameIntent.OnBackCardClick -> onBackCardClick(intent.cardModel)
         }
     }
 
@@ -35,22 +40,96 @@ class GameViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun flipCard(card: CardModel) {
-        uiState.value.cards.flatten().find { it == card }?.let { foundCard ->
-            val cards = uiState.value.cards.map { row ->
-                row.map {
-                    if (it == foundCard) {
-                        when (it) {
-                            is CardModel.Text -> it.copy(isFlipped = true)
-                            is CardModel.Image -> it.copy(isFlipped = true)
-                            CardModel.Empty -> it
-                        }
-                    } else {
-                        it
+    private fun onBackCardClick(card: CardModel) {
+        if (isTooManyFlippedToFrontUnmatchedCards()) {
+            immediatelyFlipToBackUnmatchedCards()
+        }
+        flipCardToFront(card)
+        checkForMatchedPair()
+        if (isTooManyFlippedToFrontUnmatchedCards()) {
+            flipToBackUnmatchedCardsWithDelay()
+        }
+    }
+
+    private fun checkForMatchedPair() {
+        val frontUnmatchedCards = frontUnmatchedCards()
+        if (frontUnmatchedCards.size == MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS) {
+            val firstCardPairId = frontUnmatchedCards.first().pairId
+            if (frontUnmatchedCards.all { it.pairId == firstCardPairId }) {
+                val matchedCards = frontUnmatchedCards.map { cardToMatch ->
+                    when (cardToMatch) {
+                        is CardModel.Text -> cardToMatch.copy(isPairMatched = true)
+                        is CardModel.Image -> cardToMatch.copy(isPairMatched = true)
+                        is CardModel.Empty -> cardToMatch
                     }
                 }
+                updateStateWith(matchedCards)
             }
-            sendState { copy(cards = cards) }
         }
+    }
+
+    private fun isTooManyFlippedToFrontUnmatchedCards() =
+        frontUnmatchedCards().size >= MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS
+
+    private fun flipToBackUnmatchedCardsWithDelay() {
+        flipToBackJob = viewModelScope.launch {
+            delay(FLIP_TO_BACK_DELAY)
+            flipToBackUnmatchedCards()
+        }
+    }
+
+    private fun immediatelyFlipToBackUnmatchedCards() {
+        flipToBackJob?.cancel()
+        flipToBackJob = null
+        flipToBackUnmatchedCards()
+    }
+
+    private fun frontUnmatchedCards(): List<CardModel> {
+        return uiState.value.cards.flatten().filter {
+            it.isFlippedFront && !it.isPairMatched
+        }
+    }
+
+    private fun flipToBackUnmatchedCards() {
+        val changedCards = mutableListOf<CardModel>()
+        frontUnmatchedCards().forEach {
+            changedCards.add(markCardAsFlippedToBack(it))
+        }
+        updateStateWith(changedCards)
+    }
+
+    private fun flipCardToFront(card: CardModel) {
+        updateStateWith(markCardAsFlipped(card, true))
+    }
+
+    private fun markCardAsFlippedToBack(card: CardModel): CardModel {
+        return markCardAsFlipped(card, false)
+    }
+
+    private fun markCardAsFlipped(card: CardModel, isFlippedFront: Boolean): CardModel {
+        return when (card) {
+            is CardModel.Text -> card.copy(isFlippedFront = isFlippedFront)
+            is CardModel.Image -> card.copy(isFlippedFront = isFlippedFront)
+            CardModel.Empty -> card
+        }
+    }
+
+    private fun updateStateWith(card: CardModel) {
+        updateStateWith(listOf(card))
+    }
+
+    private fun updateStateWith(cardsToUpdate: List<CardModel>) {
+        val cardsToUpdateMap = cardsToUpdate.associateBy { it.id }
+        val updatedCards = uiState.value.cards.map { column ->
+            column.map { card ->
+                cardsToUpdateMap[card.id] ?: card
+            }
+        }
+        sendState { copy(cards = updatedCards) }
+    }
+
+    companion object {
+        const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
+        const val FLIP_TO_BACK_DELAY = 2000L
     }
 }
