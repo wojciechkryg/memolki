@@ -1,4 +1,4 @@
-# images
+# 🖼 images
 
 1. Prepare all images for the game
 1. To optimize images use https://bulkresizephotos.com:

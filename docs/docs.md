@@ -1,4 +1,4 @@
-# documentation
+# 📚 documentation
 
-- [images](./docs_images.md)
-- [icons](./docs_icons.md)
+- [🖼 images](./docs_images.md)
+- [🃏 logo](./docs_logo.md)
