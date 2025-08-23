@@ -1,7 +1,7 @@
 # 🃏 logo
 
 1. Use https://editor.graphite.rs
-1. Use the logo template from (here)[../logo/memolki.graphite]
+1. Use the logo template from [here](../logo/memolki.graphite)
 1. Load the template `File > Open`
 1. Go to layers
 1. Logo images are `256x256`
