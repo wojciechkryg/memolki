@@ -1,4 +1,4 @@
-# logo
+# 🃏 logo
 
 1. Use https://editor.graphite.rs
 1. Use the logo template from (here)[../logo/memolki.graphite]
