@@ -13,7 +13,7 @@ sealed class CardModel : Parcelable {
     abstract val pairId: String
     abstract val textRes: Int
     abstract val isFlippedFront: Boolean
-    abstract val isMatched: Boolean
+    abstract val isPairMatched: Boolean
 
     object Empty : CardModel() {
         @IgnoredOnParcel
@@ -29,7 +29,7 @@ sealed class CardModel : Parcelable {
         override val isFlippedFront: Boolean = false
 
         @IgnoredOnParcel
-        override val isMatched: Boolean = false
+        override val isPairMatched: Boolean = false
     }
 
     data class Text(
@@ -37,7 +37,7 @@ sealed class CardModel : Parcelable {
         override val pairId: String,
         @StringRes override val textRes: Int,
         override val isFlippedFront: Boolean = false,
-        override val isMatched: Boolean = false
+        override val isPairMatched: Boolean = false
     ) : CardModel()
 
     data class Image(
@@ -46,6 +46,6 @@ sealed class CardModel : Parcelable {
         @StringRes override val textRes: Int,
         @DrawableRes val imageRes: Int,
         override val isFlippedFront: Boolean = false,
-        override val isMatched: Boolean = false
+        override val isPairMatched: Boolean = false
     ) : CardModel()
 }

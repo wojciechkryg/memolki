@@ -20,7 +20,7 @@ fun AnimatedCardItem(
     callbacks: GameCallbacks
 ) {
     val animationProgress by animateFloatAsState(
-        targetValue = if (card.isFlippedFront) 1f else 0f,
+        targetValue = if (card.isFlippedFront || card.isPairMatched) 1f else 0f,
         animationSpec = tween(durationMillis = ANIMATION_DURATION, easing = FastOutSlowInEasing),
         label = "cardFlip"
     )

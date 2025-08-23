@@ -44,10 +44,27 @@ class GameViewModel @Inject constructor(
         if (isTooManyFlippedToFrontUnmatchedCards()) {
             immediatelyFlipToBackUnmatchedCards()
         }
-        val cardFlipped = flipCardToFront(card)
-        updateStateWith(cardFlipped)
+        flipCardToFront(card)
+        checkForMatchedPair()
         if (isTooManyFlippedToFrontUnmatchedCards()) {
             flipToBackUnmatchedCardsWithDelay()
+        }
+    }
+
+    private fun checkForMatchedPair() {
+        val frontUnmatchedCards = frontUnmatchedCards()
+        if (frontUnmatchedCards.size == MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS) {
+            val firstCardPairId = frontUnmatchedCards.first().pairId
+            if (frontUnmatchedCards.all { it.pairId == firstCardPairId }) {
+                val matchedCards = frontUnmatchedCards.map { cardToMatch ->
+                    when (cardToMatch) {
+                        is CardModel.Text -> cardToMatch.copy(isPairMatched = true)
+                        is CardModel.Image -> cardToMatch.copy(isPairMatched = true)
+                        is CardModel.Empty -> cardToMatch
+                    }
+                }
+                updateStateWith(matchedCards)
+            }
         }
     }
 
@@ -69,27 +86,27 @@ class GameViewModel @Inject constructor(
 
     private fun frontUnmatchedCards(): List<CardModel> {
         return uiState.value.cards.flatten().filter {
-            it.isFlippedFront && !it.isMatched
+            it.isFlippedFront && !it.isPairMatched
         }
     }
 
     private fun flipToBackUnmatchedCards() {
         val changedCards = mutableListOf<CardModel>()
         frontUnmatchedCards().forEach {
-            changedCards.add(flipCardToBack(it))
+            changedCards.add(markCardAsFlippedToBack(it))
         }
         updateStateWith(changedCards)
     }
 
-    private fun flipCardToFront(card: CardModel): CardModel {
-        return flipCard(card, true)
+    private fun flipCardToFront(card: CardModel) {
+        updateStateWith(markCardAsFlipped(card, true))
     }
 
-    private fun flipCardToBack(card: CardModel): CardModel {
-        return flipCard(card, false)
+    private fun markCardAsFlippedToBack(card: CardModel): CardModel {
+        return markCardAsFlipped(card, false)
     }
 
-    private fun flipCard(card: CardModel, isFlippedFront: Boolean): CardModel {
+    private fun markCardAsFlipped(card: CardModel, isFlippedFront: Boolean): CardModel {
         return when (card) {
             is CardModel.Text -> card.copy(isFlippedFront = isFlippedFront)
             is CardModel.Image -> card.copy(isFlippedFront = isFlippedFront)
