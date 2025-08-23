@@ -62,7 +62,7 @@ class GameViewModelTest : AppTest() {
             sut.sendIntent(GameIntent.OnBackCardClick(cardToClick))
 
             // then
-            assertEquals(true, awaitItem().cards[0][0].isFlipped)
+            assertEquals(true, awaitItem().cards[0][0].isFlippedFront)
         }
     }
 }
