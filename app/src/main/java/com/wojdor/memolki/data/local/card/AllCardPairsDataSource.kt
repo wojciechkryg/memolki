@@ -1,4 +1,4 @@
-package com.wojdor.memolki.data.source.card.local
+package com.wojdor.memolki.data.local.card
 
 import com.wojdor.memolki.data.entity.CardPairEntity
 
