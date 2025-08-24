@@ -53,9 +53,9 @@ private fun HandleEffect(
 private fun openGameScreen(
     gameViewModel: GameViewModel,
     navController: NavController,
-    levelModel: LevelModel
+    level: LevelModel
 ) {
-    gameViewModel.sendIntent(GameIntent.OnLevelStart(levelModel))
+    gameViewModel.sendIntent(GameIntent.OnLevelStart(level))
     navController.navigateToGame()
 }
 

@@ -9,28 +9,48 @@ import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.ui.app.navigateToEndGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
+import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.component.GameCardsGrid
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun GameScreen(
     viewModel: GameViewModel = hiltViewModel(),
+    endGameViewModel: EndGameViewModel = hiltViewModel(),
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
-    HandleEffect(viewModel, navController)
+    HandleEffect(viewModel, endGameViewModel, navController)
     HandleState(viewModel, state)
 }
 
 @Composable
 private fun HandleEffect(
     viewModel: GameViewModel,
+    endGameViewModel: EndGameViewModel,
     navController: NavController
 ) {
     CollectUiEffects(viewModel) {
-        // TODO: Handle game effects here if needed
+        when (it) {
+            is GameEffect.OpenEndGameScreen -> openEndGameScreen(
+                endGameViewModel,
+                navController,
+                it.levelModel
+            )
+        }
     }
+}
+
+private fun openEndGameScreen(
+    endGameViewModel: EndGameViewModel,
+    navController: NavController,
+    level: LevelModel
+) {
+    endGameViewModel.sendIntent(EndGameIntent.OnEndGameShow(level))
+    navController.navigateToEndGame()
 }
 
 @Composable

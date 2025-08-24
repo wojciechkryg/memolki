@@ -46,8 +46,19 @@ class GameViewModel @Inject constructor(
         }
         flipCardToFront(card)
         checkForMatchedPair()
+        checkForEndGame()
         if (isTooManyFlippedToFrontUnmatchedCards()) {
             flipToBackUnmatchedCardsWithDelay()
+        }
+    }
+
+    private fun checkForEndGame() {
+        viewModelScope.launch {
+            val gameCards = uiState.value.cards.flatten()
+            if (gameCards.isNotEmpty() && gameCards.all { it.isPairMatched }) {
+                delay(END_GAME_DELAY)
+                sendEffect(GameEffect.OpenEndGameScreen(uiState.value.level))
+            }
         }
     }
 
@@ -131,5 +142,6 @@ class GameViewModel @Inject constructor(
     companion object {
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
         const val FLIP_TO_BACK_DELAY = 2000L
+        const val END_GAME_DELAY = 1000L
     }
 }
