@@ -1,8 +1,8 @@
 package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.data.mapper.toModel
-import com.wojdor.memolki.data.source.card.local.AllCardPairsDataSource
-import com.wojdor.memolki.data.source.card.local.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
+import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import javax.inject.Inject
 
 class CardRepository @Inject constructor(
@@ -12,9 +12,9 @@ class CardRepository @Inject constructor(
 
     fun getAllCardPairs() = allCardPairsDataSource.getAllCardPairs().toModel()
 
-    fun getUnlockedCardPairIds() = unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
+    suspend fun getUnlockedCardPairIds() = unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
 
-    fun getRandomUnlockedCardPairIds(count: Int) =
+    suspend fun getRandomUnlockedCardPairIds(count: Int) =
         unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
             .shuffled()
             .take(count)

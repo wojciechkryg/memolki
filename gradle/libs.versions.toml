@@ -1,8 +1,9 @@
 [versions]
 activityCompose = "1.10.1"
-agp = "8.12.0"
+agp = "8.12.1"
 appcompat = "1.7.1"
 coreKtx = "1.17.0"
+datastore = "1.1.7"
 hilt = "2.57"
 hiltNavigationCompose = "1.2.0"
 junit = "4.13.2"
@@ -37,6 +38,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
