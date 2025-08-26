@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.wojdor.memolki.data.crypto.BaseEncryptor
+import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
 import com.wojdor.memolki.data.local.card.AllCardPairsLocalDataSource
 import dagger.Binds
@@ -16,7 +18,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataSourceModule {
+abstract class DataModule {
+
+    @Binds
+    abstract fun bindEncryptor(baseEncryptor: BaseEncryptor): Encryptor
 
     @Binds
     abstract fun bindAllCardPairsDataSource(allCardPairsLocalDataSource: AllCardPairsLocalDataSource): AllCardPairsDataSource

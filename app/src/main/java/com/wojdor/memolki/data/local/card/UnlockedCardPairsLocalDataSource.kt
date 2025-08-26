@@ -24,9 +24,9 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
     }
 
     suspend fun addUnlockedCardPairId(unlockedCardPairId: String) {
+        val currentUnlockedCardPairIds = getUnlockedCardPairIds().toSet()
         dataStore.edit {
-            it[Key.UNLOCKED_CARD_PAIR_IDS] =
-                getUnlockedCardPairIds().toMutableSet() + unlockedCardPairId
+            it[Key.UNLOCKED_CARD_PAIR_IDS] = currentUnlockedCardPairIds + unlockedCardPairId
         }
     }
 
