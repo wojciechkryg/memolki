@@ -1,12 +1,13 @@
 package com.wojdor.memolki.data.repository
 
-import com.wojdor.memolki.data.source.card.local.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockSharedPreferences
+import com.wojdor.memolki.test.mock.MockDataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -16,7 +17,7 @@ import org.junit.Test
 class CardRepositoryTest : AppTest() {
 
     private val unlockedCardPairsLocalDataSource = UnlockedCardPairsLocalDataSource(
-        MockSharedPreferences(),
+        MockDataStore(),
         MockAllCardPairsDataSource
     )
     private lateinit var sut: CardRepository
@@ -79,7 +80,7 @@ class CardRepositoryTest : AppTest() {
     }
 
     @Test
-    fun `should return unlocked card pair ids`() {
+    fun `should return unlocked card pair ids`() = runTest {
         // given
         val expected = unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
 
@@ -91,7 +92,7 @@ class CardRepositoryTest : AppTest() {
     }
 
     @Test
-    fun `should return random unlocked card pair ids`() {
+    fun `should return random unlocked card pair ids`() = runTest {
         // given
         val count = 3
 

@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.components.AutoSizeText
-import com.wojdor.memolki.ui.theme.AppTypography
 
 @Composable
 fun FrontCardItem(
@@ -42,7 +42,7 @@ private fun FrontCardItemText(card: CardModel.Text) {
     ) {
         AutoSizeText(
             text = stringResource(card.textRes),
-            style = AppTypography.displayLarge,
+            style = MaterialTheme.typography.displayLarge,
         )
     }
 }

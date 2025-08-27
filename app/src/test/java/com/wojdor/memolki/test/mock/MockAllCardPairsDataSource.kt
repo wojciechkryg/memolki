@@ -2,7 +2,7 @@ package com.wojdor.memolki.test.mock
 
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
-import com.wojdor.memolki.data.source.card.local.AllCardPairsDataSource
+import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
 
 object MockAllCardPairsDataSource : AllCardPairsDataSource {
 

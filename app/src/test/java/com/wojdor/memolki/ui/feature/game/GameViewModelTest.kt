@@ -1,10 +1,15 @@
 package com.wojdor.memolki.ui.feature.game
 
 import app.cash.turbine.test
+import com.wojdor.memolki.data.local.user.UserLocalDataSource
+import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
-import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCards
+import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
+import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.mock.MockEncryptor
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +25,16 @@ import org.junit.Test
 class GameViewModelTest : AppTest() {
 
     @RelaxedMockK
-    private lateinit var getShuffledUnlockedCards: GetShuffledUnlockedCards
+    private lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
+
+    private val userRepository = UserRepository(
+        encryptor = MockEncryptor(),
+        userLocalDataSource = UserLocalDataSource(MockDataStore())
+    )
+    private val incrementTotalCardPairsMatchedUseCase = IncrementTotalCardPairsMatchedUseCase(
+        testDispatcher,
+        userRepository
+    )
 
     private lateinit var sut: GameViewModel
 
@@ -29,9 +43,10 @@ class GameViewModelTest : AppTest() {
         super.setup()
         sut = GameViewModel(
             savedStateHandle,
-            getShuffledUnlockedCards
+            getShuffledUnlockedCardsUseCase,
+            incrementTotalCardPairsMatchedUseCase
         )
-        every { getShuffledUnlockedCards.invoke(LevelModel.Grid2x3) } returns flowOf(
+        every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3) } returns flowOf(
             Result.success(mockShuffledCards())
         )
     }
@@ -48,6 +63,9 @@ class GameViewModelTest : AppTest() {
             // then
             assertEquals(LevelModel.Empty, awaitItem().level)
             assertEquals(LevelModel.Grid2x3, awaitItem().level)
+        }
+        userRepository.getTotalCardPairsMatched().test {
+            assertEquals(0, awaitItem())
         }
     }
 
@@ -67,6 +85,9 @@ class GameViewModelTest : AppTest() {
                 assertTrue(isFlippedFront)
                 assertFalse(isPairMatched)
             }
+        }
+        userRepository.getTotalCardPairsMatched().test {
+            assertEquals(0, awaitItem())
         }
     }
 
@@ -93,6 +114,9 @@ class GameViewModelTest : AppTest() {
                     assertTrue(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
+            }
+            userRepository.getTotalCardPairsMatched().test {
+                assertEquals(0, awaitItem())
             }
         }
 
@@ -125,6 +149,9 @@ class GameViewModelTest : AppTest() {
                     assertTrue(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
+            }
+            userRepository.getTotalCardPairsMatched().test {
+                assertEquals(0, awaitItem())
             }
         }
 
@@ -159,6 +186,9 @@ class GameViewModelTest : AppTest() {
                     assertFalse(isPairMatched)
                 }
             }
+            userRepository.getTotalCardPairsMatched().test {
+                assertEquals(1, awaitItem())
+            }
         }
 
     @Test
@@ -189,6 +219,9 @@ class GameViewModelTest : AppTest() {
                         effect
                     )
                 }
+            }
+            userRepository.getTotalCardPairsMatched().test {
+                assertEquals(3, awaitItem())
             }
         }
 

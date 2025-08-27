@@ -2,12 +2,12 @@ package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.CardRepository
-import com.wojdor.memolki.data.source.card.local.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockSharedPreferences
+import com.wojdor.memolki.test.mock.MockDataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -27,7 +27,7 @@ class GetCardPairsUseCaseTest : AppTest() {
             CardRepository(
                 MockAllCardPairsDataSource,
                 UnlockedCardPairsLocalDataSource(
-                    MockSharedPreferences(),
+                    MockDataStore(),
                     MockAllCardPairsDataSource
                 )
             )
