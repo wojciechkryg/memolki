@@ -13,6 +13,7 @@ import androidx.navigation.navigation
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelScreen
 import com.wojdor.memolki.ui.feature.collection.CollectionScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
+import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.GameScreen
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuScreen
@@ -79,7 +80,8 @@ fun AppNavigation() {
             ) {
                 GameScreen(
                     navController = navController,
-                    viewModel = getGameViewModel(it, navController)
+                    viewModel = getGameViewModel(it, navController),
+                    endGameViewModel = getEndGameViewModel(it, navController)
                 )
             }
             composable(
@@ -87,7 +89,10 @@ fun AppNavigation() {
                 enterTransition = { slideInRight },
                 exitTransition = { slideOutRight }
             ) {
-                EndGameScreen(navController = navController)
+                EndGameScreen(
+                    navController = navController,
+                    viewModel = getEndGameViewModel(it, navController)
+                )
             }
         }
         composable(
@@ -142,6 +147,17 @@ private fun getGameViewModel(
     navBackStackEntry: NavBackStackEntry,
     navController: NavController
 ): GameViewModel {
+    val gameFlowBackStackEntry = remember(navBackStackEntry) {
+        navController.getBackStackEntry(RouteFlow.GAME)
+    }
+    return hiltViewModel(gameFlowBackStackEntry)
+}
+
+@Composable
+private fun getEndGameViewModel(
+    navBackStackEntry: NavBackStackEntry,
+    navController: NavController
+): EndGameViewModel {
     val gameFlowBackStackEntry = remember(navBackStackEntry) {
         navController.getBackStackEntry(RouteFlow.GAME)
     }

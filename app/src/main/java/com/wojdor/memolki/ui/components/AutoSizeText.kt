@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.ui.theme.AppTypography
 import kotlin.math.min
 import kotlin.math.sqrt
 
@@ -73,7 +73,7 @@ private fun AutoSizeTextBigPreview() {
         AutoSizeText(
             text = "Lorem ipsum",
             modifier = Modifier.size(128.dp),
-            style = AppTypography.displayLarge
+            style = MaterialTheme.typography.displayLarge
         )
     }
 }
@@ -86,7 +86,7 @@ private fun AutoSizeTextMediumPreview() {
         AutoSizeText(
             text = "Lorem ipsum dolor sit amet",
             modifier = Modifier.size(128.dp),
-            style = AppTypography.displayLarge
+            style = MaterialTheme.typography.displayLarge
         )
     }
 }
@@ -99,7 +99,7 @@ private fun AutoSizeTextSmallPreview() {
         AutoSizeText(
             text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
             modifier = Modifier.size(128.dp),
-            style = AppTypography.displayLarge
+            style = MaterialTheme.typography.displayLarge
         )
     }
 }

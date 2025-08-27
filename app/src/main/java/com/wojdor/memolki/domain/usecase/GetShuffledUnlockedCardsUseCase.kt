@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetShuffledUnlockedCards @Inject constructor(
+class GetShuffledUnlockedCardsUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository
 ) : BaseParameterUseCase<LevelModel, List<List<CardModel>>>(coroutineDispatcher) {
