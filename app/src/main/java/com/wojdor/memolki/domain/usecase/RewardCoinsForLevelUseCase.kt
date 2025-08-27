@@ -1,7 +1,6 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.UserRepository
-import com.wojdor.memolki.di.coroutine.DefaultDispatcher
 import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase

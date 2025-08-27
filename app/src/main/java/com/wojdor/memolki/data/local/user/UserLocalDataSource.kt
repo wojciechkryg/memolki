@@ -3,40 +3,61 @@ package com.wojdor.memolki.data.local.user
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserLocalDataSource @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataWrite: DataStore<Preferences>
 ) {
-    val encryptedCoins: Flow<String?> = dataStore.data.map { it[Key.COINS] }
-
-    suspend fun setEncryptedCoins(encryptedCoins: String) {
-        dataStore.edit { it[Key.COINS] = encryptedCoins }
+    private val dataRead: Flow<Preferences> = dataWrite.data.catch { _ ->
+        emit(emptyPreferences())
     }
 
-    val encryptedTotalCoins: Flow<String?> = dataStore.data.map { it[Key.TOTAL_COINS] }
+    val encryptedCoins: Flow<String?> = dataRead.map { it[Key.COINS] }
 
-    suspend fun setEncryptedTotalCoins(encryptedTotalCoins: String) {
-        dataStore.edit { it[Key.TOTAL_COINS] = encryptedTotalCoins }
+    val encryptedTotalCoins: Flow<String?> = dataRead.map { it[Key.TOTAL_COINS] }
+
+    suspend fun setEncryptedCoinsAndTotalCoins(
+        transform: (encryptedCoins: String?, encryptedTotalCoins: String?) -> Pair<String, String>
+    ) {
+        dataWrite.edit {
+            val currentEncryptedCoins = it[Key.COINS]
+            val currentEncryptedTotalCoins = it[Key.TOTAL_COINS]
+            val (newEncryptedCoins, newEncryptedTotalCoins) = transform(
+                currentEncryptedCoins,
+                currentEncryptedTotalCoins
+            )
+            it[Key.COINS] = newEncryptedCoins
+            it[Key.TOTAL_COINS] = newEncryptedTotalCoins
+        }
     }
 
-    val encryptedTotalMatchedCardPairCount: Flow<String?> =
-        dataStore.data.map { it[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] }
+    val encryptedTotalCardPairsMatched: Flow<String?> =
+        dataRead.map { it[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] }
 
-    suspend fun setEncryptedTotalMatchedCardPairCount(encryptedTotalMatchedCardPairCount: String) {
-        dataStore.edit {
-            it[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] = encryptedTotalMatchedCardPairCount
+    suspend fun setEncryptedTotalCardPairsMatched(
+        transform: (encryptedValue: String?) -> String
+    ) {
+        dataWrite.edit { prefs ->
+            prefs[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] =
+                transform(prefs[Key.TOTAL_MATCHED_CARD_PAIR_COUNT])
         }
     }
 
     val encryptedTotalGamesPlayed: Flow<String?> =
-        dataStore.data.map { it[Key.TOTAL_GAMES_PLAYED] }
+        dataRead.map { it[Key.TOTAL_GAMES_PLAYED] }
 
-    suspend fun setEncryptedTotalGamesPlayed(totalGamesPlayed: String) {
-        dataStore.edit { it[Key.TOTAL_GAMES_PLAYED] = totalGamesPlayed }
+    suspend fun setEncryptedTotalGamesPlayed(
+        transform: (encryptedValue: String?) -> String
+    ) {
+        dataWrite.edit { prefs ->
+            prefs[Key.TOTAL_GAMES_PLAYED] =
+                transform(prefs[Key.TOTAL_GAMES_PLAYED])
+        }
     }
 
     private object Key {

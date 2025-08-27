@@ -3,7 +3,7 @@ package com.wojdor.memolki.ui.feature.game
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
-import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCards
+import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.test.AppTest
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
@@ -20,7 +20,7 @@ import org.junit.Test
 class GameViewModelTest : AppTest() {
 
     @RelaxedMockK
-    private lateinit var getShuffledUnlockedCards: GetShuffledUnlockedCards
+    private lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
 
     private lateinit var sut: GameViewModel
 
@@ -29,9 +29,9 @@ class GameViewModelTest : AppTest() {
         super.setup()
         sut = GameViewModel(
             savedStateHandle,
-            getShuffledUnlockedCards
+            getShuffledUnlockedCardsUseCase
         )
-        every { getShuffledUnlockedCards.invoke(LevelModel.Grid2x3) } returns flowOf(
+        every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3) } returns flowOf(
             Result.success(mockShuffledCards())
         )
     }

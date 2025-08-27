@@ -10,13 +10,14 @@ import javax.inject.Inject
 class EncryptorKeyStore @Inject constructor() {
 
     private val keyStore = KeyStore.getInstance(KEY_STORE).apply { load(null) }
-    val secretKey: SecretKey
-        get() {
-            val existingKey = keyStore.getEntry(KEY_ALIAS, null) as? KeyStore.SecretKeyEntry
-            return existingKey?.secretKey ?: generateSecretKey().also {
-                keyStore.setEntry(KEY_ALIAS, KeyStore.SecretKeyEntry(it), null)
-            }
-        }
+    val secretKey: SecretKey by lazy {
+        getExistingSecretKey() ?: generateSecretKey()
+    }
+
+    private fun getExistingSecretKey(): SecretKey? {
+        val existingKey = keyStore.getEntry(KEY_ALIAS, null) as? KeyStore.SecretKeyEntry
+        return existingKey?.secretKey
+    }
 
     private fun generateSecretKey(): SecretKey {
         val keyGenerator = KeyGenerator.getInstance(ALGORITHM, KEY_STORE)

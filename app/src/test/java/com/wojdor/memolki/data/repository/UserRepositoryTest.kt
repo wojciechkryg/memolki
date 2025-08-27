@@ -32,7 +32,11 @@ class UserRepositoryTest : AppTest() {
     fun `when getCoins then should return decrypted value`() = runTest {
         // given
         val expected = 123L
-        userLocalDataSource.setEncryptedCoins(mockEncryptor.encrypt(expected))
+
+        userLocalDataSource.setEncryptedCoinsAndTotalCoins { _, _ ->
+            mockEncryptor.encrypt(expected) to
+                    mockEncryptor.encrypt(expected)
+        }
 
         // when
         val result = sut.getCoins().first()
@@ -46,9 +50,10 @@ class UserRepositoryTest : AppTest() {
         // given
         val initialCoins = 100L
         val addedCoins = 23L
-        userLocalDataSource.setEncryptedCoins(mockEncryptor.encrypt(initialCoins))
-        userLocalDataSource.setEncryptedTotalCoins(mockEncryptor.encrypt(initialCoins))
-
+        userLocalDataSource.setEncryptedCoinsAndTotalCoins { _, _ ->
+            mockEncryptor.encrypt(initialCoins) to
+                    mockEncryptor.encrypt(initialCoins)
+        }
 
         // when
         sut.addCoins(addedCoins)
@@ -63,7 +68,10 @@ class UserRepositoryTest : AppTest() {
     fun `when getTotalCoins then should return decrypted value`() = runTest {
         // given
         val totalCoins = 456L
-        userLocalDataSource.setEncryptedTotalCoins(MockEncryptor().encrypt(totalCoins))
+        userLocalDataSource.setEncryptedCoinsAndTotalCoins { _, _ ->
+            mockEncryptor.encrypt(totalCoins) to
+                    mockEncryptor.encrypt(totalCoins)
+        }
 
         // when
         val result = sut.getTotalCoins().first()
@@ -76,10 +84,12 @@ class UserRepositoryTest : AppTest() {
     fun `when getTotalMatchedCardPairCount then should return decrypted value`() = runTest {
         // given
         val expected = 12L
-        userLocalDataSource.setEncryptedTotalMatchedCardPairCount(MockEncryptor().encrypt(expected))
+        userLocalDataSource.setEncryptedTotalCardPairsMatched {
+            mockEncryptor.encrypt(expected)
+        }
 
         // when
-        val result = sut.getTotalMatchedCardPairCount().first()
+        val result = sut.getTotalCardPairsMatched().first()
 
         // then
         assertEquals(expected, result)
@@ -90,17 +100,15 @@ class UserRepositoryTest : AppTest() {
         runTest {
             // given
             val initialCount = 12L
-            userLocalDataSource.setEncryptedTotalMatchedCardPairCount(
-                MockEncryptor().encrypt(
-                    initialCount
-                )
-            )
+            userLocalDataSource.setEncryptedTotalCardPairsMatched {
+                mockEncryptor.encrypt(initialCount)
+            }
 
             // when
-            sut.incrementTotalMatchedCardPairCount()
+            sut.incrementTotalCardPairsMatched()
 
             // then
-            val result = sut.getTotalMatchedCardPairCount().first()
+            val result = sut.getTotalCardPairsMatched().first()
             val expected = initialCount + 1
             assertEquals(expected, result)
         }
@@ -109,7 +117,9 @@ class UserRepositoryTest : AppTest() {
     fun `when getTotalGamesPlayed then should return decrypted value`() = runTest {
         // given
         val expected = 34L
-        userLocalDataSource.setEncryptedTotalGamesPlayed(MockEncryptor().encrypt(expected))
+        userLocalDataSource.setEncryptedTotalGamesPlayed {
+            mockEncryptor.encrypt(expected)
+        }
 
         // when
         val result = sut.getTotalGamesPlayed().first()
@@ -122,7 +132,9 @@ class UserRepositoryTest : AppTest() {
     fun `when incrementTotalGamesPlayed then should increment value in data source`() = runTest {
         // given
         val initialCount = 34L
-        userLocalDataSource.setEncryptedTotalGamesPlayed(MockEncryptor().encrypt(initialCount))
+        userLocalDataSource.setEncryptedTotalGamesPlayed {
+            mockEncryptor.encrypt(initialCount)
+        }
 
         // when
         sut.incrementTotalGamesPlayed()

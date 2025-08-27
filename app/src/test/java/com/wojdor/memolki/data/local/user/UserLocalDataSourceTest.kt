@@ -33,14 +33,17 @@ class UserLocalDataSourceTest : AppTest() {
     @Test
     fun `when coins exist then return this value`() = runTest {
         // given
-        val expected = "encrypted"
-        sut.setEncryptedCoins(expected)
+        val expectedCoins = "3"
+        val expectedTotalCoins = "123"
+        sut.setEncryptedCoinsAndTotalCoins { _, _ -> expectedCoins to expectedTotalCoins }
 
         // when
-        val result = sut.encryptedCoins.first()
+        val resultCoins = sut.encryptedCoins.first()
+        val resultTotalCoins = sut.encryptedTotalCoins.first()
 
         // then
-        assertEquals(expected, result)
+        assertEquals(expectedCoins, resultCoins)
+        assertEquals(expectedTotalCoins, resultTotalCoins)
     }
 
     @Test
@@ -53,23 +56,9 @@ class UserLocalDataSourceTest : AppTest() {
     }
 
     @Test
-    fun `when total coins exist then return this value`() =
-        runTest {
-            // given
-            val expected = "encrypted"
-            sut.setEncryptedTotalCoins(expected)
-
-            // when
-            val result = sut.encryptedTotalCoins.first()
-
-            // then
-            assertEquals(expected, result)
-        }
-
-    @Test
     fun `when no total matched card pairs then return default value`() = runTest {
         // when
-        val result = sut.encryptedTotalMatchedCardPairCount.first()
+        val result = sut.encryptedTotalCardPairsMatched.first()
 
         // then
         assertNull(result)
@@ -79,11 +68,11 @@ class UserLocalDataSourceTest : AppTest() {
     fun `when total matched card pairs exist then return this value`() =
         runTest {
             // given
-            val expected = "encrypted"
-            sut.setEncryptedTotalMatchedCardPairCount(expected)
+            val expected = "123"
+            sut.setEncryptedTotalCardPairsMatched { expected }
 
             // when
-            val result = sut.encryptedTotalMatchedCardPairCount.first()
+            val result = sut.encryptedTotalCardPairsMatched.first()
 
             // then
             assertEquals(expected, result)
@@ -101,8 +90,8 @@ class UserLocalDataSourceTest : AppTest() {
     @Test
     fun `when total games played exist then return this value`() = runTest {
         // given
-        val expected = "encrypted"
-        sut.setEncryptedTotalGamesPlayed(expected)
+        val expected = "123"
+        sut.setEncryptedTotalGamesPlayed { expected }
 
         // when
         val result = sut.encryptedTotalGamesPlayed.first()

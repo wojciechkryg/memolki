@@ -18,12 +18,12 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class GetShuffledUnlockedCardsTest : AppTest() {
 
-    private lateinit var sut: GetShuffledUnlockedCards
+    private lateinit var sut: GetShuffledUnlockedCardsUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = GetShuffledUnlockedCards(
+        sut = GetShuffledUnlockedCardsUseCase(
             testDispatcher,
             CardRepository(
                 MockAllCardPairsDataSource, UnlockedCardPairsLocalDataSource(
