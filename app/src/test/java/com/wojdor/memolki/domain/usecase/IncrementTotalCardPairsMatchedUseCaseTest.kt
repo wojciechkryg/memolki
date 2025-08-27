@@ -16,7 +16,7 @@ import org.junit.Test
 class IncrementTotalCardPairsMatchedUseCaseTest : AppTest() {
 
     private lateinit var userRepository: UserRepository
-    private lateinit var sut: IncrementTotaCardPairsMatchedUseCase
+    private lateinit var sut: IncrementTotalCardPairsMatchedUseCase
 
     @Before
     override fun setup() {
@@ -25,7 +25,7 @@ class IncrementTotalCardPairsMatchedUseCaseTest : AppTest() {
             MockEncryptor(),
             UserLocalDataSource(MockDataStore())
         )
-        sut = IncrementTotaCardPairsMatchedUseCase(
+        sut = IncrementTotalCardPairsMatchedUseCase(
             testDispatcher,
             userRepository
         )
@@ -40,7 +40,7 @@ class IncrementTotalCardPairsMatchedUseCaseTest : AppTest() {
             awaitComplete()
         }
         userRepository.getTotalCardPairsMatched().test {
-            assertEquals(1, awaitItem())
+            assertEquals(1L, awaitItem())
         }
     }
 }

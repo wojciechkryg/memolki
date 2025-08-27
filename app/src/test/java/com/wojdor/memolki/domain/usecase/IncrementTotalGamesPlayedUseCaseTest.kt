@@ -40,7 +40,7 @@ class IncrementTotalGamesPlayedUseCaseTest : AppTest() {
             awaitComplete()
         }
         userRepository.getTotalGamesPlayed().test {
-            assertEquals(1, awaitItem())
+            assertEquals(1L, awaitItem())
         }
     }
 }

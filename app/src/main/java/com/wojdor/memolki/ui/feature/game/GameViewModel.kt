@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
-import com.wojdor.memolki.domain.usecase.IncrementTotaCardPairsMatchedUseCase
+import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class GameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
-    private val incrementTotaCardPairsMatchedUseCase: IncrementTotaCardPairsMatchedUseCase
+    private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase
 ) : MviViewModel<GameIntent, GameState>(
     savedStateHandle,
     GameState()
@@ -77,7 +77,7 @@ class GameViewModel @Inject constructor(
                     }
                 }
                 updateStateWith(matchedCards)
-                incrementTotaCardPairsMatchedUseCase().launchIn(viewModelScope)
+                incrementTotalCardPairsMatchedUseCase().launchIn(viewModelScope)
             }
         }
     }

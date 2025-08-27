@@ -6,7 +6,7 @@ import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
-import com.wojdor.memolki.domain.usecase.IncrementTotaCardPairsMatchedUseCase
+import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
 import com.wojdor.memolki.test.mock.MockEncryptor
@@ -31,7 +31,7 @@ class GameViewModelTest : AppTest() {
         encryptor = MockEncryptor(),
         userLocalDataSource = UserLocalDataSource(MockDataStore())
     )
-    private val incrementTotaCardPairsMatchedUseCase = IncrementTotaCardPairsMatchedUseCase(
+    private val incrementTotalCardPairsMatchedUseCase = IncrementTotalCardPairsMatchedUseCase(
         testDispatcher,
         userRepository
     )
@@ -44,7 +44,7 @@ class GameViewModelTest : AppTest() {
         sut = GameViewModel(
             savedStateHandle,
             getShuffledUnlockedCardsUseCase,
-            incrementTotaCardPairsMatchedUseCase
+            incrementTotalCardPairsMatchedUseCase
         )
         every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3) } returns flowOf(
             Result.success(mockShuffledCards())

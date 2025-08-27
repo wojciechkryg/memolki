@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class IncrementTotaCardPairsMatchedUseCase @Inject constructor(
+class IncrementTotalCardPairsMatchedUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val userRepository: UserRepository
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
