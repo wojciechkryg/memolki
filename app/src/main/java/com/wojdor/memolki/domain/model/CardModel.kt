@@ -35,7 +35,7 @@ sealed class CardModel : Parcelable {
     data class Text(
         override val id: String,
         override val pairId: String,
-        @StringRes override val textRes: Int,
+        @field:StringRes override val textRes: Int,
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false
     ) : CardModel()
@@ -43,8 +43,8 @@ sealed class CardModel : Parcelable {
     data class Image(
         override val id: String,
         override val pairId: String,
-        @StringRes override val textRes: Int,
-        @DrawableRes val imageRes: Int,
+        @field:StringRes override val textRes: Int,
+        @field:DrawableRes val imageRes: Int,
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false
     ) : CardModel()

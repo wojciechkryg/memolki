@@ -2,7 +2,6 @@ package com.wojdor.memolki.ui.feature.collection
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,9 +29,7 @@ private fun HandleEffect(
     viewModel: CollectionViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        // TODO: Handle game effects here if needed
-    }
+    CollectUiEffects(viewModel) {}
 }
 
 @Composable

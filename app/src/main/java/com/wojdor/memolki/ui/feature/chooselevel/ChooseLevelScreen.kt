@@ -84,6 +84,7 @@ private fun ChooseLevelScreen(
             Spacer(modifier = Modifier.height(24.dp))
             ChooseLevelItem(
                 textId = level.textId,
+                isEnabled =  level.isUnlocked,
                 onClick = { callbacks.onLevelClick(level) }
             )
         }

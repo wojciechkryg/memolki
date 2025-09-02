@@ -30,9 +30,7 @@ private fun HandleEffect(
     viewModel: EndGameViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        // TODO: Handle game effects here if needed
-    }
+    CollectUiEffects(viewModel) {}
 }
 
 @Composable
