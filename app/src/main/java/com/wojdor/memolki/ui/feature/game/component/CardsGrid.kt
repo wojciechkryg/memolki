@@ -69,7 +69,7 @@ private fun CardsGridPreview() {
     AppTheme {
         GameCardsGrid(
             state = GameState(
-                level = LevelModel.Grid2x3,
+                level = LevelModel.Grid2x3(),
                 cards = List(3) {
                     List(2) {
                         CardModel.Text(

@@ -46,6 +46,6 @@ fun CoinsReward(
 @Composable
 private fun CoinsRewardPreview() {
     AppTheme {
-        CoinsReward(state = EndGameState(level = LevelModel.Grid2x3, rewardedCoins = 1234))
+        CoinsReward(state = EndGameState(level = LevelModel.Grid2x3(), rewardedCoins = 1234))
     }
 }

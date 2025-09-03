@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -21,7 +22,7 @@ fun ChooseLevelItem(
     isEnabled: Boolean = true,
     onClick: () -> Unit = {}
 ) {
-    Row {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         if (!isEnabled) {
             Icon(
                 modifier = Modifier.size(LOCKED_ICON_SIZE),
@@ -42,7 +43,7 @@ fun ChooseLevelItem(
     }
 }
 
-private val LOCKED_ICON_SIZE = 64.dp
+private val LOCKED_ICON_SIZE = 48.dp
 
 @Preview(showBackground = true)
 @Composable
