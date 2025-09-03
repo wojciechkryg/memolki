@@ -36,7 +36,7 @@ class GetShuffledUnlockedCardsTest : AppTest() {
     @Test
     fun `when called then returns shuffled unlocked card pair ids`() = runTest {
         // given
-        val level = LevelModel.Grid2x3
+        val level = LevelModel.Grid2x3()
 
         // when
         sut(level).test {

@@ -39,11 +39,11 @@ class GetLevelsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(
                 listOf(
-                    LevelModel.Grid2x3,
-                    LevelModel.Grid3x4,
-                    LevelModel.Grid4x4,
-                    LevelModel.Grid4x5,
-                    LevelModel.Grid5x6,
+                    LevelModel.Grid2x3(isUnlocked = true),
+                    LevelModel.Grid3x4(isUnlocked = false),
+                    LevelModel.Grid4x4(isUnlocked = false),
+                    LevelModel.Grid4x5(isUnlocked = false),
+                    LevelModel.Grid5x6(isUnlocked = false),
                 )
             )
             assertEquals(expected, awaitItem())
