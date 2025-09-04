@@ -264,6 +264,38 @@ class GameViewModelTest : AppTest() {
         }
 
     @Test
+    fun `when OnCardClick intent is sent with two cards that didn't match then state is updated accordingly`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
+                    Result.success(mockShuffledCardsWithSameIds())
+                )
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                skipItems(1)
+
+
+                // when
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3][1]))
+
+                // then
+                val result = awaitItem()
+                with(result.cards[0][1]) {
+                    assertTrue(isFlippedFront)
+                    assertFalse(isPairMatched)
+                }
+                with(result.cards[3][1]) {
+                    assertTrue(isFlippedFront)
+                    assertFalse(isPairMatched)
+                }
+            }
+            userRepository.getTotalCardPairsMatched().test {
+                assertEquals(0, awaitItem())
+            }
+        }
+
+    @Test
     fun `when all cards are matched then the OpenEndGameScreen effect is sent`() =
         runTest {
             sut.uiState.test {
@@ -316,6 +348,8 @@ class GameViewModelTest : AppTest() {
             CardModel.Image("stark", "arya_stark", 1, 1),
             CardModel.Text("sansa_stark", "sansa_stark", 3),
             CardModel.Image("stark", "sansa_stark", 1, 1),
+            CardModel.Text("daenerys_targaryen", "daenerys_targaryen", 4),
+            CardModel.Image("targaryen", "daenerys_targaryen", 1, 1),
             ).chunked(2)
     }
 }

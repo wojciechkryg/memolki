@@ -87,16 +87,25 @@ class GameViewModel @Inject constructor(
         firstCard: CardModel,
         secondCard: CardModel
     ): Boolean = areFromTheSamePair(firstCard, secondCard) ||
-            existAnotherCardWithTheSameId(firstCard, secondCard)
+            existAnotherCardWithTheSameIdAsFromMatchingPairId(firstCard, secondCard)
 
-    private fun areFromTheSamePair(firstCard: CardModel, secondCard: CardModel) =
-        firstCard.pairId == secondCard.pairId
+    private fun areFromTheSamePair(
+        firstCard: CardModel,
+        secondCard: CardModel
+    ) = firstCard.pairId == secondCard.pairId
 
-    private fun existAnotherCardWithTheSameId(firstCard: CardModel, secondCard: CardModel) =
-        uiState.value.cards.flatten().any {
-            (it.id == firstCard.id && it.pairId != firstCard.pairId)
-                    || (it.id == secondCard.id && it.pairId != secondCard.pairId)
-        }
+    private fun existAnotherCardWithTheSameIdAsFromMatchingPairId(
+        firstCard: CardModel,
+        secondCard: CardModel
+    ): Boolean {
+        val cards = uiState.value.cards.flatten()
+        val matchingFirstCard = cards.find { it != firstCard && it.pairId == firstCard.pairId }
+        val matchingSecondCard = cards.find { it != secondCard && it.pairId == secondCard.pairId }
+        return firstCard.id == matchingFirstCard?.id
+                || secondCard.id == matchingSecondCard?.id
+                || firstCard.id == matchingSecondCard?.id
+                || secondCard.id == matchingFirstCard?.id
+    }
 
     private fun isTooManyFlippedToFrontUnmatchedCards() =
         frontUnmatchedCards().size >= MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS
