@@ -2,6 +2,6 @@
     <string name="new_game">Uusi peli</string>
     <string name="collection">Kokoelma</string>
     <string name="settings">Asetukset</string>
-
-    <string name="choose_level">Valitse taso</string>
+    <string name="menu">Valikko</string>
+    <string name="play_again">Pelaa uudelleen</string>
 </resources>

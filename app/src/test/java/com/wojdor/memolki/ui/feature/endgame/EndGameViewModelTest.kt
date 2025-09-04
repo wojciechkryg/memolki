@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.endgame
 import app.cash.turbine.test
 import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.data.repository.UserRepository
+import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
@@ -53,7 +54,11 @@ class EndGameViewModelTest : AppTest() {
                 sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
 
                 // then
-                val expected = EndGameState(level = levelModel, rewardedCoins = rewardedCoins)
+                val expected = EndGameState(
+                    level = levelModel,
+                    rewardedCoins = rewardedCoins,
+                    menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu)
+                )
                 assertEquals(expected, awaitItem())
             }
         }

@@ -2,6 +2,6 @@
     <string name="new_game">Yeni oyun</string>
     <string name="collection">Koleksiyon</string>
     <string name="settings">Ayarlar</string>
-
-    <string name="choose_level">Seviye seçin</string>
+    <string name="menu">Menü</string>
+    <string name="play_again">Tekrar oyna</string>
 </resources>

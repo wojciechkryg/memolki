@@ -70,7 +70,12 @@ fun AppNavigation() {
             }
             composable(
                 route = Route.GAME,
-                enterTransition = { slideInRight },
+                enterTransition = {
+                    when (initialState.destination.route) {
+                        Route.END_GAME -> slideInLeft
+                        else -> slideInRight
+                    }
+                },
                 exitTransition = {
                     when (targetState.destination.route) {
                         Route.MENU -> slideOutRight
@@ -91,7 +96,8 @@ fun AppNavigation() {
             ) {
                 EndGameScreen(
                     navController = navController,
-                    viewModel = getEndGameViewModel(it, navController)
+                    viewModel = getEndGameViewModel(it, navController),
+                    gameViewModel = getGameViewModel(it, navController)
                 )
             }
         }
@@ -133,6 +139,18 @@ fun NavController.navigateToGame() {
 fun NavController.navigateToEndGame() {
     navigate(Route.END_GAME) {
         removeFromBackStack(Route.GAME)
+    }
+}
+
+fun NavController.navigateToMenu() {
+    navigate(Route.MENU) {
+        removeFromBackStack(Route.MENU)
+    }
+}
+
+fun NavController.navigateToGameFromEndGame() {
+    navigate(Route.GAME) {
+        removeFromBackStack(Route.END_GAME)
     }
 }
 

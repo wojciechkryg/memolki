@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.endgame
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
@@ -24,6 +25,8 @@ class EndGameViewModel @Inject constructor(
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
             is EndGameIntent.OnEndGameShow -> onEndGameShow(level = intent.levelModel)
+            is EndGameIntent.OnPlayAgainClick -> sendEffect(EndGameEffect.OpenGameScreen(intent.levelModel))
+            is EndGameIntent.OnMenuClick -> sendEffect(EndGameEffect.OpenMenuScreen)
         }
     }
 
@@ -31,7 +34,13 @@ class EndGameViewModel @Inject constructor(
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         rewardCoinsForLevelUseCase(level).onEach {
             it.onSuccess { rewardedCoins ->
-                sendState { copy(level = level, rewardedCoins = rewardedCoins) }
+                sendState {
+                    copy(
+                        level = level,
+                        rewardedCoins = rewardedCoins,
+                        menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu)
+                    )
+                }
             }
         }.launchIn(viewModelScope)
     }
