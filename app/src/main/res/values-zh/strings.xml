@@ -2,6 +2,6 @@
     <string name="new_game">新游戏</string>
     <string name="collection">收藏</string>
     <string name="settings">设置</string>
-
-    <string name="choose_level">选择关卡</string>
+    <string name="menu">菜单</string>
+    <string name="play_again">再玩一次</string>
 </resources>
