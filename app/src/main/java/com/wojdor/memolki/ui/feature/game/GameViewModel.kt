@@ -67,8 +67,9 @@ class GameViewModel @Inject constructor(
     private fun checkForMatchedPair() {
         val frontUnmatchedCards = frontUnmatchedCards()
         if (frontUnmatchedCards.size == MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS) {
-            val firstCardPairId = frontUnmatchedCards.first().pairId
-            if (frontUnmatchedCards.all { it.pairId == firstCardPairId }) {
+            val firstCard = frontUnmatchedCards[0]
+            val secondCard = frontUnmatchedCards[1]
+            if (areCardsMatched(firstCard, secondCard)) {
                 val matchedCards = frontUnmatchedCards.map { cardToMatch ->
                     when (cardToMatch) {
                         is CardModel.Text -> cardToMatch.copy(isPairMatched = true)
@@ -81,6 +82,21 @@ class GameViewModel @Inject constructor(
             }
         }
     }
+
+    private fun areCardsMatched(
+        firstCard: CardModel,
+        secondCard: CardModel
+    ): Boolean = areFromTheSamePair(firstCard, secondCard) ||
+            existAnotherCardWithTheSameId(firstCard, secondCard)
+
+    private fun areFromTheSamePair(firstCard: CardModel, secondCard: CardModel) =
+        firstCard.pairId == secondCard.pairId
+
+    private fun existAnotherCardWithTheSameId(firstCard: CardModel, secondCard: CardModel) =
+        uiState.value.cards.flatten().any {
+            (it.id == firstCard.id && it.pairId != firstCard.pairId)
+                    || (it.id == secondCard.id && it.pairId != secondCard.pairId)
+        }
 
     private fun isTooManyFlippedToFrontUnmatchedCards() =
         frontUnmatchedCards().size >= MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS
@@ -105,9 +121,8 @@ class GameViewModel @Inject constructor(
     }
 
     private fun flipToBackUnmatchedCards() {
-        val changedCards = mutableListOf<CardModel>()
-        frontUnmatchedCards().forEach {
-            changedCards.add(markCardAsFlippedToBack(it))
+        val changedCards = frontUnmatchedCards().map {
+            markCardAsFlippedToBack(it)
         }
         updateStateWith(changedCards)
     }
@@ -133,10 +148,9 @@ class GameViewModel @Inject constructor(
     }
 
     private fun updateStateWith(cardsToUpdate: List<CardModel>) {
-        val cardsToUpdateMap = cardsToUpdate.associateBy { it.id }
         val updatedCards = uiState.value.cards.map { column ->
             column.map { card ->
-                cardsToUpdateMap[card.id] ?: card
+                cardsToUpdate.find { it.pairId == card.pairId && it.id == card.id } ?: card
             }
         }
         sendState { copy(cards = updatedCards) }
