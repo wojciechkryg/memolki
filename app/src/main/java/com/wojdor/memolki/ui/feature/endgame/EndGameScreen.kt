@@ -70,7 +70,7 @@ private fun HandleState(
     state: EndGameState
 ) {
     val callbacks = EndGameCallbacks(
-        onPLayAgainClick = { viewModel.sendIntent(EndGameIntent.OnPlayAgainClick(state.level)) },
+        onPlayAgainClick = { viewModel.sendIntent(EndGameIntent.OnPlayAgainClick(state.level)) },
         onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) }
     )
     EndGameScreen(state, callbacks)
@@ -93,7 +93,7 @@ fun EndGameScreen(
             when (menuItem) {
                 is EndGameMenuModel.PlayAgain -> MenuItem(
                     textId = menuItem.textId,
-                    onClick = callbacks.onPLayAgainClick
+                    onClick = callbacks.onPlayAgainClick
                 )
 
                 is EndGameMenuModel.Menu -> MenuItem(

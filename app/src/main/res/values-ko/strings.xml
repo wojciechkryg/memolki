@@ -2,7 +2,6 @@
     <string name="new_game">새 게임</string>
     <string name="collection">컬렉션</string>
     <string name="settings">설정</string>
-    <string name="choose_level">레벨 선택</string>
     <string name="menu">메뉴</string>
     <string name="play_again">다시 플레이</string>
 </resources>

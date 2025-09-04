@@ -1,6 +1,6 @@
 package com.wojdor.memolki.ui.feature.endgame
 
 data class EndGameCallbacks(
-    val onPLayAgainClick: () -> Unit = {},
+    val onPlayAgainClick: () -> Unit = {},
     val onMenuClick: () -> Unit = {}
 )

@@ -2,7 +2,6 @@
     <string name="new_game">Neue Spiel</string>
     <string name="collection">Sammlung</string>
     <string name="settings">Einstellungen</string>
-    <string name="choose_level">Wähle Level</string>
     <string name="menu">Menü</string>
     <string name="play_again">Nochmal spielen</string>
 </resources>

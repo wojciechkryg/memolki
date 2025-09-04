@@ -2,7 +2,6 @@
     <string name="new_game">Permainan baru</string>
     <string name="collection">Koleksi</string>
     <string name="settings">Pengaturan</string>
-    <string name="choose_level">Pilih level</string>
     <string name="menu">Menu</string>
     <string name="play_again">Main lagi</string>
 </resources>

@@ -3,7 +3,6 @@
     <string name="new_game">Nyt spil</string>
     <string name="collection">Samling</string>
     <string name="settings">Indstillinger</string>
-    <string name="choose_level">Vælg niveau</string>
     <string name="menu">Menu</string>
     <string name="play_again">Spil igen</string>
 </resources>
