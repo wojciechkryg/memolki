@@ -33,7 +33,7 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     @Test
     fun `when level with 3 pairs then reward 1 coin`() = runTest {
         // given
-        val level = LevelModel.Grid2x3
+        val level = LevelModel.Grid2x3()
 
         // when
         val result = sut(level).first()
@@ -47,7 +47,7 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     @Test
     fun `when level with 6 pairs then reward 3 coins`() = runTest {
         // given
-        val level = LevelModel.Grid3x4
+        val level = LevelModel.Grid3x4()
 
         // when
         val result = sut(level).first()
@@ -61,7 +61,7 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     @Test
     fun `when level with 16 pairs then reward 5 coins`() = runTest {
         // given
-        val level = LevelModel.Grid4x4
+        val level = LevelModel.Grid4x4()
 
         // when
         val result = sut(level).first()
@@ -75,7 +75,7 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     @Test
     fun `when level with 20 pairs then reward 7 coins`() = runTest {
         // given
-        val level = LevelModel.Grid4x5
+        val level = LevelModel.Grid4x5()
 
         // when
         val result = sut(level).first()
@@ -89,7 +89,7 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     @Test
     fun `when level with 30 pairs then reward 13 coins`() = runTest {
         // given
-        val level = LevelModel.Grid5x6
+        val level = LevelModel.Grid5x6()
 
         // when
         val result = sut(level).first()

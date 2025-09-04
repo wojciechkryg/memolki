@@ -81,7 +81,7 @@ private fun GameScreenGrid2x3Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid2x3,
+                level = LevelModel.Grid2x3(),
                 cards = List(3) {
                     List(2) {
                         CardModel.Text(
@@ -102,7 +102,7 @@ private fun GameScreenGrid3x4Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid3x4,
+                level = LevelModel.Grid3x4(),
                 cards = List(4) {
                     List(3) {
                         CardModel.Text(
@@ -122,7 +122,7 @@ private fun GameScreenGrid4x4Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid4x4,
+                level = LevelModel.Grid4x4(),
                 cards = List(4) {
                     List(4) {
                         CardModel.Text(
@@ -143,7 +143,7 @@ private fun GameScreenGrid4x5Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid4x5,
+                level = LevelModel.Grid4x5(),
                 cards = List(5) {
                     List(4) {
                         CardModel.Text(
@@ -163,7 +163,7 @@ private fun GameScreenGrid5x6Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid5x6,
+                level = LevelModel.Grid5x6(),
                 cards = List(6) {
                     List(5) {
                         CardModel.Text(

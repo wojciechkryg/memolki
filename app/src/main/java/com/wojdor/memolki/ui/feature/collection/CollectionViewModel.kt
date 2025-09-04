@@ -23,7 +23,7 @@ class CollectionViewModel @Inject constructor(
     }
 
     override fun onIntent(intent: CollectionIntent) {
-        TODO()
+
     }
 
     private fun loadData() {

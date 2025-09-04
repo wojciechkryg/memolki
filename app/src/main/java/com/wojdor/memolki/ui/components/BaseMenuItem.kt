@@ -17,14 +17,17 @@ import com.wojdor.memolki.util.rememberThrottleClick
 fun BaseMenuItem(
     @StringRes textId: Int,
     isUppercase: Boolean = true,
+    isEnabled: Boolean = true,
     onClick: () -> Unit = {}
 ) {
     Button(
         onClick = rememberThrottleClick(onClick = onClick),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color.Black
-        )
+            contentColor = Color.Black,
+            disabledContainerColor = Color.Transparent
+        ),
+        enabled = isEnabled
     ) {
         Text(
             text = stringResource(textId).run {
@@ -52,5 +55,13 @@ private fun BaseMenuItemUppercasePreview() {
 private fun BaseMenuItemLowercasePreview() {
     AppTheme {
         BaseMenuItem(R.string.app_name, isUppercase = false)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BaseMenuItemDisabledPreview() {
+    AppTheme {
+        BaseMenuItem(R.string.app_name, isUppercase = false, isEnabled = false)
     }
 }
