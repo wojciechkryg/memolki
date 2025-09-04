@@ -30,9 +30,7 @@ private fun HandleEffect(
     viewModel: EndGameViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        // TODO: Handle game effects here if needed
-    }
+    CollectUiEffects(viewModel) {}
 }
 
 @Composable
@@ -59,7 +57,7 @@ fun EndGameScreen(
 private fun EndGamePreview() {
     AppTheme {
         EndGameScreen(
-            state = EndGameState(level = LevelModel.Grid2x3, rewardedCoins = 1234)
+            state = EndGameState(level = LevelModel.Grid2x3(), rewardedCoins = 1234)
         )
     }
 }

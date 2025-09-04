@@ -45,7 +45,7 @@ class EndGameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                val levelModel = LevelModel.Grid2x3
+                val levelModel = LevelModel.Grid2x3()
                 val rewardedCoins = 1L
                 skipItems(1)
 

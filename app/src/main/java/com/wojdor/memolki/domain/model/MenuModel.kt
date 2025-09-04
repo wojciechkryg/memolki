@@ -6,7 +6,7 @@ import com.wojdor.memolki.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-sealed class MenuModel(@StringRes val textId: Int) : Parcelable {
+sealed class MenuModel(@field:StringRes val textId: Int) : Parcelable {
     object NewGame : MenuModel(R.string.new_game)
     object Collection : MenuModel(R.string.collection)
     object Settings : MenuModel(R.string.settings)

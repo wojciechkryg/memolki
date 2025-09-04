@@ -38,12 +38,7 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
                 "apple",
                 "strawberry",
                 "orange",
-                "grape",
-                "watermelon",
-                "mango",
-                "peach",
-                "pineapple",
-                "blueberry"
+                "grape"
             )
             Assert.assertEquals(expected, result)
         }
@@ -98,7 +93,7 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
         val result = sut.getUnlockedCardPairIds()
 
         // then
-        Assert.assertEquals(11, result.size)
+        Assert.assertEquals(6, result.size)
         Assert.assertTrue(result.contains("lemon"))
     }
 }

@@ -84,6 +84,7 @@ private fun ChooseLevelScreen(
             Spacer(modifier = Modifier.height(24.dp))
             ChooseLevelItem(
                 textId = level.textId,
+                isEnabled =  level.isUnlocked,
                 onClick = { callbacks.onLevelClick(level) }
             )
         }
@@ -97,11 +98,11 @@ private fun ChooseLevelScreenPreview() {
         ChooseLevelScreen(
             state = ChooseLevelState(
                 levels = listOf(
-                    LevelModel.Grid2x3,
-                    LevelModel.Grid3x4,
-                    LevelModel.Grid4x4,
-                    LevelModel.Grid4x5,
-                    LevelModel.Grid5x6
+                    LevelModel.Grid2x3(isUnlocked = true),
+                    LevelModel.Grid3x4(isUnlocked = true),
+                    LevelModel.Grid4x4(),
+                    LevelModel.Grid4x5(),
+                    LevelModel.Grid5x6()
                 )
             ),
             callbacks = ChooseLevelCallbacks()

@@ -3,20 +3,41 @@ package com.wojdor.memolki.domain.model
 import android.os.Parcelable
 import androidx.annotation.StringRes
 import com.wojdor.memolki.R
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 sealed class LevelModel(
     val id: String,
-    @StringRes val textId: Int,
+    @field:StringRes val textId: Int,
     val columns: Int,
     val rows: Int,
-    val isUnlocked: Boolean,
 ) : Parcelable {
-    data object Empty : LevelModel("", R.string.empty, 0, 0, isUnlocked = false)
-    data object Grid2x3 : LevelModel("2x3", R.string.level2x3, 2, 3, isUnlocked = true)
-    data object Grid3x4 : LevelModel("3x4", R.string.level3x4, 3, 4, isUnlocked = false)
-    data object Grid4x4 : LevelModel("4x4", R.string.level4x4, 4, 4, isUnlocked = false)
-    data object Grid4x5 : LevelModel("4x5", R.string.level4x5, 4, 5, isUnlocked = false)
-    data object Grid5x6 : LevelModel("5x6", R.string.level5x6, 5, 6, isUnlocked = false)
+
+    abstract val isUnlocked: Boolean
+
+    data object Empty : LevelModel("", R.string.empty, 0, 0) {
+        @IgnoredOnParcel
+        override val isUnlocked: Boolean = false
+    }
+
+    data class Grid2x3(
+        override val isUnlocked: Boolean = false
+    ) : LevelModel("2x3", R.string.level2x3, 2, 3)
+
+    data class Grid3x4(
+        override val isUnlocked: Boolean = false
+    ) : LevelModel("3x4", R.string.level3x4, 3, 4)
+
+    data class Grid4x4(
+        override val isUnlocked: Boolean = false
+    ) : LevelModel("4x4", R.string.level4x4, 4, 4)
+
+    data class Grid4x5(
+        override val isUnlocked: Boolean = false
+    ) : LevelModel("4x5", R.string.level4x5, 4, 5)
+
+    data class Grid5x6(
+        override val isUnlocked: Boolean = false
+    ) : LevelModel("5x6", R.string.level5x6, 5, 6)
 }

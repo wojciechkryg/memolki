@@ -1,9 +1,14 @@
 package com.wojdor.memolki.ui.feature.chooselevel
 
 import app.cash.turbine.test
-import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
+import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
+import com.wojdor.memolki.test.mock.MockDataStore
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelEffect.OpenGameScreen
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnLevelClick
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,7 +27,17 @@ class ChooseLevelViewModelTest : AppTest() {
         super.setup()
         sut = ChooseLevelViewModel(
             savedStateHandle = savedStateHandle,
-            getLevelsUseCase = GetLevelsUseCase(testDispatcher),
+            getLevelsUseCase = GetLevelsUseCase(
+                testDispatcher,
+                GetUnlockedCardPairsCountUseCase(
+                    testDispatcher,
+                    CardRepository(
+                        MockAllCardPairsDataSource, UnlockedCardPairsLocalDataSource(
+                            MockDataStore(), MockAllCardPairsDataSource
+                        )
+                    )
+                )
+            ),
         )
     }
 
@@ -31,7 +46,7 @@ class ChooseLevelViewModelTest : AppTest() {
         runTest {
             sut.uiEffect.test {
                 // given
-                val levelModel = LevelModel.Grid2x3
+                val levelModel = LevelModel.Grid2x3()
 
                 // when
                 sut.sendIntent(OnLevelClick(levelModel))

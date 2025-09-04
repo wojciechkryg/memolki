@@ -46,7 +46,7 @@ class GameViewModelTest : AppTest() {
             getShuffledUnlockedCardsUseCase,
             incrementTotalCardPairsMatchedUseCase
         )
-        every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3) } returns flowOf(
+        every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
             Result.success(mockShuffledCards())
         )
     }
@@ -55,14 +55,14 @@ class GameViewModelTest : AppTest() {
     fun `when OnLevelStart intent is sent then state is updated with new level`() = runTest {
         sut.uiState.test {
             // given
-            val level = LevelModel.Grid2x3
+            val level = LevelModel.Grid2x3()
 
             // when
             sut.sendIntent(GameIntent.OnLevelStart(level))
 
             // then
             assertEquals(LevelModel.Empty, awaitItem().level)
-            assertEquals(LevelModel.Grid2x3, awaitItem().level)
+            assertEquals(LevelModel.Grid2x3(), awaitItem().level)
         }
         userRepository.getTotalCardPairsMatched().test {
             assertEquals(0, awaitItem())
@@ -73,7 +73,7 @@ class GameViewModelTest : AppTest() {
     fun `when OnCardClick intent is sent then state is updated with flipped card`() = runTest {
         sut.uiState.test {
             // given
-            sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3))
+            sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
             skipItems(1)
 
             // when
@@ -96,7 +96,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3))
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
                 skipItems(1)
 
                 // when
@@ -125,7 +125,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3))
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
                 skipItems(1)
 
                 // when
@@ -160,7 +160,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3))
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
                 skipItems(1)
 
 
@@ -196,7 +196,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3))
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
                 skipItems(1)
 
                 // when
@@ -215,7 +215,7 @@ class GameViewModelTest : AppTest() {
                     skipItems(1)
                     val effect = awaitItem()
                     assertEquals(
-                        GameEffect.OpenEndGameScreen(LevelModel.Grid2x3),
+                        GameEffect.OpenEndGameScreen(LevelModel.Grid2x3()),
                         effect
                     )
                 }

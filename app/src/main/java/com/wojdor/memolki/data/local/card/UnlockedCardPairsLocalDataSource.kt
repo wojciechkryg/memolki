@@ -35,6 +35,6 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
     }
 
     companion object {
-        private const val DEFAULT_UNLOCKED_CARD_PAIRS_COUNT = 10
+        private const val DEFAULT_UNLOCKED_CARD_PAIRS_COUNT = 5
     }
 }
