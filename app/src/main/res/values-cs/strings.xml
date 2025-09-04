@@ -3,6 +3,7 @@
     <string name="new_game">Nová hra</string>
     <string name="collection">Kolekce</string>
     <string name="settings">Nastavení</string>
-
     <string name="choose_level">Vyberte úroveň</string>
+    <string name="menu">Menu</string>
+    <string name="play_again">Hrát znovu</string>
 </resources>

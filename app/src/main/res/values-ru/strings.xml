@@ -2,6 +2,7 @@
     <string name="new_game">Новая игра</string>
     <string name="collection">Коллекция</string>
     <string name="settings">Настройки</string>
-
     <string name="choose_level">Выберите уровень</string>
+    <string name="menu">Меню</string>
+    <string name="play_again">Играть снова</string>
 </resources>

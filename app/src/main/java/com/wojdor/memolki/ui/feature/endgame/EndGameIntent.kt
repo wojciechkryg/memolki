@@ -5,4 +5,6 @@ import com.wojdor.memolki.ui.base.UiIntent
 
 sealed class EndGameIntent : UiIntent {
     data class OnEndGameShow(val levelModel: LevelModel) : EndGameIntent()
+    data class OnPlayAgainClick(val levelModel: LevelModel) : EndGameIntent()
+    object OnMenuClick : EndGameIntent()
 }
