@@ -47,7 +47,7 @@ class GameViewModelTest : AppTest() {
             incrementTotalCardPairsMatchedUseCase
         )
         every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
-            Result.success(mockShuffledCards())
+            Result.success(mockShuffledCardsWithSamePairIds())
         )
     }
 
@@ -117,6 +117,36 @@ class GameViewModelTest : AppTest() {
             }
             userRepository.getTotalCardPairsMatched().test {
                 assertEquals(0, awaitItem())
+            }
+        }
+
+    @Test
+    fun `when OnCardClick intent is sent with already flipped one cards to front then state is updated with the new flipped card and they match`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                skipItems(1)
+
+                // when
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][1]))
+                skipItems(1)
+
+                // then
+                val result = awaitItem()
+                with(result.cards[1][0]) {
+                    assertTrue(isFlippedFront)
+                    assertTrue(isPairMatched)
+                }
+                with(result.cards[1][1]) {
+                    assertTrue(isFlippedFront)
+                    assertTrue(isPairMatched)
+                }
+            }
+            userRepository.getTotalCardPairsMatched().test {
+                skipItems(1)
+                assertEquals(1, awaitItem())
             }
         }
 
@@ -192,6 +222,80 @@ class GameViewModelTest : AppTest() {
         }
 
     @Test
+    fun `when OnCardClick intent is sent with two cards that matches because of same id then state is updated matched cards`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
+                    Result.success(mockShuffledCardsWithSameIds())
+                )
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                skipItems(1)
+
+
+                // when
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][1]))
+                skipItems(1)
+
+                // then
+                val result = awaitItem()
+                with(result.cards[0][0]) {
+                    assertTrue(isFlippedFront)
+                    assertTrue(isPairMatched)
+                }
+                with(result.cards[0][1]) {
+                    assertFalse(isFlippedFront)
+                    assertFalse(isPairMatched)
+                }
+                with(result.cards[1][0]) {
+                    assertFalse(isFlippedFront)
+                    assertFalse(isPairMatched)
+                }
+                with(result.cards[1][1]) {
+                    assertTrue(isFlippedFront)
+                    assertTrue(isPairMatched)
+                }
+            }
+            userRepository.getTotalCardPairsMatched().test {
+                skipItems(1)
+                assertEquals(1, awaitItem())
+            }
+        }
+
+    @Test
+    fun `when OnCardClick intent is sent with two cards that didn't match then state is updated accordingly`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
+                    Result.success(mockShuffledCardsWithSameIds())
+                )
+                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                skipItems(1)
+
+
+                // when
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3][1]))
+
+                // then
+                val result = awaitItem()
+                with(result.cards[0][1]) {
+                    assertTrue(isFlippedFront)
+                    assertFalse(isPairMatched)
+                }
+                with(result.cards[3][1]) {
+                    assertTrue(isFlippedFront)
+                    assertFalse(isPairMatched)
+                }
+            }
+            userRepository.getTotalCardPairsMatched().test {
+                assertEquals(0, awaitItem())
+            }
+        }
+
+    @Test
     fun `when all cards are matched then the OpenEndGameScreen effect is sent`() =
         runTest {
             sut.uiState.test {
@@ -225,7 +329,7 @@ class GameViewModelTest : AppTest() {
             }
         }
 
-    private fun mockShuffledCards(): List<List<CardModel>> {
+    private fun mockShuffledCardsWithSamePairIds(): List<List<CardModel>> {
         return listOf(
             CardModel.Image("banana_whole", "banana", 1, 1),
             CardModel.Image("banana_half", "banana", 1, 1),
@@ -234,5 +338,18 @@ class GameViewModelTest : AppTest() {
             CardModel.Text("strawberry_whole", "strawberry", 3),
             CardModel.Text("strawberry_half", "strawberry", 3)
         ).chunked(2)
+    }
+
+    private fun mockShuffledCardsWithSameIds(): List<List<CardModel>> {
+        return listOf(
+            CardModel.Image("john_snow", "john_snow", 1, 1),
+            CardModel.Image("stark", "john_snow", 1, 1),
+            CardModel.Image("arya_stark", "arya_stark", 2, 2),
+            CardModel.Image("stark", "arya_stark", 1, 1),
+            CardModel.Text("sansa_stark", "sansa_stark", 3),
+            CardModel.Image("stark", "sansa_stark", 1, 1),
+            CardModel.Text("daenerys_targaryen", "daenerys_targaryen", 4),
+            CardModel.Image("targaryen", "daenerys_targaryen", 1, 1),
+            ).chunked(2)
     }
 }
