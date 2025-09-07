@@ -48,7 +48,7 @@ class MenuViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnNewGameClicked intent is send then the OpenChooseLevelScreen effect is send`() =
+    fun `when OnNewGameClick intent is send then the OpenChooseLevelScreen effect is send`() =
         runTest {
             sut.uiEffect.test {
                 // when
@@ -60,7 +60,7 @@ class MenuViewModelTest : AppTest() {
         }
 
     @Test
-    fun `when OnCollectionClicked intent is send then the OpenCollectionScreen effect is send`() =
+    fun `when OnCollectionClick intent is send then the OpenCollectionScreen effect is send`() =
         runTest {
             sut.uiEffect.test {
                 // when
@@ -72,7 +72,7 @@ class MenuViewModelTest : AppTest() {
         }
 
     @Test
-    fun `when OnSettingsClicked intent is send then the OpenSettingsScreen effect is send`() =
+    fun `when OnSettingsClick intent is send then the OpenSettingsScreen effect is send`() =
         runTest {
             sut.uiEffect.test {
                 // when

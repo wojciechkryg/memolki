@@ -2,4 +2,6 @@ package com.wojdor.memolki.ui.feature.collection
 
 import com.wojdor.memolki.ui.base.UiIntent
 
-class CollectionIntent : UiIntent
+sealed class CollectionIntent : UiIntent {
+    object OnShopClick : CollectionIntent()
+}

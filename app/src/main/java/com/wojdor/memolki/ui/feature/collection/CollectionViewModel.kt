@@ -28,7 +28,11 @@ class CollectionViewModel @Inject constructor(
     }
 
     override fun onIntent(intent: CollectionIntent) {
-
+        when (intent) {
+            is CollectionIntent.OnShopClick -> sendEffect(
+                CollectionEffect.OpenShopScreen
+            )
+        }
     }
 
     private fun loadData() {

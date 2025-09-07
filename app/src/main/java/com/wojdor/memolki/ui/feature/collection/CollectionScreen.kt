@@ -41,7 +41,7 @@ private fun HandleState(
 ) {
     val callbacks = CollectionCallbacks(
         onShopButtonClick = {
-            // TODO: Navigate to shop screen
+            viewModel.sendIntent(CollectionIntent.OnShopClick)
         }
     )
     CollectionScreen(state, callbacks)

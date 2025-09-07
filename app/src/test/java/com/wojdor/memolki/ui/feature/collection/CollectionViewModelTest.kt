@@ -69,4 +69,16 @@ class CollectionViewModelTest : AppTest() {
             assertEquals(5, state.lockedCardPairsCount)
         }
     }
+
+    @Test
+    fun `when OnShopClick intent is send then the OpenShopScreen effect is send`() =
+        runTest {
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(CollectionIntent.OnShopClick)
+
+                // then
+                assertEquals(CollectionEffect.OpenShopScreen, awaitItem())
+            }
+        }
 }
