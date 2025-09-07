@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.feature.collection
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.collection.component.CoinsAmount
+import com.wojdor.memolki.ui.feature.collection.component.ShopButton
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
@@ -37,7 +39,11 @@ private fun HandleState(
     viewModel: CollectionViewModel,
     state: CollectionState
 ) {
-    val callbacks = CollectionCallbacks()
+    val callbacks = CollectionCallbacks(
+        onShopButtonClick = {
+            // TODO: Navigate to shop screen
+        }
+    )
     CollectionScreen(state, callbacks)
 }
 
@@ -46,11 +52,16 @@ fun CollectionScreen(
     state: CollectionState,
     callbacks: CollectionCallbacks = CollectionCallbacks()
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        CoinsAmount(
-            modifier = Modifier.align(Alignment.TopStart),
-            state = state
-        )
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            CoinsAmount(
+                modifier = Modifier.weight(1f),
+                state = state
+            )
+            ShopButton(
+                onClick = callbacks.onShopButtonClick
+            )
+        }
     }
 }
 
