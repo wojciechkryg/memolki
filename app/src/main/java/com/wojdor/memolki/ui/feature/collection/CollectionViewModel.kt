@@ -9,7 +9,11 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -50,9 +54,19 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun loadCardPairs() {
-        loadUnlockedCards { unlockedCardPairs ->
-            loadLockedCards { allCardParisCount ->
-                val lockedCardPairsCount = allCardParisCount - unlockedCardPairs.size
+        combine(
+            getUnlockedCardPairs()
+                .map { it.getOrNull() }
+                .filterNotNull(),
+            getAllCardPairsCountUseCase()
+                .map { it.getOrNull() }
+                .filterNotNull()
+        ) { unlockedCardPairs, allCardParisCount ->
+            val lockedCardPairsCount = allCardParisCount - unlockedCardPairs.size
+            Triple(unlockedCardPairs, lockedCardPairsCount, allCardParisCount)
+        }
+            .distinctUntilChanged()
+            .onEach { (unlockedCardPairs, lockedCardPairsCount, allCardParisCount) ->
                 sendState {
                     copy(
                         collectionCardPairs = getCollectionCardPairs(
@@ -64,7 +78,7 @@ class CollectionViewModel @Inject constructor(
                     )
                 }
             }
-        }
+            .launchIn(viewModelScope)
     }
 
     private fun getCollectionCardPairs(
@@ -76,22 +90,6 @@ class CollectionViewModel @Inject constructor(
                 + CollectionCardPairModel.LockedToUnlockWithCoins(CARD_PAIR_COST)
                 + List(lockedCardPairsCount - NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK)
         { CollectionCardPairModel.Locked })
-
-    private fun loadUnlockedCards(onSuccess: (List<CardPairModel>) -> Unit) {
-        getUnlockedCardPairs().onEach {
-            it.onSuccess { unlockedCardPairs ->
-                onSuccess(unlockedCardPairs)
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun loadLockedCards(onSuccess: (Int) -> Unit) {
-        getAllCardPairsCountUseCase().onEach {
-            it.onSuccess { allCardParisCount ->
-                onSuccess(allCardParisCount)
-            }
-        }.launchIn(viewModelScope)
-    }
 
     companion object {
         const val UNLOCK_WITH_COINS_COUNT = 1
