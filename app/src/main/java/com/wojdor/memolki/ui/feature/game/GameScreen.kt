@@ -82,14 +82,12 @@ private fun GameScreenGrid2x3Preview() {
         GameScreen(
             state = GameState(
                 level = LevelModel.Grid2x3(),
-                cards = List(3) {
-                    List(2) {
-                        CardModel.Text(
-                            id = "id",
-                            pairId = "pairId",
-                            textRes = R.string.empty
-                        )
-                    }
+                cards = List(6) {
+                    CardModel.Text(
+                        id = "id",
+                        pairId = "pairId",
+                        textRes = R.string.empty
+                    )
                 }
             )
         )
@@ -103,15 +101,14 @@ private fun GameScreenGrid3x4Preview() {
         GameScreen(
             state = GameState(
                 level = LevelModel.Grid3x4(),
-                cards = List(4) {
-                    List(3) {
-                        CardModel.Text(
-                            id = "id",
-                            pairId = "pairId",
-                            textRes = R.string.empty
-                        )
-                    }
-                })
+                cards = List(12) {
+                    CardModel.Text(
+                        id = "id",
+                        pairId = "pairId",
+                        textRes = R.string.empty
+                    )
+                }
+            )
         )
     }
 }
@@ -123,14 +120,12 @@ private fun GameScreenGrid4x4Preview() {
         GameScreen(
             state = GameState(
                 level = LevelModel.Grid4x4(),
-                cards = List(4) {
-                    List(4) {
-                        CardModel.Text(
-                            id = "id",
-                            pairId = "pairId",
-                            textRes = R.string.empty
-                        )
-                    }
+                cards = List(16) {
+                    CardModel.Text(
+                        id = "id",
+                        pairId = "pairId",
+                        textRes = R.string.empty
+                    )
                 }
             )
         )
@@ -144,15 +139,15 @@ private fun GameScreenGrid4x5Preview() {
         GameScreen(
             state = GameState(
                 level = LevelModel.Grid4x5(),
-                cards = List(5) {
-                    List(4) {
-                        CardModel.Text(
-                            id = "id",
-                            pairId = "pairId",
-                            textRes = R.string.empty
-                        )
-                    }
-                })
+                cards = List(20) {
+                    CardModel.Text(
+                        id = "id",
+                        pairId = "pairId",
+                        textRes = R.string.empty
+                    )
+
+                }
+            )
         )
     }
 }
@@ -164,15 +159,14 @@ private fun GameScreenGrid5x6Preview() {
         GameScreen(
             state = GameState(
                 level = LevelModel.Grid5x6(),
-                cards = List(6) {
-                    List(5) {
-                        CardModel.Text(
-                            id = "id",
-                            pairId = "pairId",
-                            textRes = R.string.empty
-                        )
-                    }
-                })
+                cards = List(30) {
+                    CardModel.Text(
+                        id = "id",
+                        pairId = "pairId",
+                        textRes = R.string.empty
+                    )
+                }
+            )
         )
     }
 }

@@ -2,11 +2,14 @@ package com.wojdor.memolki.ui.feature.game.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,7 +21,6 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
 import com.wojdor.memolki.ui.feature.game.GameState
 import com.wojdor.memolki.ui.theme.AppTheme
-import kotlin.math.min
 
 @Composable
 fun GameCardsGrid(
@@ -31,23 +33,25 @@ fun GameCardsGrid(
             .padding(horizontal = 24.dp),
         contentAlignment = Alignment.Center
     ) {
-        val shorterEdge = maxWidth.coerceAtMost(maxHeight)
         val spacing = 8.dp
-        val rows = state.cards.size
-        val columns = state.cards.firstOrNull()?.size ?: 0
-        val cellsOnShortEdge = min(columns, rows)
-        val cardSize = (shorterEdge - spacing * cellsOnShortEdge) / cellsOnShortEdge
-        Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
-            repeat(columns) { column ->
-                Column(verticalArrangement = Arrangement.spacedBy(spacing)) {
-                    repeat(rows) { row ->
-                        AnimatedCardItem(
-                            modifier = Modifier.size(cardSize),
-                            card = state.cards[row][column],
-                            callbacks = callbacks
-                        )
-                    }
-                }
+        val columns = state.level.columns
+        val shorterEdge = maxWidth.coerceAtMost(maxHeight)
+        val cardSize = (shorterEdge - spacing * (columns - 1)) / columns
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(columns),
+            verticalArrangement = Arrangement.spacedBy(spacing),
+            horizontalArrangement = Arrangement.spacedBy(spacing),
+            modifier = Modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
+        ) {
+            items(state.cards) { card ->
+                AnimatedCardItem(
+                    modifier = Modifier.size(cardSize),
+                    card = card,
+                    callbacks = callbacks
+                )
             }
         }
     }
@@ -70,14 +74,12 @@ private fun CardsGridPreview() {
         GameCardsGrid(
             state = GameState(
                 level = LevelModel.Grid2x3(),
-                cards = List(3) {
-                    List(2) {
-                        CardModel.Text(
-                            id = "id",
-                            pairId = "pairId",
-                            textRes = R.string.empty
-                        )
-                    }
+                cards = List(6) {
+                    CardModel.Text(
+                        id = "id",
+                        pairId = "pairId",
+                        textRes = R.string.empty
+                    )
                 }
             )
         )

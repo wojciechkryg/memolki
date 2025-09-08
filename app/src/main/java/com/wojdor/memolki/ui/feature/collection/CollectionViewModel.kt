@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.collection
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.CardPairModel
+import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
@@ -54,13 +55,27 @@ class CollectionViewModel @Inject constructor(
                 val lockedCardPairsCount = allCardParisCount - unlockedCardPairs.size
                 sendState {
                     copy(
-                        unlockedCardPairs = unlockedCardPairs,
-                        lockedCardPairsCount = lockedCardPairsCount
+                        collectionCardPairs = getCollectionCardPairs(
+                            unlockedCardPairs,
+                            lockedCardPairsCount
+                        ),
+                        allCardPairsCount = allCardParisCount,
+                        unlockedCardPairsCount = unlockedCardPairs.size
                     )
                 }
             }
         }
     }
+
+    private fun getCollectionCardPairs(
+        unlockedCardPairs: List<CardPairModel>,
+        lockedCardPairsCount: Int
+    ): List<CollectionCardPairModel> =
+        (unlockedCardPairs.map { CollectionCardPairModel.Unlocked(it) }
+                + CollectionCardPairModel.LockedToUnlockWithAd
+                + CollectionCardPairModel.LockedToUnlockWithCoins(CARD_PAIR_COST)
+                + List(lockedCardPairsCount - NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK)
+        { CollectionCardPairModel.Locked })
 
     private fun loadUnlockedCards(onSuccess: (List<CardPairModel>) -> Unit) {
         getUnlockedCardPairs().onEach {
@@ -76,5 +91,13 @@ class CollectionViewModel @Inject constructor(
                 onSuccess(allCardParisCount)
             }
         }.launchIn(viewModelScope)
+    }
+
+    companion object {
+        const val UNLOCK_WITH_COINS_COUNT = 1
+        const val UNLOCK_WITH_ADS_COUNT = 1
+        const val CARD_PAIR_COST = 10
+        const val NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK =
+            UNLOCK_WITH_COINS_COUNT + UNLOCK_WITH_ADS_COUNT
     }
 }

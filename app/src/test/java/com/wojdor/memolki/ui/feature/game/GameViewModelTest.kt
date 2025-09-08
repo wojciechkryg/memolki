@@ -77,11 +77,11 @@ class GameViewModelTest : AppTest() {
             skipItems(1)
 
             // when
-            val cardToClick = awaitItem().cards[0][0]
+            val cardToClick = awaitItem().cards[0]
             sut.sendIntent(GameIntent.OnBackCardClick(cardToClick))
 
             // then
-            with(awaitItem().cards[0][0]) {
+            with(awaitItem().cards[0]) {
                 assertTrue(isFlippedFront)
                 assertFalse(isPairMatched)
             }
@@ -100,17 +100,17 @@ class GameViewModelTest : AppTest() {
                 skipItems(1)
 
                 // when
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][0]))
-                val secondCardToClick = awaitItem().cards[1][0]
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                val secondCardToClick = awaitItem().cards[2]
                 sut.sendIntent(GameIntent.OnBackCardClick(secondCardToClick))
 
                 // then
                 val result = awaitItem()
-                with(result.cards[0][0]) {
+                with(result.cards[0]) {
                     assertTrue(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
-                with(result.cards[1][0]) {
+                with(result.cards[2]) {
                     assertTrue(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
@@ -129,17 +129,17 @@ class GameViewModelTest : AppTest() {
                 skipItems(1)
 
                 // when
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][0]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
                 skipItems(1)
 
                 // then
                 val result = awaitItem()
-                with(result.cards[1][0]) {
+                with(result.cards[2]) {
                     assertTrue(isFlippedFront)
                     assertTrue(isPairMatched)
                 }
-                with(result.cards[1][1]) {
+                with(result.cards[3]) {
                     assertTrue(isFlippedFront)
                     assertTrue(isPairMatched)
                 }
@@ -159,23 +159,23 @@ class GameViewModelTest : AppTest() {
                 skipItems(1)
 
                 // when
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][0]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][0]))
-                val thirdCardToClick = awaitItem().cards[1][1]
-                sut.sendIntent(GameIntent.OnBackCardClick(thirdCardToClick))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
                 skipItems(1)
+                val thirdCardToClick = awaitItem().cards[3]
+                sut.sendIntent(GameIntent.OnBackCardClick(thirdCardToClick))
 
                 // then
                 val result = awaitItem()
-                with(result.cards[0][0]) {
+                with(result.cards[0]) {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
-                with(result.cards[1][0]) {
+                with(result.cards[1]) {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
-                with(result.cards[1][1]) {
+                with(result.cards[3]) {
                     assertTrue(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
@@ -195,23 +195,23 @@ class GameViewModelTest : AppTest() {
 
 
                 // when
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][0]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][1]))
-                val thirdCardToClick = awaitItem().cards[1][1]
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+                val thirdCardToClick = awaitItem().cards[3]
                 sut.sendIntent(GameIntent.OnBackCardClick(thirdCardToClick))
                 skipItems(1)
 
                 // then
                 val result = awaitItem()
-                with(result.cards[0][0]) {
+                with(result.cards[0]) {
                     assertTrue(isFlippedFront)
                     assertTrue(isPairMatched)
                 }
-                with(result.cards[0][1]) {
+                with(result.cards[1]) {
                     assertTrue(isFlippedFront)
                     assertTrue(isPairMatched)
                 }
-                with(result.cards[1][0]) {
+                with(result.cards[2]) {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
@@ -234,25 +234,25 @@ class GameViewModelTest : AppTest() {
 
 
                 // when
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][0]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
                 skipItems(1)
 
                 // then
                 val result = awaitItem()
-                with(result.cards[0][0]) {
+                with(result.cards[0]) {
                     assertTrue(isFlippedFront)
                     assertTrue(isPairMatched)
                 }
-                with(result.cards[0][1]) {
+                with(result.cards[1]) {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
-                with(result.cards[1][0]) {
+                with(result.cards[2]) {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
-                with(result.cards[1][1]) {
+                with(result.cards[3]) {
                     assertTrue(isFlippedFront)
                     assertTrue(isPairMatched)
                 }
@@ -276,16 +276,16 @@ class GameViewModelTest : AppTest() {
 
 
                 // when
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][1]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3][1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[7]))
 
                 // then
                 val result = awaitItem()
-                with(result.cards[0][1]) {
+                with(result.cards[1]) {
                     assertTrue(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
-                with(result.cards[3][1]) {
+                with(result.cards[7]) {
                     assertTrue(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
@@ -304,17 +304,17 @@ class GameViewModelTest : AppTest() {
                 skipItems(1)
 
                 // when
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][0]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0][1]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][0]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1][1]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2][0]))
-                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2][1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
                 skipItems(3)
 
                 // then
                 val result = awaitItem()
-                assertTrue(result.cards.flatten().all { it.isFlippedFront && it.isPairMatched })
+                assertTrue(result.cards.all { it.isFlippedFront && it.isPairMatched })
                 sut.uiEffect.test {
                     skipItems(1)
                     val effect = awaitItem()
@@ -329,7 +329,7 @@ class GameViewModelTest : AppTest() {
             }
         }
 
-    private fun mockShuffledCardsWithSamePairIds(): List<List<CardModel>> {
+    private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {
         return listOf(
             CardModel.Image("banana_whole", "banana", 1, 1),
             CardModel.Image("banana_half", "banana", 1, 1),
@@ -337,10 +337,10 @@ class GameViewModelTest : AppTest() {
             CardModel.Text("apple_half", "apple", 2),
             CardModel.Text("strawberry_whole", "strawberry", 3),
             CardModel.Text("strawberry_half", "strawberry", 3)
-        ).chunked(2)
+        )
     }
 
-    private fun mockShuffledCardsWithSameIds(): List<List<CardModel>> {
+    private fun mockShuffledCardsWithSameIds(): List<CardModel> {
         return listOf(
             CardModel.Image("john_snow", "john_snow", 1, 1),
             CardModel.Image("stark", "john_snow", 1, 1),
@@ -350,6 +350,6 @@ class GameViewModelTest : AppTest() {
             CardModel.Image("stark", "sansa_stark", 1, 1),
             CardModel.Text("daenerys_targaryen", "daenerys_targaryen", 4),
             CardModel.Image("targaryen", "daenerys_targaryen", 1, 1),
-            ).chunked(2)
+        )
     }
 }

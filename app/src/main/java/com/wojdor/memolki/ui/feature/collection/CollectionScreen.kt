@@ -3,6 +3,10 @@ package com.wojdor.memolki.ui.feature.collection
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -11,7 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.collection.component.CardPairsCollection
 import com.wojdor.memolki.ui.feature.collection.component.CoinsAmount
 import com.wojdor.memolki.ui.feature.collection.component.ShopButton
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -62,6 +68,7 @@ fun CollectionScreen(
                 onClick = callbacks.onShopButtonClick
             )
         }
+        CardPairsCollection(state)
     }
 }
 

@@ -6,6 +6,7 @@ import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.data.repository.UserRepository
+import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
@@ -63,10 +64,15 @@ class CollectionViewModelTest : AppTest() {
             // then
             assertEquals(123, state.coins)
             assertEquals(
-                MockAllCardPairsDataSource.getAllCardPairs().take(5).toModel(),
-                state.unlockedCardPairs
+                MockAllCardPairsDataSource.getAllCardPairs()
+                    .take(5)
+                    .toModel(),
+                state.collectionCardPairs
+                    .take(5)
+                    .filter { it is CollectionCardPairModel.Unlocked }
+                    .map { (it as CollectionCardPairModel.Unlocked).cardPair },
             )
-            assertEquals(5, state.lockedCardPairsCount)
+            assertEquals(5, state.unlockedCardPairsCount)
         }
     }
 

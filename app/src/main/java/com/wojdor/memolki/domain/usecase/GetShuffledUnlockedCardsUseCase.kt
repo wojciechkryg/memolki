@@ -12,7 +12,7 @@ import javax.inject.Inject
 class GetShuffledUnlockedCardsUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository
-) : BaseParameterUseCase<LevelModel, List<List<CardModel>>>(coroutineDispatcher) {
+) : BaseParameterUseCase<LevelModel, List<CardModel>>(coroutineDispatcher) {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun execute(level: LevelModel) = flow {
@@ -24,7 +24,6 @@ class GetShuffledUnlockedCardsUseCase @Inject constructor(
         }
             .flatMap { it.toList() }
             .shuffled()
-            .chunked(level.columns)
         emit(Result.success(shuffledCards))
     }
 }
