@@ -13,6 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 class GetShuffledUnlockedCardsTest : AppTest() {
@@ -28,7 +29,8 @@ class GetShuffledUnlockedCardsTest : AppTest() {
                 MockAllCardPairsDataSource, UnlockedCardPairsLocalDataSource(
                     MockDataStore(), MockAllCardPairsDataSource
                 )
-            )
+            ),
+            Random(0)
         )
     }
 

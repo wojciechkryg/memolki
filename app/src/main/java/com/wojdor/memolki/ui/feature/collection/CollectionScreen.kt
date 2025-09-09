@@ -1,25 +1,17 @@
 package com.wojdor.memolki.ui.feature.collection
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.wojdor.memolki.R
+import com.wojdor.memolki.domain.model.CardModel
+import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.feature.collection.component.CardPairsCollection
-import com.wojdor.memolki.ui.feature.collection.component.CoinsAmount
-import com.wojdor.memolki.ui.feature.collection.component.ShopButton
+import com.wojdor.memolki.ui.feature.collection.component.CollectionContent
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
@@ -58,26 +50,58 @@ fun CollectionScreen(
     state: CollectionState,
     callbacks: CollectionCallbacks = CollectionCallbacks()
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            CoinsAmount(
-                modifier = Modifier.weight(1f),
-                state = state
-            )
-            ShopButton(
-                onClick = callbacks.onShopButtonClick
-            )
-        }
-        CardPairsCollection(state)
-    }
+    CollectionContent(state, callbacks)
 }
 
 @Composable
 @Preview(showBackground = true)
-private fun EndGamePreview() {
+private fun CollectionPreview() {
     AppTheme {
-        CollectionScreen(
-            state = CollectionState(coins = 1234)
+        CollectionContent(
+            state = getCollectionStateForPreview()
         )
     }
 }
+
+fun getCollectionStateForPreview() = CollectionState(
+    coins = 1234,
+    collectionCardPairs = getCollectionCardPairsForPreview()
+)
+
+private fun getCollectionCardPairsForPreview() = listOf(
+    CollectionCardPairModel.Unlocked(
+        CardPairModel(
+            CardModel.Image(
+                "banana_whole",
+                "banana",
+                R.string.banana,
+                R.drawable.img_banana_whole
+            ) to
+                    CardModel.Image(
+                        "banana_half",
+                        "banana",
+                        R.string.banana,
+                        R.drawable.img_banana_half
+                    )
+        )
+    ),
+    CollectionCardPairModel.Unlocked(
+        CardPairModel(
+            CardModel.Image("apple_whole", "apple", R.string.apple, R.drawable.img_apple_whole) to
+                    CardModel.Text("apple_half", "apple", R.string.banana)
+        )
+    ),
+    CollectionCardPairModel.Unlocked(
+        CardPairModel(
+            CardModel.Text("strawberry_whole", "strawberry", R.string.strawberry) to
+                    CardModel.Text("strawberry_half", "strawberry", R.string.strawberry)
+        )
+    ),
+    CollectionCardPairModel.LockedToUnlockWithAd,
+    CollectionCardPairModel.LockedToUnlockWithCoins(100),
+    CollectionCardPairModel.Locked,
+    CollectionCardPairModel.Locked,
+    CollectionCardPairModel.Locked,
+    CollectionCardPairModel.Locked,
+    CollectionCardPairModel.Locked
+)

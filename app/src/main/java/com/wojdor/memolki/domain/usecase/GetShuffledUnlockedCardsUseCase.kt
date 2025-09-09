@@ -8,10 +8,12 @@ import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import kotlin.random.Random
 
 class GetShuffledUnlockedCardsUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
-    private val cardRepository: CardRepository
+    private val cardRepository: CardRepository,
+    private val random: Random
 ) : BaseParameterUseCase<LevelModel, List<CardModel>>(coroutineDispatcher) {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
@@ -23,7 +25,7 @@ class GetShuffledUnlockedCardsUseCase @Inject constructor(
             cardRepository.getCardPairById(it)?.pair
         }
             .flatMap { it.toList() }
-            .shuffled()
+            .shuffled(random)
         emit(Result.success(shuffledCards))
     }
 }

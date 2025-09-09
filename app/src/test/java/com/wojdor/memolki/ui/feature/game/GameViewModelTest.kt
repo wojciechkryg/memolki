@@ -171,7 +171,7 @@ class GameViewModelTest : AppTest() {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
-                with(result.cards[1]) {
+                with(result.cards[2]) {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }

@@ -61,20 +61,18 @@ class CollectionViewModel @Inject constructor(
             getAllCardPairsCountUseCase()
                 .map { it.getOrNull() }
                 .filterNotNull()
-        ) { unlockedCardPairs, allCardParisCount ->
-            val lockedCardPairsCount = allCardParisCount - unlockedCardPairs.size
-            Triple(unlockedCardPairs, lockedCardPairsCount, allCardParisCount)
+        ) { unlockedCardPairs, allCardPairsCount ->
+            val lockedCardPairsCount = allCardPairsCount - unlockedCardPairs.size
+            unlockedCardPairs to lockedCardPairsCount
         }
             .distinctUntilChanged()
-            .onEach { (unlockedCardPairs, lockedCardPairsCount, allCardParisCount) ->
+            .onEach { (unlockedCardPairs, lockedCardPairsCount) ->
                 sendState {
                     copy(
                         collectionCardPairs = getCollectionCardPairs(
                             unlockedCardPairs,
                             lockedCardPairsCount
                         ),
-                        allCardPairsCount = allCardParisCount,
-                        unlockedCardPairsCount = unlockedCardPairs.size
                     )
                 }
             }
@@ -84,16 +82,31 @@ class CollectionViewModel @Inject constructor(
     private fun getCollectionCardPairs(
         unlockedCardPairs: List<CardPairModel>,
         lockedCardPairsCount: Int
-    ): List<CollectionCardPairModel> =
-        (unlockedCardPairs.map { CollectionCardPairModel.Unlocked(it) }
-                + CollectionCardPairModel.LockedToUnlockWithAd
-                + CollectionCardPairModel.LockedToUnlockWithCoins(CARD_PAIR_COST)
-                + List(lockedCardPairsCount - NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK)
-        { CollectionCardPairModel.Locked })
+    ): List<CollectionCardPairModel> {
+        val unlocked = unlockedCardPairs.map { CollectionCardPairModel.Unlocked(it) }
+        val lockedToUnlockWithAd =
+            if (lockedCardPairsCount > 0) listOf(
+                CollectionCardPairModel.LockedToUnlockWithAd
+            ) else emptyList()
+        val lockedToUnlockWithCoins =
+            if (lockedCardPairsCount > 1) listOf(
+                CollectionCardPairModel.LockedToUnlockWithCoins(CARD_PAIR_COST)
+            ) else emptyList()
+        val lockedCardPairsNotPossibleToUnlockYet =
+            (lockedCardPairsCount - NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK)
+                .coerceAtLeast(0)
+        val locked = List(lockedCardPairsNotPossibleToUnlockYet) { CollectionCardPairModel.Locked }
+        return unlocked +
+                lockedToUnlockWithAd +
+                lockedToUnlockWithCoins +
+                locked
+    }
 
     companion object {
         const val UNLOCK_WITH_COINS_COUNT = 1
         const val UNLOCK_WITH_ADS_COUNT = 1
+
+        // TODO: Make cost dynamic
         const val CARD_PAIR_COST = 10
         const val NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK =
             UNLOCK_WITH_COINS_COUNT + UNLOCK_WITH_ADS_COUNT

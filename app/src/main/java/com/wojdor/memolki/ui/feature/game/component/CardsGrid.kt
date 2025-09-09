@@ -42,6 +42,7 @@ fun GameCardsGrid(
             columns = GridCells.Fixed(columns),
             verticalArrangement = Arrangement.spacedBy(spacing),
             horizontalArrangement = Arrangement.spacedBy(spacing),
+            userScrollEnabled = false,
             modifier = Modifier
                 .wrapContentHeight()
                 .fillMaxWidth()

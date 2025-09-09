@@ -8,6 +8,11 @@ import kotlinx.parcelize.Parcelize
 data class CollectionState(
     val coins: Long = 0L,
     val collectionCardPairs: List<CollectionCardPairModel> = emptyList(),
-    val allCardPairsCount: Int = 0,
-    val unlockedCardPairsCount: Int = 0
-) : UiState
+) : UiState {
+
+    val allCardPairsCount
+        get() = collectionCardPairs.size
+
+    val unlockedCardPairsCount
+        get() = collectionCardPairs.filter { it is CollectionCardPairModel.Unlocked }.size
+}
