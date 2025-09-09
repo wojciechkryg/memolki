@@ -56,8 +56,8 @@ class GameViewModel @Inject constructor(
 
     private fun checkForEndGame() {
         viewModelScope.launch {
-            val gameCards = uiState.value.cards.flatten()
-            if (gameCards.isNotEmpty() && gameCards.all { it.isPairMatched }) {
+            val cards = uiState.value.cards
+            if (cards.isNotEmpty() && cards.all { it.isPairMatched }) {
                 delay(END_GAME_DELAY)
                 sendEffect(GameEffect.OpenEndGameScreen(uiState.value.level))
             }
@@ -98,7 +98,7 @@ class GameViewModel @Inject constructor(
         firstCard: CardModel,
         secondCard: CardModel
     ): Boolean {
-        val cards = uiState.value.cards.flatten()
+        val cards = uiState.value.cards
         val matchingFirstCard = cards.find { it != firstCard && it.pairId == firstCard.pairId }
         val matchingSecondCard = cards.find { it != secondCard && it.pairId == secondCard.pairId }
         return firstCard.id == matchingFirstCard?.id
@@ -124,7 +124,7 @@ class GameViewModel @Inject constructor(
     }
 
     private fun frontUnmatchedCards(): List<CardModel> {
-        return uiState.value.cards.flatten().filter {
+        return uiState.value.cards.filter {
             it.isFlippedFront && !it.isPairMatched
         }
     }
@@ -157,10 +157,8 @@ class GameViewModel @Inject constructor(
     }
 
     private fun updateStateWith(cardsToUpdate: List<CardModel>) {
-        val updatedCards = uiState.value.cards.map { column ->
-            column.map { card ->
-                cardsToUpdate.find { it.pairId == card.pairId && it.id == card.id } ?: card
-            }
+        val updatedCards = uiState.value.cards.map { card ->
+            cardsToUpdate.find { it.pairId == card.pairId && it.id == card.id } ?: card
         }
         sendState { copy(cards = updatedCards) }
     }

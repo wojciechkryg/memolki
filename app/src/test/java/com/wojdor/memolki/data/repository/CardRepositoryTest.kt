@@ -1,6 +1,7 @@
 package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.test.AppTest
@@ -80,15 +81,18 @@ class CardRepositoryTest : AppTest() {
     }
 
     @Test
-    fun `should return unlocked card pair ids`() = runTest {
+    fun `when getUnlockedCardPairs called then return only unlocked cards `() = runTest {
         // given
-        val expected = unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
+        val allCardPairs = sut.getAllCardPairs()
 
         // when
-        val result = sut.getUnlockedCardPairIds()
+        val actualUnlockedCardPairs = sut.getUnlockedCardPairs()
 
         // then
-        assertEquals(expected, result)
+        val expected = MockAllCardPairsDataSource.getAllCardPairs()
+            .take(5)
+            .toModel()
+        assertEquals(expected, actualUnlockedCardPairs)
     }
 
     @Test

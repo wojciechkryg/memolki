@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class GetCardPairsUseCaseTest : AppTest() {
+class GetAllCardPairsUseCaseTest : AppTest() {
 
     private lateinit var sut: GetAllCardPairsUseCase
 
@@ -35,7 +35,7 @@ class GetCardPairsUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when repository returns success then use case returns success with the same data`() =
+    fun `when use case is called then returns all card pairs`() =
         runTest {
             // when
             sut().test {
