@@ -29,7 +29,6 @@ fun CardPairsCollection(state: CollectionState) {
         val shorterEdge = maxWidth.coerceAtMost(maxHeight)
         val cardPairSize = (shorterEdge - spacing * (columns - 1)) / columns
 
-        // TODO: Adapt the GameScreen with similar approach of the VerticalGrid
         LazyVerticalGrid(
             columns = GridCells.Fixed(columns),
             verticalArrangement = Arrangement.spacedBy(spacing),
