@@ -1,36 +1,47 @@
 package com.wojdor.memolki.ui.feature.collection.component
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.outlined.ShoppingCart
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.rememberThrottleClick
 
 @Composable
 fun ShopButton(onClick: () -> Unit = {}) {
-    IconButton(
-        modifier = Modifier.padding(16.dp),
+    Button(
         onClick = rememberThrottleClick(onClick = onClick),
-        colors = IconButtonDefaults.iconButtonColors(
+        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp),
+        colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
+            contentColor = Color.Black,
             disabledContainerColor = Color.Transparent
         ),
     ) {
         Icon(
-            modifier = Modifier.size(40.dp),
-            imageVector = Icons.Rounded.Add,
+            modifier = Modifier.size(24.dp),
+            imageVector = Icons.Outlined.ShoppingCart,
+            tint = colorResource(id = R.color.font),
             contentDescription = null,
-            tint = colorResource(R.color.font)
+        )
+        Spacer(modifier = Modifier.size(4.dp))
+        Text(
+            text = stringResource(id = R.string.shop).uppercase(),
+            style = MaterialTheme.typography.titleLarge
         )
     }
 }
@@ -38,5 +49,7 @@ fun ShopButton(onClick: () -> Unit = {}) {
 @Preview
 @Composable
 private fun ShopButtonPreview() {
-    ShopButton()
+    AppTheme {
+        ShopButton()
+    }
 }
