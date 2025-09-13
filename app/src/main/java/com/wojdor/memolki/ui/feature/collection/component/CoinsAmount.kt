@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +36,7 @@ fun CoinsAmount(
         )
         Spacer(modifier = Modifier.size(4.dp))
         Text(
-            modifier = modifier,
+            modifier = Modifier.weight(1f),
             text = state.coins.toString(),
             style = MaterialTheme.typography.headlineLarge,
             maxLines = 1,
@@ -48,6 +49,9 @@ fun CoinsAmount(
 @Composable
 private fun CoinsRewardPreview() {
     AppTheme {
-        CoinsAmount(state = CollectionState(coins = 1234))
+        CoinsAmount(
+            modifier = Modifier.width(128.dp),
+            state = CollectionState(coins = 1234)
+        )
     }
 }
