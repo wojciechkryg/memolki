@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.components.AutoSizeText
+import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun FrontCardItem(
@@ -37,7 +39,8 @@ private fun FrontCardItemText(card: CardModel.Text) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White),
+            .background(color = Color.White)
+            .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
         AutoSizeText(
@@ -66,26 +69,30 @@ private fun FrontCardItemImage(card: CardModel.Image) {
 @Preview
 @Composable
 private fun FrontCardItemTextPreview() {
-    FrontCardItem(
-        Modifier.size(128.dp),
-        CardModel.Text(
-            id = "banana",
-            pairId = "banana",
-            textRes = R.string.banana
+    AppTheme {
+        FrontCardItem(
+            Modifier.size(128.dp),
+            CardModel.Text(
+                id = "banana",
+                pairId = "banana",
+                textRes = R.string.banana
+            )
         )
-    )
+    }
 }
 
 @Preview
 @Composable
 private fun FrontCardItemImagePreview() {
-    FrontCardItem(
-        Modifier.size(128.dp),
-        CardModel.Image(
-            id = "banana",
-            pairId = "banana",
-            textRes = R.string.banana,
-            imageRes = R.drawable.img_banana_whole
+    AppTheme {
+        FrontCardItem(
+            Modifier.size(128.dp),
+            CardModel.Image(
+                id = "banana",
+                pairId = "banana",
+                textRes = R.string.banana,
+                imageRes = R.drawable.img_banana_whole
+            )
         )
-    )
+    }
 }
