@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalAtomicApi::class)
-
 package com.wojdor.memolki.ui.components
 
 import androidx.compose.foundation.layout.Box
@@ -21,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.extension.containsWhitespace
-import kotlin.concurrent.atomics.ExperimentalAtomicApi
 import kotlin.math.min
 import kotlin.math.sqrt
 
