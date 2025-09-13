@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.extension.containsWhitespace
 import kotlin.math.min
 import kotlin.math.sqrt
 
@@ -28,7 +29,8 @@ fun AutoSizeText(
     style: TextStyle = LocalTextStyle.current,
 ) {
     var scaledTextStyle by remember(text, style) { mutableStateOf(style) }
-    var readyToDraw by remember(text, style) { mutableStateOf(false) }
+    var isReadyToDraw by remember(text, style) { mutableStateOf(false) }
+    var isSoftWrap by remember(text, style) { mutableStateOf(text.containsWhitespace) }
 
     Box(
         modifier = modifier,
@@ -37,12 +39,12 @@ fun AutoSizeText(
         Text(
             text,
             Modifier.drawWithContent {
-                if (readyToDraw) {
+                if (isReadyToDraw) {
                     drawContent()
                 }
             },
             style = scaledTextStyle,
-            softWrap = true,
+            softWrap = isSoftWrap,
             textAlign = TextAlign.Center,
             onTextLayout = { textLayoutResult ->
                 if (textLayoutResult.hasVisualOverflow) {
@@ -50,20 +52,25 @@ fun AutoSizeText(
                         textLayoutResult.size.width / textLayoutResult.multiParagraph.width
                     val heightScale =
                         textLayoutResult.size.height / textLayoutResult.multiParagraph.height
-                    val scale = min(widthScale, heightScale)
+                    val scale = if (isSoftWrap) {
+                        sqrt(min(widthScale, heightScale) * SOFT_WRAP_SCALE_FACTOR)
+                    } else {
+                        min(widthScale, heightScale)
+                    }
                     scaledTextStyle =
                         scaledTextStyle.copy(
-                            fontSize = scaledTextStyle.fontSize * sqrt(scale),
-                            lineHeight = scaledTextStyle.lineHeight * sqrt(scale),
+                            fontSize = scaledTextStyle.fontSize * scale,
+                            lineHeight = scaledTextStyle.lineHeight * scale,
                         )
                 } else {
-                    readyToDraw = true
+                    isReadyToDraw = true
                 }
             }
         )
     }
 }
 
+private const val SOFT_WRAP_SCALE_FACTOR = 0.95f
 
 // Preview doesn't work in Android Studio, but it can be rendered properly on the device
 @Preview

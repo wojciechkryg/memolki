@@ -29,7 +29,13 @@ private fun HandleEffect(
     viewModel: CollectionViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {}
+    CollectUiEffects(viewModel) {
+        when (it) {
+            is CollectionEffect.OpenShopScreen -> {
+                // TODO: navigate to shop screen
+            }
+        }
+    }
 }
 
 @Composable
