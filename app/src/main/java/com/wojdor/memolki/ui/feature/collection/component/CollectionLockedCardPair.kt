@@ -54,7 +54,7 @@ fun CollectionLockedCardPairPreview() {
     }
 }
 
-private const val CARD_SIZE_FRACTION = 0.65f
-private const val CARD_ROTATION = 10f
-private val CARD_OFFSET = 24.dp
-private val LOCKED_ICON_SIZE = 96.dp
+internal const val CARD_SIZE_FRACTION = 0.65f
+internal const val CARD_ROTATION = 10f
+internal val CARD_OFFSET = 24.dp
+private val LOCKED_ICON_SIZE = 48.dp

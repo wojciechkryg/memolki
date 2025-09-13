@@ -33,7 +33,7 @@ fun CollectionContent(
             )
         }
         UnlockedCardPairsCounter(
-            modifier = Modifier.padding(bottom = 16.dp),
+            modifier = Modifier.padding(bottom = 8.dp),
             state = state
         )
         CardPairsCollection(state)
