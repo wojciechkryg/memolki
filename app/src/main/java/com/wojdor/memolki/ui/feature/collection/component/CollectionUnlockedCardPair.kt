@@ -5,6 +5,6 @@ import androidx.compose.runtime.Composable
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
 
 @Composable
-fun UnlockedCardPair(collectionCardPairModel: CollectionCardPairModel.Unlocked) {
+fun CollectionUnlockedCardPair(collectionCardPairModel: CollectionCardPairModel.Unlocked) {
     Text(collectionCardPairModel.cardPair.pair.first.pairId)
 }

@@ -36,12 +36,15 @@ fun CardPairsCollection(state: CollectionState) {
             modifier = Modifier.fillMaxSize()
         ) {
             items(state.collectionCardPairs) { collectionCardPair ->
-                Box(modifier = Modifier.size(cardPairSize)) {
+                Box(modifier = Modifier.size(cardPairSize), contentAlignment = Alignment.Center) {
                     when (collectionCardPair) {
-                        is CollectionCardPairModel.Unlocked -> UnlockedCardPair(collectionCardPair)
-                        is CollectionCardPairModel.Locked -> LockedCardPair()
-                        is CollectionCardPairModel.LockedToUnlockWithAd -> LockedCardPair()
-                        is CollectionCardPairModel.LockedToUnlockWithCoins -> LockedCardPair()
+                        is CollectionCardPairModel.Unlocked -> CollectionUnlockedCardPair(
+                            collectionCardPair
+                        )
+
+                        is CollectionCardPairModel.Locked -> CollectionLockedCardPair()
+                        is CollectionCardPairModel.LockedToUnlockWithAd -> CollectionLockedCardPair()
+                        is CollectionCardPairModel.LockedToUnlockWithCoins -> CollectionLockedCardPair()
                     }
                 }
             }
