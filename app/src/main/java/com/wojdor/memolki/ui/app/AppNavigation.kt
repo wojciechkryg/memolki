@@ -184,7 +184,6 @@ private fun NavGraphBuilder.cardPairDetailsScreen(navController: NavController) 
     ) {
         CardPairDetailsScreen(
             viewModel = getCardPairDetailsViewModel(it, navController),
-            navController = navController
         )
     }
 }
