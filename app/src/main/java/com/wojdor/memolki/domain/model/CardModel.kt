@@ -3,6 +3,7 @@ package com.wojdor.memolki.domain.model
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.wojdor.memolki.R
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -23,7 +24,7 @@ sealed class CardModel : Parcelable {
         override val pairId: String = ""
 
         @IgnoredOnParcel
-        override val textRes: Int = 0
+        override val textRes: Int = R.string.empty
 
         @IgnoredOnParcel
         override val isFlippedFront: Boolean = false

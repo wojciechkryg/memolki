@@ -37,6 +37,12 @@ class CollectionViewModel @Inject constructor(
             is CollectionIntent.OnShopClick -> sendEffect(
                 CollectionEffect.OpenShopScreen
             )
+
+            is CollectionIntent.OnCardPairClick -> sendEffect(
+                CollectionEffect.OpenCardPairDetailsScreen(
+                    intent.collectionCardPairModel.cardPair
+                )
+            )
         }
     }
 
