@@ -21,10 +21,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
 import com.wojdor.memolki.ui.feature.collection.CollectionState
 
 @Composable
-fun CardPairsCollection(state: CollectionState) {
+fun CardPairsCollection(
+    state: CollectionState,
+    callbacks: CollectionCallbacks
+) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +54,8 @@ fun CardPairsCollection(state: CollectionState) {
                     ) {
                         when (collectionCardPair) {
                             is CollectionCardPairModel.Unlocked -> CollectionUnlockedCardPair(
-                                collectionCardPairModel = collectionCardPair
+                                collectionCardPairModel = collectionCardPair,
+                                onClick = { callbacks.onUnlockedCardPairClick(collectionCardPair) }
                             )
 
                             is CollectionCardPairModel.Locked -> CollectionLockedCardPair()
