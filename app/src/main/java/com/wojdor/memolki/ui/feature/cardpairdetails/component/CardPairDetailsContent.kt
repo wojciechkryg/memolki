@@ -1,25 +1,24 @@
 package com.wojdor.memolki.ui.feature.cardpairdetails.component
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
+import com.wojdor.memolki.ui.components.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.theme.AppTheme
 
@@ -36,20 +35,24 @@ fun CardPairDetailsContent(cardPairModel: CardPairModel) {
         val isFirstCardText = firstCard is CardModel.Text
         val secondCard = cardPairModel.pair.second
         val isSecondCardText = secondCard is CardModel.Text
-        Column {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             CardDetails(
                 card = firstCard,
                 cardSize = cardSize
             )
             if (!isFirstCardText && !isSecondCardText && firstCard.textRes != secondCard.textRes) {
-                TextDetails(firstCard.textRes)
+                TextDetails(modifier = Modifier.weight(1f), textRes = firstCard.textRes)
             }
             CardDetails(
                 card = secondCard,
                 cardSize = cardSize
             )
             if (!isFirstCardText && !isSecondCardText) {
-                TextDetails(secondCard.textRes)
+                TextDetails(modifier = Modifier.weight(1f), textRes = secondCard.textRes)
             }
         }
     }
@@ -60,20 +63,18 @@ private fun CardDetails(card: CardModel, cardSize: Dp) {
     FrontCardItem(
         modifier = Modifier
             .size(cardSize)
-            .padding(16.dp),
+            .padding(8.dp),
         card = card
     )
 }
 
 @Composable
-private fun TextDetails(@StringRes textRes: Int) {
-    Text(
-        modifier = Modifier
-            .fillMaxWidth()
+private fun TextDetails(modifier: Modifier, @StringRes textRes: Int) {
+    AutoSizeText(
+        modifier = modifier
             .padding(8.dp),
         text = stringResource(textRes),
         style = MaterialTheme.typography.displaySmall,
-        textAlign = TextAlign.Center
     )
 }
 
