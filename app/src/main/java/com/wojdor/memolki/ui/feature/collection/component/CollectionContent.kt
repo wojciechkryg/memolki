@@ -36,7 +36,7 @@ fun CollectionContent(
             modifier = Modifier.padding(bottom = 8.dp),
             state = state
         )
-        CardPairsCollection(state)
+        CardPairsCollection(state, callbacks)
     }
 }
 

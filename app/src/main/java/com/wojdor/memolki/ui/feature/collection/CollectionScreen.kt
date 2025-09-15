@@ -10,32 +10,51 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.ui.app.navigateToCardPairDetailsScreen
+import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsIntent
+import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.collection.component.CollectionContent
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun CollectionScreen(
     viewModel: CollectionViewModel = hiltViewModel(),
+    cardPairDetailsViewModel: CardPairDetailsViewModel = hiltViewModel(),
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
-    HandleEffect(viewModel, navController)
+    HandleEffect(viewModel, cardPairDetailsViewModel, navController)
     HandleState(viewModel, state)
 }
 
 @Composable
 private fun HandleEffect(
     viewModel: CollectionViewModel,
+    cardPairDetailsViewModel: CardPairDetailsViewModel,
     navController: NavController
 ) {
     CollectUiEffects(viewModel) {
         when (it) {
-            is CollectionEffect.OpenShopScreen -> {
-                // TODO: navigate to shop screen
-            }
+            is CollectionEffect.OpenShopScreen -> navController.navigateToShop()
+            is CollectionEffect.OpenCardPairDetailsScreen -> openCardPairDetailsScreen(
+                cardPairDetailsViewModel,
+                navController,
+                it.cardPairModel
+            )
         }
     }
+}
+
+private fun openCardPairDetailsScreen(
+    cardPairDetailsViewModel: CardPairDetailsViewModel,
+    navController: NavController,
+    cardPairModel: CardPairModel
+) {
+    cardPairDetailsViewModel.sendIntent(CardPairDetailsIntent.OnCardPairDetailsShow(cardPairModel))
+    navController.navigateToCardPairDetailsScreen()
+
 }
 
 @Composable
@@ -46,6 +65,9 @@ private fun HandleState(
     val callbacks = CollectionCallbacks(
         onShopButtonClick = {
             viewModel.sendIntent(CollectionIntent.OnShopClick)
+        },
+        onUnlockedCardPairClick = {
+            viewModel.sendIntent(CollectionIntent.OnCardPairClick(it))
         }
     )
     CollectionScreen(state, callbacks)

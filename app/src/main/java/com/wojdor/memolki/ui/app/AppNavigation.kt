@@ -5,11 +5,14 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsScreen
+import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelScreen
 import com.wojdor.memolki.ui.feature.collection.CollectionScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
@@ -18,103 +21,180 @@ import com.wojdor.memolki.ui.feature.game.GameScreen
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuScreen
 import com.wojdor.memolki.ui.feature.settings.SettingsScreen
+import com.wojdor.memolki.ui.feature.shop.ShopScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = Route.MENU) {
-        composable(
-            route = Route.MENU,
-            enterTransition = {
-                when (initialState.destination.route) {
-                    Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideInLeft
-                    Route.COLLECTION -> slideInRight
-                    Route.OPTIONS -> slideInTop
-                    else -> slideInBottom
-                }
-            },
-            exitTransition = {
-                when (targetState.destination.route) {
-                    Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideOutLeft
-                    Route.COLLECTION -> slideOutRight
-                    Route.OPTIONS -> slideOutTop
-                    else -> slideOutBottom
-                }
+        menuScreen(navController)
+        gameFlow(navController)
+        collectionFlow(navController)
+        settingsScreen(navController)
+    }
+}
+
+private fun NavGraphBuilder.menuScreen(navController: NavController) {
+    composable(
+        route = Route.MENU,
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideInLeft
+                Route.COLLECTION -> slideInRight
+                Route.OPTIONS -> slideInTop
+                else -> slideInBottom
             }
-        ) {
-            MenuScreen(navController = navController)
-        }
-        navigation(
-            startDestination = Route.CHOOSE_LEVEL,
-            route = RouteFlow.GAME
-        ) {
-            composable(
-                route = Route.CHOOSE_LEVEL,
-                enterTransition = {
-                    when (initialState.destination.route) {
-                        Route.MENU -> slideInRight
-                        else -> slideInLeft
-                    }
-                },
-                exitTransition = {
-                    when (targetState.destination.route) {
-                        Route.MENU -> slideOutRight
-                        else -> slideOutLeft
-                    }
-                },
-            ) {
-                ChooseLevelScreen(
-                    navController = navController,
-                    gameViewModel = getGameViewModel(it, navController)
-                )
-            }
-            composable(
-                route = Route.GAME,
-                enterTransition = {
-                    when (initialState.destination.route) {
-                        Route.END_GAME -> slideInLeft
-                        else -> slideInRight
-                    }
-                },
-                exitTransition = {
-                    when (targetState.destination.route) {
-                        Route.MENU -> slideOutRight
-                        else -> slideOutLeft
-                    }
-                }
-            ) {
-                GameScreen(
-                    navController = navController,
-                    viewModel = getGameViewModel(it, navController),
-                    endGameViewModel = getEndGameViewModel(it, navController)
-                )
-            }
-            composable(
-                route = Route.END_GAME,
-                enterTransition = { slideInRight },
-                exitTransition = { slideOutRight }
-            ) {
-                EndGameScreen(
-                    navController = navController,
-                    viewModel = getEndGameViewModel(it, navController),
-                    gameViewModel = getGameViewModel(it, navController)
-                )
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideOutLeft
+                Route.COLLECTION -> slideOutRight
+                Route.OPTIONS -> slideOutTop
+                else -> slideOutBottom
             }
         }
-        composable(
-            route = Route.COLLECTION,
-            enterTransition = { slideInLeft },
-            exitTransition = { slideOutLeft }
-        ) {
-            CollectionScreen(navController = navController)
+    ) {
+        MenuScreen(navController = navController)
+    }
+}
+
+private fun NavGraphBuilder.gameFlow(navController: NavController) {
+    navigation(
+        startDestination = Route.CHOOSE_LEVEL,
+        route = RouteFlow.GAME
+    ) {
+        chooseLevelScreen(navController)
+        gameScreen(navController)
+        endGameScreen(navController)
+    }
+}
+
+private fun NavGraphBuilder.chooseLevelScreen(navController: NavController) {
+    composable(
+        route = Route.CHOOSE_LEVEL,
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.MENU -> slideInRight
+                else -> slideInLeft
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.MENU -> slideOutRight
+                else -> slideOutLeft
+            }
+        },
+    ) {
+        ChooseLevelScreen(
+            navController = navController,
+            gameViewModel = getGameViewModel(it, navController)
+        )
+    }
+}
+
+private fun NavGraphBuilder.gameScreen(navController: NavController) {
+    composable(
+        route = Route.GAME,
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.END_GAME -> slideInLeft
+                else -> slideInRight
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.MENU -> slideOutRight
+                else -> slideOutLeft
+            }
         }
-        composable(
-            route = Route.OPTIONS,
-            enterTransition = { slideInBottom },
-            exitTransition = { slideOutBottom }
-        ) {
-            SettingsScreen(navController = navController)
+    ) {
+        GameScreen(
+            navController = navController,
+            viewModel = getGameViewModel(it, navController),
+            endGameViewModel = getEndGameViewModel(it, navController)
+        )
+    }
+}
+
+private fun NavGraphBuilder.endGameScreen(navController: NavController) {
+    composable(
+        route = Route.END_GAME,
+        enterTransition = { slideInRight },
+        exitTransition = { slideOutRight }
+    ) {
+        EndGameScreen(
+            navController = navController,
+            viewModel = getEndGameViewModel(it, navController),
+            gameViewModel = getGameViewModel(it, navController)
+        )
+    }
+}
+
+private fun NavGraphBuilder.collectionFlow(navController: NavController) {
+    navigation(
+        startDestination = Route.COLLECTION,
+        route = RouteFlow.COLLECTION
+    ) {
+        collectionScreen(navController)
+        shopScreen(navController)
+        cardPairDetailsScreen(navController)
+    }
+}
+
+private fun NavGraphBuilder.collectionScreen(navController: NavController) {
+    composable(
+        route = Route.COLLECTION,
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.SHOP -> slideInBottom
+                Route.CARD_PAIR_DETAILS -> slideInRight
+                else -> slideInLeft
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.SHOP -> slideOutBottom
+                Route.CARD_PAIR_DETAILS -> slideOutRight
+                else -> slideOutLeft
+            }
         }
+    ) {
+        CollectionScreen(
+            cardPairDetailsViewModel = getCardPairDetailsViewModel(it, navController),
+            navController = navController
+        )
+    }
+}
+
+private fun NavGraphBuilder.shopScreen(navController: NavController) {
+    composable(
+        route = Route.SHOP,
+        enterTransition = { slideInTop },
+        exitTransition = { slideOutTop }
+    ) {
+        ShopScreen(navController = navController)
+    }
+}
+
+private fun NavGraphBuilder.cardPairDetailsScreen(navController: NavController) {
+    composable(
+        route = Route.CARD_PAIR_DETAILS,
+        enterTransition = { slideInLeft },
+        exitTransition = { slideOutLeft }
+    ) {
+        CardPairDetailsScreen(
+            viewModel = getCardPairDetailsViewModel(it, navController),
+        )
+    }
+}
+
+private fun NavGraphBuilder.settingsScreen(navController: NavController) {
+    composable(
+        route = Route.OPTIONS,
+        enterTransition = { slideInBottom },
+        exitTransition = { slideOutBottom }
+    ) {
+        SettingsScreen(navController = navController)
     }
 }
 
@@ -154,6 +234,14 @@ fun NavController.navigateToGameFromEndGame() {
     }
 }
 
+fun NavController.navigateToShop() {
+    navigate(Route.SHOP)
+}
+
+fun NavController.navigateToCardPairDetailsScreen() {
+    navigate(Route.CARD_PAIR_DETAILS)
+}
+
 private fun NavOptionsBuilder.removeFromBackStack(route: String) {
     popUpTo(route) {
         inclusive = true
@@ -165,10 +253,10 @@ private fun getGameViewModel(
     navBackStackEntry: NavBackStackEntry,
     navController: NavController
 ): GameViewModel {
-    val gameFlowBackStackEntry = remember(navBackStackEntry) {
+    val flowBackStackEntry = remember(navBackStackEntry) {
         navController.getBackStackEntry(RouteFlow.GAME)
     }
-    return hiltViewModel(gameFlowBackStackEntry)
+    return hiltViewModel(flowBackStackEntry)
 }
 
 @Composable
@@ -176,12 +264,22 @@ private fun getEndGameViewModel(
     navBackStackEntry: NavBackStackEntry,
     navController: NavController
 ): EndGameViewModel {
-    val gameFlowBackStackEntry = remember(navBackStackEntry) {
+    val flowBackStackEntry = remember(navBackStackEntry) {
         navController.getBackStackEntry(RouteFlow.GAME)
     }
-    return hiltViewModel(gameFlowBackStackEntry)
+    return hiltViewModel(flowBackStackEntry)
 }
 
+@Composable
+private fun getCardPairDetailsViewModel(
+    navBackStackEntry: NavBackStackEntry,
+    navController: NavController
+): CardPairDetailsViewModel {
+    val flowBackStackEntry = remember(navBackStackEntry) {
+        navController.getBackStackEntry(RouteFlow.COLLECTION)
+    }
+    return hiltViewModel(flowBackStackEntry)
+}
 
 private object Route {
     const val MENU = "menu"
@@ -189,9 +287,12 @@ private object Route {
     const val GAME = "game"
     const val END_GAME = "end_game"
     const val COLLECTION = "collection"
+    const val SHOP = "shop"
+    const val CARD_PAIR_DETAILS = "card_pair_details"
     const val OPTIONS = "options"
 }
 
 private object RouteFlow {
     const val GAME = "game_flow"
+    const val COLLECTION = "collection_flow"
 }
