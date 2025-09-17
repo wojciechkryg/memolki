@@ -77,6 +77,43 @@ class CollectionViewModelTest : AppTest() {
     }
 
     @Test
+    fun `when state is updated with data then all card pairs count is correct`() = runTest {
+        sut.uiState.test {
+            // given
+            skipItems(1)
+
+            // when
+            val state = awaitItem()
+
+            // then
+            assertEquals(
+                MockAllCardPairsDataSource.getAllCardPairs().size,
+                state.allCardPairsCount
+            )
+        }
+    }
+
+    @Test
+    fun `when OnCardPairClick intent is send then the OpenCardPairDetailsScreen effect is send`() =
+        runTest {
+            sut.uiEffect.test {
+                // given
+                val unlockedCardPair = CollectionCardPairModel.Unlocked(
+                    MockAllCardPairsDataSource.getAllCardPairs().first().toModel()
+                )
+
+                // when
+                sut.sendIntent(CollectionIntent.OnCardPairClick(unlockedCardPair))
+
+                // then
+                assertEquals(
+                    CollectionEffect.OpenCardPairDetailsScreen(unlockedCardPair.cardPair),
+                    awaitItem()
+                )
+            }
+        }
+
+    @Test
     fun `when OnShopClick intent is send then the OpenShopScreen effect is send`() =
         runTest {
             sut.uiEffect.test {
