@@ -15,8 +15,8 @@ class SettingsRepository @Inject constructor(
 
     suspend fun setSoundEnabled(value: Boolean) = settingsLocalDataSource.setSoundEnabled(value)
 
-    suspend fun getVibrationsEnabled() = settingsLocalDataSource.getVibrationsEnabled()
+    suspend fun getVibrationEnabled() = settingsLocalDataSource.getVibrationEnabled()
 
-    suspend fun setVibrationsEnabled(value: Boolean) =
-        settingsLocalDataSource.setVibrationsEnabled(value)
+    suspend fun setVibrationEnabled(value: Boolean) =
+        settingsLocalDataSource.setVibrationEnabled(value)
 }

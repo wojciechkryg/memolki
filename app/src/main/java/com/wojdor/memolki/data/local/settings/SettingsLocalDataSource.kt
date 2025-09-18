@@ -29,18 +29,18 @@ class SettingsLocalDataSource @Inject constructor(
         dataStore.edit { it[Key.SOUND_ENABLED] = value.toString() }
     }
 
-    suspend fun getVibrationsEnabled(): Boolean {
+    suspend fun getVibrationEnabled(): Boolean {
         val preferences = dataStore.data.first()
-        return preferences[Key.VIBRATIONS_ENABLED]?.toBoolean() ?: true
+        return preferences[Key.VIBRATION_ENABLED]?.toBoolean() ?: true
     }
 
-    suspend fun setVibrationsEnabled(value: Boolean) {
-        dataStore.edit { it[Key.VIBRATIONS_ENABLED] = value.toString() }
+    suspend fun setVibrationEnabled(value: Boolean) {
+        dataStore.edit { it[Key.VIBRATION_ENABLED] = value.toString() }
     }
 
     private object Key {
         val MUSIC_ENABLED = stringPreferencesKey("music_enabled")
         val SOUND_ENABLED = stringPreferencesKey("sound_enabled")
-        val VIBRATIONS_ENABLED = stringPreferencesKey("vibrations_enabled")
+        val VIBRATION_ENABLED = stringPreferencesKey("vibration_enabled")
     }
 }

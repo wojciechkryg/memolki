@@ -1,23 +1,101 @@
 package com.wojdor.memolki.ui.feature.settings
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
-import com.wojdor.memolki.R
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun SettingsScreen(
-    navController: NavController
+    viewModel: SettingsViewModel = hiltViewModel(),
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = stringResource(R.string.settings)
+    val state by viewModel.uiState.collectAsState()
+    HandleEffect(viewModel)
+    HandleState(viewModel, state)
+}
+
+@Composable
+private fun HandleEffect(
+    viewModel: SettingsViewModel,
+) {
+    CollectUiEffects(viewModel) {
+        // Handle effects if needed
+    }
+}
+
+@Composable
+private fun HandleState(
+    viewModel: SettingsViewModel,
+    state: SettingsState
+) {
+    val callbacks = SettingsCallbacks(
+        onSettingToggle = { viewModel.sendIntent(SettingsIntent.OnSettingClick(it)) }
+    )
+    SettingsScreen(state, callbacks)
+}
+
+@Composable
+private fun SettingsScreen(
+    state: SettingsState,
+    callbacks: SettingsCallbacks = SettingsCallbacks()
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        state.settings.forEach { setting ->
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                onClick = { callbacks.onSettingToggle(setting) },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color.Transparent
+                ),
+            ) {
+                Row {
+                    Checkbox(
+                        checked = setting.isEnabled,
+                        onCheckedChange = null
+                    )
+                    Spacer(modifier = Modifier.size(4.dp))
+                    Text(
+                        text = stringResource(setting.textId).uppercase(),
+                        style = MaterialTheme.typography.displaySmall
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SettingsScreenPreview() {
+    AppTheme {
+        SettingsScreen(
+            state = SettingsState()
         )
     }
 }

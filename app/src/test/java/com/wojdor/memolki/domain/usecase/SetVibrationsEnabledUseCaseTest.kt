@@ -33,7 +33,7 @@ class SetVibrationsEnabledUseCaseTest : AppTest() {
             // then
             val expected = Result.success(Unit)
             assertEquals(expected, awaitItem())
-            assertEquals(false, settingsRepository.getVibrationsEnabled())
+            assertEquals(false, settingsRepository.getVibrationEnabled())
             awaitComplete()
         }
     }

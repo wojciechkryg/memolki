@@ -85,7 +85,7 @@ class SettingsLocalDataSourceTest : AppTest() {
     @Test
     fun `when get vibrations enabled without a value then return default true`() = runTest {
         // when
-        val result = sut.getVibrationsEnabled()
+        val result = sut.getVibrationEnabled()
 
         // then
         assertTrue(result)
@@ -94,10 +94,10 @@ class SettingsLocalDataSourceTest : AppTest() {
     @Test
     fun `when get vibrations enabled with a value then return it`() = runTest {
         // given
-        sut.setVibrationsEnabled(false)
+        sut.setVibrationEnabled(false)
 
         // when
-        val result = sut.getVibrationsEnabled()
+        val result = sut.getVibrationEnabled()
 
         // then
         assertFalse(result)
@@ -106,8 +106,8 @@ class SettingsLocalDataSourceTest : AppTest() {
     @Test
     fun `when set vibrations enabled then the value is saved`() = runTest {
         // when
-        sut.setVibrationsEnabled(false)
-        val result = sut.getVibrationsEnabled()
+        sut.setVibrationEnabled(false)
+        val result = sut.getVibrationEnabled()
 
         // then
         assertFalse(result)

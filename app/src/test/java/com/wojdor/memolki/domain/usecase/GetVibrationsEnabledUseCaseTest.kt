@@ -29,7 +29,7 @@ class GetVibrationsEnabledUseCaseTest : AppTest() {
     @Test
     fun `when called then returns vibrations enabled`() = runTest {
         // given
-        settingsRepository.setVibrationsEnabled(false)
+        settingsRepository.setVibrationEnabled(false)
 
         // when
         sut().test {

@@ -13,12 +13,13 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class SettingsRepositoryTest : AppTest() {
 
-    private val settingsLocalDataSource = SettingsLocalDataSource(MockDataStore())
+    private lateinit var settingsLocalDataSource: SettingsLocalDataSource
     private lateinit var sut: SettingsRepository
 
     @Before
     override fun setup() {
         super.setup()
+        settingsLocalDataSource = SettingsLocalDataSource(MockDataStore())
         sut = SettingsRepository(settingsLocalDataSource)
     }
 
@@ -85,10 +86,10 @@ class SettingsRepositoryTest : AppTest() {
     @Test
     fun `when get vibrations enabled then return value from data source`() = runTest {
         // given
-        settingsLocalDataSource.setVibrationsEnabled(false)
+        settingsLocalDataSource.setVibrationEnabled(false)
 
         // when
-        val result = sut.getVibrationsEnabled()
+        val result = sut.getVibrationEnabled()
 
         // then
         assertFalse(result)
@@ -97,7 +98,7 @@ class SettingsRepositoryTest : AppTest() {
     @Test
     fun `when get vibrations enabled then return default value`() = runTest {
         // when
-        val result = sut.getVibrationsEnabled()
+        val result = sut.getVibrationEnabled()
 
         // then
         assertTrue(result)
@@ -106,9 +107,9 @@ class SettingsRepositoryTest : AppTest() {
     @Test
     fun `when set vibrations enabled then call data source`() = runTest {
         // when
-        sut.setVibrationsEnabled(false)
+        sut.setVibrationEnabled(false)
 
         // then
-        assertFalse(settingsLocalDataSource.getVibrationsEnabled())
+        assertFalse(settingsLocalDataSource.getVibrationEnabled())
     }
 }

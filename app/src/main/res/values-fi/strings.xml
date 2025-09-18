@@ -5,4 +5,7 @@
     <string name="menu">Valikko</string>
     <string name="play_again">Pelaa uudelleen</string>
     <string name="shop">Kauppa</string>
+    <string name="setting_music">Musiikki</string>
+    <string name="setting_sound">Ääni</string>
+    <string name="setting_vibration">Tärinä</string>
 </resources>
