@@ -1,6 +1,7 @@
 package com.wojdor.memolki.util.media
 
 import android.content.Context
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.SettingModel
@@ -39,6 +40,12 @@ class CardFlipPlayer @Inject constructor(
             if (isSoundEnabled) {
                 val soundId = sounds[Random.nextInt(sounds.size)]
                 MediaPlayer.create(context, soundId).apply {
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_GAME)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                            .build()
+                    )
                     setVolume(VOLUME, VOLUME)
                     setOnCompletionListener { it.release() }
                     start()

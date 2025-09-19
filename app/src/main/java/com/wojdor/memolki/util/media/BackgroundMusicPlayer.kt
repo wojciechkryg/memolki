@@ -1,6 +1,7 @@
 package com.wojdor.memolki.util.media
 
 import android.content.Context
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -14,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,17 +38,19 @@ class BackgroundMusicPlayer @Inject constructor(
 
     override fun onStart(owner: LifecycleOwner) {
         owner.lifecycle.coroutineScope.launch {
-            getSettingsUseCase().collect {
-                it.onSuccess { settings ->
-                    settings.firstOrNull { it is SettingModel.Music }?.let { music ->
-                        if (music.isEnabled) {
-                            start()
-                        } else {
-                            stop()
+            getSettingsUseCase()
+                .distinctUntilChanged()
+                .collect {
+                    it.onSuccess { settings ->
+                        settings.firstOrNull { it is SettingModel.Music }?.let { music ->
+                            if (music.isEnabled) {
+                                start()
+                            } else {
+                                stop()
+                            }
                         }
                     }
                 }
-            }
         }
     }
 
@@ -71,7 +75,7 @@ class BackgroundMusicPlayer @Inject constructor(
             fadeVolume(BACKGROUND_MUSIC_VOLUME, FADE_DURATION_MS)
             it.setNextMediaPlayer(null)
             nextPlayer?.release()
-            nextPlayer = createPlayer()?.apply {
+            nextPlayer = createPlayer().apply {
                 setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME)
             }
             it.setNextMediaPlayer(nextPlayer)
@@ -124,7 +128,14 @@ class BackgroundMusicPlayer @Inject constructor(
         nextPlayer = null
     }
 
-    private fun createPlayer() = MediaPlayer.create(context, R.raw.music_background)
+    private fun createPlayer() = MediaPlayer.create(context, R.raw.music_background).apply {
+        setAudioAttributes(
+            AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build()
+        )
+    }
 
     private fun fadeVolume(to: Float, duration: Long, onEnd: () -> Unit = {}) {
         volumeJob?.cancel()
@@ -150,7 +161,7 @@ class BackgroundMusicPlayer @Inject constructor(
     private val onCompletionListener: MediaPlayer.OnCompletionListener =
         MediaPlayer.OnCompletionListener {
             currentPlayer = nextPlayer
-            nextPlayer = createPlayer()?.apply {
+            nextPlayer = createPlayer().apply {
                 setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME)
             }
             currentPlayer?.setNextMediaPlayer(nextPlayer)
