@@ -14,7 +14,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.util.BackgroundMusicPlayer
+import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

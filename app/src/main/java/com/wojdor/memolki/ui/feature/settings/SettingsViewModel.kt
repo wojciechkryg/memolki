@@ -6,7 +6,7 @@ import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.util.BackgroundMusicPlayer
+import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -31,7 +31,7 @@ class SettingsViewModel @Inject constructor(
         when (intent) {
             is SettingsIntent.OnSettingClick -> {
                 toggleSettingsUseCase(intent.setting).onEach {
-                    it.onSuccess { handleTogglingSetting(it) }
+                    it.onSuccess { setting -> handleTogglingSetting(setting) }
                 }.launchIn(viewModelScope)
             }
         }

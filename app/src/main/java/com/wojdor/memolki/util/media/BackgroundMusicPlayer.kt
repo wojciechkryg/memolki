@@ -1,4 +1,4 @@
-package com.wojdor.memolki.util
+package com.wojdor.memolki.util.media
 
 import android.content.Context
 import android.media.MediaPlayer
@@ -65,7 +65,7 @@ class BackgroundMusicPlayer @Inject constructor(
         }
         currentPlayer?.let {
             if (!it.isPlaying) {
-                setPlayerVolume(0.0f)
+                setVolume(NO_VOLUME)
                 it.start()
             }
             fadeVolume(BACKGROUND_MUSIC_VOLUME, FADE_DURATION_MS)
@@ -134,32 +134,32 @@ class BackgroundMusicPlayer @Inject constructor(
             for (i in 0..steps) {
                 val progress = i.toFloat() / steps
                 val volume = from + (to - from) * progress
-                setPlayerVolume(volume)
+                setVolume(volume)
                 delay(FADE_STEP_DURATION)
             }
-            setPlayerVolume(to)
+            setVolume(to)
             onEnd()
         }
     }
 
-    private fun setPlayerVolume(volume: Float) {
+    private fun setVolume(volume: Float) {
         currentPlayer?.setVolume(volume, volume)
         currentVolume = volume
     }
 
     private val onCompletionListener: MediaPlayer.OnCompletionListener =
         MediaPlayer.OnCompletionListener {
-            it.release()
             currentPlayer = nextPlayer
             nextPlayer = createPlayer()?.apply {
                 setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME)
             }
             currentPlayer?.setNextMediaPlayer(nextPlayer)
             currentPlayer?.setOnCompletionListener(onCompletionListener)
+            it.release()
         }
 
     companion object {
-        private const val BACKGROUND_MUSIC_VOLUME = 0.3f
+        private const val BACKGROUND_MUSIC_VOLUME = 0.15f
         private const val NO_VOLUME = 0.0f
         private const val FADE_DURATION_MS = 500L
         private const val FADE_STEP_DURATION = 50L

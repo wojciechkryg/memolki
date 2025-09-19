@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.settings.component.ToggleSettingButton
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
@@ -66,26 +67,10 @@ private fun SettingsScreen(
     ) {
         state.settings.forEach { setting ->
             Spacer(modifier = Modifier.height(24.dp))
-            Button(
-                onClick = { callbacks.onSettingToggle(setting) },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.Black,
-                    disabledContainerColor = Color.Transparent
-                ),
-            ) {
-                Row {
-                    Checkbox(
-                        checked = setting.isEnabled,
-                        onCheckedChange = null
-                    )
-                    Spacer(modifier = Modifier.size(4.dp))
-                    Text(
-                        text = stringResource(setting.textId).uppercase(),
-                        style = MaterialTheme.typography.displaySmall
-                    )
-                }
-            }
+            ToggleSettingButton(
+                setting = setting,
+                onClick = { callbacks.onSettingToggle(setting) }
+            )
         }
     }
 }

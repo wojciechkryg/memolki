@@ -3,6 +3,7 @@ package com.wojdor.memolki.domain.usecase
 import app.cash.turbine.test
 import com.wojdor.memolki.data.local.settings.SettingsLocalDataSource
 import com.wojdor.memolki.data.repository.SettingsRepository
+import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,28 +13,40 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class SetVibrationsEnabledUseCaseTest : AppTest() {
+class GetSettingsUseCaseTest : AppTest() {
 
     private val settingsRepository = SettingsRepository(SettingsLocalDataSource(MockDataStore()))
-    private lateinit var sut: SetVibrationsEnabledUseCase
+    private lateinit var sut: GetSettingsUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = SetVibrationsEnabledUseCase(
+        sut = GetSettingsUseCase(
             testDispatcher,
             settingsRepository
         )
     }
 
     @Test
-    fun `when called then set vibrations enabled`() = runTest {
+    fun `when called then returns settings`() = runTest {
+        // given
+        settingsRepository.apply {
+            setMusicEnabled(false)
+            setSoundEnabled(true)
+            setVibrationEnabled(false)
+        }
+
         // when
-        sut(false).test {
+        sut().test {
             // then
-            val expected = Result.success(Unit)
+            val expected = Result.success(
+                listOf(
+                    SettingModel.Music(false),
+                    SettingModel.Sound(true),
+                    SettingModel.Vibration(false)
+                )
+            )
             assertEquals(expected, awaitItem())
-            assertEquals(false, settingsRepository.getVibrationEnabled())
             awaitComplete()
         }
     }

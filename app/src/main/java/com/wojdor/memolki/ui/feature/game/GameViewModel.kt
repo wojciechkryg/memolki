@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.media.CardFlipPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val cardFlipPlayer: CardFlipPlayer,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
     private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase
 ) : MviViewModel<GameIntent, GameState>(
@@ -137,6 +139,7 @@ class GameViewModel @Inject constructor(
     }
 
     private fun flipCardToFront(card: CardModel) {
+        cardFlipPlayer.play()
         updateStateWith(markCardAsFlipped(card, true))
     }
 
