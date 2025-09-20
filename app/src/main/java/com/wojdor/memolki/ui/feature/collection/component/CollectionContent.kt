@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wojdor.memolki.ui.components.CoinsAmount
 import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
 import com.wojdor.memolki.ui.feature.collection.CollectionState
 import com.wojdor.memolki.ui.feature.collection.getCollectionStateForPreview
@@ -26,7 +27,7 @@ fun CollectionContent(
         ) {
             CoinsAmount(
                 modifier = Modifier.weight(1f),
-                state = state
+                coins = state.coins
             )
             ShopButton(
                 onClick = callbacks.onShopButtonClick

@@ -5,4 +5,7 @@
     <string name="menu">Meniu</string>
     <string name="play_again">Joacă din nou</string>
     <string name="shop">Magazin</string>
+    <string name="setting_music">Muzică</string>
+    <string name="setting_sound">Sunet</string>
+    <string name="setting_vibration">Vibrație</string>
 </resources>

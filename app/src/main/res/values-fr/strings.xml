@@ -5,4 +5,7 @@
     <string name="menu">Menu</string>
     <string name="play_again">Rejouer</string>
     <string name="shop">Boutique</string>
+    <string name="setting_music">Musique</string>
+    <string name="setting_sound">Son</string>
+    <string name="setting_vibration">Vibration</string>
 </resources>

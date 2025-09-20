@@ -5,4 +5,7 @@
     <string name="menu">Meny</string>
     <string name="play_again">Spill igjen</string>
     <string name="shop">Butikk</string>
+    <string name="setting_music">Musikk</string>
+    <string name="setting_sound">Lyd</string>
+    <string name="setting_vibration">Vibrasjon</string>
 </resources>

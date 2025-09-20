@@ -5,4 +5,7 @@
     <string name="menu">메뉴</string>
     <string name="play_again">다시 플레이</string>
     <string name="shop">상점</string>
+    <string name="setting_music">음악</string>
+    <string name="setting_sound">사운드</string>
+    <string name="setting_vibration">진동</string>
 </resources>

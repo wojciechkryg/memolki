@@ -39,9 +39,7 @@ class UserLocalDataSource @Inject constructor(
     val encryptedTotalCardPairsMatched: Flow<String?> =
         dataRead.map { it[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] }
 
-    suspend fun setEncryptedTotalCardPairsMatched(
-        transform: (encryptedValue: String?) -> String
-    ) {
+    suspend fun setEncryptedTotalCardPairsMatched(transform: (encryptedValue: String?) -> String) {
         dataWrite.edit { prefs ->
             prefs[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] =
                 transform(prefs[Key.TOTAL_MATCHED_CARD_PAIR_COUNT])
@@ -51,9 +49,7 @@ class UserLocalDataSource @Inject constructor(
     val encryptedTotalGamesPlayed: Flow<String?> =
         dataRead.map { it[Key.TOTAL_GAMES_PLAYED] }
 
-    suspend fun setEncryptedTotalGamesPlayed(
-        transform: (encryptedValue: String?) -> String
-    ) {
+    suspend fun setEncryptedTotalGamesPlayed(transform: (encryptedValue: String?) -> String) {
         dataWrite.edit { prefs ->
             prefs[Key.TOTAL_GAMES_PLAYED] =
                 transform(prefs[Key.TOTAL_GAMES_PLAYED])
