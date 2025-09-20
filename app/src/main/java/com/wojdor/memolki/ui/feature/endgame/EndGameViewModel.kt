@@ -34,6 +34,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun onEndGameShow(level: LevelModel) {
+        sendState { EndGameState() }
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         getCurrentCoinsAndReward(level)
     }

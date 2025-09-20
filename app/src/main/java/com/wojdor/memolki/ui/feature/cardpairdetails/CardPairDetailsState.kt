@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CardPairDetailsState(
-    val cardPairModel: CardPairModel = CardPairModel(CardModel.Empty to CardModel.Empty)
+    val cardPairModel: CardPairModel = CardPairModel(CardModel.Empty, CardModel.Empty)
 ) : UiState
