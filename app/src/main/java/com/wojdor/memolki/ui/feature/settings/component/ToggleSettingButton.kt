@@ -3,7 +3,6 @@ package com.wojdor.memolki.ui.feature.settings.component
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,9 +54,10 @@ fun ToggleSettingButton(
                 modifier = Modifier.size(56.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
+                Icon(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(id = setting.resId),
+                    tint = colorResource(R.color.font),
                     contentDescription = null,
                 )
                 AnimateDisabledStrikeThrough(setting)
@@ -77,7 +78,7 @@ private fun AnimateDisabledStrikeThrough(setting: SettingModel) {
         animationSpec = tween(ANIMATION_DURATION)
     )
     if (strikeThroughAmount > 0f) {
-        val color = colorResource(R.color.setting_disabled)
+        val color = colorResource(R.color.font)
         Canvas(modifier = Modifier.fillMaxSize()) {
             val strokeWidth = 3.dp.toPx()
 
