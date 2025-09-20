@@ -7,12 +7,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.util.rememberThrottleClick
+import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun BaseMenuItem(
@@ -22,7 +21,7 @@ fun BaseMenuItem(
     onClick: () -> Unit = {}
 ) {
     Button(
-        onClick = rememberThrottleClick(onClick = onClick),
+        onClick = throttleClick(onClick = onClick),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = Color.Black,

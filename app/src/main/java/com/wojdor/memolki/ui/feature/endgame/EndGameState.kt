@@ -8,6 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class EndGameState(
     val level: LevelModel = LevelModel.Empty,
-    val rewardedCoins: Long = 0,
-    val menu: List<EndGameMenuModel> = emptyList()
+    val currentCoins: Long = 0L,
+    val rewardedCoins: Long = 0L,
+    val menu: List<EndGameMenuModel> = emptyList(),
+    val animateCoins: Boolean = false
 ) : UiState

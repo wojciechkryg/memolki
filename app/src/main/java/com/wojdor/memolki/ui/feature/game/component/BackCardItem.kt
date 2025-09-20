@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.components.XmlDrawable
 import com.wojdor.memolki.ui.theme.CardShape
-import com.wojdor.memolki.util.rememberThrottleClick
+import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun BackCardItem(
@@ -22,7 +22,7 @@ fun BackCardItem(
         modifier = modifier
             .clip(CardShape)
             .clickable(
-                onClick = rememberThrottleClick(onClick = onClick),
+                onClick = throttleClick(onClick = onClick),
             )
     ) {
         XmlDrawable(

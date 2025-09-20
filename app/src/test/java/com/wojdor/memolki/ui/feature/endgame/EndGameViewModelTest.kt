@@ -5,6 +5,7 @@ import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.test.AppTest
@@ -34,6 +35,7 @@ class EndGameViewModelTest : AppTest() {
                 testDispatcher,
                 userRepository
             ),
+            getCoinsUseCase = GetCoinsUseCase(testDispatcher, userRepository),
             rewardCoinsForLevelUseCase = RewardCoinsForLevelUseCase(
                 testDispatcher,
                 userRepository
@@ -54,10 +56,18 @@ class EndGameViewModelTest : AppTest() {
                 sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
 
                 // then
+                assertEquals(
+                    EndGameState(
+                        level = levelModel,
+                        menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu)
+                    ), awaitItem()
+                )
                 val expected = EndGameState(
                     level = levelModel,
                     rewardedCoins = rewardedCoins,
-                    menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu)
+                    currentCoins = rewardedCoins,
+                    menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu),
+                    animateCoins = true
                 )
                 assertEquals(expected, awaitItem())
             }

@@ -1,17 +1,9 @@
 package com.wojdor.memolki.ui.feature.endgame
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.EndGameMenuModel
@@ -19,10 +11,9 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.feature.endgame.component.CoinsReward
+import com.wojdor.memolki.ui.feature.endgame.component.EndGameContent
 import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
-import com.wojdor.memolki.ui.feature.menu.component.MenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
@@ -81,38 +72,18 @@ fun EndGameScreen(
     state: EndGameState,
     callbacks: EndGameCallbacks = EndGameCallbacks()
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CoinsReward(state = state)
-        Spacer(modifier = Modifier.height(64.dp))
-        state.menu.forEach { menuItem ->
-            Spacer(modifier = Modifier.height(16.dp))
-            when (menuItem) {
-                is EndGameMenuModel.PlayAgain -> MenuItem(
-                    textId = menuItem.textId,
-                    onClick = callbacks.onPlayAgainClick
-                )
-
-                is EndGameMenuModel.Menu -> MenuItem(
-                    textId = menuItem.textId,
-                    onClick = callbacks.onMenuClick
-                )
-            }
-        }
-    }
+    EndGameContent(state, callbacks)
 }
 
 @Composable
 @Preview(showBackground = true)
-private fun EndGamePreview() {
+private fun EndGameScreenPreview() {
     AppTheme {
         EndGameScreen(
             state = EndGameState(
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
+                currentCoins = 5678,
                 menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu)
             )
         )

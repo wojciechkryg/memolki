@@ -2,4 +2,5 @@
 <resources>
     <color name="font">#000000</color>
     <color name="border">#000000</color>
+    <color name="setting_disabled">#FFC62828</color>
 </resources>

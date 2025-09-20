@@ -10,7 +10,7 @@ import androidx.compose.runtime.setValue
 private const val THROTTLE_TIME_MS = 1000L
 
 @Composable
-fun rememberThrottleClick(
+fun throttleClick(
     onClick: () -> Unit,
     throttleTimeMs: Long = THROTTLE_TIME_MS
 ): () -> Unit {

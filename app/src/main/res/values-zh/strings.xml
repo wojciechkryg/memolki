@@ -5,4 +5,7 @@
     <string name="menu">菜单</string>
     <string name="play_again">再玩一次</string>
     <string name="shop">商店</string>
+    <string name="setting_music">音乐</string>
+    <string name="setting_sound">声音</string>
+    <string name="setting_vibration">振动</string>
 </resources>

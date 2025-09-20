@@ -18,7 +18,7 @@ import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.shape.RotatedCardPairShape
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
-import com.wojdor.memolki.util.rememberThrottleClick
+import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun CollectionUnlockedCardPair(
@@ -38,7 +38,7 @@ fun CollectionUnlockedCardPair(
                 )
             )
             .clickable(
-                onClick = rememberThrottleClick(onClick = onClick),
+                onClick = throttleClick(onClick = onClick),
             ),
         contentAlignment = Alignment.Center
     ) {

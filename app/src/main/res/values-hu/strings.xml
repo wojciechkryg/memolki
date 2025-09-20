@@ -5,4 +5,7 @@
     <string name="menu">Menü</string>
     <string name="play_again">Játssz újra</string>
     <string name="shop">Bolt</string>
+    <string name="setting_music">Zene</string>
+    <string name="setting_sound">Hang</string>
+    <string name="setting_vibration">Rezgés</string>
 </resources>

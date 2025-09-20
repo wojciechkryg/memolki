@@ -30,7 +30,7 @@ fun AppNavigation() {
         menuScreen(navController)
         gameFlow(navController)
         collectionFlow(navController)
-        settingsScreen(navController)
+        settingsScreen()
     }
 }
 
@@ -188,13 +188,13 @@ private fun NavGraphBuilder.cardPairDetailsScreen(navController: NavController) 
     }
 }
 
-private fun NavGraphBuilder.settingsScreen(navController: NavController) {
+private fun NavGraphBuilder.settingsScreen() {
     composable(
         route = Route.OPTIONS,
         enterTransition = { slideInBottom },
         exitTransition = { slideOutBottom }
     ) {
-        SettingsScreen(navController = navController)
+        SettingsScreen()
     }
 }
 
