@@ -42,24 +42,24 @@ class GetUnlockedCardPairsUseCaseTest : AppTest() {
             val expected = Result.success(
                 listOf(
                     CardPairModel(
-                        CardModel.Image("banana_whole", "banana", 1, 1) to
-                                CardModel.Image("banana_half", "banana", 1, 1)
+                        CardModel.Image("banana_whole", "banana", 1, 1),
+                        CardModel.Image("banana_half", "banana", 1, 1)
                     ),
                     CardPairModel(
-                        CardModel.Image("apple_whole", "apple", 2, 2) to
-                                CardModel.Text("apple_half", "apple", 2)
+                        CardModel.Image("apple_whole", "apple", 2, 2),
+                        CardModel.Text("apple_half", "apple", 2)
                     ),
                     CardPairModel(
-                        CardModel.Text("strawberry_whole", "strawberry", 3) to
-                                CardModel.Text("strawberry_half", "strawberry", 3)
+                        CardModel.Text("strawberry_whole", "strawberry", 3),
+                        CardModel.Text("strawberry_half", "strawberry", 3)
                     ),
                     CardPairModel(
-                        CardModel.Text("orange_whole", "orange", 4) to
-                                CardModel.Text("orange_half", "orange", 4)
+                        CardModel.Text("orange_whole", "orange", 4),
+                        CardModel.Text("orange_half", "orange", 4)
                     ),
                     CardPairModel(
-                        CardModel.Text("grape_whole", "grape", 5) to
-                                CardModel.Text("grape_half", "grape", 5)
+                        CardModel.Text("grape_whole", "grape", 5),
+                        CardModel.Text("grape_half", "grape", 5)
                     )
                 )
             )

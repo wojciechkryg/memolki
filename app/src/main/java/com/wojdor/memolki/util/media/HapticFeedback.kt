@@ -17,7 +17,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class HapticFeedback @Inject constructor(
+open class HapticFeedback @Inject constructor(
     @param:ApplicationContext private val context: Context,
     @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val getSettingsUseCase: GetSettingsUseCase
@@ -51,7 +51,7 @@ class HapticFeedback @Inject constructor(
         }
     }
 
-    fun vibrateLow() {
+    open fun vibrateLow() {
         if (!isVibrationEnabled) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(
@@ -66,7 +66,7 @@ class HapticFeedback @Inject constructor(
         }
     }
 
-    fun vibrateStrong() {
+    open fun vibrateStrong() {
         if (!isVibrationEnabled) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(

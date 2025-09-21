@@ -9,6 +9,8 @@ import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
 import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.mock.MockHapticFeedback
+import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelEffect.OpenGameScreen
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnLevelClick
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,6 +29,7 @@ class ChooseLevelViewModelTest : AppTest() {
         super.setup()
         sut = ChooseLevelViewModel(
             savedStateHandle = savedStateHandle,
+            hapticFeedback = relaxedMockk(),
             getLevelsUseCase = GetLevelsUseCase(
                 testDispatcher,
                 GetUnlockedCardPairsCountUseCase(
