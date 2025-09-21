@@ -47,14 +47,14 @@ fun CollectionUnlockedCardPair(
                 .fillMaxSize(CARD_SIZE_FRACTION)
                 .rotate(CARD_ROTATION)
                 .offset(x = CARD_OFFSET),
-            card = collectionCardPairModel.cardPair.pair.second
+            card = collectionCardPairModel.cardPair.second
         )
         FrontCardItem(
             modifier = Modifier
                 .fillMaxSize(CARD_SIZE_FRACTION)
                 .rotate(-CARD_ROTATION)
                 .offset(x = -CARD_OFFSET),
-            card = collectionCardPairModel.cardPair.pair.first
+            card = collectionCardPairModel.cardPair.first
         )
     }
 }

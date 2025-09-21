@@ -31,9 +31,9 @@ fun CardPairDetailsContent(cardPairModel: CardPairModel) {
         contentAlignment = Alignment.Center
     ) {
         val cardSize = maxWidth.coerceAtMost(maxHeight)
-        val firstCard = cardPairModel.pair.first
+        val firstCard = cardPairModel.first
         val isFirstCardText = firstCard is CardModel.Text
-        val secondCard = cardPairModel.pair.second
+        val secondCard = cardPairModel.second
         val isSecondCardText = secondCard is CardModel.Text
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -89,13 +89,13 @@ private fun CardPairDetailsContentImagesSameTextPreview() {
                     "banana",
                     R.string.banana,
                     R.drawable.img_banana_whole
-                ) to
-                        CardModel.Image(
-                            "banana_half",
-                            "banana",
-                            R.string.banana,
-                            R.drawable.img_banana_half
-                        )
+                ),
+                CardModel.Image(
+                    "banana_half",
+                    "banana",
+                    R.string.banana,
+                    R.drawable.img_banana_half
+                )
             )
         )
     }
@@ -112,13 +112,13 @@ private fun CardPairDetailsContentImagesDifferentTextPreview() {
                     "banana",
                     R.string.banana,
                     R.drawable.img_banana_whole
-                ) to
-                        CardModel.Image(
-                            "banana_half",
-                            "banana",
-                            R.string.orange,
-                            R.drawable.img_banana_half
-                        )
+                ),
+                CardModel.Image(
+                    "banana_half",
+                    "banana",
+                    R.string.orange,
+                    R.drawable.img_banana_half
+                )
             )
         )
     }
@@ -134,13 +134,13 @@ private fun CardPairDetailsContentImageAndTextPreview() {
                     "banana_whole",
                     "banana",
                     R.string.banana,
-                ) to
-                        CardModel.Image(
-                            "banana_half",
-                            "banana",
-                            R.string.orange,
-                            R.drawable.img_banana_whole
-                        )
+                ),
+                CardModel.Image(
+                    "banana_half",
+                    "banana",
+                    R.string.orange,
+                    R.drawable.img_banana_whole
+                )
             )
         )
     }
@@ -156,12 +156,12 @@ private fun CardPairDetailsContentTextsPreview() {
                     "banana_whole",
                     "banana",
                     R.string.banana,
-                ) to
-                        CardModel.Text(
-                            "banana_half",
-                            "banana",
-                            R.string.banana,
-                        )
+                ),
+                CardModel.Text(
+                    "banana_half",
+                    "banana",
+                    R.string.banana,
+                )
             )
         )
     }

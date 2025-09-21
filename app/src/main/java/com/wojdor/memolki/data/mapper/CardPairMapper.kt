@@ -6,5 +6,6 @@ import com.wojdor.memolki.domain.model.CardPairModel
 fun List<CardPairEntity>.toModel() = map { it.toModel() }
 
 fun CardPairEntity.toModel() = CardPairModel(
-    pair = pair.toModel(id)
+    first = pair.first.toModel(id),
+    second = pair.second.toModel(id)
 )

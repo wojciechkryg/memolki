@@ -6,7 +6,9 @@ import com.wojdor.memolki.data.repository.SettingsRepository
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.mock.MockSettingsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -15,7 +17,11 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class GetSettingsUseCaseTest : AppTest() {
 
-    private val settingsRepository = SettingsRepository(SettingsLocalDataSource(MockDataStore()))
+    private val settingsRepository = MockSettingsRepository(
+        MutableStateFlow(false),
+        MutableStateFlow(false),
+        MutableStateFlow(false)
+    )
     private lateinit var sut: GetSettingsUseCase
 
     @Before
@@ -29,25 +35,17 @@ class GetSettingsUseCaseTest : AppTest() {
 
     @Test
     fun `when called then returns settings`() = runTest {
-        // given
-        settingsRepository.apply {
-            setMusicEnabled(false)
-            setSoundEnabled(true)
-            setVibrationEnabled(false)
-        }
-
         // when
         sut().test {
             // then
             val expected = Result.success(
                 listOf(
                     SettingModel.Music(false),
-                    SettingModel.Sound(true),
+                    SettingModel.Sound(false),
                     SettingModel.Vibration(false)
                 )
             )
             assertEquals(expected, awaitItem())
-            awaitComplete()
         }
     }
 }

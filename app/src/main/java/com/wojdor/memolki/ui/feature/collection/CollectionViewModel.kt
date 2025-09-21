@@ -8,6 +8,7 @@ import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val hapticFeedback: HapticFeedback,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val getUnlockedCardPairs: GetUnlockedCardPairsUseCase,
     private val getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase
@@ -34,16 +36,23 @@ class CollectionViewModel @Inject constructor(
 
     override fun onIntent(intent: CollectionIntent) {
         when (intent) {
-            is CollectionIntent.OnShopClick -> sendEffect(
-                CollectionEffect.OpenShopScreen
-            )
-
-            is CollectionIntent.OnCardPairClick -> sendEffect(
-                CollectionEffect.OpenCardPairDetailsScreen(
-                    intent.collectionCardPairModel.cardPair
-                )
-            )
+            is CollectionIntent.OnShopClick -> onShopClick()
+            is CollectionIntent.OnCardPairClick -> onCardPairClick(intent)
         }
+    }
+
+    private fun onShopClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(CollectionEffect.OpenShopScreen)
+    }
+
+    private fun onCardPairClick(intent: CollectionIntent.OnCardPairClick) {
+        hapticFeedback.vibrateLow()
+        sendEffect(
+            CollectionEffect.OpenCardPairDetailsScreen(
+                intent.collectionCardPairModel.cardPair
+            )
+        )
     }
 
     private fun loadData() {

@@ -1,25 +1,24 @@
 package com.wojdor.memolki.util.media
 
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.MediaPlayer
 import com.wojdor.memolki.R
-import com.wojdor.memolki.domain.model.SettingModel
+import com.wojdor.memolki.di.coroutine.MainDispatcher
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.random.Random
+import kotlin.concurrent.atomics.AtomicInt
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
+@OptIn(ExperimentalAtomicApi::class)
 @Singleton
 class CardFlipPlayer @Inject constructor(
-    @param:ApplicationContext private val context: Context,
-    private val getSettingsUseCase: GetSettingsUseCase
-) {
+    @ApplicationContext context: Context,
+    @MainDispatcher coroutineDispatcher: CoroutineDispatcher,
+    getSettingsUseCase: GetSettingsUseCase
+) : SoundPlayer(context, coroutineDispatcher, getSettingsUseCase) {
+
     private val sounds = listOf(
         R.raw.sound_card_flip_1,
         R.raw.sound_card_flip_2,
@@ -27,34 +26,13 @@ class CardFlipPlayer @Inject constructor(
         R.raw.sound_card_flip_4
     )
 
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private var isSoundEnabled = false
+    private var lastSoundId = AtomicInt(0)
 
-    fun play() {
-        scope.launch {
-            getSettingsUseCase().collect { result ->
-                result.onSuccess { settings ->
-                    isSoundEnabled = settings.find { it is SettingModel.Sound }?.isEnabled ?: false
-                }
-            }
-            if (isSoundEnabled) {
-                val soundId = sounds[Random.nextInt(sounds.size)]
-                MediaPlayer.create(context, soundId).apply {
-                    setAudioAttributes(
-                        AudioAttributes.Builder()
-                            .setUsage(AudioAttributes.USAGE_GAME)
-                            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                            .build()
-                    )
-                    setVolume(VOLUME, VOLUME)
-                    setOnCompletionListener { it.release() }
-                    start()
-                }
-            }
+    override val soundId: Int
+        get() {
+            val last = lastSoundId.load()
+            val nextSound = sounds.filter { it != last }.random()
+            lastSoundId.store(nextSound)
+            return nextSound
         }
-    }
-
-    companion object {
-        private const val VOLUME = 0.5f
-    }
 }

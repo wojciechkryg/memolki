@@ -35,24 +35,25 @@ fun GameCardsGrid(
     ) {
         val spacing = 8.dp
         val columns = state.level.columns
-        val shorterEdge = maxWidth.coerceAtMost(maxHeight)
-        val cardSize = (shorterEdge - spacing * (columns - 1)) / columns
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(columns),
-            verticalArrangement = Arrangement.spacedBy(spacing),
-            horizontalArrangement = Arrangement.spacedBy(spacing),
-            userScrollEnabled = false,
-            modifier = Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-        ) {
-            items(state.cards) { card ->
-                AnimatedCardItem(
-                    modifier = Modifier.size(cardSize),
-                    card = card,
-                    callbacks = callbacks
-                )
+        if (columns > 0) {
+            val shorterEdge = maxWidth.coerceAtMost(maxHeight)
+            val cardSize = (shorterEdge - spacing * (columns - 1)) / columns
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columns),
+                verticalArrangement = Arrangement.spacedBy(spacing),
+                horizontalArrangement = Arrangement.spacedBy(spacing),
+                userScrollEnabled = false,
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+            ) {
+                items(state.cards) { card ->
+                    AnimatedCardItem(
+                        modifier = Modifier.size(cardSize),
+                        card = card,
+                        callbacks = callbacks
+                    )
+                }
             }
         }
     }

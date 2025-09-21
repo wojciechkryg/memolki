@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
@@ -27,6 +28,7 @@ class MenuViewModelTest : AppTest() {
         sut = MenuViewModel(
             savedStateHandle = savedStateHandle,
             getMenuUseCase = GetMenuUseCase(testDispatcher),
+            hapticFeedback = relaxedMockk()
         )
     }
 

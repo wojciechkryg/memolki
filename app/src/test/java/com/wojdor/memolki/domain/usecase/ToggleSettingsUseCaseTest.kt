@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -38,7 +39,7 @@ class ToggleSettingsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(setting.copy(isEnabled = false))
             assertEquals(expected, awaitItem())
-            assertEquals(false, settingsRepository.getMusicEnabled())
+            assertEquals(false, settingsRepository.getMusicEnabled().first())
             awaitComplete()
         }
     }
@@ -54,7 +55,7 @@ class ToggleSettingsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(setting.copy(isEnabled = true))
             assertEquals(expected, awaitItem())
-            assertEquals(true, settingsRepository.getSoundEnabled())
+            assertEquals(true, settingsRepository.getSoundEnabled().first())
             awaitComplete()
         }
     }
@@ -70,7 +71,7 @@ class ToggleSettingsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(setting.copy(isEnabled = false))
             assertEquals(expected, awaitItem())
-            assertEquals(false, settingsRepository.getVibrationEnabled())
+            assertEquals(false, settingsRepository.getVibrationEnabled().first())
             awaitComplete()
         }
     }

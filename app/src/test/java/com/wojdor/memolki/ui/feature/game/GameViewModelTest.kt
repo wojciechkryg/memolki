@@ -10,7 +10,7 @@ import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
 import com.wojdor.memolki.test.mock.MockEncryptor
-import com.wojdor.memolki.util.media.CardFlipPlayer
+import com.wojdor.memolki.test.relaxedMockk
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -28,9 +28,6 @@ class GameViewModelTest : AppTest() {
     @RelaxedMockK
     private lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
 
-    @RelaxedMockK
-    private lateinit var cardFlipPlayer: CardFlipPlayer
-
     private val userRepository = UserRepository(
         encryptor = MockEncryptor(),
         userLocalDataSource = UserLocalDataSource(MockDataStore())
@@ -47,9 +44,11 @@ class GameViewModelTest : AppTest() {
         super.setup()
         sut = GameViewModel(
             savedStateHandle,
-            cardFlipPlayer,
+            cardFlipPlayer = relaxedMockk(),
+            cardPairMatchedPlayer = relaxedMockk(),
+            hapticFeedback = relaxedMockk(),
             getShuffledUnlockedCardsUseCase,
-            incrementTotalCardPairsMatchedUseCase
+            incrementTotalCardPairsMatchedUseCase,
         )
         every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
             Result.success(mockShuffledCardsWithSamePairIds())
@@ -315,7 +314,7 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
-                skipItems(3)
+                skipItems(4)
 
                 // then
                 val result = awaitItem()

@@ -1,7 +1,8 @@
 package com.wojdor.memolki.ui.components
 
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -12,8 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
-import kotlinx.coroutines.launch
 
 @Composable
 fun CoinsAmount(
@@ -30,23 +29,19 @@ fun CoinsAmount(
     coins: Long,
     animate: Boolean = false
 ) {
-    val animatedAmount = remember { Animatable(0f) }
-
-    LaunchedEffect(coins) {
-        if (animate) {
-            launch {
-                animatedAmount.animateTo(
-                    targetValue = coins.toFloat(),
-                    animationSpec = tween(
-                        durationMillis = ANIMATION_DURATION,
-                        easing = FastOutSlowInEasing
-                    )
-                )
-            }
+    val animatedAmount by animateFloatAsState(
+        targetValue = coins.toFloat(),
+        animationSpec = if (animate) {
+            tween(
+                delayMillis = ANIMATION_DELAY,
+                durationMillis = ANIMATION_DURATION,
+                easing = FastOutSlowInEasing
+            )
         } else {
-            animatedAmount.snapTo(coins.toFloat())
-        }
-    }
+            snap()
+        },
+        label = "coins amount animation"
+    )
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -60,7 +55,7 @@ fun CoinsAmount(
         Spacer(modifier = Modifier.size(4.dp))
         Text(
             modifier = Modifier.weight(1f),
-            text = animatedAmount.value.toLong().toString(),
+            text = animatedAmount.toLong().toString(),
             style = MaterialTheme.typography.headlineLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -68,7 +63,8 @@ fun CoinsAmount(
     }
 }
 
-private const val ANIMATION_DURATION = 1500
+private const val ANIMATION_DELAY = 500
+private const val ANIMATION_DURATION = 1000
 
 @Preview
 @Composable

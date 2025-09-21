@@ -2,39 +2,38 @@ package com.wojdor.memolki.data.local.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class SettingsLocalDataSource @Inject constructor(
+open class SettingsLocalDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 
-    suspend fun getMusicEnabled(): Boolean {
-        val preferences = dataStore.data.first()
-        return preferences[Key.MUSIC_ENABLED]?.toBoolean() ?: true
+    open fun getMusicEnabled(): Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[Key.MUSIC_ENABLED]?.toBoolean() ?: true
     }
 
-    suspend fun setMusicEnabled(value: Boolean) {
+    open suspend fun setMusicEnabled(value: Boolean) {
         dataStore.edit { it[Key.MUSIC_ENABLED] = value.toString() }
     }
 
-    suspend fun getSoundEnabled(): Boolean {
-        val preferences = dataStore.data.first()
-        return preferences[Key.SOUND_ENABLED]?.toBoolean() ?: true
+    open fun getSoundEnabled(): Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[Key.SOUND_ENABLED]?.toBoolean() ?: true
     }
 
-    suspend fun setSoundEnabled(value: Boolean) {
+    open suspend fun setSoundEnabled(value: Boolean) {
         dataStore.edit { it[Key.SOUND_ENABLED] = value.toString() }
     }
 
-    suspend fun getVibrationEnabled(): Boolean {
-        val preferences = dataStore.data.first()
-        return preferences[Key.VIBRATION_ENABLED]?.toBoolean() ?: true
+    open fun getVibrationEnabled(): Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[Key.VIBRATION_ENABLED]?.toBoolean() ?: true
     }
 
-    suspend fun setVibrationEnabled(value: Boolean) {
+    open suspend fun setVibrationEnabled(value: Boolean) {
         dataStore.edit { it[Key.VIBRATION_ENABLED] = value.toString() }
     }
 

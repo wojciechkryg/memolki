@@ -34,18 +34,18 @@ private fun CardPairDetailsScreenPreview() {
         CardPairDetailsScreen(
             state = CardPairDetailsState(
                 CardPairModel(
-                    CardModel.Image(
+                    first = CardModel.Image(
                         "banana_whole",
                         "banana",
                         R.string.banana,
                         R.drawable.img_banana_whole
-                    ) to
-                            CardModel.Image(
-                                "banana_half",
-                                "banana",
-                                R.string.banana,
-                                R.drawable.img_banana_half
-                            )
+                    ),
+                    second = CardModel.Image(
+                        "banana_half",
+                        "banana",
+                        R.string.banana,
+                        R.drawable.img_banana_half
+                    )
                 )
             )
         )

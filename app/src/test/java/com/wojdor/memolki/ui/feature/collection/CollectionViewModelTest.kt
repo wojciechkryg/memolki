@@ -14,6 +14,7 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
 import com.wojdor.memolki.test.mock.MockDataStore
 import com.wojdor.memolki.test.mock.MockEncryptor
+import com.wojdor.memolki.test.relaxedMockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -47,7 +48,8 @@ class CollectionViewModelTest : AppTest() {
             getAllCardPairsCountUseCase = GetAllCardPairsCountUseCase(
                 testDispatcher,
                 cardRepository
-            )
+            ),
+            hapticFeedback = relaxedMockk()
         )
     }
 
