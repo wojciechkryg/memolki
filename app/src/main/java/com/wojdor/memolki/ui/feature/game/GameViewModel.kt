@@ -8,6 +8,7 @@ import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CardFlipPlayer
+import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class GameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val cardFlipPlayer: CardFlipPlayer,
+    private val cardPairMatchedPlayer: CardPairMatchedPlayer,
     private val hapticFeedback: HapticFeedback,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
     private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase
@@ -85,6 +87,10 @@ class GameViewModel @Inject constructor(
                 }
                 updateStateWith(matchedCards)
                 incrementTotalCardPairsMatchedUseCase().launchIn(viewModelScope)
+                viewModelScope.launch {
+                    delay(250L)
+                    cardPairMatchedPlayer.play()
+                }
             }
         }
     }

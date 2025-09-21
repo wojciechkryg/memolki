@@ -8,16 +8,22 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.media.LevelCompletePlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EndGameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val levelCompletePlayer: LevelCompletePlayer,
+    private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
@@ -39,6 +45,10 @@ class EndGameViewModel @Inject constructor(
         sendState { EndGameState() }
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         getCurrentCoinsAndReward(level)
+        viewModelScope.launch {
+            delay(250)
+            levelCompletePlayer.play()
+        }
     }
 
     private fun onPlayAgainClick(intent: EndGameIntent.OnPlayAgainClick) {
@@ -77,6 +87,8 @@ class EndGameViewModel @Inject constructor(
                         animateCoins = true
                     )
                 }
+                delay(500)
+                coinsPlayer.play()
             }
         }.launchIn(viewModelScope)
     }

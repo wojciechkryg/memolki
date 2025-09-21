@@ -10,23 +10,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CardFlipPlayer @Inject constructor(
-    @ApplicationContext context: Context,
-    @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
+class LevelCompletePlayer @Inject constructor(
+    @param:ApplicationContext private val context: Context,
+    @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     getSettingsUseCase: GetSettingsUseCase
 ) : SoundPlayer(context, coroutineDispatcher, getSettingsUseCase) {
 
-    private val sounds = listOf(
-        R.raw.sound_card_flip_1,
-        R.raw.sound_card_flip_2,
-        R.raw.sound_card_flip_3,
-        R.raw.sound_card_flip_4
-    )
-
-    private var lastSoundId = 0
-
-    override val soundId: Int
-        get() = sounds.filter { it != lastSoundId }.random().also {
-            lastSoundId = it
-        }
+    override val soundId: Int = R.raw.sound_level_complete
 }
