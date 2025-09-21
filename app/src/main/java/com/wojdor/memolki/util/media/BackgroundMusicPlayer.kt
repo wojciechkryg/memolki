@@ -6,7 +6,7 @@ import android.media.MediaPlayer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.wojdor.memolki.R
-import com.wojdor.memolki.di.coroutine.IoDispatcher
+import com.wojdor.memolki.di.coroutine.MainDispatcher
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @Singleton
 class BackgroundMusicPlayer @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+    @param:MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val getSettingsUseCase: GetSettingsUseCase
 ) : DefaultLifecycleObserver {
 
@@ -62,7 +62,7 @@ class BackgroundMusicPlayer @Inject constructor(
     }
 
     fun start() {
-        if (!isMusicEnabled && currentPlayer?.isPlaying == true && !isFadingOut) return
+        if (!isMusicEnabled || (currentPlayer?.isPlaying == true && !isFadingOut)) return
 
         volumeJob?.cancel()
         isFadingOut = false

@@ -2,17 +2,20 @@ package com.wojdor.memolki.util.media
 
 import android.content.Context
 import com.wojdor.memolki.R
-import com.wojdor.memolki.di.coroutine.IoDispatcher
+import com.wojdor.memolki.di.coroutine.MainDispatcher
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.concurrent.atomics.AtomicInt
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
+@OptIn(ExperimentalAtomicApi::class)
 @Singleton
 class CardFlipPlayer @Inject constructor(
     @ApplicationContext context: Context,
-    @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
+    @MainDispatcher coroutineDispatcher: CoroutineDispatcher,
     getSettingsUseCase: GetSettingsUseCase
 ) : SoundPlayer(context, coroutineDispatcher, getSettingsUseCase) {
 
@@ -23,10 +26,13 @@ class CardFlipPlayer @Inject constructor(
         R.raw.sound_card_flip_4
     )
 
-    private var lastSoundId = 0
+    private var lastSoundId = AtomicInt(0)
 
     override val soundId: Int
-        get() = sounds.filter { it != lastSoundId }.random().also {
-            lastSoundId = it
+        get() {
+            val last = lastSoundId.load()
+            val nextSound = sounds.filter { it != last }.random()
+            lastSoundId.store(nextSound)
+            return nextSound
         }
 }
