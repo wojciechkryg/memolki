@@ -143,7 +143,7 @@ class BackgroundMusicPlayer @Inject constructor(
         setAudioAttributes(
             AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                 .build()
         )
     }
