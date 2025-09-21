@@ -5,7 +5,7 @@ import com.wojdor.memolki.di.coroutine.DefaultDispatcher
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class GetSettingsUseCase @Inject constructor(
@@ -13,14 +13,17 @@ class GetSettingsUseCase @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : BaseUseCase<List<SettingModel>>(coroutineDispatcher) {
 
-    override fun execute() = flow {
-        with(settingsRepository) {
+    override fun execute() =
+        combine(
+            settingsRepository.getMusicEnabled(),
+            settingsRepository.getSoundEnabled(),
+            settingsRepository.getVibrationEnabled()
+        ) { music, sound, vibration ->
             val settings = listOf(
-                SettingModel.Music(getMusicEnabled()),
-                SettingModel.Sound(getSoundEnabled()),
-                SettingModel.Vibration(getVibrationEnabled())
+                SettingModel.Music(music),
+                SettingModel.Sound(sound),
+                SettingModel.Vibration(vibration)
             )
-            emit(Result.success(settings))
+            Result.success(settings)
         }
-    }
 }

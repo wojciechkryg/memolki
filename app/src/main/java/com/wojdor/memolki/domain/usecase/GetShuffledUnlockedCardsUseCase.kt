@@ -22,9 +22,9 @@ class GetShuffledUnlockedCardsUseCase @Inject constructor(
         val randomUnlockedCardPairIds =
             cardRepository.getRandomUnlockedCardPairIds(cardPairIdsCount)
         val shuffledCards = randomUnlockedCardPairIds.mapNotNull {
-            cardRepository.getCardPairById(it)?.pair
+            cardRepository.getCardPairById(it)
         }
-            .flatMap { it.toList() }
+            .flatMap { listOf(it.first, it.second) }
             .shuffled(random)
         emit(Result.success(shuffledCards))
     }

@@ -4,6 +4,7 @@ import com.wojdor.memolki.data.local.settings.SettingsLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -29,7 +30,7 @@ class SettingsRepositoryTest : AppTest() {
         settingsLocalDataSource.setMusicEnabled(false)
 
         // when
-        val result = sut.getMusicEnabled()
+        val result = sut.getMusicEnabled().first()
 
         // then
         assertFalse(result)
@@ -38,7 +39,7 @@ class SettingsRepositoryTest : AppTest() {
     @Test
     fun `when get music enabled then return default value`() = runTest {
         // when
-        val result = sut.getMusicEnabled()
+        val result = sut.getMusicEnabled().first()
 
         // then
         assertTrue(result)
@@ -50,7 +51,7 @@ class SettingsRepositoryTest : AppTest() {
         sut.setMusicEnabled(false)
 
         // then
-        assertFalse(settingsLocalDataSource.getMusicEnabled())
+        assertFalse(settingsLocalDataSource.getMusicEnabled().first())
     }
 
     @Test
@@ -59,7 +60,7 @@ class SettingsRepositoryTest : AppTest() {
         settingsLocalDataSource.setSoundEnabled(false)
 
         // when
-        val result = sut.getSoundEnabled()
+        val result = sut.getSoundEnabled().first()
 
         // then
         assertFalse(result)
@@ -68,7 +69,7 @@ class SettingsRepositoryTest : AppTest() {
     @Test
     fun `when get sound enabled then return default value`() = runTest {
         // when
-        val result = sut.getSoundEnabled()
+        val result = sut.getSoundEnabled().first()
 
         // then
         assertTrue(result)
@@ -80,7 +81,7 @@ class SettingsRepositoryTest : AppTest() {
         sut.setSoundEnabled(false)
 
         // then
-        assertFalse(settingsLocalDataSource.getSoundEnabled())
+        assertFalse(settingsLocalDataSource.getSoundEnabled().first())
     }
 
     @Test
@@ -89,7 +90,7 @@ class SettingsRepositoryTest : AppTest() {
         settingsLocalDataSource.setVibrationEnabled(false)
 
         // when
-        val result = sut.getVibrationEnabled()
+        val result = sut.getVibrationEnabled().first()
 
         // then
         assertFalse(result)
@@ -98,7 +99,7 @@ class SettingsRepositoryTest : AppTest() {
     @Test
     fun `when get vibrations enabled then return default value`() = runTest {
         // when
-        val result = sut.getVibrationEnabled()
+        val result = sut.getVibrationEnabled().first()
 
         // then
         assertTrue(result)
@@ -110,6 +111,6 @@ class SettingsRepositoryTest : AppTest() {
         sut.setVibrationEnabled(false)
 
         // then
-        assertFalse(settingsLocalDataSource.getVibrationEnabled())
+        assertFalse(settingsLocalDataSource.getVibrationEnabled().first())
     }
 }

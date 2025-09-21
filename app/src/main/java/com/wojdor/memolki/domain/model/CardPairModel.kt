@@ -5,5 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CardPairModel(
-    val pair: Pair<CardModel, CardModel>
+    val first: CardModel,
+    val second: CardModel
 ) : Parcelable

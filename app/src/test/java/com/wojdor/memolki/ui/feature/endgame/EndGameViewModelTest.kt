@@ -11,6 +11,7 @@ import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
 import com.wojdor.memolki.test.mock.MockEncryptor
+import com.wojdor.memolki.test.relaxedMockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -39,7 +40,10 @@ class EndGameViewModelTest : AppTest() {
             rewardCoinsForLevelUseCase = RewardCoinsForLevelUseCase(
                 testDispatcher,
                 userRepository
-            )
+            ),
+            hapticFeedback = relaxedMockk(),
+            levelCompletePlayer = relaxedMockk(),
+            coinsPlayer = relaxedMockk()
         )
     }
 

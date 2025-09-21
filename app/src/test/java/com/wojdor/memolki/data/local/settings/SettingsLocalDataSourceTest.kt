@@ -3,6 +3,7 @@ package com.wojdor.memolki.data.local.settings
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockDataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -23,7 +24,7 @@ class SettingsLocalDataSourceTest : AppTest() {
     @Test
     fun `when get music enabled without a value then return default true`() = runTest {
         // when
-        val result = sut.getMusicEnabled()
+        val result = sut.getMusicEnabled().first()
 
         // then
         assertTrue(result)
@@ -35,7 +36,7 @@ class SettingsLocalDataSourceTest : AppTest() {
         sut.setMusicEnabled(false)
 
         // when
-        val result = sut.getMusicEnabled()
+        val result = sut.getMusicEnabled().first()
 
         // then
         assertFalse(result)
@@ -45,7 +46,7 @@ class SettingsLocalDataSourceTest : AppTest() {
     fun `when set music enabled then the value is saved`() = runTest {
         // when
         sut.setMusicEnabled(false)
-        val result = sut.getMusicEnabled()
+        val result = sut.getMusicEnabled().first()
 
         // then
         assertFalse(result)
@@ -54,7 +55,7 @@ class SettingsLocalDataSourceTest : AppTest() {
     @Test
     fun `when get sound enabled without a value then return default true`() = runTest {
         // when
-        val result = sut.getSoundEnabled()
+        val result = sut.getSoundEnabled().first()
 
         // then
         assertTrue(result)
@@ -66,7 +67,7 @@ class SettingsLocalDataSourceTest : AppTest() {
         sut.setSoundEnabled(false)
 
         // when
-        val result = sut.getSoundEnabled()
+        val result = sut.getSoundEnabled().first()
 
         // then
         assertFalse(result)
@@ -76,7 +77,7 @@ class SettingsLocalDataSourceTest : AppTest() {
     fun `when set sound enabled then the value is saved`() = runTest {
         // when
         sut.setSoundEnabled(false)
-        val result = sut.getSoundEnabled()
+        val result = sut.getSoundEnabled().first()
 
         // then
         assertFalse(result)
@@ -85,7 +86,7 @@ class SettingsLocalDataSourceTest : AppTest() {
     @Test
     fun `when get vibrations enabled without a value then return default true`() = runTest {
         // when
-        val result = sut.getVibrationEnabled()
+        val result = sut.getVibrationEnabled().first()
 
         // then
         assertTrue(result)
@@ -97,7 +98,7 @@ class SettingsLocalDataSourceTest : AppTest() {
         sut.setVibrationEnabled(false)
 
         // when
-        val result = sut.getVibrationEnabled()
+        val result = sut.getVibrationEnabled().first()
 
         // then
         assertFalse(result)
@@ -107,7 +108,7 @@ class SettingsLocalDataSourceTest : AppTest() {
     fun `when set vibrations enabled then the value is saved`() = runTest {
         // when
         sut.setVibrationEnabled(false)
-        val result = sut.getVibrationEnabled()
+        val result = sut.getVibrationEnabled().first()
 
         // then
         assertFalse(result)
