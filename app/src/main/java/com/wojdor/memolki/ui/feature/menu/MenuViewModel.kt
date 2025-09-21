@@ -10,6 +10,7 @@ import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
+import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MenuViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val hapticFeedback: HapticFeedback,
     private val getMenuUseCase: GetMenuUseCase
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
@@ -30,10 +32,25 @@ class MenuViewModel @Inject constructor(
 
     override fun onIntent(intent: MenuIntent) {
         when (intent) {
-            OnNewGameClick -> sendEffect(OpenChooseLevelScreen)
-            OnCollectionClick -> sendEffect(OpenCollectionScreen)
-            OnSettingsClick -> sendEffect(OpenSettingsScreen)
+            OnNewGameClick -> onNewGameClick()
+            OnCollectionClick -> onCollectionClick()
+            OnSettingsClick -> onSettingsClick()
         }
+    }
+
+    private fun onNewGameClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(OpenChooseLevelScreen)
+    }
+
+    private fun onCollectionClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(OpenCollectionScreen)
+    }
+
+    private fun onSettingsClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(OpenSettingsScreen)
     }
 
     private fun loadMenu() {

@@ -5,17 +5,16 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.coroutineScope
 import com.wojdor.memolki.R
+import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,6 +22,7 @@ import javax.inject.Singleton
 @Singleton
 class BackgroundMusicPlayer @Inject constructor(
     @param:ApplicationContext private val context: Context,
+    @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val getSettingsUseCase: GetSettingsUseCase
 ) : DefaultLifecycleObserver {
 
@@ -31,27 +31,30 @@ class BackgroundMusicPlayer @Inject constructor(
     private var currentPlayer: MediaPlayer? = null
     private var nextPlayer: MediaPlayer? = null
 
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private val scope = CoroutineScope(coroutineDispatcher + SupervisorJob())
     private var volumeJob: Job? = null
+    private var isMusicEnabled = false
     private var currentVolume = NO_VOLUME
     private var isFadingOut = false
 
-    override fun onStart(owner: LifecycleOwner) {
-        owner.lifecycle.coroutineScope.launch {
-            getSettingsUseCase()
-                .distinctUntilChanged()
-                .collect {
-                    it.onSuccess { settings ->
-                        settings.firstOrNull { it is SettingModel.Music }?.let { music ->
-                            if (music.isEnabled) {
-                                start()
-                            } else {
-                                stop()
-                            }
-                        }
-                    }
+    init {
+        observeMusicSettings()
+    }
+
+    private fun observeMusicSettings() {
+        scope.launch {
+            getSettingsUseCase().collect { result ->
+                result.onSuccess { settings ->
+                    isMusicEnabled =
+                        settings.filterIsInstance<SettingModel.Music>().first().isEnabled
+                    onStart()
                 }
+            }
         }
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        onStart()
     }
 
     override fun onStop(owner: LifecycleOwner) {
@@ -59,7 +62,7 @@ class BackgroundMusicPlayer @Inject constructor(
     }
 
     fun start() {
-        if (currentPlayer?.isPlaying == true && !isFadingOut) return
+        if (!isMusicEnabled && currentPlayer?.isPlaying == true && !isFadingOut) return
 
         volumeJob?.cancel()
         isFadingOut = false
@@ -93,6 +96,14 @@ class BackgroundMusicPlayer @Inject constructor(
                     isFadingOut = false
                 }
             }
+        }
+    }
+
+    private fun onStart() {
+        if (isMusicEnabled) {
+            start()
+        } else {
+            stop()
         }
     }
 
@@ -170,7 +181,7 @@ class BackgroundMusicPlayer @Inject constructor(
         }
 
     companion object {
-        private const val BACKGROUND_MUSIC_VOLUME = 0.15f
+        private const val BACKGROUND_MUSIC_VOLUME = 0.025f
         private const val NO_VOLUME = 0.0f
         private const val FADE_DURATION_MS = 500L
         private const val FADE_STEP_DURATION = 50L

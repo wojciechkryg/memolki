@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
+import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val hapticFeedback: HapticFeedback,
     private val backgroundMusicPlayer: BackgroundMusicPlayer,
     private val getSettingsUseCase: GetSettingsUseCase,
     private val toggleSettingsUseCase: ToggleSettingsUseCase
@@ -42,6 +44,7 @@ class SettingsViewModel @Inject constructor(
             is SettingModel.Music -> handleMusicSetting(setting)
             else -> Unit
         }
+        hapticFeedback.vibrateLow()
         updateSettingState(setting)
     }
 

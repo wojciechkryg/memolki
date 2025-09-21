@@ -1,5 +1,6 @@
 package com.wojdor.memolki.ui.feature.game
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -69,6 +70,7 @@ fun GameScreen(
     state: GameState,
     callbacks: GameCallbacks = GameCallbacks()
 ) {
+    BackHandler(enabled = state.isGameFinished, onBack = {})
     GameCardsGrid(
         state = state,
         callbacks = callbacks

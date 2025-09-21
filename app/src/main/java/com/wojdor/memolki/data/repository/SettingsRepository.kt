@@ -7,15 +7,15 @@ class SettingsRepository @Inject constructor(
     private val settingsLocalDataSource: SettingsLocalDataSource
 ) {
 
-    suspend fun getMusicEnabled() = settingsLocalDataSource.getMusicEnabled()
+    fun getMusicEnabled() = settingsLocalDataSource.getMusicEnabled()
 
     suspend fun setMusicEnabled(value: Boolean) = settingsLocalDataSource.setMusicEnabled(value)
 
-    suspend fun getSoundEnabled() = settingsLocalDataSource.getSoundEnabled()
+    fun getSoundEnabled() = settingsLocalDataSource.getSoundEnabled()
 
     suspend fun setSoundEnabled(value: Boolean) = settingsLocalDataSource.setSoundEnabled(value)
 
-    suspend fun getVibrationEnabled() = settingsLocalDataSource.getVibrationEnabled()
+    fun getVibrationEnabled() = settingsLocalDataSource.getVibrationEnabled()
 
     suspend fun setVibrationEnabled(value: Boolean) =
         settingsLocalDataSource.setVibrationEnabled(value)

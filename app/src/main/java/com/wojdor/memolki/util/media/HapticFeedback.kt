@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import com.wojdor.memolki.di.coroutine.DefaultDispatcher
+import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,9 +18,9 @@ import javax.inject.Singleton
 
 @Singleton
 class HapticFeedback @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val getSettingsUseCase: GetSettingsUseCase,
-    @DefaultDispatcher private val coroutineDispatcher: CoroutineDispatcher
+    @param:ApplicationContext private val context: Context,
+    @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+    private val getSettingsUseCase: GetSettingsUseCase
 ) {
     private val scope = CoroutineScope(coroutineDispatcher + SupervisorJob())
     private var isVibrationEnabled: Boolean = false
@@ -72,7 +72,7 @@ class HapticFeedback @Inject constructor(
             vibrator.vibrate(
                 VibrationEffect.createOneShot(
                     VIBRATE_STRONG_MS,
-                    VibrationEffect.DEFAULT_AMPLITUDE
+                    VIBRATE_STRONG_AMPLITUDE
                 )
             )
         } else {
@@ -82,8 +82,9 @@ class HapticFeedback @Inject constructor(
     }
 
     companion object {
-        private const val VIBRATE_LOW_MS = 50L
-        private const val VIBRATE_LOW_AMPLITUDE = 50
-        private const val VIBRATE_STRONG_MS = 150L
+        private const val VIBRATE_LOW_MS = 10L
+        private const val VIBRATE_LOW_AMPLITUDE = 25
+        private const val VIBRATE_STRONG_MS = 30L
+        private const val VIBRATE_STRONG_AMPLITUDE = 50
     }
 }

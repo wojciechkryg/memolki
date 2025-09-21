@@ -4,34 +4,32 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SettingsLocalDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 
-    suspend fun getMusicEnabled(): Boolean {
-        val preferences = dataStore.data.first()
-        return preferences[Key.MUSIC_ENABLED]?.toBoolean() ?: true
+    fun getMusicEnabled(): Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[Key.MUSIC_ENABLED]?.toBoolean() ?: true
     }
 
     suspend fun setMusicEnabled(value: Boolean) {
         dataStore.edit { it[Key.MUSIC_ENABLED] = value.toString() }
     }
 
-    suspend fun getSoundEnabled(): Boolean {
-        val preferences = dataStore.data.first()
-        return preferences[Key.SOUND_ENABLED]?.toBoolean() ?: true
+    fun getSoundEnabled(): Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[Key.SOUND_ENABLED]?.toBoolean() ?: true
     }
 
     suspend fun setSoundEnabled(value: Boolean) {
         dataStore.edit { it[Key.SOUND_ENABLED] = value.toString() }
     }
 
-    suspend fun getVibrationEnabled(): Boolean {
-        val preferences = dataStore.data.first()
-        return preferences[Key.VIBRATION_ENABLED]?.toBoolean() ?: true
+    fun getVibrationEnabled(): Flow<Boolean> = dataStore.data.map { preferences ->
+        preferences[Key.VIBRATION_ENABLED]?.toBoolean() ?: true
     }
 
     suspend fun setVibrationEnabled(value: Boolean) {
