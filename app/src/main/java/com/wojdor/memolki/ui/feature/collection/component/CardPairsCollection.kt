@@ -59,8 +59,14 @@ fun CardPairsCollection(
                             )
 
                             is CollectionCardPairModel.Locked -> CollectionLockedCardPair()
-                            is CollectionCardPairModel.LockedToUnlockWithAd -> CollectionLockedCardPair()
-                            is CollectionCardPairModel.LockedToUnlockWithCoins -> CollectionLockedCardPair()
+                            is CollectionCardPairModel.LockedToUnlockWithCoins ->
+                                CollectionUnlockCardPairWithCoins(
+                                    collectionCardPairModel = collectionCardPair,
+                                    onClick = { callbacks.onUnlockWithCoinsClick(collectionCardPair) }
+                                )
+
+                            is CollectionCardPairModel.LockedToUnlockWithAd ->
+                                CollectionLockedCardPair()
                         }
                     }
                 }

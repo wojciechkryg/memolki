@@ -4,10 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.extension.logD
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
@@ -24,7 +26,8 @@ class CollectionViewModel @Inject constructor(
     private val hapticFeedback: HapticFeedback,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val getUnlockedCardPairs: GetUnlockedCardPairsUseCase,
-    private val getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase
+    private val getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase,
+    private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase
 ) : MviViewModel<CollectionIntent, CollectionState>(
     savedStateHandle,
     CollectionState()
@@ -38,21 +41,8 @@ class CollectionViewModel @Inject constructor(
         when (intent) {
             is CollectionIntent.OnShopClick -> onShopClick()
             is CollectionIntent.OnCardPairClick -> onCardPairClick(intent)
+            is CollectionIntent.OnUnlockWithCoinsClick -> logD("Unlock with coins clicked")
         }
-    }
-
-    private fun onShopClick() {
-        hapticFeedback.vibrateLow()
-        sendEffect(CollectionEffect.OpenShopScreen)
-    }
-
-    private fun onCardPairClick(intent: CollectionIntent.OnCardPairClick) {
-        hapticFeedback.vibrateLow()
-        sendEffect(
-            CollectionEffect.OpenCardPairDetailsScreen(
-                intent.collectionCardPairModel.cardPair
-            )
-        )
     }
 
     private fun loadData() {
@@ -75,18 +65,22 @@ class CollectionViewModel @Inject constructor(
                 .filterNotNull(),
             getAllCardPairsCountUseCase()
                 .map { it.getOrNull() }
+                .filterNotNull(),
+            calculateNextCardPairCostUseCase()
+                .map { it.getOrNull() }
                 .filterNotNull()
-        ) { unlockedCardPairs, allCardPairsCount ->
+        ) { unlockedCardPairs, allCardPairsCount, cardPairCost ->
             val lockedCardPairsCount = allCardPairsCount - unlockedCardPairs.size
-            unlockedCardPairs to lockedCardPairsCount
+            Triple(unlockedCardPairs, lockedCardPairsCount, cardPairCost)
         }
             .distinctUntilChanged()
-            .onEach { (unlockedCardPairs, lockedCardPairsCount) ->
+            .onEach { (unlockedCardPairs, lockedCardPairsCount, cardPairCost) ->
                 sendState {
                     copy(
                         collectionCardPairs = getCollectionCardPairs(
                             unlockedCardPairs,
-                            lockedCardPairsCount
+                            lockedCardPairsCount,
+                            cardPairCost
                         ),
                     )
                 }
@@ -96,35 +90,37 @@ class CollectionViewModel @Inject constructor(
 
     private fun getCollectionCardPairs(
         unlockedCardPairs: List<CardPairModel>,
-        lockedCardPairsCount: Int
+        lockedCardPairsCount: Int,
+        cardPairCost: Int
     ): List<CollectionCardPairModel> {
         val unlocked = unlockedCardPairs.map { CollectionCardPairModel.Unlocked(it) }
+        val lockedToUnlockWithCoins = getLockedToUnlockWithCoins(lockedCardPairsCount, cardPairCost)
         val lockedToUnlockWithAd = getLockedToUnlockWithAd(lockedCardPairsCount)
-        val lockedToUnlockWithCoins = getLockedToUnlockWithCoins(lockedCardPairsCount)
         val lockedCardPairsNotPossibleToUnlockYet =
             getLockedNotPossibleToUnlockYet(lockedCardPairsCount)
         return unlocked +
-                lockedToUnlockWithAd +
                 lockedToUnlockWithCoins +
+                lockedToUnlockWithAd +
                 lockedCardPairsNotPossibleToUnlockYet
     }
 
-    private fun getLockedToUnlockWithAd(lockedCardPairsCount: Int)
-            : List<CollectionCardPairModel.LockedToUnlockWithAd> =
+    private fun getLockedToUnlockWithCoins(
+        lockedCardPairsCount: Int,
+        cardPairCost: Int
+    )
+            : List<CollectionCardPairModel.LockedToUnlockWithCoins> =
         if (lockedCardPairsCount > 0) {
-            List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.LockedToUnlockWithAd }
+            List(UNLOCK_WITH_COINS_COUNT) {
+                CollectionCardPairModel.LockedToUnlockWithCoins(cardPairCost)
+            }
         } else {
             emptyList()
         }
 
-    private fun getLockedToUnlockWithCoins(lockedCardPairsCount: Int)
-            : List<CollectionCardPairModel.LockedToUnlockWithCoins> =
+    private fun getLockedToUnlockWithAd(lockedCardPairsCount: Int)
+            : List<CollectionCardPairModel.LockedToUnlockWithAd> =
         if (lockedCardPairsCount > 1) {
-            List(UNLOCK_WITH_COINS_COUNT) {
-                CollectionCardPairModel.LockedToUnlockWithCoins(
-                    CARD_PAIR_COST
-                )
-            }
+            List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.LockedToUnlockWithAd }
         } else {
             emptyList()
         }
@@ -136,12 +132,29 @@ class CollectionViewModel @Inject constructor(
         return List(lockedCardPairsNotPossibleToUnlockYet) { CollectionCardPairModel.Locked }
     }
 
+    private fun onShopClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(CollectionEffect.OpenShopScreen)
+    }
+
+    private fun onCardPairClick(intent: CollectionIntent.OnCardPairClick) {
+        hapticFeedback.vibrateLow()
+        sendEffect(
+            CollectionEffect.OpenCardPairDetailsScreen(
+                intent.collectionCardPairModel.cardPair
+            )
+        )
+    }
+
+    private fun onUnlockWithCoinsClick(intent: CollectionIntent.OnUnlockWithCoinsClick) {
+        hapticFeedback.vibrateLow()
+
+    }
+
     companion object {
         const val UNLOCK_WITH_ADS_COUNT = 1
         const val UNLOCK_WITH_COINS_COUNT = 1
 
-        // TODO: Make cost dynamic
-        const val CARD_PAIR_COST = 10
         const val NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK =
             UNLOCK_WITH_COINS_COUNT + UNLOCK_WITH_ADS_COUNT
     }

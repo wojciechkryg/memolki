@@ -4,5 +4,6 @@ import com.wojdor.memolki.domain.model.CollectionCardPairModel
 
 data class CollectionCallbacks(
     val onShopButtonClick: () -> Unit = {},
-    val onUnlockedCardPairClick: (CollectionCardPairModel.Unlocked) -> Unit = {}
+    val onUnlockedCardPairClick: (CollectionCardPairModel.Unlocked) -> Unit = {},
+    val onUnlockWithCoinsClick: (CollectionCardPairModel.LockedToUnlockWithCoins) -> Unit = {},
 )

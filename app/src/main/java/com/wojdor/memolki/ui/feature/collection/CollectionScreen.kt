@@ -68,6 +68,9 @@ private fun HandleState(
         },
         onUnlockedCardPairClick = {
             viewModel.sendIntent(CollectionIntent.OnCardPairClick(it))
+        },
+        onUnlockWithCoinsClick = {
+            viewModel.sendIntent(CollectionIntent.OnUnlockWithCoinsClick(it))
         }
     )
     CollectionScreen(state, callbacks)
