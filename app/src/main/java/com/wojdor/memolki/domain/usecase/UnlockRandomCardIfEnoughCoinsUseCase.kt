@@ -17,12 +17,16 @@ class UnlockRandomCardIfEnoughCoinsUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
 
-    override fun execute(): Flow<Result<Unit\>> = flow {
+    override fun execute(): Flow<Result<Unit>> = flow {
         val unlockedIds = cardRepository.getUnlockedCardPairs()
             .map { it.first.pairId }
             .toSet()
         val notUnlockedCardPairs = cardRepository.getAllCardPairs()
             .filter { it.first.pairId !in unlockedIds }
+        if (notUnlockedCardPairs.isEmpty()) {
+            emit(Result.failure(IllegalStateException("All card pairs are already unlocked")))
+            return@flow
+        }
         val nextCardPairCost = calculateNextCardPairCostUseCase().first().getOrThrow()
         val userCoins = userRepository.getCoins().first()
         if (userCoins < nextCardPairCost) {
