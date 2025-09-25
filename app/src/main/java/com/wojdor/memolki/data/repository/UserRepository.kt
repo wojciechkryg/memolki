@@ -4,6 +4,7 @@ import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.util.extension.logE
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -13,6 +14,8 @@ class UserRepository @Inject constructor(
 ) {
 
     fun getCoins() = decryptLong(userLocalDataSource.encryptedCoins)
+    // Testing purpose only
+//    fun getCoins() = flow { emit(3000L) }
 
     suspend fun addCoins(coins: Long) {
         userLocalDataSource.setEncryptedCoinsAndTotalCoins { encryptedCoins, encryptedTotalCoins ->
@@ -21,6 +24,15 @@ class UserRepository @Inject constructor(
             val newCoins = currentCoins + coins
             val newTotalCoins = currentTotalCoins + coins
             encryptor.encrypt(newCoins) to encryptor.encrypt(newTotalCoins)
+        }
+    }
+
+    suspend fun removeCoins(coins: Long) {
+        userLocalDataSource.setEncryptedCoinsAndTotalCoins { encryptedCoins, encryptedTotalCoins ->
+            val currentCoins = decryptLong(encryptedCoins)
+            val currentTotalCoins = decryptLong(encryptedTotalCoins)
+            val newCoins = currentCoins - coins
+            encryptor.encrypt(newCoins) to encryptor.encrypt(currentTotalCoins)
         }
     }
 

@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.game.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,7 +11,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,13 +22,33 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.components.AutoSizeText
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.CardShape
 
 @Composable
 fun FrontCardItem(
     modifier: Modifier = Modifier,
-    card: CardModel
+    card: CardModel,
+    onPress: ((isPressed: Boolean) -> Unit)? = null
 ) {
-    CardBorder(modifier = modifier) {
+    CardBorder(
+        modifier = modifier
+            .clip(CardShape)
+            .then(
+                if (onPress != null) {
+                    Modifier.pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = {
+                                onPress(true)
+                                tryAwaitRelease()
+                                onPress(false)
+                            }
+                        )
+                    }
+                } else {
+                    Modifier
+                }
+            )
+    ) {
         when (card) {
             is CardModel.Text -> FrontCardItemText(card)
             is CardModel.Image -> FrontCardItemImage(card)
@@ -76,7 +99,8 @@ private fun FrontCardItemTextPreview() {
                 id = "banana",
                 pairId = "banana",
                 textRes = R.string.banana
-            )
+            ),
+            onPress = {}
         )
     }
 }
@@ -92,7 +116,8 @@ private fun FrontCardItemImagePreview() {
                 pairId = "banana",
                 textRes = R.string.banana,
                 imageRes = R.drawable.img_banana_whole
-            )
+            ),
+            onPress = {}
         )
     }
 }

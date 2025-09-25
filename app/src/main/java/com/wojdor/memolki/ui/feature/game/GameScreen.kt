@@ -14,7 +14,7 @@ import com.wojdor.memolki.ui.app.navigateToEndGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
-import com.wojdor.memolki.ui.feature.game.component.GameCardsGrid
+import com.wojdor.memolki.ui.feature.game.component.GameContent
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
@@ -60,7 +60,10 @@ private fun HandleState(
     state: GameState
 ) {
     val callbacks = GameCallbacks(
-        onBackCardClick = { viewModel.sendIntent(GameIntent.OnBackCardClick(it)) }
+        onBackCardClick = { viewModel.sendIntent(GameIntent.OnBackCardClick(it)) },
+        onFrontCardPress = { isPressed, card ->
+            viewModel.sendIntent(GameIntent.OnFrontCardPress(isPressed, card))
+        }
     )
     GameScreen(state, callbacks)
 }
@@ -71,7 +74,7 @@ fun GameScreen(
     callbacks: GameCallbacks = GameCallbacks()
 ) {
     BackHandler(enabled = state.isGameFinished, onBack = {})
-    GameCardsGrid(
+    GameContent(
         state = state,
         callbacks = callbacks
     )

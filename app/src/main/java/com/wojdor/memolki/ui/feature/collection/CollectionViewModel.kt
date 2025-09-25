@@ -8,8 +8,8 @@ import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
+import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.util.extension.logD
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
@@ -27,7 +27,8 @@ class CollectionViewModel @Inject constructor(
     private val getCoinsUseCase: GetCoinsUseCase,
     private val getUnlockedCardPairs: GetUnlockedCardPairsUseCase,
     private val getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase,
-    private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase
+    private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase,
+    private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase
 ) : MviViewModel<CollectionIntent, CollectionState>(
     savedStateHandle,
     CollectionState()
@@ -41,19 +42,19 @@ class CollectionViewModel @Inject constructor(
         when (intent) {
             is CollectionIntent.OnShopClick -> onShopClick()
             is CollectionIntent.OnCardPairClick -> onCardPairClick(intent)
-            is CollectionIntent.OnUnlockWithCoinsClick -> logD("Unlock with coins clicked")
+            is CollectionIntent.OnUnlockWithCoinsClick -> onUnlockWithCoinsClick()
         }
     }
 
-    private fun loadData() {
-        loadCoins()
+    private fun loadData(animateCoins: Boolean = false) {
+        loadCoins(animateCoins)
         loadCardPairs()
     }
 
-    private fun loadCoins() {
+    private fun loadCoins(animateCoins: Boolean) {
         getCoinsUseCase().onEach {
             it.onSuccess { coins ->
-                sendState { copy(coins = coins) }
+                sendState { copy(coins = coins, animateCoins = animateCoins) }
             }
         }.launchIn(viewModelScope)
     }
@@ -146,9 +147,11 @@ class CollectionViewModel @Inject constructor(
         )
     }
 
-    private fun onUnlockWithCoinsClick(intent: CollectionIntent.OnUnlockWithCoinsClick) {
+    private fun onUnlockWithCoinsClick() {
         hapticFeedback.vibrateLow()
-
+        unlockRandomCardIfEnoughCoinsUseCase().onEach {
+            it.onSuccess { loadData(true) }
+        }.launchIn(viewModelScope)
     }
 
     companion object {

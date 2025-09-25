@@ -181,7 +181,7 @@ class BackgroundMusicPlayer @Inject constructor(
         }
 
     companion object {
-        private const val BACKGROUND_MUSIC_VOLUME = 0.025f
+        private const val BACKGROUND_MUSIC_VOLUME = 0.25f
         private const val NO_VOLUME = 0.0f
         private const val FADE_DURATION_MS = 500L
         private const val FADE_STEP_DURATION = 50L
