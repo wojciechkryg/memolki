@@ -37,6 +37,7 @@ class GameViewModel @Inject constructor(
         when (intent) {
             is GameIntent.OnLevelStart -> shuffleUnlockedCards(intent.levelModel)
             is GameIntent.OnBackCardClick -> onBackCardClick(intent.cardModel)
+            is GameIntent.OnFrontCardPress -> onFrontCardPress(intent.isPressed, intent.cardModel)
         }
     }
 
@@ -61,6 +62,23 @@ class GameViewModel @Inject constructor(
         }
     }
 
+    private fun onFrontCardPress(
+        isPressed: Boolean,
+        card: CardModel
+    ) {
+        if (isPressed && card is CardModel.Image && card.isPairMatched) {
+            hapticFeedback.vibrateLow()
+            sendState {
+                copy(
+                    lastCardPressed = card,
+                    shouldShowCardText = true
+                )
+            }
+        } else {
+            sendState { copy(shouldShowCardText = false) }
+        }
+    }
+
     private fun checkForEndGame() {
         viewModelScope.launch {
             val cards = uiState.value.cards
@@ -68,13 +86,14 @@ class GameViewModel @Inject constructor(
                 sendState { copy(isGameFinished = true) }
                 delay(END_GAME_DELAY)
                 sendEffect(GameEffect.OpenEndGameScreen(uiState.value.level))
+                sendState { copy(isGameFinished = false) }
             }
         }
     }
 
     private fun checkForMatchedPair() {
         val frontUnmatchedCards = frontUnmatchedCards()
-        if (frontUnmatchedCards.size == MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS) {
+        if (frontUnmatchedCards.size >= MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS) {
             val firstCard = frontUnmatchedCards[0]
             val secondCard = frontUnmatchedCards[1]
             if (areCardsMatched(firstCard, secondCard)) {

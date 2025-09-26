@@ -9,5 +9,7 @@ import kotlinx.parcelize.Parcelize
 data class GameState(
     val level: LevelModel = LevelModel.Empty,
     val cards: List<CardModel> = emptyList(),
-    val isGameFinished: Boolean = false
+    val isGameFinished: Boolean = false,
+    val lastCardPressed: CardModel = CardModel.Empty,
+    val shouldShowCardText: Boolean = false
 ) : UiState

@@ -54,6 +54,6 @@ abstract class SoundPlayer(
     }
 
     companion object {
-        private const val VOLUME = 0.1f
+        private const val VOLUME = 0.5f
     }
 }

@@ -34,7 +34,7 @@ fun AutoSizeText(
 
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text,
@@ -52,6 +52,9 @@ fun AutoSizeText(
                         textLayoutResult.size.width / textLayoutResult.multiParagraph.width
                     val heightScale =
                         textLayoutResult.size.height / textLayoutResult.multiParagraph.height
+                    if (widthScale.isNaN() || heightScale.isNaN()) {
+                        return@Text
+                    }
                     val scale = if (isSoftWrap) {
                         sqrt(min(widthScale, heightScale) * SOFT_WRAP_SCALE_FACTOR)
                     } else {

@@ -50,7 +50,7 @@ fun CollectionLockedCardPair(modifier: Modifier = Modifier) {
 @Composable
 fun CollectionLockedCardPairPreview() {
     AppTheme {
-        CollectionLockedCardPair(Modifier.size(256.dp))
+        CollectionLockedCardPair(Modifier.size(192.dp))
     }
 }
 

@@ -15,15 +15,20 @@ class CardRepository @Inject constructor(
 
     suspend fun getUnlockedCardPairs(): List<CardPairModel> {
         val unlockedCardPairIds = unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
-        return allCardPairsDataSource.getAllCardPairs()
-            .filter { it.id in unlockedCardPairIds }
-            .toModel()
+        val allCardPairs = allCardPairsDataSource.getAllCardPairs()
+        return unlockedCardPairIds.mapNotNull { id ->
+            allCardPairs.firstOrNull { it.id == id }?.toModel()
+        }
     }
 
     suspend fun getRandomUnlockedCardPairIds(count: Int) =
         unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
             .shuffled()
             .take(count)
+
+    suspend fun addUnlockedCardPairId(unlockedCardPairId: String) {
+        unlockedCardPairsLocalDataSource.addUnlockedCardPairId(unlockedCardPairId)
+    }
 
     fun getCardPairById(pairId: String) = allCardPairsDataSource.getCardPairById(pairId)?.toModel()
 }

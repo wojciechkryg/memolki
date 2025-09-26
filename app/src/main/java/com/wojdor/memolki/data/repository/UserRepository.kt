@@ -15,12 +15,23 @@ class UserRepository @Inject constructor(
     fun getCoins() = decryptLong(userLocalDataSource.encryptedCoins)
 
     suspend fun addCoins(coins: Long) {
+        require(coins >= 0) { "coins must be >= 0" }
         userLocalDataSource.setEncryptedCoinsAndTotalCoins { encryptedCoins, encryptedTotalCoins ->
             val currentCoins = decryptLong(encryptedCoins)
             val currentTotalCoins = decryptLong(encryptedTotalCoins)
             val newCoins = currentCoins + coins
             val newTotalCoins = currentTotalCoins + coins
             encryptor.encrypt(newCoins) to encryptor.encrypt(newTotalCoins)
+        }
+    }
+
+    suspend fun removeCoins(coins: Long) {
+        require(coins >= 0) { "coins must be >= 0" }
+        userLocalDataSource.setEncryptedCoinsAndTotalCoins { encryptedCoins, encryptedTotalCoins ->
+            val currentCoins = decryptLong(encryptedCoins)
+            val currentTotalCoins = decryptLong(encryptedTotalCoins)
+            val newCoins = currentCoins - coins
+            encryptor.encrypt(newCoins) to encryptor.encrypt(currentTotalCoins)
         }
     }
 
