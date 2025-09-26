@@ -27,7 +27,8 @@ fun CollectionContent(
         ) {
             CoinsAmount(
                 modifier = Modifier.weight(1f),
-                coins = state.coins
+                coins = state.coins,
+                animate = state.animateCoins
             )
             ShopButton(
                 onClick = callbacks.onShopButtonClick

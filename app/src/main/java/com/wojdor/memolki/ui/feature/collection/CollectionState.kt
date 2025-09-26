@@ -8,6 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class CollectionState(
     val coins: Long = 0L,
     val collectionCardPairs: List<CollectionCardPairModel> = emptyList(),
+    val animateCoins: Boolean = true
 ) : UiState {
 
     val allCardPairsCount

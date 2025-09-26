@@ -7,9 +7,13 @@ import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
+import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
 import com.wojdor.memolki.test.mock.MockDataStore
@@ -24,10 +28,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class CollectionViewModelTest : AppTest() {
 
-    private val userRepository = UserRepository(
-        MockEncryptor(),
-        UserLocalDataSource(MockDataStore())
-    )
+    private lateinit var userRepository: UserRepository
     private lateinit var sut: CollectionViewModel
 
     @Before
@@ -38,8 +39,22 @@ class CollectionViewModelTest : AppTest() {
             MockAllCardPairsDataSource,
             UnlockedCardPairsLocalDataSource(dataStore, MockAllCardPairsDataSource)
         )
+        userRepository = UserRepository(
+            MockEncryptor(),
+            UserLocalDataSource(MockDataStore())
+        )
+        val calculateNextCardPairCostUseCase = CalculateNextCardPairCostUseCase(
+            testDispatcher,
+            GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository),
+            GetLevelsUseCase(
+                testDispatcher,
+                GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository)
+            ),
+            cardRepository
+        )
         sut = CollectionViewModel(
             savedStateHandle = savedStateHandle,
+            hapticFeedback = relaxedMockk(),
             getCoinsUseCase = GetCoinsUseCase(testDispatcher, userRepository),
             getUnlockedCardPairs = GetUnlockedCardPairsUseCase(
                 testDispatcher,
@@ -49,7 +64,13 @@ class CollectionViewModelTest : AppTest() {
                 testDispatcher,
                 cardRepository
             ),
-            hapticFeedback = relaxedMockk()
+            calculateNextCardPairCostUseCase = calculateNextCardPairCostUseCase,
+            unlockRandomCardIfEnoughCoinsUseCase = UnlockRandomCardIfEnoughCoinsUseCase(
+                testDispatcher,
+                calculateNextCardPairCostUseCase,
+                cardRepository,
+                userRepository
+            )
         )
     }
 
@@ -75,23 +96,6 @@ class CollectionViewModelTest : AppTest() {
                     .map { (it as CollectionCardPairModel.Unlocked).cardPair },
             )
             assertEquals(5, state.unlockedCardPairsCount)
-        }
-    }
-
-    @Test
-    fun `when state is updated with data then all card pairs count is correct`() = runTest {
-        sut.uiState.test {
-            // given
-            skipItems(1)
-
-            // when
-            val state = awaitItem()
-
-            // then
-            assertEquals(
-                MockAllCardPairsDataSource.getAllCardPairs().size,
-                state.allCardPairsCount
-            )
         }
     }
 

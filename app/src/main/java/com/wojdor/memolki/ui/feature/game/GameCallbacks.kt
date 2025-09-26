@@ -4,4 +4,5 @@ import com.wojdor.memolki.domain.model.CardModel
 
 data class GameCallbacks(
     val onBackCardClick: (CardModel) -> Unit = {},
+    val onFrontCardPress: (Boolean, CardModel) -> Unit = { _, _ -> },
 )

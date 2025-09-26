@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.feature.game.component
+package com.wojdor.memolki.ui.components
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -7,22 +7,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import com.wojdor.memolki.domain.model.CardModel
-import com.wojdor.memolki.ui.feature.game.GameCallbacks
 import kotlin.math.PI
 import kotlin.math.pow
 import kotlin.math.sin
 
 @Composable
-fun AnimatedCardItem(
+fun Flippable(
     modifier: Modifier = Modifier,
-    card: CardModel,
-    callbacks: GameCallbacks
+    isFlipped: Boolean,
+    frontSide: @Composable (modifier: Modifier) -> Unit,
+    backSide: @Composable (modifier: Modifier) -> Unit,
 ) {
     val animationProgress by animateFloatAsState(
-        targetValue = if (card.isFlippedFront || card.isPairMatched) 1f else 0f,
+        targetValue = if (isFlipped) 1f else 0f,
         animationSpec = tween(durationMillis = ANIMATION_DURATION, easing = FastOutSlowInEasing),
-        label = "cardFlip"
+        label = "flip animation"
     )
 
     val rotationY = animationProgress * 180f
@@ -30,26 +29,24 @@ fun AnimatedCardItem(
     val scale = 1.0f - SCALE_DOWN_FACTOR * sin(animationProgress * PI).toFloat()
 
     if (rotationY < 90f) {
-        BackCardItem(
-            modifier = modifier.graphicsLayer {
+        backSide(
+            modifier.graphicsLayer {
                 this.rotationY = rotationY
                 this.rotationZ = rotationZ
                 cameraDistance = CAMERA_DISTANCE_FACTOR * density
                 scaleX = scale
                 scaleY = scale
-            },
-            onClick = { callbacks.onBackCardClick(card) }
+            }
         )
     } else {
-        FrontCardItem(
-            modifier = modifier.graphicsLayer {
+        frontSide(
+            modifier.graphicsLayer {
                 this.rotationY = rotationY - 180f
                 this.rotationZ = rotationZ
                 cameraDistance = CAMERA_DISTANCE_FACTOR * density
                 scaleX = scale
                 scaleY = scale
-            },
-            card = card
+            }
         )
     }
 }
