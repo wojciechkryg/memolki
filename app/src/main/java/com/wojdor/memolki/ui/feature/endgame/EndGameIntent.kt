@@ -7,4 +7,7 @@ sealed class EndGameIntent : UiIntent {
     data class OnEndGameShow(val levelModel: LevelModel) : EndGameIntent()
     data class OnPlayAgainClick(val levelModel: LevelModel) : EndGameIntent()
     object OnMenuClick : EndGameIntent()
+    object OnWatchAdClick : EndGameIntent()
+    object OnAdReward : EndGameIntent()
+    object OnAdDismiss : EndGameIntent()
 }

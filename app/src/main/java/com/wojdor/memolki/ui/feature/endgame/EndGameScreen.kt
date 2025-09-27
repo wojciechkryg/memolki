@@ -1,13 +1,16 @@
 package com.wojdor.memolki.ui.feature.endgame
 
+import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -18,6 +21,7 @@ import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun EndGameScreen(
+
     viewModel: EndGameViewModel = hiltViewModel(),
     gameViewModel: GameViewModel = hiltViewModel(),
     navController: NavController
@@ -33,17 +37,31 @@ private fun HandleEffect(
     gameViewModel: GameViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        when (it) {
+    val activity = LocalActivity.current
+    CollectUiEffects(viewModel) { effect ->
+        when (effect) {
             is EndGameEffect.OpenGameScreen -> openGameScreen(
                 gameViewModel,
                 navController,
-                it.levelModel
+                effect.levelModel
             )
 
             is EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
+            is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
         }
     }
+}
+
+private fun showAd(
+    activity: Activity,
+    viewModel: EndGameViewModel,
+    rewardedAd: RewardedAd
+) {
+    rewardedAd.show(
+        activity,
+        onUserEarnedReward = { viewModel.sendIntent(EndGameIntent.OnAdReward) },
+        onAdDismiss = { viewModel.sendIntent(EndGameIntent.OnAdDismiss) }
+    )
 }
 
 private fun openGameScreen(
@@ -62,7 +80,8 @@ private fun HandleState(
 ) {
     val callbacks = EndGameCallbacks(
         onPlayAgainClick = { viewModel.sendIntent(EndGameIntent.OnPlayAgainClick(state.level)) },
-        onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) }
+        onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) },
+        onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) }
     )
     EndGameScreen(state, callbacks)
 }
@@ -84,7 +103,29 @@ private fun EndGameScreenPreview() {
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
-                menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu)
+                menu = listOf(
+                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Menu
+                )
+            )
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun EndGameScreenWithAdPreview() {
+    AppTheme {
+        EndGameScreen(
+            state = EndGameState(
+                level = LevelModel.Grid2x3(),
+                rewardedCoins = 1234,
+                currentCoins = 5678,
+                menu = listOf(
+                    EndGameMenuModel.WatchAd,
+                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Menu
+                ),
             )
         )
     }

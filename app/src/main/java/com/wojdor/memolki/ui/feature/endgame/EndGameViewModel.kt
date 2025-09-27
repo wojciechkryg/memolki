@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -25,6 +26,7 @@ class EndGameViewModel @Inject constructor(
     private val levelCompletePlayer: LevelCompletePlayer,
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
+    private val rewardedAds: AllRewardedAds,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
@@ -35,19 +37,35 @@ class EndGameViewModel @Inject constructor(
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
-            is EndGameIntent.OnEndGameShow -> onEndGameShow(level = intent.levelModel)
+            is EndGameIntent.OnEndGameShow -> onEndGameShow(intent.levelModel)
             is EndGameIntent.OnPlayAgainClick -> onPlayAgainClick(intent)
-            is EndGameIntent.OnMenuClick -> onMenuClick()
+            EndGameIntent.OnMenuClick -> onMenuClick()
+            EndGameIntent.OnWatchAdClick -> onWatchAdClick()
+            EndGameIntent.OnAdReward -> rewardCoinsForAd()
+            EndGameIntent.OnAdDismiss -> loadAds()
         }
     }
 
     private fun onEndGameShow(level: LevelModel) {
         sendState { EndGameState() }
+        loadAds()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
             delay(250)
             levelCompletePlayer.play()
+        }
+    }
+
+    private fun loadAds() {
+        if (rewardedAds.endGameCoinsAd.isLoaded) {
+            showMenu(true)
+        } else {
+            showMenu(false)
+            rewardedAds.endGameCoinsAd.load(
+                onLoaded = { showMenu(true) },
+                onFailed = { showMenu(false) }
+            )
         }
     }
 
@@ -61,6 +79,19 @@ class EndGameViewModel @Inject constructor(
         sendEffect(EndGameEffect.OpenMenuScreen)
     }
 
+    private fun onWatchAdClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(EndGameEffect.ShowAd(rewardedAds.endGameCoinsAd))
+    }
+
+    private fun showMenu(isAdLoaded: Boolean) {
+        sendState {
+            copy(menu = getBaseMenu().let {
+                if (isAdLoaded) listOf(EndGameMenuModel.WatchAd) + it else it
+            })
+        }
+    }
+
     private fun getCurrentCoinsAndReward(level: LevelModel) {
         getCoinsUseCase().take(1).onEach {
             it.onSuccess { currentCoins ->
@@ -68,8 +99,7 @@ class EndGameViewModel @Inject constructor(
                     copy(
                         level = level,
                         currentCoins = currentCoins,
-                        animateCoins = false,
-                        menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu),
+                        animateCoins = false
                     )
                 }
                 rewardCoins(level, currentCoins)
@@ -87,9 +117,28 @@ class EndGameViewModel @Inject constructor(
                         animateCoins = true
                     )
                 }
-                delay(500)
+                delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun rewardCoinsForAd() {
+        showMenu(false)
+        rewardedAds.endGameCoinsAd.load()
+        viewModelScope.launch {
+            // TODO: Reward for watching ad
+            delay(COINS_SOUND_DELAY)
+            coinsPlayer.play()
+        }
+    }
+
+    private fun getBaseMenu() = listOf(
+        EndGameMenuModel.PlayAgain,
+        EndGameMenuModel.Menu
+    )
+
+    companion object {
+        const val COINS_SOUND_DELAY = 500L
     }
 }

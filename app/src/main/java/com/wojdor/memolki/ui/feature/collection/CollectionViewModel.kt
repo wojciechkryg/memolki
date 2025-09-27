@@ -10,8 +10,11 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.ui.feature.collection.CollectionViewModel.Companion.UNLOCK_WITH_COINS_COUNT
+import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
@@ -23,6 +26,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val getUnlockedCardPairs: GetUnlockedCardPairsUseCase,
@@ -150,7 +154,11 @@ class CollectionViewModel @Inject constructor(
     private fun onUnlockWithCoinsClick() {
         hapticFeedback.vibrateLow()
         unlockRandomCardIfEnoughCoinsUseCase().onEach {
-            it.onSuccess { loadData(true) }
+            it.onSuccess {
+                delay(COINS_SOUND_DELAY)
+                coinsPlayer.play()
+                loadData(true)
+            }
         }.launchIn(viewModelScope)
     }
 
@@ -160,5 +168,7 @@ class CollectionViewModel @Inject constructor(
 
         const val NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK =
             UNLOCK_WITH_COINS_COUNT + UNLOCK_WITH_ADS_COUNT
+
+        private const val COINS_SOUND_DELAY = 300L
     }
 }
