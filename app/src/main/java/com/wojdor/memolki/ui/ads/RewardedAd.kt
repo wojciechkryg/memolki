@@ -3,7 +3,6 @@ package com.wojdor.memolki.ui.ads
 import android.app.Activity
 import android.content.Context
 import androidx.annotation.StringRes
-import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -48,34 +47,26 @@ class RewardedAd(
 
     fun show(
         activity: Activity,
-        onUserEarnedReward: () -> Unit,
-        onAdDismiss: () -> Unit = {}
+        onGrantReward: () -> Unit,
+        onAdDismiss: (wasRewardGranted: Boolean) -> Unit = {}
     ) {
-        var wasUserGrantedForWatchAd = false
+        var wasRewardGranted = false
         if (!isLoaded) {
             logD("Tried to show ad, but it was not loaded yet.")
             return
         }
         rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                logD("Ad failed to show full screen content with error: ${adError.message}")
-            }
 
             override fun onAdDismissedFullScreenContent() {
                 rewardedAd = null
-                if (wasUserGrantedForWatchAd) {
-                    logD("Ad was dismissed, but user was granted for watching ad.")
-                    onUserEarnedReward()
-                } else {
-                    logD("Ad was dismissed.")
-                    onAdDismiss()
-                }
+                onAdDismiss(wasRewardGranted)
             }
         }
 
         rewardedAd?.show(activity) {
             logD("User earned the reward.")
-            wasUserGrantedForWatchAd = true
+            wasRewardGranted = true
+            onGrantReward()
         }
     }
 }

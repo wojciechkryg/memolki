@@ -41,14 +41,14 @@ class EndGameViewModel @Inject constructor(
             is EndGameIntent.OnPlayAgainClick -> onPlayAgainClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
             EndGameIntent.OnWatchAdClick -> onWatchAdClick()
-            EndGameIntent.OnAdReward -> rewardCoinsForAd()
-            EndGameIntent.OnAdDismiss -> loadAds()
+            EndGameIntent.OnAdReward -> onAdReward()
+            is EndGameIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
         }
     }
 
     private fun onEndGameShow(level: LevelModel) {
         sendState { EndGameState() }
-        loadAds()
+        loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
@@ -57,13 +57,37 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun loadAds() {
-        if (rewardedAds.endGameCoinsAd.isLoaded) {
+    private fun onAdReward() {
+        showMenu(false)
+        rewardedAds.endGameCoinsAd.load()
+    }
+
+    private fun onAdDismiss(wasRewardGranted: Boolean) {
+        if (wasRewardGranted) {
+            rewardCoinsForAd()
+        }
+        loadAd(wasRewardGranted)
+    }
+
+    private fun rewardCoinsForAd() {
+        viewModelScope.launch {
+            // TODO: Reward for watching ad
+            delay(COINS_SOUND_DELAY)
+            coinsPlayer.play()
+        }
+    }
+
+    private fun loadAd(wasRewardGranted: Boolean = false) {
+        if (rewardedAds.endGameCoinsAd.isLoaded && !wasRewardGranted) {
             showMenu(true)
         } else {
             showMenu(false)
             rewardedAds.endGameCoinsAd.load(
-                onLoaded = { showMenu(true) },
+                onLoaded = {
+                    if (!wasRewardGranted) {
+                        showMenu(true)
+                    }
+                },
                 onFailed = { showMenu(false) }
             )
         }
@@ -121,16 +145,6 @@ class EndGameViewModel @Inject constructor(
                 coinsPlayer.play()
             }
         }.launchIn(viewModelScope)
-    }
-
-    private fun rewardCoinsForAd() {
-        showMenu(false)
-        rewardedAds.endGameCoinsAd.load()
-        viewModelScope.launch {
-            // TODO: Reward for watching ad
-            delay(COINS_SOUND_DELAY)
-            coinsPlayer.play()
-        }
     }
 
     private fun getBaseMenu() = listOf(

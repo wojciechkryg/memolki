@@ -9,5 +9,5 @@ sealed class EndGameIntent : UiIntent {
     object OnMenuClick : EndGameIntent()
     object OnWatchAdClick : EndGameIntent()
     object OnAdReward : EndGameIntent()
-    object OnAdDismiss : EndGameIntent()
+    data class OnAdDismiss(val wasRewardGranted: Boolean) : EndGameIntent()
 }

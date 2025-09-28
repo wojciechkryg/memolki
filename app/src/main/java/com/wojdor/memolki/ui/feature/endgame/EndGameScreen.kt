@@ -59,8 +59,8 @@ private fun showAd(
 ) {
     rewardedAd.show(
         activity,
-        onUserEarnedReward = { viewModel.sendIntent(EndGameIntent.OnAdReward) },
-        onAdDismiss = { viewModel.sendIntent(EndGameIntent.OnAdDismiss) }
+        onGrantReward = { viewModel.sendIntent(EndGameIntent.OnAdReward) },
+        onAdDismiss = { viewModel.sendIntent(EndGameIntent.OnAdDismiss(it)) }
     )
 }
 
