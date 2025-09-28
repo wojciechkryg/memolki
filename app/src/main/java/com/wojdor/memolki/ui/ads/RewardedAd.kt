@@ -6,16 +6,16 @@ import androidx.annotation.StringRes
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.wojdor.memolki.util.extension.logD
+import com.google.android.gms.ads.rewarded.RewardedAd as GoogleRewardedAd
 
 class RewardedAd(
     private val context: Context,
     @param:StringRes private val adUnitRes: Int
 ) {
 
-    private var rewardedAd: RewardedAd? = null
+    private var rewardedAd: GoogleRewardedAd? = null
 
     val isLoaded: Boolean
         get() = rewardedAd != null
@@ -26,7 +26,7 @@ class RewardedAd(
     ) {
         val adUnitId = context.getString(adUnitRes)
         val adRequest = AdRequest.Builder().build()
-        RewardedAd.load(
+        GoogleRewardedAd.load(
             context,
             adUnitId,
             adRequest,
@@ -37,7 +37,7 @@ class RewardedAd(
                     onFailed(adError)
                 }
 
-                override fun onAdLoaded(ad: RewardedAd) {
+                override fun onAdLoaded(ad: GoogleRewardedAd) {
                     logD("Ad was loaded successfully.")
                     rewardedAd = ad
                     onLoaded()

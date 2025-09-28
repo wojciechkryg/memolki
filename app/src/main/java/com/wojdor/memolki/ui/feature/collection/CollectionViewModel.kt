@@ -153,8 +153,8 @@ class CollectionViewModel @Inject constructor(
 
     private fun onUnlockWithCoinsClick() {
         hapticFeedback.vibrateLow()
-        unlockRandomCardIfEnoughCoinsUseCase().onEach {
-            it.onSuccess {
+        unlockRandomCardIfEnoughCoinsUseCase().onEach { result ->
+            result.onSuccess {
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
                 loadData(true)
