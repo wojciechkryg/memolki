@@ -1,6 +1,9 @@
 package com.wojdor.memolki.ui.feature.endgame.component
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -38,9 +41,16 @@ fun EndGameContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CoinsReward(state = state)
+            CoinsReward(
+                state = state,
+                animate = state.animateRewardCoins
+            )
             Spacer(modifier = Modifier.height(64.dp))
-            AnimatedContent(state.menu) {
+            AnimatedContent(
+                state.menu,
+                transitionSpec = {
+                    fadeIn() togetherWith fadeOut()
+                }) {
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.Top,
@@ -50,10 +60,7 @@ fun EndGameContent(
                         Spacer(modifier = Modifier.height(16.dp))
                         when (menuItem) {
                             EndGameMenuModel.WatchAd ->
-                                MenuItem(
-                                    textId = menuItem.textId,
-                                    onClick = callbacks.onWatchAdClick
-                                )
+                                WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
 
                             EndGameMenuModel.PlayAgain -> MenuItem(
                                 textId = menuItem.textId,

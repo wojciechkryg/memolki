@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 sealed class EndGameMenuModel(@field:StringRes val textId: Int) : Parcelable {
-    object WatchAd : EndGameMenuModel(R.string.watch_ad)
+    object WatchAd : EndGameMenuModel(R.string.empty)
     object PlayAgain : EndGameMenuModel(R.string.play_again)
     object Menu : EndGameMenuModel(R.string.menu)
 }

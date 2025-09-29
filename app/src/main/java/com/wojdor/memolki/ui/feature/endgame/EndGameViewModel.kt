@@ -70,11 +70,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun rewardCoinsForAd() {
-        viewModelScope.launch {
-            // TODO: Reward for watching ad
-            delay(COINS_SOUND_DELAY)
-            coinsPlayer.play()
-        }
+        getCurrentCoinsAndReward(uiState.value.level, isRewardFromAd = true)
     }
 
     private fun loadAd(wasRewardGranted: Boolean = false) {
@@ -116,7 +112,7 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun getCurrentCoinsAndReward(level: LevelModel) {
+    private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {
         getCoinsUseCase().take(1).onEach {
             it.onSuccess { currentCoins ->
                 sendState {
@@ -126,19 +122,20 @@ class EndGameViewModel @Inject constructor(
                         animateCoins = false
                     )
                 }
-                rewardCoins(level, currentCoins)
+                rewardCoins(level, currentCoins, isRewardFromAd)
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun rewardCoins(level: LevelModel, currentCoins: Long) {
+    private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
         rewardCoinsForLevelUseCase(level).take(1).onEach {
             it.onSuccess { rewardedCoins ->
                 sendState {
                     copy(
-                        rewardedCoins = rewardedCoins,
+                        rewardedCoins = if (isRewardFromAd) uiState.value.rewardedCoins + rewardedCoins else rewardedCoins,
                         currentCoins = currentCoins + rewardedCoins,
-                        animateCoins = true
+                        animateCoins = true,
+                        animateRewardCoins = isRewardFromAd
                     )
                 }
                 delay(COINS_SOUND_DELAY)
