@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.MenuModel
@@ -74,27 +74,37 @@ private fun MenuScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            modifier = Modifier.size(320.dp),
+            modifier = Modifier
+                .size(320.dp)
+                .weight(1f),
             painter = painterResource(id = R.drawable.ic_logo),
-            contentDescription = null
+            contentDescription = null,
+            alignment = Alignment.BottomCenter
         )
-        state.menu.forEach { menuItem ->
-            Spacer(modifier = Modifier.height(16.dp))
-            when (menuItem) {
-                is MenuModel.NewGame -> MenuItem(
-                    textId = menuItem.textId,
-                    onClick = callbacks.onNewGameClick
-                )
+        Spacer(modifier = Modifier.height(64.dp))
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            state.menu.forEach { menuItem ->
+                Spacer(modifier = Modifier.height(16.dp))
+                when (menuItem) {
+                    is MenuModel.NewGame -> MenuItem(
+                        textId = menuItem.textId,
+                        onClick = callbacks.onNewGameClick
+                    )
 
-                is MenuModel.Collection -> MenuItem(
-                    textId = menuItem.textId,
-                    onClick = callbacks.onCollectionClick
-                )
+                    is MenuModel.Collection -> MenuItem(
+                        textId = menuItem.textId,
+                        onClick = callbacks.onCollectionClick
+                    )
 
-                is MenuModel.Settings -> MenuItem(
-                    textId = R.string.settings,
-                    onClick = callbacks.onSettingsClick
-                )
+                    is MenuModel.Settings -> MenuItem(
+                        textId = R.string.settings,
+                        onClick = callbacks.onSettingsClick
+                    )
+                }
             }
         }
     }

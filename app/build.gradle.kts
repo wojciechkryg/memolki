@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.hilt.android)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.play.services.ads.api)
     debugImplementation(libs.androidx.ui.tooling)
     ksp(libs.hilt.compiler)
 

@@ -1,5 +1,9 @@
 package com.wojdor.memolki.ui.feature.endgame.component
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -37,20 +41,38 @@ fun EndGameContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CoinsReward(state = state)
+            CoinsReward(
+                state = state,
+                animate = state.animateRewardCoins
+            )
             Spacer(modifier = Modifier.height(64.dp))
-            state.menu.forEach { menuItem ->
-                Spacer(modifier = Modifier.height(16.dp))
-                when (menuItem) {
-                    is EndGameMenuModel.PlayAgain -> MenuItem(
-                        textId = menuItem.textId,
-                        onClick = callbacks.onPlayAgainClick
-                    )
+            AnimatedContent(
+                state.menu,
+                transitionSpec = {
+                    fadeIn() togetherWith fadeOut()
+                }) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    it.forEach { menuItem ->
+                        Spacer(modifier = Modifier.height(16.dp))
+                        when (menuItem) {
+                            EndGameMenuModel.WatchAd ->
+                                WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
 
-                    is EndGameMenuModel.Menu -> MenuItem(
-                        textId = menuItem.textId,
-                        onClick = callbacks.onMenuClick
-                    )
+                            EndGameMenuModel.PlayAgain -> MenuItem(
+                                textId = menuItem.textId,
+                                onClick = callbacks.onPlayAgainClick
+                            )
+
+                            EndGameMenuModel.Menu -> MenuItem(
+                                textId = menuItem.textId,
+                                onClick = callbacks.onMenuClick
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -66,7 +88,29 @@ private fun EndGameContentPreview() {
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
-                menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu)
+                menu = listOf(
+                    EndGameMenuModel.WatchAd,
+                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Menu
+                )
+            )
+        )
+    }
+}
+
+@Composable
+@Preview
+private fun EndGameContentWithoutAdPreview() {
+    AppTheme {
+        EndGameContent(
+            state = EndGameState(
+                level = LevelModel.Grid2x3(),
+                rewardedCoins = 1234,
+                currentCoins = 5678,
+                menu = listOf(
+                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Menu
+                )
             )
         )
     }
