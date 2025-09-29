@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -25,6 +26,7 @@ class EndGameViewModel @Inject constructor(
     private val levelCompletePlayer: LevelCompletePlayer,
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
+    private val rewardedAds: AllRewardedAds,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
@@ -35,19 +37,55 @@ class EndGameViewModel @Inject constructor(
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
-            is EndGameIntent.OnEndGameShow -> onEndGameShow(level = intent.levelModel)
+            is EndGameIntent.OnEndGameShow -> onEndGameShow(intent.levelModel)
             is EndGameIntent.OnPlayAgainClick -> onPlayAgainClick(intent)
-            is EndGameIntent.OnMenuClick -> onMenuClick()
+            EndGameIntent.OnMenuClick -> onMenuClick()
+            EndGameIntent.OnWatchAdClick -> onWatchAdClick()
+            EndGameIntent.OnAdReward -> onAdReward()
+            is EndGameIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
         }
     }
 
     private fun onEndGameShow(level: LevelModel) {
         sendState { EndGameState() }
+        loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
             delay(250)
             levelCompletePlayer.play()
+        }
+    }
+
+    private fun onAdReward() {
+        showMenu(false)
+        rewardedAds.endGameCoinsAd.load()
+    }
+
+    private fun onAdDismiss(wasRewardGranted: Boolean) {
+        if (wasRewardGranted) {
+            rewardCoinsForAd()
+        }
+        loadAd(wasRewardGranted)
+    }
+
+    private fun rewardCoinsForAd() {
+        getCurrentCoinsAndReward(uiState.value.level, isRewardFromAd = true)
+    }
+
+    private fun loadAd(wasRewardGranted: Boolean = false) {
+        if (rewardedAds.endGameCoinsAd.isLoaded && !wasRewardGranted) {
+            showMenu(true)
+        } else {
+            showMenu(false)
+            rewardedAds.endGameCoinsAd.load(
+                onLoaded = {
+                    if (!wasRewardGranted) {
+                        showMenu(true)
+                    }
+                },
+                onFailed = { showMenu(false) }
+            )
         }
     }
 
@@ -61,35 +99,57 @@ class EndGameViewModel @Inject constructor(
         sendEffect(EndGameEffect.OpenMenuScreen)
     }
 
-    private fun getCurrentCoinsAndReward(level: LevelModel) {
+    private fun onWatchAdClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(EndGameEffect.ShowAd(rewardedAds.endGameCoinsAd))
+    }
+
+    private fun showMenu(isAdLoaded: Boolean) {
+        sendState {
+            copy(menu = getBaseMenu().let {
+                if (isAdLoaded) listOf(EndGameMenuModel.WatchAd) + it else it
+            })
+        }
+    }
+
+    private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {
         getCoinsUseCase().take(1).onEach {
             it.onSuccess { currentCoins ->
                 sendState {
                     copy(
                         level = level,
                         currentCoins = currentCoins,
-                        animateCoins = false,
-                        menu = listOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu),
+                        animateCoins = false
                     )
                 }
-                rewardCoins(level, currentCoins)
+                rewardCoins(level, currentCoins, isRewardFromAd)
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun rewardCoins(level: LevelModel, currentCoins: Long) {
+    private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
         rewardCoinsForLevelUseCase(level).take(1).onEach {
             it.onSuccess { rewardedCoins ->
                 sendState {
                     copy(
-                        rewardedCoins = rewardedCoins,
+                        rewardedCoins = if (isRewardFromAd) uiState.value.rewardedCoins + rewardedCoins else rewardedCoins,
                         currentCoins = currentCoins + rewardedCoins,
-                        animateCoins = true
+                        animateCoins = true,
+                        animateRewardCoins = isRewardFromAd
                     )
                 }
-                delay(500)
+                delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun getBaseMenu() = listOf(
+        EndGameMenuModel.PlayAgain,
+        EndGameMenuModel.Menu
+    )
+
+    companion object {
+        const val COINS_SOUND_DELAY = 500L
     }
 }

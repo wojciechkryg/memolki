@@ -70,7 +70,8 @@ class CollectionViewModelTest : AppTest() {
                 calculateNextCardPairCostUseCase,
                 cardRepository,
                 userRepository
-            )
+            ),
+            coinsPlayer = relaxedMockk(),
         )
     }
 
