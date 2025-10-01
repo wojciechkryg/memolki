@@ -1,5 +1,7 @@
 package com.wojdor.memolki.ui.feature.collection
 
+import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,6 +12,7 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToCardPairDetailsScreen
 import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -35,14 +38,17 @@ private fun HandleEffect(
     cardPairDetailsViewModel: CardPairDetailsViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        when (it) {
+    val activity = LocalActivity.current
+    CollectUiEffects(viewModel) { effect ->
+        when (effect) {
             is CollectionEffect.OpenShopScreen -> navController.navigateToShop()
             is CollectionEffect.OpenCardPairDetailsScreen -> openCardPairDetailsScreen(
                 cardPairDetailsViewModel,
                 navController,
-                it.cardPairModel
+                effect.cardPairModel
             )
+
+            is CollectionEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
         }
     }
 }
@@ -54,7 +60,18 @@ private fun openCardPairDetailsScreen(
 ) {
     cardPairDetailsViewModel.sendIntent(CardPairDetailsIntent.OnCardPairDetailsShow(cardPairModel))
     navController.navigateToCardPairDetailsScreen()
+}
 
+private fun showAd(
+    activity: Activity,
+    viewModel: CollectionViewModel,
+    rewardedAd: RewardedAd
+) {
+    rewardedAd.show(
+        activity,
+        onGrantReward = { viewModel.sendIntent(CollectionIntent.OnAdReward) },
+        onAdDismiss = { viewModel.sendIntent(CollectionIntent.OnAdDismiss(it)) }
+    )
 }
 
 @Composable
@@ -71,6 +88,9 @@ private fun HandleState(
         },
         onUnlockWithCoinsClick = {
             viewModel.sendIntent(CollectionIntent.OnUnlockWithCoinsClick(it))
+        },
+        onUnlockWithAdClick = {
+            viewModel.sendIntent(CollectionIntent.OnUnlockWithAdClick(it))
         }
     )
     CollectionScreen(state, callbacks)
@@ -128,8 +148,8 @@ private fun getCollectionCardPairsForPreview() = listOf(
             CardModel.Text("strawberry_half", "strawberry", R.string.strawberry)
         )
     ),
-    CollectionCardPairModel.LockedToUnlockWithAd,
     CollectionCardPairModel.LockedToUnlockWithCoins(100),
+    CollectionCardPairModel.LockedToUnlockWithAd,
     CollectionCardPairModel.Locked,
     CollectionCardPairModel.Locked,
     CollectionCardPairModel.Locked,

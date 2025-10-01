@@ -26,7 +26,7 @@ class EndGameViewModel @Inject constructor(
     private val levelCompletePlayer: LevelCompletePlayer,
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
-    private val rewardedAds: AllRewardedAds,
+    private val allRewardedAds: AllRewardedAds,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
@@ -52,14 +52,14 @@ class EndGameViewModel @Inject constructor(
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
-            delay(250)
+            delay(LEVEL_COMPLETE_SOUND_DELAY)
             levelCompletePlayer.play()
         }
     }
 
     private fun onAdReward() {
         showMenu(false)
-        rewardedAds.endGameCoinsAd.load()
+        allRewardedAds.endGameCoinsAd.load()
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
@@ -74,11 +74,11 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun loadAd(wasRewardGranted: Boolean = false) {
-        if (rewardedAds.endGameCoinsAd.isLoaded && !wasRewardGranted) {
+        if (allRewardedAds.endGameCoinsAd.isLoaded && !wasRewardGranted) {
             showMenu(true)
         } else {
             showMenu(false)
-            rewardedAds.endGameCoinsAd.load(
+            allRewardedAds.endGameCoinsAd.load(
                 onLoaded = {
                     if (!wasRewardGranted) {
                         showMenu(true)
@@ -101,7 +101,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun onWatchAdClick() {
         hapticFeedback.vibrateLow()
-        sendEffect(EndGameEffect.ShowAd(rewardedAds.endGameCoinsAd))
+        sendEffect(EndGameEffect.ShowAd(allRewardedAds.endGameCoinsAd))
     }
 
     private fun showMenu(isAdLoaded: Boolean) {
@@ -150,6 +150,7 @@ class EndGameViewModel @Inject constructor(
     )
 
     companion object {
+        const val LEVEL_COMPLETE_SOUND_DELAY = 250L
         const val COINS_SOUND_DELAY = 500L
     }
 }

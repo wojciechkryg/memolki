@@ -151,8 +151,11 @@ private fun BackSide(
                         onClick = { callbacks.onUnlockWithCoinsClick(targetState) }
                     )
 
-                is CollectionCardPairModel.LockedToUnlockWithAd -> CollectionLockedCardPair()
-                is CollectionCardPairModel.Unlocked -> { /* handled in FrontSide */
+                is CollectionCardPairModel.LockedToUnlockWithAd -> CollectionUnlockCardPairWithAd(
+                    onClick = { callbacks.onUnlockWithAdClick(targetState) }
+                )
+                is CollectionCardPairModel.Unlocked -> {
+                    // handled in FrontSide
                 }
             }
         }

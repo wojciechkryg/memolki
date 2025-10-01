@@ -10,13 +10,11 @@ import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
 import com.wojdor.memolki.test.mock.MockDataStore
 import com.wojdor.memolki.test.mock.MockEncryptor
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.util.NoSuchElementException
 
 @ExperimentalCoroutinesApi
 class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
@@ -32,7 +30,8 @@ class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
         val dataStore = MockDataStore()
         unlockedCardPairsLocalDataSource =
             UnlockedCardPairsLocalDataSource(dataStore, MockAllCardPairsDataSource)
-        cardRepository = CardRepository(MockAllCardPairsDataSource, unlockedCardPairsLocalDataSource)
+        cardRepository =
+            CardRepository(MockAllCardPairsDataSource, unlockedCardPairsLocalDataSource)
         userRepository = UserRepository(MockEncryptor(), UserLocalDataSource(dataStore))
         val getUnlockedCardPairsCountUseCase =
             GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository)
@@ -45,7 +44,7 @@ class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
         sut = UnlockRandomCardIfEnoughCoinsUseCase(
             testDispatcher,
             calculateNextCardPairCostUseCase,
-            cardRepository,
+            UnlockRandomCardUseCase(testDispatcher, cardRepository),
             userRepository
         )
     }
@@ -86,19 +85,20 @@ class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when user has more than enough coins then should remove correct amount of coins`() = runTest {
-        // given
-        val extraCoins = 100L
-        val nextCardCost = calculateNextCardPairCostUseCase().first().getOrThrow()
-        userRepository.addCoins(nextCardCost + extraCoins)
+    fun `when user has more than enough coins then should remove correct amount of coins`() =
+        runTest {
+            // given
+            val extraCoins = 100L
+            val nextCardCost = calculateNextCardPairCostUseCase().first().getOrThrow()
+            userRepository.addCoins(nextCardCost + extraCoins)
 
-        // when
-        sut().test {
-            awaitItem()
-            awaitComplete()
+            // when
+            sut().test {
+                awaitItem()
+                awaitComplete()
+            }
+
+            // then
+            assertEquals(extraCoins, userRepository.getCoins().first())
         }
-
-        // then
-        assertEquals(extraCoins, userRepository.getCoins().first())
-    }
 }
