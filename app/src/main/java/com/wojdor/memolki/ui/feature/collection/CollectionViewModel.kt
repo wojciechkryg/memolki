@@ -102,7 +102,7 @@ class CollectionViewModel @Inject constructor(
     private fun loadData(animateCoins: Boolean = false) {
         loadAd()
         loadCoins(animateCoins)
-        loadCardPairs(isAdAvailable = false)
+        loadCardPairs(isAdAvailable = allRewardedAds.endGameCoinsAd.isLoaded)
     }
 
     private fun loadCoins(animateCoins: Boolean) {

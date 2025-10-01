@@ -18,6 +18,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,12 +34,30 @@ import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.components.Flippable
 import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
 import com.wojdor.memolki.ui.feature.collection.CollectionState
+import kotlinx.coroutines.delay
 
 @Composable
 fun CardPairsCollection(
     state: CollectionState,
     callbacks: CollectionCallbacks
 ) {
+    var isClickBlocked by remember { mutableStateOf(false) }
+    val groupThrottleCallbacks = remember(callbacks) {
+        callbacks.copy(
+            onUnlockedCardPairClick = {
+                if (!isClickBlocked) {
+                    isClickBlocked = true
+                    callbacks.onUnlockedCardPairClick(it)
+                }
+            }
+        )
+    }
+    LaunchedEffect(isClickBlocked) {
+        if (isClickBlocked) {
+            delay(ON_FRONT_CARDS_CLICK_THROTTLE)
+            isClickBlocked = false
+        }
+    }
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +80,7 @@ fun CardPairsCollection(
                     CollectionCardPair(
                         modifier = Modifier.size(cardPairSize),
                         collectionCardPair = collectionCardPair,
-                        callbacks = callbacks
+                        callbacks = groupThrottleCallbacks
                     )
                 }
             }
@@ -198,3 +217,4 @@ private fun FadeEffectBottom(modifier: Modifier) {
 
 private val FADE_EFFECT_HEIGHT = 6.dp
 private const val ALPHA_DURATION = 300
+private const val ON_FRONT_CARDS_CLICK_THROTTLE = 500L
