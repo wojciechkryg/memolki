@@ -3,7 +3,7 @@ package com.wojdor.memolki.ui.feature.game.component
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.wojdor.memolki.domain.model.CardModel
-import com.wojdor.memolki.ui.components.Flippable
+import com.wojdor.memolki.ui.component.Flippable
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
 
 @Composable

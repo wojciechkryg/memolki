@@ -70,7 +70,7 @@ class CollectionViewModel @Inject constructor(
         if (wasRewardGranted) {
             rewardCardForAd()
         }
-        loadAd(wasRewardGranted)
+        loadCardPairsAndAd(wasRewardGranted)
     }
 
     private fun rewardCardForAd() {
@@ -81,12 +81,12 @@ class CollectionViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun loadAd(wasRewardGranted: Boolean = false) {
-        if (allRewardedAds.endGameCoinsAd.isLoaded && !wasRewardGranted) {
+    private fun loadCardPairsAndAd(wasRewardGranted: Boolean = false) {
+        if (allRewardedAds.collectionCardPairAd.isLoaded && !wasRewardGranted) {
             loadCardPairs(isAdAvailable = true)
         } else {
             loadCardPairs(isAdAvailable = false)
-            allRewardedAds.endGameCoinsAd.load(
+            allRewardedAds.collectionCardPairAd.load(
                 onLoaded = {
                     if (!wasRewardGranted) {
                         loadCardPairs(isAdAvailable = true)
@@ -100,9 +100,8 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun loadData(animateCoins: Boolean = false) {
-        loadAd()
+        loadCardPairsAndAd()
         loadCoins(animateCoins)
-        loadCardPairs(isAdAvailable = allRewardedAds.endGameCoinsAd.isLoaded)
     }
 
     private fun loadCoins(animateCoins: Boolean) {
@@ -233,7 +232,7 @@ class CollectionViewModel @Inject constructor(
 
     private fun onUnlockWithAdClick() {
         hapticFeedback.vibrateLow()
-        sendEffect(CollectionEffect.ShowAd(allRewardedAds.endGameCoinsAd))
+        sendEffect(CollectionEffect.ShowAd(allRewardedAds.collectionCardPairAd))
     }
 
     companion object {

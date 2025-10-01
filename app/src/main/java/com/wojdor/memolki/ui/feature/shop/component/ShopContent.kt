@@ -1,24 +1,27 @@
-package com.wojdor.memolki.ui.feature.collection.component
+package com.wojdor.memolki.ui.feature.shop.component
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.CoinsAmount
-import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
-import com.wojdor.memolki.ui.feature.collection.CollectionState
-import com.wojdor.memolki.ui.feature.collection.getCollectionStateForPreview
+import com.wojdor.memolki.ui.feature.shop.ShopCallbacks
+import com.wojdor.memolki.ui.feature.shop.ShopState
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
-fun CollectionContent(
-    state: CollectionState,
-    callbacks: CollectionCallbacks = CollectionCallbacks()
+fun ShopContent(
+    state: ShopState,
+    callbacks: ShopCallbacks = ShopCallbacks()
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -30,15 +33,13 @@ fun CollectionContent(
                 coins = state.coins,
                 animate = state.animateCoins
             )
-            ShopButton(
-                onClick = callbacks.onShopButtonClick
-            )
         }
-        UnlockedCardPairsCounter(
-            modifier = Modifier.padding(bottom = 8.dp),
-            state = state
-        )
-        CardPairsCollection(state, callbacks)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(stringResource(R.string.shop))
+        }
     }
 }
 
@@ -46,8 +47,8 @@ fun CollectionContent(
 @Preview(showBackground = true)
 private fun CollectionPreview() {
     AppTheme {
-        CollectionContent(
-            state = getCollectionStateForPreview()
+        ShopContent(
+            state = ShopState(1234)
         )
     }
 }

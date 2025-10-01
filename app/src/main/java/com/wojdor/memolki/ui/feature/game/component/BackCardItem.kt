@@ -9,7 +9,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
-import com.wojdor.memolki.ui.components.XmlDrawable
+import com.wojdor.memolki.ui.component.XmlDrawable
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.util.throttleClick
 
