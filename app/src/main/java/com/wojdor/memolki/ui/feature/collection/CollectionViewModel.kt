@@ -63,7 +63,6 @@ class CollectionViewModel @Inject constructor(
     private fun onAdReward() {
         loadCardPairs(isAdAvailable = false)
         incrementUnlockedCardPairsFromAdsCountUseCase().launchIn(viewModelScope)
-        allRewardedAds.collectionCardPairAd.load()
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {

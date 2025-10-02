@@ -59,7 +59,6 @@ class EndGameViewModel @Inject constructor(
 
     private fun onAdReward() {
         showMenu(false)
-        allRewardedAds.endGameCoinsAd.load()
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {

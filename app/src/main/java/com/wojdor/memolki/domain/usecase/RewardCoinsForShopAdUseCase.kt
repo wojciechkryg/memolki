@@ -21,10 +21,14 @@ class RewardCoinsForShopAdUseCase @Inject constructor(
     }
 
     private suspend fun calculateRewardedCoins(): Long {
-        val unlockedLevels = getLevelsUseCase().first().getOrNull() ?: return 0
+        val unlockedLevels = getLevelsUseCase().first().getOrNull() ?: return DEFAULT_REWARDED_COINS
         val biggestUnlockedLevel = unlockedLevels.filter { it.isUnlocked }.maxByOrNull { it.id }
         return biggestUnlockedLevel?.let {
             it.columns * it.rows.toLong()
-        } ?: 0
+        } ?: DEFAULT_REWARDED_COINS
+    }
+
+    companion object {
+        private const val DEFAULT_REWARDED_COINS = 0L
     }
 }

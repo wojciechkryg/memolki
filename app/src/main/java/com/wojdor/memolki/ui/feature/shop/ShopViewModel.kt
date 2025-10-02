@@ -51,7 +51,6 @@ class ShopViewModel @Inject constructor(
 
     private fun onAdReward() {
         loadMenu(isAdAvailable = false)
-        allRewardedAds.shopCoinsAd.load()
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
