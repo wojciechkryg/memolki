@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.feature.collection.component
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -17,7 +18,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,19 +29,38 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
-import com.wojdor.memolki.ui.components.Flippable
+import com.wojdor.memolki.ui.component.Flippable
 import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
 import com.wojdor.memolki.ui.feature.collection.CollectionState
+import kotlinx.coroutines.delay
 
 @Composable
 fun CardPairsCollection(
     state: CollectionState,
     callbacks: CollectionCallbacks
 ) {
+    var isClickBlocked by remember { mutableStateOf(false) }
+    val groupThrottleCallbacks = remember(callbacks) {
+        callbacks.copy(
+            onUnlockedCardPairClick = {
+                if (!isClickBlocked) {
+                    isClickBlocked = true
+                    callbacks.onUnlockedCardPairClick(it)
+                }
+            }
+        )
+    }
+    LaunchedEffect(isClickBlocked) {
+        if (isClickBlocked) {
+            delay(ON_FRONT_CARDS_CLICK_THROTTLE)
+            isClickBlocked = false
+        }
+    }
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -49,9 +71,41 @@ fun CardPairsCollection(
         val columns = 2
         val shorterEdge = maxWidth.coerceAtMost(maxHeight)
         val cardPairSize = (shorterEdge - spacing * (columns - 1)) / columns
+        val lazyGridState = rememberLazyGridState()
+        val firstLockedToUnlockWithCoinsIndex = remember(state.collectionCardPairs) {
+            state.collectionCardPairs.indexOfFirst {
+                it is CollectionCardPairModel.LockedToUnlockWithCoins
+            } - columns
+        }
+        val spacingInPixels = with(LocalDensity.current) { spacing.toPx() }
+        val cardPairSizeInPixels = with(LocalDensity.current) { cardPairSize.toPx() }
+        var hasScrolled by remember {
+            mutableStateOf(lazyGridState.firstVisibleItemIndex != 0)
+        }
+
+        LaunchedEffect(firstLockedToUnlockWithCoinsIndex) {
+            if (firstLockedToUnlockWithCoinsIndex > INDEX_NOT_FOUND && !hasScrolled) {
+                hasScrolled = true
+                delay(SCROLL_DELAY)
+                val rowIndex = firstLockedToUnlockWithCoinsIndex / columns
+                val targetOffset = rowIndex * (cardPairSizeInPixels + spacingInPixels)
+                lazyGridState.scroll {
+                    var previousValue = lazyGridState.firstVisibleItemScrollOffset.toFloat()
+                    Animatable(previousValue).animateTo(
+                        targetValue = targetOffset,
+                        animationSpec = tween(durationMillis = SCROLL_DURATION)
+                    ) {
+                        val delta = value - previousValue
+                        scrollBy(delta)
+                        previousValue = value
+                    }
+                }
+            }
+        }
 
         Box(modifier = Modifier.fillMaxSize()) {
             LazyVerticalGrid(
+                state = lazyGridState,
                 columns = GridCells.Fixed(columns),
                 verticalArrangement = Arrangement.spacedBy(spacing),
                 horizontalArrangement = Arrangement.spacedBy(spacing),
@@ -61,7 +115,7 @@ fun CardPairsCollection(
                     CollectionCardPair(
                         modifier = Modifier.size(cardPairSize),
                         collectionCardPair = collectionCardPair,
-                        callbacks = callbacks
+                        callbacks = groupThrottleCallbacks
                     )
                 }
             }
@@ -151,8 +205,12 @@ private fun BackSide(
                         onClick = { callbacks.onUnlockWithCoinsClick(targetState) }
                     )
 
-                is CollectionCardPairModel.LockedToUnlockWithAd -> CollectionLockedCardPair()
-                is CollectionCardPairModel.Unlocked -> { /* handled in FrontSide */
+                is CollectionCardPairModel.LockedToUnlockWithAd -> CollectionUnlockCardPairWithAd(
+                    onClick = { callbacks.onUnlockWithAdClick(targetState) }
+                )
+
+                is CollectionCardPairModel.Unlocked -> {
+                    // handled in FrontSide
                 }
             }
         }
@@ -195,3 +253,7 @@ private fun FadeEffectBottom(modifier: Modifier) {
 
 private val FADE_EFFECT_HEIGHT = 6.dp
 private const val ALPHA_DURATION = 300
+private const val ON_FRONT_CARDS_CLICK_THROTTLE = 500L
+private const val INDEX_NOT_FOUND = -1
+private const val SCROLL_DELAY = 500L
+private const val SCROLL_DURATION = 800

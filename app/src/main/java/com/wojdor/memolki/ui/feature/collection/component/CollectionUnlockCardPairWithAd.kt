@@ -2,14 +2,11 @@ package com.wojdor.memolki.ui.feature.collection.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,17 +16,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
-import com.wojdor.memolki.domain.model.CollectionCardPairModel
-import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.shape.RotatedCardPairShape
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
-fun CollectionUnlockCardPairWithCoins(
+fun CollectionUnlockCardPairWithAd(
     modifier: Modifier = Modifier,
-    collectionCardPairModel: CollectionCardPairModel.LockedToUnlockWithCoins,
     onClick: () -> Unit = {}
 ) {
     Box(
@@ -62,42 +56,27 @@ fun CollectionUnlockCardPairWithCoins(
             contentAlignment = Alignment.Center
         ) {
             CollectionLockedCard()
-            UnlockWithCoins(collectionCardPairModel)
+            Image(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .size(ADS_ICON_SIZE),
+                painter = painterResource(R.drawable.ic_ads),
+                contentDescription = null,
+            )
         }
     }
 }
 
-@Composable
-private fun UnlockWithCoins(
-    collectionCardPairModel: CollectionCardPairModel.LockedToUnlockWithCoins
-) {
-    Row(
-        modifier = Modifier.padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Image(
-            modifier = Modifier.size(COIN_ICON_SIZE),
-            painter = painterResource(R.drawable.ic_coin),
-            contentDescription = null,
-        )
-        AutoSizeText(
-            modifier = Modifier.padding(start = 4.dp),
-            text = collectionCardPairModel.coins.toString(),
-            style = MaterialTheme.typography.headlineMedium,
-        )
-    }
-}
+private val ADS_ICON_SIZE = 64.dp
 
-private val COIN_ICON_SIZE = 32.dp
 
 @Preview
 @Composable
-fun CollectionUnlockCardPairWithCoinsPreview() {
+fun CollectionUnlockCardPairWithAdPreview() {
     AppTheme {
-        CollectionUnlockCardPairWithCoins(
+        CollectionUnlockCardPairWithAd(
             modifier = Modifier.size(192.dp),
-            collectionCardPairModel = CollectionCardPairModel.LockedToUnlockWithCoins(coins = 100)
         )
     }
 }
+

@@ -7,10 +7,13 @@ import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
+import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
+import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
+import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.feature.collection.CollectionViewModel.Companion.UNLOCK_WITH_COINS_COUNT
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,11 +31,15 @@ class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
+    private val allRewardedAds: AllRewardedAds,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val getUnlockedCardPairs: GetUnlockedCardPairsUseCase,
     private val getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase,
     private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase,
-    private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase
+    private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase,
+    private val unlockRandomCardUseCase: UnlockRandomCardUseCase,
+    private val getUnlockedCardPairsFromAdsCountUseCase: GetUnlockedCardPairsFromAdsCountUseCase,
+    private val incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase
 ) : MviViewModel<CollectionIntent, CollectionState>(
     savedStateHandle,
     CollectionState()
@@ -44,15 +51,56 @@ class CollectionViewModel @Inject constructor(
 
     override fun onIntent(intent: CollectionIntent) {
         when (intent) {
-            is CollectionIntent.OnShopClick -> onShopClick()
+            CollectionIntent.OnShopClick -> onShopClick()
             is CollectionIntent.OnCardPairClick -> onCardPairClick(intent)
             is CollectionIntent.OnUnlockWithCoinsClick -> onUnlockWithCoinsClick()
+            is CollectionIntent.OnUnlockWithAdClick -> onUnlockWithAdClick()
+            CollectionIntent.OnAdReward -> onAdReward()
+            is CollectionIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
+        }
+    }
+
+    private fun onAdReward() {
+        loadCardPairs(isAdAvailable = false)
+        incrementUnlockedCardPairsFromAdsCountUseCase().launchIn(viewModelScope)
+    }
+
+    private fun onAdDismiss(wasRewardGranted: Boolean) {
+        if (wasRewardGranted) {
+            rewardCardForAd()
+        }
+        loadCardPairsAndAd(wasRewardGranted)
+    }
+
+    private fun rewardCardForAd() {
+        unlockRandomCardUseCase().onEach { result ->
+            result.onSuccess {
+                loadData()
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun loadCardPairsAndAd(wasRewardGranted: Boolean = false) {
+        if (allRewardedAds.collectionCardPairAd.isLoaded && !wasRewardGranted) {
+            loadCardPairs(isAdAvailable = true)
+        } else {
+            loadCardPairs(isAdAvailable = false)
+            allRewardedAds.collectionCardPairAd.load(
+                onLoaded = {
+                    if (!wasRewardGranted) {
+                        loadCardPairs(isAdAvailable = true)
+                    }
+                },
+                onFailed = {
+                    loadCardPairs(isAdAvailable = false)
+                }
+            )
         }
     }
 
     private fun loadData(animateCoins: Boolean = false) {
+        loadCardPairsAndAd()
         loadCoins(animateCoins)
-        loadCardPairs()
     }
 
     private fun loadCoins(animateCoins: Boolean) {
@@ -63,7 +111,7 @@ class CollectionViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun loadCardPairs() {
+    private fun loadCardPairs(isAdAvailable: Boolean) {
         combine(
             getUnlockedCardPairs()
                 .map { it.getOrNull() }
@@ -73,20 +121,25 @@ class CollectionViewModel @Inject constructor(
                 .filterNotNull(),
             calculateNextCardPairCostUseCase()
                 .map { it.getOrNull() }
+                .filterNotNull(),
+            getUnlockedCardPairsFromAdsCountUseCase()
+                .map { it.getOrNull()?.toInt() }
                 .filterNotNull()
-        ) { unlockedCardPairs, allCardPairsCount, cardPairCost ->
+        ) { unlockedCardPairs, allCardPairsCount, cardPairCost, unlockedCardPairsFromAdsCount ->
             val lockedCardPairsCount = allCardPairsCount - unlockedCardPairs.size
-            Triple(unlockedCardPairs, lockedCardPairsCount, cardPairCost)
+            getCollectionCardPairs(
+                unlockedCardPairs,
+                lockedCardPairsCount,
+                cardPairCost,
+                unlockedCardPairsFromAdsCount,
+                isAdAvailable
+            )
         }
             .distinctUntilChanged()
-            .onEach { (unlockedCardPairs, lockedCardPairsCount, cardPairCost) ->
+            .onEach { collectionCardPairs ->
                 sendState {
                     copy(
-                        collectionCardPairs = getCollectionCardPairs(
-                            unlockedCardPairs,
-                            lockedCardPairsCount,
-                            cardPairCost
-                        ),
+                        collectionCardPairs = collectionCardPairs,
                     )
                 }
             }
@@ -96,11 +149,18 @@ class CollectionViewModel @Inject constructor(
     private fun getCollectionCardPairs(
         unlockedCardPairs: List<CardPairModel>,
         lockedCardPairsCount: Int,
-        cardPairCost: Int
+        cardPairCost: Int,
+        unlockedCardPairsFromAdsCount: Int,
+        isAdAvailable: Boolean
     ): List<CollectionCardPairModel> {
         val unlocked = unlockedCardPairs.map { CollectionCardPairModel.Unlocked(it) }
         val lockedToUnlockWithCoins = getLockedToUnlockWithCoins(lockedCardPairsCount, cardPairCost)
-        val lockedToUnlockWithAd = getLockedToUnlockWithAd(lockedCardPairsCount)
+        val lockedToUnlockWithAd =
+            getLockedToUnlockWithAd(
+                lockedCardPairsCount,
+                unlockedCardPairsFromAdsCount,
+                isAdAvailable
+            )
         val lockedCardPairsNotPossibleToUnlockYet =
             getLockedNotPossibleToUnlockYet(lockedCardPairsCount)
         return unlocked +
@@ -112,9 +172,8 @@ class CollectionViewModel @Inject constructor(
     private fun getLockedToUnlockWithCoins(
         lockedCardPairsCount: Int,
         cardPairCost: Int
-    )
-            : List<CollectionCardPairModel.LockedToUnlockWithCoins> =
-        if (lockedCardPairsCount > 0) {
+    ): List<CollectionCardPairModel.LockedToUnlockWithCoins> =
+        if (lockedCardPairsCount > NO_LOCKED_CARD_PAIRS) {
             List(UNLOCK_WITH_COINS_COUNT) {
                 CollectionCardPairModel.LockedToUnlockWithCoins(cardPairCost)
             }
@@ -122,13 +181,21 @@ class CollectionViewModel @Inject constructor(
             emptyList()
         }
 
-    private fun getLockedToUnlockWithAd(lockedCardPairsCount: Int)
-            : List<CollectionCardPairModel.LockedToUnlockWithAd> =
-        if (lockedCardPairsCount > 1) {
-            List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.LockedToUnlockWithAd }
+    private fun getLockedToUnlockWithAd(
+        lockedCardPairsCount: Int,
+        unlockedCardPairsFromAdsCount: Int,
+        isAdAvailable: Boolean
+    ): List<CollectionCardPairModel> {
+        return if (lockedCardPairsCount > LAST_LOCKED_CARD_PAIR) {
+            if (unlockedCardPairsFromAdsCount < MAX_UNLOCKED_CARD_PAIRS_WITH_ADS && isAdAvailable) {
+                List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.LockedToUnlockWithAd }
+            } else {
+                List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.Locked }
+            }
         } else {
             emptyList()
         }
+    }
 
     private fun getLockedNotPossibleToUnlockYet(lockedCardPairsCount: Int)
             : List<CollectionCardPairModel.Locked> {
@@ -157,14 +224,22 @@ class CollectionViewModel @Inject constructor(
             result.onSuccess {
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
-                loadData(true)
+                loadData(animateCoins = true)
             }
         }.launchIn(viewModelScope)
     }
 
+    private fun onUnlockWithAdClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(CollectionEffect.ShowAd(allRewardedAds.collectionCardPairAd))
+    }
+
     companion object {
+        const val NO_LOCKED_CARD_PAIRS = 0
+        const val LAST_LOCKED_CARD_PAIR = 1
         const val UNLOCK_WITH_ADS_COUNT = 1
         const val UNLOCK_WITH_COINS_COUNT = 1
+        const val MAX_UNLOCKED_CARD_PAIRS_WITH_ADS = 3
 
         const val NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK =
             UNLOCK_WITH_COINS_COUNT + UNLOCK_WITH_ADS_COUNT

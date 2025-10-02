@@ -6,4 +6,5 @@ data class CollectionCallbacks(
     val onShopButtonClick: () -> Unit = {},
     val onUnlockedCardPairClick: (CollectionCardPairModel.Unlocked) -> Unit = {},
     val onUnlockWithCoinsClick: (CollectionCardPairModel.LockedToUnlockWithCoins) -> Unit = {},
+    val onUnlockWithAdClick: (CollectionCardPairModel.LockedToUnlockWithAd) -> Unit = {},
 )

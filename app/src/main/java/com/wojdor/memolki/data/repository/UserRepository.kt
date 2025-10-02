@@ -56,6 +56,16 @@ class UserRepository @Inject constructor(
         }
     }
 
+    fun getUnlockedCardPairsFromAdsCount() =
+        decryptLong(userLocalDataSource.encryptedUnlockedCardPairsFromAdsCount)
+
+    suspend fun incrementUnlockedCardPairsFromAdsCount() {
+        userLocalDataSource.setEncryptedUnlockedCardPairsFromAdsCount { encryptedCount ->
+            val count = decryptLong(encryptedCount)
+            encryptor.encrypt(count + 1)
+        }
+    }
+
     private fun decryptLong(encryptedValue: String?): Long {
         return if (encryptedValue.isNullOrEmpty()) {
             DEFAULT_LONG_VALUE

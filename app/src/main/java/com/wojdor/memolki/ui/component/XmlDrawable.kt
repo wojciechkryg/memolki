@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.components
+package com.wojdor.memolki.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.appcompat.content.res.AppCompatResources

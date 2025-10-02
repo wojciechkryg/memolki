@@ -144,4 +144,37 @@ class UserRepositoryTest : AppTest() {
         val expected = initialCount + 1
         assertEquals(expected, result)
     }
+
+    @Test
+    fun `when getUnlockedCardPairsFromAdsCount then should return decrypted value`() = runTest {
+        // given
+        val expected = 5L
+        userLocalDataSource.setEncryptedUnlockedCardPairsFromAdsCount {
+            mockEncryptor.encrypt(expected)
+        }
+
+        // when
+        val result = sut.getUnlockedCardPairsFromAdsCount().first()
+
+        // then
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `when incrementUnlockedCardPairsFromAdsCount then should increment value in data source`() =
+        runTest {
+            // given
+            val initialCount = 5L
+            userLocalDataSource.setEncryptedUnlockedCardPairsFromAdsCount {
+                mockEncryptor.encrypt(initialCount)
+            }
+
+            // when
+            sut.incrementUnlockedCardPairsFromAdsCount()
+
+            // then
+            val result = sut.getUnlockedCardPairsFromAdsCount().first()
+            val expected = initialCount + 1
+            assertEquals(expected, result)
+        }
 }

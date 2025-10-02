@@ -82,9 +82,9 @@ open class HapticFeedback @Inject constructor(
     }
 
     companion object {
-        private const val VIBRATE_LOW_MS = 10L
-        private const val VIBRATE_LOW_AMPLITUDE = 25
+        private const val VIBRATE_LOW_MS = 20L
+        private const val VIBRATE_LOW_AMPLITUDE = 50
         private const val VIBRATE_STRONG_MS = 30L
-        private const val VIBRATE_STRONG_AMPLITUDE = 50
+        private const val VIBRATE_STRONG_AMPLITUDE = 200
     }
 }

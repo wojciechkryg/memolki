@@ -56,10 +56,22 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
+    val encryptedUnlockedCardPairsFromAdsCount: Flow<String?> =
+        dataRead.map { it[Key.UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT] }
+
+    suspend fun setEncryptedUnlockedCardPairsFromAdsCount(transform: (encryptedValue: String?) -> String) {
+        dataWrite.edit { prefs ->
+            prefs[Key.UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT] =
+                transform(prefs[Key.UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT])
+        }
+    }
+
     private object Key {
         val COINS = stringPreferencesKey("coins")
         val TOTAL_COINS = stringPreferencesKey("total_coins")
         val TOTAL_MATCHED_CARD_PAIR_COUNT = stringPreferencesKey("total_matched_card_pair_count")
         val TOTAL_GAMES_PLAYED = stringPreferencesKey("total_games_played")
+        val UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT =
+            stringPreferencesKey("unlocked_card_pairs_from_ads_count")
     }
 }

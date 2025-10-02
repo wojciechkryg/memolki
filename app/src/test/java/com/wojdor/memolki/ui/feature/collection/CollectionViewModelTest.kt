@@ -12,8 +12,11 @@ import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
+import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
+import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
 import com.wojdor.memolki.test.mock.MockDataStore
@@ -55,6 +58,8 @@ class CollectionViewModelTest : AppTest() {
         sut = CollectionViewModel(
             savedStateHandle = savedStateHandle,
             hapticFeedback = relaxedMockk(),
+            coinsPlayer = relaxedMockk(),
+            allRewardedAds = relaxedMockk(),
             getCoinsUseCase = GetCoinsUseCase(testDispatcher, userRepository),
             getUnlockedCardPairs = GetUnlockedCardPairsUseCase(
                 testDispatcher,
@@ -68,10 +73,21 @@ class CollectionViewModelTest : AppTest() {
             unlockRandomCardIfEnoughCoinsUseCase = UnlockRandomCardIfEnoughCoinsUseCase(
                 testDispatcher,
                 calculateNextCardPairCostUseCase,
-                cardRepository,
+                UnlockRandomCardUseCase(testDispatcher, cardRepository),
                 userRepository
             ),
-            coinsPlayer = relaxedMockk(),
+            getUnlockedCardPairsFromAdsCountUseCase = GetUnlockedCardPairsFromAdsCountUseCase(
+                testDispatcher,
+                userRepository
+            ),
+            incrementUnlockedCardPairsFromAdsCountUseCase = IncrementUnlockedCardPairsFromAdsCountUseCase(
+                testDispatcher,
+                userRepository
+            ),
+            unlockRandomCardUseCase = UnlockRandomCardUseCase(
+                testDispatcher,
+                cardRepository
+            )
         )
     }
 

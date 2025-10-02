@@ -47,17 +47,17 @@ class BackgroundMusicPlayer @Inject constructor(
                 result.onSuccess { settings ->
                     isMusicEnabled =
                         settings.filterIsInstance<SettingModel.Music>().first().isEnabled
-                    onStart()
+                    playIfMusicEnabled()
                 }
             }
         }
     }
 
-    override fun onStart(owner: LifecycleOwner) {
-        onStart()
+    override fun onResume(owner: LifecycleOwner) {
+        playIfMusicEnabled()
     }
 
-    override fun onStop(owner: LifecycleOwner) {
+    override fun onPause(owner: LifecycleOwner) {
         pause()
     }
 
@@ -99,7 +99,7 @@ class BackgroundMusicPlayer @Inject constructor(
         }
     }
 
-    private fun onStart() {
+    private fun playIfMusicEnabled() {
         if (isMusicEnabled) {
             start()
         } else {

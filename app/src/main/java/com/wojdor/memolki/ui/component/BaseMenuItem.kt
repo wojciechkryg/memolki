@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.components
+package com.wojdor.memolki.ui.component
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.Button
