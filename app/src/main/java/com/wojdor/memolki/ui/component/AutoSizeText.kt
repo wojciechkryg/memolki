@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.components
+package com.wojdor.memolki.ui.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size

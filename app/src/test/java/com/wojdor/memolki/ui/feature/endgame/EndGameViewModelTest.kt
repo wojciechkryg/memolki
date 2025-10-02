@@ -18,7 +18,6 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -43,7 +42,7 @@ class EndGameViewModelTest : AppTest() {
             hapticFeedback = hapticFeedback,
             levelCompletePlayer = relaxedMockk(),
             coinsPlayer = relaxedMockk(),
-            rewardedAds = rewardedAds,
+            allRewardedAds = rewardedAds,
             incrementTotalGamesPlayedUseCase = IncrementTotalGamesPlayedUseCase(
                 testDispatcher,
                 userRepository

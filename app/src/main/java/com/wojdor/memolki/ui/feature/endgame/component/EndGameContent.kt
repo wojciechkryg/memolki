@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
-import com.wojdor.memolki.ui.components.CoinsAmount
+import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
 import com.wojdor.memolki.ui.feature.menu.component.MenuItem

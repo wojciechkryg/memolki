@@ -4,4 +4,7 @@ import com.wojdor.memolki.ui.base.UiState
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class ShopState : UiState
+data class ShopState(
+    val coins: Long = 0L,
+    val animateCoins: Boolean = true
+) : UiState

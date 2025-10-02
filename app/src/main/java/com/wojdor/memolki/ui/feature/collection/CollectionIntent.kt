@@ -14,4 +14,12 @@ sealed class CollectionIntent : UiIntent {
     data class OnUnlockWithCoinsClick(
         val collectionCardPairModel: CollectionCardPairModel.LockedToUnlockWithCoins
     ) : CollectionIntent()
+
+    data class OnUnlockWithAdClick(
+        val collectionCardPairModel: CollectionCardPairModel.LockedToUnlockWithAd
+    ) : CollectionIntent()
+
+    object OnAdReward : CollectionIntent()
+
+    data class OnAdDismiss(val wasRewardGranted: Boolean) : CollectionIntent()
 }
