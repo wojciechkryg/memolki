@@ -72,11 +72,11 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {
-        if (allRewardedAds.collectionCardPairAd.isLoaded && !wasRewardGranted) {
+        if (allRewardedAds.shopCoinsAd.isLoaded && !wasRewardGranted) {
             loadMenu(isAdAvailable = true)
         } else {
             loadMenu(isAdAvailable = false)
-            allRewardedAds.collectionCardPairAd.load(
+            allRewardedAds.shopCoinsAd.load(
                 onLoaded = {
                     if (!wasRewardGranted) {
                         loadMenu(isAdAvailable = true)

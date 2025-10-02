@@ -45,7 +45,7 @@ fun ShopContent(
 
 @Composable
 @Preview(showBackground = true)
-private fun CollectionPreview() {
+private fun ShopContentPreview() {
     AppTheme {
         ShopContent(
             state = ShopState(1234)
