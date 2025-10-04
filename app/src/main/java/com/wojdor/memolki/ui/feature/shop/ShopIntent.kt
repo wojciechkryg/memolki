@@ -4,10 +4,11 @@ import com.wojdor.memolki.ui.base.UiIntent
 
 sealed class ShopIntent : UiIntent {
 
-    object OnRewardCoinsWithAdClick : ShopIntent()
-
+    object OnWatchAdClick : ShopIntent()
     object OnAdReward : ShopIntent()
-
+    object OnBuyCoinsSmallAmountClick : ShopIntent()
+    object OnBuyCoinsBigAmountClick : ShopIntent()
+    object OnBuyAllCardsClick : ShopIntent()
     data class OnAdDismiss(val wasRewardGranted: Boolean) : ShopIntent()
 }
 

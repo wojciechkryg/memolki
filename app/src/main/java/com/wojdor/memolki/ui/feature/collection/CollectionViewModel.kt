@@ -225,6 +225,8 @@ class CollectionViewModel @Inject constructor(
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
                 loadData(animateCoins = true)
+            }.onFailure {
+                sendEffect(CollectionEffect.OpenShopScreen)
             }
         }.launchIn(viewModelScope)
     }

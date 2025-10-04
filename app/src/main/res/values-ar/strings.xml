@@ -5,6 +5,10 @@
     <string name="menu">القائمة</string>
     <string name="play_again">العب مرة أخرى</string>
     <string name="shop">المتجر</string>
+    <string name="shop_obtain">الحصول على</string>
+    <string name="shop_back_later">عد لاحقًا</string>
+    <string name="shop_buy">شراء</string>
+    <string name="shop_unlock_all_cards">افتح جميع البطاقات</string>
     <string name="setting_music">الموسيقى</string>
     <string name="setting_sound">الصوت</string>
     <string name="setting_vibration">الاهتزاز</string>

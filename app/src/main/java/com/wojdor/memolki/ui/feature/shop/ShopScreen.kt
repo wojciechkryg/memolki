@@ -8,9 +8,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.feature.collection.CollectionEffect
 import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
 
@@ -32,12 +32,18 @@ private fun HandleEffect(
     val activity = LocalActivity.current
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            is CollectionEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
+            is ShopEffect.ShowAd -> activity?.let {
+                onWatchAdClick(
+                    it,
+                    viewModel,
+                    effect.rewardedAd
+                )
+            }
         }
     }
 }
 
-private fun showAd(
+private fun onWatchAdClick(
     activity: Activity,
     viewModel: ShopViewModel,
     rewardedAd: RewardedAd
@@ -55,7 +61,10 @@ private fun HandleState(
     state: ShopState
 ) {
     val callbacks = ShopCallbacks(
-        onRewardCoinsWithAdClick = { viewModel.sendIntent(ShopIntent.OnRewardCoinsWithAdClick) }
+        onWatchAdClick = { viewModel.sendIntent(ShopIntent.OnWatchAdClick) },
+        onBuyCoinsSmallAmountClick = { viewModel.sendIntent(ShopIntent.OnBuyCoinsSmallAmountClick) },
+        onBuyCoinsBigAmountClick = { viewModel.sendIntent(ShopIntent.OnBuyCoinsBigAmountClick) },
+        onBuyAllCardsClick = { viewModel.sendIntent(ShopIntent.OnBuyAllCardsClick) }
     )
     ShopScreen(state, callbacks)
 }
@@ -73,7 +82,33 @@ private fun ShopScreen(
 private fun ShopScreenPreview() {
     AppTheme {
         ShopScreen(
-            state = ShopState()
+            state = ShopState(
+                coins = 1234,
+                menu = listOf(
+                    ShopMenuModel.WatchAd(true),
+                    ShopMenuModel.BuyCoinsSmallAmount,
+                    ShopMenuModel.BuyCoinsBigAmount,
+                    ShopMenuModel.BuyAllCards
+                )
+            )
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ShopScreenNoAdPreview() {
+    AppTheme {
+        ShopScreen(
+            state = ShopState(
+                coins = 1234,
+                menu = listOf(
+                    ShopMenuModel.WatchAd(false),
+                    ShopMenuModel.BuyCoinsSmallAmount,
+                    ShopMenuModel.BuyCoinsBigAmount,
+                    ShopMenuModel.BuyAllCards
+                )
+            )
         )
     }
 }

@@ -5,6 +5,10 @@
     <string name="menu">मेनू</string>
     <string name="play_again">फिर से खेलें</string>
     <string name="shop">दुकान</string>
+    <string name="shop_obtain">संपादन करें</string>
+    <string name="shop_back_later">बाद में वापस आएं</string>
+    <string name="shop_buy">बिक्री करें</string>
+    <string name="shop_unlock_all_cards">सभी कार्ड अनलॉक करें</string>
     <string name="setting_music">संगीत</string>
     <string name="setting_sound">ध्वनि</string>
     <string name="setting_vibration">कंपन</string>

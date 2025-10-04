@@ -5,6 +5,10 @@
     <string name="menu">Menú</string>
     <string name="play_again">Jugar de nuevo</string>
     <string name="shop">Tienda</string>
+    <string name="shop_obtain">Obtener</string>
+    <string name="shop_back_later">Vuelve más tarde</string>
+    <string name="shop_buy">Comprar</string>
+    <string name="shop_unlock_all_cards">Desbloquear todas las cartas</string>
     <string name="setting_music">Música</string>
     <string name="setting_sound">Sonido</string>
     <string name="setting_vibration">Vibración</string>

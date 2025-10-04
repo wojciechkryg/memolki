@@ -5,6 +5,10 @@
     <string name="menu">Valikko</string>
     <string name="play_again">Pelaa uudelleen</string>
     <string name="shop">Kauppa</string>
+    <string name="shop_obtain">Osta</string>
+    <string name="shop_back_later">Tule takaisin myöhemmin</string>
+    <string name="shop_buy">Ostaa</string>
+    <string name="shop_unlock_all_cards">Lukitse kaikki kortteet</string>
     <string name="setting_music">Musiikki</string>
     <string name="setting_sound">Ääni</string>
     <string name="setting_vibration">Tärinä</string>
