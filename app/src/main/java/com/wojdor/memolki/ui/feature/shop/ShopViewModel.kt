@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.shop
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -33,9 +34,12 @@ class ShopViewModel @Inject constructor(
 
     override fun onIntent(intent: ShopIntent) {
         when (intent) {
-            ShopIntent.OnRewardCoinsWithAdClick -> onUnlockWithAdClick()
+            ShopIntent.OnWatchAdClick -> onWatchAdClick()
             ShopIntent.OnAdReward -> onAdReward()
             is ShopIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
+            ShopIntent.OnBuyAllCardsClick -> onBuyCoinsSmallAmountClick()
+            ShopIntent.OnBuyCoinsBigAmountClick -> onBuyCoinsBigAmountClick()
+            ShopIntent.OnBuyCoinsSmallAmountClick -> onBuyAllCardsClick()
         }
     }
 
@@ -44,13 +48,13 @@ class ShopViewModel @Inject constructor(
         loadCoins(animateCoins)
     }
 
-    private fun onUnlockWithAdClick() {
+    private fun onWatchAdClick() {
         hapticFeedback.vibrateLow()
         sendEffect(ShopEffect.ShowAd(allRewardedAds.shopCoinsAd))
     }
 
     private fun onAdReward() {
-        loadMenu(isAdAvailable = false)
+        showMenu(isAdAvailable = false)
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
@@ -59,6 +63,10 @@ class ShopViewModel @Inject constructor(
         }
         loadMenuItemsAndAd(wasRewardGranted)
     }
+
+    private fun onBuyCoinsSmallAmountClick() = Unit // TODO: replace with purchase flow
+    private fun onBuyCoinsBigAmountClick() = Unit // TODO: replace with purchase flow
+    private fun onBuyAllCardsClick() = Unit // TODO: replace with purchase flow
 
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->
@@ -72,24 +80,20 @@ class ShopViewModel @Inject constructor(
 
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {
         if (allRewardedAds.shopCoinsAd.isLoaded && !wasRewardGranted) {
-            loadMenu(isAdAvailable = true)
+            showMenu(isAdAvailable = true)
         } else {
-            loadMenu(isAdAvailable = false)
+            showMenu(isAdAvailable = false)
             allRewardedAds.shopCoinsAd.load(
                 onLoaded = {
                     if (!wasRewardGranted) {
-                        loadMenu(isAdAvailable = true)
+                        showMenu(isAdAvailable = true)
                     }
                 },
                 onFailed = {
-                    loadMenu(isAdAvailable = false)
+                    showMenu(isAdAvailable = false)
                 }
             )
         }
-    }
-
-    private fun loadMenu(isAdAvailable: Boolean) {
-        // TODO: reload menu items
     }
 
     private fun loadCoins(animateCoins: Boolean) {
@@ -100,6 +104,18 @@ class ShopViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    private fun showMenu(isAdAvailable: Boolean) {
+        sendState {
+            copy(
+                menu = listOf(
+                    ShopMenuModel.WatchAd(isAdAvailable),
+                    ShopMenuModel.BuyCoinsSmallAmount,
+                    ShopMenuModel.BuyCoinsBigAmount,
+                    ShopMenuModel.BuyAllCards
+                )
+            )
+        }
+    }
 }
 
 private const val COINS_SOUND_DELAY = 300L

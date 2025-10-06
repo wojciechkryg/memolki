@@ -6,6 +6,10 @@
     <string name="menu">Menu</string>
     <string name="play_again">Hrát znovu</string>
     <string name="shop">Obchod</string>
+    <string name="shop_obtain">Získat</string>
+    <string name="shop_back_later">Vrátit se později</string>
+    <string name="shop_buy">Koupit</string>
+    <string name="shop_unlock_all_cards">Odemknout všechny karty</string>
     <string name="setting_music">Hudba</string>
     <string name="setting_sound">Zvuk</string>
     <string name="setting_vibration">Vibrace</string>

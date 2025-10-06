@@ -5,6 +5,10 @@
     <string name="menu">Meny</string>
     <string name="play_again">Spela igen</string>
     <string name="shop">Butik</string>
+    <string name="shop_obtain">Hämta</string>
+    <string name="shop_back_later">Kom tillbaka senare</string>
+    <string name="shop_buy">Köp</string>
+    <string name="shop_unlock_all_cards">Lås upp alla kort</string>
     <string name="setting_music">Musik</string>
     <string name="setting_sound">Ljud</string>
     <string name="setting_vibration">Vibration</string>
