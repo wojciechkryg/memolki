@@ -37,9 +37,9 @@ class ShopViewModel @Inject constructor(
             ShopIntent.OnWatchAdClick -> onWatchAdClick()
             ShopIntent.OnAdReward -> onAdReward()
             is ShopIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
-            ShopIntent.OnBuyAllCardsClick -> TODO()
-            ShopIntent.OnBuyCoinsBigAmountClick -> TODO()
-            ShopIntent.OnBuyCoinsSmallAmountClick -> TODO()
+            ShopIntent.OnBuyAllCardsClick -> onBuyCoinsSmallAmountClick()
+            ShopIntent.OnBuyCoinsBigAmountClick -> onBuyCoinsBigAmountClick()
+            ShopIntent.OnBuyCoinsSmallAmountClick -> onBuyAllCardsClick()
         }
     }
 
@@ -63,6 +63,10 @@ class ShopViewModel @Inject constructor(
         }
         loadMenuItemsAndAd(wasRewardGranted)
     }
+
+    private fun onBuyCoinsSmallAmountClick() = Unit // TODO: replace with purchase flow
+    private fun onBuyCoinsBigAmountClick() = Unit // TODO: replace with purchase flow
+    private fun onBuyAllCardsClick() = Unit // TODO: replace with purchase flow
 
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->

@@ -70,7 +70,7 @@ fun ShopMenuItem(
                     )
                 }
                 Text(
-                    modifier = modifier
+                    modifier = Modifier
                         .weight(1f)
                         .padding(vertical = 8.dp),
                     text = rightText.lowercase(),
