@@ -5,6 +5,10 @@
     <string name="menu">Menü</string>
     <string name="play_again">Játssz újra</string>
     <string name="shop">Bolt</string>
+    <string name="shop_obtain">Szerezd meg</string>
+    <string name="shop_back_later">Később jöjjön vissza</string>
+    <string name="shop_buy">Vásárolj</string>
+    <string name="shop_unlock_all_cards">Nyisd fel az összes kártyát</string>
     <string name="setting_music">Zene</string>
     <string name="setting_sound">Hang</string>
     <string name="setting_vibration">Rezgés</string>
