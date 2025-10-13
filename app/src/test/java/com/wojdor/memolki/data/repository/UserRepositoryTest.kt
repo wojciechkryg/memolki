@@ -1,31 +1,39 @@
 package com.wojdor.memolki.data.repository
 
+import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockEncryptor
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class UserRepositoryTest : AppTest() {
 
+    @Inject
+    lateinit var userLocalDataSource: UserLocalDataSource
+
+    @Inject
+    lateinit var encryptor: Encryptor
+
     private lateinit var sut: UserRepository
-    private lateinit var userLocalDataSource: UserLocalDataSource
-    private val mockEncryptor = MockEncryptor()
 
     @Before
     override fun setup() {
         super.setup()
-        userLocalDataSource = UserLocalDataSource(MockDataStore())
         sut = UserRepository(
-            mockEncryptor,
+            encryptor,
             userLocalDataSource
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test
@@ -34,8 +42,8 @@ class UserRepositoryTest : AppTest() {
         val expected = 123L
 
         userLocalDataSource.setEncryptedCoinsAndTotalCoins { _, _ ->
-            mockEncryptor.encrypt(expected) to
-                    mockEncryptor.encrypt(expected)
+            encryptor.encrypt(expected) to
+                    encryptor.encrypt(expected)
         }
 
         // when
@@ -51,8 +59,8 @@ class UserRepositoryTest : AppTest() {
         val initialCoins = 100L
         val addedCoins = 23L
         userLocalDataSource.setEncryptedCoinsAndTotalCoins { _, _ ->
-            mockEncryptor.encrypt(initialCoins) to
-                    mockEncryptor.encrypt(initialCoins)
+            encryptor.encrypt(initialCoins) to
+                    encryptor.encrypt(initialCoins)
         }
 
         // when
@@ -69,8 +77,8 @@ class UserRepositoryTest : AppTest() {
         // given
         val totalCoins = 456L
         userLocalDataSource.setEncryptedCoinsAndTotalCoins { _, _ ->
-            mockEncryptor.encrypt(totalCoins) to
-                    mockEncryptor.encrypt(totalCoins)
+            encryptor.encrypt(totalCoins) to
+                    encryptor.encrypt(totalCoins)
         }
 
         // when
@@ -85,7 +93,7 @@ class UserRepositoryTest : AppTest() {
         // given
         val expected = 12L
         userLocalDataSource.setEncryptedTotalCardPairsMatched {
-            mockEncryptor.encrypt(expected)
+            encryptor.encrypt(expected)
         }
 
         // when
@@ -101,7 +109,7 @@ class UserRepositoryTest : AppTest() {
             // given
             val initialCount = 12L
             userLocalDataSource.setEncryptedTotalCardPairsMatched {
-                mockEncryptor.encrypt(initialCount)
+                encryptor.encrypt(initialCount)
             }
 
             // when
@@ -118,7 +126,7 @@ class UserRepositoryTest : AppTest() {
         // given
         val expected = 34L
         userLocalDataSource.setEncryptedTotalGamesPlayed {
-            mockEncryptor.encrypt(expected)
+            encryptor.encrypt(expected)
         }
 
         // when
@@ -133,7 +141,7 @@ class UserRepositoryTest : AppTest() {
         // given
         val initialCount = 34L
         userLocalDataSource.setEncryptedTotalGamesPlayed {
-            mockEncryptor.encrypt(initialCount)
+            encryptor.encrypt(initialCount)
         }
 
         // when
@@ -150,7 +158,7 @@ class UserRepositoryTest : AppTest() {
         // given
         val expected = 5L
         userLocalDataSource.setEncryptedUnlockedCardPairsFromAdsCount {
-            mockEncryptor.encrypt(expected)
+            encryptor.encrypt(expected)
         }
 
         // when
@@ -166,7 +174,7 @@ class UserRepositoryTest : AppTest() {
             // given
             val initialCount = 5L
             userLocalDataSource.setEncryptedUnlockedCardPairsFromAdsCount {
-                mockEncryptor.encrypt(initialCount)
+                encryptor.encrypt(initialCount)
             }
 
             // when

@@ -6,6 +6,7 @@ import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
+import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CoinsPlayer
@@ -24,7 +25,8 @@ class ShopViewModel @Inject constructor(
     private val allRewardedAds: AllRewardedAds,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
-    private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase
+    private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
+    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
     ShopState()
@@ -76,7 +78,15 @@ class ShopViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun onBuyAllCardsClick() = Unit // TODO: replace with purchase flow
+    private fun onBuyAllCardsClick() {
+        unlockAllCardPairsUseCase().onEach {
+            it.onSuccess {
+                delay(COINS_SOUND_DELAY)
+                coinsPlayer.play()
+                loadData()
+            }
+        }.launchIn(viewModelScope)
+    }
 
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->

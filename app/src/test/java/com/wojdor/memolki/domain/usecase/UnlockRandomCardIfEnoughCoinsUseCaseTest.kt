@@ -2,51 +2,46 @@ package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
 import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
-import com.wojdor.memolki.data.local.user.UserLocalDataSource
-import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockEncryptor
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
 
-    private lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
-    private lateinit var cardRepository: CardRepository
-    private lateinit var userRepository: UserRepository
-    private lateinit var calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase
+    @Inject
+    lateinit var calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase
+
+    @Inject
+    lateinit var unlockRandomCardUseCase: UnlockRandomCardUseCase
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+
     private lateinit var sut: UnlockRandomCardIfEnoughCoinsUseCase
 
     override fun setup() {
         super.setup()
-        val dataStore = MockDataStore()
-        unlockedCardPairsLocalDataSource =
-            UnlockedCardPairsLocalDataSource(dataStore, MockAllCardPairsDataSource)
-        cardRepository =
-            CardRepository(MockAllCardPairsDataSource, unlockedCardPairsLocalDataSource)
-        userRepository = UserRepository(MockEncryptor(), UserLocalDataSource(dataStore))
-        val getUnlockedCardPairsCountUseCase =
-            GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository)
-        calculateNextCardPairCostUseCase = CalculateNextCardPairCostUseCase(
-            testDispatcher,
-            getUnlockedCardPairsCountUseCase,
-            GetLevelsUseCase(testDispatcher, getUnlockedCardPairsCountUseCase),
-            cardRepository
-        )
         sut = UnlockRandomCardIfEnoughCoinsUseCase(
             testDispatcher,
             calculateNextCardPairCostUseCase,
-            UnlockRandomCardUseCase(testDispatcher, cardRepository),
+            unlockRandomCardUseCase,
             userRepository
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

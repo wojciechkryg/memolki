@@ -1,34 +1,35 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockEncryptor
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class IncrementTotalCardPairsMatchedUseCaseTest : AppTest() {
 
-    private lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var userRepository: UserRepository
+
     private lateinit var sut: IncrementTotalCardPairsMatchedUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        userRepository = UserRepository(
-            MockEncryptor(),
-            UserLocalDataSource(MockDataStore())
-        )
         sut = IncrementTotalCardPairsMatchedUseCase(
             testDispatcher,
             userRepository
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

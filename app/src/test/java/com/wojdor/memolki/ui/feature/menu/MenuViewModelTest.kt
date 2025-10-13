@@ -1,24 +1,36 @@
 package com.wojdor.memolki.ui.feature.menu
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.relaxedMockk
+import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
+import com.wojdor.memolki.util.media.HapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class MenuViewModelTest : AppTest() {
+
+    @Inject
+    lateinit var savedStateHandle: SavedStateHandle
+
+    @Inject
+    lateinit var hapticFeedback: HapticFeedback
+
+    @Inject
+    lateinit var getMenuUseCase: GetMenuUseCase
 
     private lateinit var sut: MenuViewModel
 
@@ -26,10 +38,14 @@ class MenuViewModelTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = MenuViewModel(
-            savedStateHandle = savedStateHandle,
-            getMenuUseCase = GetMenuUseCase(testDispatcher),
-            hapticFeedback = relaxedMockk()
+            savedStateHandle,
+            hapticFeedback,
+            getMenuUseCase
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

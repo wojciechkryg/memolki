@@ -3,43 +3,48 @@ package com.wojdor.memolki.domain.usecase
 import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class UnlockRandomCardUseCaseTest : AppTest() {
 
-    private lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
-    private lateinit var cardRepository: CardRepository
+    @Inject
+    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+
+    @Inject
+    lateinit var cardRepository: CardRepository
+
     private lateinit var sut: UnlockRandomCardUseCase
 
     override fun setup() {
         super.setup()
-        val dataStore = MockDataStore()
-        unlockedCardPairsLocalDataSource =
-            UnlockedCardPairsLocalDataSource(dataStore, MockAllCardPairsDataSource)
-        cardRepository =
-            CardRepository(MockAllCardPairsDataSource, unlockedCardPairsLocalDataSource)
         sut = UnlockRandomCardUseCase(testDispatcher, cardRepository)
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test
     fun `when there are no locked cards then do nothing`() = runTest {
         // given
-        MockAllCardPairsDataSource.getAllCardPairs().forEach {
+        FakeAllCardPairsDataSource().getAllCardPairs().forEach {
             unlockedCardPairsLocalDataSource.addUnlockedCardPairId(it.id)
         }
 
         // when
-        sut()
+        sut().first()
 
         // then
         assertEquals(
-            MockAllCardPairsDataSource.getAllCardPairs().size,
+            FakeAllCardPairsDataSource().getAllCardPairs().size,
             unlockedCardPairsLocalDataSource.getUnlockedCardPairIds().size
         )
     }
