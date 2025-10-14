@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.incremental.isSealed
 
 plugins {
     alias(libs.plugins.android.application)
@@ -45,7 +44,9 @@ android {
     }
 
     kotlin {
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
     }
 
     val versionDimension = "version"
