@@ -58,8 +58,10 @@ android {
 }
 
 androidComponents {
-    beforeVariants(selector().withBuildType("release")) {
-        it.enable = false
+    if (System.getProperty("idea.sync.active") == "true") {
+        beforeVariants(selector().withBuildType("release")) {
+            it.enable = false
+        }
     }
 }
 
