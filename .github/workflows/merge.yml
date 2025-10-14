@@ -18,15 +18,21 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@41ad77ca97e46ee2e825d5e6b9a95d8169fcc44c # v4.4.2
 
+      - name: Prepare flavor strings
+        id: string_ops
+        run: |
+          echo "capitalized_flavor=$(echo ${{ matrix.flavor }} | sed 's/./\u&/')" >> $GITHUB_ENV
+          echo "lowercase_flavor=$(echo ${{ matrix.flavor }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build with Gradle
-        run: ./gradlew app:bundle${{ matrix.flavor }} --stacktrace --no-daemon --build-cache
+        run: ./gradlew app:bundle${{ env.capitalized_flavor }}Release --stacktrace --no-daemon --build-cache
 
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: com.wojdor.memolki.${{ matrix.flavor }}
-          releaseFile: "**/build/outputs/bundle/**/*.aab"
+          packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
+          releaseFiles: "app/build/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab"
           track: production
 
   bump_version:
