@@ -12,6 +12,7 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
@@ -34,6 +35,7 @@ class SettingsViewModelTest : AppTest() {
     lateinit var toggleSettingsUseCase: ToggleSettingsUseCase
     private lateinit var viewModel: SettingsViewModel
 
+    @Before
     override fun setup() {
         super.setup()
         viewModel = SettingsViewModel(

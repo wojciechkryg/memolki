@@ -9,6 +9,7 @@ import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
@@ -20,6 +21,7 @@ class CardPairDetailsViewModelTest : AppTest() {
 
     private lateinit var viewModel: CardPairDetailsViewModel
 
+    @Before
     override fun setup() {
         super.setup()
         viewModel = CardPairDetailsViewModel(savedStateHandle)

@@ -9,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class UnlockRandomCardUseCaseTest : AppTest() {
 
     private lateinit var sut: UnlockRandomCardUseCase
 
+    @Before
     override fun setup() {
         super.setup()
         sut = UnlockRandomCardUseCase(testDispatcher, cardRepository)
