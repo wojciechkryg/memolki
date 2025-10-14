@@ -1,0 +1,79 @@
+package com.wojdor.memolki.test.di
+
+import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSourceTest
+import com.wojdor.memolki.data.local.settings.SettingsLocalDataSourceTest
+import com.wojdor.memolki.data.local.user.UserLocalDataSourceTest
+import com.wojdor.memolki.data.repository.CardRepositoryTest
+import com.wojdor.memolki.data.repository.SettingsRepositoryTest
+import com.wojdor.memolki.data.repository.UserRepositoryTest
+import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetCoinsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetLevelsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetMenuUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetSettingsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsTest
+import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCaseTest
+import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCaseTest
+import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCaseTest
+import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCaseTest
+import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCaseTest
+import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
+import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCaseTest
+import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCaseTest
+import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCaseTest
+import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCaseTest
+import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModelTest
+import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelViewModelTest
+import com.wojdor.memolki.ui.feature.collection.CollectionViewModelTest
+import com.wojdor.memolki.ui.feature.endgame.EndGameViewModelTest
+import com.wojdor.memolki.ui.feature.game.GameViewModelTest
+import com.wojdor.memolki.ui.feature.menu.MenuViewModelTest
+import com.wojdor.memolki.ui.feature.settings.SettingsViewModelTest
+import com.wojdor.memolki.ui.feature.shop.ShopViewModelTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
+@OptIn(ExperimentalCoroutinesApi::class)
+interface TestInjector {
+    fun inject(test: AppTest)
+    fun inject(test: UnlockedCardPairsLocalDataSourceTest)
+    fun inject(test: SettingsLocalDataSourceTest)
+    fun inject(test: UserLocalDataSourceTest)
+    fun inject(test: CardRepositoryTest)
+    fun inject(test: SettingsRepositoryTest)
+    fun inject(test: UserRepositoryTest)
+    fun inject(test: ShopViewModelTest)
+    fun inject(test: ChooseLevelViewModelTest)
+    fun inject(test: CalculateNextCardPairCostUseCaseTest)
+    fun inject(test: GetAllCardPairsCountUseCaseTest)
+    fun inject(test: GetAllCardPairsUseCaseTest)
+    fun inject(test: GetCoinsUseCaseTest)
+    fun inject(test: GetLevelsUseCaseTest)
+    fun inject(test: GetMenuUseCaseTest)
+    fun inject(test: GetSettingsUseCaseTest)
+    fun inject(test: GetShuffledUnlockedCardsTest)
+    fun inject(test: GetShuffledUnlockedCardsUseCaseTest)
+    fun inject(test: GetUnlockedCardPairsCountUseCaseTest)
+    fun inject(test: GetUnlockedCardPairsFromAdsCountUseCaseTest)
+    fun inject(test: GetUnlockedCardPairsUseCaseTest)
+    fun inject(test: IncrementTotalCardPairsMatchedUseCaseTest)
+    fun inject(test: IncrementTotalGamesPlayedUseCaseTest)
+    fun inject(test: IncrementUnlockedCardPairsFromAdsCountUseCaseTest)
+    fun inject(test: RewardCoinsForLevelUseCaseTest)
+    fun inject(test: RewardCoinsForShopAdUseCaseTest)
+    fun inject(test: RewardCoinsForShopPurchaseUseCaseTest)
+    fun inject(test: ToggleSettingsUseCaseTest)
+    fun inject(test: UnlockRandomCardIfEnoughCoinsUseCaseTest)
+    fun inject(test: UnlockRandomCardUseCaseTest)
+    fun inject(test: CardPairDetailsViewModelTest)
+    fun inject(test: CollectionViewModelTest)
+    fun inject(test: EndGameViewModelTest)
+    fun inject(test: GameViewModelTest)
+    fun inject(test: MenuViewModelTest)
+    fun inject(test: SettingsViewModelTest)
+}

@@ -1,13 +1,13 @@
-package com.wojdor.memolki.test.mock
+package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.data.repository.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class MockSettingsRepository(
+class FakeSettingsRepository(
     private val musicEnabled: MutableStateFlow<Boolean> = MutableStateFlow(true),
     private val soundEnabled: MutableStateFlow<Boolean> = MutableStateFlow(true),
     private val vibrationEnabled: MutableStateFlow<Boolean> = MutableStateFlow(true)
-) : SettingsRepository(settingsLocalDataSource = MockSettingsLocalDataSource()) {
+) : SettingsRepository(settingsLocalDataSource = FakeSettingsLocalDataSource()) {
 
     override fun getMusicEnabled() = musicEnabled
 

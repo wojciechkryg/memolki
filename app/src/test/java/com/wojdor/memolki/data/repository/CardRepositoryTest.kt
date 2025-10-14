@@ -1,32 +1,43 @@
 package com.wojdor.memolki.data.repository
 
+import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
 import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class CardRepositoryTest : AppTest() {
 
-    private val unlockedCardPairsLocalDataSource = UnlockedCardPairsLocalDataSource(
-        MockDataStore(),
-        MockAllCardPairsDataSource
-    )
+    @Inject
+    lateinit var allCardPairsDataSource: AllCardPairsDataSource
+
+    @Inject
+    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+
     private lateinit var sut: CardRepository
 
     @Before
     override fun setup() {
         super.setup()
-        sut = CardRepository(MockAllCardPairsDataSource, unlockedCardPairsLocalDataSource)
+        sut = CardRepository(
+            allCardPairsDataSource,
+            unlockedCardPairsLocalDataSource
+        )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test
@@ -89,7 +100,7 @@ class CardRepositoryTest : AppTest() {
         val actualUnlockedCardPairs = sut.getUnlockedCardPairs()
 
         // then
-        val expected = MockAllCardPairsDataSource.getAllCardPairs()
+        val expected = FakeAllCardPairsDataSource().getAllCardPairs()
             .take(5)
             .toModel()
         assertEquals(expected, actualUnlockedCardPairs)

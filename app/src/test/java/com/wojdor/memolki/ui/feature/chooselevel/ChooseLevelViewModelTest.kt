@@ -1,26 +1,32 @@
 package com.wojdor.memolki.ui.feature.chooselevel
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
-import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
-import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockHapticFeedback
-import com.wojdor.memolki.test.relaxedMockk
+import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelEffect.OpenGameScreen
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnLevelClick
+import com.wojdor.memolki.util.media.HapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class ChooseLevelViewModelTest : AppTest() {
+
+    @Inject
+    lateinit var savedStateHandle: SavedStateHandle
+
+    @Inject
+    lateinit var hapticFeedback: HapticFeedback
+
+    @Inject
+    lateinit var getLevelsUseCase: GetLevelsUseCase
 
     private lateinit var sut: ChooseLevelViewModel
 
@@ -28,24 +34,18 @@ class ChooseLevelViewModelTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = ChooseLevelViewModel(
-            savedStateHandle = savedStateHandle,
-            hapticFeedback = relaxedMockk(),
-            getLevelsUseCase = GetLevelsUseCase(
-                testDispatcher,
-                GetUnlockedCardPairsCountUseCase(
-                    testDispatcher,
-                    CardRepository(
-                        MockAllCardPairsDataSource, UnlockedCardPairsLocalDataSource(
-                            MockDataStore(), MockAllCardPairsDataSource
-                        )
-                    )
-                )
-            ),
+            savedStateHandle,
+            hapticFeedback,
+            getLevelsUseCase,
         )
     }
 
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
+    }
+
     @Test
-    fun `when OnLevelClick intent is send then the OpenGameScreen effect is send`() =
+    fun onLevelClick_sendsOpenGameScreenEffect() =
         runTest {
             sut.uiEffect.test {
                 // given

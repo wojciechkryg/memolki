@@ -1,8 +1,9 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.domain.model.MenuModel
+import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -18,6 +19,10 @@ class GetMenuUseCaseTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = GetMenuUseCase(testDispatcher)
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

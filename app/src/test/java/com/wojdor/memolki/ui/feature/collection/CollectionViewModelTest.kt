@@ -1,94 +1,96 @@
 package com.wojdor.memolki.ui.feature.collection
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
-import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
-import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
-import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
-import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockEncryptor
-import com.wojdor.memolki.test.relaxedMockk
+import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
+import com.wojdor.memolki.ui.ads.AllRewardedAds
+import com.wojdor.memolki.util.media.CoinsPlayer
+import com.wojdor.memolki.util.media.HapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class CollectionViewModelTest : AppTest() {
 
-    private lateinit var userRepository: UserRepository
+    @Inject
+    lateinit var savedStateHandle: SavedStateHandle
+
+    @Inject
+    lateinit var coinsPlayer: CoinsPlayer
+
+    @Inject
+    lateinit var hapticFeedback: HapticFeedback
+
+    @Inject
+    lateinit var allRewardedAds: AllRewardedAds
+
+    @Inject
+    lateinit var getCoinsUseCase: GetCoinsUseCase
+
+    @Inject
+    lateinit var getUnlockedCardPairsUseCase: GetUnlockedCardPairsUseCase
+
+    @Inject
+    lateinit var getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase
+
+    @Inject
+    lateinit var calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase
+
+    @Inject
+    lateinit var unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase
+
+    @Inject
+    lateinit var unlockRandomCardUseCase: UnlockRandomCardUseCase
+
+    @Inject
+    lateinit var getUnlockedCardPairsFromAdsCountUseCase: GetUnlockedCardPairsFromAdsCountUseCase
+
+    @Inject
+    lateinit var incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
     private lateinit var sut: CollectionViewModel
 
     @Before
     override fun setup() {
         super.setup()
-        val dataStore = MockDataStore()
-        val cardRepository = CardRepository(
-            MockAllCardPairsDataSource,
-            UnlockedCardPairsLocalDataSource(dataStore, MockAllCardPairsDataSource)
-        )
-        userRepository = UserRepository(
-            MockEncryptor(),
-            UserLocalDataSource(MockDataStore())
-        )
-        val calculateNextCardPairCostUseCase = CalculateNextCardPairCostUseCase(
-            testDispatcher,
-            GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository),
-            GetLevelsUseCase(
-                testDispatcher,
-                GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository)
-            ),
-            cardRepository
-        )
         sut = CollectionViewModel(
-            savedStateHandle = savedStateHandle,
-            hapticFeedback = relaxedMockk(),
-            coinsPlayer = relaxedMockk(),
-            allRewardedAds = relaxedMockk(),
-            getCoinsUseCase = GetCoinsUseCase(testDispatcher, userRepository),
-            getUnlockedCardPairs = GetUnlockedCardPairsUseCase(
-                testDispatcher,
-                cardRepository
-            ),
-            getAllCardPairsCountUseCase = GetAllCardPairsCountUseCase(
-                testDispatcher,
-                cardRepository
-            ),
-            calculateNextCardPairCostUseCase = calculateNextCardPairCostUseCase,
-            unlockRandomCardIfEnoughCoinsUseCase = UnlockRandomCardIfEnoughCoinsUseCase(
-                testDispatcher,
-                calculateNextCardPairCostUseCase,
-                UnlockRandomCardUseCase(testDispatcher, cardRepository),
-                userRepository
-            ),
-            getUnlockedCardPairsFromAdsCountUseCase = GetUnlockedCardPairsFromAdsCountUseCase(
-                testDispatcher,
-                userRepository
-            ),
-            incrementUnlockedCardPairsFromAdsCountUseCase = IncrementUnlockedCardPairsFromAdsCountUseCase(
-                testDispatcher,
-                userRepository
-            ),
-            unlockRandomCardUseCase = UnlockRandomCardUseCase(
-                testDispatcher,
-                cardRepository
-            )
+            savedStateHandle,
+            coinsPlayer,
+            hapticFeedback,
+            allRewardedAds,
+            getCoinsUseCase,
+            getUnlockedCardPairsUseCase,
+            getAllCardPairsCountUseCase,
+            calculateNextCardPairCostUseCase,
+            unlockRandomCardIfEnoughCoinsUseCase,
+            unlockRandomCardUseCase,
+            getUnlockedCardPairsFromAdsCountUseCase,
+            incrementUnlockedCardPairsFromAdsCountUseCase
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test
@@ -104,7 +106,7 @@ class CollectionViewModelTest : AppTest() {
             // then
             assertEquals(123, state.coins)
             assertEquals(
-                MockAllCardPairsDataSource.getAllCardPairs()
+                FakeAllCardPairsDataSource().getAllCardPairs()
                     .take(5)
                     .toModel(),
                 state.collectionCardPairs
@@ -122,7 +124,7 @@ class CollectionViewModelTest : AppTest() {
             sut.uiEffect.test {
                 // given
                 val unlockedCardPair = CollectionCardPairModel.Unlocked(
-                    MockAllCardPairsDataSource.getAllCardPairs().first().toModel()
+                    FakeAllCardPairsDataSource().getAllCardPairs().first().toModel()
                 )
 
                 // when

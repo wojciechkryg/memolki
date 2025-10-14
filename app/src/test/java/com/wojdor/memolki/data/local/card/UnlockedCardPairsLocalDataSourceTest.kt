@@ -1,19 +1,25 @@
 package com.wojdor.memolki.data.local.card
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class UnlockedCardPairsLocalDataSourceTest : AppTest() {
 
-    private val dataStore = MockDataStore()
+    @Inject
+    lateinit var dataStore: DataStore<Preferences>
+
+    @Inject
+    lateinit var allCardPairsDataSource: AllCardPairsDataSource
 
     private lateinit var sut: UnlockedCardPairsLocalDataSource
 
@@ -22,8 +28,12 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
         super.setup()
         sut = UnlockedCardPairsLocalDataSource(
             dataStore,
-            MockAllCardPairsDataSource
+            allCardPairsDataSource
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

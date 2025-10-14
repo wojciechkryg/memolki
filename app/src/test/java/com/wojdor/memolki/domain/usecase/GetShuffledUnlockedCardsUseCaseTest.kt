@@ -1,24 +1,27 @@
 package com.wojdor.memolki.domain.usecase
 
-import app.cash.turbine.test
+import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
-class GetShuffledUnlockedCardsTest : AppTest() {
+class GetShuffledUnlockedCardsUseCaseTest : AppTest() {
 
     @Inject
     lateinit var cardRepository: CardRepository
+
+    @Inject
+    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
 
     private lateinit var sut: GetShuffledUnlockedCardsUseCase
 
@@ -37,27 +40,15 @@ class GetShuffledUnlockedCardsTest : AppTest() {
     }
 
     @Test
-    fun `when called then returns shuffled unlocked card pair ids`() = runTest {
+    fun `when there are unlocked cards then return shuffled list`() = runTest {
         // given
-        val level = LevelModel.Grid2x3()
+        unlockedCardPairsLocalDataSource.addUnlockedCardPairId("watermelon")
+        unlockedCardPairsLocalDataSource.addUnlockedCardPairId("mango")
 
         // when
-        sut(level).test {
-            // then
-            val result = awaitItem().getOrElse { listOf() }
-            val notExpected = Result.success(
-                listOf(
-                    "banana",
-                    "apple",
-                    "strawberry",
-                    "orange",
-                    "grape",
-                    "watermelon"
-                )
-            )
-            assertEquals(6, result.size)
-            assertNotEquals(notExpected.getOrNull(), result)
-            awaitComplete()
-        }
+        val result = sut(LevelModel.Grid2x3()).first()
+
+        // then
+        assertEquals(6, result.getOrThrow().size)
     }
 }

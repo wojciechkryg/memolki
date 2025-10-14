@@ -22,10 +22,14 @@ import javax.inject.Inject
 class AppActivity : ComponentActivity() {
 
     @Inject
+    lateinit var viewModel: AppViewModel
+
+    @Inject
     lateinit var backgroundMusicPlayer: BackgroundMusicPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.unlockAllNewCardPairsIfPurchased()
         lifecycle.addObserver(backgroundMusicPlayer)
         installSplashScreen()
         enableEdgeToEdge(

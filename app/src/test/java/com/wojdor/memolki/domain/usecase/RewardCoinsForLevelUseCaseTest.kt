@@ -1,20 +1,22 @@
 package com.wojdor.memolki.domain.usecase
 
-import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockEncryptor
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class RewardCoinsForLevelUseCaseTest : AppTest() {
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private lateinit var sut: RewardCoinsForLevelUseCase
 
@@ -23,12 +25,14 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
         super.setup()
         sut = RewardCoinsForLevelUseCase(
             testDispatcher,
-            UserRepository(
-                MockEncryptor(),
-                UserLocalDataSource(MockDataStore())
-            )
+            userRepository
         )
     }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
+    }
+
 
     @Test
     fun `when level with 3 pairs then reward 1 coin`() = runTest {

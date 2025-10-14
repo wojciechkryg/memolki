@@ -4,37 +4,46 @@ import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase.Companion.NO_MORE_CARDS
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class CalculateNextCardPairCostUseCaseTest : AppTest() {
 
-    private lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
-    private lateinit var cardRepository: CardRepository
+    @Inject
+    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+
+    @Inject
+    lateinit var cardRepository: CardRepository
+
+    @Inject
+    lateinit var getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
+
+    @Inject
+    lateinit var getLevelsUseCase: GetLevelsUseCase
+
     private lateinit var sut: CalculateNextCardPairCostUseCase
 
+    @Before
     override fun setup() {
         super.setup()
-        val dataStore = MockDataStore()
-        unlockedCardPairsLocalDataSource =
-            UnlockedCardPairsLocalDataSource(dataStore, MockAllCardPairsDataSource)
-        cardRepository =
-            CardRepository(MockAllCardPairsDataSource, unlockedCardPairsLocalDataSource)
-        val getUnlockedCardPairsCountUseCase =
-            GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository)
         sut = CalculateNextCardPairCostUseCase(
             testDispatcher,
             getUnlockedCardPairsCountUseCase,
-            GetLevelsUseCase(testDispatcher, getUnlockedCardPairsCountUseCase),
+            getLevelsUseCase,
             cardRepository
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

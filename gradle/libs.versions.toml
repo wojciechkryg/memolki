@@ -12,14 +12,13 @@ kotlinxCoroutines = "1.10.2"
 ksp = "2.2.10-2.0.2"
 material = "1.13.0"
 material3 = "1.4.0"
-mockk = "1.14.5"
+mockk = "1.14.6"
 navigationCompose = "2.9.5"
-playServicesAds = "24.6.0"
-runtime = "1.9.2"
+runtime = "1.9.3"
 splashscreen = "1.2.0-rc01"
 turbine = "1.2.1"
-uiTooling = "1.9.2"
-playServicesAdsApi = "24.6.0"
+uiTooling = "1.9.3"
+playServicesAdsApi = "24.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,7 +40,6 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 play-services-ads-api = { group = "com.google.android.gms", name = "play-services-ads-api", version.ref = "playServicesAdsApi" }
 
 [plugins]

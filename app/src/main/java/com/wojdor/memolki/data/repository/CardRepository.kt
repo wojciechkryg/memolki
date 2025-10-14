@@ -21,6 +21,12 @@ class CardRepository @Inject constructor(
         }
     }
 
+    suspend fun getLockedCardPairs(): List<CardPairModel> {
+        val unlockedCardPairIds = unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
+        val allCardPairs = allCardPairsDataSource.getAllCardPairs()
+        return allCardPairs.filter { it.id !in unlockedCardPairIds }.toModel()
+    }
+
     suspend fun getRandomUnlockedCardPairIds(count: Int) =
         unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
             .shuffled()
@@ -28,6 +34,16 @@ class CardRepository @Inject constructor(
 
     suspend fun addUnlockedCardPairId(unlockedCardPairId: String) {
         unlockedCardPairsLocalDataSource.addUnlockedCardPairId(unlockedCardPairId)
+    }
+
+    suspend fun areAllCardPairsUnlocked() =
+        unlockedCardPairsLocalDataSource.areAllCardPairsUnlocked()
+
+    suspend fun unlockAllCardPairs() {
+        getLockedCardPairs().forEach {
+            unlockedCardPairsLocalDataSource.addUnlockedCardPairId(it.first.pairId)
+        }
+        unlockedCardPairsLocalDataSource.setAllCardPairsUnlocked()
     }
 
     fun getCardPairById(pairId: String) = allCardPairsDataSource.getCardPairById(pairId)?.toModel()

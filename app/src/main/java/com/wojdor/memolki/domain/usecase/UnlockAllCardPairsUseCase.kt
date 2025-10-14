@@ -7,19 +7,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class UnlockRandomCardUseCase @Inject constructor(
+class UnlockAllCardPairsUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        val lockedCardPairs = cardRepository.getLockedCardPairs()
-        if (lockedCardPairs.isEmpty()) {
-            emit(Result.failure(IllegalStateException("All card pairs are already unlocked")))
-        } else {
-            val randomCardPairToUnlock = lockedCardPairs.random()
-            cardRepository.addUnlockedCardPairId(randomCardPairToUnlock.first.pairId)
-            emit(Result.success(Unit))
-        }
+        cardRepository.unlockAllCardPairs()
+        emit(Result.success(Unit))
     }
 }
