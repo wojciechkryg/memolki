@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -39,8 +41,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
     }
 
     val versionDimension = "version"
@@ -53,14 +55,6 @@ android {
         create("treeLeaf") {
             dimension = versionDimension
             applicationIdSuffix = ".treeleaf"
-        }
-    }
-}
-
-androidComponents {
-    if (System.getProperty("idea.sync.active") == "true") {
-        beforeVariants(selector().withBuildType("release")) {
-            it.enable = false
         }
     }
 }
