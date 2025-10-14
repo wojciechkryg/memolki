@@ -1,7 +1,9 @@
 package com.wojdor.memolki.data.local.user
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -9,16 +11,24 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class UserLocalDataSourceTest : AppTest() {
+
+    @Inject
+    lateinit var dataStore: DataStore<Preferences>
 
     private lateinit var sut: UserLocalDataSource
 
     @Before
     override fun setup() {
         super.setup()
-        sut = UserLocalDataSource(MockDataStore())
+        sut = UserLocalDataSource(dataStore)
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

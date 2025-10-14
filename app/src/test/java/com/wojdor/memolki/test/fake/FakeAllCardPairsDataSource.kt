@@ -1,10 +1,11 @@
-package com.wojdor.memolki.test.mock
+package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
 import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
+import javax.inject.Inject
 
-object MockAllCardPairsDataSource : AllCardPairsDataSource {
+class FakeAllCardPairsDataSource @Inject constructor() : AllCardPairsDataSource {
 
     override fun getAllCardPairs() = listOf(
         CardPairEntity(

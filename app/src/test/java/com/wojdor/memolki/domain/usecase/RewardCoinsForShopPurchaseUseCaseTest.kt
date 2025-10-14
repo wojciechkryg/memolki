@@ -7,22 +7,20 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class IncrementUnlockedCardPairsFromAdsCountUseCaseTest : AppTest() {
+class RewardCoinsForShopPurchaseUseCaseTest : AppTest() {
 
     @Inject
     lateinit var userRepository: UserRepository
 
-    private lateinit var sut: IncrementUnlockedCardPairsFromAdsCountUseCase
+    private lateinit var sut: RewardCoinsForShopPurchaseUseCase
 
-    @Before
     override fun setup() {
         super.setup()
-        sut = IncrementUnlockedCardPairsFromAdsCountUseCase(
+        sut = RewardCoinsForShopPurchaseUseCase(
             testDispatcher,
             userRepository
         )
@@ -33,12 +31,14 @@ class IncrementUnlockedCardPairsFromAdsCountUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when use case is executed then should increment unlocked card pairs from ads count`() =
-        runTest {
-            // when
-            sut().first()
+    fun `when user buys coins then add correct amount of coins`() = runTest {
+        // given
+        userRepository.addCoins(10)
 
-            // then
-            assertEquals(1, userRepository.getUnlockedCardPairsFromAdsCount().first())
-        }
+        // when
+        sut(100).first()
+
+        // then
+        assertEquals(110, userRepository.getCoins().first())
+    }
 }

@@ -1,27 +1,23 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.settings.SettingsLocalDataSource
 import com.wojdor.memolki.data.repository.SettingsRepository
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockSettingsRepository
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class GetSettingsUseCaseTest : AppTest() {
 
-    private val settingsRepository = MockSettingsRepository(
-        MutableStateFlow(false),
-        MutableStateFlow(false),
-        MutableStateFlow(false)
-    )
+    @Inject
+    lateinit var settingsRepository: SettingsRepository
+
     private lateinit var sut: GetSettingsUseCase
 
     @Before
@@ -33,16 +29,20 @@ class GetSettingsUseCaseTest : AppTest() {
         )
     }
 
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
+    }
+
     @Test
-    fun `when called then returns settings`() = runTest {
+    fun `when called first time then returns default settings`() = runTest {
         // when
         sut().test {
             // then
             val expected = Result.success(
                 listOf(
-                    SettingModel.Music(false),
-                    SettingModel.Sound(false),
-                    SettingModel.Vibration(false)
+                    SettingModel.Music(true),
+                    SettingModel.Sound(true),
+                    SettingModel.Vibration(true)
                 )
             )
             assertEquals(expected, awaitItem())

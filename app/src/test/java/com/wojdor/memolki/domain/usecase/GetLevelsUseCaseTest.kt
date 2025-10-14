@@ -1,26 +1,22 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
-import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockAllCardPairsDataSource
-import com.wojdor.memolki.test.mock.MockDataStore
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class GetLevelsUseCaseTest : AppTest() {
 
-    private val cardRepository = CardRepository(
-        MockAllCardPairsDataSource, UnlockedCardPairsLocalDataSource(
-            MockDataStore(), MockAllCardPairsDataSource
-        )
-    )
+    @Inject
+    lateinit var getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
+
     private lateinit var sut: GetLevelsUseCase
 
     @Before
@@ -28,8 +24,12 @@ class GetLevelsUseCaseTest : AppTest() {
         super.setup()
         sut = GetLevelsUseCase(
             testDispatcher,
-            GetUnlockedCardPairsCountUseCase(testDispatcher, cardRepository)
+            getUnlockedCardPairsCountUseCase
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test

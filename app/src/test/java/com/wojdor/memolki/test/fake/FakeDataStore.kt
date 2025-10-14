@@ -1,4 +1,4 @@
-package com.wojdor.memolki.test.mock
+package com.wojdor.memolki.test.fake
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -6,8 +6,9 @@ import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.concurrent.atomic.AtomicReference
+import javax.inject.Inject
 
-class MockDataStore : DataStore<Preferences> {
+class FakeDataStore @Inject constructor() : DataStore<Preferences> {
 
     private val preferences = AtomicReference(emptyPreferences())
     private val flow = MutableStateFlow(preferences.get())

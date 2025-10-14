@@ -33,7 +33,7 @@ class CollectionViewModel @Inject constructor(
     private val hapticFeedback: HapticFeedback,
     private val allRewardedAds: AllRewardedAds,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val getUnlockedCardPairs: GetUnlockedCardPairsUseCase,
+    private val getUnlockedCardPairsUseCase: GetUnlockedCardPairsUseCase,
     private val getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase,
     private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase,
     private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase,
@@ -113,7 +113,7 @@ class CollectionViewModel @Inject constructor(
 
     private fun loadCardPairs(isAdAvailable: Boolean) {
         combine(
-            getUnlockedCardPairs()
+            getUnlockedCardPairsUseCase()
                 .map { it.getOrNull() }
                 .filterNotNull(),
             getAllCardPairsCountUseCase()

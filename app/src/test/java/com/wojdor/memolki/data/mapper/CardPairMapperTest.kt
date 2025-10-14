@@ -5,12 +5,15 @@ import com.wojdor.memolki.data.entity.CardPairEntity
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class CardPairMapperTest : AppTest() {
+
+    override fun inject(injector: TestInjector) {}
 
     @Test
     fun `when map card pair entity then return card pair model`() {

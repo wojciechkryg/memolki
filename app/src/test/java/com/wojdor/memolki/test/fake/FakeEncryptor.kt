@@ -1,8 +1,9 @@
-package com.wojdor.memolki.test.mock
+package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.data.crypto.Encryptor
+import javax.inject.Inject
 
-class MockEncryptor : Encryptor {
+class FakeEncryptor @Inject constructor() : Encryptor {
 
     override fun encrypt(value: Long) = value.toString()
 

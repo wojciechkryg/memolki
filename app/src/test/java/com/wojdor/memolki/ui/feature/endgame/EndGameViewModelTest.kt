@@ -1,20 +1,20 @@
 package com.wojdor.memolki.ui.feature.endgame
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.user.UserLocalDataSource
-import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.mock.MockDataStore
-import com.wojdor.memolki.test.mock.MockEncryptor
+import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.media.LevelCompletePlayer
 import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,15 +22,34 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class EndGameViewModelTest : AppTest() {
 
-    private val encryptor = MockEncryptor()
-    private val userLocalDataSource = UserLocalDataSource(MockDataStore())
-    private val userRepository = UserRepository(encryptor, userLocalDataSource)
-    private val hapticFeedback: HapticFeedback = relaxedMockk()
-    private val rewardedAds: AllRewardedAds = relaxedMockk()
+    @Inject
+    lateinit var savedStateHandle: SavedStateHandle
+
+    @Inject
+    lateinit var levelCompletePlayer: LevelCompletePlayer
+
+    @Inject
+    lateinit var hapticFeedback: HapticFeedback
+
+    @Inject
+    lateinit var coinsPlayer: CoinsPlayer
+
+    @Inject
+    lateinit var allRewardedAds: AllRewardedAds
+
+    @Inject
+    lateinit var incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase
+
+    @Inject
+    lateinit var getCoinsUseCase: GetCoinsUseCase
+
+    @Inject
+    lateinit var rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
 
     private lateinit var sut: EndGameViewModel
 
@@ -38,21 +57,19 @@ class EndGameViewModelTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = EndGameViewModel(
-            savedStateHandle = savedStateHandle,
-            hapticFeedback = hapticFeedback,
-            levelCompletePlayer = relaxedMockk(),
-            coinsPlayer = relaxedMockk(),
-            allRewardedAds = rewardedAds,
-            incrementTotalGamesPlayedUseCase = IncrementTotalGamesPlayedUseCase(
-                testDispatcher,
-                userRepository
-            ),
-            getCoinsUseCase = GetCoinsUseCase(testDispatcher, userRepository),
-            rewardCoinsForLevelUseCase = RewardCoinsForLevelUseCase(
-                testDispatcher,
-                userRepository
-            )
+            savedStateHandle,
+            levelCompletePlayer,
+            coinsPlayer,
+            hapticFeedback,
+            allRewardedAds,
+            incrementTotalGamesPlayedUseCase,
+            getCoinsUseCase,
+            rewardCoinsForLevelUseCase
         )
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
     }
 
     @Test
@@ -88,7 +105,7 @@ class EndGameViewModelTest : AppTest() {
         runTest {
             // given
             val rewardedAd = relaxedMockk<RewardedAd>()
-            every { rewardedAds.endGameCoinsAd } returns rewardedAd
+            every { allRewardedAds.endGameCoinsAd } returns rewardedAd
 
             sut.uiEffect.test {
                 // when

@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
+import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
+import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CoinsPlayer
@@ -22,7 +24,9 @@ class ShopViewModel @Inject constructor(
     private val coinsPlayer: CoinsPlayer,
     private val allRewardedAds: AllRewardedAds,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase
+    private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
+    private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
+    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
     ShopState()
@@ -37,9 +41,9 @@ class ShopViewModel @Inject constructor(
             ShopIntent.OnWatchAdClick -> onWatchAdClick()
             ShopIntent.OnAdReward -> onAdReward()
             is ShopIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
-            ShopIntent.OnBuyAllCardsClick -> onBuyCoinsSmallAmountClick()
-            ShopIntent.OnBuyCoinsBigAmountClick -> onBuyCoinsBigAmountClick()
-            ShopIntent.OnBuyCoinsSmallAmountClick -> onBuyAllCardsClick()
+            ShopIntent.OnBuyCoinsSmallAmountClick -> onBuyCoinsClick(SMALL_PURCHASE_COINS_REWARD)
+            ShopIntent.OnBuyCoinsBigAmountClick -> onBuyCoinsClick(BIG_PURCHASE_COINS_REWARD)
+            ShopIntent.OnBuyAllCardsClick -> onBuyAllCardsClick()
         }
     }
 
@@ -64,9 +68,25 @@ class ShopViewModel @Inject constructor(
         loadMenuItemsAndAd(wasRewardGranted)
     }
 
-    private fun onBuyCoinsSmallAmountClick() = Unit // TODO: replace with purchase flow
-    private fun onBuyCoinsBigAmountClick() = Unit // TODO: replace with purchase flow
-    private fun onBuyAllCardsClick() = Unit // TODO: replace with purchase flow
+    private fun onBuyCoinsClick(coins: Long) {
+        rewardCoinsForShopPurchaseUseCase(coins).onEach { result ->
+            result.onSuccess {
+                delay(COINS_SOUND_DELAY)
+                coinsPlayer.play()
+                loadData(animateCoins = true)
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun onBuyAllCardsClick() {
+        unlockAllCardPairsUseCase().onEach {
+            it.onSuccess {
+                delay(COINS_SOUND_DELAY)
+                coinsPlayer.play()
+                loadData()
+            }
+        }.launchIn(viewModelScope)
+    }
 
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->
@@ -119,3 +139,5 @@ class ShopViewModel @Inject constructor(
 }
 
 private const val COINS_SOUND_DELAY = 300L
+private const val SMALL_PURCHASE_COINS_REWARD = 500L
+private const val BIG_PURCHASE_COINS_REWARD = 3000L
