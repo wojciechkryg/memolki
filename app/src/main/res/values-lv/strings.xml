@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Jauna spēle</string>
+    <string name="collection">Kolekcija</string>
+    <string name="settings">Iestatījumi</string>
+    <string name="menu">Izvēlne</string>
+    <string name="play_again">Spēlēt vēlreiz</string>
+    <string name="shop">Veikals</string>
+    <string name="shop_obtain">Iegūt</string>
+    <string name="shop_back_later">Atgriezties vēlāk</string>
+    <string name="shop_buy">Pirkt</string>
+    <string name="shop_unlock_all_cards">Atbloķēt visas kārtis</string>
+    <string name="setting_music">Mūzika</string>
+    <string name="setting_sound">Skaņa</string>
+    <string name="setting_vibration">Vibrācija</string>
+</resources>
