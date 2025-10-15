@@ -1,0 +1,59 @@
+Privacy Policy
+
+Last updated: October 14, 2025
+
+Wojciech Kryg ("Us", "We", or "Our") created the application memolki (the "Application").
+
+IMPORTANT NOTICE: The Application is intended for a general audience, including children of all ages. This privacy policy has been created with the aim of full compliance with the U.S. Children’s Online Privacy Protection Act (COPPA) and other child privacy regulations.
+
+1. Data Collection
+
+The Application is local in nature and does not directly collect any Personal Identifiable Information (PII), such as name, email address, or geographical data (location).
+
+The Application does not require logging in or account creation.
+
+1.A. Data Processed by Third Parties
+
+The Application uses third-party services that process a minimal amount of data to provide advertising and transaction services. These companies may collect the following types of data:
+
+* Device Identifiers: Advertising identifiers or installation identifiers used to recognize the device.
+* Transaction Data: Information about in-app purchases (IAP).
+
+Third parties used in the Application:
+
+1. Google AdMob (Advertising): AdMob, owned by Google, is used to display Rewarded Ads. Because the Application is intended for children, all ad requests are treated as child-directed (TAFC - Tagged for Child Directed Treatment), meaning AdMob will not use identifiers for ad personalization.
+   * Link to Google's Privacy Policy: https://policies.google.com/privacy
+
+2. Google Play Billing: Google’s payment service processes all data necessary for the verification and finalization of In-App Purchases (IAP), such as transaction data and account/device identifiers. This data is processed by Google in accordance with their policy.
+   * Link to Google's Privacy Policy: https://policies.google.com/privacy
+
+2. Use of Data
+
+The collected data is used exclusively for the following purposes:
+
+* Core Functionality: To enable the proper functioning of the Application on the user's device.
+* In-App Purchase (IAP) Functionality: To verify successful purchases and unlock paid features.
+* Displaying Non-Personalized Ads: To deliver contextual Rewarded Ads and manage them via the AdMob platform.
+
+3. Children's Privacy (COPPA)
+
+As the Application is designed for children, we do not knowingly collect any PII that would require verifiable parental consent. Any data collected by third parties is treated in compliance with regulations regarding child-directed content.
+
+If you are a parent or guardian and believe we have collected Personal Data from your child despite our precautions, please contact us immediately. We will take steps to remove this information from our systems.
+
+4. Data Security and Contact
+
+4.A. Security
+
+While we strive to use commercially acceptable means to protect your data, remember that no method of transmission over the Internet is 100% secure.
+
+4.B. Changes to the Policy
+
+This Privacy Policy may be updated from time to time. Any changes will be posted on this page.
+
+4.C. Contact
+
+If you have any questions about this Privacy Policy, please contact us:
+
+* Developer Name: Wojciech Kryg
+* Email Address: krygwojciech@gmail.com
