@@ -23,6 +23,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("KEYSTORE_PATH"))
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+    }
+
     buildFeatures {
         compose = true
     }
@@ -36,6 +45,7 @@ android {
                 "proguard-rules.pro"
             )
             ndk.debugSymbolLevel = "FULL"
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
