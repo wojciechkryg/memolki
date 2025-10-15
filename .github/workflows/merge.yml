@@ -1,8 +1,7 @@
 name: Merge Workflow
 
 on:
-  #  push:
-  pull_request:
+  push:
     branches: [ "main" ]
 
 jobs:
@@ -44,7 +43,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
           releaseFiles: "app/build/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab"
-          nativeSymbols: "app/build/outputs/native-debug-symbols/${{ matrix.flavor }}Release/native-debug-symbols.zip"
+          debugSymbols: "app/build/outputs/native-debug-symbols/${{ matrix.flavor }}Release/native-debug-symbols.zip"
           track: production
 
   bump_version:
