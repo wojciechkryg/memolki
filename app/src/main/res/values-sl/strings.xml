@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Nova igra</string>
+    <string name="collection">Zbirka</string>
+    <string name="settings">Nastavitve</string>
+    <string name="menu">Meni</string>
+    <string name="play_again">Igraj ponovno</string>
+    <string name="shop">Trgovina</string>
+    <string name="shop_obtain">Pridobi</string>
+    <string name="shop_back_later">Vrni se kasneje</string>
+    <string name="shop_buy">Kupi</string>
+    <string name="shop_unlock_all_cards">Odkleni vse karte</string>
+    <string name="setting_music">Glasba</string>
+    <string name="setting_sound">Zvok</string>
+    <string name="setting_vibration">Vibracija</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Nová hra</string>
+    <string name="collection">Zbierka</string>
+    <string name="settings">Nastavenia</string>
+    <string name="menu">Menu</string>
+    <string name="play_again">Hrať znova</string>
+    <string name="shop">Obchod</string>
+    <string name="shop_obtain">Získať</string>
+    <string name="shop_back_later">Vráť sa neskôr</string>
+    <string name="shop_buy">Kúpiť</string>
+    <string name="shop_unlock_all_cards">Odomknúť všetky karty</string>
+    <string name="setting_music">Hudba</string>
+    <string name="setting_sound">Zvuk</string>
+    <string name="setting_vibration">Vibrácie</string>
+</resources>
