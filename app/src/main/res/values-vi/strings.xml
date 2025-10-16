@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Trò chơi mới</string>
+    <string name="collection">Bộ sưu tập</string>
+    <string name="settings">Cài đặt</string>
+    <string name="menu">Thực đơn</string>
+    <string name="play_again">Chơi lại</string>
+    <string name="shop">Cửa hàng</string>
+    <string name="shop_obtain">Lấy</string>
+    <string name="shop_back_later">Quay lại sau</string>
+    <string name="shop_buy">Mua</string>
+    <string name="shop_unlock_all_cards">Mở khóa tất cả các thẻ</string>
+    <string name="setting_music">Âm nhạc</string>
+    <string name="setting_sound">Âm thanh</string>
+    <string name="setting_vibration">Rung</string>
+</resources>
