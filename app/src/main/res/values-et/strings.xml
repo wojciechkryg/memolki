@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Uus mäng</string>
+    <string name="collection">Kollektsioon</string>
+    <string name="settings">Seaded</string>
+    <string name="menu">Menüü</string>
+    <string name="play_again">Mängi uuesti</string>
+    <string name="shop">Pood</string>
+    <string name="shop_obtain">Hangi</string>
+    <string name="shop_back_later">Tule hiljem tagasi</string>
+    <string name="shop_buy">Osta</string>
+    <string name="shop_unlock_all_cards">Ava kõik kaardid</string>
+    <string name="setting_music">Muusika</string>
+    <string name="setting_sound">Heli</string>
+    <string name="setting_vibration">Vibratsioon</string>
+</resources>

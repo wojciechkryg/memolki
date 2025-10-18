@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Νέο παιχνίδι</string>
+    <string name="collection">Συλλογή</string>
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="menu">Μενού</string>
+    <string name="play_again">Παίξτε ξανά</string>
+    <string name="shop">Κατάστημα</string>
+    <string name="shop_obtain">Λάβετε</string>
+    <string name="shop_back_later">Επιστρέψτε αργότερα</string>
+    <string name="shop_buy">Αγορά</string>
+    <string name="shop_unlock_all_cards">Ξεκλειδώστε όλες τις κάρτες</string>
+    <string name="setting_music">Μουσική</string>
+    <string name="setting_sound">Ήχος</string>
+    <string name="setting_vibration">Δόνηση</string>
+</resources>

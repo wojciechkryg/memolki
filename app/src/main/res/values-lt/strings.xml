@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">Naujas žaidimas</string>
+    <string name="collection">Kolekcija</string>
+    <string name="settings">Nustatymai</string>
+    <string name="menu">Meniu</string>
+    <string name="play_again">Žaisti dar kartą</string>
+    <string name="shop">Parduotuvė</string>
+    <string name="shop_obtain">Gauti</string>
+    <string name="shop_back_later">Grįžk vėliau</string>
+    <string name="shop_buy">Pirkti</string>
+    <string name="shop_unlock_all_cards">Atrakinti visas korteles</string>
+    <string name="setting_music">Muzika</string>
+    <string name="setting_sound">Garsas</string>
+    <string name="setting_vibration">Vibracija</string>
+</resources>
