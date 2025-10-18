@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_game">משחק חדש</string>
+    <string name="collection">אוסף</string>
+    <string name="settings">הגדרות</string>
+    <string name="menu">תפריט</string>
+    <string name="play_again">שחק שוב</string>
+    <string name="shop">חנות</string>
+    <string name="shop_obtain">השג</string>
+    <string name="shop_back_later">חזור מאוחר יותר</string>
+    <string name="shop_buy">קנה</string>
+    <string name="shop_unlock_all_cards">פתח את כל הקלפים</string>
+    <string name="setting_music">מוזיקה</string>
+    <string name="setting_sound">צליל</string>
+    <string name="setting_vibration">רטט</string>
+</resources>
