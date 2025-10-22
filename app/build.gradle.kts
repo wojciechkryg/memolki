@@ -1,4 +1,7 @@
+import org.gradle.api.GradleException
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -8,6 +11,18 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
 }
+
+val secretsPropertiesFile = rootProject.file("secrets.properties")
+
+val properties = Properties()
+if (secretsPropertiesFile.exists()) {
+    properties.load(FileInputStream(secretsPropertiesFile))
+}
+
+val billingKey: String = providers
+    .environmentVariable("BILLING_KEY")
+    .orElse(providers.gradleProperty("BILLING_KEY"))
+    .getOrElse(properties.getProperty("BILLING_KEY", ""))
 
 android {
     namespace = "com.wojdor.memolki"
@@ -21,6 +36,9 @@ android {
         versionName = "0.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val quoted = "\"${billingKey.replace("\"", "\\\"")}\""
+        buildConfigField("String", "BILLING_KEY", quoted)
     }
 
     signingConfigs {
@@ -37,10 +55,14 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     buildTypes {
         release {
+            if (billingKey.isBlank()) {
+                throw GradleException("BILLING_KEY is required for release builds.")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

@@ -13,7 +13,12 @@ class CalculateCoinsForShopAdUseCase @Inject constructor(
 ) : BaseUseCase<Long>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        emit(Result.success(calculateRewardedCoins()))
+        val coinsToReward = calculateRewardedCoins()
+        if (coinsToReward > DEFAULT_REWARDED_COINS) {
+            emit(Result.success(coinsToReward))
+        } else {
+            emit(Result.failure(Exception("Wrongly calculated rewarded coins from ad")))
+        }
     }
 
     private suspend fun calculateRewardedCoins(): Long {

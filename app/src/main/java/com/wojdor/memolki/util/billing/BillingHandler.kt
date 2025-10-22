@@ -17,6 +17,7 @@ import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
+import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.util.extension.logD
 import com.wojdor.memolki.util.extension.logE
@@ -214,7 +215,7 @@ class BillingHandler @Inject constructor(
     ) = verifySignature(
         signedData,
         signature,
-        BASE_64_PUBLIC_KEY
+        BuildConfig.BILLING_KEY
     )
 
     private fun verifyHackedSignature() =
@@ -246,10 +247,6 @@ class BillingHandler @Inject constructor(
         const val IAP_COINS_BIG = "coins_big"
         const val IAP_UNLOCK_ALL_CARDS = "unlock_all_cards"
 
-        private const val PART_ONE = "TODO: REPLACE_WITH_PART_1"
-        private const val PART_TWO = "TODO: REPLACE_WITH_PART_2"
-        private const val PART_THREE = "TODO: REPLACE_WITH_PART_3"
-        private const val BASE_64_PUBLIC_KEY = PART_ONE + PART_TWO + PART_THREE
         private const val FAKE_DATA = "intentionally_wrong_transaction_token"
         private const val FAKE_SIGNATURE = "YmFkX3NpZ25hdHVyZ_ZmFrZQ=="
         private const val FAKE_PUBLIC_KEY = "FAKE_PUBLIC_KEY"
