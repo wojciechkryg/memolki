@@ -6,9 +6,9 @@
     <string name="menu">Thực đơn</string>
     <string name="play_again">Chơi lại</string>
     <string name="shop">Cửa hàng</string>
-    <string name="shop_obtain">Lấy</string>
+    <string name="shop_obtain">Lấy %d</string>
     <string name="shop_back_later">Quay lại sau</string>
-    <string name="shop_buy">Mua</string>
+    <string name="shop_buy">Mua %d</string>
     <string name="shop_unlock_all_cards">Mở khóa tất cả các thẻ</string>
     <string name="shop_purchase_failed_error">Mua hàng thất bại</string>
     <string name="shop_connection_error">Lỗi kết nối</string>

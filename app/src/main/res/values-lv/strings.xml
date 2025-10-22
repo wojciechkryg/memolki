@@ -6,9 +6,9 @@
     <string name="menu">Izvēlne</string>
     <string name="play_again">Spēlēt vēlreiz</string>
     <string name="shop">Veikals</string>
-    <string name="shop_obtain">Iegūt</string>
+    <string name="shop_obtain">Iegūt %d</string>
     <string name="shop_back_later">Atgriezties vēlāk</string>
-    <string name="shop_buy">Pirkt</string>
+    <string name="shop_buy">Pirkt %d</string>
     <string name="shop_unlock_all_cards">Atbloķēt visas kārtis</string>
     <string name="shop_purchase_failed_error">Pirkums neizdevās</string>
     <string name="shop_connection_error">Savienojuma kļūda</string>

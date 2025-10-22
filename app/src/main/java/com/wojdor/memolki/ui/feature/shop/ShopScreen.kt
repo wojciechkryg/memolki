@@ -108,10 +108,10 @@ private fun ShopScreenPreview() {
             state = ShopState(
                 coins = 1234,
                 menu = listOf(
-                    ShopMenuModel.WatchAd(true),
-                    ShopMenuModel.BuyCoinsSmallAmount,
-                    ShopMenuModel.BuyCoinsBigAmount,
-                    ShopMenuModel.BuyAllCards
+                    ShopMenuModel.WatchAd(true, 25),
+                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                    ShopMenuModel.BuyAllCards("$14.99")
                 )
             )
         )
@@ -126,10 +126,10 @@ private fun ShopScreenNoAdPreview() {
             state = ShopState(
                 coins = 1234,
                 menu = listOf(
-                    ShopMenuModel.WatchAd(false),
-                    ShopMenuModel.BuyCoinsSmallAmount,
-                    ShopMenuModel.BuyCoinsBigAmount,
-                    ShopMenuModel.BuyAllCards
+                    ShopMenuModel.WatchAd(false, 25),
+                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                    ShopMenuModel.BuyAllCards("$14.99")
                 )
             )
         )

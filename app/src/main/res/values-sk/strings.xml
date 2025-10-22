@@ -6,9 +6,9 @@
     <string name="menu">Menu</string>
     <string name="play_again">Hrať znova</string>
     <string name="shop">Obchod</string>
-    <string name="shop_obtain">Získať</string>
+    <string name="shop_obtain">Získať %d</string>
     <string name="shop_back_later">Vráť sa neskôr</string>
-    <string name="shop_buy">Kúpiť</string>
+    <string name="shop_buy">Kúpiť %d</string>
     <string name="shop_unlock_all_cards">Odomknúť všetky karty</string>
     <string name="shop_purchase_failed_error">Nákup zlyhal</string>
     <string name="shop_connection_error">Chyba pripojenia</string>

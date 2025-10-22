@@ -6,9 +6,9 @@
     <string name="menu">Menu</string>
     <string name="play_again">Opnieuw spelen</string>
     <string name="shop">Winkel</string>
-    <string name="shop_obtain">Halen</string>
+    <string name="shop_obtain">Halen %d</string>
     <string name="shop_back_later">Kom later terug</string>
-    <string name="shop_buy">Kopen</string>
+    <string name="shop_buy">Kopen %d</string>
     <string name="shop_unlock_all_cards">Alle kaarten ontgrendelen</string>
     <string name="shop_purchase_failed_error">Aankoop mislukt</string>
     <string name="shop_connection_error">Verbindingsfout</string>

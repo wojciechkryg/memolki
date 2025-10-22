@@ -6,9 +6,9 @@
     <string name="menu">Μενού</string>
     <string name="play_again">Παίξτε ξανά</string>
     <string name="shop">Κατάστημα</string>
-    <string name="shop_obtain">Λάβετε</string>
+    <string name="shop_obtain">Λάβετε %d</string>
     <string name="shop_back_later">Επιστρέψτε αργότερα</string>
-    <string name="shop_buy">Αγορά</string>
+    <string name="shop_buy">Αγορά %d</string>
     <string name="shop_unlock_all_cards">Ξεκλειδώστε όλες τις κάρτες</string>
     <string name="shop_purchase_failed_error">Πρόβλημα αγοράς</string>
     <string name="shop_connection_error">Σφάλμα σύνδεσης</string>

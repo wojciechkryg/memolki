@@ -6,9 +6,9 @@
     <string name="menu">Meny</string>
     <string name="play_again">Spill igjen</string>
     <string name="shop">Butikk</string>
-    <string name="shop_obtain">Hent</string>
+    <string name="shop_obtain">Hent %d</string>
     <string name="shop_back_later">Kom tilbake senere</string>
-    <string name="shop_buy">Kjøp</string>
+    <string name="shop_buy">Kjøp %d</string>
     <string name="shop_unlock_all_cards">Lås opp alle kort</string>
     <string name="shop_purchase_failed_error">Kjøp mislyktes</string>
     <string name="shop_connection_error">Tilkoblingsfeil</string>

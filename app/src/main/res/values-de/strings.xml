@@ -6,9 +6,9 @@
     <string name="menu">Menü</string>
     <string name="play_again">Nochmal spielen</string>
     <string name="shop">Shop</string>
-    <string name="shop_obtain">Erhalten</string>
+    <string name="shop_obtain">Erhalten %d</string>
     <string name="shop_back_later">Später wiederkommen</string>
-    <string name="shop_buy">Kaufen</string>
+    <string name="shop_buy">Kaufen %d</string>
     <string name="shop_unlock_all_cards">Alle Karten entsperren</string>
     <string name="shop_purchase_failed_error">Ein Fehler ist aufgetreten</string>
     <string name="shop_connection_error">Verbindungsfehler</string>

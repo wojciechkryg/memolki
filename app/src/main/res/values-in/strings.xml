@@ -6,9 +6,9 @@
     <string name="menu">Menu</string>
     <string name="play_again">Main lagi</string>
     <string name="shop">Toko</string>
-    <string name="shop_obtain">Dapatkan</string>
+    <string name="shop_obtain">Dapatkan %d</string>
     <string name="shop_back_later">Kembali nanti</string>
-    <string name="shop_buy">Beli</string>
+    <string name="shop_buy">Beli %d</string>
     <string name="shop_unlock_all_cards">Buka semua kartu</string>
     <string name="shop_purchase_failed_error">Pembelian gagal</string>
     <string name="shop_connection_error">Kesalahan koneksi</string>

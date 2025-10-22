@@ -6,9 +6,9 @@
     <string name="menu">메뉴</string>
     <string name="play_again">다시 플레이</string>
     <string name="shop">상점</string>
-    <string name="shop_obtain">획득</string>
+    <string name="shop_obtain">획득 %d</string>
     <string name="shop_back_later">나중에 다시 오세요</string>
-    <string name="shop_buy">구매</string>
+    <string name="shop_buy">구매 %d</string>
     <string name="shop_unlock_all_cards">모든 카드 잠금 해제</string>
     <string name="shop_purchase_failed_error">구매 실패</string>
     <string name="shop_connection_error">연결 오류</string>
