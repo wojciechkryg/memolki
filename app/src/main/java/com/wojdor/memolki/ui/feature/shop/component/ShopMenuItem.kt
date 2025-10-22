@@ -26,8 +26,8 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun ShopMenuItem(
     modifier: Modifier = Modifier,
-    leftText: String = "",
-    rightText: String,
+    priceText: String = "",
+    descriptionText: String,
     @DrawableRes leftDrawableRes: Int = NO_DRAWABLE,
     @DrawableRes rightDrawableRes: Int,
     onClick: () -> Unit = {},
@@ -54,9 +54,9 @@ fun ShopMenuItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                if (leftText.isNotEmpty()) {
+                if (priceText.isNotEmpty()) {
                     Text(
-                        text = leftText.lowercase(),
+                        text = priceText.lowercase(),
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                         style = MaterialTheme.typography.headlineLarge
                     )
@@ -73,7 +73,7 @@ fun ShopMenuItem(
                     modifier = Modifier
                         .weight(1f)
                         .padding(vertical = 8.dp),
-                    text = rightText.lowercase(),
+                    text = descriptionText.lowercase(),
                     style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Start
                 )
@@ -94,8 +94,8 @@ private const val NO_DRAWABLE = -1
 fun ShopMenuItemPreview() {
     AppTheme {
         ShopMenuItem(
-            leftText = "$0.99",
-            rightText = "Buy 500",
+            priceText = "$0.99",
+            descriptionText = "Buy 500",
             rightDrawableRes = R.drawable.ic_coins_pile_big
         )
     }
@@ -107,7 +107,7 @@ fun ShopMenuItemAdsPreview() {
     AppTheme {
         ShopMenuItem(
             leftDrawableRes = R.drawable.ic_ads,
-            rightText = "Obtain 500",
+            descriptionText = "Obtain 500",
             rightDrawableRes = R.drawable.ic_coins_pile_small
         )
     }

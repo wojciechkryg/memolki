@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.shop
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
@@ -9,6 +10,8 @@ import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.billing.BillingHandler
+import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +26,7 @@ class ShopViewModel @Inject constructor(
     private val hapticFeedback: HapticFeedback,
     private val coinsPlayer: CoinsPlayer,
     private val allRewardedAds: AllRewardedAds,
+    private val billingHandler: BillingHandler,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
     private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
@@ -32,8 +36,27 @@ class ShopViewModel @Inject constructor(
     ShopState()
 ) {
 
+    private var productDetails: List<ProductDetails> = emptyList()
+
     init {
         loadData()
+        billingHandler.setListener(object : BillingStatusListener {
+            override fun onProductsFetched(products: List<ProductDetails>) {
+                this@ShopViewModel.onProductsFetched(products)
+            }
+
+            override fun onPurchaseSuccessful(productId: String) {
+                this@ShopViewModel.onPurchaseSuccessful(productId)
+            }
+
+            override fun onPurchaseFailed() {
+                this@ShopViewModel.onPurchaseFailed()
+            }
+
+            override fun onConnectionStatusChanged(isConnected: Boolean) {
+                this@ShopViewModel.onConnectionStatusChanged(isConnected)
+            }
+        })
     }
 
     override fun onIntent(intent: ShopIntent) {
@@ -41,8 +64,8 @@ class ShopViewModel @Inject constructor(
             ShopIntent.OnWatchAdClick -> onWatchAdClick()
             ShopIntent.OnAdReward -> onAdReward()
             is ShopIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
-            ShopIntent.OnBuyCoinsSmallAmountClick -> onBuyCoinsClick(SMALL_PURCHASE_COINS_REWARD)
-            ShopIntent.OnBuyCoinsBigAmountClick -> onBuyCoinsClick(BIG_PURCHASE_COINS_REWARD)
+            ShopIntent.OnBuyCoinsSmallAmountClick -> onBuyCoinsSmallAmountClick()
+            ShopIntent.OnBuyCoinsBigAmountClick -> onBuyCoinsBigAmount()
             ShopIntent.OnBuyAllCardsClick -> onBuyAllCardsClick()
         }
     }
@@ -68,7 +91,28 @@ class ShopViewModel @Inject constructor(
         loadMenuItemsAndAd(wasRewardGranted)
     }
 
-    private fun onBuyCoinsClick(coins: Long) {
+    private fun onBuyCoinsSmallAmountClick() {
+        val product = productDetails.find { it.productId == BillingHandler.IAP_COINS_SMALL }
+        product?.let {
+            sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
+        }
+    }
+
+    private fun onBuyCoinsBigAmount() {
+        val product = productDetails.find { it.productId == BillingHandler.IAP_COINS_BIG }
+        product?.let {
+            sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
+        }
+    }
+
+    private fun onBuyAllCardsClick() {
+        val product = productDetails.find { it.productId == BillingHandler.IAP_UNLOCK_ALL_CARDS }
+        product?.let {
+            sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
+        }
+    }
+
+    private fun rewardCoins(coins: Long) {
         rewardCoinsForShopPurchaseUseCase(coins).onEach { result ->
             result.onSuccess {
                 delay(COINS_SOUND_DELAY)
@@ -78,7 +122,7 @@ class ShopViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun onBuyAllCardsClick() {
+    private fun unlockAllCardPairs() {
         unlockAllCardPairsUseCase().onEach {
             it.onSuccess {
                 delay(COINS_SOUND_DELAY)
@@ -136,8 +180,41 @@ class ShopViewModel @Inject constructor(
             )
         }
     }
+
+    private fun onProductsFetched(products: List<ProductDetails>) {
+        productDetails = products
+    }
+
+    private fun onPurchaseSuccessful(productId: String) {
+        when (productId) {
+            in billingHandler.consumableProductIds -> {
+                val coins = when (productId) {
+                    BillingHandler.IAP_COINS_SMALL -> SMALL_PURCHASE_COINS_REWARD
+                    BillingHandler.IAP_COINS_BIG -> BIG_PURCHASE_COINS_REWARD
+                    else -> DEFAULT_COINS_AMOUNT
+                }
+                if (coins > DEFAULT_COINS_AMOUNT)
+                    rewardCoins(coins)
+            }
+
+            in billingHandler.nonConsumableProductIds -> {
+                unlockAllCardPairs()
+            }
+        }
+    }
+
+    private fun onPurchaseFailed() {
+        sendEffect(ShopEffect.ShowPurchaseFailedError)
+    }
+
+    private fun onConnectionStatusChanged(isConnected: Boolean) {
+        if (!isConnected) {
+            sendEffect(ShopEffect.ShowConnectionError)
+        }
+    }
 }
 
+private const val DEFAULT_COINS_AMOUNT = 0L
 private const val COINS_SOUND_DELAY = 300L
 private const val SMALL_PURCHASE_COINS_REWARD = 500L
 private const val BIG_PURCHASE_COINS_REWARD = 3000L

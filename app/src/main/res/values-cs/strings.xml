@@ -10,6 +10,8 @@
     <string name="shop_back_later">Vrátit se později</string>
     <string name="shop_buy">Koupit</string>
     <string name="shop_unlock_all_cards">Odemknout všechny karty</string>
+    <string name="shop_purchase_failed_error">Něco se pokazilo</string>
+    <string name="shop_connection_error">Chyba připojení</string>
     <string name="setting_music">Hudba</string>
     <string name="setting_sound">Zvuk</string>
     <string name="setting_vibration">Vibrace</string>

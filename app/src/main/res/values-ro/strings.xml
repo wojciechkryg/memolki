@@ -10,6 +10,8 @@
     <string name="shop_back_later">Reveniți mai târziu</string>
     <string name="shop_buy">Cumpără</string>
     <string name="shop_unlock_all_cards">Deblochează toate cărțile</string>
+    <string name="shop_purchase_failed_error">Achiziție eșuată</string>
+    <string name="shop_connection_error">Eroare de conectare</string>
     <string name="setting_music">Muzică</string>
     <string name="setting_sound">Sunet</string>
     <string name="setting_vibration">Vibrație</string>

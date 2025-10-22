@@ -10,6 +10,8 @@
     <string name="shop_back_later">Tule takaisin myöhemmin</string>
     <string name="shop_buy">Ostaa</string>
     <string name="shop_unlock_all_cards">Avaa kaikki kortit</string>
+    <string name="shop_purchase_failed_error">Joonistamise ebaõnnestus</string>
+    <string name="shop_connection_error">Tundmatu ühendusega</string>
     <string name="setting_music">Musiikki</string>
     <string name="setting_sound">Ääni</string>
     <string name="setting_vibration">Tärinä</string>

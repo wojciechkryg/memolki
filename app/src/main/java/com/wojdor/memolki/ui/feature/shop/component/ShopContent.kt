@@ -56,7 +56,7 @@ fun ShopContent(
                     Spacer(modifier = Modifier.height(16.dp))
                     when (menuItem) {
                         is ShopMenuModel.WatchAd -> ShopMenuItem(
-                            rightText = if (menuItem.isAdAvailable) {
+                            descriptionText = if (menuItem.isAdAvailable) {
                                 stringResource(R.string.shop_obtain) + " 25"
                             } else {
                                 stringResource(R.string.shop_back_later)
@@ -68,22 +68,22 @@ fun ShopContent(
                         )
 
                         ShopMenuModel.BuyCoinsSmallAmount -> ShopMenuItem(
-                            leftText = "$0.99",
-                            rightText = stringResource(R.string.shop_buy) + " 500",
+                            priceText = "$0.99",
+                            descriptionText = stringResource(R.string.shop_buy) + " 500",
                             rightDrawableRes = R.drawable.ic_coins_pile_big,
                             onClick = callbacks.onBuyCoinsSmallAmountClick
                         )
 
                         ShopMenuModel.BuyCoinsBigAmount -> ShopMenuItem(
-                            leftText = "$4.99",
-                            rightText = stringResource(R.string.shop_buy) + " 3000",
+                            priceText = "$4.99",
+                            descriptionText = stringResource(R.string.shop_buy) + " 3000",
                             rightDrawableRes = R.drawable.ic_coins_sack,
                             onClick = callbacks.onBuyCoinsBigAmountClick
                         )
 
                         ShopMenuModel.BuyAllCards -> ShopMenuItem(
-                            leftText = "$14.99",
-                            rightText = stringResource(R.string.shop_unlock_all_cards),
+                            priceText = "$14.99",
+                            descriptionText = stringResource(R.string.shop_unlock_all_cards),
                             rightDrawableRes = R.drawable.ic_cards_stack,
                             onClick = callbacks.onBuyAllCardsClick
                         )

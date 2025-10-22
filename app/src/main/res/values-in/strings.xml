@@ -10,6 +10,8 @@
     <string name="shop_back_later">Kembali nanti</string>
     <string name="shop_buy">Beli</string>
     <string name="shop_unlock_all_cards">Buka semua kartu</string>
+    <string name="shop_purchase_failed_error">Pembelian gagal</string>
+    <string name="shop_connection_error">Kesalahan koneksi</string>
     <string name="setting_music">Musik</string>
     <string name="setting_sound">Suara</string>
     <string name="setting_vibration">Getaran</string>

@@ -8,11 +8,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.android.billingclient.api.ProductDetails
+import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.billing.BillingHandler
+import com.wojdor.memolki.util.extension.showToast
 
 @Composable
 fun ShopScreen(
@@ -39,6 +43,17 @@ private fun HandleEffect(
                     effect.rewardedAd
                 )
             }
+
+            is ShopEffect.LaunchBilling -> activity?.let {
+                launchBillingFlow(
+                    it,
+                    effect.billingHandler,
+                    effect.productDetails
+                )
+            }
+
+            is ShopEffect.ShowPurchaseFailedError -> activity?.showToast(R.string.shop_purchase_failed_error)
+            is ShopEffect.ShowConnectionError -> activity?.showToast(R.string.shop_connection_error)
         }
     }
 }
@@ -53,6 +68,14 @@ private fun onWatchAdClick(
         onGrantReward = { viewModel.sendIntent(ShopIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(ShopIntent.OnAdDismiss(it)) }
     )
+}
+
+private fun launchBillingFlow(
+    activity: Activity,
+    billingHandler: BillingHandler,
+    productDetails: ProductDetails
+) {
+    billingHandler.launchBillingFlow(activity, productDetails)
 }
 
 @Composable

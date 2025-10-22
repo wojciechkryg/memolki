@@ -10,6 +10,8 @@
     <string name="shop_back_later">Torna più tardi</string>
     <string name="shop_buy">Acquista</string>
     <string name="shop_unlock_all_cards">Sblocca tutte le carte</string>
+    <string name="shop_purchase_failed_error">Acquisto non riuscito</string>
+    <string name="shop_connection_error">Errore di connessione</string>
     <string name="setting_music">Musica</string>
     <string name="setting_sound">Suono</string>
     <string name="setting_vibration">Vibrazione</string>

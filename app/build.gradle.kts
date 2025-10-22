@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.play.services.ads.api)
+    implementation(libs.billing)
     debugImplementation(libs.androidx.ui.tooling)
     ksp(libs.hilt.compiler)
 

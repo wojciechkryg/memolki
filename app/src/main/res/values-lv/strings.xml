@@ -10,6 +10,8 @@
     <string name="shop_back_later">Atgriezties vēlāk</string>
     <string name="shop_buy">Pirkt</string>
     <string name="shop_unlock_all_cards">Atbloķēt visas kārtis</string>
+    <string name="shop_purchase_failed_error">Pirkums neizdevās</string>
+    <string name="shop_connection_error">Savienojuma kļūda</string>
     <string name="setting_music">Mūzika</string>
     <string name="setting_sound">Skaņa</string>
     <string name="setting_vibration">Vibrācija</string>

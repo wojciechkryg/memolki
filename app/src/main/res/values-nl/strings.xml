@@ -10,6 +10,8 @@
     <string name="shop_back_later">Kom later terug</string>
     <string name="shop_buy">Kopen</string>
     <string name="shop_unlock_all_cards">Alle kaarten ontgrendelen</string>
+    <string name="shop_purchase_failed_error">Aankoop mislukt</string>
+    <string name="shop_connection_error">Verbindingsfout</string>
     <string name="setting_music">Muziek</string>
     <string name="setting_sound">Geluid</string>
     <string name="setting_vibration">Trilling</string>

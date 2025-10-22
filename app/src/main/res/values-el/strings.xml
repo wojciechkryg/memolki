@@ -10,6 +10,8 @@
     <string name="shop_back_later">Επιστρέψτε αργότερα</string>
     <string name="shop_buy">Αγορά</string>
     <string name="shop_unlock_all_cards">Ξεκλειδώστε όλες τις κάρτες</string>
+    <string name="shop_purchase_failed_error">Πρόβλημα αγοράς</string>
+    <string name="shop_connection_error">Σφάλμα σύνδεσης</string>
     <string name="setting_music">Μουσική</string>
     <string name="setting_sound">Ήχος</string>
     <string name="setting_vibration">Δόνηση</string>

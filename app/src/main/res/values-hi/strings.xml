@@ -10,6 +10,8 @@
     <string name="shop_back_later">बाद में वापस आएं</string>
     <string name="shop_buy">खरीदें</string>
     <string name="shop_unlock_all_cards">सभी कार्ड अनलॉक करें</string>
+    <string name="shop_purchase_failed_error">खरीदी विफल</string>
+    <string name="shop_connection_error">कनेक्शन त्रुटि</string>
     <string name="setting_music">संगीत</string>
     <string name="setting_sound">ध्वनि</string>
     <string name="setting_vibration">कंपन</string>
