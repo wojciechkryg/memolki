@@ -6,10 +6,12 @@
     <string name="menu">Menüü</string>
     <string name="play_again">Mängi uuesti</string>
     <string name="shop">Pood</string>
-    <string name="shop_obtain">Hangi</string>
+    <string name="shop_obtain">Hangi %d</string>
     <string name="shop_back_later">Tule hiljem tagasi</string>
-    <string name="shop_buy">Osta</string>
+    <string name="shop_buy">Osta %d</string>
     <string name="shop_unlock_all_cards">Ava kõik kaardid</string>
+    <string name="shop_purchase_failed_error">Midagi läks valesti</string>
+    <string name="shop_connection_error">Ühenduse viga</string>
     <string name="setting_music">Muusika</string>
     <string name="setting_sound">Heli</string>
     <string name="setting_vibration">Vibratsioon</string>

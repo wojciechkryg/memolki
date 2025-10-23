@@ -6,10 +6,12 @@
     <string name="menu">Меню</string>
     <string name="play_again">Грати знову</string>
     <string name="shop">Магазин</string>
-    <string name="shop_obtain">Отримати</string>
+    <string name="shop_obtain">Отримати %d</string>
     <string name="shop_back_later">Поверніться пізніше</string>
-    <string name="shop_buy">Купити</string>
+    <string name="shop_buy">Купити %d</string>
     <string name="shop_unlock_all_cards">Розблокувати всі карти</string>
+    <string name="shop_purchase_failed_error">Покупка не вдалася</string>
+    <string name="shop_connection_error">Помилка з\'єднання</string>
     <string name="setting_music">Музика</string>
     <string name="setting_sound">Звук</string>
     <string name="setting_vibration">Вібрація</string>

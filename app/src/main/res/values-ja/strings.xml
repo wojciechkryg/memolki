@@ -6,10 +6,12 @@
     <string name="menu">メニュー</string>
     <string name="play_again">もう一度プレイ</string>
     <string name="shop">ショップ</string>
-    <string name="shop_obtain">獲得</string>
+    <string name="shop_obtain">獲得 %d</string>
     <string name="shop_back_later">後で戻って</string>
-    <string name="shop_buy">購入</string>
+    <string name="shop_buy">購入 %d</string>
     <string name="shop_unlock_all_cards">すべてのカードを解放</string>
+    <string name="shop_purchase_failed_error">購入に失敗しました</string>
+    <string name="shop_connection_error">接続エラー</string>
     <string name="setting_music">音楽</string>
     <string name="setting_sound">サウンド</string>
     <string name="setting_vibration">バイブレーション</string>

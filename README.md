@@ -2,6 +2,13 @@
 
 A simple and beautiful memory game.
 
+## 🔧 setup
+Add the `secrets.properties` file in the root directory with the following content for each flavor:
+```
+FRUIT_HALF_BILLING_KEY="MIIBIj...<full_billing_key>...AQAB"
+...
+```
+
 ## 📚 documentation
 
 Documentation can be found [here](./docs/docs.md).

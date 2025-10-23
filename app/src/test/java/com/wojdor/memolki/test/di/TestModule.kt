@@ -11,6 +11,7 @@ import com.wojdor.memolki.test.fake.FakeDataStore
 import com.wojdor.memolki.test.fake.FakeEncryptor
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
+import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
@@ -85,5 +86,9 @@ abstract class TestModule {
         @Provides
         @Singleton
         fun provideAllRewardedAds(): AllRewardedAds = relaxedMockk()
+
+        @Provides
+        @Singleton
+        fun provideBillingHandler(): BillingHandler = relaxedMockk()
     }
 }

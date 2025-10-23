@@ -7,8 +7,20 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 sealed class ShopMenuModel(@field:StringRes val textId: Int) : Parcelable {
-    data class WatchAd(val isAdAvailable: Boolean) : ShopMenuModel(R.string.empty)
-    object BuyCoinsSmallAmount : ShopMenuModel(R.string.shop_buy)
-    object BuyCoinsBigAmount : ShopMenuModel(R.string.shop_buy)
-    object BuyAllCards : ShopMenuModel(R.string.shop_unlock_all_cards)
+    data class WatchAd(
+        val isAdAvailable: Boolean,
+        val coinsToGrant: Long
+    ) : ShopMenuModel(R.string.shop_obtain)
+
+    data class BuyCoinsSmallAmount(
+        val formattedPrice: String,
+        val coinsToGrant: Long
+    ) : ShopMenuModel(R.string.shop_buy)
+
+    data class BuyCoinsBigAmount(
+        val formattedPrice: String,
+        val coinsToGrant: Long
+    ) : ShopMenuModel(R.string.shop_buy)
+
+    data class BuyAllCards(val formattedPrice: String) : ShopMenuModel(R.string.shop_unlock_all_cards)
 }

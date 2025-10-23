@@ -6,10 +6,12 @@
     <string name="menu">Meniu</string>
     <string name="play_again">Žaisti dar kartą</string>
     <string name="shop">Parduotuvė</string>
-    <string name="shop_obtain">Gauti</string>
+    <string name="shop_obtain">Gauti %d</string>
     <string name="shop_back_later">Grįžk vėliau</string>
-    <string name="shop_buy">Pirkti</string>
+    <string name="shop_buy">Pirkti %d</string>
     <string name="shop_unlock_all_cards">Atrakinti visas korteles</string>
+    <string name="shop_purchase_failed_error">Pirkimas nepavyko</string>
+    <string name="shop_connection_error">Ryšio klaida</string>
     <string name="setting_music">Muzika</string>
     <string name="setting_sound">Garsas</string>
     <string name="setting_vibration">Vibracija</string>

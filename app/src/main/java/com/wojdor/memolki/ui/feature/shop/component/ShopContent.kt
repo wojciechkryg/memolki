@@ -56,8 +56,8 @@ fun ShopContent(
                     Spacer(modifier = Modifier.height(16.dp))
                     when (menuItem) {
                         is ShopMenuModel.WatchAd -> ShopMenuItem(
-                            rightText = if (menuItem.isAdAvailable) {
-                                stringResource(R.string.shop_obtain) + " 25"
+                            descriptionText = if (menuItem.isAdAvailable) {
+                                stringResource(R.string.shop_obtain, menuItem.coinsToGrant)
                             } else {
                                 stringResource(R.string.shop_back_later)
                             },
@@ -67,23 +67,29 @@ fun ShopContent(
                             isEnabled = menuItem.isAdAvailable
                         )
 
-                        ShopMenuModel.BuyCoinsSmallAmount -> ShopMenuItem(
-                            leftText = "$0.99",
-                            rightText = stringResource(R.string.shop_buy) + " 500",
+                        is ShopMenuModel.BuyCoinsSmallAmount -> ShopMenuItem(
+                            priceText = menuItem.formattedPrice,
+                            descriptionText = stringResource(
+                                R.string.shop_buy,
+                                menuItem.coinsToGrant
+                            ),
                             rightDrawableRes = R.drawable.ic_coins_pile_big,
                             onClick = callbacks.onBuyCoinsSmallAmountClick
                         )
 
-                        ShopMenuModel.BuyCoinsBigAmount -> ShopMenuItem(
-                            leftText = "$4.99",
-                            rightText = stringResource(R.string.shop_buy) + " 3000",
+                        is ShopMenuModel.BuyCoinsBigAmount -> ShopMenuItem(
+                            priceText = menuItem.formattedPrice,
+                            descriptionText = stringResource(
+                                R.string.shop_buy,
+                                menuItem.coinsToGrant
+                            ),
                             rightDrawableRes = R.drawable.ic_coins_sack,
                             onClick = callbacks.onBuyCoinsBigAmountClick
                         )
 
-                        ShopMenuModel.BuyAllCards -> ShopMenuItem(
-                            leftText = "$14.99",
-                            rightText = stringResource(R.string.shop_unlock_all_cards),
+                        is ShopMenuModel.BuyAllCards -> ShopMenuItem(
+                            priceText = menuItem.formattedPrice,
+                            descriptionText = stringResource(R.string.shop_unlock_all_cards),
                             rightDrawableRes = R.drawable.ic_cards_stack,
                             onClick = callbacks.onBuyAllCardsClick
                         )
@@ -102,10 +108,10 @@ private fun ShopContentPreview() {
             state = ShopState(
                 coins = 1234,
                 menu = listOf(
-                    ShopMenuModel.WatchAd(true),
-                    ShopMenuModel.BuyCoinsSmallAmount,
-                    ShopMenuModel.BuyCoinsBigAmount,
-                    ShopMenuModel.BuyAllCards
+                    ShopMenuModel.WatchAd(true, 25),
+                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                    ShopMenuModel.BuyAllCards("$14.99")
                 )
             )
         )
