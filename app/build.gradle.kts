@@ -1,4 +1,3 @@
-import org.gradle.api.GradleException
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
@@ -37,8 +36,8 @@ android {
         applicationId = "com.wojdor.memolki"
         minSdk = 23
         targetSdk = 36
-        versionCode = 2
-        versionName = "0.0.2"
+        versionCode = 3
+        versionName = "0.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -96,11 +95,18 @@ android {
         }
     }
 
-    applicationVariants.all {
-        if (buildType.name == "release") {
-            flavorConfigs.find { it.first == flavorName }?.let { (_, billingKeyName) ->
-                if (getSecretValue(billingKeyName).isBlank()) {
-                    throw GradleException("$billingKeyName is required for release builds.")
+    tasks.matching {
+        it.name.contains("release", ignoreCase = true) &&
+                (it.name.startsWith("assemble") || it.name.startsWith("bundle"))
+    }.configureEach {
+        doFirst {
+            applicationVariants.all {
+                if (buildType.name == "release") {
+                    flavorConfigs.find { it.first == flavorName }?.let { (_, billingKeyName) ->
+                        if (getSecretValue(billingKeyName).isBlank()) {
+                            throw GradleException("$billingKeyName is required for release builds")
+                        }
+                    }
                 }
             }
         }
