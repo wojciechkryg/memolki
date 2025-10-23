@@ -3,9 +3,10 @@
 A simple and beautiful memory game.
 
 ## 🔧 setup
-Add the `secrets.properties` file in the root directory with the following content:
+Add the `secrets.properties` file in the root directory with the following content for each flavor:
 ```
-BILLING_KEY=<your_billing_key>
+FRUIT_HALF_BILLING_KEY="MIIBIj...<full_billing_key>...AQAB"
+...
 ```
 
 ## 📚 documentation

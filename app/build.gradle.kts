@@ -19,10 +19,15 @@ if (secretsPropertiesFile.exists()) {
     properties.load(FileInputStream(secretsPropertiesFile))
 }
 
-val billingKey: String = providers
-    .environmentVariable("BILLING_KEY")
-    .orElse(providers.gradleProperty("BILLING_KEY"))
-    .getOrElse(properties.getProperty("BILLING_KEY", ""))
+fun getSecretValue(key: String): String = providers
+    .environmentVariable(key)
+    .orElse(providers.gradleProperty(key))
+    .getOrElse(properties.getProperty(key, ""))
+
+val flavorConfigs = listOf(
+    "fruitHalf" to "FRUIT_HALF_BILLING_KEY",
+    "treeLeaf" to "TREE_LEAF_BILLING_KEY"
+)
 
 android {
     namespace = "com.wojdor.memolki"
@@ -36,9 +41,6 @@ android {
         versionName = "0.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        val quoted = "\"${billingKey.replace("\"", "\\\"")}\""
-        buildConfigField("String", "BILLING_KEY", quoted)
     }
 
     signingConfigs {
@@ -60,9 +62,6 @@ android {
 
     buildTypes {
         release {
-            if (billingKey.isBlank()) {
-                throw GradleException("BILLING_KEY is required for release builds.")
-            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -86,13 +85,24 @@ android {
     val versionDimension = "version"
     flavorDimensions += versionDimension
     productFlavors {
-        create("fruitHalf") {
-            dimension = versionDimension
-            applicationIdSuffix = ".fruithalf"
+        flavorConfigs.forEach { (name, billingKeyName) ->
+            create(name) {
+                dimension = versionDimension
+                applicationIdSuffix = ".${name.lowercase()}"
+                val billingKey = getSecretValue(billingKeyName)
+                val quoted = "\"${billingKey.replace("\"", "\\\"")}\""
+                buildConfigField("String", "BILLING_KEY", quoted)
+            }
         }
-        create("treeLeaf") {
-            dimension = versionDimension
-            applicationIdSuffix = ".treeleaf"
+    }
+
+    applicationVariants.all {
+        if (buildType.name == "release") {
+            flavorConfigs.find { it.first == flavorName }?.let { (_, billingKeyName) ->
+                if (getSecretValue(billingKeyName).isBlank()) {
+                    throw GradleException("$billingKeyName is required for release builds.")
+                }
+            }
         }
     }
 }
