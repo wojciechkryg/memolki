@@ -2,6 +2,8 @@ package com.wojdor.memolki.ui.feature.endgame
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.google.android.play.core.review.ReviewManager
+import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
@@ -14,6 +16,7 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.take
@@ -29,7 +32,9 @@ class EndGameViewModel @Inject constructor(
     private val allRewardedAds: AllRewardedAds,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
+    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
+    private val reviewManager: ReviewManager,
+    private val userRepository: UserRepository
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
     EndGameState()
@@ -54,6 +59,19 @@ class EndGameViewModel @Inject constructor(
         viewModelScope.launch {
             delay(LEVEL_COMPLETE_SOUND_DELAY)
             levelCompletePlayer.play()
+            requestReview()
+        }
+    }
+
+    private suspend fun requestReview() {
+        val totalGamesPlayed = userRepository.getTotalGamesPlayed().first()
+        if (totalGamesPlayed >= MIN_GAMES_PLAYED_TO_ASK_REVIEW) {
+            val request = reviewManager.requestReviewFlow()
+            request.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    sendEffect(EndGameEffect.RequestReview(reviewManager, request.result))
+                }
+            }
         }
     }
 
@@ -151,5 +169,7 @@ class EndGameViewModel @Inject constructor(
     companion object {
         const val LEVEL_COMPLETE_SOUND_DELAY = 250L
         const val COINS_SOUND_DELAY = 500L
+
+        const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
     }
 }

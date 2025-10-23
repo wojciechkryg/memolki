@@ -39,6 +39,10 @@ class ShopViewModel @Inject constructor(
 ) {
 
     private var productDetails: List<ProductDetails> = emptyList()
+    private val priceByProductId: Map<String, String>
+        get() = productDetails.associateBy({ it.productId }) { product ->
+            product.oneTimePurchaseOfferDetails?.formattedPrice.orEmpty()
+        }
 
     init {
         loadData()
@@ -97,6 +101,8 @@ class ShopViewModel @Inject constructor(
         val product = productDetails.find { it.productId == BillingHandler.IAP_COINS_SMALL }
         product?.let {
             sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
+        } ?: run {
+            sendEffect(ShopEffect.ShowPurchaseFailedError)
         }
     }
 
@@ -104,6 +110,8 @@ class ShopViewModel @Inject constructor(
         val product = productDetails.find { it.productId == BillingHandler.IAP_COINS_BIG }
         product?.let {
             sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
+        } ?: run {
+            sendEffect(ShopEffect.ShowPurchaseFailedError)
         }
     }
 
@@ -111,6 +119,8 @@ class ShopViewModel @Inject constructor(
         val product = productDetails.find { it.productId == BillingHandler.IAP_UNLOCK_ALL_CARDS }
         product?.let {
             sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
+        } ?: run {
+            sendEffect(ShopEffect.ShowPurchaseFailedError)
         }
     }
 
@@ -171,25 +181,26 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun showMenu(
-        isAdAvailable: Boolean = uiState.value.menu
-            .find { it is ShopMenuModel.WatchAd } as ShopMenuModel.WatchAd? != null,
-        priceByProductId: Map<String, String> = emptyMap()
+        isAdAvailable: Boolean = (uiState.value.menu
+            .find { it is ShopMenuModel.WatchAd } as? ShopMenuModel.WatchAd)?.isAvailable
+            ?: false
     ) {
         calculateCoinsForShopAdUseCase().onEach { result ->
             result.onSuccess { coins ->
+                val prices = priceByProductId
                 sendState {
                     copy(
                         menu = listOf(
                             ShopMenuModel.WatchAd(isAdAvailable, coins),
                             ShopMenuModel.BuyCoinsSmallAmount(
-                                priceByProductId[BillingHandler.IAP_COINS_SMALL].orEmpty(),
+                                prices[BillingHandler.IAP_COINS_SMALL].orEmpty(),
                                 SMALL_PURCHASE_COINS_REWARD
                             ),
                             ShopMenuModel.BuyCoinsBigAmount(
-                                priceByProductId[BillingHandler.IAP_COINS_BIG].orEmpty(),
+                                prices[BillingHandler.IAP_COINS_BIG].orEmpty(),
                                 BIG_PURCHASE_COINS_REWARD
                             ),
-                            ShopMenuModel.BuyAllCards(priceByProductId[BillingHandler.IAP_UNLOCK_ALL_CARDS].orEmpty())
+                            ShopMenuModel.BuyAllCards(prices[BillingHandler.IAP_UNLOCK_ALL_CARDS].orEmpty())
                         )
                     )
                 }
@@ -199,10 +210,7 @@ class ShopViewModel @Inject constructor(
 
     private fun onProductsFetched(products: List<ProductDetails>) {
         productDetails = products
-        val priceByProductId = products.associateBy({ it.productId }) { product ->
-            product.oneTimePurchaseOfferDetails?.formattedPrice.orEmpty()
-        }
-        showMenu(priceByProductId = priceByProductId)
+        showMenu()
     }
 
     private fun onPurchaseSuccessful(productId: String) {

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.SavedStateHandle
+import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
@@ -90,5 +91,9 @@ abstract class TestModule {
         @Provides
         @Singleton
         fun provideBillingHandler(): BillingHandler = relaxedMockk()
+
+        @Provides
+        @Singleton
+        fun provideReviewManager(): ReviewManager = relaxedMockk()
     }
 }

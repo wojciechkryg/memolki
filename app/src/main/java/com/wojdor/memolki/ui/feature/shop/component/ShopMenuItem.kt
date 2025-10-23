@@ -57,22 +57,25 @@ fun ShopMenuItem(
                 if (priceText.isNotEmpty()) {
                     Text(
                         text = priceText.lowercase(),
-                        modifier = Modifier.padding(start = 24.dp, top = 8.dp, bottom = 8.dp),
+                        modifier = Modifier
+                            .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
+                            .weight(1f),
                         style = MaterialTheme.typography.headlineLarge
                     )
                 } else if (leftDrawableRes != NO_DRAWABLE) {
                     Image(
                         modifier = Modifier
                             .padding(start = 16.dp)
-                            .size(64.dp),
+                            .size(64.dp)
+                            .weight(1f),
                         painter = painterResource(leftDrawableRes),
                         contentDescription = null
                     )
                 }
                 Text(
                     modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 24.dp, top = 8.dp, bottom = 8.dp),
+                        .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
+                        .weight(2f),
                     text = descriptionText.lowercase(),
                     style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Start

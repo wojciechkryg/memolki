@@ -56,7 +56,7 @@ fun ShopContent(
                     Spacer(modifier = Modifier.height(16.dp))
                     when (menuItem) {
                         is ShopMenuModel.WatchAd -> ShopMenuItem(
-                            descriptionText = if (menuItem.isAdAvailable) {
+                            descriptionText = if (menuItem.isAvailable) {
                                 stringResource(R.string.shop_obtain, menuItem.coinsToGrant)
                             } else {
                                 stringResource(R.string.shop_back_later)
@@ -64,7 +64,7 @@ fun ShopContent(
                             leftDrawableRes = R.drawable.ic_ads,
                             rightDrawableRes = R.drawable.ic_coins_pile_small,
                             onClick = callbacks.onWatchAdClick,
-                            isEnabled = menuItem.isAdAvailable
+                            isEnabled = menuItem.isAvailable
                         )
 
                         is ShopMenuModel.BuyCoinsSmallAmount -> ShopMenuItem(
@@ -74,7 +74,8 @@ fun ShopContent(
                                 menuItem.coinsToGrant
                             ),
                             rightDrawableRes = R.drawable.ic_coins_pile_big,
-                            onClick = callbacks.onBuyCoinsSmallAmountClick
+                            onClick = callbacks.onBuyCoinsSmallAmountClick,
+                            isEnabled = menuItem.isAvailable
                         )
 
                         is ShopMenuModel.BuyCoinsBigAmount -> ShopMenuItem(
@@ -84,14 +85,16 @@ fun ShopContent(
                                 menuItem.coinsToGrant
                             ),
                             rightDrawableRes = R.drawable.ic_coins_sack,
-                            onClick = callbacks.onBuyCoinsBigAmountClick
+                            onClick = callbacks.onBuyCoinsBigAmountClick,
+                            isEnabled = menuItem.isAvailable
                         )
 
                         is ShopMenuModel.BuyAllCards -> ShopMenuItem(
                             priceText = menuItem.formattedPrice,
                             descriptionText = stringResource(R.string.shop_unlock_all_cards),
                             rightDrawableRes = R.drawable.ic_cards_stack,
-                            onClick = callbacks.onBuyAllCardsClick
+                            onClick = callbacks.onBuyAllCardsClick,
+                            isEnabled = menuItem.isAvailable
                         )
                     }
                 }

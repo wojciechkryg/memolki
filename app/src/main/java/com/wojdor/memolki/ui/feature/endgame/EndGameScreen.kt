@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.ads.RewardedAd
@@ -21,7 +23,6 @@ import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun EndGameScreen(
-
     viewModel: EndGameViewModel = hiltViewModel(),
     gameViewModel: GameViewModel = hiltViewModel(),
     navController: NavController
@@ -48,8 +49,24 @@ private fun HandleEffect(
 
             is EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
             is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
+            is EndGameEffect.RequestReview -> activity?.let {
+                launchReviewFlow(
+                    it,
+                    effect.reviewManager,
+                    effect.reviewInfo
+                )
+            }
         }
     }
+}
+
+private fun openGameScreen(
+    gameViewModel: GameViewModel,
+    navController: NavController,
+    level: LevelModel
+) {
+    gameViewModel.sendIntent(GameIntent.OnLevelStart(level))
+    navController.navigateToGameFromEndGame()
 }
 
 private fun showAd(
@@ -64,13 +81,12 @@ private fun showAd(
     )
 }
 
-private fun openGameScreen(
-    gameViewModel: GameViewModel,
-    navController: NavController,
-    level: LevelModel
+private fun launchReviewFlow(
+    activity: Activity,
+    reviewManager: ReviewManager,
+    reviewInfo: ReviewInfo
 ) {
-    gameViewModel.sendIntent(GameIntent.OnLevelStart(level))
-    navController.navigateToGameFromEndGame()
+    reviewManager.launchReviewFlow(activity, reviewInfo)
 }
 
 @Composable

@@ -26,14 +26,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.nio.charset.StandardCharsets
 import java.security.KeyFactory
 import java.security.PublicKey
 import java.security.Signature
 import java.security.spec.X509EncodedKeySpec
 import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.coroutines.resume
 
+@Singleton
 class BillingHandler @Inject constructor(
     @param:ApplicationContext private val context: Context,
     @param:IoDispatcher private val dispatcher: CoroutineDispatcher
@@ -162,7 +165,7 @@ class BillingHandler @Inject constructor(
         }
     }
 
-    fun queryExistingPurchases() {
+    private fun queryExistingPurchases() {
         if (!billingClient.isReady) return
 
         billingClient.queryPurchasesAsync(
@@ -199,9 +202,7 @@ class BillingHandler @Inject constructor(
         val consumeParams = ConsumeParams.newBuilder()
             .setPurchaseToken(purchase.purchaseToken)
             .build()
-        val result = withContext(dispatcher) {
-            billingClient.consumePurchase(consumeParams)
-        }
+        val result = billingClient.consumePurchase(consumeParams)
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             listener?.onPurchaseSuccessful(purchase.products.first())
         } else {
@@ -241,6 +242,27 @@ class BillingHandler @Inject constructor(
         logE("Error verifying signature.", error)
         false
     }
+
+    suspend fun isPurchased(productId: String): Boolean =
+        suspendCancellableCoroutine { continuation ->
+            if (!billingClient.isReady) {
+                continuation.resume(false)
+                return@suspendCancellableCoroutine
+            }
+            billingClient.queryPurchasesAsync(
+                QueryPurchasesParams.newBuilder()
+                    .setProductType(BillingClient.ProductType.INAPP)
+                    .build()
+            ) { billingResult, purchases ->
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    val isPurchased =
+                        purchases.any { it.products.contains(productId) && it.isAcknowledged }
+                    continuation.resume(isPurchased)
+                } else {
+                    continuation.resume(false)
+                }
+            }
+        }
 
     companion object {
         const val IAP_COINS_SMALL = "coins_small"

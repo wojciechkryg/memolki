@@ -100,7 +100,7 @@ class ShopViewModelTest : AppTest() {
             val state = awaitItem()
             assertEquals(
                 false,
-                (state.menu.first() as ShopMenuModel.WatchAd).isAdAvailable
+                (state.menu.first() as ShopMenuModel.WatchAd).isAvailable
             )
         }
     }

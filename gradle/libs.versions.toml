@@ -16,6 +16,8 @@ material3 = "1.4.0"
 mockk = "1.14.6"
 navigationCompose = "2.9.5"
 playServicesAdsApi = "24.7.0"
+playCoreKtx = "2.0.2"
+reviewKtx = "2.0.2"
 runtime = "1.9.4"
 splashscreen = "1.2.0-rc01"
 turbine = "1.2.1"
@@ -43,6 +45,8 @@ mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 play-services-ads-api = { group = "com.google.android.gms", name = "play-services-ads-api", version.ref = "playServicesAdsApi" }
 billing = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
+play-core-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "playCoreKtx" }
+review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "reviewKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
