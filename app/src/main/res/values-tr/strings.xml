@@ -6,10 +6,12 @@
     <string name="menu">Menü</string>
     <string name="play_again">Tekrar oyna</string>
     <string name="shop">Mağaza</string>
-    <string name="shop_obtain">Al</string>
+    <string name="shop_obtain">Al %d</string>
     <string name="shop_back_later">Daha sonra geri dön</string>
-    <string name="shop_buy">Satın al</string>
+    <string name="shop_buy">Satın al %d</string>
     <string name="shop_unlock_all_cards">Tüm kartları aç</string>
+    <string name="shop_purchase_failed_error">Satın alma başarısız oldu</string>
+    <string name="shop_connection_error">Bağlantı hatası</string>
     <string name="setting_music">Müzik</string>
     <string name="setting_sound">Ses</string>
     <string name="setting_vibration">Titreşim</string>

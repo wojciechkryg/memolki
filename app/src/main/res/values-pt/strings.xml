@@ -6,10 +6,12 @@
     <string name="menu">Menu</string>
     <string name="play_again">Jogar novamente</string>
     <string name="shop">Loja</string>
-    <string name="shop_obtain">Obter</string>
+    <string name="shop_obtain">Obter %d</string>
     <string name="shop_back_later">Voltar mais tarde</string>
-    <string name="shop_buy">Comprar</string>
+    <string name="shop_buy">Comprar %d</string>
     <string name="shop_unlock_all_cards">Desbloquear todas as cartas</string>
+    <string name="shop_purchase_failed_error">Falha na compra</string>
+    <string name="shop_connection_error">Erro de conexão</string>
     <string name="setting_music">Música</string>
     <string name="setting_sound">Som</string>
     <string name="setting_vibration">Vibração</string>

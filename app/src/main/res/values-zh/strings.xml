@@ -6,10 +6,12 @@
     <string name="menu">菜单</string>
     <string name="play_again">再玩一次</string>
     <string name="shop">商店</string>
-    <string name="shop_obtain">获得</string>
+    <string name="shop_obtain">获得 %d</string>
     <string name="shop_back_later">稍后再回来</string>
-    <string name="shop_buy">购买</string>
+    <string name="shop_buy">购买 %d</string>
     <string name="shop_unlock_all_cards">解锁所有卡片</string>
+    <string name="shop_purchase_failed_error">购买失败</string>
+    <string name="shop_connection_error">连接错误</string>
     <string name="setting_music">音乐</string>
     <string name="setting_sound">声音</string>
     <string name="setting_vibration">振动</string>

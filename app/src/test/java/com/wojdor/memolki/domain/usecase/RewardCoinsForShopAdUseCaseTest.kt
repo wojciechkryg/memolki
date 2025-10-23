@@ -19,7 +19,7 @@ class RewardCoinsForShopAdUseCaseTest : AppTest() {
     lateinit var userRepository: UserRepository
 
     @Inject
-    lateinit var getLevelUseCase: GetLevelsUseCase
+    lateinit var calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase
 
     private lateinit var sut: RewardCoinsForShopAdUseCase
 
@@ -29,7 +29,7 @@ class RewardCoinsForShopAdUseCaseTest : AppTest() {
         sut = RewardCoinsForShopAdUseCase(
             testDispatcher,
             userRepository,
-            getLevelUseCase
+            calculateCoinsForShopAdUseCase
         )
     }
 

@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -9,6 +11,23 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
 }
 
+val secretsPropertiesFile = rootProject.file("secrets.properties")
+
+val properties = Properties()
+if (secretsPropertiesFile.exists()) {
+    properties.load(FileInputStream(secretsPropertiesFile))
+}
+
+fun getSecretValue(key: String): String = providers
+    .environmentVariable(key)
+    .orElse(providers.gradleProperty(key))
+    .getOrElse(properties.getProperty(key, ""))
+
+val flavorConfigs = listOf(
+    "fruitHalf" to "FRUIT_HALF_BILLING_KEY",
+    "treeLeaf" to "TREE_LEAF_BILLING_KEY"
+)
+
 android {
     namespace = "com.wojdor.memolki"
     compileSdk = 36
@@ -17,8 +36,8 @@ android {
         applicationId = "com.wojdor.memolki"
         minSdk = 23
         targetSdk = 36
-        versionCode = 2
-        versionName = "0.0.2"
+        versionCode = 3
+        versionName = "0.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,6 +56,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -64,13 +84,31 @@ android {
     val versionDimension = "version"
     flavorDimensions += versionDimension
     productFlavors {
-        create("fruitHalf") {
-            dimension = versionDimension
-            applicationIdSuffix = ".fruithalf"
+        flavorConfigs.forEach { (name, billingKeyName) ->
+            create(name) {
+                dimension = versionDimension
+                applicationIdSuffix = ".${name.lowercase()}"
+                val billingKey = getSecretValue(billingKeyName)
+                val quoted = "\"${billingKey.replace("\"", "\\\"")}\""
+                buildConfigField("String", "BILLING_KEY", quoted)
+            }
         }
-        create("treeLeaf") {
-            dimension = versionDimension
-            applicationIdSuffix = ".treeleaf"
+    }
+
+    tasks.matching {
+        it.name.contains("release", ignoreCase = true) &&
+                (it.name.startsWith("assemble") || it.name.startsWith("bundle"))
+    }.configureEach {
+        doFirst {
+            applicationVariants.all {
+                if (buildType.name == "release") {
+                    flavorConfigs.find { it.first == flavorName }?.let { (_, billingKeyName) ->
+                        if (getSecretValue(billingKeyName).isBlank()) {
+                            throw GradleException("$billingKeyName is required for release builds")
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -89,6 +127,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.play.services.ads.api)
+    implementation(libs.billing)
     debugImplementation(libs.androidx.ui.tooling)
     ksp(libs.hilt.compiler)
 

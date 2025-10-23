@@ -6,9 +6,11 @@
     <string name="menu">Meni</string>
     <string name="play_again">Igraj ponovno</string>
     <string name="shop">Trgovina</string>
-    <string name="shop_obtain">Pridobi</string>
+    <string name="shop_obtain">Pridobi %d</string>
     <string name="shop_back_later">Vrni se kasneje</string>
-    <string name="shop_buy">Kupi</string>
+    <string name="shop_buy">Kupi %d</string>
+    <string name="shop_purchase_failed_error">Nakup ni uspel</string>
+    <string name="shop_connection_error">Napaka v povezavi</string>
     <string name="shop_unlock_all_cards">Odkleni vse karte</string>
     <string name="setting_music">Glasba</string>
     <string name="setting_sound">Zvok</string>

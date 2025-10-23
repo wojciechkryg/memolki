@@ -11,24 +11,14 @@ import javax.inject.Inject
 class RewardCoinsForShopAdUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val userRepository: UserRepository,
-    private val getLevelsUseCase: GetLevelsUseCase
+    private val calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        val rewardedCoins = calculateRewardedCoins()
-        userRepository.addCoins(rewardedCoins)
-        emit(Result.success(Unit))
-    }
-
-    private suspend fun calculateRewardedCoins(): Long {
-        val unlockedLevels = getLevelsUseCase().first().getOrNull() ?: return DEFAULT_REWARDED_COINS
-        val biggestUnlockedLevel = unlockedLevels.filter { it.isUnlocked }.maxByOrNull { it.id }
-        return biggestUnlockedLevel?.let {
-            it.columns * it.rows.toLong()
-        } ?: DEFAULT_REWARDED_COINS
-    }
-
-    companion object {
-        private const val DEFAULT_REWARDED_COINS = 0L
+        val result = calculateCoinsForShopAdUseCase().first()
+        result.getOrNull()?.let {
+            userRepository.addCoins(it)
+            emit(Result.success(Unit))
+        } ?: emit(Result.failure(Exception("Failed to calculate reward coins for ad")))
     }
 }
