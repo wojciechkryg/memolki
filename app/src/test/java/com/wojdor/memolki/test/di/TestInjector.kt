@@ -6,6 +6,7 @@ import com.wojdor.memolki.data.local.user.UserLocalDataSourceTest
 import com.wojdor.memolki.data.repository.CardRepositoryTest
 import com.wojdor.memolki.data.repository.SettingsRepositoryTest
 import com.wojdor.memolki.data.repository.UserRepositoryTest
+import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
@@ -25,6 +26,8 @@ import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCaseTest
 import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCaseTest
+import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCaseTest
+import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCaseTest
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCaseTest
 import com.wojdor.memolki.test.AppTest
@@ -76,4 +79,7 @@ interface TestInjector {
     fun inject(test: GameViewModelTest)
     fun inject(test: MenuViewModelTest)
     fun inject(test: SettingsViewModelTest)
+    fun inject(test: UnlockAllCardPairsUseCaseTest)
+    fun inject(test: UnlockAllNewCardPairsIfPurchasedUseCaseTest)
+    fun inject(test: CalculateCoinsForShopAdUseCaseTest)
 }

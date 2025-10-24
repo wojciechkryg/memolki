@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">memolki • augļi</string>
+
     <string name="banana">Banāns</string>
     <string name="apple">Ābols</string>
     <string name="strawberry">Zemene</string>

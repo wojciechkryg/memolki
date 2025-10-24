@@ -30,11 +30,11 @@ class EndGameViewModel @Inject constructor(
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
     private val allRewardedAds: AllRewardedAds,
+    private val reviewManager: ReviewManager,
+    private val userRepository: UserRepository,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
-    private val reviewManager: ReviewManager,
-    private val userRepository: UserRepository
+    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
     EndGameState()

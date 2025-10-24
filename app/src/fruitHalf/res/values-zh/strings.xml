@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">memolki • 水果</string>
+
     <string name="banana">香蕉</string>
     <string name="apple">苹果</string>
     <string name="strawberry">草莓</string>

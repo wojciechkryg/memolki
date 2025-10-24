@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">memolki • gyümölcs</string>
+
     <string name="banana">Banán</string>
     <string name="apple">Alma</string>
     <string name="strawberry">Eper</string>
