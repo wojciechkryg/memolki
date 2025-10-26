@@ -2,7 +2,6 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
-import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

@@ -128,7 +128,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.play.services.ads.api)
     implementation(libs.billing)
-    implementation(libs.play.core.ktx)
     implementation(libs.review.ktx)
     debugImplementation(libs.androidx.ui.tooling)
     ksp(libs.hilt.compiler)

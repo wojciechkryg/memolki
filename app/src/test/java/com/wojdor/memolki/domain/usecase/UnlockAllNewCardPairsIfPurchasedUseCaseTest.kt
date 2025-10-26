@@ -56,7 +56,7 @@ class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
         }
 
     @Test
-    fun `when there are locked cards and unlock all is not purchased then unlock all card pairs`() =
+    fun `when there are locked cards and unlock all is not purchased then do not unlock all card pairs`() =
         runTest {
             // given
             coEvery { billingHandler.isPurchased(any()) } returns false
