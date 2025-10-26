@@ -2,7 +2,6 @@ package com.wojdor.memolki.data.local.card
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import kotlinx.coroutines.flow.first
@@ -31,20 +30,8 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
         }
     }
 
-    suspend fun areAllCardPairsUnlocked(): Boolean {
-        val preferences = dataStore.data.first()
-        return preferences[Key.ARE_ALL_CARD_PAIRS_UNLOCKED] ?: false
-    }
-
-    suspend fun setAllCardPairsUnlocked() {
-        dataStore.edit {
-            it[Key.ARE_ALL_CARD_PAIRS_UNLOCKED] = true
-        }
-    }
-
     object Key {
         val UNLOCKED_CARD_PAIR_IDS = stringSetPreferencesKey("unlocked_card_pair_ids")
-        val ARE_ALL_CARD_PAIRS_UNLOCKED = booleanPreferencesKey("are_all_card_pairs_unlocked")
     }
 
     companion object {
