@@ -46,12 +46,13 @@ class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
     fun `when there are locked cards and unlock all is purchased then unlock all card pairs`() =
         runTest {
             // given
-            coEvery { billingHandler.isPurchased(any()) } returns true
+            coEvery { billingHandler.isPurchased(BillingHandler.IAP_UNLOCK_ALL_CARDS) } returns true
 
             // when
-            sut().first()
+            val result = sut().first()
 
             // then
+            assertTrue(result.isSuccess)
             assertTrue(cardRepository.getLockedCardPairs().isEmpty())
         }
 
@@ -59,12 +60,13 @@ class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
     fun `when there are locked cards and unlock all is not purchased then do not unlock all card pairs`() =
         runTest {
             // given
-            coEvery { billingHandler.isPurchased(any()) } returns false
+            coEvery { billingHandler.isPurchased(BillingHandler.IAP_UNLOCK_ALL_CARDS) } returns false
 
             // when
-            sut().first()
+            val result = sut().first()
 
             // then
+            assertTrue(result.isSuccess)
             assertTrue(cardRepository.getLockedCardPairs().isNotEmpty())
         }
 }
