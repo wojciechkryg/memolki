@@ -54,28 +54,28 @@ fun ShopMenuItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                if (priceText.isNotEmpty()) {
+                if (leftDrawableRes != NO_DRAWABLE) {
+                    Image(
+                        modifier = Modifier
+                            .size(64.dp)
+                            .weight(2f),
+                        alignment = Alignment.Center,
+                        painter = painterResource(leftDrawableRes),
+                        contentDescription = null
+                    )
+                } else {
                     Text(
                         text = priceText.lowercase(),
                         modifier = Modifier
                             .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
-                            .weight(1f),
+                            .weight(2f),
                         style = MaterialTheme.typography.headlineLarge
-                    )
-                } else if (leftDrawableRes != NO_DRAWABLE) {
-                    Image(
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .size(64.dp)
-                            .weight(1f),
-                        painter = painterResource(leftDrawableRes),
-                        contentDescription = null
                     )
                 }
                 Text(
                     modifier = Modifier
                         .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
-                        .weight(2f),
+                        .weight(3f),
                     text = descriptionText.lowercase(),
                     style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Start

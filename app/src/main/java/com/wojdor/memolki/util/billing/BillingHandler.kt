@@ -33,10 +33,8 @@ import java.security.PublicKey
 import java.security.Signature
 import java.security.spec.X509EncodedKeySpec
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.coroutines.resume
 
-@Singleton
 class BillingHandler @Inject constructor(
     @param:ApplicationContext private val context: Context,
     @param:IoDispatcher private val dispatcher: CoroutineDispatcher
@@ -49,12 +47,9 @@ class BillingHandler @Inject constructor(
     val consumableProductIds = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
     val nonConsumableProductIds = setOf(IAP_UNLOCK_ALL_CARDS)
 
-    init {
-        startConnection()
-    }
-
-    fun setListener(listener: BillingStatusListener) {
+    fun startConnection(listener: BillingStatusListener) {
         this.listener = listener
+        startConnection()
     }
 
     private fun startConnection() {

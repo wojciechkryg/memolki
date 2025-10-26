@@ -46,7 +46,7 @@ class ShopViewModel @Inject constructor(
 
     init {
         loadData()
-        billingHandler.setListener(object : BillingStatusListener {
+        billingHandler.startConnection(object : BillingStatusListener {
             override fun onProductsFetched(products: List<ProductDetails>) {
                 this@ShopViewModel.onProductsFetched(products)
             }
@@ -193,11 +193,11 @@ class ShopViewModel @Inject constructor(
                         menu = listOf(
                             ShopMenuModel.WatchAd(isAdAvailable, coins),
                             ShopMenuModel.BuyCoinsSmallAmount(
-                                prices[BillingHandler.IAP_COINS_SMALL].orEmpty(),
+                                prices[BillingHandler.IAP_COINS_SMALL] ?: DEFAULT_PRICE,
                                 SMALL_PURCHASE_COINS_REWARD
                             ),
                             ShopMenuModel.BuyCoinsBigAmount(
-                                prices[BillingHandler.IAP_COINS_BIG].orEmpty(),
+                                prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
                                 BIG_PURCHASE_COINS_REWARD
                             ),
                             ShopMenuModel.BuyAllCards(prices[BillingHandler.IAP_UNLOCK_ALL_CARDS].orEmpty())
@@ -245,5 +245,6 @@ class ShopViewModel @Inject constructor(
 private const val DEFAULT_COINS_AMOUNT = 0L
 private const val COINS_SOUND_DELAY = 300L
 
+const val DEFAULT_PRICE = "???"
 const val SMALL_PURCHASE_COINS_REWARD = 500L
 const val BIG_PURCHASE_COINS_REWARD = 3000L
