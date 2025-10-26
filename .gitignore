@@ -13,6 +13,7 @@ secrets.properties
 captures/
 .externalNativeBuild/
 .cxx/
+.kotlin/
 *.aab
 *.apk
 output-metadata.json

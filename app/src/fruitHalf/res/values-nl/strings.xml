@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">memolki • fruit</string>
+
     <string name="banana">Banaan</string>
     <string name="apple">Appel</string>
     <string name="strawberry">Aardbei</string>

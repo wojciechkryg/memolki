@@ -36,14 +36,10 @@ class CardRepository @Inject constructor(
         unlockedCardPairsLocalDataSource.addUnlockedCardPairId(unlockedCardPairId)
     }
 
-    suspend fun areAllCardPairsUnlocked() =
-        unlockedCardPairsLocalDataSource.areAllCardPairsUnlocked()
-
     suspend fun unlockAllCardPairs() {
         getLockedCardPairs().forEach {
             unlockedCardPairsLocalDataSource.addUnlockedCardPairId(it.first.pairId)
         }
-        unlockedCardPairsLocalDataSource.setAllCardPairsUnlocked()
     }
 
     fun getCardPairById(pairId: String) = allCardPairsDataSource.getCardPairById(pairId)?.toModel()

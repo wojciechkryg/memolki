@@ -10,7 +10,7 @@
     - Go to file `.github/workflows/merge.yml`
     - Add the new flavor to the `flavor` matrix
 
-1. Setup new flavor in Google Play Console:
+1. Setup new flavor in the Google Play Console:
     - Go to https://play.google.com/console/u/0/developers/9083635429558058910/create-new-app
     - Enter app name `memolki • {name connected to flavor}`
     - Choose `Game`

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">memolki • trái cây</string>
+
     <string name="banana">Chuối</string>
     <string name="apple">Táo</string>
     <string name="strawberry">Dâu tây</string>

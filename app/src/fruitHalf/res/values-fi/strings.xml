@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">memolki • hedelmä</string>
+
     <string name="banana">Banaani</string>
     <string name="apple">Omena</string>
     <string name="strawberry">Mansikka</string>

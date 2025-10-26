@@ -2,6 +2,8 @@ package com.wojdor.memolki.ui.feature.endgame
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.google.android.play.core.review.ReviewManager
+import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
@@ -43,6 +45,9 @@ class EndGameViewModelTest : AppTest() {
     lateinit var allRewardedAds: AllRewardedAds
 
     @Inject
+    lateinit var reviewManager: ReviewManager
+
+    @Inject
     lateinit var incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase
 
     @Inject
@@ -50,6 +55,9 @@ class EndGameViewModelTest : AppTest() {
 
     @Inject
     lateinit var rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private lateinit var sut: EndGameViewModel
 
@@ -62,6 +70,8 @@ class EndGameViewModelTest : AppTest() {
             coinsPlayer,
             hapticFeedback,
             allRewardedAds,
+            reviewManager,
+            userRepository,
             incrementTotalGamesPlayedUseCase,
             getCoinsUseCase,
             rewardCoinsForLevelUseCase
