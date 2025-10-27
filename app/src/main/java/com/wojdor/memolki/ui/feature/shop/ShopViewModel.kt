@@ -20,8 +20,10 @@ import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -162,11 +164,11 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun sendTotalCoinsScore() {
-        getTotalCoinsUseCase().onEach {
-            it.onSuccess { totalCoins ->
+        viewModelScope.launch {
+            getTotalCoinsUseCase().first().onSuccess { totalCoins ->
                 sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {

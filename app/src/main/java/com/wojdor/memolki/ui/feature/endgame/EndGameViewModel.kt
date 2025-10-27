@@ -21,8 +21,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -135,8 +133,8 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {
-        getCoinsUseCase().take(1).onEach {
-            it.onSuccess { currentCoins ->
+        viewModelScope.launch {
+            getCoinsUseCase().first().onSuccess { currentCoins ->
                 sendState {
                     copy(
                         level = level,
@@ -146,12 +144,12 @@ class EndGameViewModel @Inject constructor(
                 }
                 rewardCoins(level, currentCoins, isRewardFromAd)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
-        rewardCoinsForLevelUseCase(level).take(1).onEach {
-            it.onSuccess { rewardedCoins ->
+        viewModelScope.launch {
+            rewardCoinsForLevelUseCase(level).first().onSuccess { rewardedCoins ->
                 sendState {
                     copy(
                         rewardedCoins = if (isRewardFromAd) uiState.value.rewardedCoins + rewardedCoins else rewardedCoins,
@@ -164,15 +162,15 @@ class EndGameViewModel @Inject constructor(
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun sendTotalCoinsScore() {
-        getTotalCoinsUseCase().take(1).onEach {
-            it.onSuccess { totalCoins ->
+        viewModelScope.launch {
+            getTotalCoinsUseCase().first().onSuccess { totalCoins ->
                 sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun getBaseMenu() = listOf(
