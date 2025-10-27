@@ -341,10 +341,11 @@ class GameViewModelTest : AppTest() {
                 assertTrue(result.cards.all { it.isFlippedFront && it.isPairMatched })
                 sut.uiEffect.test {
                     skipItems(1)
-                    val effect = awaitItem()
+                    assertTrue(awaitItem() is GameEffect.SendTotalCardPairsMatchedScore)
+                    skipItems(2)
                     assertEquals(
                         GameEffect.OpenEndGameScreen(LevelModel.Grid2x3()),
-                        effect
+                        awaitItem()
                     )
                 }
             }

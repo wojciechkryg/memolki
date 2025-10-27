@@ -22,6 +22,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -134,7 +135,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {
-        getCoinsUseCase().onEach {
+        getCoinsUseCase().take(1).onEach {
             it.onSuccess { currentCoins ->
                 sendState {
                     copy(
@@ -149,7 +150,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
-        rewardCoinsForLevelUseCase(level).onEach {
+        rewardCoinsForLevelUseCase(level).take(1).onEach {
             it.onSuccess { rewardedCoins ->
                 sendState {
                     copy(
@@ -167,7 +168,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun sendTotalCoinsScore() {
-        getTotalCoinsUseCase().onEach {
+        getTotalCoinsUseCase().take(1).onEach {
             it.onSuccess { totalCoins ->
                 sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
             }
