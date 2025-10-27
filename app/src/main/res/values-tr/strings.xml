@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">Yeni oyun</string>
     <string name="collection">Koleksiyon</string>
+    <string name="leaderboard">Sıralamalar</string>"
     <string name="settings">Ayarlar</string>
     <string name="menu">Menü</string>
     <string name="play_again">Tekrar oyna</string>

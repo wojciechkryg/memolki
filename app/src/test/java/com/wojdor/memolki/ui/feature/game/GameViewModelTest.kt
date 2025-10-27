@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.util.media.CardFlipPlayer
@@ -39,6 +40,9 @@ class GameViewModelTest : AppTest() {
     @Inject
     lateinit var hapticFeedback: HapticFeedback
 
+    @Inject
+    lateinit var googlePlayGames: GooglePlayGames
+
     @RelaxedMockK
     lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
 
@@ -58,6 +62,7 @@ class GameViewModelTest : AppTest() {
             cardFlipPlayer,
             cardPairMatchedPlayer,
             hapticFeedback,
+            googlePlayGames,
             getShuffledUnlockedCardsUseCase,
             incrementTotalCardPairsMatchedUseCase,
         )

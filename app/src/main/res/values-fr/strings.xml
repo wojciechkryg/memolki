@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">Nouvelle partie</string>
     <string name="collection">Collection</string>
+    <string name="leaderboard">Classement</string>
     <string name="settings">Paramètres</string>
     <string name="menu">Menu</string>
     <string name="play_again">Rejouer</string>

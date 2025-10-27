@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">Trò chơi mới</string>
     <string name="collection">Bộ sưu tập</string>
+    <string name="leaderboard">Bảng xếp hạng</string>
     <string name="settings">Cài đặt</string>
     <string name="menu">Thực đơn</string>
     <string name="play_again">Chơi lại</string>

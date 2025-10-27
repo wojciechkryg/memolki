@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">Νέο παιχνίδι</string>
     <string name="collection">Συλλογή</string>
+    <string name="leaderboard">Πλατφόρμα</string>
     <string name="settings">Ρυθμίσεις</string>
     <string name="menu">Μενού</string>
     <string name="play_again">Παίξτε ξανά</string>

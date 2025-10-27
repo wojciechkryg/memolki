@@ -6,11 +6,14 @@ import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.media.CoinsPlayer
@@ -28,11 +31,13 @@ class ShopViewModel @Inject constructor(
     private val coinsPlayer: CoinsPlayer,
     private val allRewardedAds: AllRewardedAds,
     private val billingHandler: BillingHandler,
+    private val googlePlayGames: GooglePlayGames,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase,
     private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
     private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
-    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase
+    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase,
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
     ShopState()
@@ -127,6 +132,7 @@ class ShopViewModel @Inject constructor(
     private fun rewardCoins(coins: Long) {
         rewardCoinsForShopPurchaseUseCase(coins).onEach { result ->
             result.onSuccess {
+                sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
                 loadData(animateCoins = true)
@@ -147,9 +153,18 @@ class ShopViewModel @Inject constructor(
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->
             result.onSuccess {
+                sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
                 loadData(animateCoins = true)
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun sendTotalCoinsScore() {
+        getTotalCoinsUseCase().onEach {
+            it.onSuccess { totalCoins ->
+                sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
             }
         }.launchIn(viewModelScope)
     }

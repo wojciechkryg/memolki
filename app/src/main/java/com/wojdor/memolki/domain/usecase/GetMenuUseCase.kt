@@ -15,6 +15,7 @@ class GetMenuUseCase @Inject constructor(
         val menuItems = listOf(
             MenuModel.NewGame,
             MenuModel.Collection,
+            MenuModel.Leaderboard,
             MenuModel.Settings
         )
         emit(Result.success(menuItems))

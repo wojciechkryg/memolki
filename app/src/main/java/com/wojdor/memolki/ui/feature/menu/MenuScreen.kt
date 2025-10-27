@@ -1,11 +1,14 @@
 package com.wojdor.memolki.ui.feature.menu
 
+import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,15 +19,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.MenuModel
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.app.navigateToChooseLevel
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToOptions
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.menu.component.MenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun MenuScreen(
@@ -41,14 +47,39 @@ private fun HandleEffect(
     viewModel: MenuViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        when (it) {
+    val activity = LocalActivity.current
+    CollectUiEffects(viewModel) { effect ->
+        when (effect) {
             MenuEffect.OpenChooseLevelScreen -> navController.navigateToChooseLevel()
             MenuEffect.OpenCollectionScreen -> navController.navigateToCollection()
+            is MenuEffect.OpenLeaderboardScreen -> activity?.let {
+                openLeaderboardScreen(
+                    it,
+                    viewModel,
+                    effect.googlePlayGames
+                )
+            }
+
             MenuEffect.OpenSettingsScreen -> navController.navigateToOptions()
         }
     }
 }
+
+private fun openLeaderboardScreen(
+    activity: Activity,
+    viewModel: MenuViewModel,
+    googlePlayGames: GooglePlayGames
+) {
+    viewModel.viewModelScope.launch {
+        if (googlePlayGames.isAuthenticated(activity)) {
+            val intent = googlePlayGames.getLeaderboardIntent(activity)
+            activity.startActivity(intent)
+        } else {
+            googlePlayGames.signIn(activity)
+        }
+    }
+}
+
 
 @Composable
 private fun HandleState(
@@ -58,6 +89,7 @@ private fun HandleState(
     val callbacks = MenuCallbacks(
         onNewGameClick = { viewModel.sendIntent(MenuIntent.OnNewGameClick) },
         onCollectionClick = { viewModel.sendIntent(MenuIntent.OnCollectionClick) },
+        onLeaderboardClick = { viewModel.sendIntent(MenuIntent.OnLeaderboardClick) },
         onSettingsClick = { viewModel.sendIntent(MenuIntent.OnSettingsClick) },
     )
     MenuScreen(state, callbacks)
@@ -76,14 +108,14 @@ private fun MenuScreen(
         Image(
             modifier = Modifier
                 .size(320.dp)
-                .weight(1f),
+                .weight(2f),
             painter = painterResource(id = R.drawable.ic_logo),
             contentDescription = null,
             alignment = Alignment.BottomCenter
         )
         Spacer(modifier = Modifier.height(64.dp))
         Column(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(3f),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -98,6 +130,11 @@ private fun MenuScreen(
                     is MenuModel.Collection -> MenuItem(
                         textId = menuItem.textId,
                         onClick = callbacks.onCollectionClick
+                    )
+
+                    is MenuModel.Leaderboard -> MenuItem(
+                        textId = menuItem.textId,
+                        onClick = callbacks.onLeaderboardClick
                     )
 
                     is MenuModel.Settings -> MenuItem(
@@ -119,6 +156,7 @@ private fun MenuScreenPreview() {
                 listOf(
                     MenuModel.NewGame,
                     MenuModel.Collection,
+                    MenuModel.Leaderboard,
                     MenuModel.Settings
                 )
             ),

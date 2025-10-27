@@ -7,8 +7,10 @@ import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.relaxedMockk
@@ -48,6 +50,9 @@ class EndGameViewModelTest : AppTest() {
     lateinit var reviewManager: ReviewManager
 
     @Inject
+    lateinit var googlePlayGames: GooglePlayGames
+
+    @Inject
     lateinit var incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase
 
     @Inject
@@ -55,6 +60,9 @@ class EndGameViewModelTest : AppTest() {
 
     @Inject
     lateinit var rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
+
+    @Inject
+    lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
 
     @Inject
     lateinit var userRepository: UserRepository
@@ -71,10 +79,12 @@ class EndGameViewModelTest : AppTest() {
             hapticFeedback,
             allRewardedAds,
             reviewManager,
+            googlePlayGames,
             userRepository,
             incrementTotalGamesPlayedUseCase,
             getCoinsUseCase,
-            rewardCoinsForLevelUseCase
+            rewardCoinsForLevelUseCase,
+            getTotalCoinsUseCase
         )
     }
 

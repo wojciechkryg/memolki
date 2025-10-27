@@ -7,11 +7,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
@@ -20,6 +22,7 @@ import com.wojdor.memolki.ui.feature.endgame.component.EndGameContent
 import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun EndGameScreen(
@@ -47,13 +50,22 @@ private fun HandleEffect(
                 effect.levelModel
             )
 
-            is EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
+            EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
             is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
             is EndGameEffect.RequestReview -> activity?.let {
                 launchReviewFlow(
                     it,
                     effect.reviewManager,
                     effect.reviewInfo
+                )
+            }
+
+            is EndGameEffect.SendTotalCoinsScore -> activity?.let {
+                sendTotalCoinsScore(
+                    it,
+                    viewModel,
+                    effect.googlePlayGames,
+                    effect.totalCoins
                 )
             }
         }
@@ -87,6 +99,17 @@ private fun launchReviewFlow(
     reviewInfo: ReviewInfo
 ) {
     reviewManager.launchReviewFlow(activity, reviewInfo)
+}
+
+private fun sendTotalCoinsScore(
+    activity: Activity,
+    viewModel: EndGameViewModel,
+    googlePlayGames: GooglePlayGames,
+    totalCoins: Long
+) {
+    viewModel.viewModelScope.launch {
+        googlePlayGames.submitTotalCoins(activity, totalCoins)
+    }
 }
 
 @Composable

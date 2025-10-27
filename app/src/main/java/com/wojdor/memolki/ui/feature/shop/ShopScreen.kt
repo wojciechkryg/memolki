@@ -7,16 +7,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.extension.showToast
+import kotlinx.coroutines.launch
 
 @Composable
 fun ShopScreen(
@@ -54,6 +57,14 @@ private fun HandleEffect(
 
             is ShopEffect.ShowPurchaseFailedError -> activity?.showToast(R.string.shop_purchase_failed_error)
             is ShopEffect.ShowConnectionError -> activity?.showToast(R.string.shop_connection_error)
+            is ShopEffect.SendTotalCoinsScore -> activity?.let {
+                sendTotalCoinsScore(
+                    it,
+                    viewModel,
+                    effect.googlePlayGames,
+                    effect.totalCoins
+                )
+            }
         }
     }
 }
@@ -76,6 +87,17 @@ private fun launchBillingFlow(
     productDetails: ProductDetails
 ) {
     billingHandler.launchBillingFlow(activity, productDetails)
+}
+
+private fun sendTotalCoinsScore(
+    activity: Activity,
+    viewModel: ShopViewModel,
+    googlePlayGames: GooglePlayGames,
+    totalCoins: Long
+) {
+    viewModel.viewModelScope.launch {
+        googlePlayGames.submitTotalCoins(activity, totalCoins)
+    }
 }
 
 @Composable

@@ -3,11 +3,14 @@ package com.wojdor.memolki.ui.feature.menu
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -20,6 +23,7 @@ import javax.inject.Inject
 class MenuViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val hapticFeedback: HapticFeedback,
+    private val googlePlayGames: GooglePlayGames,
     private val getMenuUseCase: GetMenuUseCase
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
@@ -34,6 +38,7 @@ class MenuViewModel @Inject constructor(
         when (intent) {
             OnNewGameClick -> onNewGameClick()
             OnCollectionClick -> onCollectionClick()
+            OnLeaderboardClick -> onLeaderboardClick()
             OnSettingsClick -> onSettingsClick()
         }
     }
@@ -46,6 +51,11 @@ class MenuViewModel @Inject constructor(
     private fun onCollectionClick() {
         hapticFeedback.vibrateLow()
         sendEffect(OpenCollectionScreen)
+    }
+
+    private fun onLeaderboardClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(OpenLeaderboardScreen(googlePlayGames))
     }
 
     private fun onSettingsClick() {
