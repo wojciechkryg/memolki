@@ -6,19 +6,24 @@ import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,11 +33,13 @@ class ShopViewModel @Inject constructor(
     private val coinsPlayer: CoinsPlayer,
     private val allRewardedAds: AllRewardedAds,
     private val billingHandler: BillingHandler,
+    private val googlePlayGames: GooglePlayGames,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase,
     private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
     private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
-    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase
+    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase,
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
     ShopState()
@@ -127,6 +134,7 @@ class ShopViewModel @Inject constructor(
     private fun rewardCoins(coins: Long) {
         rewardCoinsForShopPurchaseUseCase(coins).onEach { result ->
             result.onSuccess {
+                sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
                 loadData(animateCoins = true)
@@ -147,11 +155,20 @@ class ShopViewModel @Inject constructor(
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->
             result.onSuccess {
+                sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
                 loadData(animateCoins = true)
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun sendTotalCoinsScore() {
+        viewModelScope.launch {
+            getTotalCoinsUseCase().first().onSuccess { totalCoins ->
+                sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
+            }
+        }
     }
 
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {
@@ -200,7 +217,9 @@ class ShopViewModel @Inject constructor(
                                 prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
                                 BIG_PURCHASE_COINS_REWARD
                             ),
-                            ShopMenuModel.BuyAllCards(prices[BillingHandler.IAP_UNLOCK_ALL_CARDS].orEmpty())
+                            ShopMenuModel.BuyAllCards(
+                                prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
+                            )
                         )
                     )
                 }

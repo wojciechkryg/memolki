@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">Nieuw spel</string>
     <string name="collection">Collectie</string>
+    <string name="leaderboard">Ranglijst</string>
     <string name="settings">Instellingen</string>
     <string name="menu">Menu</string>
     <string name="play_again">Opnieuw spelen</string>

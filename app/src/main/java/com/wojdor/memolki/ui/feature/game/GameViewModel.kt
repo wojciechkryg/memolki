@@ -6,6 +6,7 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
@@ -24,6 +25,7 @@ class GameViewModel @Inject constructor(
     private val cardFlipPlayer: CardFlipPlayer,
     private val cardPairMatchedPlayer: CardPairMatchedPlayer,
     private val hapticFeedback: HapticFeedback,
+    private val googlePlayGames: GooglePlayGames,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
     private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase
 ) : MviViewModel<GameIntent, GameState>(
@@ -105,11 +107,13 @@ class GameViewModel @Inject constructor(
                     }
                 }
                 updateStateWith(matchedCards)
-                incrementTotalCardPairsMatchedUseCase().launchIn(viewModelScope)
-                viewModelScope.launch {
-                    delay(250L)
-                    cardPairMatchedPlayer.play()
-                }
+                incrementTotalCardPairsMatchedUseCase().onEach { result ->
+                    result.onSuccess {
+                        sendEffect(GameEffect.SendTotalCardPairsMatchedScore(googlePlayGames, it))
+                        delay(250L)
+                        cardPairMatchedPlayer.play()
+                    }
+                }.launchIn(viewModelScope)
             }
         }
     }

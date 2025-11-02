@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">Nuevo juego</string>
     <string name="collection">Colección</string>
+    <string name="leaderboard">Tabla de clasificación</string>
     <string name="settings">Configuración</string>
     <string name="menu">Menú</string>
     <string name="play_again">Jugar de nuevo</string>

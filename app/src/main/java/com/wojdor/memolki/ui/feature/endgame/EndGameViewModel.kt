@@ -7,10 +7,13 @@ import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
@@ -18,8 +21,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,10 +32,12 @@ class EndGameViewModel @Inject constructor(
     private val hapticFeedback: HapticFeedback,
     private val allRewardedAds: AllRewardedAds,
     private val reviewManager: ReviewManager,
+    private val googlePlayGames: GooglePlayGames,
     private val userRepository: UserRepository,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
+    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
     EndGameState()
@@ -130,8 +133,8 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {
-        getCoinsUseCase().take(1).onEach {
-            it.onSuccess { currentCoins ->
+        viewModelScope.launch {
+            getCoinsUseCase().first().onSuccess { currentCoins ->
                 sendState {
                     copy(
                         level = level,
@@ -141,12 +144,12 @@ class EndGameViewModel @Inject constructor(
                 }
                 rewardCoins(level, currentCoins, isRewardFromAd)
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
-        rewardCoinsForLevelUseCase(level).take(1).onEach {
-            it.onSuccess { rewardedCoins ->
+        viewModelScope.launch {
+            rewardCoinsForLevelUseCase(level).first().onSuccess { rewardedCoins ->
                 sendState {
                     copy(
                         rewardedCoins = if (isRewardFromAd) uiState.value.rewardedCoins + rewardedCoins else rewardedCoins,
@@ -155,10 +158,19 @@ class EndGameViewModel @Inject constructor(
                         animateRewardCoins = isRewardFromAd
                     )
                 }
+                sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
             }
-        }.launchIn(viewModelScope)
+        }
+    }
+
+    private fun sendTotalCoinsScore() {
+        viewModelScope.launch {
+            getTotalCoinsUseCase().first().onSuccess { totalCoins ->
+                sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
+            }
+        }
     }
 
     private fun getBaseMenu() = listOf(
@@ -169,7 +181,6 @@ class EndGameViewModel @Inject constructor(
     companion object {
         const val LEVEL_COMPLETE_SOUND_DELAY = 250L
         const val COINS_SOUND_DELAY = 500L
-
         const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
     }
 }

@@ -4,6 +4,7 @@ import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.user.UserLocalDataSource
 import com.wojdor.memolki.util.extension.logE
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -40,11 +41,12 @@ class UserRepository @Inject constructor(
     fun getTotalCardPairsMatched() =
         decryptLong(userLocalDataSource.encryptedTotalCardPairsMatched)
 
-    suspend fun incrementTotalCardPairsMatched() {
+    suspend fun incrementTotalCardPairsMatched(): Long {
         userLocalDataSource.setEncryptedTotalCardPairsMatched { encryptedCount ->
             val totalCardPairsMatched = decryptLong(encryptedCount)
             encryptor.encrypt(totalCardPairsMatched + 1)
         }
+        return getTotalCardPairsMatched().first()
     }
 
     fun getTotalGamesPlayed() = decryptLong(userLocalDataSource.encryptedTotalGamesPlayed)

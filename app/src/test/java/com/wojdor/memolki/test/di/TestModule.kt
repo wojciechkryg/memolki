@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeDataStore
 import com.wojdor.memolki.test.fake.FakeEncryptor
@@ -95,5 +96,9 @@ abstract class TestModule {
         @Provides
         @Singleton
         fun provideReviewManager(): ReviewManager = relaxedMockk()
+
+        @Provides
+        @Singleton
+        fun provideGooglePlayGames(): GooglePlayGames = relaxedMockk()
     }
 }
