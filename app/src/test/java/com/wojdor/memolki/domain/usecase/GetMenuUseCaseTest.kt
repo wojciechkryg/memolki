@@ -34,7 +34,6 @@ class GetMenuUseCaseTest : AppTest() {
                 listOf(
                     MenuModel.NewGame,
                     MenuModel.Collection,
-                    MenuModel.Leaderboard,
                     MenuModel.Settings
                 )
             )

@@ -66,11 +66,10 @@ class MenuViewModelTest : AppTest() {
             val state = awaitItem()
 
             // then
-            assertEquals(4, state.menu.size)
+            assertEquals(3, state.menu.size)
             assertEquals(MenuModel.NewGame, state.menu[0])
             assertEquals(MenuModel.Collection, state.menu[1])
-            assertEquals(MenuModel.Leaderboard, state.menu[2])
-            assertEquals(MenuModel.Settings, state.menu[3])
+            assertEquals(MenuModel.Settings, state.menu[2])
         }
     }
 
