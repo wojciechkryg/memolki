@@ -37,7 +37,7 @@ class IncrementTotalCardPairsMatchedUseCaseTest : AppTest() {
         // when
         sut().test {
             // then
-            assertEquals(Result.success(Unit), awaitItem())
+            assertEquals(Result.success(1L), awaitItem())
             awaitComplete()
         }
         userRepository.getTotalCardPairsMatched().test {

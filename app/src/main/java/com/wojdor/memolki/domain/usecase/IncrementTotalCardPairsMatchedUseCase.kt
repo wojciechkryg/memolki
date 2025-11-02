@@ -10,10 +10,10 @@ import javax.inject.Inject
 class IncrementTotalCardPairsMatchedUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val userRepository: UserRepository
-) : BaseUseCase<Unit>(coroutineDispatcher) {
+) : BaseUseCase<Long>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        userRepository.incrementTotalCardPairsMatched()
-        emit(Result.success(Unit))
+        val totalCardPairsMatched = userRepository.incrementTotalCardPairsMatched()
+        emit(Result.success(totalCardPairsMatched))
     }
 }

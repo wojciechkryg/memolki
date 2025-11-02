@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">משחק חדש</string>
     <string name="collection">אוסף</string>
+    <string name="leaderboard">לוח המנצחים</string>
     <string name="settings">הגדרות</string>
     <string name="menu">תפריט</string>
     <string name="play_again">שחק שוב</string>

@@ -5,9 +5,11 @@ import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -42,6 +44,9 @@ class ShopViewModelTest : AppTest() {
     lateinit var billingHandler: BillingHandler
 
     @Inject
+    lateinit var googlePlayGames: GooglePlayGames
+
+    @Inject
     lateinit var getCoinsUseCase: GetCoinsUseCase
 
     @Inject
@@ -56,6 +61,9 @@ class ShopViewModelTest : AppTest() {
     @Inject
     lateinit var unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase
 
+    @Inject
+    lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
+
     private lateinit var sut: ShopViewModel
 
     @Before
@@ -67,11 +75,13 @@ class ShopViewModelTest : AppTest() {
             coinsPlayer,
             allRewardedAds,
             billingHandler,
+            googlePlayGames,
             getCoinsUseCase,
             calculateCoinsForShopAdUseCase,
             rewardCoinsForShopAdUseCase,
             rewardCoinsForShopPurchaseUseCase,
-            unlockAllCardPairsUseCase
+            unlockAllCardPairsUseCase,
+            getTotalCoinsUseCase
         )
     }
 

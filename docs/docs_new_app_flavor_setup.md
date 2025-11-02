@@ -18,6 +18,13 @@
     - Check all declarations
     - Click `Create`
 
+1. Setup Google Play Games:
+   - Go to https://play.google.com/console/u/0/developers/9083635429558058910/app/4974380132955156236/games/leaderboards
+   - Create a new project in Google Cloud
+   - Create "Total Coins" and "Total Card Pairs Matched"
+   - Use icon images from [here](../images)
+   - TBA
+
 1. Setup AdMob:
     - Go to https://admob.google.com/v2/apps/list
     - Add app
@@ -42,4 +49,4 @@
     - Create a new branch
     - Commit and Push all the added changes
     - Create a Pull Request to the `main` branch
-    -Merge it
+    - Merge it

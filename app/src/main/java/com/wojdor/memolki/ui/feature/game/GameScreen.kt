@@ -1,21 +1,26 @@
 package com.wojdor.memolki.ui.feature.game
 
+import android.app.Activity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.app.navigateToEndGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.component.GameContent
 import com.wojdor.memolki.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen(
@@ -34,13 +39,23 @@ private fun HandleEffect(
     endGameViewModel: EndGameViewModel,
     navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        when (it) {
+    val activity = LocalActivity.current
+    CollectUiEffects(viewModel) { effect ->
+        when (effect) {
             is GameEffect.OpenEndGameScreen -> openEndGameScreen(
                 endGameViewModel,
                 navController,
-                it.levelModel
+                effect.levelModel
             )
+
+            is GameEffect.SendTotalCardPairsMatchedScore -> activity?.let {
+                sendTotalCardPairsMatchedScore(
+                    it,
+                    viewModel,
+                    effect.googlePlayGames,
+                    effect.totalCardPairsMatched
+                )
+            }
         }
     }
 }
@@ -52,6 +67,17 @@ private fun openEndGameScreen(
 ) {
     endGameViewModel.sendIntent(EndGameIntent.OnEndGameShow(level))
     navController.navigateToEndGame()
+}
+
+private fun sendTotalCardPairsMatchedScore(
+    activity: Activity,
+    viewModel: GameViewModel,
+    googlePlayGames: GooglePlayGames,
+    totalCardPairsMatched: Long
+) {
+    viewModel.viewModelScope.launch {
+        googlePlayGames.submitTotalCardPairsMatched(activity, totalCardPairsMatched)
+    }
 }
 
 @Composable

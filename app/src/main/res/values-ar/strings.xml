@@ -2,6 +2,7 @@
 <resources>
     <string name="new_game">لعبة جديدة</string>
     <string name="collection">مجموعة</string>
+    <string name="leaderboard">لوحة المتصدرين</string>
     <string name="settings">الإعدادات</string>
     <string name="menu">القائمة</string>
     <string name="play_again">العب مرة أخرى</string>
