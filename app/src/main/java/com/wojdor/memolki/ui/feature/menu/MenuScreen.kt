@@ -2,33 +2,20 @@ package com.wojdor.memolki.ui.feature.menu
 
 import android.app.Activity
 import androidx.activity.compose.LocalActivity
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.app.navigateToChooseLevel
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToOptions
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.feature.menu.component.MenuItem
+import com.wojdor.memolki.ui.feature.menu.component.MenuContent
 import com.wojdor.memolki.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -71,12 +58,11 @@ private fun openLeaderboardScreen(
     googlePlayGames: GooglePlayGames
 ) {
     viewModel.viewModelScope.launch {
-        if (googlePlayGames.isAuthenticated(activity)) {
-            val intent = googlePlayGames.getLeaderboardIntent(activity)
-            activity.startActivity(intent)
-        } else {
+        if (!googlePlayGames.isAuthenticated(activity)) {
             googlePlayGames.signIn(activity)
         }
+        val intent = googlePlayGames.getLeaderboardIntent(activity)
+        activity.startActivityForResult(intent, REQUEST_CODE_LEADERBOARD)
     }
 }
 
@@ -100,52 +86,10 @@ private fun MenuScreen(
     state: MenuState,
     callbacks: MenuCallbacks
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            modifier = Modifier
-                .size(320.dp)
-                .weight(2f),
-            painter = painterResource(id = R.drawable.ic_logo),
-            contentDescription = null,
-            alignment = Alignment.BottomCenter
-        )
-        Spacer(modifier = Modifier.height(64.dp))
-        Column(
-            modifier = Modifier.weight(3f),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            state.menu.forEach { menuItem ->
-                Spacer(modifier = Modifier.height(16.dp))
-                when (menuItem) {
-                    is MenuModel.NewGame -> MenuItem(
-                        textId = menuItem.textId,
-                        onClick = callbacks.onNewGameClick
-                    )
-
-                    is MenuModel.Collection -> MenuItem(
-                        textId = menuItem.textId,
-                        onClick = callbacks.onCollectionClick
-                    )
-
-                    is MenuModel.Leaderboard -> MenuItem(
-                        textId = menuItem.textId,
-                        onClick = callbacks.onLeaderboardClick
-                    )
-
-                    is MenuModel.Settings -> MenuItem(
-                        textId = R.string.settings,
-                        onClick = callbacks.onSettingsClick
-                    )
-                }
-            }
-        }
-    }
+    MenuContent(state, callbacks)
 }
+
+private const val REQUEST_CODE_LEADERBOARD = 1
 
 @Preview(showBackground = true)
 @Composable
@@ -156,7 +100,6 @@ private fun MenuScreenPreview() {
                 listOf(
                     MenuModel.NewGame,
                     MenuModel.Collection,
-                    MenuModel.Leaderboard,
                     MenuModel.Settings
                 )
             ),

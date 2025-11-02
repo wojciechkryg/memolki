@@ -217,7 +217,9 @@ class ShopViewModel @Inject constructor(
                                 prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
                                 BIG_PURCHASE_COINS_REWARD
                             ),
-                            ShopMenuModel.BuyAllCards(prices[BillingHandler.IAP_UNLOCK_ALL_CARDS].orEmpty())
+                            ShopMenuModel.BuyAllCards(
+                                prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
+                            )
                         )
                     )
                 }

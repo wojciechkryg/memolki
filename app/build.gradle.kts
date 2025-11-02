@@ -24,8 +24,7 @@ fun getSecretValue(key: String): String = providers
     .getOrElse(properties.getProperty(key, ""))
 
 val flavorConfigs = listOf(
-    "fruitHalf" to "FRUIT_HALF_BILLING_KEY",
-    "treeLeaf" to "TREE_LEAF_BILLING_KEY"
+    "fruitHalf" to "FRUIT_HALF_BILLING_KEY"
 )
 
 android {
