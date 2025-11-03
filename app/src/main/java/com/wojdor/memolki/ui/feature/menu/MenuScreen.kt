@@ -61,8 +61,10 @@ private fun openLeaderboardScreen(
         if (!googlePlayGames.isAuthenticated(activity)) {
             googlePlayGames.signIn(activity)
         }
-        val intent = googlePlayGames.getLeaderboardIntent(activity)
-        activity.startActivityForResult(intent, REQUEST_CODE_LEADERBOARD)
+        if (googlePlayGames.isAuthenticated(activity)) {
+            val intent = googlePlayGames.getLeaderboardIntent(activity)
+            activity.startActivityForResult(intent, REQUEST_CODE_LEADERBOARD)
+        }
     }
 }
 

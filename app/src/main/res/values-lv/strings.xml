@@ -2,7 +2,6 @@
 <resources>
     <string name="new_game">Jauna spēle</string>
     <string name="collection">Kolekcija</string>
-    <string name="leaderboard">Reitingi</string>
     <string name="settings">Iestatījumi</string>
     <string name="menu">Izvēlne</string>
     <string name="play_again">Spēlēt vēlreiz</string>
