@@ -2,7 +2,6 @@
 <resources>
     <string name="new_game">Uus mäng</string>
     <string name="collection">Kollektsioon</string>
-    <string name="leaderboard">Edetabel</string>
     <string name="settings">Seaded</string>
     <string name="menu">Menüü</string>
     <string name="play_again">Mängi uuesti</string>

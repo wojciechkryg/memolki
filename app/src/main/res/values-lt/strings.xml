@@ -2,7 +2,6 @@
 <resources>
     <string name="new_game">Naujas žaidimas</string>
     <string name="collection">Kolekcija</string>
-    <string name="leaderboard">Palyginimo tabulė</string>
     <string name="settings">Nustatymai</string>
     <string name="menu">Meniu</string>
     <string name="play_again">Žaisti dar kartą</string>

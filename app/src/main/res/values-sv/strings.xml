@@ -2,7 +2,6 @@
 <resources>
     <string name="new_game">Nytt spel</string>
     <string name="collection">Samling</string>
-    <string name="leaderboard">Ranglista</string>
     <string name="settings">Inställningar</string>
     <string name="menu">Meny</string>
     <string name="play_again">Spela igen</string>
