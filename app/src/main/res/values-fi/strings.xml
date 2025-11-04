@@ -2,7 +2,6 @@
 <resources>
     <string name="new_game">Uusi peli</string>
     <string name="collection">Kokoelma</string>
-    <string name="leaderboard">Tavaline</string>
     <string name="settings">Asetukset</string>
     <string name="menu">Valikko</string>
     <string name="play_again">Pelaa uudelleen</string>

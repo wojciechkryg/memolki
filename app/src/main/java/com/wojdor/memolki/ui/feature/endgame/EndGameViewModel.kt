@@ -181,6 +181,6 @@ class EndGameViewModel @Inject constructor(
     companion object {
         const val LEVEL_COMPLETE_SOUND_DELAY = 250L
         const val COINS_SOUND_DELAY = 500L
-        const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
+        const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 5
     }
 }
