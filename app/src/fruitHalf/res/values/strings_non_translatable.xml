@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="leaderboard_total_coins_id" translatable="false">Cgkljb6-ncOMEAIQAQ</string>
-    <string name="leaderboard_total_card_pairs_matched_id" translatable="false">Cgkljb6-ncOMEAIQAg</string>
+    <string name="leaderboard_total_coins_id" translatable="false">CgkIjb6-nc0MEAIQAQ</string>
+    <string name="leaderboard_total_card_pairs_matched_id" translatable="false">CgkIjb6-nc0MEAIQAg</string>
     <string name="game_id" translatable="false">433048231693</string>
 </resources>

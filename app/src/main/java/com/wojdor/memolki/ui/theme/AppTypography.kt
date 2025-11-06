@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.wojdor.memolki.R
 
 @Composable
-fun getAppTypography() = Typography().run {
+fun appTypography() = Typography().run {
     copy(
         displayLarge = displayLarge.withAppFont().withAppColor(),
         displayMedium = displayMedium.withAppFont().withAppColor(),
