@@ -43,6 +43,7 @@ class GetLevelsUseCaseTest : AppTest() {
                     LevelModel.Grid3x4(isUnlocked = false),
                     LevelModel.Grid4x4(isUnlocked = false),
                     LevelModel.Grid4x5(isUnlocked = false),
+                    LevelModel.Grid4x6(isUnlocked = false),
                     LevelModel.Grid5x6(isUnlocked = false),
                 )
             )

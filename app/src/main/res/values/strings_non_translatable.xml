@@ -6,6 +6,7 @@
     <string name="level3x4" translatable="false">3 x 4</string>
     <string name="level4x4" translatable="false">4 x 4</string>
     <string name="level4x5" translatable="false">4 x 5</string>
+    <string name="level4x6" translatable="false">4 x 6</string>
     <string name="level5x6" translatable="false">5 x 6</string>
 
     <string name="end_game_watch_ad_reward" translatable="false">x2</string>

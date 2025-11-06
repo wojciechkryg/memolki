@@ -91,6 +91,20 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     }
 
     @Test
+    fun `when level with 24 pairs then reward 10 coins`() = runTest {
+        // given
+        val level = LevelModel.Grid4x6()
+
+        // when
+        val result = sut(level).first()
+
+        // then
+        val expectedCoins = 10L
+        val expected = Result.success(expectedCoins)
+        assertEquals(expected, result)
+    }
+
+    @Test
     fun `when level with 30 pairs then reward 13 coins`() = runTest {
         // given
         val level = LevelModel.Grid5x6()
