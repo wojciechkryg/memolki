@@ -31,7 +31,7 @@ jobs:
 
       - name: Build with Gradle
         env:
-          BILLING_KEY: ${{ secrets.BILLING_KEY }}
+          FRUIT_HALF_BILLING_KEY: ${{ secrets.FRUIT_HALF_BILLING_KEY }}
           KEYSTORE_PATH: ${{ github.workspace }}/key.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
