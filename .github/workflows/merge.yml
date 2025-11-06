@@ -6,13 +6,21 @@ on:
 
 jobs:
   build_and_upload:
+    if: "!startsWith(github.event.head_commit.message, 'chore:')"
     strategy:
       matrix:
         flavor: [ "fruitHalf" ]
     runs-on: ubuntu-latest
-
+    outputs:
+      version_name: ${{ steps.version.outputs.version_name }}
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+
+      - name: Get version name
+        id: version
+        run: |
+          version_name=$(grep "versionName = " app/build.gradle.kts | sed 's/versionName = "//' | sed 's/"//')
+          echo "version_name=$version_name" >> $GITHUB_OUTPUT
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@41ad77ca97e46ee2e825d5e6b9a95d8169fcc44c # v4.4.2
@@ -47,34 +55,46 @@ jobs:
           mappingFile: "app/build/outputs/mapping/${{ matrix.flavor }}Release/mapping.txt"
           track: production
 
-  bump_version:
+  tag_version:
     needs: build_and_upload
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+      - name: Create and push tag
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git tag "v/${{ needs.build_and_upload.outputs.version_name }}"
+          git push origin "v/${{ needs.build_and_upload.outputs.version_name }}"
+
+  bump_version:
+    needs: tag_version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           fetch-depth: 0
 
-      - name: Bump version and push
+      - name: Bump version
+        id: bumper
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
-          # 1. Get the current version number from the file and the latest tag
           current_version_name=$(grep "versionName = " app/build.gradle.kts | sed 's/versionName = "//' | sed 's/"//')
-          
-          # Check for the latest tag (highest version) starting with 'v/'
-          # This is the version we compare against to detect manual bumps.
           last_tag_name=$(git tag --sort=-v:refname | grep -E '^v/' | head -n 1 | sed 's/v\///')
           
-          # If no tag exists, use the current version as the baseline to skip reset logic
           if [ -z "$last_tag_name" ]; then
             last_version_name=$current_version_name
           else
             last_version_name=$last_tag_name
           fi
           
-          # Split version numbers
           major_current=$(echo $current_version_name | cut -d. -f1)
           minor_current=$(echo $current_version_name | cut -d. -f2)
           patch_current=$(echo $current_version_name | cut -d. -f3)
@@ -83,33 +103,30 @@ jobs:
           minor_last=$(echo $last_version_name | cut -d. -f2)
           patch_last=$(echo $last_version_name | cut -d. -f3)
           
-          # Default: increment patch version
           new_patch=$((patch_current + 1))
           new_major=$major_current
           new_minor=$minor_current
           
-          # 2. PATCH VERSION RESET LOGIC
           if [ "$major_current" -gt "$major_last" ] || [ "$minor_current" -gt "$minor_last" ]; then
-            # If Major or Minor was increased manually, reset Patch to 0
             new_patch=0
             echo "Detected manual version increase (Major or Minor). Patch version will be reset to 0."
           fi
           
-          # 3. Increment VersionCode (always)
           current_version_code=$(grep "versionCode = " app/build.gradle.kts | sed 's/versionCode = //')
           new_version_code=$((current_version_code + 1))
-          
-          # 4. Determine the new versionName
           new_version_name="$new_major.$new_minor.$new_patch"
           
-          # 5. Update files and commit
           sed -i "s/versionCode = $current_version_code/versionCode = $new_version_code/" app/build.gradle.kts
           sed -i "s/versionName = \"$current_version_name\"/versionName = \"$new_version_name\"/" app/build.gradle.kts
-          
-          git add app/build.gradle.kts
-          git commit -m "Bump version to $new_version_name ($new_version_code)"
-          git push
-          
-          # Create tag for the PROPER, incremented version
-          git tag "v/$new_version_name"
-          git push origin "v/$new_version_name"
+
+          echo "new_version=$new_version_name" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: Bump version to ${{ steps.bumper.outputs.new_version }}"
+          title: "chore: Bump version to ${{ steps.bumper.outputs.new_version }}"
+          body: Automates version bump to ${{ steps.bumper.outputs.new_version }}
+          branch: "chore/version-bump-${{ steps.bumper.outputs.new_version }}"
+          delete-branch: true
+          labels: "chore"
