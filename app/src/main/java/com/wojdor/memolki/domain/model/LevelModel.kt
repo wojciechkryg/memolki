@@ -37,6 +37,10 @@ sealed class LevelModel(
         override val isUnlocked: Boolean = false
     ) : LevelModel("4x5", R.string.level4x5, 4, 5)
 
+    data class Grid4x6(
+        override val isUnlocked: Boolean = false
+    ) : LevelModel("4x6", R.string.level4x6, 4, 6)
+
     data class Grid5x6(
         override val isUnlocked: Boolean = false
     ) : LevelModel("5x6", R.string.level5x6, 5, 6)

@@ -25,6 +25,7 @@ class GetLevelsUseCase @Inject constructor(
             unlockLevelIfNeeded(LevelModel.Grid3x4(), unlockedCardPairsCount),
             unlockLevelIfNeeded(LevelModel.Grid4x4(), unlockedCardPairsCount),
             unlockLevelIfNeeded(LevelModel.Grid4x5(), unlockedCardPairsCount),
+            unlockLevelIfNeeded(LevelModel.Grid4x6(), unlockedCardPairsCount),
             unlockLevelIfNeeded(LevelModel.Grid5x6(), unlockedCardPairsCount)
         )
     }
@@ -38,6 +39,7 @@ class GetLevelsUseCase @Inject constructor(
                 is LevelModel.Grid3x4 -> level.copy(isUnlocked = true)
                 is LevelModel.Grid4x4 -> level.copy(isUnlocked = true)
                 is LevelModel.Grid4x5 -> level.copy(isUnlocked = true)
+                is LevelModel.Grid4x6 -> level.copy(isUnlocked = true)
                 is LevelModel.Grid5x6 -> level.copy(isUnlocked = true)
             }
         } else {

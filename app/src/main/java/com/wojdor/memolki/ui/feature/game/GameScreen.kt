@@ -185,6 +185,25 @@ private fun GameScreenGrid4x5Preview() {
 
 @Composable
 @Preview(showBackground = true)
+private fun GameScreenGrid4x6Preview() {
+    AppTheme {
+        GameScreen(
+            state = GameState(
+                level = LevelModel.Grid4x6(),
+                cards = List(24) {
+                    CardModel.Text(
+                        id = "id",
+                        pairId = "pairId",
+                        textRes = R.string.empty
+                    )
+                }
+            )
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
 private fun GameScreenGrid5x6Preview() {
     AppTheme {
         GameScreen(
