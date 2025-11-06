@@ -102,6 +102,7 @@ private fun ChooseLevelScreenPreview() {
                     LevelModel.Grid3x4(isUnlocked = true),
                     LevelModel.Grid4x4(),
                     LevelModel.Grid4x5(),
+                    LevelModel.Grid4x6(),
                     LevelModel.Grid5x6()
                 )
             ),
