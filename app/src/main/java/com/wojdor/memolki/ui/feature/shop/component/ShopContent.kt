@@ -56,6 +56,7 @@ fun ShopContent(
                     Spacer(modifier = Modifier.height(16.dp))
                     when (menuItem) {
                         is ShopMenuModel.WatchAd -> ShopMenuItem(
+                            priceText = stringResource(R.string.watch_ad),
                             descriptionText = if (menuItem.isAvailable) {
                                 stringResource(R.string.shop_obtain, menuItem.coinsToGrant)
                             } else {

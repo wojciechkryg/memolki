@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
@@ -26,7 +28,7 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun ShopMenuItem(
     modifier: Modifier = Modifier,
-    priceText: String = "",
+    priceText: String,
     descriptionText: String,
     @DrawableRes leftDrawableRes: Int = NO_DRAWABLE,
     @DrawableRes rightDrawableRes: Int,
@@ -55,14 +57,21 @@ fun ShopMenuItem(
                 horizontalArrangement = Arrangement.Start
             ) {
                 if (leftDrawableRes != NO_DRAWABLE) {
-                    Image(
-                        modifier = Modifier
-                            .size(64.dp)
-                            .weight(2f),
-                        alignment = Alignment.Center,
-                        painter = painterResource(leftDrawableRes),
-                        contentDescription = null
-                    )
+                    Column(
+                        modifier = Modifier.weight(2f),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Image(
+                            modifier = Modifier.size(48.dp),
+                            alignment = Alignment.Center,
+                            painter = painterResource(leftDrawableRes),
+                            contentDescription = null
+                        )
+                        AutoSizeText(
+                            text = priceText.uppercase(),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
                 } else {
                     Text(
                         text = priceText.lowercase(),
@@ -110,6 +119,7 @@ fun ShopMenuItemAdsPreview() {
     AppTheme {
         ShopMenuItem(
             leftDrawableRes = R.drawable.ic_ads,
+            priceText = "Watch Ad",
             descriptionText = "Obtain 500",
             rightDrawableRes = R.drawable.ic_coins_pile_small
         )

@@ -15,4 +15,5 @@
     <string name="setting_music">Música</string>
     <string name="setting_sound">Sonido</string>
     <string name="setting_vibration">Vibración</string>
+    <string name="watch_ad">Ver anuncio</string>
 </resources>
