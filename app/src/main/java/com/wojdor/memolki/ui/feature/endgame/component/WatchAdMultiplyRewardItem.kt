@@ -1,7 +1,7 @@
 package com.wojdor.memolki.ui.feature.endgame.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -9,6 +9,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.throttleClick
 
@@ -29,11 +31,19 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
             disabledContainerColor = Color.Transparent
         ),
     ) {
-        Image(
-            modifier = Modifier.size(56.dp),
-            painter = painterResource(id = R.drawable.ic_ads),
-            contentDescription = null,
-        )
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(
+                modifier = Modifier
+                    .size(48.dp),
+                alignment = Alignment.Center,
+                painter = painterResource(R.drawable.ic_ads),
+                contentDescription = null
+            )
+            AutoSizeText(
+                text = stringResource(R.string.watch_ad).uppercase(),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
         Spacer(modifier = Modifier.size(12.dp))
         Image(
             modifier = Modifier.size(32.dp),

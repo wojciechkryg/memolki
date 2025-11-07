@@ -15,4 +15,5 @@
     <string name="setting_music">음악</string>
     <string name="setting_sound">사운드</string>
     <string name="setting_vibration">진동</string>
+    <string name="watch_ad">광고 보기</string>
 </resources>
