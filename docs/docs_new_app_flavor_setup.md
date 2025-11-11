@@ -2,13 +2,26 @@
 
 1. Setup new flavor in the app:
     - Go to file `app/build.gradle.kts`
-    - Add the new flavor to the `productFlavors` by copy paste the other flavor
-    - In the `create` change to `{flavor name}`
-    - In the `applicationIdSuffix` change to `.{flavor name}`
+    - Add the new flavor to the `flavorConfigs` list
 
 1. Setup new flavor in the CI:
     - Go to file `.github/workflows/merge.yml`
     - Add the new flavor to the `flavor` matrix
+
+1. Add app icon:
+    - add prepared app icon by adding a new Image Asset
+    - don't trim icon
+    - use icon scale 65%
+    - use background scale 125%
+    - use Circle legacy icon
+    - use png
+    - select proper flavor
+
+1. Add all images, strings, colors:
+    - copy paste the images to the new flavor folder
+    - create the strings in the new flavor folder
+    - create the colors in the new flavor folder
+    - create a flavor specific `AllCardPairsLocalDataSource.class` in the `data/local/card_pairs` folder
 
 1. Setup new flavor in the Google Play Console:
     - Go to https://play.google.com/console/u/0/developers/9083635429558058910/create-new-app
@@ -18,12 +31,16 @@
     - Check all declarations
     - Click `Create`
 
+1. Go through the configuration in the Google Play Console
+
 1. Setup Google Play Games:
    - Go to https://play.google.com/console/u/0/developers/9083635429558058910/app/4974380132955156236/games/leaderboards
-   - Create a new project in Google Cloud
+   - Create a new project in Google Cloud named "memolki - {name connected to flavor}"
+   - Create a OAuth consent screen
+   - Create OAuth login details
    - Create "Total Coins" and "Total Card Pairs Matched"
    - Use icon images from [here](../images)
-   - TBA
+   - Copy identificators to the flavour's `strings_non_translatable.xml`
 
 1. Setup AdMob:
     - Go to https://admob.google.com/v2/apps/list

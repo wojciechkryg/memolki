@@ -25,7 +25,7 @@ fun CardBorder(
     Box(
         modifier = modifier
             .border(
-                border = BorderStroke(2.dp, colorResource(R.color.border)),
+                border = BorderStroke(CARD_BORDER_SIZE, colorResource(R.color.border)),
                 shape = CardShape
             )
             .clip(CardShape),
@@ -34,6 +34,8 @@ fun CardBorder(
         content()
     }
 }
+
+val CARD_BORDER_SIZE = 2.dp
 
 @Preview
 @Composable
