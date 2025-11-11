@@ -98,7 +98,7 @@ private fun FrontCardItemTextPreview() {
             CardModel.Text(
                 id = "banana",
                 pairId = "banana",
-                textRes = R.string.banana
+                textRes = R.string.empty
             ),
             onPress = {}
         )
@@ -114,8 +114,8 @@ private fun FrontCardItemImagePreview() {
             CardModel.Image(
                 id = "banana",
                 pairId = "banana",
-                textRes = R.string.banana,
-                imageRes = R.drawable.img_banana_whole
+                textRes = R.string.empty,
+                imageRes = R.drawable.img_test_whole
             ),
             onPress = {}
         )

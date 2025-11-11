@@ -37,14 +37,14 @@ private fun CardPairDetailsScreenPreview() {
                     first = CardModel.Image(
                         "banana_whole",
                         "banana",
-                        R.string.banana,
-                        R.drawable.img_banana_whole
+                        R.string.empty,
+                        R.drawable.img_test_whole
                     ),
                     second = CardModel.Image(
                         "banana_half",
                         "banana",
-                        R.string.banana,
-                        R.drawable.img_banana_half
+                        R.string.empty,
+                        R.drawable.img_test_half
                     )
                 )
             )

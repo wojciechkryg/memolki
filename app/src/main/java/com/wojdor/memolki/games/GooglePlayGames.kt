@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.annotation.StringRes
 import com.google.android.gms.games.PlayGames
+import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.R
+import com.wojdor.memolki.util.extension.logE
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +35,11 @@ class GooglePlayGames @Inject constructor() {
         activity: Activity,
         totalCardPairsMatched: Long
     ) {
-        submitScore(activity, R.string.leaderboard_total_card_pairs_matched_id, totalCardPairsMatched)
+        submitScore(
+            activity,
+            R.string.leaderboard_total_card_pairs_matched_id,
+            totalCardPairsMatched
+        )
     }
 
     suspend fun getLeaderboardIntent(activity: Activity): Intent =
@@ -44,6 +50,10 @@ class GooglePlayGames @Inject constructor() {
         @StringRes leaderboard: Int,
         score: Long
     ) {
+        if (BuildConfig.DEBUG) {
+            logE("Cannot submit score in debug build", IllegalStateException())
+            return
+        }
         if (isAuthenticated(activity)) {
             val leaderboardsClient = PlayGames.getLeaderboardsClient(activity)
             leaderboardsClient.submitScore(

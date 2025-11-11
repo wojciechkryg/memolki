@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ad_mob_app_id" translatable="false">ca-app-pub-9615601536080764~5446625730</string>
+    <string name="ad_mob_collection_card_pair" translatable="false">ca-app-pub-9615601536080764/8878936521</string>
+    <string name="ad_mob_end_game_coins" translatable="false">ca-app-pub-9615601536080764/6655974158</string>
+    <string name="ad_mob_shop_coins" translatable="false">ca-app-pub-9615601536080764/3319364379</string>
+</resources>
