@@ -87,14 +87,14 @@ private fun CardPairDetailsContentImagesSameTextPreview() {
                 CardModel.Image(
                     "banana_whole",
                     "banana",
-                    R.string.banana,
-                    R.drawable.img_banana_whole
+                    R.string.empty,
+                    R.drawable.img_test_whole
                 ),
                 CardModel.Image(
                     "banana_half",
                     "banana",
-                    R.string.banana,
-                    R.drawable.img_banana_half
+                    R.string.empty,
+                    R.drawable.img_test_half
                 )
             )
         )
@@ -110,14 +110,14 @@ private fun CardPairDetailsContentImagesDifferentTextPreview() {
                 CardModel.Image(
                     "banana_whole",
                     "banana",
-                    R.string.banana,
-                    R.drawable.img_banana_whole
+                    R.string.empty,
+                    R.drawable.img_test_whole
                 ),
                 CardModel.Image(
                     "banana_half",
                     "banana",
-                    R.string.orange,
-                    R.drawable.img_banana_half
+                    R.string.empty,
+                    R.drawable.img_test_half
                 )
             )
         )
@@ -133,13 +133,13 @@ private fun CardPairDetailsContentImageAndTextPreview() {
                 CardModel.Text(
                     "banana_whole",
                     "banana",
-                    R.string.banana,
+                    R.string.empty,
                 ),
                 CardModel.Image(
                     "banana_half",
                     "banana",
-                    R.string.orange,
-                    R.drawable.img_banana_whole
+                    R.string.empty,
+                    R.drawable.img_test_whole
                 )
             )
         )
@@ -155,12 +155,12 @@ private fun CardPairDetailsContentTextsPreview() {
                 CardModel.Text(
                     "banana_whole",
                     "banana",
-                    R.string.banana,
+                    R.string.empty,
                 ),
                 CardModel.Text(
                     "banana_half",
                     "banana",
-                    R.string.banana,
+                    R.string.empty,
                 )
             )
         )

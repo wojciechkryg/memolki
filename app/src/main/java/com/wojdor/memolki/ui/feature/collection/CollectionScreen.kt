@@ -125,27 +125,27 @@ private fun getCollectionCardPairsForPreview() = listOf(
             CardModel.Image(
                 "banana_whole",
                 "banana",
-                R.string.banana,
-                R.drawable.img_banana_whole
+                R.string.empty,
+                R.drawable.img_test_whole
             ),
             CardModel.Image(
                 "banana_half",
                 "banana",
-                R.string.banana,
-                R.drawable.img_banana_half
+                R.string.empty,
+                R.drawable.img_test_half
             )
         )
     ),
     CollectionCardPairModel.Unlocked(
         CardPairModel(
-            CardModel.Image("apple_whole", "apple", R.string.apple, R.drawable.img_apple_whole),
-            CardModel.Text("apple_half", "apple", R.string.banana)
+            CardModel.Image("apple_whole", "apple", R.string.empty, R.drawable.img_test_whole),
+            CardModel.Text("apple_half", "apple", R.string.empty)
         )
     ),
     CollectionCardPairModel.Unlocked(
         CardPairModel(
-            CardModel.Text("strawberry_whole", "strawberry", R.string.strawberry),
-            CardModel.Text("strawberry_half", "strawberry", R.string.strawberry)
+            CardModel.Text("strawberry_whole", "strawberry", R.string.empty),
+            CardModel.Text("strawberry_half", "strawberry", R.string.empty)
         )
     ),
     CollectionCardPairModel.LockedToUnlockWithCoins(100),
