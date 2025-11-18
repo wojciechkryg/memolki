@@ -73,12 +73,13 @@ fun ShopMenuItem(
                         )
                     }
                 } else {
-                    Text(
-                        text = priceText.lowercase(),
+                    AutoSizeText(
+                        text = priceText,
                         modifier = Modifier
-                            .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
-                            .weight(2f),
-                        style = MaterialTheme.typography.headlineLarge
+                            .weight(2f)
+                            .padding(start = 8.dp),
+                        style = MaterialTheme.typography.headlineLarge,
+                        softWrap = false
                     )
                 }
                 Text(
@@ -103,11 +104,23 @@ private const val NO_DRAWABLE = -1
 
 @Preview
 @Composable
-fun ShopMenuItemPreview() {
+fun ShopMenuItemShortPreview() {
     AppTheme {
         ShopMenuItem(
-            priceText = "$0.99",
+            priceText = "0.99 PLN",
             descriptionText = "Buy 500",
+            rightDrawableRes = R.drawable.ic_coins_pile_big
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ShopMenuItemLongPreview() {
+    AppTheme {
+        ShopMenuItem(
+            priceText = "149.99 PLN",
+            descriptionText = "Unlock everything that can be unlocked",
             rightDrawableRes = R.drawable.ic_coins_pile_big
         )
     }

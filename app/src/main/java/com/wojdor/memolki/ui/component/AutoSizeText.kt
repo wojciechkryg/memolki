@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
@@ -27,10 +28,11 @@ fun AutoSizeText(
     text: String,
     modifier: Modifier = Modifier,
     style: TextStyle = LocalTextStyle.current,
+    softWrap: Boolean = text.containsWhitespace
 ) {
     var scaledTextStyle by remember(text, style) { mutableStateOf(style) }
     var isReadyToDraw by remember(text, style) { mutableStateOf(false) }
-    var isSoftWrap by remember(text, style) { mutableStateOf(text.containsWhitespace) }
+    var isSoftWrap by remember(text, style) { mutableStateOf(softWrap) }
 
     Box(
         modifier = modifier,
@@ -38,11 +40,13 @@ fun AutoSizeText(
     ) {
         Text(
             text,
-            Modifier.drawWithContent {
-                if (isReadyToDraw) {
-                    drawContent()
-                }
-            },
+            Modifier
+                .fillMaxWidth()
+                .drawWithContent {
+                    if (isReadyToDraw) {
+                        drawContent()
+                    }
+                },
             style = scaledTextStyle,
             softWrap = isSoftWrap,
             textAlign = TextAlign.Center,
