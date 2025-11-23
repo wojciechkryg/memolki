@@ -25,7 +25,8 @@ fun getSecretValue(key: String): String = providers
 
 val flavorConfigs = listOf(
     "fruitHalf" to "FRUIT_HALF_BILLING_KEY",
-    "vegetableHalf" to "VEGETABLE_HALF_BILLING_KEY"
+    "vegetableHalf" to "VEGETABLE_HALF_BILLING_KEY",
+    "mammalSide" to "MAMMAL_SIDE_BILLING_KEY"
 )
 
 android {
@@ -36,8 +37,8 @@ android {
         applicationId = "com.wojdor.memolki"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1001001
-        versionName = "1.1.1"
+        versionCode = 1002000
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

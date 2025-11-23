@@ -9,7 +9,7 @@ jobs:
     if: "!startsWith(github.event.head_commit.message, 'chore:')"
     strategy:
       matrix:
-        flavor: [ "fruitHalf", "vegetableHalf" ]
+        flavor: [ "fruitHalf", "vegetableHalf", "mammalSide" ]
     runs-on: ubuntu-latest
     outputs:
       version_name: ${{ steps.version.outputs.version_name }}
@@ -19,7 +19,7 @@ jobs:
       - name: Get version name
         id: version
         run: |
-          version_name=$(grep "versionName = " app/build.gradle.kts | sed 's/versionName = "//' | sed 's/"//')
+          version_name=$(grep "versionName" app/build.gradle.kts | sed -E 's/.*versionName = "([^"]+)".*/\1/')
           echo "version_name=$version_name" >> $GITHUB_OUTPUT
 
       - name: Setup Gradle
@@ -87,7 +87,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
-          current_version_name=$(grep "versionName = " app/build.gradle.kts | sed 's/versionName = "//' | sed 's/"//')
+          current_version_name=$(grep "versionName" app/build.gradle.kts | sed -E 's/.*versionName = "([^"]+)".*/\1/')
           last_tag_name=$(git tag --sort=-v:refname | grep -E '^v/' | head -n 1 | sed 's/v\///')
           
           if [ -z "$last_tag_name" ]; then
@@ -113,7 +113,7 @@ jobs:
             echo "Detected manual version increase (Major or Minor). Patch version will be reset to 0."
           fi
           
-          current_version_code=$(grep "versionCode = " app/build.gradle.kts | sed 's/versionCode = //')
+          current_version_code=$(grep "versionCode" app/build.gradle.kts | sed -E 's/.*versionCode = ([0-9]+).*/\1/')
           new_version_code=$((current_version_code + 1))
           new_version_name="$new_major.$new_minor.$new_patch"
           
