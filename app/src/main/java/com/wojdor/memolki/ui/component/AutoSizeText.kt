@@ -41,7 +41,6 @@ fun AutoSizeText(
         Text(
             text,
             Modifier
-                .fillMaxWidth()
                 .drawWithContent {
                     if (isReadyToDraw) {
                         drawContent()

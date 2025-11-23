@@ -1,0 +1,159 @@
+Domestic Dog
+
+Domestic Cat
+
+African Lion
+
+African Bush Elephant
+
+Siberian Tiger
+
+Domestic Horse
+
+Domestic Cow
+
+Red Kangaroo
+
+Brown Bear
+
+Common Bottlenose Dolphin
+
+Koala
+
+Giant Panda
+
+Gray Wolf
+
+Domestic Goat
+
+Domestic Sheep
+
+Giraffe
+
+Hippopotamus
+
+Orca
+
+Common Chimpanzee
+
+Western Lowland Gorilla
+
+Bornean Orangutan
+
+Domestic Pig
+
+Plains Zebra
+
+Cheetah
+
+White Rhinoceros
+
+Cougar
+
+Red Fox
+
+Polar Bear
+
+Indian Elephant
+
+Domestic Rabbit
+
+European Hare
+
+Bactrian Camel
+
+American Bison
+
+Moose
+
+Wild Boar
+
+Blue Whale
+
+Sperm Whale
+
+African Buffalo
+
+Capybara
+
+European Beaver
+
+Eurasian Red Squirrel
+
+Northern White-breasted Hedgehog
+
+Platypus
+
+Tasmanian Devil
+
+Meerkat
+
+Virginia Opossum
+
+European Otter 
+
+Red Deer
+
+Ring-tailed Lemur
+
+Japanese Macaque
+
+Common Seal
+
+Walrus
+
+West Indian Manatee
+
+Dugong
+
+Giant Anteater
+
+Brown-throated Sloth
+
+Narwhal
+
+European Badger
+
+Malayan Tapir
+
+White-handed Gibbon
+
+Alpaca
+
+Sea Otter
+
+Common Wombat
+
+Brown Rat
+
+House Mouse
+
+European Mole
+
+Brown Long-eared Bat
+
+Egyptian Fruit Bat
+
+Vicuna
+
+Giant Armadillo
+
+Arctic Hare
+
+Fennec Fox
+
+Cape Hyrax
+
+Elephant Shrew
+
+Sunda Colugo
+
+Chinese Pangolin
+
+Short-beaked Echidna
+
+Lesser Chinchilla
+
+Indian Crested Porcupine
+
+Golden Mole

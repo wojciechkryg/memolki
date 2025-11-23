@@ -1,7 +1,5 @@
 # 🃏 memolki
 
-A simple and beautiful memory game.
-
 ## 🔧 setup
 
 - Add the `secrets.properties` file in the root directory with the following content for each
