@@ -62,7 +62,7 @@ fun ShopMenuItem(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Image(
-                            modifier = Modifier.size(48.dp),
+                            modifier = Modifier.size(64.dp),
                             alignment = Alignment.Center,
                             painter = painterResource(leftDrawableRes),
                             contentDescription = null

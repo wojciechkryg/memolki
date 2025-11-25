@@ -6,6 +6,7 @@ import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
@@ -65,6 +66,9 @@ class EndGameViewModelTest : AppTest() {
     lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
 
     @Inject
+    lateinit var canUnlockNewCardUseCase: CanUnlockNewCardUseCase
+
+    @Inject
     lateinit var userRepository: UserRepository
 
     private lateinit var sut: EndGameViewModel
@@ -84,7 +88,8 @@ class EndGameViewModelTest : AppTest() {
             incrementTotalGamesPlayedUseCase,
             getCoinsUseCase,
             rewardCoinsForLevelUseCase,
-            getTotalCoinsUseCase
+            getTotalCoinsUseCase,
+            canUnlockNewCardUseCase
         )
     }
 

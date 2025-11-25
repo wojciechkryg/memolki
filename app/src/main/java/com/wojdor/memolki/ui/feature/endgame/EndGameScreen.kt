@@ -15,6 +15,7 @@ import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -51,6 +52,7 @@ private fun HandleEffect(
             )
 
             EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
+            EndGameEffect.OpenCollectionScreen -> navController.navigateToCollection()
             is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
             is EndGameEffect.RequestReview -> activity?.let {
                 launchReviewFlow(
@@ -120,6 +122,7 @@ private fun HandleState(
     val callbacks = EndGameCallbacks(
         onPlayAgainClick = { viewModel.sendIntent(EndGameIntent.OnPlayAgainClick(state.level)) },
         onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) },
+        onUnlockNewCardClick = { viewModel.sendIntent(EndGameIntent.OnUnlockNewCardClick) },
         onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) }
     )
     EndGameScreen(state, callbacks)
@@ -162,6 +165,7 @@ private fun EndGameScreenWithAdPreview() {
                 currentCoins = 5678,
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
+                    EndGameMenuModel.UnlockNewCard,
                     EndGameMenuModel.PlayAgain,
                     EndGameMenuModel.Menu
                 ),

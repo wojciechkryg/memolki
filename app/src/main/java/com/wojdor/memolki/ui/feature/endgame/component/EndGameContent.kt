@@ -41,13 +41,15 @@ fun EndGameContent(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.weight(0.1f))
             CoinsReward(
                 state = state,
                 animate = state.animateRewardCoins
             )
-            Spacer(modifier = Modifier.height(64.dp))
+            Spacer(modifier = Modifier.weight(0.1f))
             AnimatedContent(
                 state.menu,
+                modifier = Modifier.weight(1f),
                 transitionSpec = {
                     fadeIn() togetherWith fadeOut()
                 }) {
@@ -61,6 +63,10 @@ fun EndGameContent(
                         when (menuItem) {
                             EndGameMenuModel.WatchAd ->
                                 WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
+
+                            EndGameMenuModel.UnlockNewCard -> UnlockNewCardItem(
+                                onClick = callbacks.onUnlockNewCardClick
+                            )
 
                             EndGameMenuModel.PlayAgain -> MenuItem(
                                 textId = menuItem.textId,
@@ -90,6 +96,7 @@ private fun EndGameContentPreview() {
                 currentCoins = 5678,
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
+                    EndGameMenuModel.UnlockNewCard,
                     EndGameMenuModel.PlayAgain,
                     EndGameMenuModel.Menu
                 )
