@@ -41,7 +41,7 @@ class CanUnlockNewCardUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when user do not have enough coins then return false`() = runTest {
+    fun `when user does not have enough coins then return false`() = runTest {
         // when
         val result = sut().first()
 
@@ -50,7 +50,7 @@ class CanUnlockNewCardUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when user do not have enough coins then return true`() = runTest {
+    fun `when user has enough coins then return true`() = runTest {
         // given
         userRepository.addCoins(9L)
 
