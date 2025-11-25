@@ -34,26 +34,26 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 modifier = Modifier
-                    .size(48.dp),
+                    .size(128.dp),
                 alignment = Alignment.Center,
                 painter = painterResource(R.drawable.ic_ads),
                 contentDescription = null
             )
             AutoSizeText(
                 text = stringResource(R.string.watch_ad).uppercase(),
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.headlineSmall
             )
         }
         Spacer(modifier = Modifier.size(12.dp))
         Image(
-            modifier = Modifier.size(32.dp),
+            modifier = Modifier.size(64.dp),
             painter = painterResource(id = R.drawable.ic_coin),
             contentDescription = null,
         )
         Spacer(modifier = Modifier.size(4.dp))
         Text(
             text = stringResource(id = R.string.end_game_watch_ad_reward).lowercase(),
-            style = MaterialTheme.typography.displaySmall
+            style = MaterialTheme.typography.displayMedium
         )
 
     }

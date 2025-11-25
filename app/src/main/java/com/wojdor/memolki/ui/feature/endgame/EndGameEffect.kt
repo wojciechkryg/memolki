@@ -10,6 +10,7 @@ import com.wojdor.memolki.ui.base.UiEffect
 sealed class EndGameEffect : UiEffect {
     data class OpenGameScreen(val levelModel: LevelModel) : EndGameEffect()
     object OpenMenuScreen : EndGameEffect()
+    object OpenCollectionScreen : EndGameEffect()
     data class ShowAd(val rewardedAd: RewardedAd) : EndGameEffect()
     data class RequestReview(
         val reviewManager: ReviewManager,

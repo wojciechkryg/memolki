@@ -6,6 +6,7 @@ import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
@@ -37,17 +38,21 @@ class EndGameViewModel @Inject constructor(
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
-    private val getTotalCoinsUseCase: GetTotalCoinsUseCase
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
+    private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
     EndGameState()
 ) {
+
+    private var isAdLoaded = false
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
             is EndGameIntent.OnEndGameShow -> onEndGameShow(intent.levelModel)
             is EndGameIntent.OnPlayAgainClick -> onPlayAgainClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
+            EndGameIntent.OnUnlockNewCardClick -> onUnlockNewCardClick()
             EndGameIntent.OnWatchAdClick -> onWatchAdClick()
             EndGameIntent.OnAdReward -> onAdReward()
             is EndGameIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
@@ -119,16 +124,33 @@ class EndGameViewModel @Inject constructor(
         sendEffect(EndGameEffect.OpenMenuScreen)
     }
 
+    private fun onUnlockNewCardClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(EndGameEffect.OpenCollectionScreen)
+    }
+
     private fun onWatchAdClick() {
         hapticFeedback.vibrateLow()
         sendEffect(EndGameEffect.ShowAd(allRewardedAds.endGameCoinsAd))
     }
 
+    private fun showMenu() {
+        showMenu(isAdLoaded)
+    }
+
     private fun showMenu(isAdLoaded: Boolean) {
-        sendState {
-            copy(menu = getBaseMenu().let {
-                if (isAdLoaded) listOf(EndGameMenuModel.WatchAd) + it else it
-            })
+        this.isAdLoaded = isAdLoaded
+        viewModelScope.launch {
+            val canUnlockNewCard = canUnlockNewCardUseCase().first().getOrDefault(false)
+            val menu = mutableListOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu).apply {
+                if (isAdLoaded) {
+                    add(0, EndGameMenuModel.WatchAd)
+                }
+                if (canUnlockNewCard) {
+                    add(EndGameMenuModel.UnlockNewCard)
+                }
+            }
+            sendState { copy(menu = menu) }
         }
     }
 
@@ -158,6 +180,7 @@ class EndGameViewModel @Inject constructor(
                         animateRewardCoins = isRewardFromAd
                     )
                 }
+                showMenu()
                 sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
@@ -172,11 +195,6 @@ class EndGameViewModel @Inject constructor(
             }
         }
     }
-
-    private fun getBaseMenu() = listOf(
-        EndGameMenuModel.PlayAgain,
-        EndGameMenuModel.Menu
-    )
 
     companion object {
         const val LEVEL_COMPLETE_SOUND_DELAY = 250L
