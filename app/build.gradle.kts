@@ -37,8 +37,8 @@ android {
         applicationId = "com.wojdor.memolki"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1002000
-        versionName = "1.2.0"
+        versionCode = 1002001
+        versionName = "1.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -101,12 +101,20 @@ android {
                 (it.name.startsWith("assemble") || it.name.startsWith("bundle"))
     }.configureEach {
         doFirst {
-            applicationVariants.all {
-                if (buildType.name == "release") {
-                    flavorConfigs.find { it.first == flavorName }?.let { (_, billingKeyName) ->
-                        if (getSecretValue(billingKeyName).isBlank()) {
-                            throw GradleException("$billingKeyName is required for release builds")
-                        }
+            val taskName = name
+            var flavorPart: String? = null
+            if (taskName.startsWith("assemble")) {
+                flavorPart = taskName.removePrefix("assemble").removeSuffix("Release")
+            } else if (taskName.startsWith("bundle")) {
+                flavorPart = taskName.removePrefix("bundle").removeSuffix("Release")
+            }
+
+            if (flavorPart != null) {
+                val flavorName = flavorPart.replaceFirstChar { it.lowercaseChar() }
+                val billingKeyName = flavorConfigs.find { it.first == flavorName }?.second
+                if (billingKeyName != null) {
+                    if (getSecretValue(billingKeyName).isBlank()) {
+                        throw GradleException("$billingKeyName is required for release builds for flavor $flavorName")
                     }
                 }
             }

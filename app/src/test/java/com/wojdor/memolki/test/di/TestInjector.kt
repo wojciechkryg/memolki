@@ -8,6 +8,8 @@ import com.wojdor.memolki.data.repository.SettingsRepositoryTest
 import com.wojdor.memolki.data.repository.UserRepositoryTest
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCaseTest
+import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
+import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCaseTest
@@ -82,4 +84,5 @@ interface TestInjector {
     fun inject(test: UnlockAllCardPairsUseCaseTest)
     fun inject(test: UnlockAllNewCardPairsIfPurchasedUseCaseTest)
     fun inject(test: CalculateCoinsForShopAdUseCaseTest)
+    fun inject(test: CanUnlockNewCardUseCaseTest)
 }

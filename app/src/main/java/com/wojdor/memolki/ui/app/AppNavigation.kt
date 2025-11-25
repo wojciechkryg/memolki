@@ -203,7 +203,9 @@ fun NavController.navigateToChooseLevel() {
 }
 
 fun NavController.navigateToCollection() {
-    navigate(Route.COLLECTION)
+    navigate(Route.COLLECTION) {
+        removeFromBackStack(Route.MENU, isInclusive = false)
+    }
 }
 
 fun NavController.navigateToOptions() {
@@ -242,9 +244,9 @@ fun NavController.navigateToCardPairDetailsScreen() {
     navigate(Route.CARD_PAIR_DETAILS)
 }
 
-private fun NavOptionsBuilder.removeFromBackStack(route: String) {
+private fun NavOptionsBuilder.removeFromBackStack(route: String, isInclusive: Boolean = true) {
     popUpTo(route) {
-        inclusive = true
+        inclusive = isInclusive
     }
 }
 
