@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: Get and normalize commit title
         id: get_commit_title
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          commit_title=$(echo '${{ github.event.head_commit.message }}' | head -n 1)
+          commit_title=$(printf '%s' "$COMMIT_MSG" | head -n 1)
           echo "commit_title=${commit_title,,}" >> $GITHUB_OUTPUT
 
   build_and_upload:
@@ -139,8 +141,8 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "Bump version to ${{ steps.bumper.outputs.new_version }}"
-          title: "Chore/bump version to ${{ steps.bumper.outputs.new_version }}"
+          title: "Chore/version bump ${{ steps.bumper.outputs.new_version }}"
           body: Automates version bump to ${{ steps.bumper.outputs.new_version }}
-          branch: "chore/bump-${{ steps.bumper.outputs.new_version }}"
+          branch: "chore/version-bump-${{ steps.bumper.outputs.new_version }}"
           delete-branch: true
           labels: "chore"
