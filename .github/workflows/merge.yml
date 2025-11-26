@@ -5,8 +5,22 @@ on:
     branches: [ "main" ]
 
 jobs:
+  vars:
+    runs-on: ubuntu-latest
+    outputs:
+      commit_title: ${{ steps.get_commit_title.outputs.commit_title }}
+    steps:
+      - name: Get and normalize commit title
+        id: get_commit_title
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          commit_title=$(printf '%s' "$COMMIT_MSG" | head -n 1)
+          echo "commit_title=${commit_title,,}" >> $GITHUB_OUTPUT
+
   build_and_upload:
-    if: "!startsWith(github.event.head_commit.message, 'chore:')"
+    needs: vars
+    if: "!startsWith(needs.vars.outputs.commit_title, 'chore/')"
     strategy:
       matrix:
         flavor: [ "fruitHalf", "vegetableHalf", "mammalSide" ]
@@ -126,8 +140,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: "chore: Bump version to ${{ steps.bumper.outputs.new_version }}"
-          title: "chore: Bump version to ${{ steps.bumper.outputs.new_version }}"
+          commit-message: "Bump version to ${{ steps.bumper.outputs.new_version }}"
+          title: "Chore/version bump ${{ steps.bumper.outputs.new_version }}"
           body: Automates version bump to ${{ steps.bumper.outputs.new_version }}
           branch: "chore/version-bump-${{ steps.bumper.outputs.new_version }}"
           delete-branch: true
