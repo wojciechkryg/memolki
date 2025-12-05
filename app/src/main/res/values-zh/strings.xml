@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • 水果</string>
+    <string name="vegetable_half_app_name">memolki • 蔬菜</string>
+    <string name="mammal_side_app_name">memolki • 哺乳动物</string>
+
     <string name="new_game">新游戏</string>
     <string name="collection">收藏</string>
     <string name="settings">设置</string>

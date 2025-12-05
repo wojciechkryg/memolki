@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • fruit</string>
+    <string name="vegetable_half_app_name">memolki • groenten</string>
+    <string name="mammal_side_app_name">memolki • zoogdieren</string>
+
     <string name="new_game">Nieuw spel</string>
     <string name="collection">Collectie</string>
     <string name="settings">Instellingen</string>

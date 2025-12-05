@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • ovoce</string>
+    <string name="vegetable_half_app_name">memolki • zelenina</string>
+    <string name="mammal_side_app_name">memolki • savci</string>
+
     <string name="new_game">Nová hra</string>
     <string name="collection">Kolekce</string>
     <string name="settings">Nastavení</string>

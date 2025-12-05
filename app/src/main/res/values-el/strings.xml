@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • φρούτα</string>
+    <string name="vegetable_half_app_name">memolki • λαχανικά</string>
+    <string name="mammal_side_app_name">memolki • θηλαστικά</string>
+
     <string name="new_game">Νέο παιχνίδι</string>
     <string name="collection">Συλλογή</string>
     <string name="settings">Ρυθμίσεις</string>

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • فاكهة</string>
+    <string name="vegetable_half_app_name">memolki • الخضروات</string>
+    <string name="mammal_side_app_name">memolki • الثدييات</string>
+
     <string name="new_game">لعبة جديدة</string>
     <string name="collection">مجموعة</string>
     <string name="settings">الإعدادات</string>

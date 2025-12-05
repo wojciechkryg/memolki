@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">memolki • الخضروات</string>
+    <string name="app_name">@string/vegetable_half_app_name</string>
 
     <string name="potato">بطاطا</string>
     <string name="tomato">طماطم</string>

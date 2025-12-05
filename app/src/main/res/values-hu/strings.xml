@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • gyümölcs</string>
+    <string name="vegetable_half_app_name">memolki • zöldségek</string>
+    <string name="mammal_side_app_name">memolki • emlősök</string>
+
     <string name="new_game">Új játék</string>
     <string name="collection">Gyűjtemény</string>
     <string name="settings">Beállítások</string>

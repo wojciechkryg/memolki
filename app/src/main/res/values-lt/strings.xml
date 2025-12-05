@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • vaisiai</string>
+    <string name="vegetable_half_app_name">memolki • daržovės</string>
+    <string name="mammal_side_app_name">memolki • žinduoliai</string>
+
     <string name="new_game">Naujas žaidimas</string>
     <string name="collection">Kolekcija</string>
     <string name="settings">Nustatymai</string>

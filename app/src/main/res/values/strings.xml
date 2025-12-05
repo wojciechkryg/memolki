@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • fruit</string>
+    <string name="vegetable_half_app_name">memolki • vegetables</string>
+    <string name="mammal_side_app_name">memolki • mammals</string>
+
     <string name="new_game">New Game</string>
     <string name="collection">Collection</string>
     <string name="settings">Settings</string>

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • frugt</string>
+    <string name="vegetable_half_app_name">memolki • grøntsager</string>
+    <string name="mammal_side_app_name">memolki • pattedyr</string>
+
     <string name="new_game">Nyt spil</string>
     <string name="collection">Samling</string>
     <string name="settings">Indstillinger</string>

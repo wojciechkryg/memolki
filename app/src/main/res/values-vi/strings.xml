@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • trái cây</string>
+    <string name="vegetable_half_app_name">memolki • rau</string>
+    <string name="mammal_side_app_name">memolki • động vật có vú</string>
+
     <string name="new_game">Trò chơi mới</string>
     <string name="collection">Bộ sưu tập</string>
     <string name="settings">Cài đặt</string>

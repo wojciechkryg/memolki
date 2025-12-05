@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • hedelmä</string>
+    <string name="vegetable_half_app_name">memolki • vihannekset</string>
+    <string name="mammal_side_app_name">memolki • nisäkkäät</string>
+
     <string name="new_game">Uusi peli</string>
     <string name="collection">Kokoelma</string>
     <string name="settings">Asetukset</string>

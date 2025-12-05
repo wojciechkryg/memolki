@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • puuvili</string>
+    <string name="vegetable_half_app_name">memolki • köögiviljad</string>
+    <string name="mammal_side_app_name">memolki • imetajad</string>
+
     <string name="new_game">Uus mäng</string>
     <string name="collection">Kollektsioon</string>
     <string name="settings">Seaded</string>

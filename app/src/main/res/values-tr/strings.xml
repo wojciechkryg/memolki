@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="fruit_half_app_name">memolki • meyve</string>
+    <string name="vegetable_half_app_name">memolki • sebzeler</string>
+    <string name="mammal_side_app_name">memolki • memeliler</string>
+
     <string name="new_game">Yeni oyun</string>
     <string name="collection">Koleksiyon</string>
     <string name="settings">Ayarlar</string>
