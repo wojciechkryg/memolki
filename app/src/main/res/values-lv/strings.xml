@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • augļi</string>
-    <string name="vegetable_half_app_name">memolki • dārzeņi</string>
-    <string name="mammal_side_app_name">memolki • zīdītāji</string>
+    <string name="app_name_fruit_half">memolki • augļi</string>
+    <string name="app_name_vegetable_half">memolki • dārzeņi</string>
+    <string name="app_name_mammal_side">memolki • zīdītāji</string>
+
+    <string name="suffix_fruit_half">• augļi</string>
+    <string name="suffix_vegetable_half">• dārzeņi</string>
+    <string name="suffix_mammal_side">• zīdītāji</string>
 
     <string name="new_game">Jauna spēle</string>
     <string name="collection">Kolekcija</string>
     <string name="settings">Iestatījumi</string>
+    <string name="more">Vairāk?</string>
     <string name="menu">Izvēlne</string>
     <string name="play_again">Spēlēt vēlreiz</string>
     <string name="shop">Veikals</string>

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • ovocie</string>
-    <string name="vegetable_half_app_name">memolki • zelenina</string>
-    <string name="mammal_side_app_name">memolki • cicavce</string>
+    <string name="app_name_fruit_half">memolki • ovocie</string>
+    <string name="app_name_vegetable_half">memolki • zelenina</string>
+    <string name="app_name_mammal_side">memolki • cicavce</string>
+
+    <string name="suffix_fruit_half">• ovocie</string>
+    <string name="suffix_vegetable_half">• zelenina</string>
+    <string name="suffix_mammal_side">• cicavce</string>
 
     <string name="new_game">Nová hra</string>
     <string name="collection">Zbierka</string>
     <string name="settings">Nastavenia</string>
+    <string name="more">Viac?</string>
     <string name="menu">Menu</string>
     <string name="play_again">Hrať znova</string>
     <string name="shop">Obchod</string>

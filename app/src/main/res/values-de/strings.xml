@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • Obst</string>
-    <string name="vegetable_half_app_name">memolki • Gemüse</string>
-    <string name="mammal_side_app_name">memolki • Säugetiere</string>
+    <string name="app_name_fruit_half">memolki • Obst</string>
+    <string name="app_name_vegetable_half">memolki • Gemüse</string>
+    <string name="app_name_mammal_side">memolki • Säugetiere</string>
+
+    <string name="suffix_fruit_half">• Obst</string>
+    <string name="suffix_vegetable_half">• Gemüse</string>
+    <string name="suffix_mammal_side">• Säugetiere</string>
 
     <string name="new_game">Neues Spiel</string>
     <string name="collection">Sammlung</string>
     <string name="settings">Einstellungen</string>
+    <string name="more">Mehr?</string>
     <string name="menu">Menü</string>
     <string name="play_again">Nochmal spielen</string>
     <string name="shop">Shop</string>

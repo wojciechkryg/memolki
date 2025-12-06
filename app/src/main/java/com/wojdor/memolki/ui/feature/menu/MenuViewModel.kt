@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.menu
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
+import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
@@ -15,6 +16,7 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -24,7 +26,8 @@ class MenuViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val hapticFeedback: HapticFeedback,
     private val googlePlayGames: GooglePlayGames,
-    private val getMenuUseCase: GetMenuUseCase
+    private val getMenuUseCase: GetMenuUseCase,
+    private val getMoreAppsUseCase: GetMoreAppsUseCase
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
     MenuState()
@@ -64,9 +67,14 @@ class MenuViewModel @Inject constructor(
     }
 
     private fun loadMenu() {
-        getMenuUseCase().onEach {
-            it.onSuccess { menu ->
-                sendState { copy(menu = menu) }
+        combine(getMenuUseCase(), getMoreAppsUseCase()) { menuResult, moreAppsResult ->
+            menuResult to moreAppsResult
+        }.onEach { (menuResult, moreAppsResult) ->
+            sendState {
+                copy(
+                    menu = menuResult.getOrNull() ?: menu,
+                    otherAppModel = moreAppsResult.getOrNull()?.random() ?: otherAppModel
+                )
             }
         }.launchIn(viewModelScope)
     }

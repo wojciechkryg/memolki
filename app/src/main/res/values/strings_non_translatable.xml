@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string-array name="app_ids" translatable="false">
-        <item>com.wojdor.memolki.fruitHalf</item>
-        <item>com.wojdor.memolki.vegetableHalf</item>
-        <item>com.wojdor.memolki.mammalSide</item>
-    </string-array>
-
     <string name="empty" translatable="false" />
 
     <string name="level2x3" translatable="false">2 x 3</string>

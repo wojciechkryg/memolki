@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • sadje</string>
-    <string name="vegetable_half_app_name">memolki • zelenjava</string>
-    <string name="mammal_side_app_name">memolki • sesalci</string>
+    <string name="app_name_fruit_half">memolki • sadje</string>
+    <string name="app_name_vegetable_half">memolki • zelenjava</string>
+    <string name="app_name_mammal_side">memolki • sesalci</string>
+
+    <string name="suffix_fruit_half">• sadje</string>
+    <string name="suffix_vegetable_half">• zelenjava</string>
+    <string name="suffix_mammal_side">• sesalci</string>
 
     <string name="new_game">Nova igra</string>
     <string name="collection">Zbirka</string>
     <string name="settings">Nastavitve</string>
+    <string name="more">Več?</string>
     <string name="menu">Meni</string>
     <string name="play_again">Igraj ponovno</string>
     <string name="shop">Trgovina</string>

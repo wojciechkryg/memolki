@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • owoce</string>
-    <string name="vegetable_half_app_name">memolki • warzywa</string>
-    <string name="mammal_side_app_name">memolki • ssaki</string>
+    <string name="app_name_fruit_half">memolki • owoce</string>
+    <string name="app_name_vegetable_half">memolki • warzywa</string>
+    <string name="app_name_mammal_side">memolki • ssaki</string>
+
+    <string name="suffix_fruit_half">• owoce</string>
+    <string name="suffix_vegetable_half">• warzywa</string>
+    <string name="suffix_mammal_side">• ssaki</string>
 
     <string name="new_game">Nowa gra</string>
     <string name="collection">Kolekcja</string>
     <string name="settings">Ustawienia</string>
+    <string name="more">Więcej?</string>
     <string name="menu">Menu</string>
     <string name="play_again">Zagraj ponownie</string>
     <string name="shop">Sklep</string>

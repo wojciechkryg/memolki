@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • फल</string>
-    <string name="vegetable_half_app_name">memolki • सब्जियां</string>
-    <string name="mammal_side_app_name">memolki • स्तनधारी</string>
+    <string name="app_name_fruit_half">memolki • फल</string>
+    <string name="app_name_vegetable_half">memolki • सब्जियां</string>
+    <string name="app_name_mammal_side">memolki • स्तनधारी</string>
+
+    <string name="suffix_fruit_half">• फल</string>
+    <string name="suffix_vegetable_half">• सब्जियां</string>
+    <string name="suffix_mammal_side">• स्तनधारी</string>
 
     <string name="new_game">नया खेल</string>
     <string name="collection">संग्रह</string>
     <string name="settings">सेटिंग्स</string>
+    <string name="more">और?</string>
     <string name="menu">मेनू</string>
     <string name="play_again">फिर से खेलें</string>
     <string name="shop">दुकान</string>

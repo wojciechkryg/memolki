@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • meyve</string>
-    <string name="vegetable_half_app_name">memolki • sebzeler</string>
-    <string name="mammal_side_app_name">memolki • memeliler</string>
+    <string name="app_name_fruit_half">memolki • meyve</string>
+    <string name="app_name_vegetable_half">memolki • sebzeler</string>
+    <string name="app_name_mammal_side">memolki • memeliler</string>
+
+    <string name="suffix_fruit_half">• meyve</string>
+    <string name="suffix_vegetable_half">• sebzeler</string>
+    <string name="suffix_mammal_side">• memeliler</string>
 
     <string name="new_game">Yeni oyun</string>
     <string name="collection">Koleksiyon</string>
     <string name="settings">Ayarlar</string>
+    <string name="more">Daha?</string>
     <string name="menu">Menü</string>
     <string name="play_again">Tekrar oyna</string>
     <string name="shop">Mağaza</string>

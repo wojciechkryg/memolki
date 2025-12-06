@@ -14,6 +14,7 @@ import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMenuUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCaseTest
@@ -84,4 +85,5 @@ interface TestInjector {
     fun inject(test: UnlockAllNewCardPairsIfPurchasedUseCaseTest)
     fun inject(test: CalculateCoinsForShopAdUseCaseTest)
     fun inject(test: CanUnlockNewCardUseCaseTest)
+    fun inject(test: GetMoreAppsUseCaseTest)
 }

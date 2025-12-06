@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
+import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
@@ -39,6 +40,9 @@ class MenuViewModelTest : AppTest() {
     @Inject
     lateinit var getMenuUseCase: GetMenuUseCase
 
+    @Inject
+    lateinit var getMoreAppsUseCase: GetMoreAppsUseCase
+
     private lateinit var sut: MenuViewModel
 
     @Before
@@ -48,7 +52,8 @@ class MenuViewModelTest : AppTest() {
             savedStateHandle,
             hapticFeedback,
             googlePlayGames,
-            getMenuUseCase
+            getMenuUseCase,
+            getMoreAppsUseCase
         )
     }
 

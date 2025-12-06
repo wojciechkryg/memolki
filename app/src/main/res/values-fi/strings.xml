@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • hedelmä</string>
-    <string name="vegetable_half_app_name">memolki • vihannekset</string>
-    <string name="mammal_side_app_name">memolki • nisäkkäät</string>
+    <string name="app_name_fruit_half">memolki • hedelmä</string>
+    <string name="app_name_vegetable_half">memolki • vihannekset</string>
+    <string name="app_name_mammal_side">memolki • nisäkkäät</string>
+
+    <string name="suffix_fruit_half">• hedelmä</string>
+    <string name="suffix_vegetable_half">• vihannekset</string>
+    <string name="suffix_mammal_side">• nisäkkäät</string>
 
     <string name="new_game">Uusi peli</string>
     <string name="collection">Kokoelma</string>
     <string name="settings">Asetukset</string>
+    <string name="more">Lisää?</string>
     <string name="menu">Valikko</string>
     <string name="play_again">Pelaa uudelleen</string>
     <string name="shop">Kauppa</string>
@@ -14,8 +19,8 @@
     <string name="shop_back_later">Tule takaisin myöhemmin</string>
     <string name="shop_buy">Ostaa %d</string>
     <string name="shop_unlock_all_cards">Avaa kaikki kortit</string>
-    <string name="shop_purchase_failed_error">Joonistamise ebaõnnestus</string>
-    <string name="shop_connection_error">Tundmatu ühendusega</string>
+    <string name="shop_purchase_failed_error">Ostos epäonnistui</string>
+    <string name="shop_connection_error">Yhteysvirhe</string>
     <string name="setting_music">Musiikki</string>
     <string name="setting_sound">Ääni</string>
     <string name="setting_vibration">Tärinä</string>

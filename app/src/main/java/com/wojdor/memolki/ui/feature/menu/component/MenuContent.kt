@@ -4,22 +4,23 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
+import com.wojdor.memolki.ui.component.XmlDrawable
 import com.wojdor.memolki.ui.feature.menu.MenuCallbacks
 import com.wojdor.memolki.ui.feature.menu.MenuState
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -31,18 +32,16 @@ fun MenuContent(
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
+        XmlDrawable(
             modifier = Modifier
                 .size(320.dp)
                 .weight(2f),
-            painter = painterResource(id = R.drawable.ic_logo),
-            contentDescription = null,
+            drawableRes = R.drawable.ic_logo,
             alignment = Alignment.BottomCenter
         )
-        Spacer(modifier = Modifier.height(64.dp))
+        Spacer(modifier = Modifier.weight(0.4f))
         Column(
             modifier = Modifier.weight(3f),
             verticalArrangement = Arrangement.Top,
@@ -86,6 +85,13 @@ fun MenuContent(
                 )
             }
         }
+        state.otherAppModel?.let {
+            MoreAppsItem(
+                modifier = Modifier.fillMaxWidth(),
+                appModel = it,
+                onClick = callbacks.onMoreAppsClick
+            )
+        }
     }
 }
 
@@ -99,7 +105,8 @@ private fun MenuContentPreview() {
                     MenuModel.NewGame,
                     MenuModel.Collection,
                     MenuModel.Settings
-                )
+                ),
+                AppModel.VegetableHalf
             ),
             callbacks = MenuCallbacks()
         )

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • פרי</string>
-    <string name="vegetable_half_app_name">memolki • ירקות</string>
-    <string name="mammal_side_app_name">memolki • יונקים</string>
+    <string name="app_name_fruit_half">memolki • פרי</string>
+    <string name="app_name_vegetable_half">memolki • ירקות</string>
+    <string name="app_name_mammal_side">memolki • יונקים</string>
+
+    <string name="suffix_fruit_half">• פרי</string>
+    <string name="suffix_vegetable_half">• ירקות</string>
+    <string name="suffix_mammal_side">• יונקים</string>
 
     <string name="new_game">משחק חדש</string>
     <string name="collection">אוסף</string>
     <string name="settings">הגדרות</string>
+    <string name="more">עוד?</string>
     <string name="menu">תפריט</string>
     <string name="play_again">שחק שוב</string>
     <string name="shop">חנות</string>

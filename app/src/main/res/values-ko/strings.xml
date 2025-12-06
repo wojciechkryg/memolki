@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fruit_half_app_name">memolki • 과일</string>
-    <string name="vegetable_half_app_name">memolki • 야채</string>
-    <string name="mammal_side_app_name">memolki • 포유류</string>
+    <string name="app_name_fruit_half">memolki • 과일</string>
+    <string name="app_name_vegetable_half">memolki • 야채</string>
+    <string name="app_name_mammal_side">memolki • 포유류</string>
+
+    <string name="suffix_fruit_half">• 과일</string>
+    <string name="suffix_vegetable_half">• 야채</string>
+    <string name="suffix_mammal_side">• 포유류</string>
 
     <string name="new_game">새 게임</string>
     <string name="collection">컬렉션</string>
     <string name="settings">설정</string>
+    <string name="more">더?</string>
     <string name="menu">메뉴</string>
     <string name="play_again">다시 플레이</string>
     <string name="shop">상점</string>
