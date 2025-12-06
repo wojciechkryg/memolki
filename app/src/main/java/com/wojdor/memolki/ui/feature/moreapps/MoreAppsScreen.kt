@@ -1,11 +1,14 @@
 package com.wojdor.memolki.ui.feature.moreapps
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -43,14 +46,31 @@ private fun showAppInstall(
     activity: Activity,
     app: AppModel
 ) {
-    TODO()
+    val id = app.appId
+    try {
+        activity.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                "market://details?id=$id".toUri()
+            )
+        )
+    } catch (error: ActivityNotFoundException) {
+        activity.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                "https://play.google.com/store/apps/details?id=$id".toUri()
+            )
+        )
+    }
 }
 
 private fun openApp(
     activity: Activity,
     app: AppModel
 ) {
-    TODO()
+    activity.packageManager.getLaunchIntentForPackage(app.appId)?.let {
+        activity.startActivity(it)
+    }
 }
 
 

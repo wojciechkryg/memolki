@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.feature.menu.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -51,7 +52,7 @@ fun MoreAppsItem(
                     disabledContainerColor = Color.Transparent
                 )
             ) {
-                Row {
+                Row(horizontalArrangement = Arrangement.Center) {
                     Image(
                         modifier = Modifier.height(48.dp),
                         painter = painterResource(appModel.imageRes),

@@ -25,6 +25,7 @@ import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCaseTest
+import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCaseTest
@@ -90,4 +91,5 @@ interface TestInjector {
     fun inject(test: GetMoreAppsUseCaseTest)
     fun inject(test: GetTotalGamesPlayedUseCaseTest)
     fun inject(test: MoreAppsViewModelTest)
+    fun inject(test: IsAppInstalledUseCaseTest)
 }

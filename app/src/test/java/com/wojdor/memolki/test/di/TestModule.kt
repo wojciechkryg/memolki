@@ -9,6 +9,7 @@ import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
+import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
 import com.wojdor.memolki.test.fake.FakeDataStore
 import com.wojdor.memolki.test.fake.FakeEncryptor
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
@@ -21,6 +22,7 @@ import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
+import com.wojdor.memolki.util.provider.AppInstalledProvider
 import com.wojdor.memolki.util.provider.PackageNameProvider
 import dagger.Binds
 import dagger.Module
@@ -52,6 +54,10 @@ abstract class TestModule {
     @Binds
     @Singleton
     abstract fun bindPackageNameProvider(fakePackageNameProvider: FakePackageNameProvider): PackageNameProvider
+
+    @Binds
+    @Singleton
+    abstract fun bindAppInstalledProvider(fakeAppInstalledProvider: FakeAppInstalledProvider): AppInstalledProvider
 
     companion object {
         @Provides

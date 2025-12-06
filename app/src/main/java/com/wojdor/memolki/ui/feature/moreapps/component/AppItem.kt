@@ -50,16 +50,26 @@ fun AppItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Image(
-                    modifier = Modifier.height(72.dp),
-                    painter = painterResource(appModel.imageRes),
-                    contentDescription = null
-                )
-                AutoSizeText(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = stringResource(appModel.textRes),
-                    style = MaterialTheme.typography.displaySmall
-                )
+                Row(
+                    modifier = Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Image(
+                        modifier = Modifier.height(72.dp),
+                        painter = painterResource(appModel.imageRes),
+                        contentDescription = null
+                    )
+                }
+                Row(
+                    modifier = Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    AutoSizeText(
+                        modifier = Modifier.padding(start = 12.dp),
+                        text = stringResource(appModel.textRes),
+                        style = MaterialTheme.typography.displaySmall
+                    )
+                }
             }
         }
     }
@@ -70,7 +80,7 @@ fun AppItem(
 private fun AppItemPreview() {
     AppTheme {
         AppItem(
-            modifier = Modifier.width(320.dp),
+            modifier = Modifier.width(500.dp),
             appModel = AppModel.VegetableHalf
         )
     }

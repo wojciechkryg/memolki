@@ -4,8 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
+import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.OpenApp
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.ShowAppInstall
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsIntent.OnAppClick
@@ -29,15 +31,25 @@ class MoreAppsViewModelTest : AppTest() {
     @Inject
     lateinit var getMoreAppsUseCase: GetMoreAppsUseCase
 
+    @Inject
+    lateinit var fakeAppInstalledProvider: FakeAppInstalledProvider
+
+    private lateinit var isAppInstalledUseCase: IsAppInstalledUseCase
+
     private lateinit var sut: MoreAppsViewModel
 
     @Before
     override fun setup() {
         super.setup()
+        isAppInstalledUseCase = IsAppInstalledUseCase(
+            testDispatcher,
+            fakeAppInstalledProvider
+        )
         sut = MoreAppsViewModel(
             savedStateHandle,
             hapticFeedback,
-            getMoreAppsUseCase
+            getMoreAppsUseCase,
+            isAppInstalledUseCase
         )
     }
 
@@ -64,6 +76,7 @@ class MoreAppsViewModelTest : AppTest() {
     fun `when OnAppClick intent is send then the ShowAppInstall effect is send`() = runTest {
         // given
         val app = AppModel.FruitHalf
+        fakeAppInstalledProvider.mockAppInstalled = false
 
         sut.uiEffect.test {
             // when
@@ -78,6 +91,7 @@ class MoreAppsViewModelTest : AppTest() {
     fun `when OnAppClick intent is send then the OpenApp effect is send`() = runTest {
         // given
         val app = AppModel.FruitHalf
+        fakeAppInstalledProvider.mockAppInstalled = true
 
         sut.uiEffect.test {
             // when

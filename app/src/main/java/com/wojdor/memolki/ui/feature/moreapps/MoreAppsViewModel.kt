@@ -4,7 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
+import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.OpenApp
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.ShowAppInstall
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsIntent.OnAppClick
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -18,6 +20,7 @@ class MoreAppsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val hapticFeedback: HapticFeedback,
     private val getMoreAppsUseCase: GetMoreAppsUseCase,
+    private val isAppInstalledUseCase: IsAppInstalledUseCase,
 ) : MviViewModel<MoreAppsIntent, MoreAppsState>(
     savedStateHandle,
     MoreAppsState()
@@ -35,7 +38,15 @@ class MoreAppsViewModel @Inject constructor(
 
     private fun onAppClick(app: AppModel) {
         hapticFeedback.vibrateLow()
-        sendEffect(ShowAppInstall(app))
+        isAppInstalledUseCase(app.appId).onEach {
+            it.onSuccess { isInstalled ->
+                if (isInstalled) {
+                    sendEffect(OpenApp(app))
+                } else {
+                    sendEffect(ShowAppInstall(app))
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun loadApps() {
