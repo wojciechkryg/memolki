@@ -2,8 +2,10 @@ package com.wojdor.memolki.ui.feature.menu
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
@@ -27,7 +29,8 @@ class MenuViewModel @Inject constructor(
     private val hapticFeedback: HapticFeedback,
     private val googlePlayGames: GooglePlayGames,
     private val getMenuUseCase: GetMenuUseCase,
-    private val getMoreAppsUseCase: GetMoreAppsUseCase
+    private val getMoreAppsUseCase: GetMoreAppsUseCase,
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
     MenuState()
@@ -67,15 +70,27 @@ class MenuViewModel @Inject constructor(
     }
 
     private fun loadMenu() {
-        combine(getMenuUseCase(), getMoreAppsUseCase()) { menuResult, moreAppsResult ->
-            menuResult to moreAppsResult
-        }.onEach { (menuResult, moreAppsResult) ->
+        combine(
+            getMenuUseCase(),
+            getMoreAppsUseCase(),
+            getTotalGamesPlayedUseCase()
+        ) { menuResult, moreAppsResult, totalGamesPlayedResult ->
+            Triple(menuResult, moreAppsResult, totalGamesPlayedResult)
+        }.onEach { (menuResult, moreAppsResult, totalGamesPlayedResult) ->
             sendState {
+                var randomApp: AppModel? = null
+                if (totalGamesPlayedResult.getOrDefault(0) >= MINIMUM_GAMES_PLAYED) {
+                    randomApp = moreAppsResult.getOrDefault(emptyList()).random()
+                }
                 copy(
                     menu = menuResult.getOrNull() ?: menu,
-                    otherAppModel = moreAppsResult.getOrNull()?.random() ?: otherAppModel
+                    otherAppModel = randomApp ?: otherAppModel
                 )
             }
         }.launchIn(viewModelScope)
+    }
+
+    companion object {
+        private const val MINIMUM_GAMES_PLAYED = 3
     }
 }

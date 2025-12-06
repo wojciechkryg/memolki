@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,7 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.AppModel
+import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
@@ -38,28 +39,30 @@ fun MoreAppsItem(
             text = stringResource(R.string.more).lowercase(),
             style = MaterialTheme.typography.headlineLarge
         )
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = throttleClick(onClick),
-            shape = RoundedCornerShape(16.dp),
-            contentPadding = PaddingValues(12.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(appModel.colorRes),
-                contentColor = Color.Black,
-                disabledContainerColor = Color.Transparent
-            )
-        ) {
-            Row {
-                Image(
-                    modifier = Modifier.height(48.dp),
-                    painter = painterResource(appModel.imageRes),
-                    contentDescription = null
+        CardBorder {
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = throttleClick(onClick),
+                shape = CardShape,
+                contentPadding = PaddingValues(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(appModel.colorRes),
+                    contentColor = Color.Black,
+                    disabledContainerColor = Color.Transparent
                 )
-                Text(
-                    modifier = Modifier.padding(start = 8.dp),
-                    text = stringResource(appModel.textRes),
-                    style = MaterialTheme.typography.headlineMedium
-                )
+            ) {
+                Row {
+                    Image(
+                        modifier = Modifier.height(48.dp),
+                        painter = painterResource(appModel.imageRes),
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 8.dp),
+                        text = stringResource(appModel.textRes),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
             }
         }
     }

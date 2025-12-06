@@ -96,6 +96,10 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
     tasks.matching {
         it.name.contains("release", ignoreCase = true) &&
                 (it.name.startsWith("assemble") || it.name.startsWith("bundle"))
