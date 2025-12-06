@@ -12,9 +12,11 @@ import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenMoreAppsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -128,6 +130,18 @@ class MenuViewModelTest : AppTest() {
 
                 // then
                 assertEquals(OpenSettingsScreen, awaitItem())
+            }
+        }
+
+    @Test
+    fun `when OnMoreAppsClick intent is send then the OpenMoreAppsScreen effect is send`() =
+        runTest {
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(OnMoreAppsClick)
+
+                // then
+                assertEquals(OpenMoreAppsScreen, awaitItem())
             }
         }
 }

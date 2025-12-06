@@ -43,7 +43,7 @@ fun CollectionContent(
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview
 private fun CollectionPreview() {
     AppTheme {
         CollectionContent(

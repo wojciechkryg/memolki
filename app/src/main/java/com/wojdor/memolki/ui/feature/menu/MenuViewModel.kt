@@ -8,12 +8,10 @@ import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
-import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
-import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
-import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.*
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -46,6 +44,7 @@ class MenuViewModel @Inject constructor(
             OnCollectionClick -> onCollectionClick()
             OnLeaderboardClick -> onLeaderboardClick()
             OnSettingsClick -> onSettingsClick()
+            OnMoreAppsClick -> onMoreAppsClick()
         }
     }
 
@@ -69,6 +68,11 @@ class MenuViewModel @Inject constructor(
         sendEffect(OpenSettingsScreen)
     }
 
+    private fun onMoreAppsClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(OpenMoreAppsScreen)
+    }
+
     private fun loadMenu() {
         combine(
             getMenuUseCase(),
@@ -77,11 +81,11 @@ class MenuViewModel @Inject constructor(
         ) { menuResult, moreAppsResult, totalGamesPlayedResult ->
             Triple(menuResult, moreAppsResult, totalGamesPlayedResult)
         }.onEach { (menuResult, moreAppsResult, totalGamesPlayedResult) ->
+            var randomApp: AppModel? = null
+            if (totalGamesPlayedResult.getOrDefault(0) >= MINIMUM_GAMES_PLAYED) {
+                randomApp = moreAppsResult.getOrDefault(emptyList()).random()
+            }
             sendState {
-                var randomApp: AppModel? = null
-                if (totalGamesPlayedResult.getOrDefault(0) >= MINIMUM_GAMES_PLAYED) {
-                    randomApp = moreAppsResult.getOrDefault(emptyList()).random()
-                }
                 copy(
                     menu = menuResult.getOrNull() ?: menu,
                     otherAppModel = randomApp ?: otherAppModel

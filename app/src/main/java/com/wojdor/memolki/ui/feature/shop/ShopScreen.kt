@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
@@ -23,18 +22,16 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ShopScreen(
-    viewModel: ShopViewModel = hiltViewModel(),
-    navController: NavController
+    viewModel: ShopViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-    HandleEffect(viewModel, navController)
+    HandleEffect(viewModel)
     HandleState(viewModel, state)
 }
 
 @Composable
 private fun HandleEffect(
-    viewModel: ShopViewModel,
-    navController: NavController
+    viewModel: ShopViewModel
 ) {
     val activity = LocalActivity.current
     CollectUiEffects(viewModel) { effect ->

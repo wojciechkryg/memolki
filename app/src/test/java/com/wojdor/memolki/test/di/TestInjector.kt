@@ -40,6 +40,7 @@ import com.wojdor.memolki.ui.feature.collection.CollectionViewModelTest
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModelTest
 import com.wojdor.memolki.ui.feature.game.GameViewModelTest
 import com.wojdor.memolki.ui.feature.menu.MenuViewModelTest
+import com.wojdor.memolki.ui.feature.moreapps.MoreAppsViewModelTest
 import com.wojdor.memolki.ui.feature.settings.SettingsViewModelTest
 import com.wojdor.memolki.ui.feature.shop.ShopViewModelTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -88,4 +89,5 @@ interface TestInjector {
     fun inject(test: CanUnlockNewCardUseCaseTest)
     fun inject(test: GetMoreAppsUseCaseTest)
     fun inject(test: GetTotalGamesPlayedUseCaseTest)
+    fun inject(test: MoreAppsViewModelTest)
 }
