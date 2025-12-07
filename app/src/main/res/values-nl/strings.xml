@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_fruit_half">memolki • fruit</string>
+    <string name="app_name_vegetable_half">memolki • groenten</string>
+    <string name="app_name_mammal_side">memolki • zoogdieren</string>
+
+    <string name="suffix_fruit_half">• fruit</string>
+    <string name="suffix_vegetable_half">• groenten</string>
+    <string name="suffix_mammal_side">• zoogdieren</string>
+
     <string name="new_game">Nieuw spel</string>
     <string name="collection">Collectie</string>
     <string name="settings">Instellingen</string>
+    <string name="more">Meer?</string>
     <string name="menu">Menu</string>
     <string name="play_again">Opnieuw spelen</string>
     <string name="shop">Winkel</string>

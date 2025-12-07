@@ -9,11 +9,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.app.navigateToChooseLevel
 import com.wojdor.memolki.ui.app.navigateToCollection
-import com.wojdor.memolki.ui.app.navigateToOptions
+import com.wojdor.memolki.ui.app.navigateToMoreApps
+import com.wojdor.memolki.ui.app.navigateToSettings
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.menu.component.MenuContent
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -47,7 +49,8 @@ private fun HandleEffect(
                 )
             }
 
-            MenuEffect.OpenSettingsScreen -> navController.navigateToOptions()
+            MenuEffect.OpenSettingsScreen -> navController.navigateToSettings()
+            MenuEffect.OpenMoreAppsScreen -> navController.navigateToMoreApps()
         }
     }
 }
@@ -79,6 +82,7 @@ private fun HandleState(
         onCollectionClick = { viewModel.sendIntent(MenuIntent.OnCollectionClick) },
         onLeaderboardClick = { viewModel.sendIntent(MenuIntent.OnLeaderboardClick) },
         onSettingsClick = { viewModel.sendIntent(MenuIntent.OnSettingsClick) },
+        onMoreAppsClick = { viewModel.sendIntent(MenuIntent.OnMoreAppsClick) },
     )
     MenuScreen(state, callbacks)
 }
@@ -103,7 +107,8 @@ private fun MenuScreenPreview() {
                     MenuModel.NewGame,
                     MenuModel.Collection,
                     MenuModel.Settings
-                )
+                ),
+                AppModel.VegetableHalf
             ),
             callbacks = MenuCallbacks()
         )

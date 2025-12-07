@@ -20,6 +20,7 @@ import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.GameScreen
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuScreen
+import com.wojdor.memolki.ui.feature.moreapps.MoreAppsScreen
 import com.wojdor.memolki.ui.feature.settings.SettingsScreen
 import com.wojdor.memolki.ui.feature.shop.ShopScreen
 
@@ -31,6 +32,7 @@ fun AppNavigation() {
         gameFlow(navController)
         collectionFlow(navController)
         settingsScreen()
+        moreAppsScreen()
     }
 }
 
@@ -41,7 +43,8 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
             when (initialState.destination.route) {
                 Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideInLeft
                 Route.COLLECTION -> slideInRight
-                Route.OPTIONS -> slideInTop
+                Route.SETTINGS -> slideInTop
+                Route.MORE_APPS -> slideInBottom
                 else -> slideInBottom
             }
         },
@@ -49,7 +52,8 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
             when (targetState.destination.route) {
                 Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideOutLeft
                 Route.COLLECTION -> slideOutRight
-                Route.OPTIONS -> slideOutTop
+                Route.SETTINGS -> slideOutTop
+                Route.MORE_APPS -> slideOutBottom
                 else -> slideOutBottom
             }
         }
@@ -136,7 +140,7 @@ private fun NavGraphBuilder.collectionFlow(navController: NavController) {
         route = RouteFlow.COLLECTION
     ) {
         collectionScreen(navController)
-        shopScreen(navController)
+        shopScreen()
         cardPairDetailsScreen(navController)
     }
 }
@@ -166,13 +170,13 @@ private fun NavGraphBuilder.collectionScreen(navController: NavController) {
     }
 }
 
-private fun NavGraphBuilder.shopScreen(navController: NavController) {
+private fun NavGraphBuilder.shopScreen() {
     composable(
         route = Route.SHOP,
         enterTransition = { slideInTop },
         exitTransition = { slideOutTop }
     ) {
-        ShopScreen(navController = navController)
+        ShopScreen()
     }
 }
 
@@ -190,11 +194,21 @@ private fun NavGraphBuilder.cardPairDetailsScreen(navController: NavController) 
 
 private fun NavGraphBuilder.settingsScreen() {
     composable(
-        route = Route.OPTIONS,
+        route = Route.SETTINGS,
         enterTransition = { slideInBottom },
         exitTransition = { slideOutBottom }
     ) {
         SettingsScreen()
+    }
+}
+
+private fun NavGraphBuilder.moreAppsScreen() {
+    composable(
+        route = Route.MORE_APPS,
+        enterTransition = { slideInTop },
+        exitTransition = { slideOutTop }
+    ) {
+        MoreAppsScreen()
     }
 }
 
@@ -208,8 +222,12 @@ fun NavController.navigateToCollection() {
     }
 }
 
-fun NavController.navigateToOptions() {
-    navigate(Route.OPTIONS)
+fun NavController.navigateToSettings() {
+    navigate(Route.SETTINGS)
+}
+
+fun NavController.navigateToMoreApps() {
+    navigate(Route.MORE_APPS)
 }
 
 fun NavController.navigateToGame() {
@@ -291,7 +309,8 @@ private object Route {
     const val COLLECTION = "collection"
     const val SHOP = "shop"
     const val CARD_PAIR_DETAILS = "card_pair_details"
-    const val OPTIONS = "options"
+    const val SETTINGS = "settings"
+    const val MORE_APPS = "more_apps"
 }
 
 private object RouteFlow {

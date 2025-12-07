@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_fruit_half">memolki • buah</string>
+    <string name="app_name_vegetable_half">memolki • sayuran</string>
+    <string name="app_name_mammal_side">memolki • mamalia</string>
+
+    <string name="suffix_fruit_half">• buah</string>
+    <string name="suffix_vegetable_half">• sayuran</string>
+    <string name="suffix_mammal_side">• mamalia</string>
+
     <string name="new_game">Permainan baru</string>
     <string name="collection">Koleksi</string>
     <string name="settings">Pengaturan</string>
+    <string name="more">Lagi?</string>
     <string name="menu">Menu</string>
     <string name="play_again">Main lagi</string>
     <string name="shop">Toko</string>

@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_fruit_half">memolki • vaisiai</string>
+    <string name="app_name_vegetable_half">memolki • daržovės</string>
+    <string name="app_name_mammal_side">memolki • žinduoliai</string>
+
+    <string name="suffix_fruit_half">• vaisiai</string>
+    <string name="suffix_vegetable_half">• daržovės</string>
+    <string name="suffix_mammal_side">• žinduoliai</string>
+
     <string name="new_game">Naujas žaidimas</string>
     <string name="collection">Kolekcija</string>
     <string name="settings">Nustatymai</string>
+    <string name="more">Daugiau?</string>
     <string name="menu">Meniu</string>
     <string name="play_again">Žaisti dar kartą</string>
     <string name="shop">Parduotuvė</string>

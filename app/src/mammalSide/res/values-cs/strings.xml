@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">memolki • savci</string>
+    <string name="app_name">@string/mammal_side_app_name</string>
 
     <string name="domestic_dog">Pes domácí</string>
     <string name="domestic_cat">Kočka domácí</string>

@@ -223,7 +223,7 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
                 val thirdCardToClick = awaitItem().cards[3]
                 sut.sendIntent(GameIntent.OnBackCardClick(thirdCardToClick))
-                skipItems(1)
+                skipItems(3)
 
                 // then
                 val result = awaitItem()
@@ -239,6 +239,7 @@ class GameViewModelTest : AppTest() {
                     assertFalse(isFlippedFront)
                     assertFalse(isPairMatched)
                 }
+                assertFalse(result.shouldShowCardText)
             }
             userRepository.getTotalCardPairsMatched().test {
                 assertEquals(1, awaitItem())
@@ -260,7 +261,7 @@ class GameViewModelTest : AppTest() {
                 // when
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
-                skipItems(1)
+                skipItems(2)
 
                 // then
                 val result = awaitItem()
@@ -280,6 +281,7 @@ class GameViewModelTest : AppTest() {
                     assertTrue(isFlippedFront)
                     assertTrue(isPairMatched)
                 }
+                assertTrue(result.shouldShowCardText)
             }
             userRepository.getTotalCardPairsMatched().test {
                 skipItems(1)
@@ -342,12 +344,13 @@ class GameViewModelTest : AppTest() {
                 sut.uiEffect.test {
                     skipItems(1)
                     assertTrue(awaitItem() is GameEffect.SendTotalCardPairsMatchedScore)
-                    skipItems(2)
+                    skipItems(1)
                     assertEquals(
                         GameEffect.OpenEndGameScreen(LevelModel.Grid2x3()),
                         awaitItem()
                     )
                 }
+                skipItems(2)
             }
             userRepository.getTotalCardPairsMatched().test {
                 assertEquals(3, awaitItem())

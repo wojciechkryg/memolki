@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_fruit_half">memolki • フルーツ</string>
+    <string name="app_name_vegetable_half">memolki • 野菜</string>
+    <string name="app_name_mammal_side">memolki • 哺乳類</string>
+
+    <string name="suffix_fruit_half">• フルーツ</string>
+    <string name="suffix_vegetable_half">• 野菜</string>
+    <string name="suffix_mammal_side">• 哺乳類</string>
+
     <string name="new_game">新しいゲーム</string>
     <string name="collection">コレクション</string>
     <string name="settings">設定</string>
+    <string name="more">もっと？</string>
     <string name="menu">メニュー</string>
     <string name="play_again">もう一度プレイ</string>
     <string name="shop">ショップ</string>

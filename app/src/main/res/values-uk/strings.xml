@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_fruit_half">memolki • фрукти</string>
+    <string name="app_name_vegetable_half">memolki • овочі</string>
+    <string name="app_name_mammal_side">memolki • ссавці</string>
+
+    <string name="suffix_fruit_half">• фрукти</string>
+    <string name="suffix_vegetable_half">• овочі</string>
+    <string name="suffix_mammal_side">• ссавці</string>
+
     <string name="new_game">Нова гра</string>
     <string name="collection">Колекція</string>
     <string name="settings">Налаштування</string>
+    <string name="more">Більше?</string>
     <string name="menu">Меню</string>
     <string name="play_again">Грати знову</string>
     <string name="shop">Магазин</string>
