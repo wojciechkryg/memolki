@@ -53,6 +53,7 @@ class GameViewModel @Inject constructor(
 
     private fun onBackCardClick(card: CardModel) {
         hapticFeedback.vibrateStrong()
+        hideCardText()
         if (isTooManyFlippedToFrontUnmatchedCards()) {
             immediatelyFlipToBackUnmatchedCards()
         }
@@ -70,14 +71,9 @@ class GameViewModel @Inject constructor(
     ) {
         if (isPressed && card is CardModel.Image && card.isPairMatched) {
             hapticFeedback.vibrateLow()
-            sendState {
-                copy(
-                    lastCardPressed = card,
-                    shouldShowCardText = true
-                )
-            }
+            showCardText(card)
         } else {
-            sendState { copy(shouldShowCardText = false) }
+            hideCardText()
         }
     }
 
@@ -99,23 +95,28 @@ class GameViewModel @Inject constructor(
             val firstCard = frontUnmatchedCards[0]
             val secondCard = frontUnmatchedCards[1]
             if (areCardsMatched(firstCard, secondCard)) {
-                val matchedCards = frontUnmatchedCards.map { cardToMatch ->
-                    when (cardToMatch) {
-                        is CardModel.Text -> cardToMatch.copy(isPairMatched = true)
-                        is CardModel.Image -> cardToMatch.copy(isPairMatched = true)
-                        is CardModel.Empty -> cardToMatch
-                    }
-                }
-                updateStateWith(matchedCards)
-                incrementTotalCardPairsMatchedUseCase().onEach { result ->
-                    result.onSuccess {
-                        sendEffect(GameEffect.SendTotalCardPairsMatchedScore(googlePlayGames, it))
-                        delay(250L)
-                        cardPairMatchedPlayer.play()
-                    }
-                }.launchIn(viewModelScope)
+                matchCards(frontUnmatchedCards)
             }
         }
+    }
+
+    private fun matchCards(frontUnmatchedCards: List<CardModel>) {
+        val matchedCards = frontUnmatchedCards.map { cardToMatch ->
+            when (cardToMatch) {
+                is CardModel.Text -> cardToMatch.copy(isPairMatched = true)
+                is CardModel.Image -> cardToMatch.copy(isPairMatched = true)
+                is CardModel.Empty -> cardToMatch
+            }
+        }
+        updateStateWith(matchedCards)
+        showCardText(matchedCards)
+        incrementTotalCardPairsMatchedUseCase().onEach { result ->
+            result.onSuccess {
+                sendEffect(GameEffect.SendTotalCardPairsMatchedScore(googlePlayGames, it))
+                delay(250L)
+                cardPairMatchedPlayer.play()
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun areCardsMatched(
@@ -197,6 +198,25 @@ class GameViewModel @Inject constructor(
             cardsToUpdate.find { it.pairId == card.pairId && it.id == card.id } ?: card
         }
         sendState { copy(cards = updatedCards) }
+    }
+
+    private fun showCardText(card: CardModel) {
+        sendState {
+            copy(
+                lastCardPressed = card,
+                shouldShowCardText = true
+            )
+        }
+    }
+
+    private fun showCardText(matchedCards: List<CardModel>) {
+        if (matchedCards.all { it is CardModel.Image }) {
+            showCardText(matchedCards.first())
+        }
+    }
+
+    private fun hideCardText() {
+        sendState { copy(shouldShowCardText = false) }
     }
 
     companion object {
