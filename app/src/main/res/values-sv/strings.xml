@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_fruit_half">memolki • frukt</string>
+    <string name="app_name_vegetable_half">memolki • grönsaker</string>
+    <string name="app_name_mammal_side">memolki • däggdjur</string>
+
+    <string name="suffix_fruit_half">• frukt</string>
+    <string name="suffix_vegetable_half">• grönsaker</string>
+    <string name="suffix_mammal_side">• däggdjur</string>
+
     <string name="new_game">Nytt spel</string>
     <string name="collection">Samling</string>
     <string name="settings">Inställningar</string>
+    <string name="more">Mer?</string>
     <string name="menu">Meny</string>
     <string name="play_again">Spela igen</string>
     <string name="shop">Butik</string>

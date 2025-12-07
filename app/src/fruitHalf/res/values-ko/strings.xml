@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">memolki • 과일</string>
+    <string name="app_name">@string/app_name_fruit_half</string>
 
     <string name="banana">바나나</string>
     <string name="apple">사과</string>

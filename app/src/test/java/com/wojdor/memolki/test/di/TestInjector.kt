@@ -8,22 +8,24 @@ import com.wojdor.memolki.data.repository.SettingsRepositoryTest
 import com.wojdor.memolki.data.repository.UserRepositoryTest
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCaseTest
-import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMenuUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCaseTest
+import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCaseTest
@@ -39,6 +41,7 @@ import com.wojdor.memolki.ui.feature.collection.CollectionViewModelTest
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModelTest
 import com.wojdor.memolki.ui.feature.game.GameViewModelTest
 import com.wojdor.memolki.ui.feature.menu.MenuViewModelTest
+import com.wojdor.memolki.ui.feature.moreapps.MoreAppsViewModelTest
 import com.wojdor.memolki.ui.feature.settings.SettingsViewModelTest
 import com.wojdor.memolki.ui.feature.shop.ShopViewModelTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -85,4 +88,8 @@ interface TestInjector {
     fun inject(test: UnlockAllNewCardPairsIfPurchasedUseCaseTest)
     fun inject(test: CalculateCoinsForShopAdUseCaseTest)
     fun inject(test: CanUnlockNewCardUseCaseTest)
+    fun inject(test: GetMoreAppsUseCaseTest)
+    fun inject(test: GetTotalGamesPlayedUseCaseTest)
+    fun inject(test: MoreAppsViewModelTest)
+    fun inject(test: IsAppInstalledUseCaseTest)
 }

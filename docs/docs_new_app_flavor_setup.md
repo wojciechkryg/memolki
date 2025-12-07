@@ -3,6 +3,8 @@
 1. Setup new flavor in the app:
     - Go to file `app/build.gradle.kts`
     - Add the new flavor to the `flavorConfigs` list
+    - Add the new flavor package name to the `queries` in `AndroidManifest.xml`
+    - Add the new app in the `AppModel` and include it in the `all` function
 
 1. Setup new flavor in the CI:
     - Go to file `.github/workflows/merge.yml`

@@ -8,4 +8,5 @@ sealed class MenuEffect : UiEffect {
     object OpenCollectionScreen : MenuEffect()
     data class OpenLeaderboardScreen(val googlePlayGames: GooglePlayGames) : MenuEffect()
     object OpenSettingsScreen : MenuEffect()
+    object OpenMoreAppsScreen : MenuEffect()
 }

@@ -1,5 +1,6 @@
 package com.wojdor.memolki.ui.theme
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
@@ -10,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.wojdor.memolki.R
 
 @Composable
-fun appTypography() = Typography().run {
+fun appTypography() = MaterialTheme.typography.run {
     copy(
         displayLarge = displayLarge.withAppFont().withAppColor(),
         displayMedium = displayMedium.withAppFont().withAppColor(),

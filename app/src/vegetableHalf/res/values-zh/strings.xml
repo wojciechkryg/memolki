@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">memolki • 蔬菜</string>
+    <string name="app_name">@string/vegetable_half_app_name</string>
 
     <string name="potato">土豆</string>
     <string name="tomato">番茄</string>

@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_fruit_half">memolki • gyümölcs</string>
+    <string name="app_name_vegetable_half">memolki • zöldségek</string>
+    <string name="app_name_mammal_side">memolki • emlősök</string>
+
+    <string name="suffix_fruit_half">• gyümölcs</string>
+    <string name="suffix_vegetable_half">• zöldségek</string>
+    <string name="suffix_mammal_side">• emlősök</string>
+
     <string name="new_game">Új játék</string>
     <string name="collection">Gyűjtemény</string>
     <string name="settings">Beállítások</string>
+    <string name="more">Több?</string>
     <string name="menu">Menü</string>
     <string name="play_again">Játssz újra</string>
     <string name="shop">Bolt</string>

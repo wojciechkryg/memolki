@@ -34,6 +34,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.ui.component.FadeEffectBottom
+import com.wojdor.memolki.ui.component.FadeEffectTop
 import com.wojdor.memolki.ui.component.Flippable
 import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
 import com.wojdor.memolki.ui.feature.collection.CollectionState
@@ -217,41 +219,6 @@ private fun BackSide(
     }
 }
 
-@Composable
-private fun FadeEffectTop(modifier: Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(FADE_EFFECT_HEIGHT)
-            .background(
-                brush = Brush.verticalGradient(
-                    listOf(
-                        colorResource(R.color.primary),
-                        Color.Transparent
-                    )
-                )
-            )
-    )
-}
-
-@Composable
-private fun FadeEffectBottom(modifier: Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(FADE_EFFECT_HEIGHT)
-            .background(
-                brush = Brush.verticalGradient(
-                    listOf(
-                        Color.Transparent,
-                        colorResource(R.color.primary)
-                    )
-                )
-            )
-    )
-}
-
-private val FADE_EFFECT_HEIGHT = 6.dp
 private const val ALPHA_DURATION = 300
 private const val ON_FRONT_CARDS_CLICK_THROTTLE = 500L
 private const val INDEX_NOT_FOUND = -1

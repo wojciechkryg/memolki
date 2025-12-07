@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">memolki • pattedyr</string>
+    <string name="app_name">@string/mammal_side_app_name</string>
 
     <string name="domestic_dog">Tamhund</string>
     <string name="domestic_cat">Tamkatt</string>

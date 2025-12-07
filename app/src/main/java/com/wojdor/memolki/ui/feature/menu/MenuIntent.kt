@@ -7,4 +7,5 @@ sealed class MenuIntent : UiIntent {
     object OnCollectionClick : MenuIntent()
     object OnLeaderboardClick : MenuIntent()
     object OnSettingsClick : MenuIntent()
+    object OnMoreAppsClick : MenuIntent()
 }
