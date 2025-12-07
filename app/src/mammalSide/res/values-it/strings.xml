@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">@string/app_name_vegetable_half</string>
+    <string name="app_name">@string/app_name_mammal_side</string>
 
     <string name="domestic_dog">Cane domestico</string>
     <string name="domestic_cat">Gatto domestico</string>
