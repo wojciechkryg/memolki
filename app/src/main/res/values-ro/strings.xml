@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • fructe</string>
     <string name="app_name_vegetable_half">memolki • legume</string>
     <string name="app_name_mammal_side">memolki • mamifere</string>
+    <string name="app_name_bird_side">memolki • păsări</string>
 
     <string name="suffix_fruit_half">• fructe</string>
     <string name="suffix_vegetable_half">• legume</string>
     <string name="suffix_mammal_side">• mamifere</string>
+    <string name="suffix_bird_side">• păsări</string>
 
     <string name="new_game">Joc nou</string>
     <string name="collection">Colecție</string>

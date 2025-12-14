@@ -8,6 +8,7 @@
         <package android:name="com.wojdor.memolki.fruithalf" />
         <package android:name="com.wojdor.memolki.vegetablehalf" />
         <package android:name="com.wojdor.memolki.mammalside" />
+        <package android:name="com.wojdor.memolki.birdside" />
     </queries>
 
     <application

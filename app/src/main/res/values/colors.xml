@@ -3,7 +3,8 @@
     <color name="font">#000000</color>
     <color name="border">#000000</color>
 
-    <color name="fruit_half_primary">#FFEAA1</color>
-    <color name="vegetable_half_primary">#E6A0A0</color>
-    <color name="mammal_side_primary">#E2BA8B</color>
+    <color name="primary_fruit_half">#FFEAA1</color>
+    <color name="primary_vegetable_half">#E6A0A0</color>
+    <color name="primary_mammal_side">#E2BA8B</color>
+    <color name="primary_bird_side">#B1DBE7</color>
 </resources>
