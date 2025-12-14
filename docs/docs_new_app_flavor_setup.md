@@ -60,6 +60,11 @@
     - go to file `.github/workflows/merge.yml`
     - add the new flavor to the `flavor` matrix
     - add flavor's billing key to the `Build with Gradle` step
+    - go to https://play.google.com/console/u/0/developers/9083635429558058910/app/4974380132955156236/monetization-setup
+    - copy the public RSA billing key
+    - add it to the local `/secrets.properties` file
+    - go to GitHub to Settings/Secrets and variables/Actions
+    - add the public RSA billing key
 
 1. Setup pushing builds from CI to Google Play Console :
     - go to https://play.google.com/console/u/0/developers/9083635429558058910/users-and-permissions/google-play-store-deploy%40memolki.iam.gserviceaccount.com
