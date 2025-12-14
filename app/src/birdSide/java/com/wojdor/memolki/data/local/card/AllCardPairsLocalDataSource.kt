@@ -54,21 +54,6 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             )
         ),
         CardPairEntity(
-            id = "peregrine_falcon",
-            pair = Pair(
-                CardEntity.Image(
-                    id = "peregrine_falcon_side",
-                    textRes = R.string.peregrine_falcon,
-                    imageRes = R.drawable.img_peregrine_falcon_side
-                ),
-                CardEntity.Image(
-                    id = "peregrine_falcon_front",
-                    textRes = R.string.peregrine_falcon,
-                    imageRes = R.drawable.img_peregrine_falcon_front
-                )
-            )
-        ),
-        CardPairEntity(
             id = "mute_swan",
             pair = Pair(
                 CardEntity.Image(
@@ -80,6 +65,36 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
                     id = "mute_swan_front",
                     textRes = R.string.mute_swan,
                     imageRes = R.drawable.img_mute_swan_front
+                )
+            )
+        ),
+        CardPairEntity(
+            id = "mallard",
+            pair = Pair(
+                CardEntity.Image(
+                    id = "mallard_side",
+                    textRes = R.string.mallard,
+                    imageRes = R.drawable.img_mallard_side
+                ),
+                CardEntity.Image(
+                    id = "mallard_front",
+                    textRes = R.string.mallard,
+                    imageRes = R.drawable.img_mallard_front
+                )
+            )
+        ),
+        CardPairEntity(
+            id = "peregrine_falcon",
+            pair = Pair(
+                CardEntity.Image(
+                    id = "peregrine_falcon_side",
+                    textRes = R.string.peregrine_falcon,
+                    imageRes = R.drawable.img_peregrine_falcon_side
+                ),
+                CardEntity.Image(
+                    id = "peregrine_falcon_front",
+                    textRes = R.string.peregrine_falcon,
+                    imageRes = R.drawable.img_peregrine_falcon_front
                 )
             )
         ),
@@ -470,21 +485,6 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
                     id = "marabou_stork_front",
                     textRes = R.string.marabou_stork,
                     imageRes = R.drawable.img_marabou_stork_front
-                )
-            )
-        ),
-        CardPairEntity(
-            id = "mallard",
-            pair = Pair(
-                CardEntity.Image(
-                    id = "mallard_side",
-                    textRes = R.string.mallard,
-                    imageRes = R.drawable.img_mallard_side
-                ),
-                CardEntity.Image(
-                    id = "mallard_front",
-                    textRes = R.string.mallard,
-                    imageRes = R.drawable.img_mallard_front
                 )
             )
         ),
