@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • meyve</string>
     <string name="app_name_vegetable_half">memolki • sebzeler</string>
     <string name="app_name_mammal_side">memolki • memeliler</string>
+    <string name="app_name_bird_side">memolki • kuşlar</string>
 
     <string name="suffix_fruit_half">• meyve</string>
     <string name="suffix_vegetable_half">• sebzeler</string>
     <string name="suffix_mammal_side">• memeliler</string>
+    <string name="suffix_bird_side">• kuşlar</string>
 
     <string name="new_game">Yeni oyun</string>
     <string name="collection">Koleksiyon</string>

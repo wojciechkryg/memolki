@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • 과일</string>
     <string name="app_name_vegetable_half">memolki • 야채</string>
     <string name="app_name_mammal_side">memolki • 포유류</string>
+    <string name="app_name_bird_side">memolki • 새</string>
 
     <string name="suffix_fruit_half">• 과일</string>
     <string name="suffix_vegetable_half">• 야채</string>
     <string name="suffix_mammal_side">• 포유류</string>
+    <string name="suffix_bird_side">• 새</string>
 
     <string name="new_game">새 게임</string>
     <string name="collection">컬렉션</string>

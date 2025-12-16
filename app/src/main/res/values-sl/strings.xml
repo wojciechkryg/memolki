@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • sadje</string>
     <string name="app_name_vegetable_half">memolki • zelenjava</string>
     <string name="app_name_mammal_side">memolki • sesalci</string>
+    <string name="app_name_bird_side">memolki • ptice</string>
 
     <string name="suffix_fruit_half">• sadje</string>
     <string name="suffix_vegetable_half">• zelenjava</string>
     <string name="suffix_mammal_side">• sesalci</string>
+    <string name="suffix_bird_side">• ptice</string>
 
     <string name="new_game">Nova igra</string>
     <string name="collection">Zbirka</string>

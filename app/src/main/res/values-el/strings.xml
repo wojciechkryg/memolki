@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • φρούτα</string>
     <string name="app_name_vegetable_half">memolki • λαχανικά</string>
     <string name="app_name_mammal_side">memolki • θηλαστικά</string>
+    <string name="app_name_bird_side">memolki • Πουλιά</string>
 
     <string name="suffix_fruit_half">• φρούτα</string>
     <string name="suffix_vegetable_half">• λαχανικά</string>
     <string name="suffix_mammal_side">• θηλαστικά</string>
+    <string name="suffix_bird_side">• Πουλιά</string>
 
     <string name="new_game">Νέο παιχνίδι</string>
     <string name="collection">Συλλογή</string>

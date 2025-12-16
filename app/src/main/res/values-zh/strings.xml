@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • 水果</string>
     <string name="app_name_vegetable_half">memolki • 蔬菜</string>
     <string name="app_name_mammal_side">memolki • 哺乳动物</string>
+    <string name="app_name_bird_side">memolki • 鸟类</string>
 
     <string name="suffix_fruit_half">• 水果</string>
     <string name="suffix_vegetable_half">• 蔬菜</string>
     <string name="suffix_mammal_side">• 哺乳动物</string>
+    <string name="suffix_bird_side">• 鸟类</string>
 
     <string name="new_game">新游戏</string>
     <string name="collection">收藏</string>

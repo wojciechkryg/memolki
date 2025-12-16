@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • augļi</string>
     <string name="app_name_vegetable_half">memolki • dārzeņi</string>
     <string name="app_name_mammal_side">memolki • zīdītāji</string>
+    <string name="app_name_bird_side">memolki • putni</string>
 
     <string name="suffix_fruit_half">• augļi</string>
     <string name="suffix_vegetable_half">• dārzeņi</string>
     <string name="suffix_mammal_side">• zīdītāji</string>
+    <string name="suffix_bird_side">• putni</string>
 
     <string name="new_game">Jauna spēle</string>
     <string name="collection">Kolekcija</string>
