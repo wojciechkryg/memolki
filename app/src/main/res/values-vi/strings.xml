@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • trái cây</string>
     <string name="app_name_vegetable_half">memolki • rau</string>
     <string name="app_name_mammal_side">memolki • động vật có vú</string>
+    <string name="app_name_bird_side">memolki • chim</string>
 
     <string name="suffix_fruit_half">• trái cây</string>
     <string name="suffix_vegetable_half">• rau</string>
     <string name="suffix_mammal_side">• động vật có vú</string>
+    <string name="suffix_bird_side">• chim</string>
 
     <string name="new_game">Trò chơi mới</string>
     <string name="collection">Bộ sưu tập</string>

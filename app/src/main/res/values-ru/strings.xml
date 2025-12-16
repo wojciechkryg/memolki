@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • фрукты</string>
     <string name="app_name_vegetable_half">memolki • овощи</string>
     <string name="app_name_mammal_side">memolki • млекопитающие</string>
+    <string name="app_name_bird_side">memolki • птицы</string>
 
     <string name="suffix_fruit_half">• фрукты</string>
     <string name="suffix_vegetable_half">• овощи</string>
     <string name="suffix_mammal_side">• млекопитающие</string>
+    <string name="suffix_bird_side">• птицы</string>
 
     <string name="new_game">Новая игра</string>
     <string name="collection">Коллекция</string>

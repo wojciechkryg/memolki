@@ -23,7 +23,7 @@ jobs:
     if: "!startsWith(needs.vars.outputs.commit_title, 'chore/')"
     strategy:
       matrix:
-        flavor: [ "fruitHalf", "vegetableHalf", "mammalSide" ]
+        flavor: [ "fruitHalf", "vegetableHalf", "mammalSide", "birdSide" ]
     runs-on: ubuntu-latest
     outputs:
       version_name: ${{ steps.version.outputs.version_name }}

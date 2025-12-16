@@ -3,10 +3,12 @@
     <string name="app_name_fruit_half">memolki • frukt</string>
     <string name="app_name_vegetable_half">memolki • grønnsaker</string>
     <string name="app_name_mammal_side">memolki • pattedyr</string>
+    <string name="app_name_bird_side">memolki • fugler</string>
 
     <string name="suffix_fruit_half">• frukt</string>
     <string name="suffix_vegetable_half">• grønnsaker</string>
     <string name="suffix_mammal_side">• pattedyr</string>
+    <string name="suffix_bird_side">• fugler</string>
 
     <string name="new_game">Nytt spill</string>
     <string name="collection">Samling</string>
