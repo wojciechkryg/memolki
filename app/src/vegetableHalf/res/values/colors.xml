@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">@color/vegetable_half_primary</color>
+    <color name="primary">@color/primary_vegetable_half</color>
 </resources>
