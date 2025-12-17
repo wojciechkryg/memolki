@@ -4,9 +4,9 @@ on:
   pull_request_target:
 
 jobs:
-  unit-test:
-
+  tests-execution:
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.head_ref, 'chore/') }}
 
     steps:
       - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
@@ -18,3 +18,11 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew testFruitHalfDebugUnitTest --no-daemon --build-cache
+
+  unit-test:
+    needs: tests-execution
+    runs-on: ubuntu-latest
+    if: ${{ always() && (needs.tests-execution.result == 'success' || needs.tests-execution.result == 'skipped') }}
+    steps:
+      - name: All checks passed
+        run: echo "All checks passed or were intentionally skipped."

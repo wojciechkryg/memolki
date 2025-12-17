@@ -2,7 +2,8 @@
 activityCompose = "1.12.1"
 agp = "8.13.2"
 appcompat = "1.7.1"
-billing = "8.1.0"
+billing = "8.2.1"
+composeFoundation = "1.10.0"
 coreKtx = "1.17.0"
 datastore = "1.2.0"
 hilt = "2.57.2"
@@ -16,7 +17,7 @@ material = "1.13.0"
 material3 = "1.4.0"
 mockk = "1.14.7"
 navigationCompose = "2.9.6"
-playServicesAdsApi = "24.8.0"
+playServicesAdsApi = "24.9.0"
 playServicesAuth = "21.4.0"
 playServicesGames = "21.0.0"
 reviewKtx = "2.0.2"
@@ -26,6 +27,7 @@ turbine = "1.2.1"
 uiTooling = "1.10.0"
 
 [libraries]
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
