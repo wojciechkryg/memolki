@@ -15,7 +15,12 @@ class CardPairDetailsViewModel @Inject constructor(
 
     override fun onIntent(intent: CardPairDetailsIntent) {
         when (intent) {
-            is CardPairDetailsIntent.OnCardPairDetailsShow -> sendState { copy(intent.cardPairModel) }
+            is CardPairDetailsIntent.OnCardPairDetailsShow -> sendState {
+                copy(
+                    cardPairModels = intent.cardPairModels,
+                    initialPage = intent.initialPage
+                )
+            }
         }
     }
 }

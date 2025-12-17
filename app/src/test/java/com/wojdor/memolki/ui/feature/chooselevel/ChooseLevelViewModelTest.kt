@@ -45,7 +45,7 @@ class ChooseLevelViewModelTest : AppTest() {
     }
 
     @Test
-    fun onLevelClick_sendsOpenGameScreenEffect() =
+    fun `when OnLevelClick then send OpenGameScreen effect`() =
         runTest {
             sut.uiEffect.test {
                 // given

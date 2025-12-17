@@ -42,11 +42,13 @@ private fun HandleEffect(
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is CollectionEffect.OpenShopScreen -> navController.navigateToShop()
-            is CollectionEffect.OpenCardPairDetailsScreen -> openCardPairDetailsScreen(
-                cardPairDetailsViewModel,
-                navController,
-                effect.cardPairModel
-            )
+            is CollectionEffect.OpenCardPairDetailsScreen ->
+                openCardPairDetailsScreen(
+                    viewModel,
+                    cardPairDetailsViewModel,
+                    navController,
+                    effect.cardPairModel
+                )
 
             is CollectionEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
         }
@@ -54,11 +56,22 @@ private fun HandleEffect(
 }
 
 private fun openCardPairDetailsScreen(
+    viewModel: CollectionViewModel,
     cardPairDetailsViewModel: CardPairDetailsViewModel,
     navController: NavController,
     cardPairModel: CardPairModel
 ) {
-    cardPairDetailsViewModel.sendIntent(CardPairDetailsIntent.OnCardPairDetailsShow(cardPairModel))
+    val unlockedCardPairs = viewModel.uiState.value.collectionCardPairs
+        .filterIsInstance<CollectionCardPairModel.Unlocked>()
+        .map { it.cardPair }
+    val initialPage = unlockedCardPairs.indexOf(cardPairModel)
+        .takeIf { it != -1 } ?: 0
+    cardPairDetailsViewModel.sendIntent(
+        CardPairDetailsIntent.OnCardPairDetailsShow(
+            unlockedCardPairs,
+            initialPage
+        )
+    )
     navController.navigateToCardPairDetailsScreen()
 }
 
