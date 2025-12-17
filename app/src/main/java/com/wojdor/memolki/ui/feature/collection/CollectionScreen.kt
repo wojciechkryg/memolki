@@ -61,8 +61,7 @@ private fun openCardPairDetailsScreen(
     navController: NavController,
     cardPairModel: CardPairModel
 ) {
-    val state = viewModel.uiState.value
-    val unlockedCardPairs = state.collectionCardPairs
+    val unlockedCardPairs = viewModel.uiState.value.collectionCardPairs
         .filterIsInstance<CollectionCardPairModel.Unlocked>()
         .map { it.cardPair }
     val initialPage = unlockedCardPairs.indexOf(cardPairModel)
