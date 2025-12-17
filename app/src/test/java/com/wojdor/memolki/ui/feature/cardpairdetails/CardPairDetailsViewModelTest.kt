@@ -32,18 +32,21 @@ class CardPairDetailsViewModelTest : AppTest() {
     }
 
     @Test
-    fun `When OnCardPairDetailsShow intent is sent then should load card pair`() = runTest {
+    fun `when OnCardPairDetailsShow intent is sent then should load card pairs`() = runTest {
         viewModel.uiState.test {
             // given
-            val cardPair = FakeAllCardPairsDataSource().getAllCardPairs().first()
-            val cardPairModel = cardPair.toModel()
+            val cardPairs = FakeAllCardPairsDataSource().getAllCardPairs()
+            val cardPairModels = cardPairs.map { it.toModel() }
+            val initialPage = 1
             skipItems(1)
 
             // when
-            viewModel.sendIntent(CardPairDetailsIntent.OnCardPairDetailsShow(cardPairModel))
+            viewModel.sendIntent(CardPairDetailsIntent.OnCardPairDetailsShow(cardPairModels, initialPage))
 
             // then
-            assertEquals(cardPairModel, awaitItem().cardPairModel)
+            val state = awaitItem()
+            assertEquals(cardPairModels, state.cardPairModels)
+            assertEquals(initialPage, state.initialPage)
         }
     }
 }
