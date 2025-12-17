@@ -28,6 +28,7 @@ private fun HandleState(state: CardPairDetailsState) {
 
 @Composable
 private fun CardPairDetailsScreen(state: CardPairDetailsState) {
+    if (state.cardPairModels.isEmpty()) return
     val pagerState = rememberPagerState(
         initialPage = state.initialPage,
         pageCount = { state.cardPairModels.size }

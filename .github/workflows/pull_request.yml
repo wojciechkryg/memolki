@@ -9,12 +9,12 @@ jobs:
     if: ${{ !startsWith(github.head_ref, 'chore/') }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@41ad77ca97e46ee2e825d5e6b9a95d8169fcc44c # v4.4.2
 
       - name: Run unit tests
         run: ./gradlew testFruitHalfDebugUnitTest --no-daemon --build-cache
