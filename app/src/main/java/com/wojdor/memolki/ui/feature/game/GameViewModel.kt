@@ -84,7 +84,7 @@ class GameViewModel @Inject constructor(
                 sendState { copy(isGameFinished = true) }
                 delay(END_GAME_DELAY)
                 sendEffect(GameEffect.OpenEndGameScreen(uiState.value.level))
-                sendState { copy(isGameFinished = false) }
+                sendState { copy(isGameFinished = false, shouldShowCardText = false) }
             }
         }
     }

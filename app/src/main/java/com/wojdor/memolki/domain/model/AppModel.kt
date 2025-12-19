@@ -18,7 +18,8 @@ sealed class AppModel : Parcelable {
         fun all() = listOf(
             FruitHalf,
             VegetableHalf,
-            MammalSide
+            MammalSide,
+            BirdSide
         )
     }
 
