@@ -69,6 +69,7 @@ private fun openApp(
     app: AppModel
 ) {
     activity.packageManager.getLaunchIntentForPackage(app.appId)?.let {
+        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         activity.startActivity(it)
     }
 }
