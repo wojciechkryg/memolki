@@ -72,9 +72,9 @@ class GameViewModel @Inject constructor(
         if (isPressed && card is CardModel.Image && card.isPairMatched) {
             hapticFeedback.vibrateLow()
             hideCardText()
-            showCardImage(card)
+            showCardDetails(card)
         } else {
-            hideCardImage()
+            hideCardDetails()
         }
     }
 
@@ -89,7 +89,7 @@ class GameViewModel @Inject constructor(
                     copy(
                         isGameFinished = false,
                         shouldShowCardText = false,
-                        shouldShowCardImage = false,
+                        shouldShowCardDetails = false,
                         lastCardPressed = CardModel.Empty
                     )
                 }
@@ -208,17 +208,17 @@ class GameViewModel @Inject constructor(
         sendState { copy(cards = updatedCards) }
     }
 
-    private fun showCardImage(card: CardModel) {
+    private fun showCardDetails(card: CardModel) {
         sendState {
             copy(
                 lastCardPressed = card,
-                shouldShowCardImage = true
+                shouldShowCardDetails = true
             )
         }
     }
 
-    private fun hideCardImage() {
-        sendState { copy(shouldShowCardImage = false) }
+    private fun hideCardDetails() {
+        sendState { copy(shouldShowCardDetails = false) }
     }
 
     private fun showCardText(card: CardModel) {

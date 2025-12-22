@@ -39,7 +39,9 @@ fun GameContent(
     callbacks: GameCallbacks = GameCallbacks()
 ) {
     CardsGridWithText(state, callbacks)
-    CardDetails(state)
+    if (state.shouldShowCardDetails) {
+        CardDetails(state)
+    }
 }
 
 @Composable
@@ -86,39 +88,37 @@ private fun CardsGridWithText(
 
 @Composable
 private fun CardDetails(state: GameState) {
-    if (state.shouldShowCardImage) {
-        Dialog(
-            onDismissRequest = { },
-            properties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            BoxWithConstraints(contentAlignment = Alignment.Center) {
-                val shorterEdge = maxWidth.coerceAtMost(maxHeight)
-                Column(
-                    modifier = Modifier.padding(horizontal = 24.dp)
-                ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    FrontCardItem(
-                        modifier = Modifier
-                            .size(shorterEdge)
-                            .padding(24.dp),
-                        card = state.lastCardPressed
-                    )
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center,
+    Dialog(
+        onDismissRequest = { },
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        BoxWithConstraints(contentAlignment = Alignment.Center) {
+            val shorterEdge = maxWidth.coerceAtMost(maxHeight)
+            Column(
+                modifier = Modifier.padding(horizontal = 24.dp)
+            ) {
+                Spacer(modifier = Modifier.weight(1f))
+                FrontCardItem(
+                    modifier = Modifier
+                        .size(shorterEdge)
+                        .padding(24.dp),
+                    card = state.lastCardPressed
+                )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
 
-                        ) {
-                        AutoSizeText(
-                            modifier = Modifier
-                                .clip(FullRoundedShape)
-                                .background(colorResource(R.color.primary))
-                                .padding(vertical = 16.dp, horizontal = 32.dp),
-                            text = stringResource(state.lastCardPressed.textRes),
-                            style = MaterialTheme.typography.displayMedium,
-                        )
-                    }
+                    ) {
+                    AutoSizeText(
+                        modifier = Modifier
+                            .clip(FullRoundedShape)
+                            .background(colorResource(R.color.primary))
+                            .padding(vertical = 16.dp, horizontal = 32.dp),
+                        text = stringResource(state.lastCardPressed.textRes),
+                        style = MaterialTheme.typography.displayMedium,
+                    )
                 }
             }
         }
@@ -182,7 +182,7 @@ private fun CardsGridPressedPreview() {
                 level = LevelModel.Grid2x3(),
                 cards = cards,
                 lastCardPressed = cards.first(),
-                shouldShowCardImage = true
+                shouldShowCardDetails = true
             )
         )
     }
