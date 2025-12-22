@@ -15,6 +15,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wojdor.memolki.R
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.InAppUpdates
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -31,8 +32,12 @@ class AppActivity : ComponentActivity() {
     @Inject
     lateinit var googlePlayGames: GooglePlayGames
 
+    @Inject
+    lateinit var inAppUpdates: InAppUpdates
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        inAppUpdates.checkUpdate(this)
         viewModel.unlockAllNewCardPairsIfPurchased()
         lifecycle.addObserver(backgroundMusicPlayer)
         installSplashScreen()
@@ -54,5 +59,10 @@ class AppActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        inAppUpdates.cleanup()
     }
 }
