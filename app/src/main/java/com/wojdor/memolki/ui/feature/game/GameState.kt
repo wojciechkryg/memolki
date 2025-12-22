@@ -12,5 +12,5 @@ data class GameState(
     val isGameFinished: Boolean = false,
     val lastCardPressed: CardModel = CardModel.Empty,
     val shouldShowCardText: Boolean = false,
-    val shouldShowCardImage: Boolean = false
+    val shouldShowCardDetails: Boolean = false
 ) : UiState
