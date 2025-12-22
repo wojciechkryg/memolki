@@ -141,6 +141,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.PAT }}
           commit-message: "Bump version to ${{ steps.bumper.outputs.new_version }}"
           title: "Chore/version bump ${{ steps.bumper.outputs.new_version }}"
           body: Automates version bump to ${{ steps.bumper.outputs.new_version }}
