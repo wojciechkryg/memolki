@@ -64,7 +64,7 @@ private fun CardsGridWithText(
                 animationSpec = tween(durationMillis = CARD_TEXT_ANIMATION_DURATION)
             )
             Column(
-                modifier = Modifier.padding(horizontal = 24.dp)
+                modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 Spacer(
                     modifier = Modifier
@@ -95,13 +95,13 @@ private fun CardDetails(state: GameState) {
         BoxWithConstraints(contentAlignment = Alignment.Center) {
             val shorterEdge = maxWidth.coerceAtMost(maxHeight)
             Column(
-                modifier = Modifier.padding(horizontal = 24.dp)
+                modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 FrontCardItem(
                     modifier = Modifier
                         .size(shorterEdge)
-                        .padding(24.dp),
+                        .padding(16.dp),
                     card = state.lastCardPressed
                 )
                 Box(
