@@ -144,6 +144,7 @@ dependencies {
     implementation(libs.play.services.ads.api)
     implementation(libs.billing)
     implementation(libs.review.ktx)
+    implementation(libs.app.update.ktx)
     implementation(libs.play.services.auth)
     implementation(libs.play.services.games)
     implementation(libs.kotlinx.coroutines.play.services)
