@@ -47,6 +47,8 @@ class InAppUpdates @Inject constructor() {
     }
 
     fun cleanup() {
-        appUpdateManager.unregisterListener(installStateUpdatedListener)
+        if (this::appUpdateManager.isInitialized) {
+            appUpdateManager.unregisterListener(installStateUpdatedListener)
+            }
     }
 }

@@ -37,7 +37,6 @@ class AppActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        inAppUpdates.checkUpdate(this)
         viewModel.unlockAllNewCardPairsIfPurchased()
         lifecycle.addObserver(backgroundMusicPlayer)
         installSplashScreen()
@@ -59,6 +58,11 @@ class AppActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        inAppUpdates.checkUpdate(this)
     }
 
     override fun onDestroy() {
