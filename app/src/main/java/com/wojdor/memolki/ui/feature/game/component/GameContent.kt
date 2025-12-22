@@ -13,11 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -90,11 +86,7 @@ private fun CardsGridWithText(
 
 @Composable
 private fun CardDetails(state: GameState) {
-    var showDialog by remember { mutableStateOf(state.shouldShowCardImage) }
-    LaunchedEffect(state.shouldShowCardImage) {
-        showDialog = state.shouldShowCardImage
-    }
-    if (showDialog) {
+    if (state.shouldShowCardImage) {
         Dialog(
             onDismissRequest = { },
             properties = DialogProperties(usePlatformDefaultWidth = false)
