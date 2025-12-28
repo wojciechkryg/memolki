@@ -4,7 +4,9 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +29,7 @@ fun CardPairDetailsContent(cardPairModel: CardPairModel) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center
     ) {
         val cardSize = maxWidth.coerceAtMost(maxHeight)
@@ -46,6 +48,8 @@ fun CardPairDetailsContent(cardPairModel: CardPairModel) {
             )
             if (!isFirstCardText && !isSecondCardText && firstCard.textRes != secondCard.textRes) {
                 TextDetails(modifier = Modifier.weight(1f), textRes = firstCard.textRes)
+            } else {
+                Spacer(modifier = Modifier.height(16.dp))
             }
             CardDetails(
                 card = secondCard,
@@ -62,8 +66,7 @@ fun CardPairDetailsContent(cardPairModel: CardPairModel) {
 private fun CardDetails(card: CardModel, cardSize: Dp) {
     FrontCardItem(
         modifier = Modifier
-            .size(cardSize)
-            .padding(8.dp),
+            .size(cardSize),
         card = card
     )
 }
@@ -71,8 +74,7 @@ private fun CardDetails(card: CardModel, cardSize: Dp) {
 @Composable
 private fun TextDetails(modifier: Modifier, @StringRes textRes: Int) {
     AutoSizeText(
-        modifier = modifier
-            .padding(8.dp),
+        modifier = modifier.padding(8.dp),
         text = stringResource(textRes),
         style = MaterialTheme.typography.displaySmall,
     )
