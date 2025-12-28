@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.feature.collection.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -8,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,7 +20,10 @@ import com.wojdor.memolki.ui.theme.AppTheme
 @Composable
 fun CollectionLockedCardPair(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier.padding(vertical = CARD_PAIR_VERTICAL_PADDING),
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(rotatedCardPairShape)
+            .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
         contentAlignment = Alignment.Center
     ) {
         CollectionLockedCard(modifier = cardLeftModifier)
