@@ -13,11 +13,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@41ad77ca97e46ee2e825d5e6b9a95d8169fcc44c # v4.4.2
-
       - name: Run unit tests
-        run: ./gradlew testFruitHalfDebugUnitTest --no-daemon --build-cache
+        uses: gradle/gradle-build-action@021839818318288544485c54cc41a1f021ac82c6 # v3.4.0
+        with:
+          arguments: testFruitHalfDebugUnitTest --no-daemon --build-cache
 
   unit-test:
     needs: tests-execution

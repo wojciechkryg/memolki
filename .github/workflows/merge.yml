@@ -36,9 +36,6 @@ jobs:
           version_name=$(grep "versionName" app/build.gradle.kts | sed -E 's/.*versionName = "([^"]+)".*/\1/')
           echo "version_name=$version_name" >> $GITHUB_OUTPUT
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@41ad77ca97e46ee2e825d5e6b9a95d8169fcc44c # v4.4.2
-
       - name: Prepare flavor strings
         id: string_ops
         run: |
@@ -52,6 +49,9 @@ jobs:
           echo $KEYSTORE_BASE64 | base64 --decode > key.jks
 
       - name: Build with Gradle
+        uses: gradle/gradle-build-action@021839818318288544485c54cc41a1f021ac82c6 # v3.4.0
+        with:
+          arguments: app:bundle${{ env.capitalized_flavor }}Release --stacktrace --no-daemon --build-cache
         env:
           FRUIT_HALF_BILLING_KEY: ${{ secrets.FRUIT_HALF_BILLING_KEY }}
           VEGETABLE_HALF_BILLING_KEY: ${{ secrets.VEGETABLE_HALF_BILLING_KEY }}
@@ -61,10 +61,9 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew app:bundle${{ env.capitalized_flavor }}Release --stacktrace --no-daemon --build-cache
 
       - name: Upload to Google Play
-        uses: r0adkll/upload-google-play@v1
+        uses: r0adkll/upload-google-play@0f92ae7483652c93836371c183dd5d6a2ac37107 # v1.1.2
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
@@ -139,7 +138,7 @@ jobs:
           echo "new_version=$new_version_name" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@522d2871b268d16853a0b3f240212f438bcc4add # v6.1.0
         with:
           token: ${{ secrets.PAT }}
           commit-message: "Bump version to ${{ steps.bumper.outputs.new_version }}"
