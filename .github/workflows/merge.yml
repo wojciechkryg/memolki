@@ -49,7 +49,7 @@ jobs:
           echo $KEYSTORE_BASE64 | base64 --decode > key.jks
 
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@53b39578be91d3c101569335805537553f191544 # v3.2.1
+        uses: gradle/gradle-build-action@v3.4.1
         with:
           arguments: app:bundle${{ env.capitalized_flavor }}Release --stacktrace --no-daemon --build-cache
         env:
