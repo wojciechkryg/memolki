@@ -16,13 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.feature.shop.ShopCallbacks
 import com.wojdor.memolki.ui.feature.shop.ShopState
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
 
 @Composable
 fun ShopContent(
@@ -31,7 +31,7 @@ fun ShopContent(
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = spacingL),
             verticalAlignment = Alignment.CenterVertically
         ) {
             CoinsAmount(
@@ -48,12 +48,12 @@ fun ShopContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp),
+                    .padding(spacingL),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 it.forEach { menuItem ->
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(spacingL))
                     when (menuItem) {
                         is ShopMenuModel.WatchAd -> ShopMenuItem(
                             priceText = stringResource(R.string.watch_ad),
@@ -95,6 +95,7 @@ fun ShopContent(
                             descriptionText = stringResource(R.string.shop_unlock_all_cards),
                             rightDrawableRes = R.drawable.ic_cards_stack,
                             onClick = callbacks.onBuyAllCardsClick,
+
                             isEnabled = menuItem.isAvailable
                         )
                     }

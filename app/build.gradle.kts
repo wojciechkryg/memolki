@@ -148,6 +148,7 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.play.services.games)
     implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.androidx.compose.material3.window.size)
 
     debugImplementation(libs.androidx.ui.tooling)
     ksp(libs.hilt.compiler)

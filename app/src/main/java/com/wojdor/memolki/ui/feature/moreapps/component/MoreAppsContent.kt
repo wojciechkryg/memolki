@@ -17,6 +17,7 @@ import com.wojdor.memolki.ui.component.FadeEffectTop
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsCallbacks
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsState
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
 
 @Composable
 fun MoreAppsContent(
@@ -27,8 +28,8 @@ fun MoreAppsContent(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(spacingL),
+            verticalArrangement = Arrangement.spacedBy(spacingL),
         ) {
             items(state.apps) {
                 AppItem(appModel = it, onClick = callbacks.onAppClick)

@@ -14,9 +14,11 @@ import androidx.compose.ui.unit.LayoutDirection
 
 class RotatedCardPairShape(
     private val cardShape: Shape,
-    private val sizeFraction: Float,
+    private val cardWidthFraction: Float,
     private val rotation: Float,
-    private val xOffset: Dp
+    private val xOffset: Dp,
+    private val yOffset: Dp,
+    private val aspectRatio: Float
 ) : Shape {
 
     override fun createOutline(
@@ -24,16 +26,19 @@ class RotatedCardPairShape(
         layoutDirection: LayoutDirection,
         density: Density
     ): Outline {
-        val cardSize = size * sizeFraction
+        val cardWidth = size.width * cardWidthFraction
+        val cardHeight = cardWidth / aspectRatio
+        val cardSize = Size(cardWidth, cardHeight)
         val cardRect = Rect(
             Offset((size.width - cardSize.width) / 2, (size.height - cardSize.height) / 2),
             cardSize
         )
         val xOffsetPx = with(density) { xOffset.toPx() }
+        val yOffsetPx = with(density) { yOffset.toPx() }
         val cardOutline = cardShape.createOutline(cardSize, layoutDirection, density)
 
-        val path1 = createTransformedPath(cardOutline, cardRect, rotation, xOffsetPx)
-        val path2 = createTransformedPath(cardOutline, cardRect, -rotation, -xOffsetPx)
+        val path1 = createTransformedPath(cardOutline, cardRect, rotation, xOffset = xOffsetPx, yOffset = yOffsetPx)
+        val path2 = createTransformedPath(cardOutline, cardRect, -rotation, xOffset = -xOffsetPx, yOffset = yOffsetPx)
 
         val finalPath = Path().apply {
             op(path1, path2, PathOperation.Union)
@@ -45,7 +50,8 @@ class RotatedCardPairShape(
         outline: Outline,
         cardRect: Rect,
         rotation: Float,
-        xOffset: Float
+        xOffset: Float,
+        yOffset: Float,
     ): Path {
         val path = Path().apply { addOutline(outline) }
         val matrix = Matrix()
@@ -58,7 +64,7 @@ class RotatedCardPairShape(
         matrix.rotateZ(rotation)
         matrix.translate(-cardRect.center.x, -cardRect.center.y)
 
-        matrix.translate(xOffset, 0f)
+        matrix.translate(xOffset, yOffset)
 
         matrix.translate(cardRect.topLeft.x, cardRect.topLeft.y)
 

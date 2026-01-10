@@ -8,12 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
 import com.wojdor.memolki.ui.feature.collection.CollectionState
 import com.wojdor.memolki.ui.feature.collection.getCollectionStateForPreview
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
 
 @Composable
 fun CollectionContent(
@@ -22,7 +23,7 @@ fun CollectionContent(
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = spacingL),
             verticalAlignment = Alignment.CenterVertically
         ) {
             CoinsAmount(
@@ -35,7 +36,7 @@ fun CollectionContent(
             )
         }
         UnlockedCardPairsCounter(
-            modifier = Modifier.padding(bottom = 8.dp),
+            modifier = Modifier.padding(bottom = spacingS),
             state = state
         )
         CardPairsCollection(state, callbacks)

@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.component.CoinsAmount
@@ -21,6 +20,7 @@ import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
 import com.wojdor.memolki.ui.feature.menu.component.MenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
 
 @Composable
 fun EndGameContent(
@@ -32,7 +32,7 @@ fun EndGameContent(
         verticalArrangement = Arrangement.Top
     ) {
         CoinsAmount(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = spacingL),
             coins = state.currentCoins,
             animate = state.animateCoins
         )
@@ -59,7 +59,7 @@ fun EndGameContent(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     it.forEach { menuItem ->
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(spacingL))
                         when (menuItem) {
                             EndGameMenuModel.WatchAd ->
                                 WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)

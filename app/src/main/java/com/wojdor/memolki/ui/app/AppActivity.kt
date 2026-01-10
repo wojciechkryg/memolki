@@ -9,12 +9,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wojdor.memolki.R
 import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.LocalWindowSize
 import com.wojdor.memolki.util.InAppUpdates
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +39,7 @@ class AppActivity : ComponentActivity() {
     @Inject
     lateinit var inAppUpdates: InAppUpdates
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.unlockAllNewCardPairsIfPurchased()
@@ -47,15 +52,18 @@ class AppActivity : ComponentActivity() {
             )
         )
         setContent {
-            AppTheme {
-                Scaffold(
-                    containerColor = colorResource(R.color.primary),
-                    content = { innerPadding ->
-                        Box(modifier = Modifier.padding(innerPadding)) {
-                            AppNavigation()
+            val windowSizeClass = calculateWindowSizeClass(this)
+            CompositionLocalProvider(LocalWindowSize provides windowSizeClass) {
+                AppTheme {
+                    Scaffold(
+                        containerColor = colorResource(R.color.primary),
+                        content = { innerPadding ->
+                            Box(modifier = Modifier.padding(innerPadding)) {
+                                AppNavigation()
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }

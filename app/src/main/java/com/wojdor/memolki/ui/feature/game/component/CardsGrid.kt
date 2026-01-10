@@ -1,13 +1,11 @@
 package com.wojdor.memolki.ui.feature.game.component
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
@@ -15,27 +13,31 @@ import com.wojdor.memolki.ui.feature.game.GameState
 
 @Composable
 fun CardsGrid(
-    columns: Int,
-    spacing: Dp,
+    modifier: Modifier = Modifier,
     state: GameState,
+    callbacks: GameCallbacks,
     cardSize: Dp,
-    callbacks: GameCallbacks
+    columns: Int,
+    spacing: Dp
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(columns),
+    // LazyVerticalGrid doesn't work well on tablets with smaller card sizes
+    Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(spacing),
-        horizontalArrangement = Arrangement.spacedBy(spacing),
-        userScrollEnabled = false,
-        modifier = Modifier
-            .wrapContentHeight()
-            .fillMaxWidth()
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(state.cards) { card ->
-            FlippableCardItem(
-                modifier = Modifier.size(cardSize),
-                card = card,
-                callbacks = callbacks
-            )
+        state.cards.chunked(columns).forEach { rowCards ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(spacing, Alignment.CenterHorizontally)
+            ) {
+                rowCards.forEach { card ->
+                    FlippableCardItem(
+                        modifier = Modifier.size(cardSize),
+                        card = card,
+                        callbacks = callbacks
+                    )
+                }
+            }
         }
     }
 }
