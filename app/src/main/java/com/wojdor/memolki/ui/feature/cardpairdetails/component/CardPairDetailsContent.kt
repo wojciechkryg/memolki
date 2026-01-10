@@ -16,23 +16,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.isTablet
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
 
 @Composable
 fun CardPairDetailsContent(cardPairModel: CardPairModel) {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
+            .padding(spacingL),
         contentAlignment = Alignment.Center
     ) {
-        val cardSize = maxWidth.coerceAtMost(maxHeight)
+        val cardSize = maxWidth.coerceAtMost(maxHeight) / if (isTablet) 1.5f else 1f
         val firstCard = cardPairModel.first
         val isFirstCardText = firstCard is CardModel.Text
         val secondCard = cardPairModel.second
@@ -49,7 +51,7 @@ fun CardPairDetailsContent(cardPairModel: CardPairModel) {
             if (!isFirstCardText && !isSecondCardText && firstCard.textRes != secondCard.textRes) {
                 TextDetails(modifier = Modifier.weight(1f), textRes = firstCard.textRes)
             } else {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(spacingL))
             }
             CardDetails(
                 card = secondCard,
@@ -74,7 +76,7 @@ private fun CardDetails(card: CardModel, cardSize: Dp) {
 @Composable
 private fun TextDetails(modifier: Modifier, @StringRes textRes: Int) {
     AutoSizeText(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(spacingS),
         text = stringResource(textRes),
         style = MaterialTheme.typography.displaySmall,
     )
@@ -118,7 +120,7 @@ private fun CardPairDetailsContentImagesDifferentTextPreview() {
                 CardModel.Image(
                     "banana_half",
                     "banana",
-                    R.string.empty,
+                    R.string.new_game,
                     R.drawable.img_test_half
                 )
             )
@@ -162,7 +164,7 @@ private fun CardPairDetailsContentTextsPreview() {
                 CardModel.Text(
                     "banana_half",
                     "banana",
-                    R.string.empty,
+                    R.string.new_game,
                 )
             )
         )

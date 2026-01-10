@@ -25,13 +25,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.component.FadeEffectBottom
 import com.wojdor.memolki.ui.component.FadeEffectTop
 import com.wojdor.memolki.ui.component.Flippable
 import com.wojdor.memolki.ui.feature.collection.CollectionCallbacks
 import com.wojdor.memolki.ui.feature.collection.CollectionState
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingM
 import kotlinx.coroutines.delay
 
 @Composable
@@ -59,10 +60,10 @@ fun CardPairsCollection(
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = spacingL),
         contentAlignment = Alignment.Center
     ) {
-        val spacing = 12.dp
+        val spacing = spacingM
         val columns = 2
         val shorterEdge = maxWidth.coerceAtMost(maxHeight)
         val cardPairSize = (shorterEdge - spacing * (columns - 1)) / columns

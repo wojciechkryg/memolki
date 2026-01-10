@@ -27,6 +27,7 @@ import com.wojdor.memolki.ui.feature.collection.component.rotatedCardPairShape
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
@@ -59,7 +60,7 @@ fun UnlockNewCardItem(
                 horizontalArrangement = Arrangement.Center
             ) {
                 AutoSizeText(
-                    modifier = Modifier.padding(start = 4.dp),
+                    modifier = Modifier.padding(start = spacingXS),
                     text = stringResource(R.string.new_card_to_unlock).uppercase(),
                     style = MaterialTheme.typography.displaySmall,
                 )

@@ -25,6 +25,8 @@ import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.spacingM
+import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
@@ -38,7 +40,7 @@ fun AppItem(
             modifier = Modifier.fillMaxWidth(),
             onClick = throttleClick(onClick = { onClick(appModel) }),
             shape = CardShape,
-            contentPadding = PaddingValues(12.dp),
+            contentPadding = PaddingValues(spacingM),
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(appModel.colorRes),
                 contentColor = Color.Black,
@@ -65,7 +67,7 @@ fun AppItem(
                     horizontalArrangement = Arrangement.Start
                 ) {
                     AutoSizeText(
-                        modifier = Modifier.padding(start = 12.dp),
+                        modifier = Modifier.padding(start = spacingM),
                         text = stringResource(appModel.textRes),
                         style = MaterialTheme.typography.displaySmall
                     )

@@ -16,12 +16,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.isTablet
+import com.wojdor.memolki.ui.theme.spacingL
 
 @Composable
 fun CollectionLockedCardPair(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .padding(if (isTablet) spacingL else 0.dp)
             .clip(rotatedCardPairShape)
             .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
         contentAlignment = Alignment.Center

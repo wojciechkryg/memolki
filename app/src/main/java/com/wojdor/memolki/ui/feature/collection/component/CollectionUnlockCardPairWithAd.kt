@@ -26,6 +26,9 @@ import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.isTablet
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
@@ -36,6 +39,7 @@ fun CollectionUnlockCardPairWithAd(
     Box(
         modifier = modifier
             .fillMaxWidth()
+            .padding(if (isTablet) spacingL else 0.dp)
             .clip(rotatedCardPairShape)
             .clickable(
                 onClick = throttleClick(onClick = onClick),

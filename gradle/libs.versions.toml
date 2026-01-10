@@ -26,6 +26,7 @@ runtime = "1.10.0"
 splashscreen = "1.2.0"
 turbine = "1.2.1"
 uiTooling = "1.10.0"
+material3WindowSizeClass = "1.4.0"
 
 [libraries]
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
@@ -55,6 +56,7 @@ play-services-games = { group = "com.google.android.gms", name = "play-services-
 billing = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billing" }
 review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "reviewKtx" }
 app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "appUpdateKtx" }
+androidx-compose-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "material3WindowSizeClass" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

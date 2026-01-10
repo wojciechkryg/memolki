@@ -23,6 +23,8 @@ import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
@@ -45,13 +47,13 @@ fun ShopMenuItem(
         }
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 8.dp),
+            modifier = Modifier.padding(horizontal = spacingS),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
             Row(
                 modifier = Modifier
-                    .padding(vertical = 8.dp)
+                    .padding(vertical = spacingS)
                     .weight(1f),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
@@ -77,14 +79,14 @@ fun ShopMenuItem(
                         text = priceText,
                         modifier = Modifier
                             .weight(2f)
-                            .padding(start = 8.dp),
+                            .padding(start = spacingS),
                         style = MaterialTheme.typography.headlineLarge,
                         softWrap = false
                     )
                 }
                 Text(
                     modifier = Modifier
-                        .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
+                        .padding(start = spacingL, top = spacingS, bottom = spacingS)
                         .weight(3f),
                     text = descriptionText.lowercase(),
                     style = MaterialTheme.typography.headlineMedium,
