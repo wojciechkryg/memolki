@@ -23,6 +23,7 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.spacingS
 
 @Composable
 fun FrontCardItem(
@@ -63,7 +64,7 @@ private fun FrontCardItemText(card: CardModel.Text) {
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.White)
-            .padding(8.dp),
+            .padding(spacingS),
         contentAlignment = Alignment.Center
     ) {
         AutoSizeText(

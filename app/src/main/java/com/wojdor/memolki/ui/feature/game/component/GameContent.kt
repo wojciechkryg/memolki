@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.wojdor.memolki.R
@@ -32,6 +31,10 @@ import com.wojdor.memolki.ui.feature.game.GameCallbacks
 import com.wojdor.memolki.ui.feature.game.GameState
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
+import com.wojdor.memolki.ui.theme.spacingXL
+import kotlin.math.ceil
 
 @Composable
 fun GameContent(
@@ -49,40 +52,47 @@ private fun CardsGridWithText(
     state: GameState,
     callbacks: GameCallbacks
 ) {
-    BoxWithConstraints(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    val animatedTextAlpha by animateFloatAsState(
+        targetValue = if (state.shouldShowCardText) 1.0f else 0.0f,
+        label = "on press card text animation",
+        animationSpec = tween(durationMillis = CARD_TEXT_ANIMATION_DURATION)
+    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = spacingL),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val spacing = 8.dp
-        val columns = state.level.columns
-        if (columns > 0) {
-            val shorterEdge = maxWidth.coerceAtMost(maxHeight)
-            val cardSize = (shorterEdge - spacing * (columns - 1)) / columns
-            val animatedTextAlpha by animateFloatAsState(
-                targetValue = if (state.shouldShowCardText) 1.0f else 0.0f,
-                label = "on press card text animation",
-                animationSpec = tween(durationMillis = CARD_TEXT_ANIMATION_DURATION)
-            )
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp)
-            ) {
-                Spacer(
-                    modifier = Modifier
-                        .weight(1f)
-                        .alpha(animatedTextAlpha)
-                )
-                CardsGrid(columns, spacing, state, cardSize, callbacks)
-                AutoSizeText(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp)
-                        .alpha(animatedTextAlpha),
-                    text = stringResource(state.lastCardPressed.textRes),
-                    style = MaterialTheme.typography.displayMedium,
+        Spacer(modifier = Modifier.weight(0.1f))
+        BoxWithConstraints(
+            modifier = Modifier.weight(0.8f),
+            contentAlignment = Alignment.Center
+        ) {
+            val spacing = spacingS
+            val columns = state.level.columns
+            if (columns > 0 && state.cards.isNotEmpty()) {
+                val rows = ceil(state.cards.size / columns.toFloat()).toInt()
+                val cardWidth = (maxWidth - spacing * (columns - 1)) / columns
+                val cardHeight = (maxHeight - spacing * (rows - 1)) / rows
+                val cardSize = cardWidth.coerceAtMost(cardHeight)
+                CardsGrid(
+                    state = state,
+                    callbacks = callbacks,
+                    cardSize = cardSize,
+                    columns = columns,
+                    spacing = spacing
                 )
             }
         }
+        AutoSizeText(
+            modifier = Modifier
+                .weight(0.1f)
+                .fillMaxWidth()
+                .padding(vertical = spacingL)
+                .alpha(animatedTextAlpha),
+            text = stringResource(state.lastCardPressed.textRes),
+            style = MaterialTheme.typography.displayMedium,
+        )
     }
 }
 
@@ -95,13 +105,13 @@ private fun CardDetails(state: GameState) {
         BoxWithConstraints(contentAlignment = Alignment.Center) {
             val shorterEdge = maxWidth.coerceAtMost(maxHeight)
             Column(
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = spacingL)
             ) {
                 Spacer(modifier = Modifier.weight(1f))
                 FrontCardItem(
                     modifier = Modifier
                         .size(shorterEdge)
-                        .padding(16.dp),
+                        .padding(spacingL),
                     card = state.lastCardPressed
                 )
                 Box(
@@ -115,7 +125,7 @@ private fun CardDetails(state: GameState) {
                         modifier = Modifier
                             .clip(FullRoundedShape)
                             .background(colorResource(R.color.primary))
-                            .padding(vertical = 16.dp, horizontal = 32.dp),
+                            .padding(vertical = spacingL, horizontal = spacingXL),
                         text = stringResource(state.lastCardPressed.textRes),
                         style = MaterialTheme.typography.displayMedium,
                     )

@@ -6,29 +6,28 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
-import com.wojdor.memolki.ui.feature.collection.component.CARD_OFFSET
-import com.wojdor.memolki.ui.feature.collection.component.CARD_ROTATION
-import com.wojdor.memolki.ui.feature.collection.component.CARD_SIZE_FRACTION
+import com.wojdor.memolki.ui.feature.collection.component.CARD_PAIR_VERTICAL_PADDING
 import com.wojdor.memolki.ui.feature.collection.component.CollectionLockedCard
+import com.wojdor.memolki.ui.feature.collection.component.cardLeftModifier
+import com.wojdor.memolki.ui.feature.collection.component.cardRightModifier
+import com.wojdor.memolki.ui.feature.collection.component.rotatedCardPairShape
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
-import com.wojdor.memolki.ui.shape.RotatedCardPairShape
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
@@ -37,31 +36,17 @@ fun UnlockNewCardItem(
 ) {
     Box(
         modifier = Modifier
-            .size(144.dp)
-            .clip(
-                RotatedCardPairShape(
-                    cardShape = CardShape,
-                    sizeFraction = CARD_SIZE_FRACTION,
-                    rotation = CARD_ROTATION,
-                    xOffset = CARD_OFFSET
-                )
-            )
+            .width(144.dp)
+            .clip(rotatedCardPairShape)
             .clickable(
                 onClick = throttleClick(onClick = onClick),
-            ),
+            )
+            .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
         contentAlignment = Alignment.Center
     ) {
-        CollectionLockedCard(
-            modifier = Modifier
-                .fillMaxSize(CARD_SIZE_FRACTION)
-                .rotate(CARD_ROTATION)
-                .offset(x = CARD_OFFSET)
-        )
+        CollectionLockedCard(modifier = cardLeftModifier)
         Box(
-            modifier = Modifier
-                .fillMaxSize(CARD_SIZE_FRACTION)
-                .rotate(-CARD_ROTATION)
-                .offset(x = -CARD_OFFSET),
+            modifier = cardRightModifier,
             contentAlignment = Alignment.Center
         ) {
             CollectionLockedCard()
@@ -75,7 +60,7 @@ fun UnlockNewCardItem(
                 horizontalArrangement = Arrangement.Center
             ) {
                 AutoSizeText(
-                    modifier = Modifier.padding(start = 4.dp),
+                    modifier = Modifier.padding(start = spacingXS),
                     text = stringResource(R.string.new_card_to_unlock).uppercase(),
                     style = MaterialTheme.typography.displaySmall,
                 )

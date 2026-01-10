@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -26,17 +27,18 @@ import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingM
+import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun MoreAppsItem(
-    modifier: Modifier = Modifier,
-    appModel: AppModel,
-    onClick: () -> Unit = {}
+    modifier: Modifier = Modifier, appModel: AppModel, onClick: () -> Unit = {}
 ) {
-    Column(modifier = modifier.padding(16.dp)) {
+    Column(modifier = modifier.padding(spacingL)) {
         Text(
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = spacingS),
             text = stringResource(R.string.more).lowercase(),
             style = MaterialTheme.typography.headlineLarge
         )
@@ -45,21 +47,24 @@ fun MoreAppsItem(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = throttleClick(onClick),
                 shape = CardShape,
-                contentPadding = PaddingValues(12.dp),
+                contentPadding = PaddingValues(spacingM),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = colorResource(appModel.colorRes),
                     contentColor = Color.Black,
                     disabledContainerColor = Color.Transparent
                 )
             ) {
-                Row(horizontalArrangement = Arrangement.Center) {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Image(
                         modifier = Modifier.height(48.dp),
                         painter = painterResource(appModel.imageRes),
                         contentDescription = null
                     )
                     Text(
-                        modifier = Modifier.padding(start = 8.dp),
+                        modifier = Modifier.padding(start = spacingS),
                         text = stringResource(appModel.textRes),
                         style = MaterialTheme.typography.headlineMedium
                     )
@@ -74,7 +79,7 @@ fun MoreAppsItem(
 private fun MoreAppsItemPreview() {
     AppTheme {
         MoreAppsItem(
-            modifier = Modifier.size(width = 320.dp, height = 160.dp),
+            modifier = Modifier.size(width = 360.dp, height = 240.dp),
             appModel = AppModel.VegetableHalf
         )
     }
