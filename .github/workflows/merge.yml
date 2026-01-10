@@ -30,9 +30,6 @@ jobs:
       matrix:
         flavor: [ "fruitHalf", "vegetableHalf", "mammalSide", "birdSide" ]
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: write
     outputs:
       version_name: ${{ steps.version.outputs.version_name }}
     steps:
