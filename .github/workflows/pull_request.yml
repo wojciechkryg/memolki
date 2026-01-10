@@ -14,7 +14,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Run unit tests
-        uses: gradle/gradle-build-action@53b39578be91d3c101569335805537553f191544 # v3.2.1
+        uses: gradle/gradle-build-action@v3.4.1
         with:
           arguments: testFruitHalfDebugUnitTest --no-daemon --build-cache
 
