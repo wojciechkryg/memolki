@@ -28,8 +28,8 @@ jobs:
     outputs:
       version_name: ${{ steps.version.outputs.version_name }}
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
-
+      - uses: actions/checkout@v4
+      
       - name: Get version name
         id: version
         run: |
@@ -63,7 +63,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload to Google Play
-        uses: r0adkll/upload-google-play@0f92ae7483652c93836371c183dd5d6a2ac37107 # v1.1.2
+        uses: r0adkll/upload-google-play@v1.1.2
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
@@ -77,7 +77,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+      - uses: actions/checkout@v4
       - name: Create and push tag
         run: |
           git config --global user.name "GitHub Actions"
@@ -92,7 +92,7 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -138,7 +138,7 @@ jobs:
           echo "new_version=$new_version_name" >> $GITHUB_OUTPUT
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@522d2871b268d16853a0b3f240212f438bcc4add # v6.1.0
+        uses: peter-evans/create-pull-request@v6.1.0
         with:
           token: ${{ secrets.PAT }}
           commit-message: "Bump version to ${{ steps.bumper.outputs.new_version }}"
