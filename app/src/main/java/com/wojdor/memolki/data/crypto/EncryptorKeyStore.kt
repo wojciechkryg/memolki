@@ -7,6 +7,8 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.inject.Inject
 
+@Deprecated("Uses Android KeyStore which can be invalidated by OS updates or lock screen changes. " +
+    "Replaced by LocalEncryptorKeyStore. Kept only for migrating existing users' data.")
 class EncryptorKeyStore @Inject constructor() {
 
     private val keyStore = KeyStore.getInstance(KEY_STORE).apply { load(null) }

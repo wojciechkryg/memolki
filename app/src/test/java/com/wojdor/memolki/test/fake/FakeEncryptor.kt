@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class FakeEncryptor @Inject constructor() : Encryptor {
 
-    override fun encrypt(value: Long) = value.toString()
+    override suspend fun encrypt(value: Long) = value.toString()
 
-    override fun decrypt(encryptedValue: String) = encryptedValue.toLong()
+    override suspend fun decrypt(encryptedValue: String) = encryptedValue.toLong()
 }
