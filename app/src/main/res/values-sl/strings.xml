@@ -26,5 +26,6 @@
     <string name="setting_music">Glasba</string>
     <string name="setting_sound">Zvok</string>
     <string name="setting_vibration">Vibracija</string>
+    <string name="setting_language">Jezik</string>
     <string name="watch_ad">Oglejte si oglas</string>
 </resources>

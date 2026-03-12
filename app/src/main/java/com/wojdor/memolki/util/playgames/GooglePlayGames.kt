@@ -1,4 +1,4 @@
-package com.wojdor.memolki.games
+package com.wojdor.memolki.util.playgames
 
 import android.app.Activity
 import android.content.Intent

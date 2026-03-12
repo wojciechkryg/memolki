@@ -7,15 +7,19 @@ import com.wojdor.memolki.data.repository.CardRepositoryTest
 import com.wojdor.memolki.data.repository.SettingsRepositoryTest
 import com.wojdor.memolki.data.repository.UserRepositoryTest
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCaseTest
+import com.wojdor.memolki.domain.usecase.ChangeLanguageUseCaseTest
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCaseTest
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetCurrentLanguageTagUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMenuUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetSupportedLanguagesUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCaseTest
@@ -36,6 +40,7 @@ import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCaseTes
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCaseTest
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModelTest
+import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageViewModelTest
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelViewModelTest
 import com.wojdor.memolki.ui.feature.collection.CollectionViewModelTest
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModelTest
@@ -92,4 +97,9 @@ interface TestInjector {
     fun inject(test: GetTotalGamesPlayedUseCaseTest)
     fun inject(test: MoreAppsViewModelTest)
     fun inject(test: IsAppInstalledUseCaseTest)
+    fun inject(test: GetSupportedLanguagesUseCaseTest)
+    fun inject(test: GetCurrentLanguageTagUseCaseTest)
+    fun inject(test: ChangeLanguageUseCaseTest)
+    fun inject(test: ChangeLanguageViewModelTest)
+    fun inject(test: GetLanguagesWithCurrentUseCaseTest)
 }

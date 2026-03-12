@@ -26,5 +26,6 @@
     <string name="setting_music">Âm nhạc</string>
     <string name="setting_sound">Âm thanh</string>
     <string name="setting_vibration">Rung</string>
+    <string name="setting_language">Ngôn ngữ</string>
     <string name="watch_ad">Xem quảng cáo</string>
 </resources>

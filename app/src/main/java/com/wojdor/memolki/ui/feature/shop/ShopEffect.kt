@@ -1,7 +1,7 @@
 package com.wojdor.memolki.ui.feature.shop
 
 import com.android.billingclient.api.ProductDetails
-import com.wojdor.memolki.games.GooglePlayGames
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.base.UiEffect
 import com.wojdor.memolki.util.billing.BillingHandler

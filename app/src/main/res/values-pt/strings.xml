@@ -26,5 +26,6 @@
     <string name="setting_music">Música</string>
     <string name="setting_sound">Som</string>
     <string name="setting_vibration">Vibração</string>
+    <string name="setting_language">Idioma</string>
     <string name="watch_ad">Assistir ao anúncio</string>
 </resources>

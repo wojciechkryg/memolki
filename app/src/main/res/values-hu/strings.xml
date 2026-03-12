@@ -26,5 +26,6 @@
     <string name="setting_music">Zene</string>
     <string name="setting_sound">Hang</string>
     <string name="setting_vibration">Rezgés</string>
+    <string name="setting_language">Nyelv</string>
     <string name="watch_ad">Reklám megtekintése</string>
 </resources>
