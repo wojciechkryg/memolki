@@ -68,6 +68,13 @@ class UserRepository @Inject constructor(
         }
     }
 
+    fun getLastShopAdShownTimestamp() =
+        decryptLong(userLocalDataSource.encryptedLastShopAdShownTimestamp)
+
+    suspend fun setLastShopAdShownTimestamp(timestamp: Long) {
+        userLocalDataSource.setEncryptedLastShopAdShownTimestamp(encryptor.encrypt(timestamp))
+    }
+
     private suspend fun decryptLong(encryptedValue: String?): Long {
         return if (encryptedValue.isNullOrEmpty()) {
             DEFAULT_LONG_VALUE

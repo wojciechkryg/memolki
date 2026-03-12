@@ -3,11 +3,11 @@ package com.wojdor.memolki.ui.ads
 import android.app.Activity
 import android.content.Context
 import androidx.annotation.StringRes
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import com.wojdor.memolki.util.extension.logD
 import com.google.android.gms.ads.rewarded.RewardedAd as GoogleRewardedAd
 
 class RewardedAd(
@@ -32,13 +32,11 @@ class RewardedAd(
             adRequest,
             object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    logD("Ad failed to load with error: ${adError.message}")
                     rewardedAd = null
                     onFailed(adError)
                 }
 
                 override fun onAdLoaded(ad: GoogleRewardedAd) {
-                    logD("Ad was loaded successfully.")
                     rewardedAd = ad
                     onLoaded()
                 }
@@ -51,8 +49,7 @@ class RewardedAd(
         onAdDismiss: (wasRewardGranted: Boolean) -> Unit = {}
     ) {
         var wasRewardGranted = false
-        if (!isLoaded) {
-            logD("Tried to show ad, but it was not loaded yet.")
+        if (!isLoaded || activity.isFinishing || activity.isDestroyed) {
             return
         }
         rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
@@ -61,10 +58,14 @@ class RewardedAd(
                 rewardedAd = null
                 onAdDismiss(wasRewardGranted)
             }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                rewardedAd = null
+                onAdDismiss(wasRewardGranted)
+            }
         }
 
         rewardedAd?.show(activity) {
-            logD("User earned the reward.")
             wasRewardGranted = true
             onGrantReward()
         }
