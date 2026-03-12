@@ -26,5 +26,6 @@
     <string name="setting_music">Musiikki</string>
     <string name="setting_sound">Ääni</string>
     <string name="setting_vibration">Tärinä</string>
+    <string name="setting_language">Kieli</string>
     <string name="watch_ad">Katso mainos</string>
 </resources>

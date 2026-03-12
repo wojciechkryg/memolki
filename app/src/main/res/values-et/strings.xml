@@ -26,5 +26,6 @@
     <string name="setting_music">Muusika</string>
     <string name="setting_sound">Heli</string>
     <string name="setting_vibration">Vibratsioon</string>
+    <string name="setting_language">Keel</string>
     <string name="watch_ad">Vaata reklaami</string>
 </resources>

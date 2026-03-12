@@ -2,8 +2,8 @@ package com.wojdor.memolki.ui.feature.endgame
 
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.LevelModel
-import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.base.UiEffect
 

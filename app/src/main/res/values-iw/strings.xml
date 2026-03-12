@@ -26,5 +26,6 @@
     <string name="setting_music">מוזיקה</string>
     <string name="setting_sound">צליל</string>
     <string name="setting_vibration">רטט</string>
+    <string name="setting_language">שפה</string>
     <string name="watch_ad">צפה במודעה</string>
 </resources>

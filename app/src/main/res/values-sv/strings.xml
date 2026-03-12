@@ -26,5 +26,6 @@
     <string name="setting_music">Musik</string>
     <string name="setting_sound">Ljud</string>
     <string name="setting_vibration">Vibration</string>
+    <string name="setting_language">Språk</string>
     <string name="watch_ad">Titta på annons</string>
 </resources>

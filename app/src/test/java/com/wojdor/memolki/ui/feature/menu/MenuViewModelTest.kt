@@ -2,11 +2,11 @@ package com.wojdor.memolki.ui.feature.menu
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
-import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen

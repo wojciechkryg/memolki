@@ -2,13 +2,17 @@ package com.wojdor.memolki.ui.feature.menu
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
-import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.feature.menu.MenuEffect.*
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenMoreAppsScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
