@@ -19,6 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +41,10 @@ fun LanguageButton(
     onClick: () -> Unit = {}
 ) {
     Button(
+        modifier = Modifier.semantics {
+            role = Role.RadioButton
+            selected = isSelected
+        },
         onClick = throttleClick(onClick = onClick),
         contentPadding = if (isSelected) PaddingValues(
             top = 8.dp,

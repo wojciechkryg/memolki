@@ -15,22 +15,14 @@ open class LocaleProvider @Inject constructor(
 ) {
 
     open fun getLanguageTag(): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val localeManager = context.getSystemService(LocaleManager::class.java)
-            val locales = localeManager.applicationLocales
-            if (locales.isEmpty) {
-                Locale.getDefault().language
-            } else {
-                locales[0]?.language ?: DEFAULT_LANGUAGE_TAG
-            }
+        val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val locales = context.getSystemService(LocaleManager::class.java).applicationLocales
+            if (locales.isEmpty) null else locales[0]
         } else {
             val locales = AppCompatDelegate.getApplicationLocales()
-            if (locales.isEmpty) {
-                Locale.getDefault().language
-            } else {
-                locales[0]?.language ?: DEFAULT_LANGUAGE_TAG
-            }
+            if (locales.isEmpty) null else locales[0]
         }
+        return locale?.language ?: Locale.getDefault().language
     }
 
     open fun setLanguageTag(tag: String) {
@@ -43,7 +35,4 @@ open class LocaleProvider @Inject constructor(
         }
     }
 
-    companion object {
-        private const val DEFAULT_LANGUAGE_TAG = "en"
-    }
 }
