@@ -3,13 +3,14 @@ package com.wojdor.memolki.ui.feature.shop
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.ProductDetails
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
+import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
+import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
@@ -18,6 +19,7 @@ import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -34,6 +36,8 @@ class ShopViewModel @Inject constructor(
     private val allRewardedAds: AllRewardedAds,
     private val billingHandler: BillingHandler,
     private val googlePlayGames: GooglePlayGames,
+    private val isShopAdCooldownOverUseCase: IsShopAdCooldownOverUseCase,
+    private val setLastShopAdShownTimestampUseCase: SetLastShopAdShownTimestampUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase,
     private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
@@ -99,6 +103,7 @@ class ShopViewModel @Inject constructor(
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
         if (wasRewardGranted) {
+            setLastShopAdShownTimestampUseCase().launchIn(viewModelScope)
             rewardCoinsForAd()
         }
         loadMenuItemsAndAd(wasRewardGranted)
@@ -172,21 +177,26 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {
-        if (allRewardedAds.shopCoinsAd.isLoaded && !wasRewardGranted) {
-            showMenu(isAdAvailable = true)
-        } else {
-            showMenu(isAdAvailable = false)
-            allRewardedAds.shopCoinsAd.load(
-                onLoaded = {
-                    if (!wasRewardGranted) {
-                        showMenu(isAdAvailable = true)
-                    }
-                },
-                onFailed = {
-                    showMenu(isAdAvailable = false)
+        isShopAdCooldownOverUseCase().onEach { result ->
+            val isAdCooldownOver = result.getOrThrow()
+            if (allRewardedAds.shopCoinsAd.isLoaded && !wasRewardGranted && isAdCooldownOver) {
+                showMenu(isAdAvailable = true)
+            } else {
+                showMenu(isAdAvailable = false)
+                if (isAdCooldownOver) {
+                    allRewardedAds.shopCoinsAd.load(
+                        onLoaded = {
+                            if (!wasRewardGranted) {
+                                showMenu(isAdAvailable = true)
+                            }
+                        },
+                        onFailed = {
+                            showMenu(isAdAvailable = false)
+                        }
+                    )
                 }
-            )
-        }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun loadCoins(animateCoins: Boolean) {

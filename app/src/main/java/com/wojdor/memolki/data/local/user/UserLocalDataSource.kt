@@ -66,6 +66,15 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
+    val encryptedLastShopAdShownTimestamp: Flow<String?> =
+        dataRead.map { it[Key.LAST_SHOP_AD_SHOWN_TIMESTAMP] }
+
+    suspend fun setEncryptedLastShopAdShownTimestamp(encryptedValue: String) {
+        dataWrite.edit { prefs ->
+            prefs[Key.LAST_SHOP_AD_SHOWN_TIMESTAMP] = encryptedValue
+        }
+    }
+
     private object Key {
         val COINS = stringPreferencesKey("coins")
         val TOTAL_COINS = stringPreferencesKey("total_coins")
@@ -73,5 +82,7 @@ class UserLocalDataSource @Inject constructor(
         val TOTAL_GAMES_PLAYED = stringPreferencesKey("total_games_played")
         val UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT =
             stringPreferencesKey("unlocked_card_pairs_from_ads_count")
+        val LAST_SHOP_AD_SHOWN_TIMESTAMP =
+            stringPreferencesKey("last_shop_ad_shown_timestamp")
     }
 }

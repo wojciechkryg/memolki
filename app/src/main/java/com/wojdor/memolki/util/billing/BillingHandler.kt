@@ -19,7 +19,6 @@ import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.di.coroutine.IoDispatcher
-import com.wojdor.memolki.util.extension.logD
 import com.wojdor.memolki.util.extension.logE
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -76,7 +75,6 @@ class BillingHandler @Inject constructor(
 
             override fun onBillingServiceDisconnected() {
                 listener?.onConnectionStatusChanged(false)
-                logD("Billing disconnection. Retrying to connect.")
                 scope.launch {
                     delay(RETRY_CONNECTION_DELAY)
                     startConnection()
