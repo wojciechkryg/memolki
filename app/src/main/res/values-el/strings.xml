@@ -26,5 +26,6 @@
     <string name="setting_music">Μουσική</string>
     <string name="setting_sound">Ήχος</string>
     <string name="setting_vibration">Δόνηση</string>
+    <string name="setting_language">Γλώσσα</string>
     <string name="watch_ad">Δείτε τη διαφήμιση</string>
 </resources>

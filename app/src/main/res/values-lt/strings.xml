@@ -26,5 +26,6 @@
     <string name="setting_music">Muzika</string>
     <string name="setting_sound">Garsas</string>
     <string name="setting_vibration">Vibracija</string>
+    <string name="setting_language">Kalba</string>
     <string name="watch_ad">Žiūrėti skelbimą</string>
 </resources>

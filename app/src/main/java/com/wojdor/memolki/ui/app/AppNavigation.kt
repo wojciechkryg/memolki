@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsScreen
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
+import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageScreen
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelScreen
 import com.wojdor.memolki.ui.feature.collection.CollectionScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
@@ -31,7 +32,7 @@ fun AppNavigation() {
         menuScreen(navController)
         gameFlow(navController)
         collectionFlow(navController)
-        settingsScreen()
+        settingsFlow(navController)
         moreAppsScreen()
     }
 }
@@ -192,13 +193,43 @@ private fun NavGraphBuilder.cardPairDetailsScreen(navController: NavController) 
     }
 }
 
-private fun NavGraphBuilder.settingsScreen() {
+private fun NavGraphBuilder.settingsFlow(navController: NavController) {
+    navigation(
+        startDestination = Route.SETTINGS,
+        route = RouteFlow.SETTINGS
+    ) {
+        settingsScreen(navController)
+        changeLanguageScreen(navController)
+    }
+}
+
+private fun NavGraphBuilder.settingsScreen(navController: NavController) {
     composable(
         route = Route.SETTINGS,
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.CHANGE_LANGUAGE -> slideInTop
+                else -> slideInBottom
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.CHANGE_LANGUAGE -> slideOutTop
+                else -> slideOutBottom
+            }
+        }
+    ) {
+        SettingsScreen(navController = navController)
+    }
+}
+
+private fun NavGraphBuilder.changeLanguageScreen(navController: NavController) {
+    composable(
+        route = Route.CHANGE_LANGUAGE,
         enterTransition = { slideInBottom },
         exitTransition = { slideOutBottom }
     ) {
-        SettingsScreen()
+        ChangeLanguageScreen(navController = navController)
     }
 }
 
@@ -224,6 +255,10 @@ fun NavController.navigateToCollection() {
 
 fun NavController.navigateToSettings() {
     navigate(Route.SETTINGS)
+}
+
+fun NavController.navigateToChangeLanguage() {
+    navigate(Route.CHANGE_LANGUAGE)
 }
 
 fun NavController.navigateToMoreApps() {
@@ -310,10 +345,12 @@ private object Route {
     const val SHOP = "shop"
     const val CARD_PAIR_DETAILS = "card_pair_details"
     const val SETTINGS = "settings"
+    const val CHANGE_LANGUAGE = "change_language"
     const val MORE_APPS = "more_apps"
 }
 
 private object RouteFlow {
     const val GAME = "game_flow"
     const val COLLECTION = "collection_flow"
+    const val SETTINGS = "settings_flow"
 }

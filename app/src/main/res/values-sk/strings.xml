@@ -26,5 +26,6 @@
     <string name="setting_music">Hudba</string>
     <string name="setting_sound">Zvuk</string>
     <string name="setting_vibration">Vibrácie</string>
+    <string name="setting_language">Jazyk</string>
     <string name="watch_ad">Sledovať reklamu</string>
 </resources>

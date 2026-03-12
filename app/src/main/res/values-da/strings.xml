@@ -26,5 +26,6 @@
     <string name="setting_music">Musik</string>
     <string name="setting_sound">Lyd</string>
     <string name="setting_vibration">Vibration</string>
+    <string name="setting_language">Sprog</string>
     <string name="watch_ad">Se annonce</string>
 </resources>

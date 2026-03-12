@@ -11,28 +11,36 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.SettingModel
+import com.wojdor.memolki.ui.app.navigateToChangeLanguage
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.menu.component.MenuItem
 import com.wojdor.memolki.ui.feature.settings.component.ToggleSettingButton
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingXL
 
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
-    HandleEffect(viewModel)
+    HandleEffect(viewModel, navController)
     HandleState(viewModel, state)
 }
 
 @Composable
 private fun HandleEffect(
     viewModel: SettingsViewModel,
+    navController: NavController
 ) {
-    CollectUiEffects(viewModel) {
-        // Handle effects if needed
+    CollectUiEffects(viewModel) { effect ->
+        when (effect) {
+            is SettingsEffect.OpenChangeLanguageScreen -> navController.navigateToChangeLanguage()
+        }
     }
 }
 
@@ -42,7 +50,8 @@ private fun HandleState(
     state: SettingsState
 ) {
     val callbacks = SettingsCallbacks(
-        onSettingToggle = { viewModel.sendIntent(SettingsIntent.OnSettingClick(it)) }
+        onSettingToggle = { viewModel.sendIntent(SettingsIntent.OnSettingClick(it)) },
+        onLanguageClick = { viewModel.sendIntent(SettingsIntent.OnLanguageClick) }
     )
     SettingsScreen(state, callbacks)
 }
@@ -58,11 +67,13 @@ private fun SettingsScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         state.settings.forEach { setting ->
-            Spacer(modifier = Modifier.height(24.dp))
-            ToggleSettingButton(
-                setting = setting,
-                onClick = { callbacks.onSettingToggle(setting) }
-            )
+            ToggleSettingButton(setting = setting) {
+                callbacks.onSettingToggle(setting)
+            }
+            Spacer(modifier = Modifier.height(spacingXL))
+        }
+        MenuItem(textId = R.string.setting_language) {
+            callbacks.onLanguageClick()
         }
     }
 }

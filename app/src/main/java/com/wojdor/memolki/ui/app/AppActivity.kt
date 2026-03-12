@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wojdor.memolki.R
-import com.wojdor.memolki.games.GooglePlayGames
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.LocalWindowSize
 import com.wojdor.memolki.util.InAppUpdates
@@ -32,9 +31,6 @@ class AppActivity : ComponentActivity() {
 
     @Inject
     lateinit var backgroundMusicPlayer: BackgroundMusicPlayer
-
-    @Inject
-    lateinit var googlePlayGames: GooglePlayGames
 
     @Inject
     lateinit var inAppUpdates: InAppUpdates

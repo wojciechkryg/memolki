@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -57,24 +58,27 @@ private fun CardsGridWithText(
         label = "on press card text animation",
         animationSpec = tween(durationMillis = CARD_TEXT_ANIMATION_DURATION)
     )
-    Column(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = spacingL),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.weight(0.1f))
-        BoxWithConstraints(
-            modifier = Modifier.weight(0.8f),
-            contentAlignment = Alignment.Center
-        ) {
-            val spacing = spacingS
-            val columns = state.level.columns
-            if (columns > 0 && state.cards.isNotEmpty()) {
-                val rows = ceil(state.cards.size / columns.toFloat()).toInt()
-                val cardWidth = (maxWidth - spacing * (columns - 1)) / columns
-                val cardHeight = (maxHeight - spacing * (rows - 1)) / rows
-                val cardSize = cardWidth.coerceAtMost(cardHeight)
+        val spacing = spacingS
+        val columns = state.level.columns
+        if (columns > 0 && state.cards.isNotEmpty()) {
+            val rows = ceil(state.cards.size / columns.toFloat()).toInt()
+            val gridAreaHeight = maxHeight * GRID_AREA_RATIO
+            val cardWidth = (maxWidth - spacing * (columns - 1)) / columns
+            val cardHeight = (gridAreaHeight - spacing * (rows - 1)) / rows
+            val cardSize = cardWidth.coerceAtMost(cardHeight)
+            val actualGridHeight = cardSize * rows + spacing * (rows - 1)
+            val topSpace = maxHeight * TOP_SPACE_RATIO
+            val gridTopPadding = topSpace + (gridAreaHeight - actualGridHeight) / 2
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(gridTopPadding))
                 CardsGrid(
                     state = state,
                     callbacks = callbacks,
@@ -82,17 +86,22 @@ private fun CardsGridWithText(
                     columns = columns,
                     spacing = spacing
                 )
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    AutoSizeText(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .alpha(animatedTextAlpha),
+                        text = stringResource(state.lastCardPressed.textRes),
+                        style = MaterialTheme.typography.displayMedium,
+                    )
+                }
             }
         }
-        AutoSizeText(
-            modifier = Modifier
-                .weight(0.1f)
-                .fillMaxWidth()
-                .padding(vertical = spacingL)
-                .alpha(animatedTextAlpha),
-            text = stringResource(state.lastCardPressed.textRes),
-            style = MaterialTheme.typography.displayMedium,
-        )
     }
 }
 
@@ -136,6 +145,8 @@ private fun CardDetails(state: GameState) {
 }
 
 private const val CARD_TEXT_ANIMATION_DURATION = 300
+private const val TOP_SPACE_RATIO = 0.1f
+private const val GRID_AREA_RATIO = 0.8f
 
 @Preview
 @Composable
