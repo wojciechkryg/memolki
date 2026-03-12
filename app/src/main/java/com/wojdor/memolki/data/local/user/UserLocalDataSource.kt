@@ -22,7 +22,7 @@ class UserLocalDataSource @Inject constructor(
     val encryptedTotalCoins: Flow<String?> = dataRead.map { it[Key.TOTAL_COINS] }
 
     suspend fun setEncryptedCoinsAndTotalCoins(
-        transform: (encryptedCoins: String?, encryptedTotalCoins: String?) -> Pair<String, String>
+        transform: suspend (encryptedCoins: String?, encryptedTotalCoins: String?) -> Pair<String, String>
     ) {
         dataWrite.edit {
             val currentEncryptedCoins = it[Key.COINS]
@@ -39,7 +39,7 @@ class UserLocalDataSource @Inject constructor(
     val encryptedTotalCardPairsMatched: Flow<String?> =
         dataRead.map { it[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] }
 
-    suspend fun setEncryptedTotalCardPairsMatched(transform: (encryptedValue: String?) -> String) {
+    suspend fun setEncryptedTotalCardPairsMatched(transform: suspend (encryptedValue: String?) -> String) {
         dataWrite.edit { prefs ->
             prefs[Key.TOTAL_MATCHED_CARD_PAIR_COUNT] =
                 transform(prefs[Key.TOTAL_MATCHED_CARD_PAIR_COUNT])
@@ -49,7 +49,7 @@ class UserLocalDataSource @Inject constructor(
     val encryptedTotalGamesPlayed: Flow<String?> =
         dataRead.map { it[Key.TOTAL_GAMES_PLAYED] }
 
-    suspend fun setEncryptedTotalGamesPlayed(transform: (encryptedValue: String?) -> String) {
+    suspend fun setEncryptedTotalGamesPlayed(transform: suspend (encryptedValue: String?) -> String) {
         dataWrite.edit { prefs ->
             prefs[Key.TOTAL_GAMES_PLAYED] =
                 transform(prefs[Key.TOTAL_GAMES_PLAYED])
@@ -59,7 +59,7 @@ class UserLocalDataSource @Inject constructor(
     val encryptedUnlockedCardPairsFromAdsCount: Flow<String?> =
         dataRead.map { it[Key.UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT] }
 
-    suspend fun setEncryptedUnlockedCardPairsFromAdsCount(transform: (encryptedValue: String?) -> String) {
+    suspend fun setEncryptedUnlockedCardPairsFromAdsCount(transform: suspend (encryptedValue: String?) -> String) {
         dataWrite.edit { prefs ->
             prefs[Key.UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT] =
                 transform(prefs[Key.UNLOCKED_CARD_PAIRS_FROM_ADS_COUNT])

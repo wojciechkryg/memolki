@@ -68,7 +68,7 @@ class UserRepository @Inject constructor(
         }
     }
 
-    private fun decryptLong(encryptedValue: String?): Long {
+    private suspend fun decryptLong(encryptedValue: String?): Long {
         return if (encryptedValue.isNullOrEmpty()) {
             DEFAULT_LONG_VALUE
         } else {
@@ -76,7 +76,7 @@ class UserRepository @Inject constructor(
                 encryptor.decrypt(encryptedValue)
             } catch (error: Exception) {
                 logE("Decryption error", error)
-                throw error
+                DEFAULT_LONG_VALUE
             }
         }
     }
