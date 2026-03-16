@@ -21,20 +21,12 @@ class LocalEncryptorKeyStore @Inject constructor(
     private val mutex = Mutex()
 
     suspend fun getSecretKey(): SecretKey = cachedKey ?: mutex.withLock {
-        cachedKey ?: (getExistingKey() ?: migrateFromOldDataStore() ?: generateAndStoreKey())
-            .also { cachedKey = it }
+        cachedKey ?: (getExistingKey() ?: generateAndStoreKey()).also { cachedKey = it }
     }
 
     private suspend fun getExistingKey(): SecretKey? {
         val encoded = dataStore.data.first()[KEY_PREF] ?: return null
         val decoded = Base64.decode(encoded, Base64.DEFAULT)
-        return SecretKeySpec(decoded, ALGORITHM)
-    }
-
-    private suspend fun migrateFromOldDataStore(): SecretKey? {
-        val encoded = dataStore.data.first()[KEY_PREF] ?: return null
-        val decoded = Base64.decode(encoded, Base64.DEFAULT)
-        dataStore.edit { it[KEY_PREF] = encoded }
         return SecretKeySpec(decoded, ALGORITHM)
     }
 
