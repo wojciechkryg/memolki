@@ -2,76 +2,69 @@ package com.wojdor.memolki.ui.feature.cardpairdetails.component
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.ui.theme.isTablet
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 
 @Composable
 fun CardPairDetailsContent(cardPairModel: CardPairModel) {
-    BoxWithConstraints(
+    val firstCard = cardPairModel.first
+    val isFirstCardText = firstCard is CardModel.Text
+    val secondCard = cardPairModel.second
+    val isSecondCardText = secondCard is CardModel.Text
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(spacingL),
-        contentAlignment = Alignment.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        val cardSize = maxWidth.coerceAtMost(maxHeight) / if (isTablet) 1.5f else 1f
-        val firstCard = cardPairModel.first
-        val isFirstCardText = firstCard is CardModel.Text
-        val secondCard = cardPairModel.second
-        val isSecondCardText = secondCard is CardModel.Text
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            CardDetails(
-                card = firstCard,
-                cardSize = cardSize
-            )
-            if (!isFirstCardText && !isSecondCardText && firstCard.textRes != secondCard.textRes) {
-                TextDetails(modifier = Modifier.weight(1f), textRes = firstCard.textRes)
-            } else {
-                Spacer(modifier = Modifier.height(spacingL))
-            }
-            CardDetails(
-                card = secondCard,
-                cardSize = cardSize
-            )
-            if (!isFirstCardText && !isSecondCardText) {
-                TextDetails(modifier = Modifier.weight(1f), textRes = secondCard.textRes)
-            }
+        CardDetails(
+            modifier = Modifier.weight(CARD_WEIGHT),
+            card = firstCard
+        )
+        if (!isFirstCardText && !isSecondCardText && firstCard.textRes != secondCard.textRes) {
+            TextDetails(modifier = Modifier.weight(TEXT_WEIGHT), textRes = firstCard.textRes)
+        } else {
+            Spacer(modifier = Modifier.height(spacingL))
+        }
+        CardDetails(
+            modifier = Modifier.weight(CARD_WEIGHT),
+            card = secondCard
+        )
+        if (!isFirstCardText && !isSecondCardText) {
+            TextDetails(modifier = Modifier.weight(TEXT_WEIGHT), textRes = secondCard.textRes)
         }
     }
 }
 
 @Composable
-private fun CardDetails(card: CardModel, cardSize: Dp) {
+private fun CardDetails(modifier: Modifier, card: CardModel) {
     FrontCardItem(
-        modifier = Modifier
-            .size(cardSize),
+        modifier = modifier.aspectRatio(1f),
         card = card
     )
 }
+
+private const val CARD_WEIGHT = 3f
+private const val TEXT_WEIGHT = 1f
 
 @Composable
 private fun TextDetails(modifier: Modifier, @StringRes textRes: Int) {

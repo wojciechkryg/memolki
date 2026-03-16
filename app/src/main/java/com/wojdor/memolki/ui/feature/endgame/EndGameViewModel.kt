@@ -3,7 +3,6 @@ package com.wojdor.memolki.ui.feature.endgame
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
@@ -18,6 +17,7 @@ import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -175,15 +175,19 @@ class EndGameViewModel @Inject constructor(
                 sendState {
                     copy(
                         rewardedCoins = if (isRewardFromAd) uiState.value.rewardedCoins + rewardedCoins else rewardedCoins,
-                        currentCoins = currentCoins + rewardedCoins,
-                        animateCoins = true,
                         animateRewardCoins = isRewardFromAd
+                    )
+                }
+                delay(REWARD_COINS_DELAY)
+                coinsPlayer.play()
+                sendState {
+                    copy(
+                        currentCoins = currentCoins + rewardedCoins,
+                        animateCoins = true
                     )
                 }
                 showMenu()
                 sendTotalCoinsScore()
-                delay(COINS_SOUND_DELAY)
-                coinsPlayer.play()
             }
         }
     }
@@ -198,7 +202,7 @@ class EndGameViewModel @Inject constructor(
 
     companion object {
         const val LEVEL_COMPLETE_SOUND_DELAY = 250L
-        const val COINS_SOUND_DELAY = 500L
+        const val REWARD_COINS_DELAY = 500L
         const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 5
     }
 }

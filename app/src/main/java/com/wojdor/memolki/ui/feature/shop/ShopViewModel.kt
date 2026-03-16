@@ -21,6 +21,7 @@ import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -49,6 +50,7 @@ class ShopViewModel @Inject constructor(
     ShopState()
 ) {
 
+    private var loadCoinsJob: Job? = null
     private var productDetails: List<ProductDetails> = emptyList()
     private val priceByProductId: Map<String, String>
         get() = productDetails.associateBy({ it.productId }) { product ->
@@ -200,7 +202,8 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun loadCoins(animateCoins: Boolean) {
-        getCoinsUseCase().onEach {
+        loadCoinsJob?.cancel()
+        loadCoinsJob = getCoinsUseCase().onEach {
             it.onSuccess { coins ->
                 sendState { copy(coins = coins, animateCoins = animateCoins) }
             }

@@ -26,6 +26,15 @@ class InAppUpdates @Inject constructor() {
         listenForUpdate(activity)
     }
 
+    fun resumeUpdate() {
+        if (!this::appUpdateManager.isInitialized) return
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                completeUpdate()
+            }
+        }
+    }
+
     private fun listenForUpdate(activity: Activity) {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
@@ -49,6 +58,6 @@ class InAppUpdates @Inject constructor() {
     fun cleanup() {
         if (this::appUpdateManager.isInitialized) {
             appUpdateManager.unregisterListener(installStateUpdatedListener)
-            }
+        }
     }
 }

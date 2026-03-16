@@ -42,12 +42,11 @@ class CalculateNextCardPairCostUseCase @Inject constructor(
             val biggestUnlockedLevelCardPairsCount = getCardPairsCountForLevel(biggestUnlockedLevel)
             val unlockedLevelAdditionalCost =
                 (biggestUnlockedLevelCardPairsCount.toDouble() * CARD_PAIR_COST_FACTOR).toInt()
-            val unlockedCardPairsAdditionalCount = missingCardPairsCountToCalculate
             val baseLevelCalculation = baseCardPairCost * log2(
                 biggestUnlockedLevelCardPairsCount.toDouble()
             )
             (((baseLevelCalculation / BASE_LEVEL_FACTOR) + unlockedLevelAdditionalCost) *
-                    (biggestUnlockedLevelCardPairsCount / (unlockedCardPairsAdditionalCount + UNLOCKED_CARD_FACTOR).toDouble()))
+                    (unlockedCardPairsCount.toDouble() / (allPossibleCardPairsCount + biggestUnlockedLevelCardPairsCount)))
                 .toInt()
                 .coerceAtLeast(MINIMUM_CARD_PAIR_COST)
         } else {
@@ -66,7 +65,6 @@ class CalculateNextCardPairCostUseCase @Inject constructor(
     companion object {
         const val NO_MORE_CARDS = Int.MAX_VALUE
         const val CARD_PAIR_COST_FACTOR = 3.5
-        const val UNLOCKED_CARD_FACTOR = 4
         const val BASE_LEVEL_FACTOR = 1.7
         const val MINIMUM_CARD_PAIR_COST = 1
     }
