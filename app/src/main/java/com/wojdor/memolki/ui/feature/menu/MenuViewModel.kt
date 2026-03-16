@@ -2,10 +2,11 @@ package com.wojdor.memolki.ui.feature.menu
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
@@ -19,10 +20,13 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,6 +36,8 @@ class MenuViewModel @Inject constructor(
     private val googlePlayGames: GooglePlayGames,
     private val getMenuUseCase: GetMenuUseCase,
     private val getMoreAppsUseCase: GetMoreAppsUseCase,
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
+    private val getTotalCardPairsMatchedUseCase: GetTotalCardPairsMatchedUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
@@ -65,6 +71,7 @@ class MenuViewModel @Inject constructor(
     private fun onLeaderboardClick() {
         hapticFeedback.vibrateLow()
         sendEffect(OpenLeaderboardScreen(googlePlayGames))
+        sendLeaderboardScores()
     }
 
     private fun onSettingsClick() {
@@ -96,6 +103,22 @@ class MenuViewModel @Inject constructor(
                 )
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun sendLeaderboardScores() {
+        viewModelScope.launch {
+            getTotalCoinsUseCase().first().onSuccess { totalCoins ->
+                sendEffect(MenuEffect.SendTotalCoinsScore(googlePlayGames, totalCoins))
+            }
+            getTotalCardPairsMatchedUseCase().first().onSuccess { totalCardPairsMatched ->
+                sendEffect(
+                    MenuEffect.SendTotalCardPairsMatchedScore(
+                        googlePlayGames,
+                        totalCardPairsMatched
+                    )
+                )
+            }
+        }
     }
 
     companion object {

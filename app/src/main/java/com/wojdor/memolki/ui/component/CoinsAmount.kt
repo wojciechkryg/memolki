@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToLong
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
 
@@ -33,7 +34,6 @@ fun CoinsAmount(
         targetValue = coins.toFloat(),
         animationSpec = if (animate) {
             tween(
-                delayMillis = ANIMATION_DELAY,
                 durationMillis = ANIMATION_DURATION,
                 easing = FastOutSlowInEasing
             )
@@ -55,7 +55,7 @@ fun CoinsAmount(
         Spacer(modifier = Modifier.size(4.dp))
         Text(
             modifier = Modifier.weight(1f),
-            text = animatedAmount.toLong().toString(),
+            text = animatedAmount.roundToLong().toString(),
             style = MaterialTheme.typography.headlineLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -63,7 +63,6 @@ fun CoinsAmount(
     }
 }
 
-private const val ANIMATION_DELAY = 500
 private const val ANIMATION_DURATION = 1000
 
 @Preview

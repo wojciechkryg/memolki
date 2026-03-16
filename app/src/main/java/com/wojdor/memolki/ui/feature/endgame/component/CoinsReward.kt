@@ -19,28 +19,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
-import com.wojdor.memolki.domain.model.LevelModel
-import com.wojdor.memolki.ui.feature.endgame.EndGameState
 import com.wojdor.memolki.ui.theme.AppTheme
+import kotlin.math.roundToLong
 
 @Composable
 fun CoinsReward(
     modifier: Modifier = Modifier,
-    state: EndGameState,
+    rewardedCoins: Long,
     animate: Boolean = false
 ) {
     val animatedAmount by animateFloatAsState(
-        targetValue = state.rewardedCoins.toFloat(),
+        targetValue = rewardedCoins.toFloat(),
         animationSpec = if (animate) {
             tween(
-                delayMillis = ANIMATION_DELAY,
                 durationMillis = ANIMATION_DURATION,
                 easing = FastOutSlowInEasing
             )
         } else {
             snap()
         },
-        label = "coins amount animation"
+        label = "coins reward animation"
     )
     Row(
         modifier = modifier,
@@ -48,7 +46,7 @@ fun CoinsReward(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "+ ${animatedAmount.toLong()}",
+            text = "+ ${animatedAmount.roundToLong()}",
             style = MaterialTheme.typography.displayLarge
         )
         Spacer(modifier = Modifier.size(16.dp))
@@ -60,13 +58,12 @@ fun CoinsReward(
     }
 }
 
-private const val ANIMATION_DELAY = 500
 private const val ANIMATION_DURATION = 1000
 
 @Preview
 @Composable
 private fun CoinsRewardPreview() {
     AppTheme {
-        CoinsReward(state = EndGameState(level = LevelModel.Grid2x3(), rewardedCoins = 1234))
+        CoinsReward(rewardedCoins = 1234)
     }
 }

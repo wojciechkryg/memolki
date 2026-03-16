@@ -26,10 +26,13 @@ class RewardCoinsForLevelUseCase @Inject constructor(
     private fun calculateRewardedCoins(level: LevelModel): Long {
         val totalCards = level.columns * level.rows
         val numberOfPairs = totalCards / 2
-        return (numberOfPairs * log2(numberOfPairs.toDouble()) / DIVIDE_FACTOR).roundToLong()
+        return (numberOfPairs * log2(numberOfPairs.toDouble()) / DIVIDE_FACTOR)
+            .roundToLong()
+            .coerceAtLeast(MINIMUM_REWARDED_COINS)
     }
 
     companion object {
         private const val DIVIDE_FACTOR = 4.5
+        private const val MINIMUM_REWARDED_COINS = 1L
     }
 }

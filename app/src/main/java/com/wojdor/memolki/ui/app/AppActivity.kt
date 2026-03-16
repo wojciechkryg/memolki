@@ -48,6 +48,7 @@ class AppActivity : ComponentActivity() {
                 Color.TRANSPARENT
             )
         )
+        inAppUpdates.checkUpdate(this)
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
             CompositionLocalProvider(LocalWindowSize provides windowSizeClass) {
@@ -69,7 +70,7 @@ class AppActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        inAppUpdates.checkUpdate(this)
+        inAppUpdates.resumeUpdate()
     }
 
     override fun onDestroy() {

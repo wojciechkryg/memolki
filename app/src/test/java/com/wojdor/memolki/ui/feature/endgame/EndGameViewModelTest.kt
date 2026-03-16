@@ -108,7 +108,7 @@ class EndGameViewModelTest : AppTest() {
 
                 // when
                 sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
-                skipItems(2)
+                skipItems(3)
 
                 // then
                 val expected = EndGameState(

@@ -17,6 +17,7 @@ import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -44,6 +45,8 @@ class CollectionViewModel @Inject constructor(
     savedStateHandle,
     CollectionState()
 ) {
+
+    private var loadCoinsJob: Job? = null
 
     init {
         loadData()
@@ -104,7 +107,8 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun loadCoins(animateCoins: Boolean) {
-        getCoinsUseCase().onEach {
+        loadCoinsJob?.cancel()
+        loadCoinsJob = getCoinsUseCase().onEach {
             it.onSuccess { coins ->
                 sendState { copy(coins = coins, animateCoins = animateCoins) }
             }

@@ -52,7 +52,7 @@ class CanUnlockNewCardUseCaseTest : AppTest() {
     @Test
     fun `when user has enough coins then return true`() = runTest {
         // given
-        userRepository.addCoins(9L)
+        userRepository.addCoins(11L)
 
         // when
         val result = sut().first()

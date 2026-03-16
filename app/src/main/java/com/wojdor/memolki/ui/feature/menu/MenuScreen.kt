@@ -49,6 +49,19 @@ private fun HandleEffect(
                 )
             }
 
+            is MenuEffect.SendTotalCoinsScore -> activity?.let {
+                sendTotalCoinsScore(it, viewModel, effect.googlePlayGames, effect.totalCoins)
+            }
+
+            is MenuEffect.SendTotalCardPairsMatchedScore -> activity?.let {
+                sendTotalCardPairsMatchedScore(
+                    it,
+                    viewModel,
+                    effect.googlePlayGames,
+                    effect.totalCardPairsMatched
+                )
+            }
+
             MenuEffect.OpenSettingsScreen -> navController.navigateToSettings()
             MenuEffect.OpenMoreAppsScreen -> navController.navigateToMoreApps()
         }
@@ -71,6 +84,27 @@ private fun openLeaderboardScreen(
     }
 }
 
+private fun sendTotalCoinsScore(
+    activity: Activity,
+    viewModel: MenuViewModel,
+    googlePlayGames: GooglePlayGames,
+    totalCoins: Long
+) {
+    viewModel.viewModelScope.launch {
+        googlePlayGames.submitTotalCoins(activity, totalCoins)
+    }
+}
+
+private fun sendTotalCardPairsMatchedScore(
+    activity: Activity,
+    viewModel: MenuViewModel,
+    googlePlayGames: GooglePlayGames,
+    totalCardPairsMatched: Long
+) {
+    viewModel.viewModelScope.launch {
+        googlePlayGames.submitTotalCardPairsMatched(activity, totalCardPairsMatched)
+    }
+}
 
 @Composable
 private fun HandleState(

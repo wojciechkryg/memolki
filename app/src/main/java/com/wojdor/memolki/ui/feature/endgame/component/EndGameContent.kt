@@ -43,7 +43,7 @@ fun EndGameContent(
         ) {
             Spacer(modifier = Modifier.weight(0.15f))
             CoinsReward(
-                state = state,
+                rewardedCoins = state.rewardedCoins,
                 animate = state.animateRewardCoins
             )
             Spacer(modifier = Modifier.weight(0.05f))

@@ -6,6 +6,8 @@ import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
@@ -47,6 +49,12 @@ class MenuViewModelTest : AppTest() {
     lateinit var getMoreAppsUseCase: GetMoreAppsUseCase
 
     @Inject
+    lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
+
+    @Inject
+    lateinit var getTotalCardPairsMatchedUseCase: GetTotalCardPairsMatchedUseCase
+
+    @Inject
     lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
 
     private lateinit var sut: MenuViewModel
@@ -60,6 +68,8 @@ class MenuViewModelTest : AppTest() {
             googlePlayGames,
             getMenuUseCase,
             getMoreAppsUseCase,
+            getTotalCoinsUseCase,
+            getTotalCardPairsMatchedUseCase,
             getTotalGamesPlayedUseCase
         )
     }
