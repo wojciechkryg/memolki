@@ -42,8 +42,6 @@ fun CardPairDetailsContent(cardPairModel: CardPairModel) {
         )
         if (!isFirstCardText && !isSecondCardText && firstCard.textRes != secondCard.textRes) {
             TextDetails(modifier = Modifier.weight(TEXT_WEIGHT), textRes = firstCard.textRes)
-        } else {
-            Spacer(modifier = Modifier.weight(TEXT_WEIGHT))
         }
         CardDetails(
             modifier = Modifier.weight(CARD_WEIGHT),
