@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
 import kotlin.math.roundToLong
 
 @Composable
@@ -49,7 +50,7 @@ fun CoinsReward(
             text = "+ ${animatedAmount.roundToLong()}",
             style = MaterialTheme.typography.displayLarge
         )
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.size(spacingL))
         Image(
             modifier = Modifier.size(64.dp),
             painter = painterResource(id = R.drawable.ic_coin),

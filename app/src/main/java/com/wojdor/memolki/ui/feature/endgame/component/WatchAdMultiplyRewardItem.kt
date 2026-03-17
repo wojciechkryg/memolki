@@ -20,13 +20,16 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingM
+import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
     Button(
         onClick = throttleClick(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(spacingL),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = Color.Black,
@@ -46,13 +49,13 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
                 style = MaterialTheme.typography.headlineSmall
             )
         }
-        Spacer(modifier = Modifier.size(12.dp))
+        Spacer(modifier = Modifier.size(spacingM))
         Image(
             modifier = Modifier.size(64.dp),
             painter = painterResource(id = R.drawable.ic_coin),
             contentDescription = null,
         )
-        Spacer(modifier = Modifier.size(4.dp))
+        Spacer(modifier = Modifier.size(spacingXS))
         Text(
             text = stringResource(id = R.string.end_game_watch_ad_reward).lowercase(),
             style = MaterialTheme.typography.displayMedium

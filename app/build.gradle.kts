@@ -101,26 +101,27 @@ android {
         unitTests.isReturnDefaultValues = true
     }
 
+    val resolvedBillingKeys = flavorConfigs.associate { (flavor, keyName) ->
+        flavor to getSecretValue(keyName)
+    }
     tasks.matching {
         it.name.contains("release", ignoreCase = true) &&
                 (it.name.startsWith("assemble") || it.name.startsWith("bundle"))
     }.configureEach {
-        doFirst {
-            val taskName = name
-            var flavorPart: String? = null
-            if (taskName.startsWith("assemble")) {
-                flavorPart = taskName.removePrefix("assemble").removeSuffix("Release")
-            } else if (taskName.startsWith("bundle")) {
-                flavorPart = taskName.removePrefix("bundle").removeSuffix("Release")
+        val flavorPart = name.removeSuffix("Release").let {
+            when {
+                it.startsWith("assemble") -> it.removePrefix("assemble")
+                it.startsWith("bundle") -> it.removePrefix("bundle")
+                else -> null
             }
-
-            if (flavorPart != null) {
-                val flavorName = flavorPart.replaceFirstChar { it.lowercaseChar() }
+        }
+        if (flavorPart != null) {
+            val flavorName = flavorPart.replaceFirstChar { it.lowercaseChar() }
+            val billingKey = resolvedBillingKeys[flavorName]
+            if (billingKey != null && billingKey.isBlank()) {
                 val billingKeyName = flavorConfigs.find { it.first == flavorName }?.second
-                if (billingKeyName != null) {
-                    if (getSecretValue(billingKeyName).isBlank()) {
-                        throw GradleException("$billingKeyName is required for release builds for flavor $flavorName")
-                    }
+                doFirst {
+                    throw GradleException("$billingKeyName is required for release builds for flavor $flavorName")
                 }
             }
         }

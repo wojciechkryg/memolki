@@ -17,13 +17,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
+import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun ShopButton(onClick: () -> Unit = {}) {
     Button(
         onClick = throttleClick(onClick = onClick),
-        contentPadding = PaddingValues(start = 8.dp, end = 16.dp),
+        contentPadding = PaddingValues(start = spacingS, end = spacingL),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = Color.Black,
@@ -35,7 +38,7 @@ fun ShopButton(onClick: () -> Unit = {}) {
             painter = painterResource(id = R.drawable.ic_coins_sack),
             contentDescription = null,
         )
-        Spacer(modifier = Modifier.size(4.dp))
+        Spacer(modifier = Modifier.size(spacingXS))
         Text(
             text = stringResource(id = R.string.shop).uppercase(),
             style = MaterialTheme.typography.titleLarge
