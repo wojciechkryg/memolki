@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.LanguageModel
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
@@ -47,10 +49,10 @@ fun LanguageButton(
         },
         onClick = throttleClick(onClick = onClick),
         contentPadding = if (isSelected) PaddingValues(
-            top = 8.dp,
-            bottom = 8.dp,
-            start = 8.dp,
-            end = 16.dp
+            top = spacingS,
+            bottom = spacingS,
+            start = spacingS,
+            end = spacingL
         ) else ButtonDefaults.ContentPadding,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,

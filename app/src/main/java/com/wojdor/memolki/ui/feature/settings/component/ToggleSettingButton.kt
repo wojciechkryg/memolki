@@ -30,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
+import com.wojdor.memolki.ui.theme.spacingXS
 
 @Composable
 fun ToggleSettingButton(
@@ -39,7 +42,7 @@ fun ToggleSettingButton(
     Button(
         // don't use throttleClick here
         onClick = onClick,
-        contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 16.dp),
+        contentPadding = PaddingValues(top = spacingS, bottom = spacingS, start = spacingS, end = spacingL),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = Color.Black,
@@ -62,7 +65,7 @@ fun ToggleSettingButton(
                 )
                 AnimateDisabledStrikeThrough(setting)
             }
-            Spacer(modifier = Modifier.size(4.dp))
+            Spacer(modifier = Modifier.size(spacingXS))
             Text(
                 text = stringResource(id = setting.textId).uppercase(),
                 style = MaterialTheme.typography.displaySmall

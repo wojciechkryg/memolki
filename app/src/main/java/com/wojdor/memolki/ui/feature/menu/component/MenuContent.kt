@@ -24,6 +24,7 @@ import com.wojdor.memolki.ui.component.XmlDrawable
 import com.wojdor.memolki.ui.feature.menu.MenuCallbacks
 import com.wojdor.memolki.ui.feature.menu.MenuState
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
 
 @Composable
 fun MenuContent(
@@ -54,7 +55,7 @@ fun MenuContent(
                 }
             ) {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(spacingL),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     it.forEach { menuItem ->
@@ -77,7 +78,7 @@ fun MenuContent(
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(spacingL))
             Row {
                 IconItem(
                     iconRes = R.drawable.ic_leaderboard,

@@ -108,12 +108,12 @@ android {
         it.name.contains("release", ignoreCase = true) &&
                 (it.name.startsWith("assemble") || it.name.startsWith("bundle"))
     }.configureEach {
-        val taskName = name
-        var flavorPart: String? = null
-        if (taskName.startsWith("assemble")) {
-            flavorPart = taskName.removePrefix("assemble").removeSuffix("Release")
-        } else if (taskName.startsWith("bundle")) {
-            flavorPart = taskName.removePrefix("bundle").removeSuffix("Release")
+        val flavorPart = name.removeSuffix("Release").let {
+            when {
+                it.startsWith("assemble") -> it.removePrefix("assemble")
+                it.startsWith("bundle") -> it.removePrefix("bundle")
+                else -> null
+            }
         }
         if (flavorPart != null) {
             val flavorName = flavorPart.replaceFirstChar { it.lowercaseChar() }

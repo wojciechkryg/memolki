@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.LevelModel
@@ -21,6 +20,7 @@ import com.wojdor.memolki.ui.feature.chooselevel.component.ChooseLevelItem
 import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingXL
 
 @Composable
 fun ChooseLevelScreen(
@@ -81,7 +81,7 @@ private fun ChooseLevelScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         state.levels.forEach { level ->
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(spacingXL))
             ChooseLevelItem(
                 textId = level.textId,
                 isEnabled =  level.isUnlocked,

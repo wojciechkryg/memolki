@@ -1,4 +1,4 @@
-package com.wojdor.memolki.util
+package com.wojdor.memolki.util.update
 
 import android.app.Activity
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -10,7 +10,7 @@ import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import javax.inject.Inject
 
-class InAppUpdates @Inject constructor() {
+class InAppUpdate @Inject constructor() {
 
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var installStateUpdatedListener: InstallStateUpdatedListener

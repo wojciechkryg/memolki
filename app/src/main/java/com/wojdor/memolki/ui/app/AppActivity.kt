@@ -19,8 +19,8 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.ClickIndicatorOverlay
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.LocalWindowSize
-import com.wojdor.memolki.util.InAppUpdates
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
+import com.wojdor.memolki.util.update.InAppUpdate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ class AppActivity : ComponentActivity() {
     lateinit var backgroundMusicPlayer: BackgroundMusicPlayer
 
     @Inject
-    lateinit var inAppUpdates: InAppUpdates
+    lateinit var inAppUpdate: InAppUpdate
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +48,7 @@ class AppActivity : ComponentActivity() {
                 Color.TRANSPARENT
             )
         )
-        inAppUpdates.checkUpdate(this)
+        inAppUpdate.checkUpdate(this)
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
             CompositionLocalProvider(LocalWindowSize provides windowSizeClass) {
@@ -70,11 +70,11 @@ class AppActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        inAppUpdates.resumeUpdate()
+        inAppUpdate.resumeUpdate()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        inAppUpdates.cleanup()
+        inAppUpdate.cleanup()
     }
 }
