@@ -368,7 +368,7 @@ internal object Route {
     const val SETTINGS = "settings"
     const val CHANGE_LANGUAGE = "change_language"
     const val MORE_APPS = "more_apps"
-    const val ENABLE_NOTIFICATIONS = "enable_notifications/{${AppNavigation.DESTINATION_ARG}"
+    const val ENABLE_NOTIFICATIONS = "enable_notifications/{${AppNavigation.DESTINATION_ARG}}"
 }
 
 private object RouteFlow {
