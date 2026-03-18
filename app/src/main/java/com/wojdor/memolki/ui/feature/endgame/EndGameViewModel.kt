@@ -11,8 +11,10 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -22,6 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,13 +42,15 @@ class EndGameViewModel @Inject constructor(
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
-    private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase
+    private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase,
+    private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
     EndGameState()
 ) {
 
     private var isAdLoaded = false
+    private var shouldShowNotificationRequest = false
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
@@ -63,12 +68,19 @@ class EndGameViewModel @Inject constructor(
         sendState { EndGameState() }
         loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
+        checkShouldShowNotificationRequest()
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
             delay(LEVEL_COMPLETE_SOUND_DELAY)
             levelCompletePlayer.play()
             requestReview()
         }
+    }
+
+    private fun checkShouldShowNotificationRequest() {
+        shouldShowNotificationRequestUseCase().onEach { result ->
+            result.onSuccess { shouldShowNotificationRequest = it }
+        }.launchIn(viewModelScope)
     }
 
     private suspend fun requestReview() {
@@ -116,17 +128,40 @@ class EndGameViewModel @Inject constructor(
 
     private fun onPlayAgainClick(intent: EndGameIntent.OnPlayAgainClick) {
         hapticFeedback.vibrateLow()
-        sendEffect(EndGameEffect.OpenGameScreen(intent.levelModel))
+        navigateOrShowNotificationRequest(
+            destination = EnableNotificationDestination.GAME,
+            defaultEffect = EndGameEffect.OpenGameScreen(intent.levelModel),
+            levelModel = intent.levelModel
+        )
     }
 
     private fun onMenuClick() {
         hapticFeedback.vibrateLow()
-        sendEffect(EndGameEffect.OpenMenuScreen)
+        navigateOrShowNotificationRequest(
+            destination = EnableNotificationDestination.MENU,
+            defaultEffect = EndGameEffect.OpenMenuScreen
+        )
     }
 
     private fun onUnlockNewCardClick() {
         hapticFeedback.vibrateLow()
-        sendEffect(EndGameEffect.OpenCollectionScreen)
+        navigateOrShowNotificationRequest(
+            destination = EnableNotificationDestination.COLLECTION,
+            defaultEffect = EndGameEffect.OpenCollectionScreen
+        )
+    }
+
+    private fun navigateOrShowNotificationRequest(
+        destination: EnableNotificationDestination,
+        defaultEffect: EndGameEffect,
+        levelModel: LevelModel? = null
+    ) {
+        if (shouldShowNotificationRequest) {
+            shouldShowNotificationRequest = false
+            sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, levelModel))
+        } else {
+            sendEffect(defaultEffect)
+        }
     }
 
     private fun onWatchAdClick() {

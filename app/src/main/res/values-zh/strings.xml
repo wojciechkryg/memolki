@@ -28,4 +28,43 @@
     <string name="setting_vibration">振动</string>
     <string name="setting_language">语言</string>
     <string name="watch_ad">观看广告</string>
+
+    <string name="notification_channel_reminders">提醒</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 你的卡牌在等你！</item>
+        <item>✨ 准备解锁新卡牌了吗？</item>
+        <item>💰 新奖励在等你！</item>
+        <item>🧠 今天的记忆力怎么样？</item>
+        <item>🏆 打破你的最高分！</item>
+        <item>🎴 你的收藏想你了！</item>
+        <item>✨ 挑战时间到了！</item>
+        <item>💰 金币在累积！</item>
+        <item>🃏 洗洗牌吧！</item>
+        <item>🧠 保持大脑敏锐！</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>配对卡牌赚取金币</item>
+        <item>快速一局大有帮助</item>
+        <item>新卡牌等待解锁</item>
+        <item>洗牌、翻牌、配对！</item>
+        <item>今天扩充你的收藏</item>
+        <item>在快速回合中测试你的记忆力</item>
+        <item>你的收藏还不完整</item>
+        <item>回来翻几张卡牌</item>
+        <item>金币不会自己收集</item>
+        <item>玩一局开心一下</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 你的金币奖励准备好了！</item>
+        <item>✨ 金币在等你！</item>
+        <item>🏆 该领取奖励了！</item>
+    </string-array>
+    <string name="notification_ad_reward_body">观看广告赚取金币</string>
+
+    <string name="enable_notifications_title">解锁更多奖励！</string>
+    <string name="enable_notifications_body">在金币准备好领取和新卡牌等待解锁时收到通知！</string>
+    <string name="enable_notifications_enable">开启</string>
+    <string name="enable_notifications_later">稍后</string>
 </resources>

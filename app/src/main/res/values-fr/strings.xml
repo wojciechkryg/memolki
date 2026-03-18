@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • fruit</string>
+    <string name="app_name_fruit_half">memolki • fruits</string>
     <string name="app_name_vegetable_half">memolki • légumes</string>
     <string name="app_name_mammal_side">memolki • mammifères</string>
     <string name="app_name_bird_side">memolki • oiseaux</string>
 
-    <string name="suffix_fruit_half">• fruit</string>
+    <string name="suffix_fruit_half">• fruits</string>
     <string name="suffix_vegetable_half">• légumes</string>
     <string name="suffix_mammal_side">• mammifères</string>
     <string name="suffix_bird_side">• oiseaux</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Langue</string>
     <string name="watch_ad">Regarder la publicité</string>
+
+    <string name="notification_channel_reminders">Rappels</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Tes cartes t\'attendent !</item>
+        <item>✨ Prêt à débloquer de nouvelles cartes ?</item>
+        <item>💰 De nouvelles récompenses t\'attendent !</item>
+        <item>🧠 Comment va ta mémoire aujourd\'hui ?</item>
+        <item>🏆 Bats ton meilleur score !</item>
+        <item>🎴 Ta collection s\'ennuie sans toi !</item>
+        <item>✨ C\'est l\'heure du défi !</item>
+        <item>💰 Les pièces s\'accumulent !</item>
+        <item>🃏 Mélange des cartes !</item>
+        <item>🧠 Garde ton cerveau en forme !</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Associe des paires et gagne des pièces</item>
+        <item>Une partie rapide fait beaucoup de bien</item>
+        <item>De nouvelles cartes attendent d\'être débloquées</item>
+        <item>Mélange, retourne et associe !</item>
+        <item>Enrichis ta collection aujourd\'hui</item>
+        <item>Teste ta mémoire dans un tour rapide</item>
+        <item>Ta collection n\'est pas encore complète</item>
+        <item>Reviens et retourne des cartes</item>
+        <item>Les pièces ne se collectent pas toutes seules</item>
+        <item>Joue un tour et amuse-toi</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Ta récompense en pièces est prête !</item>
+        <item>✨ Des pièces t\'attendent !</item>
+        <item>🏆 C\'est l\'heure de récupérer ta récompense !</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Regarde une pub pour gagner des pièces</string>
+
+    <string name="enable_notifications_title">Débloque plus de récompenses !</string>
+    <string name="enable_notifications_body">Reçois des notifications quand les pièces sont prêtes à être collectées et de nouvelles cartes attendent d\'être débloquées !</string>
+    <string name="enable_notifications_enable">Activer</string>
+    <string name="enable_notifications_later">Plus tard</string>
 </resources>

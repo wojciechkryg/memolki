@@ -27,5 +27,44 @@
     <string name="setting_sound">Zvok</string>
     <string name="setting_vibration">Vibracija</string>
     <string name="setting_language">Jezik</string>
-    <string name="watch_ad">Oglejte si oglas</string>
+    <string name="watch_ad">Oglej si oglas</string>
+
+    <string name="notification_channel_reminders">Opomniki</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Tvoje karte čakajo!</item>
+        <item>✨ Pripravljen odkleniti nove karte?</item>
+        <item>💰 Nove nagrade čakajo!</item>
+        <item>🧠 Kako ti dela spomin danes?</item>
+        <item>🏆 Premagaj svoj najboljši rezultat!</item>
+        <item>🎴 Tvoja zbirka te pogreša!</item>
+        <item>✨ Čas za izziv!</item>
+        <item>💰 Kovanci se kopičijo!</item>
+        <item>🃏 Premešaj nekaj kart!</item>
+        <item>🧠 Ohranjaj možgane ostre!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Poveži pare in zasluži kovance</item>
+        <item>Hitra igra pomaga veliko</item>
+        <item>Nove karte čakajo na odklenitev</item>
+        <item>Premešaj, obrni in poveži!</item>
+        <item>Povečaj svojo zbirko danes</item>
+        <item>Preizkusi svoj spomin v hitrem krogu</item>
+        <item>Tvoja zbirka še ni popolna</item>
+        <item>Vrni se in obrni nekaj kart</item>
+        <item>Kovanci se ne bodo zbrali sami</item>
+        <item>Igraj krog in se zabavaj</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Tvoja nagrada v kovancih je pripravljena!</item>
+        <item>✨ Kovanci čakajo na te!</item>
+        <item>🏆 Čas je, da pobereš svojo nagrado!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Oglej si oglas, da zaslužiš kovance</string>
+
+    <string name="enable_notifications_title">Odkleni več nagrad!</string>
+    <string name="enable_notifications_body">Prejmi obvestila, ko so kovanci pripravljeni za pobiranje in nove karte čakajo na odklenitev!</string>
+    <string name="enable_notifications_enable">Omogoči</string>
+    <string name="enable_notifications_later">Pozneje</string>
 </resources>

@@ -10,6 +10,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
+import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -44,7 +45,8 @@ class ShopViewModel @Inject constructor(
     private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
     private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
     private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase,
-    private val getTotalCoinsUseCase: GetTotalCoinsUseCase
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
+    private val scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
     ShopState()
@@ -106,6 +108,7 @@ class ShopViewModel @Inject constructor(
     private fun onAdDismiss(wasRewardGranted: Boolean) {
         if (wasRewardGranted) {
             setLastShopAdShownTimestampUseCase().launchIn(viewModelScope)
+            scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
             rewardCoinsForAd()
         }
         loadMenuItemsAndAd(wasRewardGranted)

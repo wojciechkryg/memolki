@@ -28,4 +28,43 @@
     <string name="setting_vibration">Вибрация</string>
     <string name="setting_language">Язык</string>
     <string name="watch_ad">Смотреть рекламу</string>
+
+    <string name="notification_channel_reminders">Напоминания</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Твои карты ждут!</item>
+        <item>✨ Готов открыть новые карты?</item>
+        <item>💰 Новые награды ждут!</item>
+        <item>🧠 Как твоя память сегодня?</item>
+        <item>🏆 Побей свой лучший результат!</item>
+        <item>🎴 Твоя коллекция скучает по тебе!</item>
+        <item>✨ Время для испытания!</item>
+        <item>💰 Монеты копятся!</item>
+        <item>🃏 Перемешай карты!</item>
+        <item>🧠 Держи мозг в тонусе!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Находи пары и зарабатывай монеты</item>
+        <item>Быстрая игра — большая польза</item>
+        <item>Новые карты ждут открытия</item>
+        <item>Перемешай, переверни и найди пару!</item>
+        <item>Пополни свою коллекцию сегодня</item>
+        <item>Проверь свою память в быстром раунде</item>
+        <item>Твоя коллекция ещё не полная</item>
+        <item>Вернись и переверни несколько карт</item>
+        <item>Монеты сами себя не соберут</item>
+        <item>Сыграй раунд и повеселись</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Твоя награда в монетах готова!</item>
+        <item>✨ Монеты ждут тебя!</item>
+        <item>🏆 Пора забрать свою награду!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Посмотри рекламу, чтобы заработать монеты</string>
+
+    <string name="enable_notifications_title">Открой больше наград!</string>
+    <string name="enable_notifications_body">Получай уведомления, когда монеты готовы к сбору и новые карты ждут открытия!</string>
+    <string name="enable_notifications_enable">Включить</string>
+    <string name="enable_notifications_later">Позже</string>
 </resources>

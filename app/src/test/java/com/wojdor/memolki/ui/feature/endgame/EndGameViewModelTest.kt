@@ -12,6 +12,7 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.relaxedMockk
@@ -69,6 +70,9 @@ class EndGameViewModelTest : AppTest() {
     lateinit var canUnlockNewCardUseCase: CanUnlockNewCardUseCase
 
     @Inject
+    lateinit var shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase
+
+    @Inject
     lateinit var userRepository: UserRepository
 
     private lateinit var sut: EndGameViewModel
@@ -89,7 +93,8 @@ class EndGameViewModelTest : AppTest() {
             getCoinsUseCase,
             rewardCoinsForLevelUseCase,
             getTotalCoinsUseCase,
-            canUnlockNewCardUseCase
+            canUnlockNewCardUseCase,
+            shouldShowNotificationRequestUseCase
         )
     }
 

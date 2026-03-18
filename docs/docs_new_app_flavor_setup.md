@@ -12,7 +12,8 @@
     - copy paste the images to the new flavor folder
     - create the strings in the new flavor folder
     - create the colors in the new flavor folder
-    - create a flavor specific `AllCardPairsLocalDataSource.class` in the `data/local/card_pairs` folder
+    - create a flavor specific `AllCardPairsLocalDataSource.class` in the `data/local/card_pairs`
+      folder
     - add the new app in the `AppModel` and include it in the `all` function
 
 1. Add app icon:
@@ -36,13 +37,14 @@
 1. go through the configuration in the Google Play Console
 
 1. Setup Google Play Games:
-   - go to https://play.google.com/console/u/0/developers/9083635429558058910/app/4974380132955156236/games/leaderboards
-   - create a new project in Google Cloud named "memolki - {name connected to flavor}"
-   - create a OAuth consent screen
-   - create OAuth login details
-   - create "Total Coins" and "Total Card Pairs Matched"
-   - use icon images from [here](../images)
-   - copy identificators to the flavour's `strings_non_translatable.xml`
+    - go
+      to https://play.google.com/console/u/0/developers/9083635429558058910/app/4974380132955156236/games/leaderboards
+    - create a new project in Google Cloud named "memolki - {name connected to flavor}"
+    - create a OAuth consent screen
+    - create OAuth login details
+    - create "Total Coins" and "Total Card Pairs Matched"
+    - use icon images from [here](../images)
+    - copy identificators to the flavour's `strings_non_translatable.xml`
 
 1. Setup AdMob:
     - go to https://admob.google.com/v2/apps/list
@@ -52,22 +54,27 @@
     - enter app name `memolki • {flavor name}`
     - click `Add`
     - go to `App settings`
-    - copy `App ID` (looks like `ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX`) and add it to the flavor's `res/values/ad_mob_ids.xml` as `ad_mob_app_id`
-    - create `Rewarded ad`s with the same names and settings as in https://admob.google.com/v2/apps/8308414287/adunits/list
-    - copy `Ad Unit ID`s (looks like `ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX`) and add them to the flavor's `res/values/ad_mob_ids.xml`.
+    - copy `App ID` (looks like `ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX`) and add it to the flavor's
+      `res/values/ad_mob_ids.xml` as `ad_mob_app_id`
+    - create `Rewarded ad`s with the same names and settings as
+      in https://admob.google.com/v2/apps/8308414287/adunits/list
+    - copy `Ad Unit ID`s (looks like `ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX`) and add them to the
+      flavor's `res/values/ad_mob_ids.xml`.
 
 1. Setup new flavor in the CI:
     - go to file `.github/workflows/merge.yml`
     - add the new flavor to the `flavor` matrix
     - add flavor's billing key to the `Build with Gradle` step
-    - go to https://play.google.com/console/u/0/developers/9083635429558058910/app/4974380132955156236/monetization-setup
+    - go
+      to https://play.google.com/console/u/0/developers/9083635429558058910/app/4974380132955156236/monetization-setup
     - copy the public RSA billing key
     - add it to the local `/secrets.properties` file
     - go to GitHub to Settings/Secrets and variables/Actions
     - add the public RSA billing key
 
 1. Setup pushing builds from CI to Google Play Console :
-    - go to https://play.google.com/console/u/0/developers/9083635429558058910/users-and-permissions/google-play-store-deploy%40memolki.iam.gserviceaccount.com
+    - go
+      to https://play.google.com/console/u/0/developers/9083635429558058910/users-and-permissions/google-play-store-deploy%40memolki.iam.gserviceaccount.com
     - click `Add application`
     - choose new application
     - go to `Version` section and check the `Creation of production builds`

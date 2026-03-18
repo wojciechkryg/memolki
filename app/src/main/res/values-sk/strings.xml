@@ -28,4 +28,43 @@
     <string name="setting_vibration">Vibrácie</string>
     <string name="setting_language">Jazyk</string>
     <string name="watch_ad">Sledovať reklamu</string>
+
+    <string name="notification_channel_reminders">Pripomienky</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Tvoje karty čakajú!</item>
+        <item>✨ Pripravený odomknúť nové karty?</item>
+        <item>💰 Nové odmeny čakajú!</item>
+        <item>🧠 Aká je dnes tvoja pamäť?</item>
+        <item>🏆 Prekonaj svoje najlepšie skóre!</item>
+        <item>🎴 Tvoja zbierka sa po tebe stýska!</item>
+        <item>✨ Čas na výzvu!</item>
+        <item>💰 Mince sa hromadia!</item>
+        <item>🃏 Zamiešaj nejaké karty!</item>
+        <item>🧠 Udržuj svoj mozog v kondícii!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Spáruj páry a získaj mince</item>
+        <item>Rýchla hra veľa pomôže</item>
+        <item>Nové karty čakajú na odomknutie</item>
+        <item>Zamiešaj, otoč a spáruj!</item>
+        <item>Rozšír svoju zbierku ešte dnes</item>
+        <item>Otestuj si pamäť v rýchlom kole</item>
+        <item>Tvoja zbierka ešte nie je kompletná</item>
+        <item>Vráť sa a otoč pár kariet</item>
+        <item>Mince sa samy nepozbierajú</item>
+        <item>Zahraj si kolo a zabav sa</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Tvoja odmena v minciach je pripravená!</item>
+        <item>✨ Mince na teba čakajú!</item>
+        <item>🏆 Čas vyzdvihnúť si odmenu!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Sleduj reklamu a získaj mince</string>
+
+    <string name="enable_notifications_title">Odomkni viac odmien!</string>
+    <string name="enable_notifications_body">Dostávaj upozornenia, keď sú mince pripravené na zber a nové karty čakajú na odomknutie!</string>
+    <string name="enable_notifications_enable">Povoliť</string>
+    <string name="enable_notifications_later">Neskôr</string>
 </resources>

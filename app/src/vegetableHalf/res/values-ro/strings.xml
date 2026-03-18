@@ -19,7 +19,7 @@
     <string name="cauliflower">Conopidă</string>
     <string name="sweet_potato">Cartof dulce</string>
     <string name="pea">Mazăre</string>
-    <string name="asparagus">Saranghel</string>
+    <string name="asparagus">Sparanghel</string>
     <string name="brussels_sprout">Varză de Bruxelles</string>
     <string name="zucchini">Dovlecel</string>
     <string name="eggplant">Vânătă</string>
@@ -27,10 +27,10 @@
     <string name="butternut_squash">Dovleac plăcintar</string>
     <string name="beet">Sfeclă</string>
     <string name="radish">Ridiche</string>
-    <string name="kale">Kale</string>
+    <string name="kale">Varză creață</string>
     <string name="leek">Praz</string>
     <string name="artichoke">Anghinare</string>
-    <string name="swiss_chard">Mangold</string>
+    <string name="swiss_chard">Sfeclă de frunze</string>
     <string name="okra">Bama</string>
     <string name="turnip">Nap</string>
     <string name="parsnip">Păstârnac</string>
@@ -39,7 +39,7 @@
     <string name="chili_pepper">Ardei iute</string>
     <string name="lima_bean">Fasole lima</string>
     <string name="acorn_squash">Dovleac ghindă</string>
-    <string name="collard_greens">Varză collard</string>
+    <string name="collard_greens">Varză de frunze</string>
     <string name="watercress">Năsturel</string>
     <string name="bok_choy">Bok choy</string>
     <string name="fennel">Fenicul</string>
@@ -47,8 +47,8 @@
     <string name="radicchio">Radicchio</string>
     <string name="endive">Andivă</string>
     <string name="jicama">Jicama</string>
-    <string name="kohlrabi">Gul</string>
-    <string name="celeriac">Țelină</string>
+    <string name="kohlrabi">Gulie</string>
+    <string name="celeriac">Țelină de rădăcină</string>
     <string name="water_chestnut">Castan de apă</string>
     <string name="bean_sprouts">Muguri de fasole</string>
     <string name="mustard_greens">Frunze de muștar</string>

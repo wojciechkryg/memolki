@@ -8,9 +8,16 @@ Memolki is an Android card-matching memory game built with Jetpack Compose. It s
 
 ## Build & Test Commands
 
+The **default flavor** is `fruitHalf` — use it for builds, tests, and installs unless told otherwise.
+
+After making changes, always install and launch the app on the connected device/emulator to verify the build works at runtime (not just compilation).
+
 ```bash
-# Build debug APK (fruitHalf is the default flavor — swap for another if needed)
+# Build debug APK
 ./gradlew assembleFruitHalfDebug
+
+# Install debug APK on connected device/emulator and launch it
+./gradlew installFruitHalfDebug && adb shell am start -n com.wojdor.memolki.fruithalf/com.wojdor.memolki.ui.app.AppActivity
 
 # Run all unit tests — you MUST specify a flavor, the unqualified task name is ambiguous
 ./gradlew testFruitHalfDebugUnitTest

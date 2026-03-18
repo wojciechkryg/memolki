@@ -27,5 +27,44 @@
     <string name="setting_sound">Garsas</string>
     <string name="setting_vibration">Vibracija</string>
     <string name="setting_language">Kalba</string>
-    <string name="watch_ad">Žiūrėti skelbimą</string>
+    <string name="watch_ad">Žiūrėti reklamą</string>
+
+    <string name="notification_channel_reminders">Priminimai</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Tavo kortos laukia!</item>
+        <item>✨ Pasiruošęs atrakinti naujas kortas?</item>
+        <item>💰 Nauji apdovanojimai laukia!</item>
+        <item>🧠 Kaip tavo atmintis šiandien?</item>
+        <item>🏆 Pagerink savo geriausią rezultatą!</item>
+        <item>🎴 Tavo kolekcija tavęs pasiilgo!</item>
+        <item>✨ Laikas iššūkiui!</item>
+        <item>💰 Monetos kaupiasi!</item>
+        <item>🃏 Sumaišyk kelias kortas!</item>
+        <item>🧠 Laikyk savo smegenis formos!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Suporuok poras ir uždirbk monetų</item>
+        <item>Greitas žaidimas labai padeda</item>
+        <item>Naujos kortos laukia atrakinimo</item>
+        <item>Sumaišyk, apversk ir suporuok!</item>
+        <item>Papildyk savo kolekciją šiandien</item>
+        <item>Išbandyk savo atmintį greitame raunde</item>
+        <item>Tavo kolekcija dar nebaigta</item>
+        <item>Grįžk ir apversk kelias kortas</item>
+        <item>Monetos pačios nesirinks</item>
+        <item>Sužaisk raundą ir linksminkis</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Tavo monetų apdovanojimas paruoštas!</item>
+        <item>✨ Monetos laukia tavęs!</item>
+        <item>🏆 Laikas atsiimti savo apdovanojimą!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Pažiūrėk reklamą ir uždirbk monetų</string>
+
+    <string name="enable_notifications_title">Atrakink daugiau apdovanojimų!</string>
+    <string name="enable_notifications_body">Gauk pranešimus, kai monetos paruoštos surinkti ir naujos kortos laukia atrakinimo!</string>
+    <string name="enable_notifications_enable">Įjungti</string>
+    <string name="enable_notifications_later">Vėliau</string>
 </resources>

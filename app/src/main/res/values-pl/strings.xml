@@ -28,4 +28,43 @@
     <string name="setting_vibration">Wibracje</string>
     <string name="setting_language">Język</string>
     <string name="watch_ad">Obejrzyj reklamę</string>
+
+    <string name="notification_channel_reminders">Przypomnienia</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Twoje karty czekają!</item>
+        <item>✨ Odblokujesz nowe karty?</item>
+        <item>💰 Czekają nowe nagrody!</item>
+        <item>🧠 Jak tam dziś pamięć?</item>
+        <item>🏆 Pobij swój rekord!</item>
+        <item>🎴 Kolekcja za Tobą tęskni!</item>
+        <item>✨ Czas na wyzwanie!</item>
+        <item>💰 Monety się zbierają!</item>
+        <item>🃏 Potasuj karty!</item>
+        <item>🧠 Trenuj swoją pamięć!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Łącz pary i zdobywaj monety</item>
+        <item>Krótka rozgrywka, a tyle radości</item>
+        <item>Nowe karty czekają na odblokowanie</item>
+        <item>Tasuj, odkrywaj i dopasowuj!</item>
+        <item>Rozbuduj dziś swoją kolekcję</item>
+        <item>Sprawdź pamięć w szybkiej rundzie</item>
+        <item>Twoja kolekcja nie jest jeszcze kompletna</item>
+        <item>Wróć i odkryj kilka kart</item>
+        <item>Monety same się nie zbiorą</item>
+        <item>Zagraj rundkę i miło spędź czas</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Twoja nagroda w monetach jest gotowa!</item>
+        <item>✨ Monety czekają na Ciebie!</item>
+        <item>🏆 Czas odebrać nagrodę!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Obejrzyj reklamę, aby zdobyć monety</string>
+
+    <string name="enable_notifications_title">Odblokuj więcej nagród!</string>
+    <string name="enable_notifications_body">Otrzymuj powiadomienia, gdy monety są gotowe do zebrania i nowe karty czekają na odblokowanie!</string>
+    <string name="enable_notifications_enable">Włącz</string>
+    <string name="enable_notifications_later">Później</string>
 </resources>

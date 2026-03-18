@@ -12,6 +12,7 @@ import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
 import com.wojdor.memolki.test.fake.FakeDataStore
 import com.wojdor.memolki.test.fake.FakeEncryptor
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
+import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -22,6 +23,7 @@ import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.AppInstalledProvider
 import com.wojdor.memolki.util.provider.LocaleProvider
@@ -64,6 +66,10 @@ abstract class TestModule {
     @Binds
     @Singleton
     abstract fun bindLocaleProvider(fakeLocaleProvider: FakeLocaleProvider): LocaleProvider
+
+    @Binds
+    @Singleton
+    abstract fun bindNotificationScheduler(fakeNotificationScheduler: FakeNotificationScheduler): NotificationScheduler
 
     companion object {
         @Provides

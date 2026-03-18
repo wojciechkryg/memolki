@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • fruit</string>
+    <string name="app_name_fruit_half">memolki • fruits</string>
     <string name="app_name_vegetable_half">memolki • vegetables</string>
     <string name="app_name_mammal_side">memolki • mammals</string>
     <string name="app_name_bird_side">memolki • birds</string>
 
-    <string name="suffix_fruit_half">• fruit</string>
-    <string name="suffix_vegetable_half">• vegetable</string>
+    <string name="suffix_fruit_half">• fruits</string>
+    <string name="suffix_vegetable_half">• vegetables</string>
     <string name="suffix_mammal_side">• mammals</string>
     <string name="suffix_bird_side">• birds</string>
 
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Language</string>
     <string name="watch_ad">Watch Ad</string>
+
+    <string name="notification_channel_reminders">Reminders</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Your cards are waiting!</item>
+        <item>✨ Ready to unlock new cards?</item>
+        <item>💰 New rewards are waiting!</item>
+        <item>🧠 How\'s your memory today?</item>
+        <item>🏆 Beat your best score!</item>
+        <item>🎴 Your collection misses you!</item>
+        <item>✨ Time for a challenge!</item>
+        <item>💰 Coins are piling up!</item>
+        <item>🃏 Shuffle some cards!</item>
+        <item>🧠 Keep your brain sharp!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Match pairs and earn coins</item>
+        <item>A quick game goes a long way</item>
+        <item>New cards waiting to be unlocked</item>
+        <item>Shuffle, flip, and match!</item>
+        <item>Grow your collection today</item>
+        <item>Test your memory in a quick round</item>
+        <item>Your collection is not complete yet</item>
+        <item>Come back and flip some cards</item>
+        <item>Coins won\'t collect themselves</item>
+        <item>Play a round and have fun</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Your coin reward is ready!</item>
+        <item>✨ Coins are waiting for you!</item>
+        <item>🏆 Time to collect your reward!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Watch an ad to earn coins</string>
+
+    <string name="enable_notifications_title">Unlock more rewards!</string>
+    <string name="enable_notifications_body">Get notified when coins are ready to collect and new cards are waiting to be unlocked!</string>
+    <string name="enable_notifications_enable">Enable</string>
+    <string name="enable_notifications_later">Later</string>
 </resources>

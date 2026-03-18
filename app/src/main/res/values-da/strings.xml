@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • frugt</string>
+    <string name="app_name_fruit_half">memolki • frugter</string>
     <string name="app_name_vegetable_half">memolki • grøntsager</string>
     <string name="app_name_mammal_side">memolki • pattedyr</string>
     <string name="app_name_bird_side">memolki • fugle</string>
 
-    <string name="suffix_fruit_half">• frugt</string>
+    <string name="suffix_fruit_half">• frugter</string>
     <string name="suffix_vegetable_half">• grøntsager</string>
     <string name="suffix_mammal_side">• pattedyr</string>
     <string name="suffix_bird_side">• fugle</string>
@@ -21,11 +21,50 @@
     <string name="shop_back_later">Kom tilbage senere</string>
     <string name="shop_buy">Køb %d</string>
     <string name="shop_unlock_all_cards">Lås alle kort op</string>
-    <string name="shop_purchase_failed_error">Der skete en fejl</string>
+    <string name="shop_purchase_failed_error">Køb mislykkedes</string>
     <string name="shop_connection_error">Netværksfejl</string>
     <string name="setting_music">Musik</string>
     <string name="setting_sound">Lyd</string>
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Sprog</string>
     <string name="watch_ad">Se annonce</string>
+
+    <string name="notification_channel_reminders">Påmindelser</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Dine kort venter!</item>
+        <item>✨ Klar til at låse nye kort op?</item>
+        <item>💰 Nye belønninger venter!</item>
+        <item>🧠 Hvordan er din hukommelse i dag?</item>
+        <item>🏆 Slå din bedste score!</item>
+        <item>🎴 Din samling savner dig!</item>
+        <item>✨ Tid til en udfordring!</item>
+        <item>💰 Mønterne hober sig op!</item>
+        <item>🃏 Bland nogle kort!</item>
+        <item>🧠 Hold din hjerne skarp!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Match par og tjen mønter</item>
+        <item>Et hurtigt spil gør underværker</item>
+        <item>Nye kort venter på at blive låst op</item>
+        <item>Bland, vend og match!</item>
+        <item>Udvid din samling i dag</item>
+        <item>Test din hukommelse i en hurtig runde</item>
+        <item>Din samling er endnu ikke komplet</item>
+        <item>Kom tilbage og vend nogle kort</item>
+        <item>Mønterne samler ikke sig selv</item>
+        <item>Spil en runde og hav det sjovt</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Din møntbelønning er klar!</item>
+        <item>✨ Mønter venter på dig!</item>
+        <item>🏆 Tid til at hente din belønning!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Se en annonce for at tjene mønter</string>
+
+    <string name="enable_notifications_title">Lås flere belønninger op!</string>
+    <string name="enable_notifications_body">Få besked, når mønter er klar til at blive hentet, og nye kort venter på at blive låst op!</string>
+    <string name="enable_notifications_enable">Aktivér</string>
+    <string name="enable_notifications_later">Senere</string>
 </resources>

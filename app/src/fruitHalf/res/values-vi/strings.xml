@@ -12,20 +12,20 @@
     <string name="peach">Đào</string>
     <string name="pineapple">Dứa</string>
     <string name="blueberry">Việt quất</string>
-    <string name="lemon">Chanh</string>
+    <string name="lemon">Chanh vàng</string>
     <string name="raspberry">Phúc bồn tử</string>
     <string name="cherry">Anh đào</string>
     <string name="pear">Lê</string>
     <string name="avocado">Bơ</string>
     <string name="kiwi">Kiwi</string>
-    <string name="lime">Chanh</string>
+    <string name="lime">Chanh xanh</string>
     <string name="plum">Mận</string>
     <string name="cantaloupe">Dưa lưới</string>
     <string name="coconut">Dừa</string>
     <string name="pomegranate">Lựu</string>
     <string name="apricot">Mơ</string>
     <string name="nectarine">Xuân đào</string>
-    <string name="grapefruit">Bưởi</string>
+    <string name="grapefruit">Bưởi chùm</string>
     <string name="blackberry">Mâm xôi đen</string>
     <string name="fig">Sung</string>
     <string name="papaya">Đu đủ</string>
@@ -45,7 +45,7 @@
     <string name="durian">Sầu riêng</string>
     <string name="kumquat">Tắc</string>
     <string name="blackcurrant">Lý chua đen</string>
-    <string name="gooseberry">Phúc bồn tử</string>
+    <string name="gooseberry">Lý gai</string>
     <string name="rambutan">Chôm chôm</string>
     <string name="mulberry">Dâu tằm</string>
     <string name="elderberry">Cơm cháy</string>
@@ -61,5 +61,5 @@
     <string name="cape_gooseberry">Tầm bóp</string>
     <string name="feijoa">Feijoa</string>
     <string name="salak">Salak</string>
-    <string name="loquat">Nhót</string>
+    <string name="loquat">Tỳ bà</string>
 </resources>

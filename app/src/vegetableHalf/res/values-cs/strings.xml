@@ -11,7 +11,7 @@
     <string name="cucumber">Okurka</string>
     <string name="broccoli">Brokolice</string>
     <string name="garlic">Česnek</string>
-    <string name="celery">Celer</string>
+    <string name="celery">Řapíkatý celer</string>
     <string name="cabbage">Zelí</string>
     <string name="spinach">Špenát</string>
     <string name="sweetcorn">Kukuřice</string>
@@ -32,7 +32,7 @@
     <string name="artichoke">Artyčok</string>
     <string name="swiss_chard">Mangold</string>
     <string name="okra">Okra</string>
-    <string name="turnip">Tuřín</string>
+    <string name="turnip">Vodnice</string>
     <string name="parsnip">Pastinák</string>
     <string name="scallion">Jarní cibulka</string>
     <string name="arugula">Roketa</string>
@@ -48,11 +48,11 @@
     <string name="endive">Endivie</string>
     <string name="jicama">Jicama</string>
     <string name="kohlrabi">Kedluben</string>
-    <string name="celeriac">Celer</string>
+    <string name="celeriac">Bulvový celer</string>
     <string name="water_chestnut">Vodní kaštan</string>
     <string name="bean_sprouts">Fazolové klíčky</string>
     <string name="mustard_greens">Hořčičné listy</string>
-    <string name="fava_bean">Fava fazole</string>
+    <string name="fava_bean">Bob</string>
     <string name="rhubarb">Rebarbora</string>
     <string name="shallot">Šalotka</string>
     <string name="topinambur">Topinambur</string>

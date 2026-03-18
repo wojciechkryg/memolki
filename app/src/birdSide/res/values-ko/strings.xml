@@ -21,12 +21,12 @@
     <string name="great_white_pelican">큰사다새</string>
     <string name="wandering_albatross">나그네알바트로스</string>
     <string name="great_spotted_woodpecker">큰오색딱따구리</string>
-    <string name="european_herring_gull">유럽재갈매기</string>
+    <string name="european_herring_gull">유럽은갈매기</string>
     <string name="white_tailed_eagle">흰꼬리수리</string>
     <string name="great_tit">박새</string>
     <string name="european_robin">유럽울새</string>
     <string name="northern_lapwing">댕기물떼새</string>
-    <string name="common_crane">재두루미</string>
+    <string name="common_crane">회색두루미</string>
     <string name="indian_peafowl">인도공작</string>
     <string name="domestic_turkey">집칠면조</string>
     <string name="eurasian_sparrowhawk">새매</string>
@@ -41,7 +41,7 @@
     <string name="sulphur_crested_cockatoo">유황앵무</string>
     <string name="common_chaffinch">멋쟁이</string>
     <string name="common_blackbird">일반 검은지빠귀</string>
-    <string name="song_thrush">개똥지빠귀</string>
+    <string name="song_thrush">노래지빠귀</string>
     <string name="mandarin_duck">원앙</string>
     <string name="atlantic_puffin">대서양 퍼핀</string>
     <string name="black_stork">먹황새</string>
@@ -59,7 +59,7 @@
     <string name="eurasian_coot">검은머리물닭</string>
     <string name="great_crested_grebe">뿔논병아리</string>
     <string name="grey_heron">왜가리</string>
-    <string name="eurasian_bittern">알락해오라기</string>
+    <string name="eurasian_bittern">큰덤불해오라기</string>
     <string name="common_tern">일반 제비갈매기</string>
     <string name="northern_gannet">북방가넷</string>
     <string name="european_golden_plover">검은가슴물떼새</string>
@@ -76,10 +76,10 @@
     <string name="chicken">집닭</string>
     <string name="harpy_eagle">부채머리수리</string>
     <string name="hooded_crow">회색까마귀</string>
-    <string name="eurasian_bullfinch">밀화부리</string>
+    <string name="eurasian_bullfinch">붉은배멋쟁이</string>
     <string name="european_goldfinch">오색방울새</string>
     <string name="eurasian_skylark">종다리</string>
-    <string name="barn_owl">원숭이올빼미</string>
+    <string name="barn_owl">가면올빼미</string>
     <string name="eurasian_golden_oriole">꾀꼬리</string>
     <string name="secretary_bird">뱀잡이수리</string>
 </resources>

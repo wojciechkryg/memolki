@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • fruta</string>
+    <string name="app_name_fruit_half">memolki • frutas</string>
     <string name="app_name_vegetable_half">memolki • verduras</string>
     <string name="app_name_mammal_side">memolki • mamíferos</string>
     <string name="app_name_bird_side">memolki • aves</string>
 
-    <string name="suffix_fruit_half">• fruta</string>
+    <string name="suffix_fruit_half">• frutas</string>
     <string name="suffix_vegetable_half">• verduras</string>
     <string name="suffix_mammal_side">• mamíferos</string>
     <string name="suffix_bird_side">• aves</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Vibración</string>
     <string name="setting_language">Idioma</string>
     <string name="watch_ad">Ver anuncio</string>
+
+    <string name="notification_channel_reminders">Recordatorios</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 ¡Tus cartas te esperan!</item>
+        <item>✨ ¿Listo para desbloquear nuevas cartas?</item>
+        <item>💰 ¡Nuevas recompensas te esperan!</item>
+        <item>🧠 ¿Cómo está tu memoria hoy?</item>
+        <item>🏆 ¡Supera tu mejor puntuación!</item>
+        <item>🎴 ¡Tu colección te extraña!</item>
+        <item>✨ ¡Hora de un desafío!</item>
+        <item>💰 ¡Las monedas se acumulan!</item>
+        <item>🃏 ¡Baraja algunas cartas!</item>
+        <item>🧠 ¡Mantén tu mente en forma!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Empareja pares y gana monedas</item>
+        <item>Una partida rápida ayuda mucho</item>
+        <item>Nuevas cartas esperan ser desbloqueadas</item>
+        <item>¡Baraja, voltea y empareja!</item>
+        <item>Amplía tu colección hoy</item>
+        <item>Pon a prueba tu memoria en una ronda rápida</item>
+        <item>Tu colección aún no está completa</item>
+        <item>Vuelve y voltea algunas cartas</item>
+        <item>Las monedas no se recogen solas</item>
+        <item>Juega una ronda y diviértete</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 ¡Tu recompensa de monedas está lista!</item>
+        <item>✨ ¡Las monedas te esperan!</item>
+        <item>🏆 ¡Hora de recoger tu recompensa!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Mira un anuncio para ganar monedas</string>
+
+    <string name="enable_notifications_title">¡Desbloquea más recompensas!</string>
+    <string name="enable_notifications_body">¡Recibe notificaciones cuando las monedas estén listas y nuevas cartas esperen ser desbloqueadas!</string>
+    <string name="enable_notifications_enable">Activar</string>
+    <string name="enable_notifications_later">Luego</string>
 </resources>

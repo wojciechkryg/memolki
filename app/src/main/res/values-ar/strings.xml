@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • فاكهة</string>
+    <string name="app_name_fruit_half">memolki • فواكه</string>
     <string name="app_name_vegetable_half">memolki • الخضروات</string>
     <string name="app_name_mammal_side">memolki • الثدييات</string>
     <string name="app_name_bird_side">memolki • طيور</string>
 
-    <string name="suffix_fruit_half">فاكهة •</string>
+    <string name="suffix_fruit_half">فواكه •</string>
     <string name="suffix_vegetable_half">الخضروات •</string>
     <string name="suffix_mammal_side">الثدييات •</string>
     <string name="suffix_bird_side">طيور •</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">الاهتزاز</string>
     <string name="setting_language">اللغة</string>
     <string name="watch_ad">شاهد الإعلان</string>
+
+    <string name="notification_channel_reminders">تذكيرات</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 بطاقاتك بانتظارك!</item>
+        <item>✨ مستعد لفتح بطاقات جديدة؟</item>
+        <item>💰 مكافآت جديدة بانتظارك!</item>
+        <item>🧠 كيف ذاكرتك اليوم؟</item>
+        <item>🏆 تغلب على أفضل نتيجة لك!</item>
+        <item>🎴 مجموعتك تفتقدك!</item>
+        <item>✨ حان وقت التحدي!</item>
+        <item>💰 العملات تتراكم!</item>
+        <item>🃏 اخلط بعض البطاقات!</item>
+        <item>🧠 حافظ على ذهنك حادًا!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>طابق الأزواج واكسب العملات</item>
+        <item>لعبة سريعة تفيد كثيرًا</item>
+        <item>بطاقات جديدة بانتظار الفتح</item>
+        <item>اخلط، اقلب، وطابق!</item>
+        <item>وسّع مجموعتك اليوم</item>
+        <item>اختبر ذاكرتك في جولة سريعة</item>
+        <item>مجموعتك لم تكتمل بعد</item>
+        <item>عد واقلب بعض البطاقات</item>
+        <item>العملات لن تجمع نفسها</item>
+        <item>العب جولة واستمتع</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 مكافأة العملات جاهزة!</item>
+        <item>✨ العملات بانتظارك!</item>
+        <item>🏆 حان وقت جمع مكافأتك!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">شاهد إعلانًا لكسب العملات</string>
+
+    <string name="enable_notifications_title">افتح المزيد من المكافآت!</string>
+    <string name="enable_notifications_body">احصل على إشعارات عندما تكون العملات جاهزة للجمع وبطاقات جديدة بانتظار الفتح!</string>
+    <string name="enable_notifications_enable">تفعيل</string>
+    <string name="enable_notifications_later">لاحقًا</string>
 </resources>

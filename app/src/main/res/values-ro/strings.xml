@@ -18,7 +18,7 @@
     <string name="play_again">Joacă din nou</string>
     <string name="shop">Magazin</string>
     <string name="shop_obtain">Obține %d</string>
-    <string name="shop_back_later">Reveniți mai târziu</string>
+    <string name="shop_back_later">Revino mai târziu</string>
     <string name="shop_buy">Cumpără %d</string>
     <string name="shop_unlock_all_cards">Deblochează toate cărțile</string>
     <string name="shop_purchase_failed_error">Achiziție eșuată</string>
@@ -27,5 +27,44 @@
     <string name="setting_sound">Sunet</string>
     <string name="setting_vibration">Vibrație</string>
     <string name="setting_language">Limbă</string>
-    <string name="watch_ad">Urmăriți reclama</string>
+    <string name="watch_ad">Urmărește reclama</string>
+
+    <string name="notification_channel_reminders">Memento-uri</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Cărțile tale te așteaptă!</item>
+        <item>✨ Pregătit să deblochezi cărți noi?</item>
+        <item>💰 Recompense noi te așteaptă!</item>
+        <item>🧠 Cum e memoria ta azi?</item>
+        <item>🏆 Depășește cel mai bun scor al tău!</item>
+        <item>🎴 Colecția ta îți simte lipsa!</item>
+        <item>✨ E timpul pentru o provocare!</item>
+        <item>💰 Monedele se adună!</item>
+        <item>🃏 Amestecă niște cărți!</item>
+        <item>🧠 Menține-ți mintea în formă!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Potrivește perechile și câștigă monede</item>
+        <item>Un joc rapid ajută mult</item>
+        <item>Cărți noi așteaptă să fie deblocate</item>
+        <item>Amestecă, întoarce și potrivește!</item>
+        <item>Mărește-ți colecția azi</item>
+        <item>Testează-ți memoria într-o rundă rapidă</item>
+        <item>Colecția ta nu este încă completă</item>
+        <item>Revino și întoarce niște cărți</item>
+        <item>Monedele nu se adună singure</item>
+        <item>Joacă o rundă și distrează-te</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Recompensa ta în monede este gata!</item>
+        <item>✨ Monedele te așteaptă!</item>
+        <item>🏆 E timpul să îți colectezi recompensa!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Vizionează o reclamă pentru a câștiga monede</string>
+
+    <string name="enable_notifications_title">Deblochează mai multe recompense!</string>
+    <string name="enable_notifications_body">Primește notificări când monedele sunt gata de colectat și cărți noi așteaptă să fie deblocate!</string>
+    <string name="enable_notifications_enable">Activează</string>
+    <string name="enable_notifications_later">Mai târziu</string>
 </resources>

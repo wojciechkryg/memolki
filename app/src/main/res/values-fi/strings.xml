@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • hedelmä</string>
+    <string name="app_name_fruit_half">memolki • hedelmät</string>
     <string name="app_name_vegetable_half">memolki • vihannekset</string>
     <string name="app_name_mammal_side">memolki • nisäkkäät</string>
     <string name="app_name_bird_side">memolki • linnut</string>
 
-    <string name="suffix_fruit_half">• hedelmä</string>
+    <string name="suffix_fruit_half">• hedelmät</string>
     <string name="suffix_vegetable_half">• vihannekset</string>
     <string name="suffix_mammal_side">• nisäkkäät</string>
     <string name="suffix_bird_side">• linnut</string>
@@ -17,9 +17,9 @@
     <string name="menu">Valikko</string>
     <string name="play_again">Pelaa uudelleen</string>
     <string name="shop">Kauppa</string>
-    <string name="shop_obtain">Osta %d</string>
+    <string name="shop_obtain">Hanki %d</string>
     <string name="shop_back_later">Tule takaisin myöhemmin</string>
-    <string name="shop_buy">Ostaa %d</string>
+    <string name="shop_buy">Osta %d</string>
     <string name="shop_unlock_all_cards">Avaa kaikki kortit</string>
     <string name="shop_purchase_failed_error">Ostos epäonnistui</string>
     <string name="shop_connection_error">Yhteysvirhe</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Tärinä</string>
     <string name="setting_language">Kieli</string>
     <string name="watch_ad">Katso mainos</string>
+
+    <string name="notification_channel_reminders">Muistutukset</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Korttisi odottavat!</item>
+        <item>✨ Valmis avaamaan uusia kortteja?</item>
+        <item>💰 Uudet palkinnot odottavat!</item>
+        <item>🧠 Miten muistisi toimii tänään?</item>
+        <item>🏆 Voita paras tuloksesi!</item>
+        <item>🎴 Kokoelmasi kaipaa sinua!</item>
+        <item>✨ Aika haasteelle!</item>
+        <item>💰 Kolikot kasautuvat!</item>
+        <item>🃏 Sekoita kortteja!</item>
+        <item>🧠 Pidä aivosi terävinä!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Yhdistä pareja ja ansaitse kolikoita</item>
+        <item>Nopea peli vie pitkälle</item>
+        <item>Uudet kortit odottavat avaamista</item>
+        <item>Sekoita, käännä ja yhdistä!</item>
+        <item>Kasvata kokoelmaasi tänään</item>
+        <item>Testaa muistiasi nopealla kierroksella</item>
+        <item>Kokoelmasi ei ole vielä valmis</item>
+        <item>Tule takaisin ja käännä kortteja</item>
+        <item>Kolikot eivät kerää itseään</item>
+        <item>Pelaa kierros ja pidä hauskaa</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Kolikkopalkintosi on valmis!</item>
+        <item>✨ Kolikot odottavat sinua!</item>
+        <item>🏆 Aika kerätä palkintosi!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Katso mainos ansaitaksesi kolikoita</string>
+
+    <string name="enable_notifications_title">Avaa lisää palkintoja!</string>
+    <string name="enable_notifications_body">Saa ilmoituksia, kun kolikot ovat valmiina kerättäväksi ja uudet kortit odottavat avaamista!</string>
+    <string name="enable_notifications_enable">Ota käyttöön</string>
+    <string name="enable_notifications_later">Myöhemmin</string>
 </resources>

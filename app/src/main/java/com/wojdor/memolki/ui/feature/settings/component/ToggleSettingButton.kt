@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,7 +45,6 @@ fun ToggleSettingButton(
         contentPadding = PaddingValues(top = spacingS, bottom = spacingS, start = spacingS, end = spacingL),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color.Black,
             disabledContainerColor = Color.Transparent
         ),
     ) {
@@ -60,7 +59,6 @@ fun ToggleSettingButton(
                 Icon(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(id = setting.resId),
-                    tint = colorResource(R.color.font),
                     contentDescription = null,
                 )
                 AnimateDisabledStrikeThrough(setting)
@@ -81,7 +79,7 @@ private fun AnimateDisabledStrikeThrough(setting: SettingModel) {
         animationSpec = tween(ANIMATION_DURATION)
     )
     if (strikeThroughAmount > 0f) {
-        val color = colorResource(R.color.font)
+        val color = LocalContentColor.current
         Canvas(modifier = Modifier.fillMaxSize()) {
             val strokeWidth = 3.dp.toPx()
 

@@ -33,7 +33,7 @@
     <string name="indian_elephant">Intiannorsu</string>
     <string name="domestic_rabbit">Kesytetty kaniini</string>
     <string name="european_hare">Eurooppalainen jänis</string>
-    <string name="bactrian_camel">Bakteerikameli</string>
+    <string name="bactrian_camel">Baktriankameli</string>
     <string name="american_bison">Amerikanbiisoni</string>
     <string name="moose">Hirvi</string>
     <string name="wild_boar">Villisika</string>
@@ -67,7 +67,7 @@
     <string name="common_wombat">Paljasnenävompatti</string>
     <string name="brown_rat">Ruskea rotta</string>
     <string name="house_mouse">Kotihiiri</string>
-    <string name="european_mole">Euroopanmaamyyrä</string>
+    <string name="european_mole">Euroopankontiainen</string>
     <string name="brown_long_eared_bat">Ruskopitkäkorvalepakko</string>
     <string name="egyptian_fruit_bat">Egyptin hedelmälepakko</string>
     <string name="vicuna">Vikunja</string>

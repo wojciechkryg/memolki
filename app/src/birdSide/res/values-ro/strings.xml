@@ -47,7 +47,7 @@
     <string name="black_stork">Barză neagră</string>
     <string name="great_cormorant">Cormoran mare</string>
     <string name="red_kite">Gaie roșie</string>
-    <string name="tawny_owl">Huhurez mare</string>
+    <string name="tawny_owl">Huhurez mic</string>
     <string name="rook">Cioară de semănătură</string>
     <string name="common_starling">Graur comun</string>
     <string name="eurasian_nuthatch">Țiclean</string>
@@ -61,7 +61,7 @@
     <string name="grey_heron">Stârc cenușiu</string>
     <string name="eurasian_bittern">Buhai de baltă</string>
     <string name="common_tern">Chiră de baltă</string>
-    <string name="northern_gannet">Ganga de nord</string>
+    <string name="northern_gannet">Sulă de nord</string>
     <string name="european_golden_plover">Ploier auriu</string>
     <string name="european_bee_eater">Prigorie</string>
     <string name="european_roller">Dumbrăveancă</string>

@@ -6,12 +6,12 @@
     <string name="white_stork">Valge-toonekurg</string>
     <string name="house_sparrow">Koduvarblane</string>
     <string name="peregrine_falcon">Rabapistrik</string>
-    <string name="mute_swan">Kühmknorsklane</string>
+    <string name="mute_swan">Kühmnokk-luik</string>
     <string name="common_raven">Harilik ronk</string>
-    <string name="long_eared_owl">Kõrvukräts</string>
+    <string name="long_eared_owl">Sarvkakk</string>
     <string name="greater_flamingo">Suurflamingo</string>
     <string name="black_chinned_hummingbird">Mustlõug-koolibri</string>
-    <string name="keel_billed_toucan">Väävel-tuukan</string>
+    <string name="keel_billed_toucan">Vikerkaaretuukan</string>
     <string name="hyacinth_macaw">Hüatsint-aara</string>
     <string name="common_cuckoo">Harilik kägu</string>
     <string name="domestic_goose">Koduhani</string>
@@ -51,7 +51,7 @@
     <string name="rook">Künnivares</string>
     <string name="common_starling">Harilik kuldnokk</string>
     <string name="eurasian_nuthatch">Puukoristaja</string>
-    <string name="whitethroat">Väike-põõsalind</string>
+    <string name="whitethroat">Pruunselg-põõsalind</string>
     <string name="eurasian_wren">Käblik</string>
     <string name="northern_wheatear">Kivitäks</string>
     <string name="white_wagtail">Linavästrik</string>

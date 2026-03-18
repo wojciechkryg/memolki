@@ -9,7 +9,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,15 +27,13 @@ fun IconItem(
         contentPadding = PaddingValues(spacingXS),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color.Black,
             disabledContainerColor = Color.Transparent
         )
     ) {
         Icon(
             modifier = Modifier.size(96.dp),
             painter = painterResource(iconRes),
-            contentDescription = null,
-            tint = colorResource(R.color.font)
+            contentDescription = null
         )
     }
 }

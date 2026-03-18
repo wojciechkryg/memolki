@@ -25,7 +25,7 @@
     <string name="pomegranate">Granaatõun</string>
     <string name="apricot">Aprikoos</string>
     <string name="nectarine">Nektariin</string>
-    <string name="grapefruit">Greibipuu</string>
+    <string name="grapefruit">Greip</string>
     <string name="blackberry">Põldmari</string>
     <string name="fig">Viigimari</string>
     <string name="papaya">Papaia</string>
@@ -41,7 +41,7 @@
     <string name="jackfruit">Jakapuu</string>
     <string name="star_fruit">Tähtvili</string>
     <string name="mangosteen">Mangostan</string>
-    <string name="citron">Sidrun</string>
+    <string name="citron">Tsedraat</string>
     <string name="durian">Durian</string>
     <string name="kumquat">Kumkvaat</string>
     <string name="blackcurrant">Must sõstar</string>
@@ -58,7 +58,7 @@
     <string name="tamarind">Tamarind</string>
     <string name="pomelo">Pomelo</string>
     <string name="jujube">Jujube</string>
-    <string name="cape_gooseberry">Karusmari</string>
+    <string name="cape_gooseberry">Füüsalis</string>
     <string name="feijoa">Feijoa</string>
     <string name="salak">Salak</string>
     <string name="loquat">Loquat</string>
