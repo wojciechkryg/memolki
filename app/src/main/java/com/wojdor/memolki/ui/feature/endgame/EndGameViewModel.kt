@@ -65,7 +65,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun onEndGameShow(level: LevelModel) {
-        sendState { EndGameState() }
+        sendState { EndGameState(showSparkles = true) }
         loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         checkShouldShowNotificationRequest()

@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
@@ -38,7 +39,7 @@ fun ShopMenuItem(
     isEnabled: Boolean = true
 ) {
     CardBorder(
-        modifier = modifier.clip(CardShape).let {
+        modifier = modifier.bounceClickEffect().clip(CardShape).let {
             if (isEnabled) {
                 it.clickable(onClick = throttleClick(onClick = onClick))
             } else {

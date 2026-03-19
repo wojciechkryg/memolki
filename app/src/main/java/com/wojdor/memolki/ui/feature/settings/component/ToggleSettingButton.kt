@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.SettingModel
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
@@ -40,6 +41,7 @@ fun ToggleSettingButton(
     onClick: () -> Unit = {}
 ) {
     Button(
+        modifier = Modifier.bounceClickEffect(),
         // don't use throttleClick here
         onClick = onClick,
         contentPadding = PaddingValues(top = spacingS, bottom = spacingS, start = spacingS, end = spacingL),

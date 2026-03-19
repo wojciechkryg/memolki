@@ -12,5 +12,6 @@ data class EndGameState(
     val rewardedCoins: Long = 0L,
     val menu: List<EndGameMenuModel> = emptyList(),
     val animateCoins: Boolean = false,
-    val animateRewardCoins: Boolean = false
+    val animateRewardCoins: Boolean = false,
+    val showSparkles: Boolean = false
 ) : UiState

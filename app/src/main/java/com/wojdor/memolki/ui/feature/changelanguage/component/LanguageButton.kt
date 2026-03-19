@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.LanguageModel
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXS
@@ -42,7 +43,7 @@ fun LanguageButton(
     onClick: () -> Unit = {}
 ) {
     Button(
-        modifier = Modifier.semantics {
+        modifier = Modifier.bounceClickEffect().semantics {
             role = Role.RadioButton
             selected = isSelected
         },

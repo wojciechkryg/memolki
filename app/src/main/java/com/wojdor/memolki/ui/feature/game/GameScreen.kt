@@ -89,7 +89,9 @@ private fun HandleState(
         onBackCardClick = { viewModel.sendIntent(GameIntent.OnBackCardClick(it)) },
         onFrontCardPress = { isPressed, card ->
             viewModel.sendIntent(GameIntent.OnFrontCardPress(isPressed, card))
-        }
+        },
+        onMatchAnimationComplete = { viewModel.sendIntent(GameIntent.OnMatchAnimationComplete) },
+        onMismatchShakeComplete = { viewModel.sendIntent(GameIntent.OnMismatchShakeComplete) }
     )
     GameScreen(state, callbacks)
 }

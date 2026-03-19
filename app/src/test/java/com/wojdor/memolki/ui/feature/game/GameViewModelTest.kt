@@ -129,6 +129,7 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(secondCardToClick))
 
                 // then
+                skipItems(1)
                 val result = awaitItem()
                 with(result.cards[0]) {
                     assertTrue(isFlippedFront)
@@ -188,6 +189,7 @@ class GameViewModelTest : AppTest() {
                 skipItems(1)
                 val thirdCardToClick = awaitItem().cards[3]
                 sut.sendIntent(GameIntent.OnBackCardClick(thirdCardToClick))
+                skipItems(1)
 
                 // then
                 val result = awaitItem()
@@ -306,6 +308,7 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[7]))
 
                 // then
+                skipItems(1)
                 val result = awaitItem()
                 with(result.cards[1]) {
                     assertTrue(isFlippedFront)

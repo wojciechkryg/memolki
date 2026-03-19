@@ -5,8 +5,10 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.component.CoinsAmount
+import com.wojdor.memolki.ui.component.SparklesOverlay
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
 import com.wojdor.memolki.ui.feature.menu.component.MenuItem
@@ -27,61 +30,63 @@ fun EndGameContent(
     state: EndGameState,
     callbacks: EndGameCallbacks = EndGameCallbacks()
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        CoinsAmount(
-            modifier = Modifier.padding(horizontal = spacingL),
-            coins = state.currentCoins,
-            animate = state.animateCoins
-        )
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
-            Spacer(modifier = Modifier.weight(0.15f))
-            CoinsReward(
-                rewardedCoins = state.rewardedCoins,
-                animate = state.animateRewardCoins
+            CoinsAmount(
+                modifier = Modifier.padding(horizontal = spacingL),
+                coins = state.currentCoins,
+                animate = state.animateCoins
             )
-            Spacer(modifier = Modifier.weight(0.05f))
-            AnimatedContent(
-                state.menu,
+            Column(
                 modifier = Modifier.weight(1f),
-                transitionSpec = {
-                    fadeIn() togetherWith fadeOut()
-                }) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.weight(0.15f))
+                CoinsReward(
+                    rewardedCoins = state.rewardedCoins,
+                    animate = state.animateRewardCoins
+                )
+                Spacer(modifier = Modifier.weight(0.1f))
+                AnimatedContent(
+                    state.menu,
+                    transitionSpec = {
+                        fadeIn() togetherWith fadeOut()
+                    }
                 ) {
-                    it.forEach { menuItem ->
-                        Spacer(modifier = Modifier.height(spacingL))
-                        when (menuItem) {
-                            EndGameMenuModel.WatchAd ->
-                                WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(spacingL),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        it.forEach { menuItem ->
+                            when (menuItem) {
+                                EndGameMenuModel.WatchAd ->
+                                    WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
 
-                            EndGameMenuModel.UnlockNewCard -> UnlockNewCardItem(
-                                onClick = callbacks.onUnlockNewCardClick
-                            )
+                                EndGameMenuModel.UnlockNewCard -> UnlockNewCardItem(
+                                    onClick = callbacks.onUnlockNewCardClick
+                                )
 
-                            EndGameMenuModel.PlayAgain -> MenuItem(
-                                textId = menuItem.textId,
-                                onClick = callbacks.onPlayAgainClick
-                            )
+                                EndGameMenuModel.PlayAgain -> MenuItem(
+                                    textId = menuItem.textId,
+                                    onClick = callbacks.onPlayAgainClick
+                                )
 
-                            EndGameMenuModel.Menu -> MenuItem(
-                                textId = menuItem.textId,
-                                onClick = callbacks.onMenuClick
-                            )
+                                EndGameMenuModel.Menu -> MenuItem(
+                                    textId = menuItem.textId,
+                                    onClick = callbacks.onMenuClick
+                                )
+                            }
                         }
                     }
                 }
+                Spacer(modifier = Modifier.weight(0.3f))
             }
         }
+        SparklesOverlay(isActive = state.showSparkles)
     }
 }
 

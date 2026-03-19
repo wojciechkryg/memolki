@@ -9,6 +9,7 @@ import com.wojdor.memolki.data.repository.UserRepositoryTest
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.ChangeLanguageUseCaseTest
 import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCaseTest
+import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCaseTest
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCaseTest
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCaseTest
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCaseTest
@@ -22,9 +23,11 @@ import com.wojdor.memolki.domain.usecase.GetMenuUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSupportedLanguagesUseCaseTest
-import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCaseTest
+import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCaseTest
@@ -72,7 +75,6 @@ interface TestInjector {
     fun inject(test: GetLevelsUseCaseTest)
     fun inject(test: GetMenuUseCaseTest)
     fun inject(test: GetSettingsUseCaseTest)
-    fun inject(test: GetShuffledUnlockedCardsTest)
     fun inject(test: GetShuffledUnlockedCardsUseCaseTest)
     fun inject(test: GetUnlockedCardPairsCountUseCaseTest)
     fun inject(test: GetUnlockedCardPairsFromAdsCountUseCaseTest)
@@ -108,4 +110,8 @@ interface TestInjector {
     fun inject(test: ScheduleAdRewardNotificationUseCaseTest)
     fun inject(test: ShouldShowNotificationRequestUseCaseTest)
     fun inject(test: EnableNotificationsViewModelTest)
+    fun inject(test: GetTotalCoinsUseCaseTest)
+    fun inject(test: GetTotalCardPairsMatchedUseCaseTest)
+    fun inject(test: SetLastShopAdShownTimestampUseCaseTest)
+    fun inject(test: IsShopAdCooldownOverUseCaseTest)
 }

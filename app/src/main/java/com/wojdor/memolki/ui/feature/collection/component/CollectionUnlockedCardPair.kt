@@ -15,6 +15,7 @@ import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.feature.collection.getCollectionStateForPreview
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.isTablet
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.util.throttleClick
@@ -29,6 +30,7 @@ fun CollectionUnlockedCardPair(
         modifier = modifier
             .fillMaxWidth()
             .padding(if (isTablet) spacingL else 0.dp)
+            .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
                 onClick = throttleClick(onClick = onClick),
