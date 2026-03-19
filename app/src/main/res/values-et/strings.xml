@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • puuvili</string>
+    <string name="app_name_fruit_half">memolki • puuviljad</string>
     <string name="app_name_vegetable_half">memolki • köögiviljad</string>
     <string name="app_name_mammal_side">memolki • imetajad</string>
     <string name="app_name_bird_side">memolki • linnud</string>
 
-    <string name="suffix_fruit_half">• puuvili</string>
+    <string name="suffix_fruit_half">• puuviljad</string>
     <string name="suffix_vegetable_half">• köögiviljad</string>
     <string name="suffix_mammal_side">• imetajad</string>
     <string name="suffix_bird_side">• linnud</string>
@@ -21,11 +21,50 @@
     <string name="shop_back_later">Tule hiljem tagasi</string>
     <string name="shop_buy">Osta %d</string>
     <string name="shop_unlock_all_cards">Ava kõik kaardid</string>
-    <string name="shop_purchase_failed_error">Midagi läks valesti</string>
+    <string name="shop_purchase_failed_error">Ost ebaõnnestus</string>
     <string name="shop_connection_error">Ühenduse viga</string>
     <string name="setting_music">Muusika</string>
     <string name="setting_sound">Heli</string>
     <string name="setting_vibration">Vibratsioon</string>
     <string name="setting_language">Keel</string>
     <string name="watch_ad">Vaata reklaami</string>
+
+    <string name="notification_channel_reminders">Meeldetuletused</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Sinu kaardid ootavad!</item>
+        <item>✨ Valmis uusi kaarte avama?</item>
+        <item>💰 Uued auhinnad ootavad!</item>
+        <item>🧠 Kuidas sinu mälu täna on?</item>
+        <item>🏆 Ületa oma parim tulemus!</item>
+        <item>🎴 Sinu kollektsioon igatseb sind!</item>
+        <item>✨ Aeg väljakutseks!</item>
+        <item>💰 Mündid kuhjuvad!</item>
+        <item>🃏 Sega mõned kaardid!</item>
+        <item>🧠 Hoia oma aju teravana!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Sobita paare ja teeni münte</item>
+        <item>Kiire mäng teeb palju head</item>
+        <item>Uued kaardid ootavad avamist</item>
+        <item>Sega, keera ja sobita!</item>
+        <item>Kasva oma kollektsiooni täna</item>
+        <item>Testi oma mälu kiires voorus</item>
+        <item>Sinu kollektsioon pole veel täielik</item>
+        <item>Tule tagasi ja keera mõned kaardid</item>
+        <item>Mündid ei kogu end ise</item>
+        <item>Mängi voor ja lõbutse</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Sinu mündi auhind on valmis!</item>
+        <item>✨ Mündid ootavad sind!</item>
+        <item>🏆 Aeg oma auhind kätte saada!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Vaata reklaami, et münte teenida</string>
+
+    <string name="enable_notifications_title">Ava rohkem auhindu!</string>
+    <string name="enable_notifications_body">Saa teavitusi, kui mündid on kogumiseks valmis ja uued kaardid ootavad avamist!</string>
+    <string name="enable_notifications_enable">Luba</string>
+    <string name="enable_notifications_later">Hiljem</string>
 </resources>

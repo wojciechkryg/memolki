@@ -28,4 +28,43 @@
     <string name="setting_vibration">Vibrazione</string>
     <string name="setting_language">Lingua</string>
     <string name="watch_ad">Guarda la pubblicità</string>
+
+    <string name="notification_channel_reminders">Promemoria</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Le tue carte ti aspettano!</item>
+        <item>✨ Pronto a sbloccare nuove carte?</item>
+        <item>💰 Nuove ricompense ti aspettano!</item>
+        <item>🧠 Com\'è la tua memoria oggi?</item>
+        <item>🏆 Batti il tuo miglior punteggio!</item>
+        <item>🎴 La tua collezione ti manca!</item>
+        <item>✨ È ora di una sfida!</item>
+        <item>💰 Le monete si accumulano!</item>
+        <item>🃏 Mischia qualche carta!</item>
+        <item>🧠 Tieni il cervello in forma!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Abbina le coppie e guadagna monete</item>
+        <item>Una partita veloce fa molto bene</item>
+        <item>Nuove carte aspettano di essere sbloccate</item>
+        <item>Mischia, gira e abbina!</item>
+        <item>Espandi la tua collezione oggi</item>
+        <item>Metti alla prova la tua memoria in un turno veloce</item>
+        <item>La tua collezione non è ancora completa</item>
+        <item>Torna e gira qualche carta</item>
+        <item>Le monete non si raccolgono da sole</item>
+        <item>Gioca un turno e divertiti</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 La tua ricompensa in monete è pronta!</item>
+        <item>✨ Le monete ti aspettano!</item>
+        <item>🏆 È ora di riscuotere la tua ricompensa!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Guarda una pubblicità per guadagnare monete</string>
+
+    <string name="enable_notifications_title">Sblocca più ricompense!</string>
+    <string name="enable_notifications_body">Ricevi notifiche quando le monete sono pronte e nuove carte aspettano di essere sbloccate!</string>
+    <string name="enable_notifications_enable">Attiva</string>
+    <string name="enable_notifications_later">Dopo</string>
 </resources>

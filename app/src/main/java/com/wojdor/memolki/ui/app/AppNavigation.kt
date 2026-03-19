@@ -7,15 +7,19 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsScreen
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageScreen
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelScreen
 import com.wojdor.memolki.ui.feature.collection.CollectionScreen
+import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationsScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.GameScreen
@@ -42,7 +46,7 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
         route = Route.MENU,
         enterTransition = {
             when (initialState.destination.route) {
-                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideInLeft
+                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME, Route.ENABLE_NOTIFICATIONS -> slideInLeft
                 Route.COLLECTION -> slideInRight
                 Route.SETTINGS -> slideInTop
                 Route.MORE_APPS -> slideInBottom
@@ -51,7 +55,7 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
         },
         exitTransition = {
             when (targetState.destination.route) {
-                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideOutLeft
+                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME, Route.ENABLE_NOTIFICATIONS -> slideOutLeft
                 Route.COLLECTION -> slideOutRight
                 Route.SETTINGS -> slideOutTop
                 Route.MORE_APPS -> slideOutBottom
@@ -71,6 +75,7 @@ private fun NavGraphBuilder.gameFlow(navController: NavController) {
         chooseLevelScreen(navController)
         gameScreen(navController)
         endGameScreen(navController)
+        enableNotificationsScreen(navController)
     }
 }
 
@@ -102,7 +107,7 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
         route = Route.GAME,
         enterTransition = {
             when (initialState.destination.route) {
-                Route.END_GAME -> slideInLeft
+                Route.END_GAME, Route.ENABLE_NOTIFICATIONS -> slideInLeft
                 else -> slideInRight
             }
         },
@@ -132,6 +137,17 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
             viewModel = getEndGameViewModel(it, navController),
             gameViewModel = getGameViewModel(it, navController)
         )
+    }
+}
+
+private fun NavGraphBuilder.enableNotificationsScreen(navController: NavController) {
+    composable(
+        route = Route.ENABLE_NOTIFICATIONS,
+        arguments = listOf(navArgument(AppNavigation.DESTINATION_ARG) { type = NavType.StringType }),
+        enterTransition = { slideInLeft },
+        exitTransition = { slideOutRight }
+    ) {
+        EnableNotificationsScreen(navController = navController)
     }
 }
 
@@ -174,6 +190,7 @@ private fun NavGraphBuilder.collectionScreen(navController: NavController) {
 private fun NavGraphBuilder.shopScreen() {
     composable(
         route = Route.SHOP,
+        deepLinks = listOf(navDeepLink { uriPattern = AppNavigation.SHOP_DEEP_LINK }),
         enterTransition = { slideInTop },
         exitTransition = { slideOutTop }
     ) {
@@ -297,6 +314,10 @@ fun NavController.navigateToCardPairDetailsScreen() {
     navigate(Route.CARD_PAIR_DETAILS)
 }
 
+fun NavController.navigateToEnableNotifications(destination: String) {
+    navigate(Route.ENABLE_NOTIFICATIONS.replace("{${AppNavigation.DESTINATION_ARG}}", destination))
+}
+
 private fun NavOptionsBuilder.removeFromBackStack(route: String, isInclusive: Boolean = true) {
     popUpTo(route) {
         inclusive = isInclusive
@@ -336,7 +357,7 @@ private fun getCardPairDetailsViewModel(
     return hiltViewModel(flowBackStackEntry)
 }
 
-private object Route {
+internal object Route {
     const val MENU = "menu"
     const val CHOOSE_LEVEL = "chose_level"
     const val GAME = "game"
@@ -347,10 +368,17 @@ private object Route {
     const val SETTINGS = "settings"
     const val CHANGE_LANGUAGE = "change_language"
     const val MORE_APPS = "more_apps"
+    const val ENABLE_NOTIFICATIONS = "enable_notifications/{${AppNavigation.DESTINATION_ARG}}"
 }
 
 private object RouteFlow {
     const val GAME = "game_flow"
     const val COLLECTION = "collection_flow"
     const val SETTINGS = "settings_flow"
+}
+
+object AppNavigation {
+    private const val DEEP_LINK_SCHEME = "memolki"
+    internal const val SHOP_DEEP_LINK = "$DEEP_LINK_SCHEME://${Route.SHOP}"
+    const val DESTINATION_ARG = "destination"
 }

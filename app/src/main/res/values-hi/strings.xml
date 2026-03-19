@@ -17,7 +17,7 @@
     <string name="menu">मेनू</string>
     <string name="play_again">फिर से खेलें</string>
     <string name="shop">दुकान</string>
-    <string name="shop_obtain">प्राप्त करेंं %d</string>
+    <string name="shop_obtain">प्राप्त करें %d</string>
     <string name="shop_back_later">बाद में वापस आएं</string>
     <string name="shop_buy">खरीदें %d</string>
     <string name="shop_unlock_all_cards">सभी कार्ड अनलॉक करें</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">कंपन</string>
     <string name="setting_language">भाषा</string>
     <string name="watch_ad">विज्ञापन देखें</string>
+
+    <string name="notification_channel_reminders">रिमाइंडर</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 आपके कार्ड इंतज़ार कर रहे हैं!</item>
+        <item>✨ नए कार्ड अनलॉक करने के लिए तैयार?</item>
+        <item>💰 नए इनाम इंतज़ार कर रहे हैं!</item>
+        <item>🧠 आज आपकी याददाश्त कैसी है?</item>
+        <item>🏆 अपना सर्वश्रेष्ठ स्कोर तोड़ें!</item>
+        <item>🎴 आपका संग्रह आपको याद कर रहा है!</item>
+        <item>✨ चुनौती का समय!</item>
+        <item>💰 सिक्के जमा हो रहे हैं!</item>
+        <item>🃏 कुछ कार्ड शफ़ल करें!</item>
+        <item>🧠 अपने दिमाग को तेज़ रखें!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>जोड़ियां मिलाएं और सिक्के कमाएं</item>
+        <item>एक तेज़ खेल बहुत काम आता है</item>
+        <item>नए कार्ड अनलॉक होने का इंतज़ार कर रहे हैं</item>
+        <item>शफ़ल करें, पलटें और मिलाएं!</item>
+        <item>आज अपना संग्रह बढ़ाएं</item>
+        <item>एक तेज़ राउंड में अपनी याददाश्त परखें</item>
+        <item>आपका संग्रह अभी पूरा नहीं हुआ</item>
+        <item>वापस आएं और कुछ कार्ड पलटें</item>
+        <item>सिक्के खुद नहीं जमा होंगे</item>
+        <item>एक राउंड खेलें और मज़े करें</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 आपका सिक्का इनाम तैयार है!</item>
+        <item>✨ सिक्के आपका इंतज़ार कर रहे हैं!</item>
+        <item>🏆 अपना इनाम लेने का समय!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">सिक्के कमाने के लिए विज्ञापन देखें</string>
+
+    <string name="enable_notifications_title">और इनाम अनलॉक करें!</string>
+    <string name="enable_notifications_body">जब सिक्के जमा करने के लिए तैयार हों और नए कार्ड अनलॉक होने का इंतज़ार कर रहे हों तो सूचना पाएं!</string>
+    <string name="enable_notifications_enable">चालू करें</string>
+    <string name="enable_notifications_later">बाद में</string>
 </resources>

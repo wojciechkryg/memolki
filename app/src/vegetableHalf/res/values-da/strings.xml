@@ -32,14 +32,14 @@
     <string name="artichoke">Artiskok</string>
     <string name="swiss_chard">Bladbede</string>
     <string name="okra">Okra</string>
-    <string name="turnip">Roe</string>
+    <string name="turnip">Majroe</string>
     <string name="parsnip">Pastinak</string>
     <string name="scallion">Forårsløg</string>
     <string name="arugula">Rucola</string>
     <string name="chili_pepper">Chili</string>
     <string name="lima_bean">Limabønner</string>
     <string name="acorn_squash">Agern squash</string>
-    <string name="collard_greens">Grønkål</string>
+    <string name="collard_greens">Bladkål</string>
     <string name="watercress">Brøndkarse</string>
     <string name="bok_choy">Bok choy</string>
     <string name="fennel">Fennikel</string>
@@ -52,7 +52,7 @@
     <string name="water_chestnut">Vandkastanje</string>
     <string name="bean_sprouts">Bønnespirer</string>
     <string name="mustard_greens">Sennepsgrønt</string>
-    <string name="fava_bean">Fava bønner</string>
+    <string name="fava_bean">Hestebønne</string>
     <string name="rhubarb">Rabarber</string>
     <string name="shallot">Skalotteløg</string>
     <string name="topinambur">Jordskok</string>

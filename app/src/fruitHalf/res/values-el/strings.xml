@@ -39,12 +39,12 @@
     <string name="date">Χουρμάς</string>
     <string name="persimmon">Λωτός</string>
     <string name="jackfruit">Τζάκφρουτ</string>
-    <string name="star_fruit">Καρύδι</string>
+    <string name="star_fruit">Καράμπολα</string>
     <string name="mangosteen">Μανγκοστίν</string>
     <string name="citron">Κίτρο</string>
     <string name="durian">Ντούριαν</string>
     <string name="kumquat">Κουμκουάτ</string>
-    <string name="blackcurrant">Φραγκοστάφυλο</string>
+    <string name="blackcurrant">Μαύρη σταφίδα</string>
     <string name="gooseberry">Φραγκοστάφυλο</string>
     <string name="rambutan">Ραμπουτάν</string>
     <string name="mulberry">Μούρο</string>
@@ -58,7 +58,7 @@
     <string name="tamarind">Ταμάρινδος</string>
     <string name="pomelo">Φράπα</string>
     <string name="jujube">Τζίτζιφο</string>
-    <string name="cape_gooseberry">Φραγκοστάφυλο</string>
+    <string name="cape_gooseberry">Φυσάλις</string>
     <string name="feijoa">Φεϊζόα</string>
     <string name="salak">Σαλάκ</string>
     <string name="loquat">Μουσμουλιά</string>

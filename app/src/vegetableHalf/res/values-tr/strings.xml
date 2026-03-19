@@ -11,7 +11,7 @@
     <string name="cucumber">Salatalık</string>
     <string name="broccoli">Brokoli</string>
     <string name="garlic">Sarımsak</string>
-    <string name="celery">Kereviz</string>
+    <string name="celery">Sap kereviz</string>
     <string name="cabbage">Lahana</string>
     <string name="spinach">Ispanak</string>
     <string name="sweetcorn">Mısır</string>
@@ -23,11 +23,11 @@
     <string name="brussels_sprout">Brüksel lahanası</string>
     <string name="zucchini">Kabak</string>
     <string name="eggplant">Patlıcan</string>
-    <string name="pumpkin">Bal kabağı</string>
-    <string name="butternut_squash">Balkabağı</string>
+    <string name="pumpkin">Balkabağı</string>
+    <string name="butternut_squash">Bal kabağı</string>
     <string name="beet">Pancar</string>
     <string name="radish">Turp</string>
-    <string name="kale">Kale</string>
+    <string name="kale">Kara lahana</string>
     <string name="leek">Pırasa</string>
     <string name="artichoke">Enginar</string>
     <string name="swiss_chard">Pazı</string>
@@ -39,7 +39,7 @@
     <string name="chili_pepper">Acı biber</string>
     <string name="lima_bean">Lima fasulyesi</string>
     <string name="acorn_squash">Meşe palamudu kabağı</string>
-    <string name="collard_greens">Kara lahana</string>
+    <string name="collard_greens">Yaprak lahana</string>
     <string name="watercress">Su teresi</string>
     <string name="bok_choy">Bok choy</string>
     <string name="fennel">Rezene</string>
@@ -48,7 +48,7 @@
     <string name="endive">Hindiba</string>
     <string name="jicama">Jicama</string>
     <string name="kohlrabi">Alabaş</string>
-    <string name="celeriac">Kereviz</string>
+    <string name="celeriac">Kök kereviz</string>
     <string name="water_chestnut">Su kestanesi</string>
     <string name="bean_sprouts">Fasulye filizi</string>
     <string name="mustard_greens">Hardal yeşilliği</string>

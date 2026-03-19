@@ -32,7 +32,6 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
         shape = RoundedCornerShape(spacingL),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color.Black,
             disabledContainerColor = Color.Transparent
         ),
     ) {

@@ -28,4 +28,43 @@
     <string name="setting_vibration">Вібрація</string>
     <string name="setting_language">Мова</string>
     <string name="watch_ad">Переглянути рекламу</string>
+
+    <string name="notification_channel_reminders">Нагадування</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Твої картки чекають!</item>
+        <item>✨ Готовий відкрити нові картки?</item>
+        <item>💰 Нові нагороди чекають!</item>
+        <item>🧠 Як твоя пам\'ять сьогодні?</item>
+        <item>🏆 Побий свій найкращий результат!</item>
+        <item>🎴 Твоя колекція сумує за тобою!</item>
+        <item>✨ Час для випробування!</item>
+        <item>💰 Монети накопичуються!</item>
+        <item>🃏 Перемішай картки!</item>
+        <item>🧠 Тримай мозок у тонусі!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Знаходь пари і заробляй монети</item>
+        <item>Швидка гра — велика користь</item>
+        <item>Нові картки чекають на відкриття</item>
+        <item>Перемішай, переверни та знайди пару!</item>
+        <item>Поповни свою колекцію сьогодні</item>
+        <item>Перевір свою пам\'ять у швидкому раунді</item>
+        <item>Твоя колекція ще не повна</item>
+        <item>Повернись і переверни кілька карток</item>
+        <item>Монети самі себе не зберуть</item>
+        <item>Зіграй раунд і розважся</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Твоя нагорода в монетах готова!</item>
+        <item>✨ Монети чекають на тебе!</item>
+        <item>🏆 Час забрати свою нагороду!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Переглянь рекламу, щоб заробити монети</string>
+
+    <string name="enable_notifications_title">Відкрий більше нагород!</string>
+    <string name="enable_notifications_body">Отримуй сповіщення, коли монети готові до збору і нові картки чекають на відкриття!</string>
+    <string name="enable_notifications_enable">Увімкнути</string>
+    <string name="enable_notifications_later">Пізніше</string>
 </resources>

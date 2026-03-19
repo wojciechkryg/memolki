@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,8 +37,7 @@ fun CollectionLockedCardPair(modifier: Modifier = Modifier) {
             Icon(
                 modifier = Modifier.size(LOCKED_ICON_SIZE),
                 painter = painterResource(R.drawable.ic_lock),
-                contentDescription = null,
-                tint = colorResource(R.color.font)
+                contentDescription = null
             )
         }
     }

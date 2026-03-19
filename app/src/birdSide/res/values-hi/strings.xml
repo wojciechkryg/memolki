@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">@string/app_name_bird_side</string>
 
-    <string name="golden_eagle">सुनहरा बाज़</string>
+    <string name="golden_eagle">सुनहरा गरुड़</string>
     <string name="white_stork">सफ़ेद सारस</string>
     <string name="house_sparrow">घरेलू गौरैया</string>
     <string name="peregrine_falcon">पेरेग्राइन बाज़</string>
@@ -21,7 +21,7 @@
     <string name="great_white_pelican">बड़ा सफ़ेद हवासील</string>
     <string name="wandering_albatross">आवारा अल्बाट्रॉस</string>
     <string name="great_spotted_woodpecker">बड़ा धब्बेदार कठफोड़वा</string>
-    <string name="european_herring_gull">यूरोपीय समुद्री बगुला</string>
+    <string name="european_herring_gull">यूरोपीय रूपहला गल</string>
     <string name="white_tailed_eagle">सफ़ेद पूंछ वाला बाज़</string>
     <string name="great_tit">रामगंगरा</string>
     <string name="european_robin">रॉबिन</string>
@@ -34,7 +34,7 @@
     <string name="andean_condor">एंडीज़ का कोंडोर</string>
     <string name="marabou_stork">माराबो सारस</string>
     <string name="mallard">नीलसर</string>
-    <string name="rock_dove">जंगली कबूतर</string>
+    <string name="rock_dove">चट्टानी कबूतर</string>
     <string name="common_wood_pigeon">जंगली कबूतर</string>
     <string name="canary">कैनरी</string>
     <string name="budgerigar">बजरीगर</string>
@@ -49,13 +49,13 @@
     <string name="red_kite">लाल चील</string>
     <string name="tawny_owl">उल्लू</string>
     <string name="rook">बनकौआ</string>
-    <string name="common_starling">मैना</string>
+    <string name="common_starling">यूरोपीय तारा मैना</string>
     <string name="eurasian_nuthatch">सिरी</string>
     <string name="whitethroat">श्वेतकंठ</string>
     <string name="eurasian_wren">रेन</string>
-    <string name="northern_wheatear">पਿੱदी</string>
+    <string name="northern_wheatear">पत्थरचट</string>
     <string name="white_wagtail">खंजन</string>
-    <string name="common_nightingale">बुलबुल</string>
+    <string name="common_nightingale">साधारण नाइटिंगेल</string>
     <string name="eurasian_coot">जलमुर्गी</string>
     <string name="great_crested_grebe">पनडुब्बी</string>
     <string name="grey_heron">सिलेटी बगुला</string>
@@ -74,12 +74,12 @@
     <string name="southern_cassowary">दक्षिणी कैसोवरी</string>
     <string name="brown_kiwi">भूरा कीवी</string>
     <string name="chicken">मुर्गी</string>
-    <string name="harpy_eagle">गिद्धराज</string>
-    <string name="hooded_crow">काला कौआ</string>
+    <string name="harpy_eagle">हार्पी गरुड़</string>
+    <string name="hooded_crow">धूसर कौआ</string>
     <string name="eurasian_bullfinch">बुलफिंच</string>
     <string name="european_goldfinch">गोल्डफिंच</string>
     <string name="eurasian_skylark">भरत</string>
-    <string name="barn_owl">घुग्घू</string>
+    <string name="barn_owl">लक्ष्मी उल्लू</string>
     <string name="eurasian_golden_oriole">पीलक</string>
     <string name="secretary_bird">सचिव पक्षी</string>
 </resources>

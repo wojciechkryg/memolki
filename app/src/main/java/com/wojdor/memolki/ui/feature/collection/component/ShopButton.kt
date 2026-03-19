@@ -29,7 +29,6 @@ fun ShopButton(onClick: () -> Unit = {}) {
         contentPadding = PaddingValues(start = spacingS, end = spacingL),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color.Black,
             disabledContainerColor = Color.Transparent
         ),
     ) {

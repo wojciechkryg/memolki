@@ -28,4 +28,43 @@
     <string name="setting_vibration">진동</string>
     <string name="setting_language">언어</string>
     <string name="watch_ad">광고 보기</string>
+
+    <string name="notification_channel_reminders">알림</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 카드가 기다리고 있어요!</item>
+        <item>✨ 새 카드를 잠금 해제할 준비가 됐나요?</item>
+        <item>💰 새로운 보상이 기다리고 있어요!</item>
+        <item>🧠 오늘 기억력은 어떤가요?</item>
+        <item>🏆 최고 점수를 경신하세요!</item>
+        <item>🎴 컬렉션이 당신을 기다려요!</item>
+        <item>✨ 도전할 시간이에요!</item>
+        <item>💰 코인이 쌓이고 있어요!</item>
+        <item>🃏 카드를 섞어보세요!</item>
+        <item>🧠 두뇌를 날카롭게 유지하세요!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>쌍을 맞추고 코인을 획득하세요</item>
+        <item>빠른 게임 한 판이 큰 도움이 돼요</item>
+        <item>새 카드가 잠금 해제를 기다리고 있어요</item>
+        <item>섞고, 뒤집고, 맞추세요!</item>
+        <item>오늘 컬렉션을 늘려보세요</item>
+        <item>빠른 라운드로 기억력을 테스트하세요</item>
+        <item>컬렉션이 아직 완성되지 않았어요</item>
+        <item>돌아와서 카드를 뒤집어보세요</item>
+        <item>코인은 저절로 모이지 않아요</item>
+        <item>한 라운드 플레이하고 즐기세요</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 코인 보상이 준비됐어요!</item>
+        <item>✨ 코인이 기다리고 있어요!</item>
+        <item>🏆 보상을 받을 시간이에요!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">광고를 보고 코인을 획득하세요</string>
+
+    <string name="enable_notifications_title">더 많은 보상을 잠금 해제하세요!</string>
+    <string name="enable_notifications_body">코인이 준비되고 새 카드가 잠금 해제를 기다릴 때 알림을 받으세요!</string>
+    <string name="enable_notifications_enable">활성화</string>
+    <string name="enable_notifications_later">나중에</string>
 </resources>

@@ -11,7 +11,7 @@
     <string name="cucumber">Uhorka</string>
     <string name="broccoli">Brokolica</string>
     <string name="garlic">Cesnak</string>
-    <string name="celery">Zeler</string>
+    <string name="celery">Stopkový zeler</string>
     <string name="cabbage">Kapusta</string>
     <string name="spinach">Špenát</string>
     <string name="sweetcorn">Kukurica</string>
@@ -39,7 +39,7 @@
     <string name="chili_pepper">Čili paprička</string>
     <string name="lima_bean">Fazuľa lima</string>
     <string name="acorn_squash">Žaluďová tekvica</string>
-    <string name="collard_greens">Kapusta</string>
+    <string name="collard_greens">Listová kapusta</string>
     <string name="watercress">Žerucha</string>
     <string name="bok_choy">Bok choy</string>
     <string name="fennel">Fenikel</string>

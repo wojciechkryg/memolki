@@ -8,6 +8,8 @@ import com.wojdor.memolki.data.repository.SettingsRepositoryTest
 import com.wojdor.memolki.data.repository.UserRepositoryTest
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.ChangeLanguageUseCaseTest
+import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCaseTest
+import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCaseTest
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCaseTest
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
@@ -43,6 +45,7 @@ import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModelTes
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageViewModelTest
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelViewModelTest
 import com.wojdor.memolki.ui.feature.collection.CollectionViewModelTest
+import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationsViewModelTest
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModelTest
 import com.wojdor.memolki.ui.feature.game.GameViewModelTest
 import com.wojdor.memolki.ui.feature.menu.MenuViewModelTest
@@ -102,4 +105,7 @@ interface TestInjector {
     fun inject(test: ChangeLanguageUseCaseTest)
     fun inject(test: ChangeLanguageViewModelTest)
     fun inject(test: GetLanguagesWithCurrentUseCaseTest)
+    fun inject(test: ScheduleAdRewardNotificationUseCaseTest)
+    fun inject(test: ShouldShowNotificationRequestUseCaseTest)
+    fun inject(test: EnableNotificationsViewModelTest)
 }

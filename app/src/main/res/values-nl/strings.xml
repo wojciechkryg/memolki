@@ -28,4 +28,43 @@
     <string name="setting_vibration">Trilling</string>
     <string name="setting_language">Taal</string>
     <string name="watch_ad">Bekijk advertentie</string>
+
+    <string name="notification_channel_reminders">Herinneringen</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Je kaarten wachten!</item>
+        <item>✨ Klaar om nieuwe kaarten te ontgrendelen?</item>
+        <item>💰 Nieuwe beloningen wachten!</item>
+        <item>🧠 Hoe is je geheugen vandaag?</item>
+        <item>🏆 Versla je beste score!</item>
+        <item>🎴 Je collectie mist je!</item>
+        <item>✨ Tijd voor een uitdaging!</item>
+        <item>💰 De munten stapelen zich op!</item>
+        <item>🃏 Schud wat kaarten!</item>
+        <item>🧠 Houd je brein scherp!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Match paren en verdien munten</item>
+        <item>Een snel spelletje doet wonderen</item>
+        <item>Nieuwe kaarten wachten om ontgrendeld te worden</item>
+        <item>Schud, draai om en match!</item>
+        <item>Breid je collectie vandaag uit</item>
+        <item>Test je geheugen in een snelle ronde</item>
+        <item>Je collectie is nog niet compleet</item>
+        <item>Kom terug en draai wat kaarten om</item>
+        <item>Munten verzamelen zich niet vanzelf</item>
+        <item>Speel een ronde en heb plezier</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Je muntbeloning is klaar!</item>
+        <item>✨ Munten wachten op je!</item>
+        <item>🏆 Tijd om je beloning op te halen!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Bekijk een advertentie om munten te verdienen</string>
+
+    <string name="enable_notifications_title">Ontgrendel meer beloningen!</string>
+    <string name="enable_notifications_body">Ontvang meldingen wanneer munten klaar zijn om verzameld te worden en nieuwe kaarten wachten om ontgrendeld te worden!</string>
+    <string name="enable_notifications_enable">Inschakelen</string>
+    <string name="enable_notifications_later">Later</string>
 </resources>

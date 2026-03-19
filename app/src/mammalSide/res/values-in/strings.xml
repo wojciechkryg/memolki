@@ -41,9 +41,9 @@
     <string name="sperm_whale">Paus sperma</string>
     <string name="african_buffalo">Kerbau afrika</string>
     <string name="capybara">Kapibara</string>
-    <string name="european_beaver">Berang-berang eropa</string>
-    <string name="eurasian_red_squirrel">Tupai merah eurasia</string>
-    <string name="northern_white_breasted_hedgehog">Landak susu dada putih utara</string>
+    <string name="european_beaver">Bever Eropa</string>
+    <string name="eurasian_red_squirrel">Bajing merah Eurasia</string>
+    <string name="northern_white_breasted_hedgehog">Landak dada putih utara</string>
     <string name="platypus">Platipus</string>
     <string name="tasmanian_devil">Setan tasmania</string>
     <string name="meerkat">Meerkat</string>
@@ -56,10 +56,10 @@
     <string name="walrus">Walrus</string>
     <string name="west_indian_manatee">Manatee hindia barat</string>
     <string name="dugong">Dugong</string>
-    <string name="giant_anteater">Trenggiling raksasa</string>
+    <string name="giant_anteater">Pemakan semut raksasa</string>
     <string name="brown_throated_sloth">Kungkang leher coklat</string>
     <string name="narwhal">Narwhal</string>
-    <string name="european_badger">Luwak eropa</string>
+    <string name="european_badger">Badger Eropa</string>
     <string name="malayan_tapir">Tapir malaya</string>
     <string name="white_handed_gibbon">Owa tangan putih</string>
     <string name="alpaca">Alpaka</string>
@@ -67,7 +67,7 @@
     <string name="common_wombat">Wombat biasa</string>
     <string name="brown_rat">Tikus coklat</string>
     <string name="house_mouse">Mencit rumah</string>
-    <string name="european_mole">Tikus tanah eropa</string>
+    <string name="european_mole">Mondok Eropa</string>
     <string name="brown_long_eared_bat">Kelelawar telinga panjang coklat</string>
     <string name="egyptian_fruit_bat">Kelelawar buah mesir</string>
     <string name="vicuna">Vikuna</string>
@@ -81,5 +81,5 @@
     <string name="short_beaked_echidna">Ekidna paruh pendek</string>
     <string name="lesser_chinchilla">Chinchilla kecil</string>
     <string name="indian_crested_porcupine">Landak jambul india</string>
-    <string name="golden_mole">Tikus tanah emas</string>
+    <string name="golden_mole">Mondok emas</string>
 </resources>

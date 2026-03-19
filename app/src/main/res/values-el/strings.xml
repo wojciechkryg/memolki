@@ -3,12 +3,12 @@
     <string name="app_name_fruit_half">memolki • φρούτα</string>
     <string name="app_name_vegetable_half">memolki • λαχανικά</string>
     <string name="app_name_mammal_side">memolki • θηλαστικά</string>
-    <string name="app_name_bird_side">memolki • Πουλιά</string>
+    <string name="app_name_bird_side">memolki • πουλιά</string>
 
     <string name="suffix_fruit_half">• φρούτα</string>
     <string name="suffix_vegetable_half">• λαχανικά</string>
     <string name="suffix_mammal_side">• θηλαστικά</string>
-    <string name="suffix_bird_side">• Πουλιά</string>
+    <string name="suffix_bird_side">• πουλιά</string>
 
     <string name="new_game">Νέο παιχνίδι</string>
     <string name="collection">Συλλογή</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Δόνηση</string>
     <string name="setting_language">Γλώσσα</string>
     <string name="watch_ad">Δείτε τη διαφήμιση</string>
+
+    <string name="notification_channel_reminders">Υπενθυμίσεις</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Οι κάρτες σου περιμένουν!</item>
+        <item>✨ Έτοιμος να ξεκλειδώσεις νέες κάρτες;</item>
+        <item>💰 Νέες ανταμοιβές περιμένουν!</item>
+        <item>🧠 Πώς είναι η μνήμη σου σήμερα;</item>
+        <item>🏆 Ξεπέρασε το καλύτερό σου σκορ!</item>
+        <item>🎴 Η συλλογή σου σε περιμένει!</item>
+        <item>✨ Ώρα για πρόκληση!</item>
+        <item>💰 Τα νομίσματα συσσωρεύονται!</item>
+        <item>🃏 Ανακάτεψε μερικές κάρτες!</item>
+        <item>🧠 Κράτα το μυαλό σου σε φόρμα!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Ταίριαξε ζευγάρια και κέρδισε νομίσματα</item>
+        <item>Ένα γρήγορο παιχνίδι κάνει τη διαφορά</item>
+        <item>Νέες κάρτες περιμένουν να ξεκλειδωθούν</item>
+        <item>Ανακάτεψε, γύρισε και ταίριαξε!</item>
+        <item>Μεγάλωσε τη συλλογή σου σήμερα</item>
+        <item>Δοκίμασε τη μνήμη σου σε έναν γρήγορο γύρο</item>
+        <item>Η συλλογή σου δεν είναι ακόμα πλήρης</item>
+        <item>Γύρνα πίσω και γύρισε μερικές κάρτες</item>
+        <item>Τα νομίσματα δεν μαζεύονται μόνα τους</item>
+        <item>Παίξε έναν γύρο και διασκέδασε</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Η ανταμοιβή σου σε νομίσματα είναι έτοιμη!</item>
+        <item>✨ Νομίσματα σε περιμένουν!</item>
+        <item>🏆 Ώρα να συλλέξεις την ανταμοιβή σου!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Δες μια διαφήμιση για να κερδίσεις νομίσματα</string>
+
+    <string name="enable_notifications_title">Ξεκλείδωσε περισσότερες ανταμοιβές!</string>
+    <string name="enable_notifications_body">Λάβε ειδοποιήσεις όταν τα νομίσματα είναι έτοιμα για συλλογή και νέες κάρτες περιμένουν να ξεκλειδωθούν!</string>
+    <string name="enable_notifications_enable">Ενεργοποίηση</string>
+    <string name="enable_notifications_later">Αργότερα</string>
 </resources>

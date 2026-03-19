@@ -24,10 +24,24 @@ jobs:
       - name: Run unit tests
         run: gradle testFruitHalfDebugUnitTest --build-cache
 
-  unit-test:
-    needs: tests-execution
+  debug-flags-check:
     runs-on: ubuntu-latest
-    if: ${{ always() && (needs.tests-execution.result == 'success' || needs.tests-execution.result == 'skipped') }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Check for enabled debug flags
+        run: |
+          if grep -r 'SHOW_CLICK_INDICATOR = true' app/src/; then
+            echo "::error::SHOW_CLICK_INDICATOR is enabled. Disable it before merging."
+            exit 1
+          fi
+
+  unit-test:
+    needs: [tests-execution, debug-flags-check]
+    runs-on: ubuntu-latest
+    if: ${{ always() && (needs.tests-execution.result == 'success' || needs.tests-execution.result == 'skipped') && needs.debug-flags-check.result == 'success' }}
     steps:
       - name: All checks passed
         run: echo "All checks passed or were intentionally skipped."

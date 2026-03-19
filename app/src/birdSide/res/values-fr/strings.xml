@@ -3,7 +3,7 @@
     <string name="app_name">@string/app_name_bird_side</string>
 
     <string name="golden_eagle">Aigle royal</string>
-    <string name="white_stork">Cicogne blanche</string>
+    <string name="white_stork">Cigogne blanche</string>
     <string name="house_sparrow">Moineau domestique</string>
     <string name="peregrine_falcon">Faucon pèlerin</string>
     <string name="mute_swan">Cygne tuberculé</string>
@@ -44,7 +44,7 @@
     <string name="song_thrush">Grive musicienne</string>
     <string name="mandarin_duck">Canard mandarin</string>
     <string name="atlantic_puffin">Macareux moine</string>
-    <string name="black_stork">Cicogne noire</string>
+    <string name="black_stork">Cigogne noire</string>
     <string name="great_cormorant">Grand cormoran</string>
     <string name="red_kite">Milan royal</string>
     <string name="tawny_owl">Chouette hulotte</string>

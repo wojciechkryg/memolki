@@ -11,11 +11,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToCollection
+import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -23,6 +23,7 @@ import com.wojdor.memolki.ui.feature.endgame.component.EndGameContent
 import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import kotlinx.coroutines.launch
 
 @Composable
@@ -53,6 +54,12 @@ private fun HandleEffect(
 
             EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
             EndGameEffect.OpenCollectionScreen -> navController.navigateToCollection()
+            is EndGameEffect.OpenEnableNotificationsScreen -> openEnableNotificationsScreen(
+                gameViewModel,
+                navController,
+                effect
+            )
+
             is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
             is EndGameEffect.RequestReview -> activity?.let {
                 launchReviewFlow(
@@ -81,6 +88,17 @@ private fun openGameScreen(
 ) {
     gameViewModel.sendIntent(GameIntent.OnLevelStart(level))
     navController.navigateToGameFromEndGame()
+}
+
+private fun openEnableNotificationsScreen(
+    gameViewModel: GameViewModel,
+    navController: NavController,
+    effect: EndGameEffect.OpenEnableNotificationsScreen
+) {
+    effect.levelModel?.let {
+        gameViewModel.sendIntent(GameIntent.OnLevelStart(it))
+    }
+    navController.navigateToEnableNotifications(effect.destination.route)
 }
 
 private fun showAd(

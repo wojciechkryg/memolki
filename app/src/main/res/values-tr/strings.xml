@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • meyve</string>
+    <string name="app_name_fruit_half">memolki • meyveler</string>
     <string name="app_name_vegetable_half">memolki • sebzeler</string>
     <string name="app_name_mammal_side">memolki • memeliler</string>
     <string name="app_name_bird_side">memolki • kuşlar</string>
 
-    <string name="suffix_fruit_half">• meyve</string>
+    <string name="suffix_fruit_half">• meyveler</string>
     <string name="suffix_vegetable_half">• sebzeler</string>
     <string name="suffix_mammal_side">• memeliler</string>
     <string name="suffix_bird_side">• kuşlar</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Titreşim</string>
     <string name="setting_language">Dil</string>
     <string name="watch_ad">Reklamı izle</string>
+
+    <string name="notification_channel_reminders">Hatırlatmalar</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Kartların seni bekliyor!</item>
+        <item>✨ Yeni kartları açmaya hazır mısın?</item>
+        <item>💰 Yeni ödüller bekliyor!</item>
+        <item>🧠 Bugün hafızan nasıl?</item>
+        <item>🏆 En iyi skorunu geç!</item>
+        <item>🎴 Koleksiyonun seni özledi!</item>
+        <item>✨ Meydan okuma zamanı!</item>
+        <item>💰 Paralar birikiyor!</item>
+        <item>🃏 Biraz kart karıştır!</item>
+        <item>🧠 Beynini zinde tut!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Eşleştir ve para kazan</item>
+        <item>Hızlı bir oyun çok işe yarar</item>
+        <item>Yeni kartlar açılmayı bekliyor</item>
+        <item>Karıştır, çevir ve eşleştir!</item>
+        <item>Koleksiyonunu bugün büyüt</item>
+        <item>Hızlı bir turda hafızanı test et</item>
+        <item>Koleksiyonun henüz tamamlanmadı</item>
+        <item>Geri gel ve biraz kart çevir</item>
+        <item>Paralar kendini toplamaz</item>
+        <item>Bir tur oyna ve eğlen</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Para ödülün hazır!</item>
+        <item>✨ Paralar seni bekliyor!</item>
+        <item>🏆 Ödülünü alma zamanı!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Para kazanmak için reklam izle</string>
+
+    <string name="enable_notifications_title">Daha fazla ödül aç!</string>
+    <string name="enable_notifications_body">Paralar hazır olduğunda ve yeni kartlar açılmayı beklediğinde bildirim al!</string>
+    <string name="enable_notifications_enable">Etkinleştir</string>
+    <string name="enable_notifications_later">Sonra</string>
 </resources>

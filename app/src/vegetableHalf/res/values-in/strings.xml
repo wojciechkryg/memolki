@@ -4,14 +4,14 @@
 
     <string name="potato">Kentang</string>
     <string name="tomato">Tomat</string>
-    <string name="onion">Bawang</string>
+    <string name="onion">Bawang bombay</string>
     <string name="carrot">Wortel</string>
     <string name="lettuce">Selada</string>
     <string name="bell_pepper">Paprika</string>
     <string name="cucumber">Timun</string>
     <string name="broccoli">Brokoli</string>
     <string name="garlic">Bawang putih</string>
-    <string name="celery">Seledri</string>
+    <string name="celery">Seledri batang</string>
     <string name="cabbage">Kubis</string>
     <string name="spinach">Bayam</string>
     <string name="sweetcorn">Jagung</string>
@@ -26,13 +26,13 @@
     <string name="pumpkin">Labu</string>
     <string name="butternut_squash">Labu butternut</string>
     <string name="beet">Bit</string>
-    <string name="radish">Lobak</string>
+    <string name="radish">Lobak merah</string>
     <string name="kale">Kale</string>
     <string name="leek">Bawang perai</string>
     <string name="artichoke">Artichoke</string>
     <string name="swiss_chard">Swiss chard</string>
     <string name="okra">Okra</string>
-    <string name="turnip">Lobak</string>
+    <string name="turnip">Lobak putih</string>
     <string name="parsnip">Pastinak</string>
     <string name="scallion">Daun bawang</string>
     <string name="arugula">Arugula</string>
@@ -48,7 +48,7 @@
     <string name="endive">Endive</string>
     <string name="jicama">Bengkuang</string>
     <string name="kohlrabi">Kohlrabi</string>
-    <string name="celeriac">Seledri</string>
+    <string name="celeriac">Seledri akar</string>
     <string name="water_chestnut">Kacang air</string>
     <string name="bean_sprouts">Tauge</string>
     <string name="mustard_greens">Sawi</string>

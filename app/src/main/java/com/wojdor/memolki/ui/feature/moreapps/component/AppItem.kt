@@ -43,7 +43,6 @@ fun AppItem(
             contentPadding = PaddingValues(spacingM),
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(appModel.colorRes),
-                contentColor = Color.Black,
                 disabledContainerColor = Color.Transparent
             )
         ) {

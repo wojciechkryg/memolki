@@ -35,11 +35,11 @@
     <string name="turnip">Rova</string>
     <string name="parsnip">Palsternacka</string>
     <string name="scallion">Salladslök</string>
-    <string name="arugula">Ruccola</string>
+    <string name="arugula">Rucola</string>
     <string name="chili_pepper">Chili</string>
     <string name="lima_bean">Limabönor</string>
     <string name="acorn_squash">Ekollonpumpa</string>
-    <string name="collard_greens">Grönkål</string>
+    <string name="collard_greens">Bladkål</string>
     <string name="watercress">Vattenkrasse</string>
     <string name="bok_choy">Bok choy</string>
     <string name="fennel">Fänkål</string>
@@ -52,7 +52,7 @@
     <string name="water_chestnut">Vattenkastanj</string>
     <string name="bean_sprouts">Böngroddar</string>
     <string name="mustard_greens">Senapsgrönt</string>
-    <string name="fava_bean">Fava bönor</string>
+    <string name="fava_bean">Bondböna</string>
     <string name="rhubarb">Rabarber</string>
     <string name="shallot">Schalottenlök</string>
     <string name="topinambur">Jordärtskocka</string>

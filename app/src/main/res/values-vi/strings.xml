@@ -14,7 +14,7 @@
     <string name="collection">Bộ sưu tập</string>
     <string name="settings">Cài đặt</string>
     <string name="more">Thêm?</string>
-    <string name="menu">Thực đơn</string>
+    <string name="menu">Menu</string>
     <string name="play_again">Chơi lại</string>
     <string name="shop">Cửa hàng</string>
     <string name="shop_obtain">Lấy %d</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Rung</string>
     <string name="setting_language">Ngôn ngữ</string>
     <string name="watch_ad">Xem quảng cáo</string>
+
+    <string name="notification_channel_reminders">Nhắc nhở</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Thẻ của bạn đang chờ!</item>
+        <item>✨ Sẵn sàng mở khóa thẻ mới?</item>
+        <item>💰 Phần thưởng mới đang chờ!</item>
+        <item>🧠 Trí nhớ của bạn hôm nay thế nào?</item>
+        <item>🏆 Phá kỷ lục của bạn!</item>
+        <item>🎴 Bộ sưu tập nhớ bạn!</item>
+        <item>✨ Đến lúc thử thách!</item>
+        <item>💰 Xu đang tích lũy!</item>
+        <item>🃏 Xáo trộn vài lá thẻ!</item>
+        <item>🧠 Giữ trí não sắc bén!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Ghép đôi và kiếm xu</item>
+        <item>Một ván nhanh rất có ích</item>
+        <item>Thẻ mới đang chờ được mở khóa</item>
+        <item>Xáo, lật và ghép đôi!</item>
+        <item>Mở rộng bộ sưu tập hôm nay</item>
+        <item>Thử trí nhớ trong một vòng nhanh</item>
+        <item>Bộ sưu tập chưa hoàn thành</item>
+        <item>Quay lại và lật vài lá thẻ</item>
+        <item>Xu không tự thu thập được</item>
+        <item>Chơi một vòng và vui vẻ</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Phần thưởng xu đã sẵn sàng!</item>
+        <item>✨ Xu đang chờ bạn!</item>
+        <item>🏆 Đến lúc nhận phần thưởng!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Xem quảng cáo để kiếm xu</string>
+
+    <string name="enable_notifications_title">Mở khóa thêm phần thưởng!</string>
+    <string name="enable_notifications_body">Nhận thông báo khi xu sẵn sàng để thu thập và thẻ mới đang chờ mở khóa!</string>
+    <string name="enable_notifications_enable">Bật</string>
+    <string name="enable_notifications_later">Để sau</string>
 </resources>

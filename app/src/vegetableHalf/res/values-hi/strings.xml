@@ -21,13 +21,13 @@
     <string name="pea">मटर</string>
     <string name="asparagus">शतावरी</string>
     <string name="brussels_sprout">ब्रसल स्प्राउट</string>
-    <string name="zucchini">तुरई</string>
+    <string name="zucchini">ज़ुकीनी</string>
     <string name="eggplant">बैंगन</string>
     <string name="pumpkin">कद्दू</string>
     <string name="butternut_squash">बटरनट स्क्वैश</string>
     <string name="beet">चुकंदर</string>
     <string name="radish">मूली</string>
-    <string name="kale">गोभी</string>
+    <string name="kale">केल</string>
     <string name="leek">लीक</string>
     <string name="artichoke">हाथी चक</string>
     <string name="swiss_chard">स्विस चार्ड</string>
@@ -53,7 +53,7 @@
     <string name="bean_sprouts">अंकुरित फलियां</string>
     <string name="mustard_greens">सरसों का साग</string>
     <string name="fava_bean">फावा बीन</string>
-    <string name="rhubarb"> rhubarb</string>
+    <string name="rhubarb">रूबर्ब</string>
     <string name="shallot">शलोट</string>
     <string name="topinambur">टोपिनांबुर</string>
     <string name="yam">रतालू</string>

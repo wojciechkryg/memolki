@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • frukt</string>
+    <string name="app_name_fruit_half">memolki • frukter</string>
     <string name="app_name_vegetable_half">memolki • grönsaker</string>
     <string name="app_name_mammal_side">memolki • däggdjur</string>
     <string name="app_name_bird_side">memolki • fåglar</string>
 
-    <string name="suffix_fruit_half">• frukt</string>
+    <string name="suffix_fruit_half">• frukter</string>
     <string name="suffix_vegetable_half">• grönsaker</string>
     <string name="suffix_mammal_side">• däggdjur</string>
     <string name="suffix_bird_side">• fåglar</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Språk</string>
     <string name="watch_ad">Titta på annons</string>
+
+    <string name="notification_channel_reminders">Påminnelser</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Dina kort väntar!</item>
+        <item>✨ Redo att låsa upp nya kort?</item>
+        <item>💰 Nya belöningar väntar!</item>
+        <item>🧠 Hur är ditt minne idag?</item>
+        <item>🏆 Slå ditt bästa resultat!</item>
+        <item>🎴 Din samling saknar dig!</item>
+        <item>✨ Dags för en utmaning!</item>
+        <item>💰 Mynten hopar sig!</item>
+        <item>🃏 Blanda några kort!</item>
+        <item>🧠 Håll hjärnan skarp!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Matcha par och tjäna mynt</item>
+        <item>Ett snabbt spel gör stor skillnad</item>
+        <item>Nya kort väntar på att låsas upp</item>
+        <item>Blanda, vänd och matcha!</item>
+        <item>Utöka din samling idag</item>
+        <item>Testa ditt minne i en snabb runda</item>
+        <item>Din samling är inte komplett än</item>
+        <item>Kom tillbaka och vänd några kort</item>
+        <item>Mynten samlar inte sig själva</item>
+        <item>Spela en runda och ha kul</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Din myntbelöning är redo!</item>
+        <item>✨ Mynt väntar på dig!</item>
+        <item>🏆 Dags att hämta din belöning!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Titta på en annons för att tjäna mynt</string>
+
+    <string name="enable_notifications_title">Lås upp fler belöningar!</string>
+    <string name="enable_notifications_body">Få aviseringar när mynt är redo att hämtas och nya kort väntar på att låsas upp!</string>
+    <string name="enable_notifications_enable">Aktivera</string>
+    <string name="enable_notifications_later">Senare</string>
 </resources>

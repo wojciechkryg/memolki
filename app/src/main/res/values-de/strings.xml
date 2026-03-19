@@ -21,11 +21,50 @@
     <string name="shop_back_later">Später wiederkommen</string>
     <string name="shop_buy">%d kaufen</string>
     <string name="shop_unlock_all_cards">Alle Karten entsperren</string>
-    <string name="shop_purchase_failed_error">Ein Fehler ist aufgetreten</string>
+    <string name="shop_purchase_failed_error">Kauf fehlgeschlagen</string>
     <string name="shop_connection_error">Verbindungsfehler</string>
     <string name="setting_music">Musik</string>
     <string name="setting_sound">Sound</string>
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Sprache</string>
     <string name="watch_ad">Werbung ansehen</string>
+
+    <string name="notification_channel_reminders">Erinnerungen</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 Deine Karten warten!</item>
+        <item>✨ Bereit, neue Karten freizuschalten?</item>
+        <item>💰 Neue Belohnungen warten!</item>
+        <item>🧠 Wie ist dein Gedächtnis heute?</item>
+        <item>🏆 Schlag deinen Highscore!</item>
+        <item>🎴 Deine Sammlung vermisst dich!</item>
+        <item>✨ Zeit für eine Herausforderung!</item>
+        <item>💰 Die Münzen häufen sich!</item>
+        <item>🃏 Misch ein paar Karten!</item>
+        <item>🧠 Halte dein Gehirn fit!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Finde Paare und verdiene Münzen</item>
+        <item>Ein schnelles Spiel bringt viel</item>
+        <item>Neue Karten warten darauf, freigeschaltet zu werden</item>
+        <item>Mischen, umdrehen und zuordnen!</item>
+        <item>Erweitere heute deine Sammlung</item>
+        <item>Teste dein Gedächtnis in einer schnellen Runde</item>
+        <item>Deine Sammlung ist noch nicht komplett</item>
+        <item>Komm zurück und dreh ein paar Karten um</item>
+        <item>Münzen sammeln sich nicht von allein</item>
+        <item>Spiel eine Runde und hab Spaß</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Deine Münzbelohnung ist bereit!</item>
+        <item>✨ Münzen warten auf dich!</item>
+        <item>🏆 Zeit, deine Belohnung abzuholen!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Sieh dir eine Werbung an, um Münzen zu verdienen</string>
+
+    <string name="enable_notifications_title">Schalte mehr Belohnungen frei!</string>
+    <string name="enable_notifications_body">Lass dich benachrichtigen, wenn Münzen bereit sind und neue Karten darauf warten, freigeschaltet zu werden!</string>
+    <string name="enable_notifications_enable">Aktivieren</string>
+    <string name="enable_notifications_later">Später</string>
 </resources>

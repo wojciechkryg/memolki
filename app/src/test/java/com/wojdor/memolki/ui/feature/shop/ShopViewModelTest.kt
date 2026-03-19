@@ -9,6 +9,7 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
+import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCase
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
@@ -72,6 +73,9 @@ class ShopViewModelTest : AppTest() {
     @Inject
     lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
 
+    @Inject
+    lateinit var scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase
+
     private lateinit var sut: ShopViewModel
 
     @Before
@@ -91,7 +95,8 @@ class ShopViewModelTest : AppTest() {
             rewardCoinsForShopAdUseCase,
             rewardCoinsForShopPurchaseUseCase,
             unlockAllCardPairsUseCase,
-            getTotalCoinsUseCase
+            getTotalCoinsUseCase,
+            scheduleAdRewardNotificationUseCase
         )
     }
 

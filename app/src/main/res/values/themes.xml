@@ -3,5 +3,6 @@
     <style name="Theme.Memolki" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="android:windowBackground">@color/primary</item>
+        <item name="android:forceDarkAllowed">false</item>
     </style>
 </resources>

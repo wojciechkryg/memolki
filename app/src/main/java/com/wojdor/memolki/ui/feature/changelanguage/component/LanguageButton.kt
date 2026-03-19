@@ -23,7 +23,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,7 +55,6 @@ fun LanguageButton(
         ) else ButtonDefaults.ContentPadding,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color.Black,
             disabledContainerColor = Color.Transparent
         ),
     ) {
@@ -74,7 +72,6 @@ fun LanguageButton(
                         .size(56.dp)
                         .padding(end = spacingXS),
                     painter = painterResource(id = R.drawable.ic_check),
-                    tint = colorResource(R.color.font),
                     contentDescription = null
                 )
             }

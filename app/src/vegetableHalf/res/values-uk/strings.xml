@@ -11,7 +11,7 @@
     <string name="cucumber">Огірок</string>
     <string name="broccoli">Броколі</string>
     <string name="garlic">Часник</string>
-    <string name="celery">Селера</string>
+    <string name="celery">Стеблова селера</string>
     <string name="cabbage">Капуста</string>
     <string name="spinach">Шпинат</string>
     <string name="sweetcorn">Кукурудза</string>
@@ -48,7 +48,7 @@
     <string name="endive">Ендівій</string>
     <string name="jicama">Хікама</string>
     <string name="kohlrabi">Кольрабі</string>
-    <string name="celeriac">Селера</string>
+    <string name="celeriac">Коренева селера</string>
     <string name="water_chestnut">Водяний горіх</string>
     <string name="bean_sprouts">Паростки квасолі</string>
     <string name="mustard_greens">Листова гірчиця</string>

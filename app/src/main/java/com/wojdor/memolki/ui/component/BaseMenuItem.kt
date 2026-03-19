@@ -24,7 +24,6 @@ fun BaseMenuItem(
         onClick = throttleClick(onClick = onClick),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
-            contentColor = Color.Black,
             disabledContainerColor = Color.Transparent
         ),
         enabled = isEnabled

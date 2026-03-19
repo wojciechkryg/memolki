@@ -31,7 +31,7 @@
     <string name="red_fox">Κόκκινη αλεπού</string>
     <string name="polar_bear">Πολική αρκούδα</string>
     <string name="indian_elephant">Ινδικός ελέφαντας</string>
-    <string name="domestic_rabbit">Οικόσιτος λαγός</string>
+    <string name="domestic_rabbit">Οικόσιτο κουνέλι</string>
     <string name="european_hare">Ευρωπαϊκός λαγός</string>
     <string name="bactrian_camel">Βακτριανή καμήλα</string>
     <string name="american_bison">Αμερικανικός βίσονας</string>
@@ -67,7 +67,7 @@
     <string name="common_wombat">Κοινό γουόμπατ</string>
     <string name="brown_rat">Καφέ αρουραίος</string>
     <string name="house_mouse">Οικιακός ποντικός</string>
-    <string name="european_mole">Ευρωπαϊκός τυφλοπόντικας</string>
+    <string name="european_mole">Ευρωπαϊκός ασπάλακας</string>
     <string name="brown_long_eared_bat">Καφέ νυχτερίδα με μακριά αυτιά</string>
     <string name="egyptian_fruit_bat">Αιγυπτιακή φρουτονυχτερίδα</string>
     <string name="vicuna">Βικούνια</string>
@@ -81,5 +81,5 @@
     <string name="short_beaked_echidna">Έχιδνα με κοντό ράμφος</string>
     <string name="lesser_chinchilla">Μικρότερο τσιντσιλά</string>
     <string name="indian_crested_porcupine">Ινδικός λοφιοφόρος σκαντζόχοιρος</string>
-    <string name="golden_mole">Χρυσός τυφλοπόντικας</string>
+    <string name="golden_mole">Χρυσός ασπάλακας</string>
 </resources>

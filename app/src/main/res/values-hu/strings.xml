@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name_fruit_half">memolki • gyümölcs</string>
+    <string name="app_name_fruit_half">memolki • gyümölcsök</string>
     <string name="app_name_vegetable_half">memolki • zöldségek</string>
     <string name="app_name_mammal_side">memolki • emlősök</string>
     <string name="app_name_bird_side">memolki • madarak</string>
 
-    <string name="suffix_fruit_half">• gyümölcs</string>
+    <string name="suffix_fruit_half">• gyümölcsök</string>
     <string name="suffix_vegetable_half">• zöldségek</string>
     <string name="suffix_mammal_side">• emlősök</string>
     <string name="suffix_bird_side">• madarak</string>
@@ -18,7 +18,7 @@
     <string name="play_again">Játssz újra</string>
     <string name="shop">Bolt</string>
     <string name="shop_obtain">Szerezd meg %d</string>
-    <string name="shop_back_later">Később jöjjön vissza</string>
+    <string name="shop_back_later">Gyere vissza később</string>
     <string name="shop_buy">Vásárolj %d</string>
     <string name="shop_unlock_all_cards">Nyisd fel az összes kártyát</string>
     <string name="shop_purchase_failed_error">Sikertelen vásárlás</string>
@@ -28,4 +28,43 @@
     <string name="setting_vibration">Rezgés</string>
     <string name="setting_language">Nyelv</string>
     <string name="watch_ad">Reklám megtekintése</string>
+
+    <string name="notification_channel_reminders">Emlékeztetők</string>
+
+    <string-array name="notification_daily_titles">
+        <item>🃏 A kártyáid várnak!</item>
+        <item>✨ Készen állsz új kártyákat feloldani?</item>
+        <item>💰 Új jutalmak várnak!</item>
+        <item>🧠 Milyen ma a memóriád?</item>
+        <item>🏆 Döntsd meg a legjobb eredményed!</item>
+        <item>🎴 A gyűjteményed hiányol!</item>
+        <item>✨ Itt az ideje egy kihívásnak!</item>
+        <item>💰 Az érmék gyűlnek!</item>
+        <item>🃏 Keverd meg a kártyákat!</item>
+        <item>🧠 Tartsd karban az agyad!</item>
+    </string-array>
+    <string-array name="notification_daily_bodies">
+        <item>Párosítsd a párokat és szerezz érméket</item>
+        <item>Egy gyors játék sokat számít</item>
+        <item>Új kártyák várnak feloldásra</item>
+        <item>Keverd, fordítsd és párosítsd!</item>
+        <item>Bővítsd a gyűjteményed ma</item>
+        <item>Teszteld a memóriádat egy gyors körben</item>
+        <item>A gyűjteményed még nem teljes</item>
+        <item>Gyere vissza és forgass néhány kártyát</item>
+        <item>Az érmék nem gyűjtik magukat</item>
+        <item>Játssz egy kört és szórakozz</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Az érme jutalmad kész!</item>
+        <item>✨ Érmék várnak rád!</item>
+        <item>🏆 Ideje begyűjteni a jutalmadat!</item>
+    </string-array>
+    <string name="notification_ad_reward_body">Nézz meg egy reklámot, hogy érméket szerezz</string>
+
+    <string name="enable_notifications_title">Oldj fel több jutalmat!</string>
+    <string name="enable_notifications_body">Kapj értesítéseket, amikor az érmék begyűjthetők és új kártyák várnak feloldásra!</string>
+    <string name="enable_notifications_enable">Engedélyezés</string>
+    <string name="enable_notifications_later">Később</string>
 </resources>
