@@ -38,38 +38,30 @@ fun SparklesOverlay(isActive: Boolean) {
                 yFraction = MARGIN + Random.nextFloat() * (1f - 2 * MARGIN),
                 sizeDp = SPARKLE_MIN_SIZE_DP + Random.nextFloat() * SPARKLE_SIZE_RANGE_DP,
                 delayMs = (Random.nextFloat() * SPARKLE_STAGGER_RANGE).toLong(),
-                peakAlpha = SPARKLE_MIN_ALPHA + Random.nextFloat() * SPARKLE_ALPHA_RANGE,
                 rotation = Random.nextFloat() * SPARKLE_ROTATION_RANGE,
-                alpha = Animatable(0f),
-                scale = Animatable(SPARKLE_SCALE_START)
+                scale = Animatable(0f)
             )
         }
     }
     sparkles.forEachIndexed { index, sparkle ->
         LaunchedEffect(index) {
             delay(sparkle.delayMs)
-            launch {
-                sparkle.alpha.animateTo(sparkle.peakAlpha, tween(SPARKLE_FADE_IN_MS))
-                sparkle.alpha.animateTo(0f, tween(SPARKLE_FADE_OUT_MS))
-            }
-            launch {
-                sparkle.scale.animateTo(1f, tween(SPARKLE_FADE_IN_MS))
-                sparkle.scale.animateTo(SPARKLE_SCALE_END, tween(SPARKLE_FADE_OUT_MS))
-            }
+            sparkle.scale.animateTo(1f, tween(SPARKLE_SCALE_UP_MS))
+            sparkle.scale.animateTo(0f, tween(SPARKLE_SCALE_DOWN_MS))
         }
     }
     Canvas(modifier = Modifier.fillMaxSize()) {
         sparkles.forEach { sparkle ->
-            val alpha = sparkle.alpha.value
-            if (alpha > 0f) {
-                val radiusPx = sparkle.sizeDp * density * sparkle.scale.value
+            val scale = sparkle.scale.value
+            if (scale > 0f) {
+                val radiusPx = sparkle.sizeDp * density * scale
                 drawSparkle(
                     center = Offset(
                         sparkle.xFraction * size.width,
                         sparkle.yFraction * size.height
                     ),
                     radius = radiusPx,
-                    color = fontColor.copy(alpha = alpha),
+                    color = fontColor,
                     strokeWidth = SPARKLE_STROKE_WIDTH * density,
                     rotation = sparkle.rotation,
                     cornerRadius = SPARKLE_CORNER_RADIUS * density
@@ -122,25 +114,19 @@ private class SparkleState(
     val yFraction: Float,
     val sizeDp: Float,
     val delayMs: Long,
-    val peakAlpha: Float,
     val rotation: Float,
-    val alpha: Animatable<Float, *>,
     val scale: Animatable<Float, *>
 )
 
-private const val SPARKLE_COUNT = 24
-private const val SPARKLE_MIN_SIZE_DP = 4f
-private const val SPARKLE_SIZE_RANGE_DP = 5f
+private const val SPARKLE_COUNT = 32
+private const val SPARKLE_MIN_SIZE_DP = 5f
+private const val SPARKLE_SIZE_RANGE_DP = 6f
 private const val SPARKLE_STAGGER_RANGE = 1500f
-private const val SPARKLE_MIN_ALPHA = 0.5f
-private const val SPARKLE_ALPHA_RANGE = 0.4f
-private const val SPARKLE_FADE_IN_MS = 400
-private const val SPARKLE_FADE_OUT_MS = 1800
-private const val SPARKLE_SCALE_START = 0.3f
-private const val SPARKLE_SCALE_END = 0.4f
+private const val SPARKLE_SCALE_UP_MS = 400
+private const val SPARKLE_SCALE_DOWN_MS = 1800
 private const val SPARKLE_POINTS = 4
 private const val SPARKLE_INNER_RATIO = 0.2f
-private const val SPARKLE_STROKE_WIDTH = 2.5f
+private const val SPARKLE_STROKE_WIDTH = 2f
 private const val SPARKLE_CORNER_RADIUS = 6f
 private const val SPARKLE_ROTATION_RANGE = 0.8f
 private const val MARGIN = 0.05f
