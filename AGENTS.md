@@ -56,7 +56,7 @@ Conventions:
 - Constructor-injected with `@Inject`
 - **Dispatcher is always the 1st constructor parameter**
 - Dispatcher choice: `@IoDispatcher` for anything touching system services, repositories, or I/O; `@DefaultDispatcher` for pure in-memory computation; `@MainDispatcher` only when the Android API requires the main thread
-- Wrap return values in `Result.success()`
+- Wrap repository/data calls in `runCatching { }` so exceptions are emitted as `Result.failure` instead of crashing the flow
 
 Reference examples:
 - Simple: `domain/usecase/GetSettingsUseCase.kt`

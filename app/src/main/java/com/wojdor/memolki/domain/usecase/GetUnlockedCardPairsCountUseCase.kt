@@ -13,6 +13,6 @@ class GetUnlockedCardPairsCountUseCase @Inject constructor(
 ) : BaseUseCase<Int>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        emit(Result.success(cardRepository.getUnlockedCardPairs().size))
+        emit(runCatching { cardRepository.getUnlockedCardPairs().size })
     }
 }

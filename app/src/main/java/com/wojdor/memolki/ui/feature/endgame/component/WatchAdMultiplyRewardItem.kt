@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.wojdor.memolki.ui.theme.animated
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.bounceClickEffect
+import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
@@ -29,7 +31,7 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
     Button(
-        modifier = Modifier.bounceClickEffect(),
+        modifier = Modifier.pulseEffect().bounceClickEffect(),
         onClick = throttleClick(onClick = onClick),
         shape = RoundedCornerShape(spacingL),
         colors = ButtonDefaults.buttonColors(
@@ -47,7 +49,7 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
             )
             AutoSizeText(
                 text = stringResource(R.string.watch_ad).uppercase(),
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineSmall.animated()
             )
         }
         Spacer(modifier = Modifier.size(spacingM))
@@ -59,7 +61,7 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
         Spacer(modifier = Modifier.size(spacingXS))
         Text(
             text = stringResource(id = R.string.end_game_watch_ad_reward).lowercase(),
-            style = MaterialTheme.typography.displayMedium
+            style = MaterialTheme.typography.displayMedium.animated()
         )
 
     }

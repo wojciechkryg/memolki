@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.wojdor.memolki.ui.theme.animated
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.ui.component.bounceClickEffect
+import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
@@ -43,7 +45,7 @@ fun MoreAppsItem(
             text = stringResource(R.string.more).lowercase(),
             style = MaterialTheme.typography.headlineLarge
         )
-        CardBorder(modifier = Modifier.bounceClickEffect()) {
+        CardBorder(modifier = Modifier.pulseEffect().bounceClickEffect()) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = throttleClick(onClick),
@@ -66,7 +68,7 @@ fun MoreAppsItem(
                     Text(
                         modifier = Modifier.padding(start = spacingS),
                         text = stringResource(appModel.textRes),
-                        style = MaterialTheme.typography.headlineMedium
+                        style = MaterialTheme.typography.headlineMedium.animated()
                     )
                 }
             }
