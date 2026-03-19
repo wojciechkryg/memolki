@@ -15,6 +15,8 @@ sealed class CardModel : Parcelable {
     abstract val textRes: Int
     abstract val isFlippedFront: Boolean
     abstract val isPairMatched: Boolean
+    abstract val isMatchAnimating: Boolean
+    abstract val isMismatchShaking: Boolean
 
     object Empty : CardModel() {
         @IgnoredOnParcel
@@ -31,6 +33,12 @@ sealed class CardModel : Parcelable {
 
         @IgnoredOnParcel
         override val isPairMatched: Boolean = false
+
+        @IgnoredOnParcel
+        override val isMatchAnimating: Boolean = false
+
+        @IgnoredOnParcel
+        override val isMismatchShaking: Boolean = false
     }
 
     data class Text(
@@ -38,7 +46,9 @@ sealed class CardModel : Parcelable {
         override val pairId: String,
         @field:StringRes override val textRes: Int,
         override val isFlippedFront: Boolean = false,
-        override val isPairMatched: Boolean = false
+        override val isPairMatched: Boolean = false,
+        override val isMatchAnimating: Boolean = false,
+        override val isMismatchShaking: Boolean = false
     ) : CardModel()
 
     data class Image(
@@ -47,6 +57,8 @@ sealed class CardModel : Parcelable {
         @field:StringRes override val textRes: Int,
         @field:DrawableRes val imageRes: Int,
         override val isFlippedFront: Boolean = false,
-        override val isPairMatched: Boolean = false
+        override val isPairMatched: Boolean = false,
+        override val isMatchAnimating: Boolean = false,
+        override val isMismatchShaking: Boolean = false
     ) : CardModel()
 }

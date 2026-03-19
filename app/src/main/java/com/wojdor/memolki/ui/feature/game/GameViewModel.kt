@@ -2,7 +2,6 @@ package com.wojdor.memolki.ui.feature.game
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
@@ -11,8 +10,8 @@ import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -33,13 +32,13 @@ class GameViewModel @Inject constructor(
     GameState()
 ) {
 
-    private var flipToBackJob: Job? = null
-
     override fun onIntent(intent: GameIntent) {
         when (intent) {
             is GameIntent.OnLevelStart -> shuffleUnlockedCards(intent.levelModel)
             is GameIntent.OnBackCardClick -> onBackCardClick(intent.cardModel)
             is GameIntent.OnFrontCardPress -> onFrontCardPress(intent.isPressed, intent.cardModel)
+            GameIntent.OnMatchAnimationComplete -> onMatchAnimationComplete()
+            GameIntent.OnMismatchShakeComplete -> onMismatchShakeComplete()
         }
     }
 
@@ -55,26 +54,43 @@ class GameViewModel @Inject constructor(
         hapticFeedback.vibrateStrong()
         hideCardText()
         if (isTooManyFlippedToFrontUnmatchedCards()) {
-            immediatelyFlipToBackUnmatchedCards()
+            flipToBackUnmatchedCards()
         }
         flipCardToFront(card)
         checkForMatchedPair()
         checkForEndGame()
         if (isTooManyFlippedToFrontUnmatchedCards()) {
-            flipToBackUnmatchedCardsWithDelay()
+            startMismatchShake()
         }
     }
 
-    private fun onFrontCardPress(
-        isPressed: Boolean,
-        card: CardModel
-    ) {
+    private fun onFrontCardPress(isPressed: Boolean, card: CardModel) {
         if (isPressed && card is CardModel.Image && card.isPairMatched) {
             hapticFeedback.vibrateLow()
             hideCardText()
             showCardDetails(card)
         } else {
             hideCardDetails()
+        }
+    }
+
+    private fun onMatchAnimationComplete() {
+        mapCards { card ->
+            if (card.isMatchAnimating) {
+                copyCard(card, isMatchAnimating = false)
+            } else {
+                card
+            }
+        }
+    }
+
+    private fun onMismatchShakeComplete() {
+        mapCards { card ->
+            if (card.isMismatchShaking) {
+                copyCard(card, isMismatchShaking = false, isFlippedFront = false)
+            } else {
+                card
+            }
         }
     }
 
@@ -109,12 +125,8 @@ class GameViewModel @Inject constructor(
     }
 
     private fun matchCards(frontUnmatchedCards: List<CardModel>) {
-        val matchedCards = frontUnmatchedCards.map { cardToMatch ->
-            when (cardToMatch) {
-                is CardModel.Text -> cardToMatch.copy(isPairMatched = true)
-                is CardModel.Image -> cardToMatch.copy(isPairMatched = true)
-                is CardModel.Empty -> cardToMatch
-            }
+        val matchedCards = frontUnmatchedCards.map { card ->
+            copyCard(card, isPairMatched = true, isMatchAnimating = true)
         }
         updateStateWith(matchedCards)
         showCardText(matchedCards)
@@ -154,17 +166,11 @@ class GameViewModel @Inject constructor(
     private fun isTooManyFlippedToFrontUnmatchedCards() =
         frontUnmatchedCards().size >= MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS
 
-    private fun flipToBackUnmatchedCardsWithDelay() {
-        flipToBackJob = viewModelScope.launch {
-            delay(FLIP_TO_BACK_DELAY)
-            flipToBackUnmatchedCards()
+    private fun startMismatchShake() {
+        val unmatchedCards = frontUnmatchedCards().map { card ->
+            copyCard(card, isMismatchShaking = true)
         }
-    }
-
-    private fun immediatelyFlipToBackUnmatchedCards() {
-        flipToBackJob?.cancel()
-        flipToBackJob = null
-        flipToBackUnmatchedCards()
+        updateStateWith(unmatchedCards)
     }
 
     private fun frontUnmatchedCards(): List<CardModel> {
@@ -174,27 +180,42 @@ class GameViewModel @Inject constructor(
     }
 
     private fun flipToBackUnmatchedCards() {
-        val changedCards = frontUnmatchedCards().map {
-            markCardAsFlippedToBack(it)
+        val changedCards = frontUnmatchedCards().map { card ->
+            copyCard(card, isFlippedFront = false, isMismatchShaking = false)
         }
         updateStateWith(changedCards)
     }
 
     private fun flipCardToFront(card: CardModel) {
         cardFlipPlayer.play()
-        updateStateWith(markCardAsFlipped(card, true))
+        updateStateWith(copyCard(card, isFlippedFront = true, isMismatchShaking = false))
     }
 
-    private fun markCardAsFlippedToBack(card: CardModel): CardModel {
-        return markCardAsFlipped(card, false)
+    private fun copyCard(
+        card: CardModel,
+        isFlippedFront: Boolean = card.isFlippedFront,
+        isPairMatched: Boolean = card.isPairMatched,
+        isMatchAnimating: Boolean = card.isMatchAnimating,
+        isMismatchShaking: Boolean = card.isMismatchShaking
+    ): CardModel = when (card) {
+        is CardModel.Text -> card.copy(
+            isFlippedFront = isFlippedFront,
+            isPairMatched = isPairMatched,
+            isMatchAnimating = isMatchAnimating,
+            isMismatchShaking = isMismatchShaking
+        )
+        is CardModel.Image -> card.copy(
+            isFlippedFront = isFlippedFront,
+            isPairMatched = isPairMatched,
+            isMatchAnimating = isMatchAnimating,
+            isMismatchShaking = isMismatchShaking
+        )
+        CardModel.Empty -> card
     }
 
-    private fun markCardAsFlipped(card: CardModel, isFlippedFront: Boolean): CardModel {
-        return when (card) {
-            is CardModel.Text -> card.copy(isFlippedFront = isFlippedFront)
-            is CardModel.Image -> card.copy(isFlippedFront = isFlippedFront)
-            CardModel.Empty -> card
-        }
+    private fun mapCards(transform: (CardModel) -> CardModel) {
+        val updatedCards = uiState.value.cards.map(transform)
+        sendState { copy(cards = updatedCards) }
     }
 
     private fun updateStateWith(card: CardModel) {
@@ -242,7 +263,6 @@ class GameViewModel @Inject constructor(
 
     companion object {
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
-        const val FLIP_TO_BACK_DELAY = 2000L
         const val END_GAME_DELAY = 1000L
     }
 }

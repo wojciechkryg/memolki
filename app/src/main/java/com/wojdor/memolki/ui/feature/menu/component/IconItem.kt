@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
@@ -23,6 +24,7 @@ fun IconItem(
     onClick: () -> Unit = {}
 ) {
     Button(
+        modifier = Modifier.bounceClickEffect(),
         onClick = throttleClick(onClick),
         contentPadding = PaddingValues(spacingXS),
         colors = ButtonDefaults.buttonColors(

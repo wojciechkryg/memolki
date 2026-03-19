@@ -8,4 +8,6 @@ sealed class GameIntent : UiIntent {
     data class OnLevelStart(val levelModel: LevelModel) : GameIntent()
     data class OnBackCardClick(val cardModel: CardModel) : GameIntent()
     data class OnFrontCardPress(val isPressed: Boolean, val cardModel: CardModel) : GameIntent()
+    object OnMatchAnimationComplete : GameIntent()
+    object OnMismatchShakeComplete : GameIntent()
 }

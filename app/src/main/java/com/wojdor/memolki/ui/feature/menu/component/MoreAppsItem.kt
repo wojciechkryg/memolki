@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.AppModel
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
@@ -42,7 +43,7 @@ fun MoreAppsItem(
             text = stringResource(R.string.more).lowercase(),
             style = MaterialTheme.typography.headlineLarge
         )
-        CardBorder {
+        CardBorder(modifier = Modifier.bounceClickEffect()) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = throttleClick(onClick),

@@ -113,7 +113,7 @@ class EndGameViewModelTest : AppTest() {
 
                 // when
                 sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
-                skipItems(3)
+                skipItems(4)
 
                 // then
                 val expected = EndGameState(
@@ -124,7 +124,8 @@ class EndGameViewModelTest : AppTest() {
                         EndGameMenuModel.PlayAgain,
                         EndGameMenuModel.Menu
                     ),
-                    animateCoins = true
+                    animateCoins = true,
+                    showSparkles = true
                 )
                 assertEquals(expected, awaitItem())
             }

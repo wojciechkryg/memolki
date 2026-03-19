@@ -25,6 +25,7 @@ import com.wojdor.memolki.ui.feature.collection.component.cardLeftModifier
 import com.wojdor.memolki.ui.feature.collection.component.cardRightModifier
 import com.wojdor.memolki.ui.feature.collection.component.rotatedCardPairShape
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingXS
@@ -37,6 +38,7 @@ fun UnlockNewCardItem(
     Box(
         modifier = Modifier
             .width(144.dp)
+            .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
                 onClick = throttleClick(onClick = onClick),

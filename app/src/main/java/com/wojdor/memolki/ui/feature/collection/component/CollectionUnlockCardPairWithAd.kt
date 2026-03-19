@@ -26,6 +26,7 @@ import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.isTablet
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingXL
@@ -40,6 +41,7 @@ fun CollectionUnlockCardPairWithAd(
         modifier = modifier
             .fillMaxWidth()
             .padding(if (isTablet) spacingL else 0.dp)
+            .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
                 onClick = throttleClick(onClick = onClick),
