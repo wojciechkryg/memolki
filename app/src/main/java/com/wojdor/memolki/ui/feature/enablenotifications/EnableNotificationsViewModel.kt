@@ -35,6 +35,7 @@ class EnableNotificationsViewModel @Inject constructor(
             EnableNotificationDestination.GAME -> EnableNotificationsEffect.NavigateToGame
             EnableNotificationDestination.MENU -> EnableNotificationsEffect.NavigateToMenu
             EnableNotificationDestination.COLLECTION -> EnableNotificationsEffect.NavigateToCollection
+            EnableNotificationDestination.SHOP -> EnableNotificationsEffect.NavigateToShop
         }
         sendEffect(effect)
     }

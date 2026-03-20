@@ -7,4 +7,5 @@ sealed class EnableNotificationsEffect : UiEffect {
     object NavigateToGame : EnableNotificationsEffect()
     object NavigateToMenu : EnableNotificationsEffect()
     object NavigateToCollection : EnableNotificationsEffect()
+    object NavigateToShop : EnableNotificationsEffect()
 }

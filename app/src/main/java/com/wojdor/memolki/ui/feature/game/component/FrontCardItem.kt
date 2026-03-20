@@ -41,10 +41,13 @@ fun FrontCardItem(
                         awaitEachGesture {
                             awaitFirstDown(requireUnconsumed = false)
                             onPress(true)
-                            do {
-                                val event = awaitPointerEvent()
-                            } while (event.changes.any { it.pressed })
-                            onPress(false)
+                            try {
+                                do {
+                                    val event = awaitPointerEvent()
+                                } while (event.changes.any { it.pressed })
+                            } finally {
+                                onPress(false)
+                            }
                         }
                     }
                 } else {

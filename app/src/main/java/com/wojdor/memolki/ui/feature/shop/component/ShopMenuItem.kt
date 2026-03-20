@@ -7,7 +7,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -20,10 +19,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
@@ -35,7 +34,6 @@ import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.throttleClick
-import kotlin.math.roundToInt
 
 @Composable
 fun ShopMenuItem(
@@ -52,7 +50,7 @@ fun ShopMenuItem(
     CardBorder(
         modifier = modifier
             .let { if (isEnabled) it.bounceClickEffect() else it }
-            .offset { IntOffset(shakeOffset.roundToInt(), 0) }
+            .graphicsLayer { translationX = shakeOffset }
             .clip(CardShape)
             .let {
                 if (isEnabled) {

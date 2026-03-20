@@ -38,6 +38,7 @@ fun AppNavigation() {
         collectionFlow(navController)
         settingsFlow(navController)
         moreAppsScreen()
+        enableNotificationsScreen(navController)
     }
 }
 
@@ -75,7 +76,6 @@ private fun NavGraphBuilder.gameFlow(navController: NavController) {
         chooseLevelScreen(navController)
         gameScreen(navController)
         endGameScreen(navController)
-        enableNotificationsScreen(navController)
     }
 }
 
@@ -130,7 +130,12 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
     composable(
         route = Route.END_GAME,
         enterTransition = { slideInRight },
-        exitTransition = { slideOutRight }
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.ENABLE_NOTIFICATIONS -> slideOutLeft
+                else -> slideOutRight
+            }
+        }
     ) {
         EndGameScreen(
             navController = navController,
@@ -143,9 +148,25 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
 private fun NavGraphBuilder.enableNotificationsScreen(navController: NavController) {
     composable(
         route = Route.ENABLE_NOTIFICATIONS,
-        arguments = listOf(navArgument(AppNavigation.DESTINATION_ARG) { type = NavType.StringType }),
-        enterTransition = { slideInLeft },
-        exitTransition = { slideOutRight }
+        arguments = listOf(navArgument(AppNavigation.DESTINATION_ARG) {
+            type = NavType.StringType
+        }),
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.END_GAME -> slideInRight
+                Route.COLLECTION -> slideInLeft
+                Route.SHOP -> slideInTop
+                else -> slideInBottom
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.MENU, Route.END_GAME, Route.GAME -> slideOutRight
+                Route.COLLECTION -> slideOutLeft
+                Route.SHOP -> slideOutTop
+                else -> slideOutTop
+            }
+        }
     ) {
         EnableNotificationsScreen(navController = navController)
     }
@@ -157,7 +178,7 @@ private fun NavGraphBuilder.collectionFlow(navController: NavController) {
         route = RouteFlow.COLLECTION
     ) {
         collectionScreen(navController)
-        shopScreen()
+        shopScreen(navController)
         cardPairDetailsScreen(navController)
     }
 }
@@ -168,14 +189,14 @@ private fun NavGraphBuilder.collectionScreen(navController: NavController) {
         enterTransition = {
             when (initialState.destination.route) {
                 Route.SHOP -> slideInBottom
-                Route.CARD_PAIR_DETAILS -> slideInRight
+                Route.CARD_PAIR_DETAILS, Route.ENABLE_NOTIFICATIONS -> slideInRight
                 else -> slideInLeft
             }
         },
         exitTransition = {
             when (targetState.destination.route) {
                 Route.SHOP -> slideOutBottom
-                Route.CARD_PAIR_DETAILS -> slideOutRight
+                Route.CARD_PAIR_DETAILS, Route.ENABLE_NOTIFICATIONS -> slideOutRight
                 else -> slideOutLeft
             }
         }
@@ -187,14 +208,24 @@ private fun NavGraphBuilder.collectionScreen(navController: NavController) {
     }
 }
 
-private fun NavGraphBuilder.shopScreen() {
+private fun NavGraphBuilder.shopScreen(navController: NavController) {
     composable(
         route = Route.SHOP,
         deepLinks = listOf(navDeepLink { uriPattern = AppNavigation.SHOP_DEEP_LINK }),
-        enterTransition = { slideInTop },
-        exitTransition = { slideOutTop }
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.ENABLE_NOTIFICATIONS -> slideInBottom
+                else -> slideInTop
+            }
+        },
+        exitTransition = {
+            when (targetState.destination.route) {
+                Route.ENABLE_NOTIFICATIONS -> slideOutBottom
+                else -> slideOutTop
+            }
+        }
     ) {
-        ShopScreen()
+        ShopScreen(navController = navController)
     }
 }
 
