@@ -61,7 +61,11 @@
         <item>✨ Moedas estão esperando por você!</item>
         <item>🏆 Hora de coletar sua recompensa!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Assista a um anúncio para ganhar moedas</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Moedas grátis estão esperando!</item>
+        <item>Colete sua recompensa de moedas agora!</item>
+        <item>Suas moedas estão prontas!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Desbloqueie mais recompensas!</string>
     <string name="enable_notifications_body">Receba notificações quando moedas estiverem prontas e novas cartas esperando para serem desbloqueadas!</string>

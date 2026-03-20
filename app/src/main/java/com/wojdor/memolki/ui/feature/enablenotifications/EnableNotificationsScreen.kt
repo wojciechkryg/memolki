@@ -2,9 +2,11 @@ package com.wojdor.memolki.ui.feature.enablenotifications
 
 import android.Manifest
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,19 +19,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
-import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -44,6 +51,7 @@ fun EnableNotificationsScreen(
     viewModel: EnableNotificationsViewModel = hiltViewModel(),
     navController: NavController
 ) {
+    BackHandler { }
     val state by viewModel.uiState.collectAsState()
     HandleEffect(viewModel, navController)
     HandleState(viewModel, state)
@@ -66,7 +74,8 @@ private fun HandleEffect(
 
             EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame()
             EnableNotificationsEffect.NavigateToMenu -> navController.navigateToMenu()
-            EnableNotificationsEffect.NavigateToCollection -> navController.navigateToCollection()
+            EnableNotificationsEffect.NavigateToCollection -> navController.popBackStack()
+            EnableNotificationsEffect.NavigateToShop -> navController.popBackStack()
         }
     }
 }
@@ -128,7 +137,20 @@ private fun EnableNotificationsScreen(
             textId = R.string.enable_notifications_enable,
             onClick = callbacks.onEnableClick
         )
-        TextButton(onClick = throttleClick(onClick = callbacks.onLaterClick)) {
+        var isLaterVisible by remember { mutableStateOf(false) }
+        LaunchedEffect(Unit) {
+            delay(LATER_BUTTON_DELAY)
+            isLaterVisible = true
+        }
+        val laterAlpha by animateFloatAsState(
+            targetValue = if (isLaterVisible) 1f else 0f,
+            label = "later button alpha animation"
+        )
+        TextButton(
+            onClick = throttleClick(onClick = callbacks.onLaterClick),
+            enabled = isLaterVisible,
+            modifier = Modifier.alpha(laterAlpha)
+        ) {
             Text(
                 text = stringResource(R.string.enable_notifications_later).lowercase(),
                 style = MaterialTheme.typography.bodyLarge,
@@ -137,6 +159,8 @@ private fun EnableNotificationsScreen(
         }
     }
 }
+
+private const val LATER_BUTTON_DELAY = 1500L
 
 @Composable
 @Preview(showBackground = true)

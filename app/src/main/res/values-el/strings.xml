@@ -61,7 +61,11 @@
         <item>✨ Νομίσματα σε περιμένουν!</item>
         <item>🏆 Ώρα να συλλέξεις την ανταμοιβή σου!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Δες μια διαφήμιση για να κερδίσεις νομίσματα</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Δωρεάν νομίσματα σε περιμένουν!</item>
+        <item>Συλλέξτε την ανταμοιβή σας τώρα!</item>
+        <item>Τα νομίσματά σας είναι έτοιμα!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Ξεκλείδωσε περισσότερες ανταμοιβές!</string>
     <string name="enable_notifications_body">Λάβε ειδοποιήσεις όταν τα νομίσματα είναι έτοιμα για συλλογή και νέες κάρτες περιμένουν να ξεκλειδωθούν!</string>

@@ -61,7 +61,11 @@
         <item>✨ Монеты ждут тебя!</item>
         <item>🏆 Пора забрать свою награду!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Посмотри рекламу, чтобы заработать монеты</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Бесплатные монеты ждут тебя!</item>
+        <item>Забери свою награду прямо сейчас!</item>
+        <item>Твои монеты готовы!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Открой больше наград!</string>
     <string name="enable_notifications_body">Получай уведомления, когда монеты готовы к сбору и новые карты ждут открытия!</string>

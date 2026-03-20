@@ -7,6 +7,7 @@ import com.wojdor.memolki.ui.base.UiEffect
 import com.wojdor.memolki.util.billing.BillingHandler
 
 sealed class ShopEffect : UiEffect {
+    object OpenEnableNotificationsScreen : ShopEffect()
     data class ShowAd(val rewardedAd: RewardedAd) : ShopEffect()
     data class LaunchBilling(
         val billingHandler: BillingHandler,

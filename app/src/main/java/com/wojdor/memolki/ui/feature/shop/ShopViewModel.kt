@@ -15,6 +15,7 @@ import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingStatusListener
@@ -46,7 +47,8 @@ class ShopViewModel @Inject constructor(
     private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
     private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
-    private val scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase
+    private val scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase,
+    private val notificationScheduler: NotificationScheduler
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
     ShopState()
@@ -110,8 +112,15 @@ class ShopViewModel @Inject constructor(
             setLastShopAdShownTimestampUseCase().launchIn(viewModelScope)
             scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
             rewardCoinsForAd()
+            checkShouldShowNotificationRequest()
         }
         loadMenuItemsAndAd(wasRewardGranted)
+    }
+
+    private fun checkShouldShowNotificationRequest() {
+        if (!notificationScheduler.hasNotificationPermission()) {
+            sendEffect(ShopEffect.OpenEnableNotificationsScreen)
+        }
     }
 
     private fun onBuyCoinsSmallAmountClick() {

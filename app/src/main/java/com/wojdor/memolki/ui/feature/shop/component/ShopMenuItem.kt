@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.shop.component
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,9 +12,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.bounceClickEffect
+import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
@@ -38,14 +45,23 @@ fun ShopMenuItem(
     onClick: () -> Unit = {},
     isEnabled: Boolean = true
 ) {
+    var isShaking by remember { mutableStateOf(false) }
+    val shakeOffset = rememberShakeOffset(isShaking) { isShaking = false }
     CardBorder(
-        modifier = modifier.bounceClickEffect().clip(CardShape).let {
-            if (isEnabled) {
-                it.clickable(onClick = throttleClick(onClick = onClick))
-            } else {
-                it
+        modifier = modifier
+            .let { if (isEnabled) it.bounceClickEffect() else it }
+            .graphicsLayer { translationX = shakeOffset }
+            .clip(CardShape)
+            .let {
+                if (isEnabled) {
+                    it.clickable(onClick = throttleClick(onClick = onClick))
+                } else {
+                    it.clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) { isShaking = true }
+                }
             }
-        }
     ) {
         Row(
             modifier = Modifier.padding(horizontal = spacingS),

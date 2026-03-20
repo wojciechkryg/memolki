@@ -12,8 +12,11 @@ import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.R
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.ShopMenuModel
+import androidx.navigation.NavController
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.billing.BillingHandler
@@ -22,20 +25,25 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ShopScreen(
-    viewModel: ShopViewModel = hiltViewModel()
+    viewModel: ShopViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
-    HandleEffect(viewModel)
+    HandleEffect(viewModel, navController)
     HandleState(viewModel, state)
 }
 
 @Composable
 private fun HandleEffect(
-    viewModel: ShopViewModel
+    viewModel: ShopViewModel,
+    navController: NavController
 ) {
     val activity = LocalActivity.current
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
+            is ShopEffect.OpenEnableNotificationsScreen ->
+                navController.navigateToEnableNotifications(EnableNotificationDestination.SHOP.route)
+
             is ShopEffect.ShowAd -> activity?.let {
                 onWatchAdClick(
                     it,

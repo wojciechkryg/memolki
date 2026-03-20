@@ -6,6 +6,7 @@ import com.wojdor.memolki.ui.base.UiEffect
 
 sealed class CollectionEffect : UiEffect {
     object OpenShopScreen : CollectionEffect()
+    object OpenEnableNotificationsScreen : CollectionEffect()
     data class OpenCardPairDetailsScreen(val cardPairModel: CardPairModel) : CollectionEffect()
     data class ShowAd(val rewardedAd: RewardedAd) : CollectionEffect()
 }

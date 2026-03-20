@@ -61,7 +61,11 @@
         <item>✨ Mønter venter på dig!</item>
         <item>🏆 Tid til at hente din belønning!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Se en annonce for at tjene mønter</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Gratis mønter venter på dig!</item>
+        <item>Hent din møntbelønning nu!</item>
+        <item>Dine mønter er klar!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Lås flere belønninger op!</string>
     <string name="enable_notifications_body">Få besked, når mønter er klar til at blive hentet, og nye kort venter på at blive låst op!</string>

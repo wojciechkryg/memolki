@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.feature.game.component
+package com.wojdor.memolki.ui.component
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
@@ -13,13 +13,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun rememberShakeOffset(
     isShaking: Boolean,
-    onComplete: () -> Unit
+    delayMs: Long = 0L,
+    onComplete: () -> Unit = {}
 ): Float {
     val offset = remember { Animatable(0f) }
     val amplitudePx = with(LocalDensity.current) { SHAKE_AMPLITUDE.toPx() }
     LaunchedEffect(isShaking) {
         if (isShaking) {
-            delay(MISMATCH_VIEW_DELAY)
+            if (delayMs > 0) delay(delayMs)
             offset.animateTo(0f, shakeKeyframes(amplitudePx))
             onComplete()
         }
@@ -42,4 +43,3 @@ private fun shakeKeyframes(amplitude: Float): AnimationSpec<Float> = keyframes {
 private val SHAKE_AMPLITUDE = 4.dp
 private const val SHAKE_DURATION_MS = 250
 private const val SHAKE_OSCILLATIONS = 3
-private const val MISMATCH_VIEW_DELAY = 1700L

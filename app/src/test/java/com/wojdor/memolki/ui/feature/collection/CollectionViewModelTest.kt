@@ -11,6 +11,7 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCase
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.test.AppTest
@@ -66,6 +67,9 @@ class CollectionViewModelTest : AppTest() {
     lateinit var incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase
 
     @Inject
+    lateinit var notificationScheduler: NotificationScheduler
+
+    @Inject
     lateinit var userRepository: UserRepository
 
     private lateinit var sut: CollectionViewModel
@@ -85,7 +89,8 @@ class CollectionViewModelTest : AppTest() {
             unlockRandomCardIfEnoughCoinsUseCase,
             unlockRandomCardUseCase,
             getUnlockedCardPairsFromAdsCountUseCase,
-            incrementUnlockedCardPairsFromAdsCountUseCase
+            incrementUnlockedCardPairsFromAdsCountUseCase,
+            notificationScheduler
         )
     }
 

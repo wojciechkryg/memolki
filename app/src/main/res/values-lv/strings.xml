@@ -61,7 +61,11 @@
         <item>✨ Monētas gaida tevi!</item>
         <item>🏆 Laiks saņemt savu balvu!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Skaties reklāmu, lai nopelnītu monētas</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Bezmaksas monētas gaida tevi!</item>
+        <item>Saņem savu monētu balvu tagad!</item>
+        <item>Tavas monētas ir gatavas!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Atbloķē vairāk balvu!</string>
     <string name="enable_notifications_body">Saņem paziņojumus, kad monētas ir gatavas savākšanai un jaunas kārtis gaida atbloķēšanu!</string>

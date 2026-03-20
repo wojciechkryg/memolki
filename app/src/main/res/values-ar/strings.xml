@@ -61,7 +61,11 @@
         <item>✨ العملات بانتظارك!</item>
         <item>🏆 حان وقت جمع مكافأتك!</item>
     </string-array>
-    <string name="notification_ad_reward_body">شاهد إعلانًا لكسب العملات</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>عملات مجانية بانتظارك!</item>
+        <item>اجمع مكافأة عملاتك الآن!</item>
+        <item>عملاتك جاهزة للاستلام!</item>
+    </string-array>
 
     <string name="enable_notifications_title">افتح المزيد من المكافآت!</string>
     <string name="enable_notifications_body">احصل على إشعارات عندما تكون العملات جاهزة للجمع وبطاقات جديدة بانتظار الفتح!</string>

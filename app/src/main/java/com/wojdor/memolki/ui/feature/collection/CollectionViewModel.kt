@@ -14,6 +14,7 @@ import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,7 +41,8 @@ class CollectionViewModel @Inject constructor(
     private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase,
     private val unlockRandomCardUseCase: UnlockRandomCardUseCase,
     private val getUnlockedCardPairsFromAdsCountUseCase: GetUnlockedCardPairsFromAdsCountUseCase,
-    private val incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase
+    private val incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase,
+    private val notificationScheduler: NotificationScheduler
 ) : MviViewModel<CollectionIntent, CollectionState>(
     savedStateHandle,
     CollectionState()
@@ -71,8 +73,15 @@ class CollectionViewModel @Inject constructor(
     private fun onAdDismiss(wasRewardGranted: Boolean) {
         if (wasRewardGranted) {
             rewardCardForAd()
+            checkShouldShowNotificationRequest()
         }
         loadCardPairsAndAd(wasRewardGranted)
+    }
+
+    private fun checkShouldShowNotificationRequest() {
+        if (!notificationScheduler.hasNotificationPermission()) {
+            sendEffect(CollectionEffect.OpenEnableNotificationsScreen)
+        }
     }
 
     private fun rewardCardForAd() {

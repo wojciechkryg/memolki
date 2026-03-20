@@ -61,7 +61,11 @@
         <item>✨ Munten wachten op je!</item>
         <item>🏆 Tijd om je beloning op te halen!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Bekijk een advertentie om munten te verdienen</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Gratis munten wachten op je!</item>
+        <item>Haal je muntbeloning nu op!</item>
+        <item>Je munten zijn klaar!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Ontgrendel meer beloningen!</string>
     <string name="enable_notifications_body">Ontvang meldingen wanneer munten klaar zijn om verzameld te worden en nieuwe kaarten wachten om ontgrendeld te worden!</string>

@@ -61,7 +61,11 @@
         <item>✨ Le monete ti aspettano!</item>
         <item>🏆 È ora di riscuotere la tua ricompensa!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Guarda una pubblicità per guadagnare monete</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Monete gratis ti aspettano!</item>
+        <item>Ritira la tua ricompensa adesso!</item>
+        <item>Le tue monete sono pronte!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Sblocca più ricompense!</string>
     <string name="enable_notifications_body">Ricevi notifiche quando le monete sono pronte e nuove carte aspettano di essere sbloccate!</string>

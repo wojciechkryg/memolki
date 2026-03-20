@@ -61,7 +61,11 @@
         <item>✨ सिक्के आपका इंतज़ार कर रहे हैं!</item>
         <item>🏆 अपना इनाम लेने का समय!</item>
     </string-array>
-    <string name="notification_ad_reward_body">सिक्के कमाने के लिए विज्ञापन देखें</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>मुफ्त सिक्के आपका इंतज़ार कर रहे हैं!</item>
+        <item>अभी अपना सिक्का इनाम इकट्ठा करें!</item>
+        <item>आपके सिक्के तैयार हैं!</item>
+    </string-array>
 
     <string name="enable_notifications_title">और इनाम अनलॉक करें!</string>
     <string name="enable_notifications_body">जब सिक्के जमा करने के लिए तैयार हों और नए कार्ड अनलॉक होने का इंतज़ार कर रहे हों तो सूचना पाएं!</string>

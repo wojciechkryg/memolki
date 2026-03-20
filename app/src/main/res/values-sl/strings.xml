@@ -61,7 +61,11 @@
         <item>✨ Kovanci čakajo na te!</item>
         <item>🏆 Čas je, da pobereš svojo nagrado!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Oglej si oglas, da zaslužiš kovance</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Brezplačni kovanci te čakajo!</item>
+        <item>Poberi svojo nagrado zdaj!</item>
+        <item>Tvoji kovanci so pripravljeni!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Odkleni več nagrad!</string>
     <string name="enable_notifications_body">Prejmi obvestila, ko so kovanci pripravljeni za pobiranje in nove karte čakajo na odklenitev!</string>
