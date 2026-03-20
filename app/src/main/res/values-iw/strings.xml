@@ -61,7 +61,11 @@
         <item>✨ מטבעות מחכים לך!</item>
         <item>🏆 הגיע הזמן לאסוף את הפרס שלך!</item>
     </string-array>
-    <string name="notification_ad_reward_body">צפה במודעה כדי להרוויח מטבעות</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>מטבעות חינם מחכים לך!</item>
+        <item>אסוף את פרס המטבעות שלך עכשיו!</item>
+        <item>המטבעות שלך מוכנים!</item>
+    </string-array>
 
     <string name="enable_notifications_title">פתח עוד פרסים!</string>
     <string name="enable_notifications_body">קבל התראות כשמטבעות מוכנים לאיסוף וקלפים חדשים מחכים לפתיחה!</string>

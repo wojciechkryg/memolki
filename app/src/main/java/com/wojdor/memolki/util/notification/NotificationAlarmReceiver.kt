@@ -56,8 +56,9 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
     ) {
         val random = entryPoint.random()
         val titles = context.resources.getStringArray(R.array.notification_ad_reward_titles)
+        val bodies = context.resources.getStringArray(R.array.notification_ad_reward_bodies)
         val title = titles[random.nextInt(titles.size)]
-        val body = context.getString(R.string.notification_ad_reward_body)
+        val body = bodies[random.nextInt(bodies.size)]
         val contentIntent = createShopDeepLinkIntent(context)
         showNotification(context, AD_REWARD_NOTIFICATION_ID, title, body, contentIntent)
     }

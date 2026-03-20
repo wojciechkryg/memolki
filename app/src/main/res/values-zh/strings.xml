@@ -61,7 +61,11 @@
         <item>✨ 金币在等你！</item>
         <item>🏆 该领取奖励了！</item>
     </string-array>
-    <string name="notification_ad_reward_body">观看广告赚取金币</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>免费金币等着你！</item>
+        <item>快来领取金币奖励！</item>
+        <item>你的金币已准备好！</item>
+    </string-array>
 
     <string name="enable_notifications_title">解锁更多奖励！</string>
     <string name="enable_notifications_body">在金币准备好领取和新卡牌等待解锁时收到通知！</string>

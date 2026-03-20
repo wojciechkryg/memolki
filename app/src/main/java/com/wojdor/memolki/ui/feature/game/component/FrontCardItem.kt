@@ -2,7 +2,8 @@ package com.wojdor.memolki.ui.feature.game.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -37,13 +38,14 @@ fun FrontCardItem(
             .then(
                 if (onPress != null) {
                     Modifier.pointerInput(Unit) {
-                        detectTapGestures(
-                            onPress = {
-                                onPress(true)
-                                tryAwaitRelease()
-                                onPress(false)
-                            }
-                        )
+                        awaitEachGesture {
+                            awaitFirstDown(requireUnconsumed = false)
+                            onPress(true)
+                            do {
+                                val event = awaitPointerEvent()
+                            } while (event.changes.any { it.pressed })
+                            onPress(false)
+                        }
                     }
                 } else {
                     Modifier

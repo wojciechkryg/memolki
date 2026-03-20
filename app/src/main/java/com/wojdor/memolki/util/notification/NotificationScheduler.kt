@@ -129,7 +129,7 @@ open class NotificationScheduler @Inject constructor(
         internal const val EXTRA_NOTIFICATION_TYPE = "notification_type"
         internal const val TYPE_DAILY = "daily"
         internal const val TYPE_AD_REWARD = "ad_reward"
-        internal const val SHOP_AD_COOLDOWN_MS = 60 * 60 * 1000L
+        internal const val SHOP_AD_COOLDOWN_MS = 30 * 60 * 1000L
         private const val AD_REWARD_WINDOW_MS = 30 * 60 * 1000L
         private const val REMINDER_INTERVAL_DAYS = 3
         private const val DAILY_WINDOW_START_HOUR = 14

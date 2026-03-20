@@ -61,7 +61,11 @@
         <item>✨ 코인이 기다리고 있어요!</item>
         <item>🏆 보상을 받을 시간이에요!</item>
     </string-array>
-    <string name="notification_ad_reward_body">광고를 보고 코인을 획득하세요</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>무료 코인이 기다리고 있어요!</item>
+        <item>지금 코인 보상을 받으세요!</item>
+        <item>코인이 준비되었어요!</item>
+    </string-array>
 
     <string name="enable_notifications_title">더 많은 보상을 잠금 해제하세요!</string>
     <string name="enable_notifications_body">코인이 준비되고 새 카드가 잠금 해제를 기다릴 때 알림을 받으세요!</string>

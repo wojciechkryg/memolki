@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.component.Flippable
+import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
 
 @Composable
@@ -19,6 +20,7 @@ fun FlippableCardItem(
     )
     val shakeOffset = rememberShakeOffset(
         isShaking = card.isMismatchShaking,
+        delayMs = MISMATCH_VIEW_DELAY,
         onComplete = callbacks.onMismatchShakeComplete
     )
     Flippable(
@@ -43,3 +45,5 @@ fun FlippableCardItem(
         }
     )
 }
+
+private const val MISMATCH_VIEW_DELAY = 1700L

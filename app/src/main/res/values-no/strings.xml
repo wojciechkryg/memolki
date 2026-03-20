@@ -61,7 +61,11 @@
         <item>✨ Mynter venter på deg!</item>
         <item>🏆 Tid for å hente belønningen din!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Se en annonse for å tjene mynter</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Gratis mynter venter på deg!</item>
+        <item>Hent myntbelønningen din nå!</item>
+        <item>Myntene dine er klare!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Lås opp flere belønninger!</string>
     <string name="enable_notifications_body">Få varsler når mynter er klare til å hentes og nye kort venter på å bli låst opp!</string>

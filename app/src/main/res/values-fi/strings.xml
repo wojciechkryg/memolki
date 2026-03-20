@@ -61,7 +61,11 @@
         <item>✨ Kolikot odottavat sinua!</item>
         <item>🏆 Aika kerätä palkintosi!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Katso mainos ansaitaksesi kolikoita</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Ilmaiset kolikot odottavat sinua!</item>
+        <item>Kerää kolikkopalkkiosi nyt!</item>
+        <item>Kolikkosi ovat valmiina!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Avaa lisää palkintoja!</string>
     <string name="enable_notifications_body">Saa ilmoituksia, kun kolikot ovat valmiina kerättäväksi ja uudet kortit odottavat avaamista!</string>

@@ -61,7 +61,11 @@
         <item>✨ Monedele te așteaptă!</item>
         <item>🏆 E timpul să îți colectezi recompensa!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Vizionează o reclamă pentru a câștiga monede</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Monede gratuite te așteaptă!</item>
+        <item>Colectează-ți recompensa acum!</item>
+        <item>Monedele tale sunt gata!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Deblochează mai multe recompense!</string>
     <string name="enable_notifications_body">Primește notificări când monedele sunt gata de colectat și cărți noi așteaptă să fie deblocate!</string>

@@ -61,7 +61,11 @@
         <item>✨ Mince na tebe čekají!</item>
         <item>🏆 Čas vyzvednout si odměnu!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Sleduj reklamu a získej mince</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Čekají na tebe mince zdarma!</item>
+        <item>Vyzvedni si svou odměnu!</item>
+        <item>Tvé mince jsou připraveny!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Odemkni více odměn!</string>
     <string name="enable_notifications_body">Dostávej upozornění, když jsou mince připraveny ke sběru a nové karty čekají na odemknutí!</string>

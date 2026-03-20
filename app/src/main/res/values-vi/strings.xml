@@ -61,7 +61,11 @@
         <item>✨ Xu đang chờ bạn!</item>
         <item>🏆 Đến lúc nhận phần thưởng!</item>
     </string-array>
-    <string name="notification_ad_reward_body">Xem quảng cáo để kiếm xu</string>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Xu miễn phí đang chờ bạn!</item>
+        <item>Nhận phần thưởng xu ngay!</item>
+        <item>Xu của bạn đã sẵn sàng!</item>
+    </string-array>
 
     <string name="enable_notifications_title">Mở khóa thêm phần thưởng!</string>
     <string name="enable_notifications_body">Nhận thông báo khi xu sẵn sàng để thu thập và thẻ mới đang chờ mở khóa!</string>

@@ -38,6 +38,7 @@
         <activity
             android:name=".ui.app.AppActivity"
             android:exported="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Memolki.SplashScreen">
             <intent-filter>
