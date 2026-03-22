@@ -47,7 +47,8 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
         route = Route.MENU,
         enterTransition = {
             when (initialState.destination.route) {
-                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME, Route.ENABLE_NOTIFICATIONS -> slideInLeft
+                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideInLeft
+                Route.ENABLE_NOTIFICATIONS -> slideInTop
                 Route.COLLECTION -> slideInRight
                 Route.SETTINGS -> slideInTop
                 Route.MORE_APPS -> slideInBottom
@@ -56,7 +57,8 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
         },
         exitTransition = {
             when (targetState.destination.route) {
-                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME, Route.ENABLE_NOTIFICATIONS -> slideOutLeft
+                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideOutLeft
+                Route.ENABLE_NOTIFICATIONS -> slideOutTop
                 Route.COLLECTION -> slideOutRight
                 Route.SETTINGS -> slideOutTop
                 Route.MORE_APPS -> slideOutBottom
@@ -107,7 +109,8 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
         route = Route.GAME,
         enterTransition = {
             when (initialState.destination.route) {
-                Route.END_GAME, Route.ENABLE_NOTIFICATIONS -> slideInLeft
+                Route.END_GAME -> slideInLeft
+                Route.ENABLE_NOTIFICATIONS -> slideInTop
                 else -> slideInRight
             }
         },
@@ -132,7 +135,7 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
         enterTransition = { slideInRight },
         exitTransition = {
             when (targetState.destination.route) {
-                Route.ENABLE_NOTIFICATIONS -> slideOutLeft
+                Route.ENABLE_NOTIFICATIONS -> slideOutTop
                 else -> slideOutRight
             }
         }
@@ -151,22 +154,8 @@ private fun NavGraphBuilder.enableNotificationsScreen(navController: NavControll
         arguments = listOf(navArgument(AppNavigation.DESTINATION_ARG) {
             type = NavType.StringType
         }),
-        enterTransition = {
-            when (initialState.destination.route) {
-                Route.END_GAME -> slideInRight
-                Route.COLLECTION -> slideInLeft
-                Route.SHOP -> slideInTop
-                else -> slideInBottom
-            }
-        },
-        exitTransition = {
-            when (targetState.destination.route) {
-                Route.MENU, Route.END_GAME, Route.GAME -> slideOutRight
-                Route.COLLECTION -> slideOutLeft
-                Route.SHOP -> slideOutTop
-                else -> slideOutTop
-            }
-        }
+        enterTransition = { slideInBottom },
+        exitTransition = { slideOutBottom }
     ) {
         EnableNotificationsScreen(navController = navController)
     }
@@ -189,14 +178,16 @@ private fun NavGraphBuilder.collectionScreen(navController: NavController) {
         enterTransition = {
             when (initialState.destination.route) {
                 Route.SHOP -> slideInBottom
-                Route.CARD_PAIR_DETAILS, Route.ENABLE_NOTIFICATIONS -> slideInRight
+                Route.ENABLE_NOTIFICATIONS -> slideInTop
+                Route.CARD_PAIR_DETAILS -> slideInRight
                 else -> slideInLeft
             }
         },
         exitTransition = {
             when (targetState.destination.route) {
                 Route.SHOP -> slideOutBottom
-                Route.CARD_PAIR_DETAILS, Route.ENABLE_NOTIFICATIONS -> slideOutRight
+                Route.ENABLE_NOTIFICATIONS -> slideOutTop
+                Route.CARD_PAIR_DETAILS -> slideOutRight
                 else -> slideOutLeft
             }
         }
@@ -212,18 +203,8 @@ private fun NavGraphBuilder.shopScreen(navController: NavController) {
     composable(
         route = Route.SHOP,
         deepLinks = listOf(navDeepLink { uriPattern = AppNavigation.SHOP_DEEP_LINK }),
-        enterTransition = {
-            when (initialState.destination.route) {
-                Route.ENABLE_NOTIFICATIONS -> slideInBottom
-                else -> slideInTop
-            }
-        },
-        exitTransition = {
-            when (targetState.destination.route) {
-                Route.ENABLE_NOTIFICATIONS -> slideOutBottom
-                else -> slideOutTop
-            }
-        }
+        enterTransition = { slideInTop },
+        exitTransition = { slideOutTop }
     ) {
         ShopScreen(navController = navController)
     }
@@ -338,7 +319,9 @@ fun NavController.navigateToGameFromEndGame() {
 }
 
 fun NavController.navigateToShop() {
-    navigate(Route.SHOP)
+    navigate(Route.SHOP) {
+        removeFromBackStack(Route.SHOP)
+    }
 }
 
 fun NavController.navigateToCardPairDetailsScreen() {
