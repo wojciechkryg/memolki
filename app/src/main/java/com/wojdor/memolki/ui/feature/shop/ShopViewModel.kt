@@ -109,9 +109,11 @@ class ShopViewModel @Inject constructor(
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
         if (wasRewardGranted) {
-            setLastShopAdShownTimestampUseCase().onEach {
-                scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
-                checkShouldShowNotificationRequest()
+            setLastShopAdShownTimestampUseCase().onEach { result ->
+                result.onSuccess {
+                    scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
+                    checkShouldShowNotificationRequest()
+                }
             }.launchIn(viewModelScope)
             rewardCoinsForAd()
         }
@@ -178,7 +180,7 @@ class ShopViewModel @Inject constructor(
                 sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
-                loadData(animateCoins = true)
+                loadCoins(animateCoins = true)
             }
         }.launchIn(viewModelScope)
     }
@@ -193,17 +195,20 @@ class ShopViewModel @Inject constructor(
 
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {
         isShopAdCooldownOverUseCase().onEach { result ->
-            val isAdCooldownOver = result.getOrThrow()
-            if (allRewardedAds.shopCoinsAd.isLoaded && !wasRewardGranted && isAdCooldownOver) {
-                showMenu(isAdAvailable = true)
-            } else {
-                showMenu(isAdAvailable = false)
-                if (isAdCooldownOver && !wasRewardGranted) {
-                    allRewardedAds.shopCoinsAd.load(
-                        onLoaded = { showMenu(isAdAvailable = true) },
-                        onFailed = { showMenu(isAdAvailable = false) }
-                    )
+            result.onSuccess { isAdCooldownOver ->
+                if (allRewardedAds.shopCoinsAd.isLoaded && !wasRewardGranted && isAdCooldownOver) {
+                    showMenu(isAdAvailable = true)
+                } else {
+                    showMenu(isAdAvailable = false)
+                    if (isAdCooldownOver && !wasRewardGranted) {
+                        allRewardedAds.shopCoinsAd.load(
+                            onLoaded = { showMenu(isAdAvailable = true) },
+                            onFailed = { showMenu(isAdAvailable = false) }
+                        )
+                    }
                 }
+            }.onFailure {
+                showMenu(isAdAvailable = false)
             }
         }.launchIn(viewModelScope)
     }

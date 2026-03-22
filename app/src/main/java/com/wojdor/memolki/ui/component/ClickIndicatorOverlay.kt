@@ -24,7 +24,6 @@ import com.wojdor.memolki.R
 private const val SHOW_CLICK_INDICATOR = false
 private const val INDICATOR_SIZE_DP = 160
 private const val FADE_IN_MS = 300
-private const val HOLD_MS = 200L
 private const val FADE_OUT_MS = 500
 private const val SCALE_UP = 1.15f
 private const val SCALE_DOWN = 1f

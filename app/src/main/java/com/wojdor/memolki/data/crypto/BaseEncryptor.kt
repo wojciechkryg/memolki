@@ -8,10 +8,8 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
 class BaseEncryptor @Inject constructor(
-    private val localKeyStore: LocalEncryptorKeyStore,
-    private val legacyKeyStore: EncryptorKeyStore
+    private val localKeyStore: LocalEncryptorKeyStore
 ) : Encryptor {
 
     override suspend fun encrypt(value: Long): String {
@@ -25,16 +23,12 @@ class BaseEncryptor @Inject constructor(
     }
 
     override suspend fun decrypt(encryptedValue: String): Long {
-        return try {
-            decryptWithKey(encryptedValue, localKeyStore.getSecretKey())
-        } catch (softwareError: Exception) {
-            try {
-                decryptWithKey(encryptedValue, legacyKeyStore.secretKey)
-            } catch (legacyError: Exception) {
-                val message = "Decryption error"
-                logE(message, legacyError)
-                throw IllegalStateException(message, legacyError)
-            }
+        try {
+            return decryptWithKey(encryptedValue, localKeyStore.getSecretKey())
+        } catch (error: Exception) {
+            val message = "Decryption error"
+            logE(message, error)
+            throw IllegalStateException(message, error)
         }
     }
 
