@@ -13,6 +13,7 @@ import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
+import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
@@ -113,6 +114,8 @@ class ShopViewModel @Inject constructor(
                 result.onSuccess {
                     scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
                     checkShouldShowNotificationRequest()
+                }.onFailure {
+                    logE("Failed to save ad timestamp", it)
                 }
             }.launchIn(viewModelScope)
             rewardCoinsForAd()
