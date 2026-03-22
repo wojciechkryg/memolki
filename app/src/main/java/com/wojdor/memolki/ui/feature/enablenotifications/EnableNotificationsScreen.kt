@@ -37,8 +37,10 @@ import kotlinx.coroutines.delay
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
+import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
+import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -74,8 +76,8 @@ private fun HandleEffect(
 
             EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame()
             EnableNotificationsEffect.NavigateToMenu -> navController.navigateToMenu()
-            EnableNotificationsEffect.NavigateToCollection -> navController.popBackStack()
-            EnableNotificationsEffect.NavigateToShop -> navController.popBackStack()
+            EnableNotificationsEffect.NavigateToCollection -> navController.navigateToCollection()
+            EnableNotificationsEffect.NavigateToShop -> navController.navigateToShop()
         }
     }
 }

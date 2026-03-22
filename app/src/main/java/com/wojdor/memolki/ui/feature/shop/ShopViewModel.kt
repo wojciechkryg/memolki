@@ -15,12 +15,12 @@ import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -109,10 +109,11 @@ class ShopViewModel @Inject constructor(
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
         if (wasRewardGranted) {
-            setLastShopAdShownTimestampUseCase().launchIn(viewModelScope)
-            scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
+            setLastShopAdShownTimestampUseCase().onEach {
+                scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
+                checkShouldShowNotificationRequest()
+            }.launchIn(viewModelScope)
             rewardCoinsForAd()
-            checkShouldShowNotificationRequest()
         }
         loadMenuItemsAndAd(wasRewardGranted)
     }
@@ -197,16 +198,10 @@ class ShopViewModel @Inject constructor(
                 showMenu(isAdAvailable = true)
             } else {
                 showMenu(isAdAvailable = false)
-                if (isAdCooldownOver) {
+                if (isAdCooldownOver && !wasRewardGranted) {
                     allRewardedAds.shopCoinsAd.load(
-                        onLoaded = {
-                            if (!wasRewardGranted) {
-                                showMenu(isAdAvailable = true)
-                            }
-                        },
-                        onFailed = {
-                            showMenu(isAdAvailable = false)
-                        }
+                        onLoaded = { showMenu(isAdAvailable = true) },
+                        onFailed = { showMenu(isAdAvailable = false) }
                     )
                 }
             }
