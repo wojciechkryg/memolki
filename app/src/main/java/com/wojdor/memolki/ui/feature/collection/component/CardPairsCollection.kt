@@ -68,10 +68,12 @@ fun CardPairsCollection(
         val shorterEdge = maxWidth.coerceAtMost(maxHeight)
         val cardPairSize = (shorterEdge - spacing * (columns - 1)) / columns
         val lazyGridState = rememberLazyGridState()
-        val firstLockedToUnlockWithCoinsIndex = remember(state.collectionCardPairs) {
-            state.collectionCardPairs.indexOfFirst {
-                it is CollectionCardPairModel.LockedToUnlockWithCoins
-            } - columns
+        val firstUnlockableIndex = remember(state.collectionCardPairs) {
+            val index = state.collectionCardPairs.indexOfFirst {
+                it is CollectionCardPairModel.LockedToUnlockWithCoins ||
+                    it is CollectionCardPairModel.LockedToUnlockWithAd
+            }
+            if (index == INDEX_NOT_FOUND) INDEX_NOT_FOUND else (index - columns).coerceAtLeast(0)
         }
         val spacingInPixels = with(LocalDensity.current) { spacing.toPx() }
         val cardPairSizeInPixels = with(LocalDensity.current) { cardPairSize.toPx() }
@@ -79,11 +81,11 @@ fun CardPairsCollection(
             mutableStateOf(lazyGridState.firstVisibleItemIndex != 0)
         }
 
-        LaunchedEffect(firstLockedToUnlockWithCoinsIndex) {
-            if (firstLockedToUnlockWithCoinsIndex > INDEX_NOT_FOUND && !hasScrolled) {
+        LaunchedEffect(firstUnlockableIndex) {
+            if (firstUnlockableIndex > INDEX_NOT_FOUND && !hasScrolled) {
                 hasScrolled = true
                 delay(SCROLL_DELAY)
-                val rowIndex = firstLockedToUnlockWithCoinsIndex / columns
+                val rowIndex = firstUnlockableIndex / columns
                 val targetOffset = rowIndex * (cardPairSizeInPixels + spacingInPixels)
                 lazyGridState.scroll {
                     var previousValue = lazyGridState.firstVisibleItemScrollOffset.toFloat()

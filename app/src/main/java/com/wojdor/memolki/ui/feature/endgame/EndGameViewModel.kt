@@ -97,6 +97,9 @@ class EndGameViewModel @Inject constructor(
             result.onSuccess { hasReceived ->
                 isShareRewardAvailable = !hasReceived
                 showMenu()
+            }.onFailure {
+                isShareRewardAvailable = false
+                showMenu()
             }
         }.launchIn(viewModelScope)
     }

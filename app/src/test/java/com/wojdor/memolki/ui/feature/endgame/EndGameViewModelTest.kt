@@ -124,37 +124,32 @@ class EndGameViewModelTest : AppTest() {
     @Test
     fun `when OnEndGameShow intent is sent then the state is updated with the level and rewarded coins`() =
         runTest {
-            sut.uiState.test {
-                // given
-                val levelModel = LevelModel.Grid2x3(isUnlocked = true)
-                val rewardedCoins = 1L
+            // given
+            val levelModel = LevelModel.Grid2x3(isUnlocked = true)
+            val rewardedCoins = 1L
 
-                // when
-                sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
+            // when
+            sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
+            testScheduler.advanceUntilIdle()
 
-                // then
-                val expected = EndGameState(
-                    level = levelModel,
-                    rewardedCoins = rewardedCoins,
-                    currentCoins = rewardedCoins,
-                    menu = listOf(
-                        EndGameMenuModel.PlayAgain,
-                        EndGameMenuModel.Menu,
-                        EndGameMenuModel.FreeCoins,
-                        EndGameMenuModel.Share(
-                            showReward = true,
-                            rewardCoins = RewardCoinsForShareUseCase.SHARE_REWARD_COINS
-                        )
-                    ),
-                    animateCoins = true,
-                    showSparkles = true
-                )
-                var lastItem = awaitItem()
-                while (lastItem != expected) {
-                    lastItem = awaitItem()
-                }
-                assertEquals(expected, lastItem)
-            }
+            // then
+            val expected = EndGameState(
+                level = levelModel,
+                rewardedCoins = rewardedCoins,
+                currentCoins = rewardedCoins,
+                menu = listOf(
+                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Menu,
+                    EndGameMenuModel.FreeCoins,
+                    EndGameMenuModel.Share(
+                        showReward = true,
+                        rewardCoins = RewardCoinsForShareUseCase.SHARE_REWARD_COINS
+                    )
+                ),
+                animateCoins = true,
+                showSparkles = true
+            )
+            assertEquals(expected, sut.uiState.value)
         }
 
     @Test
@@ -200,4 +195,5 @@ class EndGameViewModelTest : AppTest() {
             assertEquals(expectedState, awaitItem())
         }
     }
+
 }
