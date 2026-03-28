@@ -13,6 +13,8 @@ import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
+import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.test.AppTest
@@ -81,6 +83,12 @@ class EndGameViewModelTest : AppTest() {
     lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
 
     @Inject
+    lateinit var hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase
+
+    @Inject
+    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+
+    @Inject
     lateinit var userRepository: UserRepository
 
     private lateinit var sut: EndGameViewModel
@@ -96,14 +104,15 @@ class EndGameViewModelTest : AppTest() {
             allRewardedAds,
             reviewManager,
             googlePlayGames,
-            userRepository,
             incrementTotalGamesPlayedUseCase,
+            getTotalGamesPlayedUseCase,
             getCoinsUseCase,
             rewardCoinsForLevelUseCase,
             getTotalCoinsUseCase,
             canUnlockNewCardUseCase,
             shouldShowNotificationRequestUseCase,
             rewardCoinsForShareUseCase,
+            hasReceivedShareRewardUseCase,
             checkDailyLoginStreakUseCase
         )
     }

@@ -3,14 +3,15 @@ package com.wojdor.memolki.ui.feature.endgame
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
-import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
+import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
@@ -39,14 +40,15 @@ class EndGameViewModel @Inject constructor(
     private val allRewardedAds: AllRewardedAds,
     private val reviewManager: ReviewManager,
     private val googlePlayGames: GooglePlayGames,
-    private val userRepository: UserRepository,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
     private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase,
     private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase,
     private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase,
+    private val hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase,
     private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
@@ -91,13 +93,16 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun checkShareRewardAvailable() {
-        viewModelScope.launch {
-            val hasReceived = userRepository.getHasReceivedShareReward().first()
-            isShareRewardAvailable = !hasReceived
-        }
+        hasReceivedShareRewardUseCase().onEach { result ->
+            result.onSuccess { hasReceived ->
+                isShareRewardAvailable = !hasReceived
+                showMenu()
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun onScreenResume() {
+        checkShareRewardAvailable()
         checkDailyStreakRewardAvailable()
         reloadCoins()
     }
@@ -113,6 +118,9 @@ class EndGameViewModel @Inject constructor(
         checkDailyLoginStreakUseCase().onEach { result ->
             result.onSuccess { streakResult ->
                 isDailyStreakRewardAvailable = streakResult.isRewardAvailable
+                showMenu()
+            }.onFailure {
+                isDailyStreakRewardAvailable = false
                 showMenu()
             }
         }.launchIn(viewModelScope)
@@ -152,7 +160,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private suspend fun requestReview() {
-        val totalGamesPlayed = userRepository.getTotalGamesPlayed().first()
+        val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
         if (totalGamesPlayed >= MIN_GAMES_PLAYED_TO_ASK_REVIEW) {
             val request = reviewManager.requestReviewFlow()
             request.addOnCompleteListener { task ->

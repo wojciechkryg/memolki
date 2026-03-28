@@ -59,7 +59,7 @@ fun AppItem(
                     Image(
                         modifier = Modifier.height(72.dp),
                         painter = painterResource(appModel.imageRes),
-                        contentDescription = null
+                        contentDescription = stringResource(appModel.textRes)
                     )
                 }
                 Row(

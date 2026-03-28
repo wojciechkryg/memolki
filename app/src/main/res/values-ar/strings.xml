@@ -28,6 +28,8 @@
     <string name="setting_vibration">الاهتزاز</string>
     <string name="setting_language">اللغة</string>
     <string name="watch_ad">شاهد الإعلان</string>
+    <string name="share">مشاركة</string>
+    <string name="content_description_locked">مقفل</string>
 
     <string name="notification_channel_reminders">تذكيرات</string>
 

@@ -32,10 +32,16 @@ import com.wojdor.memolki.ui.feature.settings.SettingsScreen
 import com.wojdor.memolki.ui.feature.shop.ShopScreen
 
 @Composable
-fun AppNavigation(onNewIntent: Intent? = null) {
+fun AppNavigation(
+    onNewIntent: Intent? = null,
+    onIntentHandled: () -> Unit = {}
+) {
     val navController = rememberNavController()
     LaunchedEffect(onNewIntent) {
-        onNewIntent?.let { navController.handleDeepLink(it) }
+        onNewIntent?.let {
+            navController.handleDeepLink(it)
+            onIntentHandled()
+        }
     }
     NavHost(navController, startDestination = Route.MENU) {
         menuScreen(navController)

@@ -28,6 +28,8 @@
     <string name="setting_vibration">Vibracija</string>
     <string name="setting_language">Kalba</string>
     <string name="watch_ad">Žiūrėti reklamą</string>
+    <string name="share">Dalintis</string>
+    <string name="content_description_locked">Užrakinta</string>
 
     <string name="notification_channel_reminders">Priminimai</string>
 

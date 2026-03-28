@@ -28,6 +28,8 @@
     <string name="setting_vibration">Getaran</string>
     <string name="setting_language">Bahasa</string>
     <string name="watch_ad">Tonton Iklan</string>
+    <string name="share">Bagikan</string>
+    <string name="content_description_locked">Terkunci</string>
 
     <string name="notification_channel_reminders">Pengingat</string>
 

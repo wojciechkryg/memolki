@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,8 @@ fun MenuContent(
                 .size(320.dp)
                 .weight(2f),
             drawableRes = R.drawable.ic_logo,
-            alignment = Alignment.BottomCenter
+            alignment = Alignment.BottomCenter,
+            contentDescription = stringResource(R.string.app_logo)
         )
         Spacer(modifier = Modifier.weight(0.4f))
         Column(

@@ -28,6 +28,8 @@
     <string name="setting_vibration">Vibratsioon</string>
     <string name="setting_language">Keel</string>
     <string name="watch_ad">Vaata reklaami</string>
+    <string name="share">Jaga</string>
+    <string name="content_description_locked">Lukustatud</string>
 
     <string name="notification_channel_reminders">Meeldetuletused</string>
 

@@ -28,6 +28,8 @@
     <string name="setting_vibration">振动</string>
     <string name="setting_language">语言</string>
     <string name="watch_ad">观看广告</string>
+    <string name="share">分享</string>
+    <string name="content_description_locked">已锁定</string>
 
     <string name="notification_channel_reminders">提醒</string>
 

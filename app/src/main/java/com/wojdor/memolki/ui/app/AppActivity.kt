@@ -67,7 +67,10 @@ class AppActivity : ComponentActivity() {
                             containerColor = colorResource(R.color.primary),
                             content = { innerPadding ->
                                 Box(modifier = Modifier.padding(innerPadding)) {
-                                    AppNavigation(onNewIntent = newIntentState.value)
+                                    AppNavigation(
+                                        onNewIntent = newIntentState.value,
+                                        onIntentHandled = { newIntentState.value = null }
+                                    )
                                 }
                             }
                         )

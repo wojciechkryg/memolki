@@ -81,6 +81,8 @@ class UserRepository @Inject constructor(
         decryptLong(userLocalDataSource.encryptedLastDailyStreakCollectedTimestamp)
 
     suspend fun setDailyStreakData(count: Long, timestamp: Long) {
+        require(count >= 0) { "count must be >= 0" }
+        require(timestamp >= 0) { "timestamp must be >= 0" }
         userLocalDataSource.setEncryptedDailyStreakData { _, _ ->
             encryptor.encrypt(count) to encryptor.encrypt(timestamp)
         }

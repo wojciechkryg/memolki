@@ -28,6 +28,8 @@
     <string name="setting_vibration">Trilling</string>
     <string name="setting_language">Taal</string>
     <string name="watch_ad">Bekijk advertentie</string>
+    <string name="share">Delen</string>
+    <string name="content_description_locked">Vergrendeld</string>
 
     <string name="notification_channel_reminders">Herinneringen</string>
 

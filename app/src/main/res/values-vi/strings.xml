@@ -28,6 +28,8 @@
     <string name="setting_vibration">Rung</string>
     <string name="setting_language">Ngôn ngữ</string>
     <string name="watch_ad">Xem quảng cáo</string>
+    <string name="share">Chia sẻ</string>
+    <string name="content_description_locked">Đã khóa</string>
 
     <string name="notification_channel_reminders">Nhắc nhở</string>
 

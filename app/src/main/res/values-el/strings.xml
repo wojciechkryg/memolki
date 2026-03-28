@@ -28,6 +28,8 @@
     <string name="setting_vibration">Δόνηση</string>
     <string name="setting_language">Γλώσσα</string>
     <string name="watch_ad">Δείτε τη διαφήμιση</string>
+    <string name="share">Κοινοποίηση</string>
+    <string name="content_description_locked">Κλειδωμένο</string>
 
     <string name="notification_channel_reminders">Υπενθυμίσεις</string>
 

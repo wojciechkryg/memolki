@@ -28,6 +28,8 @@
     <string name="setting_vibration">Rezgés</string>
     <string name="setting_language">Nyelv</string>
     <string name="watch_ad">Reklám megtekintése</string>
+    <string name="share">Megosztás</string>
+    <string name="content_description_locked">Zárolva</string>
 
     <string name="notification_channel_reminders">Emlékeztetők</string>
 

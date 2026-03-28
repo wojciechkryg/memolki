@@ -14,5 +14,6 @@ class BootReceiver : BroadcastReceiver() {
             NotificationAlarmReceiverEntryPoint::class.java
         )
         entryPoint.notificationScheduler().scheduleReminderNotification()
+        entryPoint.notificationScheduler().scheduleStreakNotification()
     }
 }

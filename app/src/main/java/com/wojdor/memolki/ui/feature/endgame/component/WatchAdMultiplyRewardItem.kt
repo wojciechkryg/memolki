@@ -45,7 +45,7 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
                     .size(128.dp),
                 alignment = Alignment.Center,
                 painter = painterResource(R.drawable.ic_ads),
-                contentDescription = null
+                contentDescription = stringResource(R.string.watch_ad)
             )
             AutoSizeText(
                 text = stringResource(R.string.watch_ad).uppercase(),

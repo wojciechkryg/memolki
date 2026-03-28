@@ -61,7 +61,7 @@ fun ToggleSettingButton(
                 Icon(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(id = setting.resId),
-                    contentDescription = null,
+                    contentDescription = stringResource(setting.textId),
                 )
                 AnimateDisabledStrikeThrough(setting)
             }

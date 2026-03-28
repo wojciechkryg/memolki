@@ -28,6 +28,8 @@
     <string name="setting_vibration">Titreşim</string>
     <string name="setting_language">Dil</string>
     <string name="watch_ad">Reklamı izle</string>
+    <string name="share">Paylaş</string>
+    <string name="content_description_locked">Kilitli</string>
 
     <string name="notification_channel_reminders">Hatırlatmalar</string>
 

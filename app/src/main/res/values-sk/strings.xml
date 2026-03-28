@@ -28,6 +28,8 @@
     <string name="setting_vibration">Vibrácie</string>
     <string name="setting_language">Jazyk</string>
     <string name="watch_ad">Sledovať reklamu</string>
+    <string name="share">Zdieľať</string>
+    <string name="content_description_locked">Zamknuté</string>
 
     <string name="notification_channel_reminders">Pripomienky</string>
 

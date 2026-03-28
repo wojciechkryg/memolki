@@ -39,7 +39,7 @@ fun FreeCoinsItem(onClick: () -> Unit = {}) {
             modifier = Modifier.size(64.dp),
             alignment = Alignment.Center,
             painter = painterResource(R.drawable.ic_daily_reward),
-            contentDescription = null
+            contentDescription = stringResource(R.string.free_coins)
         )
         Spacer(modifier = Modifier.size(spacingM))
         AutoSizeText(

@@ -28,6 +28,8 @@
     <string name="setting_vibration">バイブレーション</string>
     <string name="setting_language">言語</string>
     <string name="watch_ad">広告を見る</string>
+    <string name="share">共有</string>
+    <string name="content_description_locked">ロック中</string>
 
     <string name="notification_channel_reminders">リマインダー</string>
 

@@ -45,8 +45,13 @@ class ChangeLanguageViewModel @Inject constructor(
 
     private fun changeLanguage() {
         val tag = pendingLanguageTag ?: return
-        pendingLanguageTag = null
-        localeProvider.setLanguageTag(tag)
+        runCatching {
+            localeProvider.setLanguageTag(tag)
+        }.onSuccess {
+            pendingLanguageTag = null
+        }.onFailure {
+            sendState { copy(isLanguageChangeInProgress = false) }
+        }
     }
 
     private fun loadLanguages() {

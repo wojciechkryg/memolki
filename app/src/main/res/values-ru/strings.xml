@@ -28,6 +28,8 @@
     <string name="setting_vibration">Вибрация</string>
     <string name="setting_language">Язык</string>
     <string name="watch_ad">Смотреть рекламу</string>
+    <string name="share">Поделиться</string>
+    <string name="content_description_locked">Заблокировано</string>
 
     <string name="notification_channel_reminders">Напоминания</string>
 

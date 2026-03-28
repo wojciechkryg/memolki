@@ -8,9 +8,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import java.time.Instant
-import java.time.ZoneId
-import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 class CheckDailyLoginStreakUseCase @Inject constructor(
@@ -36,32 +33,24 @@ class CheckDailyLoginStreakUseCase @Inject constructor(
                 coinsReward = calculateReward(1)
             )
         }
-        if (now < lastTimestamp) {
+        val lastCollectedDate = timeProvider.toLocalDate(lastTimestamp)
+        val daysBetween = timeProvider.daysBetween(lastCollectedDate, today)
+        if (now < lastTimestamp || daysBetween == 0L) {
             return DailyStreakResult(
                 isRewardAvailable = false,
                 streakDay = currentStreak.toInt(),
                 coinsReward = 0L
             )
         }
-        val lastCollectedDate = Instant.ofEpochMilli(lastTimestamp)
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate()
-        val daysBetween = ChronoUnit.DAYS.between(lastCollectedDate, today)
-        return when {
-            daysBetween == 0L -> DailyStreakResult(
-                isRewardAvailable = false,
-                streakDay = currentStreak.toInt(),
-                coinsReward = 0L
+        return if (daysBetween == 1L) {
+            val newStreak = (currentStreak + 1).toInt()
+            DailyStreakResult(
+                isRewardAvailable = true,
+                streakDay = newStreak,
+                coinsReward = calculateReward(newStreak)
             )
-            daysBetween == 1L -> {
-                val newStreak = (currentStreak + 1).toInt()
-                DailyStreakResult(
-                    isRewardAvailable = true,
-                    streakDay = newStreak,
-                    coinsReward = calculateReward(newStreak)
-                )
-            }
-            else -> DailyStreakResult(
+        } else {
+            DailyStreakResult(
                 isRewardAvailable = true,
                 streakDay = 1,
                 coinsReward = calculateReward(1)

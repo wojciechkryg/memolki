@@ -28,6 +28,8 @@
     <string name="setting_vibration">Vibración</string>
     <string name="setting_language">Idioma</string>
     <string name="watch_ad">Ver anuncio</string>
+    <string name="share">Compartir</string>
+    <string name="content_description_locked">Bloqueado</string>
 
     <string name="notification_channel_reminders">Recordatorios</string>
 

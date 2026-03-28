@@ -28,6 +28,8 @@
     <string name="setting_vibration">Tärinä</string>
     <string name="setting_language">Kieli</string>
     <string name="watch_ad">Katso mainos</string>
+    <string name="share">Jaa</string>
+    <string name="content_description_locked">Lukittu</string>
 
     <string name="notification_channel_reminders">Muistutukset</string>
 

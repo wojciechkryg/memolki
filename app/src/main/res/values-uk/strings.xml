@@ -28,6 +28,8 @@
     <string name="setting_vibration">Вібрація</string>
     <string name="setting_language">Мова</string>
     <string name="watch_ad">Переглянути рекламу</string>
+    <string name="share">Поділитися</string>
+    <string name="content_description_locked">Заблоковано</string>
 
     <string name="notification_channel_reminders">Нагадування</string>
 
@@ -66,7 +68,7 @@
     <string name="enable_notifications_enable">Увімкнути</string>
     <string name="enable_notifications_later">Пізніше</string>
     <string-array name="notification_daily_streak_titles">
-        <item>🔥 Не перервй серію!</item>
+        <item>🔥 Не перервай серію!</item>
         <item>🎁 Твоя щоденна нагорода готова!</item>
         <item>💰 Безкоштовні монети в магазині!</item>
         <item>🔥 Не втрать свою серію!</item>

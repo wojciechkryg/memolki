@@ -28,6 +28,8 @@
     <string name="setting_vibration">רטט</string>
     <string name="setting_language">שפה</string>
     <string name="watch_ad">צפה במודעה</string>
+    <string name="share">שיתוף</string>
+    <string name="content_description_locked">נעול</string>
 
     <string name="notification_channel_reminders">תזכורות</string>
 
