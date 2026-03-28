@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Rappels</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Tes cartes t\'attendent !</item>
-        <item>✨ Prêt à débloquer de nouvelles cartes ?</item>
-        <item>💰 De nouvelles récompenses t\'attendent !</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Comment va ta mémoire aujourd\'hui ?</item>
-        <item>🏆 Bats ton meilleur score !</item>
-        <item>🎴 Ta collection s\'ennuie sans toi !</item>
-        <item>✨ C\'est l\'heure du défi !</item>
-        <item>💰 Les pièces s\'accumulent !</item>
-        <item>🃏 Mélange des cartes !</item>
-        <item>🧠 Garde ton cerveau en forme !</item>
+        <item>🃏 Tes cartes s\'ennuient de toi !</item>
+        <item>🎴 Ta collection est incomplète !</item>
+        <item>✨ L\'heure du défi !</item>
+        <item>🃏 Prêt à retourner des cartes ?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Associe des paires et gagne des pièces</item>
-        <item>Une partie rapide fait beaucoup de bien</item>
-        <item>De nouvelles cartes attendent d\'être débloquées</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Une partie rapide fait du bien</item>
+        <item>Reviens et trouve des paires !</item>
+        <item>Teste ta mémoire en un tour rapide</item>
         <item>Mélange, retourne et associe !</item>
-        <item>Enrichis ta collection aujourd\'hui</item>
-        <item>Teste ta mémoire dans un tour rapide</item>
-        <item>Ta collection n\'est pas encore complète</item>
-        <item>Reviens et retourne des cartes</item>
-        <item>Les pièces ne se collectent pas toutes seules</item>
-        <item>Joue un tour et amuse-toi</item>
+        <item>Garde ton cerveau en forme !</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Ta récompense en pièces est prête !</item>
         <item>✨ Des pièces t\'attendent !</item>
         <item>🏆 C\'est l\'heure de récupérer ta récompense !</item>
+        <item>💰 Tes pièces sont arrivées !</item>
+        <item>✨ Récompense débloquée !</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Des pièces gratuites t\'attendent !</item>
         <item>Récupère ta récompense maintenant !</item>
         <item>Tes pièces sont prêtes !</item>
+        <item>Regarde une autre pub pour plus de pièces</item>
+        <item>Récupère tes pièces dans la boutique !</item>
     </string-array>
 
     <string name="enable_notifications_title">Débloque plus de récompenses !</string>
     <string name="enable_notifications_body">Reçois des notifications quand les pièces sont prêtes à être collectées et de nouvelles cartes attendent d\'être débloquées !</string>
     <string name="enable_notifications_enable">Activer</string>
     <string name="enable_notifications_later">Plus tard</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Garde ta série en vie !</item>
+        <item>🎁 Ta récompense quotidienne est prête !</item>
+        <item>💰 Pièces gratuites dans la boutique !</item>
+        <item>🔥 Ne perds pas ta série !</item>
+        <item>🎁 La récompense du jour t\'attend !</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Collecte tes pièces avant la fin du jour !</item>
+        <item>Visite la boutique pour ta récompense</item>
+        <item>Ta série est en jeu !</item>
+        <item>Ne brise pas ta série !</item>
+        <item>Ouvre la boutique et prends tes pièces</item>
+    </string-array>
+    <string name="free_coins">Pièces gratuites</string>
+    <string name="daily_reward_day">Jour %d</string>
+    <string name="daily_reward_collect">Collecter %d</string>
+    <string name="daily_reward_back_tomorrow">Reviens demain</string>
+    <string name="share_text">J\'ai trouvé toutes les paires dans le jeu memolki ! Peux-tu me battre ? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

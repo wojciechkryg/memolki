@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">تذكيرات</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 بطاقاتك بانتظارك!</item>
-        <item>✨ مستعد لفتح بطاقات جديدة؟</item>
-        <item>💰 مكافآت جديدة بانتظارك!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 كيف ذاكرتك اليوم؟</item>
-        <item>🏆 تغلب على أفضل نتيجة لك!</item>
-        <item>🎴 مجموعتك تفتقدك!</item>
+        <item>🃏 بطاقاتك تفتقدك!</item>
+        <item>🎴 مجموعتك غير مكتملة!</item>
         <item>✨ حان وقت التحدي!</item>
-        <item>💰 العملات تتراكم!</item>
-        <item>🃏 اخلط بعض البطاقات!</item>
-        <item>🧠 حافظ على ذهنك حادًا!</item>
+        <item>🃏 مستعد لقلب بعض البطاقات؟</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>طابق الأزواج واكسب العملات</item>
-        <item>لعبة سريعة تفيد كثيرًا</item>
-        <item>بطاقات جديدة بانتظار الفتح</item>
-        <item>اخلط، اقلب، وطابق!</item>
-        <item>وسّع مجموعتك اليوم</item>
+    <string-array name="notification_reminder_bodies">
+        <item>لعبة سريعة تفيد كثيراً</item>
+        <item>عد وطابق بعض الأزواج!</item>
         <item>اختبر ذاكرتك في جولة سريعة</item>
-        <item>مجموعتك لم تكتمل بعد</item>
-        <item>عد واقلب بعض البطاقات</item>
-        <item>العملات لن تجمع نفسها</item>
-        <item>العب جولة واستمتع</item>
+        <item>اخلط واقلب وطابق!</item>
+        <item>حافظ على ذهنك حاداً!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 مكافأة العملات جاهزة!</item>
         <item>✨ العملات بانتظارك!</item>
         <item>🏆 حان وقت جمع مكافأتك!</item>
+        <item>💰 عملاتك وصلت!</item>
+        <item>✨ المكافأة مفتوحة!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>عملات مجانية بانتظارك!</item>
         <item>اجمع مكافأة عملاتك الآن!</item>
         <item>عملاتك جاهزة للاستلام!</item>
+        <item>شاهد إعلاناً آخر لمزيد من العملات</item>
+        <item>احصل على عملاتك في المتجر!</item>
     </string-array>
 
     <string name="enable_notifications_title">افتح المزيد من المكافآت!</string>
     <string name="enable_notifications_body">احصل على إشعارات عندما تكون العملات جاهزة للجمع وبطاقات جديدة بانتظار الفتح!</string>
     <string name="enable_notifications_enable">تفعيل</string>
     <string name="enable_notifications_later">لاحقًا</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 حافظ على سلسلتك!</item>
+        <item>🎁 مكافأتك اليومية جاهزة!</item>
+        <item>💰 عملات مجانية في المتجر!</item>
+        <item>🔥 لا تفقد سلسلتك!</item>
+        <item>🎁 مكافأة اليوم بانتظارك!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>اجمع عملاتك قبل نهاية اليوم!</item>
+        <item>زر المتجر للحصول على مكافأتك</item>
+        <item>سلسلتك على المحك!</item>
+        <item>لا تكسر سلسلتك!</item>
+        <item>افتح المتجر واحصل على عملاتك</item>
+    </string-array>
+    <string name="free_coins">عملات مجانية</string>
+    <string name="daily_reward_day">يوم %d</string>
+    <string name="daily_reward_collect">اجمع %d</string>
+    <string name="daily_reward_back_tomorrow">عد غداً</string>
+    <string name="share_text">لقد طابقت جميع الأزواج في لعبة memolki! هل يمكنك التغلب علي؟ 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

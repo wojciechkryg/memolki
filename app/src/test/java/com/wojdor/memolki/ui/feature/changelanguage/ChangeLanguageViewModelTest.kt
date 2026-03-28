@@ -2,8 +2,8 @@ package com.wojdor.memolki.ui.feature.changelanguage
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.wojdor.memolki.domain.usecase.ChangeLanguageUseCase
 import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCase
+import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.verifyOnce
@@ -30,7 +30,7 @@ class ChangeLanguageViewModelTest : AppTest() {
     lateinit var getLanguagesWithCurrentUseCase: GetLanguagesWithCurrentUseCase
 
     @Inject
-    lateinit var changeLanguageUseCase: ChangeLanguageUseCase
+    lateinit var localeProvider: LocaleProvider
 
     private lateinit var sut: ChangeLanguageViewModel
 
@@ -41,7 +41,7 @@ class ChangeLanguageViewModelTest : AppTest() {
             savedStateHandle,
             hapticFeedback,
             getLanguagesWithCurrentUseCase,
-            changeLanguageUseCase
+            localeProvider
         )
     }
 

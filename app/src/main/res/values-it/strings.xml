@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Promemoria</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Le tue carte ti aspettano!</item>
-        <item>✨ Pronto a sbloccare nuove carte?</item>
-        <item>💰 Nuove ricompense ti aspettano!</item>
-        <item>🧠 Com\'è la tua memoria oggi?</item>
-        <item>🏆 Batti il tuo miglior punteggio!</item>
-        <item>🎴 La tua collezione ti manca!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Come va la tua memoria oggi?</item>
+        <item>🃏 Le tue carte sentono la tua mancanza!</item>
+        <item>🎴 La tua collezione è incompleta!</item>
         <item>✨ È ora di una sfida!</item>
-        <item>💰 Le monete si accumulano!</item>
-        <item>🃏 Mischia qualche carta!</item>
-        <item>🧠 Tieni il cervello in forma!</item>
+        <item>🃏 Pronto a girare le carte?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Abbina le coppie e guadagna monete</item>
-        <item>Una partita veloce fa molto bene</item>
-        <item>Nuove carte aspettano di essere sbloccate</item>
-        <item>Mischia, gira e abbina!</item>
-        <item>Espandi la tua collezione oggi</item>
-        <item>Metti alla prova la tua memoria in un turno veloce</item>
-        <item>La tua collezione non è ancora completa</item>
-        <item>Torna e gira qualche carta</item>
-        <item>Le monete non si raccolgono da sole</item>
-        <item>Gioca un turno e divertiti</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Una partita veloce aiuta molto</item>
+        <item>Torna e trova le coppie!</item>
+        <item>Metti alla prova la memoria in un giro veloce</item>
+        <item>Mescola, gira e abbina!</item>
+        <item>Tieni il cervello allenato!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 La tua ricompensa in monete è pronta!</item>
         <item>✨ Le monete ti aspettano!</item>
         <item>🏆 È ora di riscuotere la tua ricompensa!</item>
+        <item>💰 Le tue monete sono arrivate!</item>
+        <item>✨ Ricompensa sbloccata!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Monete gratis ti aspettano!</item>
         <item>Ritira la tua ricompensa adesso!</item>
         <item>Le tue monete sono pronte!</item>
+        <item>Guarda un altro annuncio per più monete</item>
+        <item>Prendi le tue monete nel negozio!</item>
     </string-array>
 
     <string name="enable_notifications_title">Sblocca più ricompense!</string>
     <string name="enable_notifications_body">Ricevi notifiche quando le monete sono pronte e nuove carte aspettano di essere sbloccate!</string>
     <string name="enable_notifications_enable">Attiva</string>
     <string name="enable_notifications_later">Dopo</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Mantieni la tua serie!</item>
+        <item>🎁 La tua ricompensa giornaliera è pronta!</item>
+        <item>💰 Monete gratis nel negozio!</item>
+        <item>🔥 Non perdere la tua serie!</item>
+        <item>🎁 La ricompensa di oggi ti aspetta!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Raccogli le monete prima che finisca il giorno!</item>
+        <item>Visita il negozio per la ricompensa</item>
+        <item>La tua serie è in gioco!</item>
+        <item>Non interrompere la serie!</item>
+        <item>Apri il negozio e prendi le monete</item>
+    </string-array>
+    <string name="free_coins">Monete gratis</string>
+    <string name="daily_reward_day">Giorno %d</string>
+    <string name="daily_reward_collect">Raccogli %d</string>
+    <string name="daily_reward_back_tomorrow">Torna domani</string>
+    <string name="share_text">Ho trovato tutte le coppie nel gioco memolki! Riesci a battermi? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

@@ -75,6 +75,34 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
+    val encryptedHasReceivedShareReward: Flow<String?> =
+        dataRead.map { it[Key.HAS_RECEIVED_SHARE_REWARD] }
+
+    suspend fun setEncryptedHasReceivedShareReward(encryptedValue: String) {
+        dataWrite.edit { prefs ->
+            prefs[Key.HAS_RECEIVED_SHARE_REWARD] = encryptedValue
+        }
+    }
+
+    val encryptedDailyStreakCount: Flow<String?> =
+        dataRead.map { it[Key.DAILY_STREAK_COUNT] }
+
+    val encryptedLastDailyStreakCollectedTimestamp: Flow<String?> =
+        dataRead.map { it[Key.LAST_DAILY_STREAK_COLLECTED_TIMESTAMP] }
+
+    suspend fun setEncryptedDailyStreakData(
+        transform: suspend (encryptedCount: String?, encryptedTimestamp: String?) -> Pair<String, String>
+    ) {
+        dataWrite.edit { prefs ->
+            val (newCount, newTimestamp) = transform(
+                prefs[Key.DAILY_STREAK_COUNT],
+                prefs[Key.LAST_DAILY_STREAK_COLLECTED_TIMESTAMP]
+            )
+            prefs[Key.DAILY_STREAK_COUNT] = newCount
+            prefs[Key.LAST_DAILY_STREAK_COLLECTED_TIMESTAMP] = newTimestamp
+        }
+    }
+
     private object Key {
         val COINS = stringPreferencesKey("coins")
         val TOTAL_COINS = stringPreferencesKey("total_coins")
@@ -84,5 +112,9 @@ class UserLocalDataSource @Inject constructor(
             stringPreferencesKey("unlocked_card_pairs_from_ads_count")
         val LAST_SHOP_AD_SHOWN_TIMESTAMP =
             stringPreferencesKey("last_shop_ad_shown_timestamp")
+        val HAS_RECEIVED_SHARE_REWARD = stringPreferencesKey("has_received_share_reward")
+        val DAILY_STREAK_COUNT = stringPreferencesKey("daily_streak_count")
+        val LAST_DAILY_STREAK_COLLECTED_TIMESTAMP =
+            stringPreferencesKey("last_daily_streak_collected_timestamp")
     }
 }

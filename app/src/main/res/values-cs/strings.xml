@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Připomínky</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Tvoje karty čekají!</item>
-        <item>✨ Připraven odemknout nové karty?</item>
-        <item>💰 Nové odměny čekají!</item>
-        <item>🧠 Jaká je dnes tvoje paměť?</item>
-        <item>🏆 Překonej své nejlepší skóre!</item>
-        <item>🎴 Tvoje kolekce se po tobě stýská!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Jaká je dnes tvá paměť?</item>
+        <item>🃏 Tvé karty se po tobě stýskají!</item>
+        <item>🎴 Tvá sbírka není kompletní!</item>
         <item>✨ Čas na výzvu!</item>
-        <item>💰 Mince se hromadí!</item>
-        <item>🃏 Zamíchej pár karet!</item>
-        <item>🧠 Udržuj svůj mozek v kondici!</item>
+        <item>🃏 Připraven otočit pár karet?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Spáruj páry a získej mince</item>
+    <string-array name="notification_reminder_bodies">
         <item>Rychlá hra hodně pomůže</item>
-        <item>Nové karty čekají na odemknutí</item>
-        <item>Zamíchej, otoč a spáruj!</item>
-        <item>Rozšiř svou kolekci ještě dnes</item>
-        <item>Otestuj svou paměť v rychlém kole</item>
-        <item>Tvoje kolekce ještě není kompletní</item>
-        <item>Vrať se a otoč pár karet</item>
-        <item>Mince se samy neposbírají</item>
-        <item>Zahraj si kolo a bav se</item>
+        <item>Vrať se a spoj páry!</item>
+        <item>Otestuj paměť v rychlém kole</item>
+        <item>Zamíchej, otoč a spoj!</item>
+        <item>Udržuj mozek v kondici!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Tvoje odměna v mincích je připravena!</item>
         <item>✨ Mince na tebe čekají!</item>
         <item>🏆 Čas vyzvednout si odměnu!</item>
+        <item>💰 Tvé mince dorazily!</item>
+        <item>✨ Odměna odemčena!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Čekají na tebe mince zdarma!</item>
         <item>Vyzvedni si svou odměnu!</item>
         <item>Tvé mince jsou připraveny!</item>
+        <item>Sleduj další reklamu pro více mincí</item>
+        <item>Vezmi si mince v obchodě!</item>
     </string-array>
 
     <string name="enable_notifications_title">Odemkni více odměn!</string>
     <string name="enable_notifications_body">Dostávej upozornění, když jsou mince připraveny ke sběru a nové karty čekají na odemknutí!</string>
     <string name="enable_notifications_enable">Povolit</string>
     <string name="enable_notifications_later">Později</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Udržuj svou sérii!</item>
+        <item>🎁 Tvá denní odměna je připravena!</item>
+        <item>💰 Mince zdarma v obchodě!</item>
+        <item>🔥 Neztrať svou sérii!</item>
+        <item>🎁 Dnešní odměna čeká!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Sbírej mince, než den skončí!</item>
+        <item>Navštiv obchod pro odměnu</item>
+        <item>Tvá série je v ohrožení!</item>
+        <item>Nepřerušuj sérii!</item>
+        <item>Otevři obchod a vezmi si mince</item>
+    </string-array>
+    <string name="free_coins">Mince zdarma</string>
+    <string name="daily_reward_day">Den %d</string>
+    <string name="daily_reward_collect">Sebrat %d</string>
+    <string name="daily_reward_back_tomorrow">Přijď zítra</string>
+    <string name="share_text">Spojil jsem všechny páry ve hře memolki! Dokážeš mě porazit? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

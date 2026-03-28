@@ -14,6 +14,7 @@ import com.wojdor.memolki.test.fake.FakeEncryptor
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
+import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.util.billing.BillingHandler
@@ -28,6 +29,7 @@ import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.AppInstalledProvider
 import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.util.provider.PackageNameProvider
+import com.wojdor.memolki.util.provider.TimeProvider
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -70,6 +72,10 @@ abstract class TestModule {
     @Binds
     @Singleton
     abstract fun bindNotificationScheduler(fakeNotificationScheduler: FakeNotificationScheduler): NotificationScheduler
+
+    @Binds
+    @Singleton
+    abstract fun bindTimeProvider(fakeTimeProvider: FakeTimeProvider): TimeProvider
 
     companion object {
         @Provides

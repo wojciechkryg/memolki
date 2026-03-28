@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">रिमाइंडर</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 आपके कार्ड इंतज़ार कर रहे हैं!</item>
-        <item>✨ नए कार्ड अनलॉक करने के लिए तैयार?</item>
-        <item>💰 नए इनाम इंतज़ार कर रहे हैं!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 आज आपकी याददाश्त कैसी है?</item>
-        <item>🏆 अपना सर्वश्रेष्ठ स्कोर तोड़ें!</item>
-        <item>🎴 आपका संग्रह आपको याद कर रहा है!</item>
+        <item>🃏 आपके कार्ड आपको याद कर रहे हैं!</item>
+        <item>🎴 आपका संग्रह अधूरा है!</item>
         <item>✨ चुनौती का समय!</item>
-        <item>💰 सिक्के जमा हो रहे हैं!</item>
-        <item>🃏 कुछ कार्ड शफ़ल करें!</item>
-        <item>🧠 अपने दिमाग को तेज़ रखें!</item>
+        <item>🃏 कार्ड पलटने के लिए तैयार?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>जोड़ियां मिलाएं और सिक्के कमाएं</item>
-        <item>एक तेज़ खेल बहुत काम आता है</item>
-        <item>नए कार्ड अनलॉक होने का इंतज़ार कर रहे हैं</item>
-        <item>शफ़ल करें, पलटें और मिलाएं!</item>
-        <item>आज अपना संग्रह बढ़ाएं</item>
-        <item>एक तेज़ राउंड में अपनी याददाश्त परखें</item>
-        <item>आपका संग्रह अभी पूरा नहीं हुआ</item>
-        <item>वापस आएं और कुछ कार्ड पलटें</item>
-        <item>सिक्के खुद नहीं जमा होंगे</item>
-        <item>एक राउंड खेलें और मज़े करें</item>
+    <string-array name="notification_reminder_bodies">
+        <item>एक त्वरित खेल बहुत मदद करता है</item>
+        <item>वापस आओ और जोड़े मिलाओ!</item>
+        <item>एक तेज दौर में अपनी याददाश्त परखो</item>
+        <item>फेरबदल करो, पलटो और मिलाओ!</item>
+        <item>अपने दिमाग को तेज रखो!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 आपका सिक्का इनाम तैयार है!</item>
         <item>✨ सिक्के आपका इंतज़ार कर रहे हैं!</item>
         <item>🏆 अपना इनाम लेने का समय!</item>
+        <item>💰 आपके सिक्के आ गए!</item>
+        <item>✨ इनाम अनलॉक!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>मुफ्त सिक्के आपका इंतज़ार कर रहे हैं!</item>
         <item>अभी अपना सिक्का इनाम इकट्ठा करें!</item>
         <item>आपके सिक्के तैयार हैं!</item>
+        <item>और सिक्कों के लिए एक और विज्ञापन देखें</item>
+        <item>दुकान में अपने सिक्के लें!</item>
     </string-array>
 
     <string name="enable_notifications_title">और इनाम अनलॉक करें!</string>
     <string name="enable_notifications_body">जब सिक्के जमा करने के लिए तैयार हों और नए कार्ड अनलॉक होने का इंतज़ार कर रहे हों तो सूचना पाएं!</string>
     <string name="enable_notifications_enable">चालू करें</string>
     <string name="enable_notifications_later">बाद में</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 अपनी स्ट्रीक बनाए रखें!</item>
+        <item>🎁 आपका दैनिक इनाम तैयार है!</item>
+        <item>💰 दुकान में मुफ्त सिक्के!</item>
+        <item>🔥 अपनी स्ट्रीक मत खोइए!</item>
+        <item>🎁 आज का इनाम इंतज़ार कर रहा है!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>दिन खत्म होने से पहले सिक्के इकट्ठा करें!</item>
+        <item>इनाम के लिए दुकान पर जाएं</item>
+        <item>आपकी स्ट्रीक दांव पर है!</item>
+        <item>अपनी स्ट्रीक मत तोड़ो!</item>
+        <item>दुकान खोलें और सिक्के लें</item>
+    </string-array>
+    <string name="free_coins">मुफ्त सिक्के</string>
+    <string name="daily_reward_day">दिन %d</string>
+    <string name="daily_reward_collect">इकट्ठा करें %d</string>
+    <string name="daily_reward_back_tomorrow">कल वापस आएं</string>
+    <string name="share_text">मैंने memolki गेम में सभी जोड़े मिला लिए! क्या तुम मुझे हरा सकते हो? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

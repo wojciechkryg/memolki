@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Meeldetuletused</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Sinu kaardid ootavad!</item>
-        <item>✨ Valmis uusi kaarte avama?</item>
-        <item>💰 Uued auhinnad ootavad!</item>
-        <item>🧠 Kuidas sinu mälu täna on?</item>
-        <item>🏆 Ületa oma parim tulemus!</item>
-        <item>🎴 Sinu kollektsioon igatseb sind!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Kuidas su mälu täna on?</item>
+        <item>🃏 Sinu kaardid igatsevad sind!</item>
+        <item>🎴 Sinu kogu on puudulik!</item>
         <item>✨ Aeg väljakutseks!</item>
-        <item>💰 Mündid kuhjuvad!</item>
-        <item>🃏 Sega mõned kaardid!</item>
-        <item>🧠 Hoia oma aju teravana!</item>
+        <item>🃏 Valmis kaarte keerama?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Sobita paare ja teeni münte</item>
-        <item>Kiire mäng teeb palju head</item>
-        <item>Uued kaardid ootavad avamist</item>
-        <item>Sega, keera ja sobita!</item>
-        <item>Kasva oma kollektsiooni täna</item>
-        <item>Testi oma mälu kiires voorus</item>
-        <item>Sinu kollektsioon pole veel täielik</item>
-        <item>Tule tagasi ja keera mõned kaardid</item>
-        <item>Mündid ei kogu end ise</item>
-        <item>Mängi voor ja lõbutse</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Kiire mäng aitab palju</item>
+        <item>Tule tagasi ja leia paarid!</item>
+        <item>Testi mälu kiirel ringil</item>
+        <item>Sega, keera ja leia!</item>
+        <item>Hoia aju teravana!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Sinu mündi auhind on valmis!</item>
         <item>✨ Mündid ootavad sind!</item>
         <item>🏆 Aeg oma auhind kätte saada!</item>
+        <item>💰 Sinu mündid on kohal!</item>
+        <item>✨ Auhind avatud!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Tasuta mündid ootavad sind!</item>
         <item>Kogu oma mündiauhind nüüd!</item>
         <item>Sinu mündid on valmis!</item>
+        <item>Vaata veel ühte reklaami rohkemate müntide eest</item>
+        <item>Võta oma mündid poest!</item>
     </string-array>
 
     <string name="enable_notifications_title">Ava rohkem auhindu!</string>
     <string name="enable_notifications_body">Saa teavitusi, kui mündid on kogumiseks valmis ja uued kaardid ootavad avamist!</string>
     <string name="enable_notifications_enable">Luba</string>
     <string name="enable_notifications_later">Hiljem</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Hoia oma seeria elus!</item>
+        <item>🎁 Sinu päevane auhind on valmis!</item>
+        <item>💰 Tasuta mündid poes!</item>
+        <item>🔥 Ära kaota oma seeriat!</item>
+        <item>🎁 Tänane auhind ootab!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Kogu mündid enne päeva lõppu!</item>
+        <item>Külasta poodi auhinna saamiseks</item>
+        <item>Sinu seeria on ohus!</item>
+        <item>Ära katkesta seeriat!</item>
+        <item>Ava pood ja võta oma mündid</item>
+    </string-array>
+    <string name="free_coins">Tasuta mündid</string>
+    <string name="daily_reward_day">Päev %d</string>
+    <string name="daily_reward_collect">Kogu %d</string>
+    <string name="daily_reward_back_tomorrow">Tule homme tagasi</string>
+    <string name="share_text">Leidsin kõik paarid mängus memolki! Kas sa suudad mind võita? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

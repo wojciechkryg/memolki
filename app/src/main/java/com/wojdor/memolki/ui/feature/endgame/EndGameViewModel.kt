@@ -10,7 +10,9 @@ import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
+import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
@@ -43,7 +45,9 @@ class EndGameViewModel @Inject constructor(
     private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase,
-    private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase
+    private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase,
+    private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase,
+    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
     EndGameState()
@@ -51,6 +55,9 @@ class EndGameViewModel @Inject constructor(
 
     private var isAdLoaded = false
     private var shouldShowNotificationRequest = false
+    private var isNotificationRequestDismissed = false
+    private var isDailyStreakRewardAvailable = false
+    private var isShareRewardAvailable = false
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
@@ -61,6 +68,61 @@ class EndGameViewModel @Inject constructor(
             EndGameIntent.OnWatchAdClick -> onWatchAdClick()
             EndGameIntent.OnAdReward -> onAdReward()
             is EndGameIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
+            EndGameIntent.OnShareClick -> onShareClick()
+            EndGameIntent.OnFreeCoinsClick -> onFreeCoinsClick()
+            EndGameIntent.OnScreenResume -> onScreenResume()
+        }
+    }
+
+    private fun onShareClick() {
+        hapticFeedback.vibrateLow()
+        rewardCoinsForShareUseCase().onEach { result ->
+            result.onSuccess { wasRewarded ->
+                if (wasRewarded) {
+                    isShareRewardAvailable = false
+                    coinsPlayer.play()
+                    sendState { copy(animateCoins = true) }
+                    reloadCoins()
+                    showMenu()
+                }
+            }
+        }.launchIn(viewModelScope)
+        sendEffect(EndGameEffect.Share)
+    }
+
+    private fun checkShareRewardAvailable() {
+        viewModelScope.launch {
+            val hasReceived = userRepository.getHasReceivedShareReward().first()
+            isShareRewardAvailable = !hasReceived
+        }
+    }
+
+    private fun onScreenResume() {
+        checkDailyStreakRewardAvailable()
+        reloadCoins()
+    }
+
+    private fun onFreeCoinsClick() {
+        hapticFeedback.vibrateLow()
+        shouldShowNotificationRequest = false
+        isNotificationRequestDismissed = true
+        sendEffect(EndGameEffect.OpenShopScreen)
+    }
+
+    private fun checkDailyStreakRewardAvailable() {
+        checkDailyLoginStreakUseCase().onEach { result ->
+            result.onSuccess { streakResult ->
+                isDailyStreakRewardAvailable = streakResult.isRewardAvailable
+                showMenu()
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun reloadCoins() {
+        viewModelScope.launch {
+            getCoinsUseCase().first().onSuccess { coins ->
+                sendState { copy(currentCoins = coins) }
+            }
         }
     }
 
@@ -69,6 +131,8 @@ class EndGameViewModel @Inject constructor(
         loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         checkShouldShowNotificationRequest()
+        checkShareRewardAvailable()
+        checkDailyStreakRewardAvailable()
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
             delay(LEVEL_COMPLETE_SOUND_DELAY)
@@ -79,7 +143,11 @@ class EndGameViewModel @Inject constructor(
 
     private fun checkShouldShowNotificationRequest() {
         shouldShowNotificationRequestUseCase().onEach { result ->
-            result.onSuccess { shouldShowNotificationRequest = it }
+            result.onSuccess {
+                if (!isNotificationRequestDismissed) {
+                    shouldShowNotificationRequest = it
+                }
+            }
         }.launchIn(viewModelScope)
     }
 
@@ -181,9 +249,15 @@ class EndGameViewModel @Inject constructor(
                 if (isAdLoaded) {
                     add(0, EndGameMenuModel.WatchAd)
                 }
-                if (canUnlockNewCard) {
+                if (isDailyStreakRewardAvailable) {
+                    add(EndGameMenuModel.FreeCoins)
+                } else if (canUnlockNewCard) {
                     add(EndGameMenuModel.UnlockNewCard)
                 }
+                add(EndGameMenuModel.Share(
+                    showReward = isShareRewardAvailable,
+                    rewardCoins = if (isShareRewardAvailable) RewardCoinsForShareUseCase.SHARE_REWARD_COINS else 0L
+                ))
             }
             sendState { copy(menu = menu) }
         }
@@ -238,6 +312,6 @@ class EndGameViewModel @Inject constructor(
     companion object {
         const val LEVEL_COMPLETE_SOUND_DELAY = 250L
         const val REWARD_COINS_DELAY = 500L
-        const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 5
+        const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
     }
 }

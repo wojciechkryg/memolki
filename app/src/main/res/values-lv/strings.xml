@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Atgādinājumi</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Tavas kārtis gaida!</item>
-        <item>✨ Gatavs atbloķēt jaunas kārtis?</item>
-        <item>💰 Jaunas balvas gaida!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Kā tava atmiņa šodien?</item>
-        <item>🏆 Pārspēj savu labāko rezultātu!</item>
-        <item>🎴 Tava kolekcija tevi ilgojas!</item>
+        <item>🃏 Tavas kārtis tevi sagaida!</item>
+        <item>🎴 Tava kolekcija nav pilnīga!</item>
         <item>✨ Laiks izaicinājumam!</item>
-        <item>💰 Monētas krājas!</item>
-        <item>🃏 Sajauc dažas kārtis!</item>
-        <item>🧠 Uzturi savas smadzenes formā!</item>
+        <item>🃏 Gatavs apgriezt kārtis?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Savieno pārus un pelni monētas</item>
+    <string-array name="notification_reminder_bodies">
         <item>Ātra spēle daudz palīdz</item>
-        <item>Jaunas kārtis gaida atbloķēšanu</item>
-        <item>Sajauc, apgriez un savieno!</item>
-        <item>Papildini savu kolekciju šodien</item>
-        <item>Pārbaudi savu atmiņu ātrā raundā</item>
-        <item>Tava kolekcija vēl nav pilnīga</item>
-        <item>Atgriezies un apgriez dažas kārtis</item>
-        <item>Monētas pašas nesavāksies</item>
-        <item>Nospēlē raundu un izklaidējies</item>
+        <item>Atgriezies un atrodi pārus!</item>
+        <item>Pārbaudi atmiņu ātrā raundā</item>
+        <item>Sajauc, apgriez un saskaņo!</item>
+        <item>Uzturi smadzenes asu!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Tava monētu balva ir gatava!</item>
         <item>✨ Monētas gaida tevi!</item>
         <item>🏆 Laiks saņemt savu balvu!</item>
+        <item>💰 Tavas monētas ir klāt!</item>
+        <item>✨ Balva atbloķēta!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Bezmaksas monētas gaida tevi!</item>
         <item>Saņem savu monētu balvu tagad!</item>
         <item>Tavas monētas ir gatavas!</item>
+        <item>Skaties vēl vienu reklāmu, lai iegūtu vairāk monētu</item>
+        <item>Paņem monētas veikalā!</item>
     </string-array>
 
     <string name="enable_notifications_title">Atbloķē vairāk balvu!</string>
     <string name="enable_notifications_body">Saņem paziņojumus, kad monētas ir gatavas savākšanai un jaunas kārtis gaida atbloķēšanu!</string>
     <string name="enable_notifications_enable">Iespējot</string>
     <string name="enable_notifications_later">Vēlāk</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Uzturi savu sēriju!</item>
+        <item>🎁 Tava ikdienas balva ir gatava!</item>
+        <item>💰 Bezmaksas monētas veikalā!</item>
+        <item>🔥 Nezaudē savu sēriju!</item>
+        <item>🎁 Šodienas balva gaida!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Savāc monētas pirms diena beidzas!</item>
+        <item>Apmeklē veikalu balvai</item>
+        <item>Tava sērija ir apdraudēta!</item>
+        <item>Nepārtrauc sēriju!</item>
+        <item>Atver veikalu un paņem monētas</item>
+    </string-array>
+    <string name="free_coins">Bezmaksas monētas</string>
+    <string name="daily_reward_day">%d. diena</string>
+    <string name="daily_reward_collect">Savākt %d</string>
+    <string name="daily_reward_back_tomorrow">Atgriezies rīt</string>
+    <string name="share_text">Es atradu visus pārus spēlē memolki! Vai tu vari mani pārspēt? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

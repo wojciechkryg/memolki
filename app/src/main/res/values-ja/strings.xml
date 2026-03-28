@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">リマインダー</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 カードが待っています！</item>
-        <item>✨ 新しいカードをアンロックしませんか？</item>
-        <item>💰 新しい報酬が待っています！</item>
-        <item>🧠 今日の記憶力はどうですか？</item>
-        <item>🏆 ベストスコアを更新しよう！</item>
-        <item>🎴 コレクションがあなたを待っています！</item>
-        <item>✨ チャレンジの時間です！</item>
-        <item>💰 コインが貯まっています！</item>
-        <item>🃏 カードをシャッフルしよう！</item>
-        <item>🧠 脳を鍛えましょう！</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 今日の記憶力はどう？</item>
+        <item>🃏 カードが待ってるよ！</item>
+        <item>🎴 コレクションが未完成！</item>
+        <item>✨ チャレンジの時間！</item>
+        <item>🃏 カードをめくる準備はできた？</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>ペアを揃えてコインを獲得</item>
-        <item>ちょっとしたゲームが大きな効果</item>
-        <item>新しいカードがアンロックを待っています</item>
-        <item>シャッフル、めくって、マッチ！</item>
-        <item>今日コレクションを増やそう</item>
-        <item>クイックラウンドで記憶力をテスト</item>
-        <item>コレクションはまだ完成していません</item>
-        <item>戻ってカードをめくろう</item>
-        <item>コインは勝手には集まりません</item>
-        <item>ラウンドをプレイして楽しもう</item>
+    <string-array name="notification_reminder_bodies">
+        <item>ちょっとしたゲームが効果的</item>
+        <item>戻ってペアを見つけよう！</item>
+        <item>クイックラウンドで記憶力テスト</item>
+        <item>シャッフルしてめくってマッチ！</item>
+        <item>脳を鍛えよう！</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 コイン報酬の準備ができました！</item>
         <item>✨ コインが待っています！</item>
         <item>🏆 報酬を受け取る時間です！</item>
+        <item>💰 コインが届きました！</item>
+        <item>✨ 報酬アンロック！</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>無料コインが待っています！</item>
         <item>今すぐコイン報酬を受け取ろう！</item>
         <item>コインの準備ができました！</item>
+        <item>もう一つ広告を見てコインを増やそう</item>
+        <item>ショップでコインを受け取ろう！</item>
     </string-array>
 
     <string name="enable_notifications_title">もっと報酬をアンロック！</string>
     <string name="enable_notifications_body">コインの準備ができたときや新しいカードがアンロックを待っているときに通知を受け取ろう！</string>
     <string name="enable_notifications_enable">有効にする</string>
     <string name="enable_notifications_later">あとで</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 連続記録を維持しよう！</item>
+        <item>🎁 デイリー報酬の準備ができました！</item>
+        <item>💰 ショップで無料コイン！</item>
+        <item>🔥 連続記録を失わないで！</item>
+        <item>🎁 今日の報酬が待ってるよ！</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>日が終わる前にコインを集めよう！</item>
+        <item>ショップで報酬を受け取ろう</item>
+        <item>連続記録がピンチ！</item>
+        <item>連続記録を途切れさせないで！</item>
+        <item>ショップを開いてコインをゲット</item>
+    </string-array>
+    <string name="free_coins">無料コイン</string>
+    <string name="daily_reward_day">%d日目</string>
+    <string name="daily_reward_collect">%d枚を集める</string>
+    <string name="daily_reward_back_tomorrow">明日また来てね</string>
+    <string name="share_text">memolkiゲームで全ペアを揃えたよ！君は僕に勝てるかな？🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

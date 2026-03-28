@@ -13,6 +13,6 @@ class BootReceiver : BroadcastReceiver() {
             context.applicationContext,
             NotificationAlarmReceiverEntryPoint::class.java
         )
-        entryPoint.notificationScheduler().scheduleDailyNotification()
+        entryPoint.notificationScheduler().scheduleReminderNotification()
     }
 }

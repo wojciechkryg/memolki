@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.compose.runtime.mutableStateOf
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -41,6 +42,8 @@ class AppActivity : ComponentActivity() {
     @Inject
     lateinit var inAppUpdate: InAppUpdate
 
+    private val newIntentState = mutableStateOf<Intent?>(null)
+
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +67,7 @@ class AppActivity : ComponentActivity() {
                             containerColor = colorResource(R.color.primary),
                             content = { innerPadding ->
                                 Box(modifier = Modifier.padding(innerPadding)) {
-                                    AppNavigation()
+                                    AppNavigation(onNewIntent = newIntentState.value)
                                 }
                             }
                         )
@@ -77,6 +80,7 @@ class AppActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        newIntentState.value = intent
     }
 
     override fun onResume() {

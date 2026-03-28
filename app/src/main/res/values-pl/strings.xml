@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Przypomnienia</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Twoje karty czekają!</item>
-        <item>✨ Odblokujesz nowe karty?</item>
-        <item>💰 Czekają nowe nagrody!</item>
-        <item>🧠 Jak tam dziś pamięć?</item>
-        <item>🏆 Pobij swój rekord!</item>
-        <item>🎴 Kolekcja za Tobą tęskni!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Jak twoja pamięć dzisiaj?</item>
+        <item>🃏 Twoje karty za tobą tęsknią!</item>
+        <item>🎴 Twoja kolekcja jest niekompletna!</item>
         <item>✨ Czas na wyzwanie!</item>
-        <item>💰 Monety się zbierają!</item>
-        <item>🃏 Potasuj karty!</item>
-        <item>🧠 Trenuj swoją pamięć!</item>
+        <item>🃏 Gotowy odkryć karty?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Łącz pary i zdobywaj monety</item>
-        <item>Krótka rozgrywka, a tyle radości</item>
-        <item>Nowe karty czekają na odblokowanie</item>
-        <item>Tasuj, odkrywaj i dopasowuj!</item>
-        <item>Rozbuduj dziś swoją kolekcję</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Szybka gra wiele daje</item>
+        <item>Wróć i dopasuj pary!</item>
         <item>Sprawdź pamięć w szybkiej rundzie</item>
-        <item>Twoja kolekcja nie jest jeszcze kompletna</item>
-        <item>Wróć i odkryj kilka kart</item>
-        <item>Monety same się nie zbiorą</item>
-        <item>Zagraj rundkę i miło spędź czas</item>
+        <item>Tasuj, odkrywaj i dopasowuj!</item>
+        <item>Utrzymuj umysł w formie!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Twoja nagroda w monetach jest gotowa!</item>
         <item>✨ Monety czekają na Ciebie!</item>
         <item>🏆 Czas odebrać nagrodę!</item>
+        <item>💰 Twoje monety dotarły!</item>
+        <item>✨ Nagroda odblokowana!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Darmowe monety czekają na Ciebie!</item>
         <item>Odbierz swoją nagrodę teraz!</item>
         <item>Twoje monety są gotowe!</item>
+        <item>Obejrzyj kolejną reklamę po więcej monet</item>
+        <item>Weź monety w sklepie!</item>
     </string-array>
 
     <string name="enable_notifications_title">Odblokuj więcej nagród!</string>
     <string name="enable_notifications_body">Otrzymuj powiadomienia, gdy monety są gotowe do zebrania i nowe karty czekają na odblokowanie!</string>
     <string name="enable_notifications_enable">Włącz</string>
     <string name="enable_notifications_later">Później</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Utrzymaj swoją serię!</item>
+        <item>🎁 Twoja dzienna nagroda jest gotowa!</item>
+        <item>💰 Darmowe monety w sklepie!</item>
+        <item>🔥 Nie strać swojej serii!</item>
+        <item>🎁 Dzisiejsza nagroda czeka!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Zbierz monety zanim dzień się skończy!</item>
+        <item>Odwiedź sklep po nagrodę</item>
+        <item>Twoja seria jest zagrożona!</item>
+        <item>Nie przerywaj serii!</item>
+        <item>Otwórz sklep i weź monety</item>
+    </string-array>
+    <string name="free_coins">Darmowe monety</string>
+    <string name="daily_reward_day">Dzień %d</string>
+    <string name="daily_reward_collect">Odbierz %d</string>
+    <string name="daily_reward_back_tomorrow">Wróć jutro</string>
+    <string name="share_text">Dopasowałem wszystkie pary w grze memolki! Dasz radę mnie pokonać? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

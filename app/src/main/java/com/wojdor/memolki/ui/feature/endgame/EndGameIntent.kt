@@ -11,4 +11,7 @@ sealed class EndGameIntent : UiIntent {
     object OnWatchAdClick : EndGameIntent()
     object OnAdReward : EndGameIntent()
     data class OnAdDismiss(val wasRewardGranted: Boolean) : EndGameIntent()
+    object OnShareClick : EndGameIntent()
+    object OnFreeCoinsClick : EndGameIntent()
+    object OnScreenResume : EndGameIntent()
 }

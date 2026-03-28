@@ -44,6 +44,7 @@ import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.util.throttleClick
@@ -151,7 +152,9 @@ private fun EnableNotificationsScreen(
         TextButton(
             onClick = throttleClick(onClick = callbacks.onLaterClick),
             enabled = isLaterVisible,
-            modifier = Modifier.alpha(laterAlpha)
+            modifier = Modifier
+                .padding(top = spacingL)
+                .alpha(laterAlpha)
         ) {
             Text(
                 text = stringResource(R.string.enable_notifications_later).lowercase(),

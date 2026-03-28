@@ -12,6 +12,8 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
+import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
@@ -73,6 +75,12 @@ class EndGameViewModelTest : AppTest() {
     lateinit var shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase
 
     @Inject
+    lateinit var rewardCoinsForShareUseCase: RewardCoinsForShareUseCase
+
+    @Inject
+    lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+
+    @Inject
     lateinit var userRepository: UserRepository
 
     private lateinit var sut: EndGameViewModel
@@ -94,7 +102,9 @@ class EndGameViewModelTest : AppTest() {
             rewardCoinsForLevelUseCase,
             getTotalCoinsUseCase,
             canUnlockNewCardUseCase,
-            shouldShowNotificationRequestUseCase
+            shouldShowNotificationRequestUseCase,
+            rewardCoinsForShareUseCase,
+            checkDailyLoginStreakUseCase
         )
     }
 
@@ -109,11 +119,9 @@ class EndGameViewModelTest : AppTest() {
                 // given
                 val levelModel = LevelModel.Grid2x3(isUnlocked = true)
                 val rewardedCoins = 1L
-                skipItems(1)
 
                 // when
                 sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
-                skipItems(4)
 
                 // then
                 val expected = EndGameState(
@@ -122,12 +130,21 @@ class EndGameViewModelTest : AppTest() {
                     currentCoins = rewardedCoins,
                     menu = listOf(
                         EndGameMenuModel.PlayAgain,
-                        EndGameMenuModel.Menu
+                        EndGameMenuModel.Menu,
+                        EndGameMenuModel.FreeCoins,
+                        EndGameMenuModel.Share(
+                            showReward = true,
+                            rewardCoins = RewardCoinsForShareUseCase.SHARE_REWARD_COINS
+                        )
                     ),
                     animateCoins = true,
                     showSparkles = true
                 )
-                assertEquals(expected, awaitItem())
+                var lastItem = awaitItem()
+                while (lastItem != expected) {
+                    lastItem = awaitItem()
+                }
+                assertEquals(expected, lastItem)
             }
         }
 
@@ -164,7 +181,11 @@ class EndGameViewModelTest : AppTest() {
                 animateCoins = false,
                 menu = listOf(
                     EndGameMenuModel.PlayAgain,
-                    EndGameMenuModel.Menu
+                    EndGameMenuModel.Menu,
+                    EndGameMenuModel.Share(
+                        showReward = false,
+                        rewardCoins = 0L
+                    )
                 )
             )
             assertEquals(expectedState, awaitItem())

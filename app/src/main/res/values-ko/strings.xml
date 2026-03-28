@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">알림</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 카드가 기다리고 있어요!</item>
-        <item>✨ 새 카드를 잠금 해제할 준비가 됐나요?</item>
-        <item>💰 새로운 보상이 기다리고 있어요!</item>
-        <item>🧠 오늘 기억력은 어떤가요?</item>
-        <item>🏆 최고 점수를 경신하세요!</item>
-        <item>🎴 컬렉션이 당신을 기다려요!</item>
-        <item>✨ 도전할 시간이에요!</item>
-        <item>💰 코인이 쌓이고 있어요!</item>
-        <item>🃏 카드를 섞어보세요!</item>
-        <item>🧠 두뇌를 날카롭게 유지하세요!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 오늘 기억력은 어때요?</item>
+        <item>🃏 카드가 당신을 기다려요!</item>
+        <item>🎴 컬렉션이 미완성이에요!</item>
+        <item>✨ 도전할 시간!</item>
+        <item>🃏 카드를 뒤집을 준비 됐나요?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>쌍을 맞추고 코인을 획득하세요</item>
-        <item>빠른 게임 한 판이 큰 도움이 돼요</item>
-        <item>새 카드가 잠금 해제를 기다리고 있어요</item>
+    <string-array name="notification_reminder_bodies">
+        <item>짧은 게임이 큰 도움이 돼요</item>
+        <item>돌아와서 짝을 맞춰보세요!</item>
+        <item>빠른 라운드로 기억력 테스트</item>
         <item>섞고, 뒤집고, 맞추세요!</item>
-        <item>오늘 컬렉션을 늘려보세요</item>
-        <item>빠른 라운드로 기억력을 테스트하세요</item>
-        <item>컬렉션이 아직 완성되지 않았어요</item>
-        <item>돌아와서 카드를 뒤집어보세요</item>
-        <item>코인은 저절로 모이지 않아요</item>
-        <item>한 라운드 플레이하고 즐기세요</item>
+        <item>두뇌를 날카롭게!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 코인 보상이 준비됐어요!</item>
         <item>✨ 코인이 기다리고 있어요!</item>
         <item>🏆 보상을 받을 시간이에요!</item>
+        <item>💰 코인이 도착했어요!</item>
+        <item>✨ 보상 잠금 해제!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>무료 코인이 기다리고 있어요!</item>
         <item>지금 코인 보상을 받으세요!</item>
         <item>코인이 준비되었어요!</item>
+        <item>광고를 더 보고 코인을 받으세요</item>
+        <item>상점에서 코인을 받으세요!</item>
     </string-array>
 
     <string name="enable_notifications_title">더 많은 보상을 잠금 해제하세요!</string>
     <string name="enable_notifications_body">코인이 준비되고 새 카드가 잠금 해제를 기다릴 때 알림을 받으세요!</string>
     <string name="enable_notifications_enable">활성화</string>
     <string name="enable_notifications_later">나중에</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 연속 기록을 유지하세요!</item>
+        <item>🎁 일일 보상이 준비되었어요!</item>
+        <item>💰 상점에서 무료 코인!</item>
+        <item>🔥 연속 기록을 놓치지 마세요!</item>
+        <item>🎁 오늘의 보상이 기다려요!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>하루가 끝나기 전에 코인을 모으세요!</item>
+        <item>상점에서 보상을 받으세요</item>
+        <item>연속 기록이 위험해요!</item>
+        <item>연속 기록을 끊지 마세요!</item>
+        <item>상점을 열고 코인을 받으세요</item>
+    </string-array>
+    <string name="free_coins">무료 코인</string>
+    <string name="daily_reward_day">%d일차</string>
+    <string name="daily_reward_collect">%d개 수집</string>
+    <string name="daily_reward_back_tomorrow">내일 다시 오세요</string>
+    <string name="share_text">memolki 게임에서 모든 짝을 맞췄어요! 저를 이길 수 있나요? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

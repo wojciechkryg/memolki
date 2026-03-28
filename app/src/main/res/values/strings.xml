@@ -31,41 +31,58 @@
 
     <string name="notification_channel_reminders">Reminders</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Your cards are waiting!</item>
-        <item>✨ Ready to unlock new cards?</item>
-        <item>💰 New rewards are waiting!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 How\'s your memory today?</item>
-        <item>🏆 Beat your best score!</item>
-        <item>🎴 Your collection misses you!</item>
+        <item>🃏 Your cards miss you!</item>
+        <item>🎴 Your collection is incomplete!</item>
         <item>✨ Time for a challenge!</item>
-        <item>💰 Coins are piling up!</item>
-        <item>🃏 Shuffle some cards!</item>
-        <item>🧠 Keep your brain sharp!</item>
+        <item>🃏 Ready to flip some cards?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Match pairs and earn coins</item>
+    <string-array name="notification_reminder_bodies">
         <item>A quick game goes a long way</item>
-        <item>New cards waiting to be unlocked</item>
-        <item>Shuffle, flip, and match!</item>
-        <item>Grow your collection today</item>
+        <item>Come back and match some pairs!</item>
         <item>Test your memory in a quick round</item>
-        <item>Your collection is not complete yet</item>
-        <item>Come back and flip some cards</item>
-        <item>Coins won\'t collect themselves</item>
-        <item>Play a round and have fun</item>
+        <item>Shuffle, flip, and match!</item>
+        <item>Keep your brain sharp!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Your coin reward is ready!</item>
         <item>✨ Coins are waiting for you!</item>
         <item>🏆 Time to collect your reward!</item>
+        <item>💰 Your coins have arrived!</item>
+        <item>✨ Reward unlocked!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Free coins are waiting for you!</item>
         <item>Collect your coin reward now!</item>
         <item>Your coins are ready to claim!</item>
+        <item>Watch another ad for more coins</item>
+        <item>Grab your coins in the shop!</item>
     </string-array>
+
+    <string name="share_text">I matched all pairs in game memolki! Can you beat me? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Keep your streak alive!</item>
+        <item>🎁 Your daily reward is ready!</item>
+        <item>💰 Free coins in the shop!</item>
+        <item>🔥 Don\'t lose your streak!</item>
+        <item>🎁 Today\'s reward is waiting!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Collect your coins before the day ends!</item>
+        <item>Visit the shop to claim your reward</item>
+        <item>Your streak is on the line!</item>
+        <item>Don\'t break your streak!</item>
+        <item>Open the shop and grab your coins</item>
+    </string-array>
+
+    <string name="free_coins">Free Coins</string>
+
+    <string name="daily_reward_day">Day %d</string>
+    <string name="daily_reward_collect">Collect %d</string>
+    <string name="daily_reward_back_tomorrow">Back tomorrow</string>
 
     <string name="enable_notifications_title">Unlock more rewards!</string>
     <string name="enable_notifications_body">Get notified when coins are ready to collect and new cards are waiting to be unlocked!</string>

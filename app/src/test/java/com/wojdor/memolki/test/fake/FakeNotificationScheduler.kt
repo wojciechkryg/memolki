@@ -9,10 +9,13 @@ class FakeNotificationScheduler @Inject constructor(
     random: Random
 ) : NotificationScheduler(mockk(), random) {
 
-    var dailyNotificationScheduled = false
+    var reminderNotificationScheduled = false
         private set
 
     var adRewardNotificationScheduled = false
+        private set
+
+    var streakNotificationScheduled = false
         private set
 
     var adRewardNotificationCancelled = false
@@ -26,12 +29,16 @@ class FakeNotificationScheduler @Inject constructor(
 
     var hasPermission = false
 
-    override fun scheduleDailyNotification() {
-        dailyNotificationScheduled = true
+    override fun scheduleReminderNotification() {
+        reminderNotificationScheduled = true
     }
 
     override fun scheduleAdRewardNotification() {
         adRewardNotificationScheduled = true
+    }
+
+    override fun scheduleStreakNotification() {
+        streakNotificationScheduled = true
     }
 
     override fun cancelAdRewardNotification() {

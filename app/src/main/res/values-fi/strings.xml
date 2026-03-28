@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Muistutukset</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Korttisi odottavat!</item>
-        <item>✨ Valmis avaamaan uusia kortteja?</item>
-        <item>💰 Uudet palkinnot odottavat!</item>
-        <item>🧠 Miten muistisi toimii tänään?</item>
-        <item>🏆 Voita paras tuloksesi!</item>
-        <item>🎴 Kokoelmasi kaipaa sinua!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Millainen muistisi on tänään?</item>
+        <item>🃏 Korttisi kaipaavat sinua!</item>
+        <item>🎴 Kokoelmasi on keskeneräinen!</item>
         <item>✨ Aika haasteelle!</item>
-        <item>💰 Kolikot kasautuvat!</item>
-        <item>🃏 Sekoita kortteja!</item>
-        <item>🧠 Pidä aivosi terävinä!</item>
+        <item>🃏 Valmis kääntämään kortteja?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Yhdistä pareja ja ansaitse kolikoita</item>
-        <item>Nopea peli vie pitkälle</item>
-        <item>Uudet kortit odottavat avaamista</item>
-        <item>Sekoita, käännä ja yhdistä!</item>
-        <item>Kasvata kokoelmaasi tänään</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Nopea peli auttaa paljon</item>
+        <item>Tule takaisin ja yhdistä pareja!</item>
         <item>Testaa muistiasi nopealla kierroksella</item>
-        <item>Kokoelmasi ei ole vielä valmis</item>
-        <item>Tule takaisin ja käännä kortteja</item>
-        <item>Kolikot eivät kerää itseään</item>
-        <item>Pelaa kierros ja pidä hauskaa</item>
+        <item>Sekoita, käännä ja yhdistä!</item>
+        <item>Pidä aivosi terävinä!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Kolikkopalkintosi on valmis!</item>
         <item>✨ Kolikot odottavat sinua!</item>
         <item>🏆 Aika kerätä palkintosi!</item>
+        <item>💰 Kolikkosi ovat saapuneet!</item>
+        <item>✨ Palkkio avattu!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Ilmaiset kolikot odottavat sinua!</item>
         <item>Kerää kolikkopalkkiosi nyt!</item>
         <item>Kolikkosi ovat valmiina!</item>
+        <item>Katso toinen mainos saadaksesi lisää kolikoita</item>
+        <item>Nappaa kolikkosi kaupasta!</item>
     </string-array>
 
     <string name="enable_notifications_title">Avaa lisää palkintoja!</string>
     <string name="enable_notifications_body">Saa ilmoituksia, kun kolikot ovat valmiina kerättäväksi ja uudet kortit odottavat avaamista!</string>
     <string name="enable_notifications_enable">Ota käyttöön</string>
     <string name="enable_notifications_later">Myöhemmin</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Pidä putkesi käynnissä!</item>
+        <item>🎁 Päivittäinen palkkiosi on valmis!</item>
+        <item>💰 Ilmaisia kolikoita kaupassa!</item>
+        <item>🔥 Älä menetä putkea!</item>
+        <item>🎁 Tämän päivän palkkio odottaa!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Kerää kolikot ennen päivän loppua!</item>
+        <item>Käy kaupassa noutamassa palkkio</item>
+        <item>Putkesi on vaakalaudalla!</item>
+        <item>Älä katkaise putkea!</item>
+        <item>Avaa kauppa ja nappaa kolikkosi</item>
+    </string-array>
+    <string name="free_coins">Ilmaiset kolikot</string>
+    <string name="daily_reward_day">Päivä %d</string>
+    <string name="daily_reward_collect">Kerää %d</string>
+    <string name="daily_reward_back_tomorrow">Tule takaisin huomenna</string>
+    <string name="share_text">Löysin kaikki parit pelissä memolki! Voitko päihittää minut? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

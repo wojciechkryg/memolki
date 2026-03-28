@@ -111,6 +111,7 @@ private fun HandleState(
     state: ShopState
 ) {
     val callbacks = ShopCallbacks(
+        onDailyRewardCollectClick = { viewModel.sendIntent(ShopIntent.OnDailyRewardCollectClick) },
         onWatchAdClick = { viewModel.sendIntent(ShopIntent.OnWatchAdClick) },
         onBuyCoinsSmallAmountClick = { viewModel.sendIntent(ShopIntent.OnBuyCoinsSmallAmountClick) },
         onBuyCoinsBigAmountClick = { viewModel.sendIntent(ShopIntent.OnBuyCoinsBigAmountClick) },

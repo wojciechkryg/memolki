@@ -68,6 +68,24 @@ class UserRepository @Inject constructor(
         }
     }
 
+    fun getHasReceivedShareReward(): Flow<Boolean> =
+        decryptLong(userLocalDataSource.encryptedHasReceivedShareReward).map { it == 1L }
+
+    suspend fun setHasReceivedShareReward() {
+        userLocalDataSource.setEncryptedHasReceivedShareReward(encryptor.encrypt(1L))
+    }
+
+    fun getDailyStreakCount() = decryptLong(userLocalDataSource.encryptedDailyStreakCount)
+
+    fun getLastDailyStreakCollectedTimestamp() =
+        decryptLong(userLocalDataSource.encryptedLastDailyStreakCollectedTimestamp)
+
+    suspend fun setDailyStreakData(count: Long, timestamp: Long) {
+        userLocalDataSource.setEncryptedDailyStreakData { _, _ ->
+            encryptor.encrypt(count) to encryptor.encrypt(timestamp)
+        }
+    }
+
     fun getLastShopAdShownTimestamp() =
         decryptLong(userLocalDataSource.encryptedLastShopAdShownTimestamp)
 

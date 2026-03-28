@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">תזכורות</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 הקלפים שלך מחכים!</item>
-        <item>✨ מוכן לפתוח קלפים חדשים?</item>
-        <item>💰 פרסים חדשים מחכים!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 איך הזיכרון שלך היום?</item>
-        <item>🏆 שבור את השיא שלך!</item>
-        <item>🎴 האוסף שלך מתגעגע אליך!</item>
-        <item>✨ הגיע הזמן לאתגר!</item>
-        <item>💰 המטבעות נערמים!</item>
-        <item>🃏 ערבב כמה קלפים!</item>
-        <item>🧠 שמור על המוח שלך חד!</item>
+        <item>🃏 הקלפים שלך מתגעגעים אליך!</item>
+        <item>🎴 האוסף שלך לא שלם!</item>
+        <item>✨ הגיע זמן לאתגר!</item>
+        <item>🃏 מוכן להפוך קלפים?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>התאם זוגות והרוויח מטבעות</item>
-        <item>משחק מהיר עושה את ההבדל</item>
-        <item>קלפים חדשים מחכים לפתיחה</item>
-        <item>ערבב, הפוך והתאם!</item>
-        <item>הגדל את האוסף שלך היום</item>
+    <string-array name="notification_reminder_bodies">
+        <item>משחק מהיר עושה הרבה</item>
+        <item>חזור והתאם זוגות!</item>
         <item>בדוק את הזיכרון שלך בסיבוב מהיר</item>
-        <item>האוסף שלך עדיין לא שלם</item>
-        <item>חזור והפוך כמה קלפים</item>
-        <item>המטבעות לא יאספו את עצמם</item>
-        <item>שחק סיבוב ותהנה</item>
+        <item>ערבב, הפוך והתאם!</item>
+        <item>שמור על המוח חד!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 פרס המטבעות שלך מוכן!</item>
         <item>✨ מטבעות מחכים לך!</item>
         <item>🏆 הגיע הזמן לאסוף את הפרס שלך!</item>
+        <item>💰 המטבעות שלך הגיעו!</item>
+        <item>✨ פרס נפתח!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>מטבעות חינם מחכים לך!</item>
         <item>אסוף את פרס המטבעות שלך עכשיו!</item>
         <item>המטבעות שלך מוכנים!</item>
+        <item>צפה בפרסומת נוספת לעוד מטבעות</item>
+        <item>קח את המטבעות שלך בחנות!</item>
     </string-array>
 
     <string name="enable_notifications_title">פתח עוד פרסים!</string>
     <string name="enable_notifications_body">קבל התראות כשמטבעות מוכנים לאיסוף וקלפים חדשים מחכים לפתיחה!</string>
     <string name="enable_notifications_enable">הפעל</string>
     <string name="enable_notifications_later">מאוחר יותר</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 שמור על הרצף שלך!</item>
+        <item>🎁 הפרס היומי שלך מוכן!</item>
+        <item>💰 מטבעות חינם בחנות!</item>
+        <item>🔥 אל תאבד את הרצף!</item>
+        <item>🎁 פרס היום מחכה!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>אסוף מטבעות לפני שהיום נגמר!</item>
+        <item>בקר בחנות לפרס שלך</item>
+        <item>הרצף שלך בסכנה!</item>
+        <item>אל תשבור את הרצף!</item>
+        <item>פתח את החנות וקח את המטבעות</item>
+    </string-array>
+    <string name="free_coins">מטבעות חינם</string>
+    <string name="daily_reward_day">יום %d</string>
+    <string name="daily_reward_collect">אסוף %d</string>
+    <string name="daily_reward_back_tomorrow">חזור מחר</string>
+    <string name="share_text">התאמתי את כל הזוגות במשחק memolki! אתה יכול לנצח אותי? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

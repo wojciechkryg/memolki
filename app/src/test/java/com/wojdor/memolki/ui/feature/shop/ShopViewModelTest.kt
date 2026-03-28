@@ -9,6 +9,8 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
+import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
+import com.wojdor.memolki.domain.usecase.CollectDailyStreakRewardUseCase
 import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
@@ -80,6 +82,12 @@ class ShopViewModelTest : AppTest() {
     @Inject
     lateinit var notificationScheduler: NotificationScheduler
 
+    @Inject
+    lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+
+    @Inject
+    lateinit var collectDailyStreakRewardUseCase: CollectDailyStreakRewardUseCase
+
     private lateinit var sut: ShopViewModel
 
     @Before
@@ -101,7 +109,9 @@ class ShopViewModelTest : AppTest() {
             unlockAllCardPairsUseCase,
             getTotalCoinsUseCase,
             scheduleAdRewardNotificationUseCase,
-            notificationScheduler
+            notificationScheduler,
+            checkDailyLoginStreakUseCase,
+            collectDailyStreakRewardUseCase
         )
     }
 
@@ -128,10 +138,8 @@ class ShopViewModelTest : AppTest() {
         sut.uiState.test {
             skipItems(2)
             val state = awaitItem()
-            assertEquals(
-                false,
-                (state.menu.first() as ShopMenuModel.WatchAd).isAvailable
-            )
+            val watchAd = state.menu.filterIsInstance<ShopMenuModel.WatchAd>().first()
+            assertEquals(false, watchAd.isAvailable)
         }
     }
 }

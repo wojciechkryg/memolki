@@ -31,44 +31,57 @@
 
     <string name="notification_channel_reminders">Opomniki</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Tvoje karte čakajo!</item>
-        <item>✨ Pripravljen odkleniti nove karte?</item>
-        <item>💰 Nove nagrade čakajo!</item>
-        <item>🧠 Kako ti dela spomin danes?</item>
-        <item>🏆 Premagaj svoj najboljši rezultat!</item>
-        <item>🎴 Tvoja zbirka te pogreša!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Kakšen je tvoj spomin danes?</item>
+        <item>🃏 Tvoje karte te pogrešajo!</item>
+        <item>🎴 Tvoja zbirka ni popolna!</item>
         <item>✨ Čas za izziv!</item>
-        <item>💰 Kovanci se kopičijo!</item>
-        <item>🃏 Premešaj nekaj kart!</item>
-        <item>🧠 Ohranjaj možgane ostre!</item>
+        <item>🃏 Pripravljen obrniti karte?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Poveži pare in zasluži kovance</item>
-        <item>Hitra igra pomaga veliko</item>
-        <item>Nove karte čakajo na odklenitev</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Hitra igra zelo pomaga</item>
+        <item>Vrni se in poveži pare!</item>
+        <item>Preizkusi spomin v hitrem krogu</item>
         <item>Premešaj, obrni in poveži!</item>
-        <item>Povečaj svojo zbirko danes</item>
-        <item>Preizkusi svoj spomin v hitrem krogu</item>
-        <item>Tvoja zbirka še ni popolna</item>
-        <item>Vrni se in obrni nekaj kart</item>
-        <item>Kovanci se ne bodo zbrali sami</item>
-        <item>Igraj krog in se zabavaj</item>
+        <item>Ohranjaj možgane ostre!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Tvoja nagrada v kovancih je pripravljena!</item>
         <item>✨ Kovanci čakajo na te!</item>
         <item>🏆 Čas je, da pobereš svojo nagrado!</item>
+        <item>💰 Tvoji kovanci so prispeli!</item>
+        <item>✨ Nagrada odklenjena!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Brezplačni kovanci te čakajo!</item>
         <item>Poberi svojo nagrado zdaj!</item>
         <item>Tvoji kovanci so pripravljeni!</item>
+        <item>Oglej si še en oglas za več kovancev</item>
+        <item>Vzemi kovance v trgovini!</item>
     </string-array>
 
     <string name="enable_notifications_title">Odkleni več nagrad!</string>
     <string name="enable_notifications_body">Prejmi obvestila, ko so kovanci pripravljeni za pobiranje in nove karte čakajo na odklenitev!</string>
     <string name="enable_notifications_enable">Omogoči</string>
     <string name="enable_notifications_later">Pozneje</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Ohrani svojo serijo!</item>
+        <item>🎁 Tvoja dnevna nagrada je pripravljena!</item>
+        <item>💰 Brezplačni kovanci v trgovini!</item>
+        <item>🔥 Ne izgubi serije!</item>
+        <item>🎁 Današnja nagrada čaka!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Zberi kovance preden se dan konča!</item>
+        <item>Obišči trgovino za nagrado</item>
+        <item>Tvoja serija je ogrožena!</item>
+        <item>Ne prekini serije!</item>
+        <item>Odpri trgovino in vzemi kovance</item>
+    </string-array>
+    <string name="free_coins">Brezplačni kovanci</string>
+    <string name="daily_reward_day">Dan %d</string>
+    <string name="daily_reward_collect">Zberi %d</string>
+    <string name="daily_reward_back_tomorrow">Vrni se jutri</string>
+    <string name="share_text">Ujel sem vse pare v igri memolki! Me lahko premagate? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>
