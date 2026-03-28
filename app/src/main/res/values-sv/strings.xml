@@ -28,47 +28,64 @@
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Språk</string>
     <string name="watch_ad">Titta på annons</string>
+    <string name="share">Dela</string>
+    <string name="content_description_locked">Låst</string>
+    <string name="leaderboard">Topplista</string>
+    <string name="coins">Mynt</string>
 
     <string name="notification_channel_reminders">Påminnelser</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Dina kort väntar!</item>
-        <item>✨ Redo att låsa upp nya kort?</item>
-        <item>💰 Nya belöningar väntar!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Hur är ditt minne idag?</item>
-        <item>🏆 Slå ditt bästa resultat!</item>
-        <item>🎴 Din samling saknar dig!</item>
+        <item>🃏 Dina kort saknar dig!</item>
+        <item>🎴 Din samling är ofullständig!</item>
         <item>✨ Dags för en utmaning!</item>
-        <item>💰 Mynten hopar sig!</item>
-        <item>🃏 Blanda några kort!</item>
-        <item>🧠 Håll hjärnan skarp!</item>
+        <item>🃏 Redo att vända kort?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Matcha par och tjäna mynt</item>
+    <string-array name="notification_reminder_bodies">
         <item>Ett snabbt spel gör stor skillnad</item>
-        <item>Nya kort väntar på att låsas upp</item>
+        <item>Kom tillbaka och matcha par!</item>
+        <item>Testa minnet i en snabb runda</item>
         <item>Blanda, vänd och matcha!</item>
-        <item>Utöka din samling idag</item>
-        <item>Testa ditt minne i en snabb runda</item>
-        <item>Din samling är inte komplett än</item>
-        <item>Kom tillbaka och vänd några kort</item>
-        <item>Mynten samlar inte sig själva</item>
-        <item>Spela en runda och ha kul</item>
+        <item>Håll hjärnan skarp!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Din myntbelöning är redo!</item>
         <item>✨ Mynt väntar på dig!</item>
         <item>🏆 Dags att hämta din belöning!</item>
+        <item>💰 Dina mynt har anlänt!</item>
+        <item>✨ Belöning upplåst!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Gratis mynt väntar på dig!</item>
         <item>Hämta din myntbelöning nu!</item>
         <item>Dina mynt är redo!</item>
+        <item>Titta på en till annons för fler mynt</item>
+        <item>Ta dina mynt i butiken!</item>
     </string-array>
 
     <string name="enable_notifications_title">Lås upp fler belöningar!</string>
     <string name="enable_notifications_body">Få aviseringar när mynt är redo att hämtas och nya kort väntar på att låsas upp!</string>
     <string name="enable_notifications_enable">Aktivera</string>
     <string name="enable_notifications_later">Senare</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Håll din streak vid liv!</item>
+        <item>🎁 Din dagliga belöning är redo!</item>
+        <item>💰 Gratis mynt i butiken!</item>
+        <item>🔥 Förlora inte din streak!</item>
+        <item>🎁 Dagens belöning väntar!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Samla mynt innan dagen är slut!</item>
+        <item>Besök butiken för din belöning</item>
+        <item>Din streak är i fara!</item>
+        <item>Bryt inte din streak!</item>
+        <item>Öppna butiken och ta dina mynt</item>
+    </string-array>
+    <string name="free_coins">Gratis mynt</string>
+    <string name="daily_reward_day">Dag %d</string>
+    <string name="daily_reward_collect">Samla %d</string>
+    <string name="daily_reward_back_tomorrow">Kom tillbaka imorgon</string>
+    <string name="share_text">Jag matchade alla par i spelet memolki! Kan du slå mig? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

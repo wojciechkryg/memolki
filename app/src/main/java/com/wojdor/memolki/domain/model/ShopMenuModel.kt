@@ -7,6 +7,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 sealed class ShopMenuModel(@field:StringRes val textId: Int) : Parcelable {
+    data class DailyReward(
+        override val isAvailable: Boolean,
+        val streakDay: Int,
+        val coinsToGrant: Long
+    ) : ShopMenuModel(R.string.daily_reward_day)
+
     data class WatchAd(
         override val isAvailable: Boolean,
         val coinsToGrant: Long

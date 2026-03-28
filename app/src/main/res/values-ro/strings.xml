@@ -28,47 +28,64 @@
     <string name="setting_vibration">Vibrație</string>
     <string name="setting_language">Limbă</string>
     <string name="watch_ad">Urmărește reclama</string>
+    <string name="share">Distribuie</string>
+    <string name="content_description_locked">Blocat</string>
+    <string name="leaderboard">Clasament</string>
+    <string name="coins">Monede</string>
 
     <string name="notification_channel_reminders">Memento-uri</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Cărțile tale te așteaptă!</item>
-        <item>✨ Pregătit să deblochezi cărți noi?</item>
-        <item>💰 Recompense noi te așteaptă!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Cum e memoria ta azi?</item>
-        <item>🏆 Depășește cel mai bun scor al tău!</item>
-        <item>🎴 Colecția ta îți simte lipsa!</item>
-        <item>✨ E timpul pentru o provocare!</item>
-        <item>💰 Monedele se adună!</item>
-        <item>🃏 Amestecă niște cărți!</item>
-        <item>🧠 Menține-ți mintea în formă!</item>
+        <item>🃏 Cărțile tale te așteaptă!</item>
+        <item>🎴 Colecția ta e incompletă!</item>
+        <item>✨ E timpul unei provocări!</item>
+        <item>🃏 Pregătit să întorci cărți?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Potrivește perechile și câștigă monede</item>
+    <string-array name="notification_reminder_bodies">
         <item>Un joc rapid ajută mult</item>
-        <item>Cărți noi așteaptă să fie deblocate</item>
-        <item>Amestecă, întoarce și potrivește!</item>
-        <item>Mărește-ți colecția azi</item>
+        <item>Revino și potrivește perechi!</item>
         <item>Testează-ți memoria într-o rundă rapidă</item>
-        <item>Colecția ta nu este încă completă</item>
-        <item>Revino și întoarce niște cărți</item>
-        <item>Monedele nu se adună singure</item>
-        <item>Joacă o rundă și distrează-te</item>
+        <item>Amestecă, întoarce și potrivește!</item>
+        <item>Menține-ți mintea ascuțită!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Recompensa ta în monede este gata!</item>
         <item>✨ Monedele te așteaptă!</item>
         <item>🏆 E timpul să îți colectezi recompensa!</item>
+        <item>💰 Monedele tale au sosit!</item>
+        <item>✨ Recompensă deblocată!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Monede gratuite te așteaptă!</item>
         <item>Colectează-ți recompensa acum!</item>
         <item>Monedele tale sunt gata!</item>
+        <item>Privește încă o reclamă pentru mai multe monede</item>
+        <item>Ia-ți monedele din magazin!</item>
     </string-array>
 
     <string name="enable_notifications_title">Deblochează mai multe recompense!</string>
     <string name="enable_notifications_body">Primește notificări când monedele sunt gata de colectat și cărți noi așteaptă să fie deblocate!</string>
     <string name="enable_notifications_enable">Activează</string>
     <string name="enable_notifications_later">Mai târziu</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Menține-ți seria!</item>
+        <item>🎁 Recompensa ta zilnică este gata!</item>
+        <item>💰 Monede gratuite în magazin!</item>
+        <item>🔥 Nu-ți pierde seria!</item>
+        <item>🎁 Recompensa de azi așteaptă!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Colectează monede înainte să se termine ziua!</item>
+        <item>Vizitează magazinul pentru recompensă</item>
+        <item>Seria ta este în pericol!</item>
+        <item>Nu întrerupe seria!</item>
+        <item>Deschide magazinul și ia monedele</item>
+    </string-array>
+    <string name="free_coins">Monede gratuite</string>
+    <string name="daily_reward_day">Ziua %d</string>
+    <string name="daily_reward_collect">Colectează %d</string>
+    <string name="daily_reward_back_tomorrow">Revino mâine</string>
+    <string name="share_text">Am potrivit toate perechile în jocul memolki! Poți să mă învingi? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

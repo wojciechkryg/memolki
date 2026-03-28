@@ -28,47 +28,64 @@
     <string name="setting_vibration">Вібрація</string>
     <string name="setting_language">Мова</string>
     <string name="watch_ad">Переглянути рекламу</string>
+    <string name="share">Поділитися</string>
+    <string name="content_description_locked">Заблоковано</string>
+    <string name="leaderboard">Таблиця лідерів</string>
+    <string name="coins">Монети</string>
 
     <string name="notification_channel_reminders">Нагадування</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Твої картки чекають!</item>
-        <item>✨ Готовий відкрити нові картки?</item>
-        <item>💰 Нові нагороди чекають!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Як твоя пам\'ять сьогодні?</item>
-        <item>🏆 Побий свій найкращий результат!</item>
-        <item>🎴 Твоя колекція сумує за тобою!</item>
+        <item>🃏 Твої картки сумують!</item>
+        <item>🎴 Твоя колекція не завершена!</item>
         <item>✨ Час для випробування!</item>
-        <item>💰 Монети накопичуються!</item>
-        <item>🃏 Перемішай картки!</item>
-        <item>🧠 Тримай мозок у тонусі!</item>
+        <item>🃏 Готовий перевернути картки?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Знаходь пари і заробляй монети</item>
-        <item>Швидка гра — велика користь</item>
-        <item>Нові картки чекають на відкриття</item>
-        <item>Перемішай, переверни та знайди пару!</item>
-        <item>Поповни свою колекцію сьогодні</item>
-        <item>Перевір свою пам\'ять у швидкому раунді</item>
-        <item>Твоя колекція ще не повна</item>
-        <item>Повернись і переверни кілька карток</item>
-        <item>Монети самі себе не зберуть</item>
-        <item>Зіграй раунд і розважся</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Швидка гра дуже допомагає</item>
+        <item>Повертайся і знайди пари!</item>
+        <item>Перевір пам\'ять у швидкому раунді</item>
+        <item>Перемішай, переверни і знайди!</item>
+        <item>Тримай мозок у тонусі!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Твоя нагорода в монетах готова!</item>
         <item>✨ Монети чекають на тебе!</item>
         <item>🏆 Час забрати свою нагороду!</item>
+        <item>💰 Твої монети прибули!</item>
+        <item>✨ Нагорода розблокована!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Безкоштовні монети чекають на тебе!</item>
         <item>Забери свою нагороду зараз!</item>
         <item>Твої монети готові!</item>
+        <item>Подивись ще рекламу за більше монет</item>
+        <item>Забери монети в магазині!</item>
     </string-array>
 
     <string name="enable_notifications_title">Відкрий більше нагород!</string>
     <string name="enable_notifications_body">Отримуй сповіщення, коли монети готові до збору і нові картки чекають на відкриття!</string>
     <string name="enable_notifications_enable">Увімкнути</string>
     <string name="enable_notifications_later">Пізніше</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Не перервай серію!</item>
+        <item>🎁 Твоя щоденна нагорода готова!</item>
+        <item>💰 Безкоштовні монети в магазині!</item>
+        <item>🔥 Не втрать свою серію!</item>
+        <item>🎁 Сьогоднішня нагорода чекає!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Збери монети до кінця дня!</item>
+        <item>Відвідай магазин за нагородою</item>
+        <item>Твоя серія під загрозою!</item>
+        <item>Не перервай серію!</item>
+        <item>Відкрий магазин і забери монети</item>
+    </string-array>
+    <string name="free_coins">Безкоштовні монети</string>
+    <string name="daily_reward_day">День %d</string>
+    <string name="daily_reward_collect">Зібрати %d</string>
+    <string name="daily_reward_back_tomorrow">Повертайся завтра</string>
+    <string name="share_text">Я знайшов усі пари в грі memolki! Зможеш мене перемогти? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

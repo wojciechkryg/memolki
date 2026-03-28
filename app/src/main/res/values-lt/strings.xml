@@ -28,47 +28,64 @@
     <string name="setting_vibration">Vibracija</string>
     <string name="setting_language">Kalba</string>
     <string name="watch_ad">Žiūrėti reklamą</string>
+    <string name="share">Dalintis</string>
+    <string name="content_description_locked">Užrakinta</string>
+    <string name="leaderboard">Lyderių lentelė</string>
+    <string name="coins">Monetos</string>
 
     <string name="notification_channel_reminders">Priminimai</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Tavo kortos laukia!</item>
-        <item>✨ Pasiruošęs atrakinti naujas kortas?</item>
-        <item>💰 Nauji apdovanojimai laukia!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Kaip tavo atmintis šiandien?</item>
-        <item>🏆 Pagerink savo geriausią rezultatą!</item>
-        <item>🎴 Tavo kolekcija tavęs pasiilgo!</item>
+        <item>🃏 Tavo kortos tavęs pasiilgo!</item>
+        <item>🎴 Tavo kolekcija nepilna!</item>
         <item>✨ Laikas iššūkiui!</item>
-        <item>💰 Monetos kaupiasi!</item>
-        <item>🃏 Sumaišyk kelias kortas!</item>
-        <item>🧠 Laikyk savo smegenis formos!</item>
+        <item>🃏 Pasiruošęs versti kortas?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Suporuok poras ir uždirbk monetų</item>
-        <item>Greitas žaidimas labai padeda</item>
-        <item>Naujos kortos laukia atrakinimo</item>
-        <item>Sumaišyk, apversk ir suporuok!</item>
-        <item>Papildyk savo kolekciją šiandien</item>
-        <item>Išbandyk savo atmintį greitame raunde</item>
-        <item>Tavo kolekcija dar nebaigta</item>
-        <item>Grįžk ir apversk kelias kortas</item>
-        <item>Monetos pačios nesirinks</item>
-        <item>Sužaisk raundą ir linksminkis</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Greitas žaidimas daug padeda</item>
+        <item>Grįžk ir surask poras!</item>
+        <item>Patikrink atmintį greitame raunde</item>
+        <item>Maišyk, versk ir rask!</item>
+        <item>Laikyk smegenis aštriai!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Tavo monetų apdovanojimas paruoštas!</item>
         <item>✨ Monetos laukia tavęs!</item>
         <item>🏆 Laikas atsiimti savo apdovanojimą!</item>
+        <item>💰 Tavo monetos atvyko!</item>
+        <item>✨ Atlygis atrakintas!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Nemokamos monetos laukia tavęs!</item>
         <item>Surink savo monetų atlygį dabar!</item>
         <item>Tavo monetos paruoštos!</item>
+        <item>Žiūrėk dar vieną reklamą daugiau monetų</item>
+        <item>Pasiimk monetas parduotuvėje!</item>
     </string-array>
 
     <string name="enable_notifications_title">Atrakink daugiau apdovanojimų!</string>
     <string name="enable_notifications_body">Gauk pranešimus, kai monetos paruoštos surinkti ir naujos kortos laukia atrakinimo!</string>
     <string name="enable_notifications_enable">Įjungti</string>
     <string name="enable_notifications_later">Vėliau</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Išlaikyk savo seriją!</item>
+        <item>🎁 Tavo dienos atlygis paruoštas!</item>
+        <item>💰 Nemokamos monetos parduotuvėje!</item>
+        <item>🔥 Neprarask serijos!</item>
+        <item>🎁 Šiandienos atlygis laukia!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Surink monetas prieš dienai pasibaigiant!</item>
+        <item>Aplankyk parduotuvę atlygiui</item>
+        <item>Tavo serija pavojuje!</item>
+        <item>Nenutrauk serijos!</item>
+        <item>Atidaryk parduotuvę ir pasiimk monetas</item>
+    </string-array>
+    <string name="free_coins">Nemokamos monetos</string>
+    <string name="daily_reward_day">%d diena</string>
+    <string name="daily_reward_collect">Surinkti %d</string>
+    <string name="daily_reward_back_tomorrow">Grįžk rytoj</string>
+    <string name="share_text">Suradau visas poras žaidime memolki! Ar gali mane įveikti? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

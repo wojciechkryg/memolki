@@ -4,5 +4,7 @@ data class EndGameCallbacks(
     val onPlayAgainClick: () -> Unit = {},
     val onMenuClick: () -> Unit = {},
     val onUnlockNewCardClick: () -> Unit = {},
-    val onWatchAdClick: () -> Unit = {}
+    val onWatchAdClick: () -> Unit = {},
+    val onShareClick: () -> Unit = {},
+    val onFreeCoinsClick: () -> Unit = {}
 )

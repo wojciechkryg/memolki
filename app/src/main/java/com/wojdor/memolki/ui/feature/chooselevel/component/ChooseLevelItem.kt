@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
@@ -54,7 +55,7 @@ fun ChooseLevelItem(
             Icon(
                 modifier = Modifier.size(LOCKED_ICON_SIZE),
                 painter = painterResource(R.drawable.ic_lock),
-                contentDescription = null
+                contentDescription = stringResource(R.string.content_description_locked)
             )
         }
         BaseMenuItem(

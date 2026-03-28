@@ -4,26 +4,46 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.component.SparklesOverlay
+import com.wojdor.memolki.ui.component.bounceClickEffect
+import com.wojdor.memolki.util.throttleClick
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
 import com.wojdor.memolki.ui.feature.menu.component.MenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingS
 
 @Composable
 fun EndGameContent(
@@ -70,6 +90,10 @@ fun EndGameContent(
                                     onClick = callbacks.onUnlockNewCardClick
                                 )
 
+                                EndGameMenuModel.FreeCoins -> FreeCoinsItem(
+                                    onClick = callbacks.onFreeCoinsClick
+                                )
+
                                 EndGameMenuModel.PlayAgain -> MenuItem(
                                     textId = menuItem.textId,
                                     onClick = callbacks.onPlayAgainClick
@@ -79,6 +103,11 @@ fun EndGameContent(
                                     textId = menuItem.textId,
                                     onClick = callbacks.onMenuClick
                                 )
+
+                                is EndGameMenuModel.Share -> ShareButton(
+                                    shareModel = menuItem,
+                                    onClick = callbacks.onShareClick
+                                )
                             }
                         }
                     }
@@ -87,6 +116,63 @@ fun EndGameContent(
             }
         }
         SparklesOverlay(isActive = state.showSparkles)
+    }
+}
+
+@Composable
+private fun ShareButton(
+    shareModel: EndGameMenuModel.Share,
+    onClick: () -> Unit
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Button(
+            modifier = Modifier.bounceClickEffect(),
+            onClick = throttleClick(onClick),
+            contentPadding = PaddingValues(spacingL),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent
+            )
+        ) {
+            Icon(
+                modifier = Modifier.size(36.dp),
+                painter = painterResource(R.drawable.ic_share),
+                contentDescription = stringResource(R.string.share)
+            )
+        }
+        val rewardAlpha by animateFloatAsState(
+            targetValue = if (shareModel.showReward) 1f else 0f,
+            label = "share reward alpha"
+        )
+        if (rewardAlpha > 0f) {
+            ShareRewardLabel(
+                modifier = Modifier
+                    .padding(start = spacingS)
+                    .alpha(rewardAlpha),
+                coins = shareModel.rewardCoins
+            )
+        }
+    }
+}
+
+@Composable
+private fun ShareRewardLabel(
+    modifier: Modifier = Modifier,
+    coins: Long = 0L
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(spacingS)
+    ) {
+        Text(
+            text = "+$coins",
+            style = MaterialTheme.typography.headlineSmall
+        )
+        Image(
+            modifier = Modifier.size(32.dp),
+            painter = painterResource(R.drawable.ic_coin),
+            contentDescription = stringResource(R.string.coins)
+        )
     }
 }
 
@@ -103,7 +189,8 @@ private fun EndGameContentPreview() {
                     EndGameMenuModel.WatchAd,
                     EndGameMenuModel.PlayAgain,
                     EndGameMenuModel.Menu,
-                    EndGameMenuModel.UnlockNewCard
+                    EndGameMenuModel.UnlockNewCard,
+                    EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
             )
         )
@@ -121,7 +208,29 @@ private fun EndGameContentWithoutAdPreview() {
                 currentCoins = 5678,
                 menu = listOf(
                     EndGameMenuModel.PlayAgain,
-                    EndGameMenuModel.Menu
+                    EndGameMenuModel.Menu,
+                    EndGameMenuModel.Share(showReward = false)
+                )
+            )
+        )
+    }
+}
+
+@Composable
+@Preview
+private fun EndGameContentWithFreeCoinsPreview() {
+    AppTheme {
+        EndGameContent(
+            state = EndGameState(
+                level = LevelModel.Grid2x3(),
+                rewardedCoins = 1234,
+                currentCoins = 5678,
+                menu = listOf(
+                    EndGameMenuModel.WatchAd,
+                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Menu,
+                    EndGameMenuModel.FreeCoins,
+                    EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
             )
         )

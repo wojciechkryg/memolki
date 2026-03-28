@@ -67,7 +67,7 @@ fun CollectionUnlockCardPairWithAd(
                 Image(
                     modifier = Modifier.size(64.dp),
                     painter = painterResource(R.drawable.ic_ads),
-                    contentDescription = null,
+                    contentDescription = stringResource(R.string.watch_ad),
                 )
                 AutoSizeText(
                     text = stringResource(R.string.watch_ad).uppercase(),

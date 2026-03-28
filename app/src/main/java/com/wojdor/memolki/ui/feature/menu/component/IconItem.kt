@@ -21,6 +21,7 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun IconItem(
     @DrawableRes iconRes: Int,
+    contentDescription: String? = null,
     onClick: () -> Unit = {}
 ) {
     Button(
@@ -35,7 +36,7 @@ fun IconItem(
         Icon(
             modifier = Modifier.size(96.dp),
             painter = painterResource(iconRes),
-            contentDescription = null
+            contentDescription = contentDescription
         )
     }
 }

@@ -28,47 +28,64 @@
     <string name="setting_vibration">Vibração</string>
     <string name="setting_language">Idioma</string>
     <string name="watch_ad">Assistir ao anúncio</string>
+    <string name="share">Partilhar</string>
+    <string name="content_description_locked">Bloqueado</string>
+    <string name="leaderboard">Classificação</string>
+    <string name="coins">Moedas</string>
 
     <string name="notification_channel_reminders">Lembretes</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Suas cartas estão esperando!</item>
-        <item>✨ Pronto para desbloquear novas cartas?</item>
-        <item>💰 Novas recompensas estão esperando!</item>
-        <item>🧠 Como está sua memória hoje?</item>
-        <item>🏆 Supere sua melhor pontuação!</item>
-        <item>🎴 Sua coleção sente sua falta!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Como está a tua memória hoje?</item>
+        <item>🃏 As tuas cartas sentem a tua falta!</item>
+        <item>🎴 A tua coleção está incompleta!</item>
         <item>✨ Hora de um desafio!</item>
-        <item>💰 As moedas estão se acumulando!</item>
-        <item>🃏 Embaralhe algumas cartas!</item>
-        <item>🧠 Mantenha seu cérebro afiado!</item>
+        <item>🃏 Pronto para virar cartas?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Combine pares e ganhe moedas</item>
-        <item>Um jogo rápido faz muita diferença</item>
-        <item>Novas cartas esperando para serem desbloqueadas</item>
-        <item>Embaralhe, vire e combine!</item>
-        <item>Aumente sua coleção hoje</item>
-        <item>Teste sua memória em uma rodada rápida</item>
-        <item>Sua coleção ainda não está completa</item>
-        <item>Volte e vire algumas cartas</item>
-        <item>As moedas não se coletam sozinhas</item>
-        <item>Jogue uma rodada e divirta-se</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Um jogo rápido faz bem</item>
+        <item>Volta e encontra pares!</item>
+        <item>Testa a memória numa ronda rápida</item>
+        <item>Baralha, vira e combina!</item>
+        <item>Mantém o cérebro afiado!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
-        <item>💰 Sua recompensa em moedas está pronta!</item>
-        <item>✨ Moedas estão esperando por você!</item>
-        <item>🏆 Hora de coletar sua recompensa!</item>
+        <item>💰 A tua recompensa em moedas está pronta!</item>
+        <item>✨ Moedas estão à tua espera!</item>
+        <item>🏆 Hora de recolher a tua recompensa!</item>
+        <item>💰 As tuas moedas chegaram!</item>
+        <item>✨ Recompensa desbloqueada!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
-        <item>Moedas grátis estão esperando!</item>
-        <item>Colete sua recompensa de moedas agora!</item>
-        <item>Suas moedas estão prontas!</item>
+        <item>Moedas grátis à tua espera!</item>
+        <item>Recolhe a tua recompensa agora!</item>
+        <item>As tuas moedas estão prontas!</item>
+        <item>Vê mais um anúncio para mais moedas</item>
+        <item>Pega as moedas na loja!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Desbloqueie mais recompensas!</string>
-    <string name="enable_notifications_body">Receba notificações quando moedas estiverem prontas e novas cartas esperando para serem desbloqueadas!</string>
+    <string name="enable_notifications_title">Desbloqueia mais recompensas!</string>
+    <string name="enable_notifications_body">Recebe notificações quando moedas estiverem prontas e novas cartas à espera de serem desbloqueadas!</string>
     <string name="enable_notifications_enable">Ativar</string>
     <string name="enable_notifications_later">Depois</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Mantém a tua série!</item>
+        <item>🎁 A tua recompensa diária está pronta!</item>
+        <item>💰 Moedas grátis na loja!</item>
+        <item>🔥 Não percas a tua série!</item>
+        <item>🎁 A recompensa de hoje espera!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Recolhe moedas antes do dia acabar!</item>
+        <item>Visita a loja para a recompensa</item>
+        <item>A tua série está em jogo!</item>
+        <item>Não quebres a tua série!</item>
+        <item>Abre a loja e pega as moedas</item>
+    </string-array>
+    <string name="free_coins">Moedas grátis</string>
+    <string name="daily_reward_day">Dia %d</string>
+    <string name="daily_reward_collect">Recolher %d</string>
+    <string name="daily_reward_back_tomorrow">Volta amanhã</string>
+    <string name="share_text">Encontrei todos os pares no jogo memolki! Consegues vencer-me? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

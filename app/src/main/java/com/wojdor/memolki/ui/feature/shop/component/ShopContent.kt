@@ -55,6 +55,19 @@ fun ShopContent(
                 it.forEach { menuItem ->
                     Spacer(modifier = Modifier.height(spacingL))
                     when (menuItem) {
+                        is ShopMenuModel.DailyReward -> ShopMenuItem(
+                            priceText = stringResource(R.string.daily_reward_day, menuItem.streakDay),
+                            descriptionText = if (menuItem.isAvailable) {
+                                stringResource(R.string.daily_reward_collect, menuItem.coinsToGrant)
+                            } else {
+                                stringResource(R.string.daily_reward_back_tomorrow)
+                            },
+                            leftDrawableRes = R.drawable.ic_daily_reward,
+                            rightDrawableRes = R.drawable.ic_coins_pile_small,
+                            onClick = callbacks.onDailyRewardCollectClick,
+                            isEnabled = menuItem.isAvailable
+                        )
+
                         is ShopMenuModel.WatchAd -> ShopMenuItem(
                             priceText = stringResource(R.string.watch_ad),
                             descriptionText = if (menuItem.isAvailable) {
@@ -113,6 +126,26 @@ private fun ShopContentPreview() {
             state = ShopState(
                 coins = 1234,
                 menu = listOf(
+                    ShopMenuModel.DailyReward(true, 3, 3),
+                    ShopMenuModel.WatchAd(true, 25),
+                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                    ShopMenuModel.BuyAllCards("$14.99")
+                )
+            )
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun ShopContentDailyRewardCollectedPreview() {
+    AppTheme {
+        ShopContent(
+            state = ShopState(
+                coins = 1234,
+                menu = listOf(
+                    ShopMenuModel.DailyReward(false, 3, 0),
                     ShopMenuModel.WatchAd(true, 25),
                     ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
                     ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),

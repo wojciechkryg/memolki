@@ -28,47 +28,64 @@
     <string name="setting_vibration">Rezgés</string>
     <string name="setting_language">Nyelv</string>
     <string name="watch_ad">Reklám megtekintése</string>
+    <string name="share">Megosztás</string>
+    <string name="content_description_locked">Zárolva</string>
+    <string name="leaderboard">Ranglista</string>
+    <string name="coins">Érmék</string>
 
     <string name="notification_channel_reminders">Emlékeztetők</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 A kártyáid várnak!</item>
-        <item>✨ Készen állsz új kártyákat feloldani?</item>
-        <item>💰 Új jutalmak várnak!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Milyen ma a memóriád?</item>
-        <item>🏆 Döntsd meg a legjobb eredményed!</item>
-        <item>🎴 A gyűjteményed hiányol!</item>
-        <item>✨ Itt az ideje egy kihívásnak!</item>
-        <item>💰 Az érmék gyűlnek!</item>
-        <item>🃏 Keverd meg a kártyákat!</item>
-        <item>🧠 Tartsd karban az agyad!</item>
+        <item>🃏 A kártyáid hiányolnak!</item>
+        <item>🎴 A gyűjteményed hiányos!</item>
+        <item>✨ Ideje egy kihívásnak!</item>
+        <item>🃏 Készen állsz kártyát fordítani?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Párosítsd a párokat és szerezz érméket</item>
-        <item>Egy gyors játék sokat számít</item>
-        <item>Új kártyák várnak feloldásra</item>
-        <item>Keverd, fordítsd és párosítsd!</item>
-        <item>Bővítsd a gyűjteményed ma</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Egy gyors játék sokat segít</item>
+        <item>Gyere vissza és párosíts!</item>
         <item>Teszteld a memóriádat egy gyors körben</item>
-        <item>A gyűjteményed még nem teljes</item>
-        <item>Gyere vissza és forgass néhány kártyát</item>
-        <item>Az érmék nem gyűjtik magukat</item>
-        <item>Játssz egy kört és szórakozz</item>
+        <item>Keverj, fordíts és párosíts!</item>
+        <item>Tartsd élesben az agyad!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Az érme jutalmad kész!</item>
         <item>✨ Érmék várnak rád!</item>
         <item>🏆 Ideje begyűjteni a jutalmadat!</item>
+        <item>💰 Az érméid megérkeztek!</item>
+        <item>✨ Jutalom feloldva!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Ingyenes érmék várnak rád!</item>
         <item>Gyűjtsd be az érmejutalmadat most!</item>
         <item>Az érméid már készek!</item>
+        <item>Nézz meg még egy hirdetést több érméért</item>
+        <item>Vedd el az érméidet a boltban!</item>
     </string-array>
 
     <string name="enable_notifications_title">Oldj fel több jutalmat!</string>
     <string name="enable_notifications_body">Kapj értesítéseket, amikor az érmék begyűjthetők és új kártyák várnak feloldásra!</string>
     <string name="enable_notifications_enable">Engedélyezés</string>
     <string name="enable_notifications_later">Később</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Tartsd életben a sorozatod!</item>
+        <item>🎁 A napi jutalmad kész!</item>
+        <item>💰 Ingyenes érmék a boltban!</item>
+        <item>🔥 Ne veszítsd el a sorozatod!</item>
+        <item>🎁 A mai jutalom vár!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Gyűjtsd be az érméket a nap végéig!</item>
+        <item>Látogasd meg a boltot a jutalomért</item>
+        <item>A sorozatod veszélyben van!</item>
+        <item>Ne szakítsd meg a sorozatot!</item>
+        <item>Nyisd meg a boltot és vedd el az érméket</item>
+    </string-array>
+    <string name="free_coins">Ingyenes érmék</string>
+    <string name="daily_reward_day">%d. nap</string>
+    <string name="daily_reward_collect">Gyűjts %d</string>
+    <string name="daily_reward_back_tomorrow">Gyere vissza holnap</string>
+    <string name="share_text">Megtaláltam az összes párt a memolki játékban! Le tudsz győzni? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

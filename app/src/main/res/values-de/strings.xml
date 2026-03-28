@@ -28,47 +28,64 @@
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Sprache</string>
     <string name="watch_ad">Werbung ansehen</string>
+    <string name="share">Teilen</string>
+    <string name="content_description_locked">Gesperrt</string>
+    <string name="leaderboard">Bestenliste</string>
+    <string name="coins">Münzen</string>
 
     <string name="notification_channel_reminders">Erinnerungen</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Deine Karten warten!</item>
-        <item>✨ Bereit, neue Karten freizuschalten?</item>
-        <item>💰 Neue Belohnungen warten!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Wie ist dein Gedächtnis heute?</item>
-        <item>🏆 Schlag deinen Highscore!</item>
-        <item>🎴 Deine Sammlung vermisst dich!</item>
+        <item>🃏 Deine Karten vermissen dich!</item>
+        <item>🎴 Deine Sammlung ist unvollständig!</item>
         <item>✨ Zeit für eine Herausforderung!</item>
-        <item>💰 Die Münzen häufen sich!</item>
-        <item>🃏 Misch ein paar Karten!</item>
-        <item>🧠 Halte dein Gehirn fit!</item>
+        <item>🃏 Bereit, Karten umzudrehen?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Finde Paare und verdiene Münzen</item>
-        <item>Ein schnelles Spiel bringt viel</item>
-        <item>Neue Karten warten darauf, freigeschaltet zu werden</item>
-        <item>Mischen, umdrehen und zuordnen!</item>
-        <item>Erweitere heute deine Sammlung</item>
-        <item>Teste dein Gedächtnis in einer schnellen Runde</item>
-        <item>Deine Sammlung ist noch nicht komplett</item>
-        <item>Komm zurück und dreh ein paar Karten um</item>
-        <item>Münzen sammeln sich nicht von allein</item>
-        <item>Spiel eine Runde und hab Spaß</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Ein kurzes Spiel bringt viel</item>
+        <item>Komm zurück und finde Paare!</item>
+        <item>Teste dein Gedächtnis in einer Runde</item>
+        <item>Mischen, umdrehen und finden!</item>
+        <item>Halte dein Gehirn fit!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Deine Münzbelohnung ist bereit!</item>
         <item>✨ Münzen warten auf dich!</item>
         <item>🏆 Zeit, deine Belohnung abzuholen!</item>
+        <item>💰 Deine Münzen sind da!</item>
+        <item>✨ Belohnung freigeschaltet!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Gratis Münzen warten auf dich!</item>
         <item>Hol dir jetzt deine Münzbelohnung!</item>
         <item>Deine Münzen sind bereit!</item>
+        <item>Sieh dir eine weitere Werbung für mehr Münzen an</item>
+        <item>Hol dir deine Münzen im Shop!</item>
     </string-array>
 
     <string name="enable_notifications_title">Schalte mehr Belohnungen frei!</string>
     <string name="enable_notifications_body">Lass dich benachrichtigen, wenn Münzen bereit sind und neue Karten darauf warten, freigeschaltet zu werden!</string>
     <string name="enable_notifications_enable">Aktivieren</string>
     <string name="enable_notifications_later">Später</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Halte deine Serie aufrecht!</item>
+        <item>🎁 Deine tägliche Belohnung ist bereit!</item>
+        <item>💰 Gratis Münzen im Shop!</item>
+        <item>🔥 Verliere deine Serie nicht!</item>
+        <item>🎁 Die heutige Belohnung wartet!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Sammle Münzen bevor der Tag endet!</item>
+        <item>Besuche den Shop für deine Belohnung</item>
+        <item>Deine Serie steht auf dem Spiel!</item>
+        <item>Brich deine Serie nicht ab!</item>
+        <item>Öffne den Shop und hol dir Münzen</item>
+    </string-array>
+    <string name="free_coins">Gratis Münzen</string>
+    <string name="daily_reward_day">Tag %d</string>
+    <string name="daily_reward_collect">Sammle %d</string>
+    <string name="daily_reward_back_tomorrow">Komm morgen wieder</string>
+    <string name="share_text">Ich habe alle Paare im Spiel memolki gefunden! Kannst du mich schlagen? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

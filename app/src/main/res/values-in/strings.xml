@@ -28,47 +28,64 @@
     <string name="setting_vibration">Getaran</string>
     <string name="setting_language">Bahasa</string>
     <string name="watch_ad">Tonton Iklan</string>
+    <string name="share">Bagikan</string>
+    <string name="content_description_locked">Terkunci</string>
+    <string name="leaderboard">Papan peringkat</string>
+    <string name="coins">Koin</string>
 
     <string name="notification_channel_reminders">Pengingat</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Kartumu sudah menunggu!</item>
-        <item>✨ Siap membuka kartu baru?</item>
-        <item>💰 Hadiah baru sudah menunggu!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Bagaimana ingatanmu hari ini?</item>
-        <item>🏆 Kalahkan skor terbaikmu!</item>
-        <item>🎴 Koleksimu merindukanmu!</item>
-        <item>✨ Saatnya tantangan!</item>
-        <item>💰 Koin terus bertambah!</item>
-        <item>🃏 Kocok beberapa kartu!</item>
-        <item>🧠 Jaga otakmu tetap tajam!</item>
+        <item>🃏 Kartumu merindukanmu!</item>
+        <item>🎴 Koleksimu belum lengkap!</item>
+        <item>✨ Waktunya tantangan!</item>
+        <item>🃏 Siap membalik kartu?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Cocokkan pasangan dan dapatkan koin</item>
-        <item>Permainan cepat sangat membantu</item>
-        <item>Kartu baru menunggu untuk dibuka</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Satu permainan cepat sangat membantu</item>
+        <item>Kembali dan cocokkan pasangan!</item>
+        <item>Uji ingatanmu dalam putaran cepat</item>
         <item>Kocok, balik, dan cocokkan!</item>
-        <item>Perbesar koleksimu hari ini</item>
-        <item>Uji ingatanmu dalam ronde cepat</item>
-        <item>Koleksimu belum lengkap</item>
-        <item>Kembali dan balik beberapa kartu</item>
-        <item>Koin tidak akan mengumpulkan dirinya sendiri</item>
-        <item>Mainkan satu ronde dan bersenang-senang</item>
+        <item>Jaga otakmu tetap tajam!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Hadiah koinmu sudah siap!</item>
         <item>✨ Koin menunggumu!</item>
         <item>🏆 Saatnya mengambil hadiahmu!</item>
+        <item>💰 Koinmu sudah tiba!</item>
+        <item>✨ Hadiah terbuka!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Koin gratis menunggumu!</item>
         <item>Kumpulkan hadiah koinmu sekarang!</item>
         <item>Koinmu sudah siap!</item>
+        <item>Tonton iklan lagi untuk lebih banyak koin</item>
+        <item>Ambil koinmu di toko!</item>
     </string-array>
 
     <string name="enable_notifications_title">Buka lebih banyak hadiah!</string>
     <string name="enable_notifications_body">Dapatkan notifikasi saat koin siap dikumpulkan dan kartu baru menunggu untuk dibuka!</string>
     <string name="enable_notifications_enable">Aktifkan</string>
     <string name="enable_notifications_later">Nanti</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Jaga streak-mu tetap hidup!</item>
+        <item>🎁 Hadiah harianmu sudah siap!</item>
+        <item>💰 Koin gratis di toko!</item>
+        <item>🔥 Jangan kehilangan streak-mu!</item>
+        <item>🎁 Hadiah hari ini menunggu!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Kumpulkan koinmu sebelum hari berakhir!</item>
+        <item>Kunjungi toko untuk hadiahmu</item>
+        <item>Streak-mu dipertaruhkan!</item>
+        <item>Jangan putus streak-mu!</item>
+        <item>Buka toko dan ambil koinmu</item>
+    </string-array>
+    <string name="free_coins">Koin gratis</string>
+    <string name="daily_reward_day">Hari %d</string>
+    <string name="daily_reward_collect">Kumpulkan %d</string>
+    <string name="daily_reward_back_tomorrow">Kembali besok</string>
+    <string name="share_text">Saya mencocokkan semua pasangan di game memolki! Bisakah kamu mengalahkan saya? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

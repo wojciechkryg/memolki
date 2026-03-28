@@ -45,7 +45,7 @@ fun ShopButton(onClick: () -> Unit = {}) {
         Image(
             modifier = Modifier.size(56.dp),
             painter = painterResource(id = R.drawable.ic_coins_sack),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.shop),
         )
         Spacer(modifier = Modifier.size(spacingXS))
         Text(

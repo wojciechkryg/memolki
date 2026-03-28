@@ -9,4 +9,5 @@ sealed class ShopIntent : UiIntent {
     object OnBuyCoinsBigAmountClick : ShopIntent()
     object OnBuyAllCardsClick : ShopIntent()
     data class OnAdDismiss(val wasRewardGranted: Boolean) : ShopIntent()
+    object OnDailyRewardCollectClick : ShopIntent()
 }

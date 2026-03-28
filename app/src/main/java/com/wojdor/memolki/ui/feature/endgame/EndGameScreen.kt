@@ -1,7 +1,9 @@
 package com.wojdor.memolki.ui.feature.endgame
 
 import android.app.Activity
+import android.content.Intent
 import androidx.activity.compose.LocalActivity
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -11,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
+import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.ads.RewardedAd
@@ -18,6 +21,7 @@ import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
+import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.component.EndGameContent
 import com.wojdor.memolki.ui.feature.game.GameIntent
@@ -33,6 +37,10 @@ fun EndGameScreen(
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
+    LifecycleResumeEffect(Unit) {
+        viewModel.sendIntent(EndGameIntent.OnScreenResume)
+        onPauseOrDispose {}
+    }
     HandleEffect(viewModel, gameViewModel, navController)
     HandleState(viewModel, state)
 }
@@ -77,8 +85,20 @@ private fun HandleEffect(
                     effect.totalCoins
                 )
             }
+
+            EndGameEffect.Share -> activity?.let { shareApp(it) }
+            EndGameEffect.OpenShopScreen -> navController.navigateToShop()
         }
     }
+}
+
+private fun shareApp(activity: Activity) {
+    val shareText = activity.getString(R.string.share_text, activity.packageName)
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, shareText)
+    }
+    activity.startActivity(Intent.createChooser(intent, null))
 }
 
 private fun openGameScreen(
@@ -141,7 +161,9 @@ private fun HandleState(
         onPlayAgainClick = { viewModel.sendIntent(EndGameIntent.OnPlayAgainClick(state.level)) },
         onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) },
         onUnlockNewCardClick = { viewModel.sendIntent(EndGameIntent.OnUnlockNewCardClick) },
-        onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) }
+        onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) },
+        onShareClick = { viewModel.sendIntent(EndGameIntent.OnShareClick) },
+        onFreeCoinsClick = { viewModel.sendIntent(EndGameIntent.OnFreeCoinsClick) }
     )
     EndGameScreen(state, callbacks)
 }

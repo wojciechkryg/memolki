@@ -28,47 +28,64 @@
     <string name="setting_vibration">Rung</string>
     <string name="setting_language">Ngôn ngữ</string>
     <string name="watch_ad">Xem quảng cáo</string>
+    <string name="share">Chia sẻ</string>
+    <string name="content_description_locked">Đã khóa</string>
+    <string name="leaderboard">Bảng xếp hạng</string>
+    <string name="coins">Xu</string>
 
     <string name="notification_channel_reminders">Nhắc nhở</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Thẻ của bạn đang chờ!</item>
-        <item>✨ Sẵn sàng mở khóa thẻ mới?</item>
-        <item>💰 Phần thưởng mới đang chờ!</item>
-        <item>🧠 Trí nhớ của bạn hôm nay thế nào?</item>
-        <item>🏆 Phá kỷ lục của bạn!</item>
-        <item>🎴 Bộ sưu tập nhớ bạn!</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Trí nhớ bạn hôm nay thế nào?</item>
+        <item>🃏 Thẻ bài đang nhớ bạn!</item>
+        <item>🎴 Bộ sưu tập chưa hoàn thành!</item>
         <item>✨ Đến lúc thử thách!</item>
-        <item>💰 Xu đang tích lũy!</item>
-        <item>🃏 Xáo trộn vài lá thẻ!</item>
-        <item>🧠 Giữ trí não sắc bén!</item>
+        <item>🃏 Sẵn sàng lật thẻ chưa?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Ghép đôi và kiếm xu</item>
+    <string-array name="notification_reminder_bodies">
         <item>Một ván nhanh rất có ích</item>
-        <item>Thẻ mới đang chờ được mở khóa</item>
-        <item>Xáo, lật và ghép đôi!</item>
-        <item>Mở rộng bộ sưu tập hôm nay</item>
-        <item>Thử trí nhớ trong một vòng nhanh</item>
-        <item>Bộ sưu tập chưa hoàn thành</item>
-        <item>Quay lại và lật vài lá thẻ</item>
-        <item>Xu không tự thu thập được</item>
-        <item>Chơi một vòng và vui vẻ</item>
+        <item>Quay lại và ghép đôi!</item>
+        <item>Kiểm tra trí nhớ trong vòng nhanh</item>
+        <item>Xáo, lật và ghép!</item>
+        <item>Giữ đầu óc minh mẫn!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Phần thưởng xu đã sẵn sàng!</item>
         <item>✨ Xu đang chờ bạn!</item>
         <item>🏆 Đến lúc nhận phần thưởng!</item>
+        <item>💰 Xu của bạn đã đến!</item>
+        <item>✨ Phần thưởng mở khóa!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Xu miễn phí đang chờ bạn!</item>
         <item>Nhận phần thưởng xu ngay!</item>
         <item>Xu của bạn đã sẵn sàng!</item>
+        <item>Xem thêm quảng cáo để nhận xu</item>
+        <item>Lấy xu trong cửa hàng!</item>
     </string-array>
 
     <string name="enable_notifications_title">Mở khóa thêm phần thưởng!</string>
     <string name="enable_notifications_body">Nhận thông báo khi xu sẵn sàng để thu thập và thẻ mới đang chờ mở khóa!</string>
     <string name="enable_notifications_enable">Bật</string>
     <string name="enable_notifications_later">Để sau</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Giữ chuỗi của bạn!</item>
+        <item>🎁 Phần thưởng hàng ngày đã sẵn sàng!</item>
+        <item>💰 Xu miễn phí trong cửa hàng!</item>
+        <item>🔥 Đừng mất chuỗi!</item>
+        <item>🎁 Phần thưởng hôm nay đang chờ!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Thu thập xu trước khi hết ngày!</item>
+        <item>Ghé cửa hàng nhận thưởng</item>
+        <item>Chuỗi của bạn đang gặp nguy!</item>
+        <item>Đừng phá vỡ chuỗi!</item>
+        <item>Mở cửa hàng và lấy xu</item>
+    </string-array>
+    <string name="free_coins">Xu miễn phí</string>
+    <string name="daily_reward_day">Ngày %d</string>
+    <string name="daily_reward_collect">Thu thập %d</string>
+    <string name="daily_reward_back_tomorrow">Quay lại ngày mai</string>
+    <string name="share_text">Tôi đã ghép tất cả các cặp trong trò chơi memolki! Bạn có thể thắng tôi không? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

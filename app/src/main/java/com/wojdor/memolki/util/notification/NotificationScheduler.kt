@@ -25,18 +25,18 @@ open class NotificationScheduler @Inject constructor(
 
     override fun onCreate(owner: LifecycleOwner) {
         createNotificationChannel()
-        scheduleDailyNotification()
+        scheduleReminderNotification()
     }
 
     override fun onResume(owner: LifecycleOwner) {
         dismissVisibleNotifications()
     }
 
-    open fun scheduleDailyNotification() {
+    open fun scheduleReminderNotification() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
-        val triggerAt = calculateNextDailyTriggerTime()
-        val pendingIntent = createPendingIntent(TYPE_DAILY, DAILY_ALARM_REQUEST_CODE)
+        val triggerAt = calculateNextReminderTriggerTime()
+        val pendingIntent = createPendingIntent(TYPE_REMINDER, REMINDER_ALARM_REQUEST_CODE)
         alarmManager.setWindow(
             AlarmManager.RTC_WAKEUP,
             triggerAt,
@@ -58,6 +58,19 @@ open class NotificationScheduler @Inject constructor(
         )
     }
 
+    open fun scheduleStreakNotification() {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+            ?: return
+        val triggerAt = calculateNextStreakTriggerTime()
+        val pendingIntent = createPendingIntent(TYPE_STREAK, STREAK_ALARM_REQUEST_CODE)
+        alarmManager.setWindow(
+            AlarmManager.RTC_WAKEUP,
+            triggerAt,
+            DAILY_WINDOW_MS,
+            pendingIntent
+        )
+    }
+
     open fun cancelAdRewardNotification() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
@@ -69,8 +82,9 @@ open class NotificationScheduler @Inject constructor(
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
                 ?: return
-        notificationManager.cancel(DAILY_NOTIFICATION_ID)
+        notificationManager.cancel(REMINDER_NOTIFICATION_ID)
         notificationManager.cancel(AD_REWARD_NOTIFICATION_ID)
+        notificationManager.cancel(STREAK_NOTIFICATION_ID)
     }
 
     open fun createNotificationChannel() {
@@ -97,7 +111,20 @@ open class NotificationScheduler @Inject constructor(
         }
     }
 
-    private fun calculateNextDailyTriggerTime(): Long {
+    private fun calculateNextStreakTriggerTime(): Long {
+        val randomHour = random.nextInt(DAILY_WINDOW_START_HOUR, DAILY_WINDOW_END_HOUR)
+        val randomMinute = random.nextInt(MINUTES_IN_HOUR)
+        val calendar = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, STREAK_INTERVAL_DAYS)
+            set(Calendar.HOUR_OF_DAY, randomHour)
+            set(Calendar.MINUTE, randomMinute)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.timeInMillis
+    }
+
+    private fun calculateNextReminderTriggerTime(): Long {
         val randomHour = random.nextInt(DAILY_WINDOW_START_HOUR, DAILY_WINDOW_END_HOUR)
         val randomMinute = random.nextInt(MINUTES_IN_HOUR)
         val calendar = Calendar.getInstance().apply {
@@ -124,19 +151,23 @@ open class NotificationScheduler @Inject constructor(
 
     companion object {
         internal const val NOTIFICATION_CHANNEL_ID = "reminders"
-        internal const val DAILY_NOTIFICATION_ID = 2001
+        internal const val REMINDER_NOTIFICATION_ID = 2001
         internal const val AD_REWARD_NOTIFICATION_ID = 2002
+        internal const val STREAK_NOTIFICATION_ID = 2003
         internal const val EXTRA_NOTIFICATION_TYPE = "notification_type"
-        internal const val TYPE_DAILY = "daily"
+        internal const val TYPE_REMINDER = "reminder"
         internal const val TYPE_AD_REWARD = "ad_reward"
+        internal const val TYPE_STREAK = "streak"
         internal const val SHOP_AD_COOLDOWN_MS = 30 * 60 * 1000L
         private const val AD_REWARD_WINDOW_MS = 30 * 60 * 1000L
         private const val REMINDER_INTERVAL_DAYS = 3
         private const val DAILY_WINDOW_START_HOUR = 14
         private const val DAILY_WINDOW_END_HOUR = 20
         private const val DAILY_WINDOW_MS = 60 * 60 * 1000L
-        private const val DAILY_ALARM_REQUEST_CODE = 1001
+        private const val REMINDER_ALARM_REQUEST_CODE = 1001
         private const val AD_REWARD_ALARM_REQUEST_CODE = 1002
+        private const val STREAK_ALARM_REQUEST_CODE = 1003
+        private const val STREAK_INTERVAL_DAYS = 1
         private const val MINUTES_IN_HOUR = 60
     }
 }

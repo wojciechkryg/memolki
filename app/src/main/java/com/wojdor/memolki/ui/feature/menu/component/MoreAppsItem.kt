@@ -63,7 +63,7 @@ fun MoreAppsItem(
                     Image(
                         modifier = Modifier.height(48.dp),
                         painter = painterResource(appModel.imageRes),
-                        contentDescription = null
+                        contentDescription = stringResource(appModel.textRes)
                     )
                     Text(
                         modifier = Modifier.padding(start = spacingS),

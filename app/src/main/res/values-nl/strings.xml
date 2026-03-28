@@ -28,47 +28,64 @@
     <string name="setting_vibration">Trilling</string>
     <string name="setting_language">Taal</string>
     <string name="watch_ad">Bekijk advertentie</string>
+    <string name="share">Delen</string>
+    <string name="content_description_locked">Vergrendeld</string>
+    <string name="leaderboard">Scorebord</string>
+    <string name="coins">Munten</string>
 
     <string name="notification_channel_reminders">Herinneringen</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Je kaarten wachten!</item>
-        <item>✨ Klaar om nieuwe kaarten te ontgrendelen?</item>
-        <item>💰 Nieuwe beloningen wachten!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Hoe is je geheugen vandaag?</item>
-        <item>🏆 Versla je beste score!</item>
-        <item>🎴 Je collectie mist je!</item>
+        <item>🃏 Je kaarten missen je!</item>
+        <item>🎴 Je collectie is onvolledig!</item>
         <item>✨ Tijd voor een uitdaging!</item>
-        <item>💰 De munten stapelen zich op!</item>
-        <item>🃏 Schud wat kaarten!</item>
-        <item>🧠 Houd je brein scherp!</item>
+        <item>🃏 Klaar om kaarten om te draaien?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Match paren en verdien munten</item>
-        <item>Een snel spelletje doet wonderen</item>
-        <item>Nieuwe kaarten wachten om ontgrendeld te worden</item>
-        <item>Schud, draai om en match!</item>
-        <item>Breid je collectie vandaag uit</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Een snel spelletje helpt veel</item>
+        <item>Kom terug en zoek paren!</item>
         <item>Test je geheugen in een snelle ronde</item>
-        <item>Je collectie is nog niet compleet</item>
-        <item>Kom terug en draai wat kaarten om</item>
-        <item>Munten verzamelen zich niet vanzelf</item>
-        <item>Speel een ronde en heb plezier</item>
+        <item>Schud, draai en match!</item>
+        <item>Houd je brein scherp!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Je muntbeloning is klaar!</item>
         <item>✨ Munten wachten op je!</item>
         <item>🏆 Tijd om je beloning op te halen!</item>
+        <item>💰 Je munten zijn gearriveerd!</item>
+        <item>✨ Beloning ontgrendeld!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Gratis munten wachten op je!</item>
         <item>Haal je muntbeloning nu op!</item>
         <item>Je munten zijn klaar!</item>
+        <item>Bekijk nog een advertentie voor meer munten</item>
+        <item>Pak je munten in de winkel!</item>
     </string-array>
 
     <string name="enable_notifications_title">Ontgrendel meer beloningen!</string>
     <string name="enable_notifications_body">Ontvang meldingen wanneer munten klaar zijn om verzameld te worden en nieuwe kaarten wachten om ontgrendeld te worden!</string>
     <string name="enable_notifications_enable">Inschakelen</string>
     <string name="enable_notifications_later">Later</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Houd je reeks in leven!</item>
+        <item>🎁 Je dagelijkse beloning is klaar!</item>
+        <item>💰 Gratis munten in de winkel!</item>
+        <item>🔥 Verlies je reeks niet!</item>
+        <item>🎁 De beloning van vandaag wacht!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Verzamel munten voor de dag voorbij is!</item>
+        <item>Bezoek de winkel voor je beloning</item>
+        <item>Je reeks staat op het spel!</item>
+        <item>Verbreek je reeks niet!</item>
+        <item>Open de winkel en pak je munten</item>
+    </string-array>
+    <string name="free_coins">Gratis munten</string>
+    <string name="daily_reward_day">Dag %d</string>
+    <string name="daily_reward_collect">Verzamel %d</string>
+    <string name="daily_reward_back_tomorrow">Kom morgen terug</string>
+    <string name="share_text">Ik heb alle paren gevonden in het spel memolki! Kun jij mij verslaan? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
+import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
+import com.wojdor.memolki.domain.usecase.CollectDailyStreakRewardUseCase
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
@@ -49,20 +51,25 @@ class ShopViewModel @Inject constructor(
     private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase,
-    private val notificationScheduler: NotificationScheduler
+    private val notificationScheduler: NotificationScheduler,
+    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase,
+    private val collectDailyStreakRewardUseCase: CollectDailyStreakRewardUseCase
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
     ShopState()
 ) {
 
     private var loadCoinsJob: Job? = null
+    private var checkStreakJob: Job? = null
     private var productDetails: List<ProductDetails> = emptyList()
+    private var dailyStreakResult: CheckDailyLoginStreakUseCase.DailyStreakResult? = null
     private val priceByProductId: Map<String, String>
         get() = productDetails.associateBy({ it.productId }) { product ->
             product.oneTimePurchaseOfferDetails?.formattedPrice.orEmpty()
         }
 
     init {
+        checkDailyStreak()
         loadData()
         billingHandler.startConnection(object : BillingStatusListener {
             override fun onProductsFetched(products: List<ProductDetails>) {
@@ -91,7 +98,32 @@ class ShopViewModel @Inject constructor(
             ShopIntent.OnBuyCoinsSmallAmountClick -> onBuyCoinsSmallAmountClick()
             ShopIntent.OnBuyCoinsBigAmountClick -> onBuyCoinsBigAmount()
             ShopIntent.OnBuyAllCardsClick -> onBuyAllCardsClick()
+            ShopIntent.OnDailyRewardCollectClick -> onDailyRewardCollectClick()
         }
+    }
+
+    private fun checkDailyStreak() {
+        checkStreakJob?.cancel()
+        checkStreakJob = checkDailyLoginStreakUseCase().onEach { result ->
+            result.onSuccess { streakResult ->
+                dailyStreakResult = streakResult
+                showMenu()
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun onDailyRewardCollectClick() {
+        hapticFeedback.vibrateLow()
+        collectDailyStreakRewardUseCase().onEach { result ->
+            result.onSuccess {
+                notificationScheduler.scheduleStreakNotification()
+                delay(COINS_SOUND_DELAY)
+                coinsPlayer.play()
+                checkDailyStreak()
+                loadCoins(animateCoins = true)
+                checkShouldShowNotificationRequest()
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun loadData(animateCoins: Boolean = false) {
@@ -233,10 +265,19 @@ class ShopViewModel @Inject constructor(
         calculateCoinsForShopAdUseCase().onEach { result ->
             result.onSuccess { coins ->
                 val prices = priceByProductId
-                sendState {
-                    copy(
-                        menu = listOf(
-                            ShopMenuModel.WatchAd(isAdAvailable, coins),
+                val menu = mutableListOf<ShopMenuModel>()
+                dailyStreakResult?.let { streak ->
+                    menu.add(
+                        ShopMenuModel.DailyReward(
+                            isAvailable = streak.isRewardAvailable,
+                            streakDay = streak.streakDay,
+                            coinsToGrant = streak.coinsReward
+                        )
+                    )
+                }
+                menu.addAll(
+                    listOf(
+                        ShopMenuModel.WatchAd(isAdAvailable, coins),
                             ShopMenuModel.BuyCoinsSmallAmount(
                                 prices[BillingHandler.IAP_COINS_SMALL] ?: DEFAULT_PRICE,
                                 SMALL_PURCHASE_COINS_REWARD
@@ -245,12 +286,12 @@ class ShopViewModel @Inject constructor(
                                 prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
                                 BIG_PURCHASE_COINS_REWARD
                             ),
-                            ShopMenuModel.BuyAllCards(
-                                prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
-                            )
+                        ShopMenuModel.BuyAllCards(
+                            prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
                         )
                     )
-                }
+                )
+                sendState { copy(menu = menu) }
             }
         }.launchIn(viewModelScope)
     }

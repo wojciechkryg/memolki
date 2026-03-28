@@ -28,47 +28,64 @@
     <string name="setting_vibration">Вибрация</string>
     <string name="setting_language">Язык</string>
     <string name="watch_ad">Смотреть рекламу</string>
+    <string name="share">Поделиться</string>
+    <string name="content_description_locked">Заблокировано</string>
+    <string name="leaderboard">Таблица лидеров</string>
+    <string name="coins">Монеты</string>
 
     <string name="notification_channel_reminders">Напоминания</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Твои карты ждут!</item>
-        <item>✨ Готов открыть новые карты?</item>
-        <item>💰 Новые награды ждут!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Как твоя память сегодня?</item>
-        <item>🏆 Побей свой лучший результат!</item>
-        <item>🎴 Твоя коллекция скучает по тебе!</item>
+        <item>🃏 Твои карточки скучают!</item>
+        <item>🎴 Твоя коллекция не завершена!</item>
         <item>✨ Время для испытания!</item>
-        <item>💰 Монеты копятся!</item>
-        <item>🃏 Перемешай карты!</item>
-        <item>🧠 Держи мозг в тонусе!</item>
+        <item>🃏 Готов перевернуть карточки?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Находи пары и зарабатывай монеты</item>
-        <item>Быстрая игра — большая польза</item>
-        <item>Новые карты ждут открытия</item>
-        <item>Перемешай, переверни и найди пару!</item>
-        <item>Пополни свою коллекцию сегодня</item>
-        <item>Проверь свою память в быстром раунде</item>
-        <item>Твоя коллекция ещё не полная</item>
-        <item>Вернись и переверни несколько карт</item>
-        <item>Монеты сами себя не соберут</item>
-        <item>Сыграй раунд и повеселись</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Быстрая игра очень помогает</item>
+        <item>Возвращайся и найди пары!</item>
+        <item>Проверь память в быстром раунде</item>
+        <item>Перемешай, переверни и найди!</item>
+        <item>Держи мозг в тонусе!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Твоя награда в монетах готова!</item>
         <item>✨ Монеты ждут тебя!</item>
         <item>🏆 Пора забрать свою награду!</item>
+        <item>💰 Твои монеты прибыли!</item>
+        <item>✨ Награда разблокирована!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Бесплатные монеты ждут тебя!</item>
         <item>Забери свою награду прямо сейчас!</item>
         <item>Твои монеты готовы!</item>
+        <item>Посмотри ещё рекламу за больше монет</item>
+        <item>Забери монеты в магазине!</item>
     </string-array>
 
     <string name="enable_notifications_title">Открой больше наград!</string>
     <string name="enable_notifications_body">Получай уведомления, когда монеты готовы к сбору и новые карты ждут открытия!</string>
     <string name="enable_notifications_enable">Включить</string>
     <string name="enable_notifications_later">Позже</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Не прерывай серию!</item>
+        <item>🎁 Твоя ежедневная награда готова!</item>
+        <item>💰 Бесплатные монеты в магазине!</item>
+        <item>🔥 Не потеряй свою серию!</item>
+        <item>🎁 Сегодняшняя награда ждёт!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Собери монеты до конца дня!</item>
+        <item>Загляни в магазин за наградой</item>
+        <item>Твоя серия под угрозой!</item>
+        <item>Не прерывай серию!</item>
+        <item>Открой магазин и забери монеты</item>
+    </string-array>
+    <string name="free_coins">Бесплатные монеты</string>
+    <string name="daily_reward_day">День %d</string>
+    <string name="daily_reward_collect">Собрать %d</string>
+    <string name="daily_reward_back_tomorrow">Возвращайся завтра</string>
+    <string name="share_text">Я нашёл все пары в игре memolki! Сможешь меня обыграть? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

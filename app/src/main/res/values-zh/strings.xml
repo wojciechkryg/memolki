@@ -28,47 +28,64 @@
     <string name="setting_vibration">振动</string>
     <string name="setting_language">语言</string>
     <string name="watch_ad">观看广告</string>
+    <string name="share">分享</string>
+    <string name="content_description_locked">已锁定</string>
+    <string name="leaderboard">排行榜</string>
+    <string name="coins">金币</string>
 
     <string name="notification_channel_reminders">提醒</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 你的卡牌在等你！</item>
-        <item>✨ 准备解锁新卡牌了吗？</item>
-        <item>💰 新奖励在等你！</item>
-        <item>🧠 今天的记忆力怎么样？</item>
-        <item>🏆 打破你的最高分！</item>
-        <item>🎴 你的收藏想你了！</item>
-        <item>✨ 挑战时间到了！</item>
-        <item>💰 金币在累积！</item>
-        <item>🃏 洗洗牌吧！</item>
-        <item>🧠 保持大脑敏锐！</item>
+    <string-array name="notification_reminder_titles">
+        <item>🧠 今天你的记忆力怎么样？</item>
+        <item>🃏 你的卡片想你了！</item>
+        <item>🎴 你的收藏还不完整！</item>
+        <item>✨ 挑战时间到！</item>
+        <item>🃏 准备好翻牌了吗？</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>配对卡牌赚取金币</item>
-        <item>快速一局大有帮助</item>
-        <item>新卡牌等待解锁</item>
+    <string-array name="notification_reminder_bodies">
+        <item>一局快速游戏大有帮助</item>
+        <item>回来配对吧！</item>
+        <item>在快速一轮中测试记忆力</item>
         <item>洗牌、翻牌、配对！</item>
-        <item>今天扩充你的收藏</item>
-        <item>在快速回合中测试你的记忆力</item>
-        <item>你的收藏还不完整</item>
-        <item>回来翻几张卡牌</item>
-        <item>金币不会自己收集</item>
-        <item>玩一局开心一下</item>
+        <item>保持大脑敏锐！</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 你的金币奖励准备好了！</item>
         <item>✨ 金币在等你！</item>
         <item>🏆 该领取奖励了！</item>
+        <item>💰 你的金币到了！</item>
+        <item>✨ 奖励已解锁！</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>免费金币等着你！</item>
         <item>快来领取金币奖励！</item>
         <item>你的金币已准备好！</item>
+        <item>再看一个广告获得更多金币</item>
+        <item>在商店领取你的金币！</item>
     </string-array>
 
     <string name="enable_notifications_title">解锁更多奖励！</string>
     <string name="enable_notifications_body">在金币准备好领取和新卡牌等待解锁时收到通知！</string>
     <string name="enable_notifications_enable">开启</string>
     <string name="enable_notifications_later">稍后</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 保持你的连续登录！</item>
+        <item>🎁 你的每日奖励已准备好！</item>
+        <item>💰 商店里有免费金币！</item>
+        <item>🔥 别丢了你的连续记录！</item>
+        <item>🎁 今天的奖励在等你！</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>在一天结束前收集金币！</item>
+        <item>去商店领取奖励</item>
+        <item>你的连续记录岌岌可危！</item>
+        <item>别中断你的连续！</item>
+        <item>打开商店拿金币</item>
+    </string-array>
+    <string name="free_coins">免费金币</string>
+    <string name="daily_reward_day">第%d天</string>
+    <string name="daily_reward_collect">收集 %d</string>
+    <string name="daily_reward_back_tomorrow">明天再来</string>
+    <string name="share_text">我在memolki游戏中配对了所有卡片！你能打败我吗？🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

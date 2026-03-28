@@ -28,47 +28,64 @@
     <string name="setting_vibration">Vibration</string>
     <string name="setting_language">Sprog</string>
     <string name="watch_ad">Se annonce</string>
+    <string name="share">Del</string>
+    <string name="content_description_locked">Låst</string>
+    <string name="leaderboard">Rangliste</string>
+    <string name="coins">Mønter</string>
 
     <string name="notification_channel_reminders">Påmindelser</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Dine kort venter!</item>
-        <item>✨ Klar til at låse nye kort op?</item>
-        <item>💰 Nye belønninger venter!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Hvordan er din hukommelse i dag?</item>
-        <item>🏆 Slå din bedste score!</item>
-        <item>🎴 Din samling savner dig!</item>
+        <item>🃏 Dine kort savner dig!</item>
+        <item>🎴 Din samling er ufuldstændig!</item>
         <item>✨ Tid til en udfordring!</item>
-        <item>💰 Mønterne hober sig op!</item>
-        <item>🃏 Bland nogle kort!</item>
-        <item>🧠 Hold din hjerne skarp!</item>
+        <item>🃏 Klar til at vende nogle kort?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Match par og tjen mønter</item>
-        <item>Et hurtigt spil gør underværker</item>
-        <item>Nye kort venter på at blive låst op</item>
-        <item>Bland, vend og match!</item>
-        <item>Udvid din samling i dag</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Et hurtigt spil gør en forskel</item>
+        <item>Kom tilbage og match par!</item>
         <item>Test din hukommelse i en hurtig runde</item>
-        <item>Din samling er endnu ikke komplet</item>
-        <item>Kom tilbage og vend nogle kort</item>
-        <item>Mønterne samler ikke sig selv</item>
-        <item>Spil en runde og hav det sjovt</item>
+        <item>Bland, vend og match!</item>
+        <item>Hold hjernen skarp!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Din møntbelønning er klar!</item>
         <item>✨ Mønter venter på dig!</item>
         <item>🏆 Tid til at hente din belønning!</item>
+        <item>💰 Dine mønter er ankommet!</item>
+        <item>✨ Belønning låst op!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Gratis mønter venter på dig!</item>
         <item>Hent din møntbelønning nu!</item>
         <item>Dine mønter er klar!</item>
+        <item>Se en reklame mere for flere mønter</item>
+        <item>Tag dine mønter i butikken!</item>
     </string-array>
 
     <string name="enable_notifications_title">Lås flere belønninger op!</string>
     <string name="enable_notifications_body">Få besked, når mønter er klar til at blive hentet, og nye kort venter på at blive låst op!</string>
     <string name="enable_notifications_enable">Aktivér</string>
     <string name="enable_notifications_later">Senere</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Hold din streak i live!</item>
+        <item>🎁 Din daglige belønning er klar!</item>
+        <item>💰 Gratis mønter i butikken!</item>
+        <item>🔥 Mist ikke din streak!</item>
+        <item>🎁 Dagens belønning venter!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Saml dine mønter inden dagen slutter!</item>
+        <item>Besøg butikken for din belønning</item>
+        <item>Din streak er på spil!</item>
+        <item>Bryd ikke din streak!</item>
+        <item>Åbn butikken og tag dine mønter</item>
+    </string-array>
+    <string name="free_coins">Gratis mønter</string>
+    <string name="daily_reward_day">Dag %d</string>
+    <string name="daily_reward_collect">Saml %d</string>
+    <string name="daily_reward_back_tomorrow">Kom igen i morgen</string>
+    <string name="share_text">Jeg matchede alle par i spillet memolki! Kan du slå mig? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

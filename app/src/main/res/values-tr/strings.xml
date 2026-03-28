@@ -28,47 +28,64 @@
     <string name="setting_vibration">Titreşim</string>
     <string name="setting_language">Dil</string>
     <string name="watch_ad">Reklamı izle</string>
+    <string name="share">Paylaş</string>
+    <string name="content_description_locked">Kilitli</string>
+    <string name="leaderboard">Sıralama</string>
+    <string name="coins">Paralar</string>
 
     <string name="notification_channel_reminders">Hatırlatmalar</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Kartların seni bekliyor!</item>
-        <item>✨ Yeni kartları açmaya hazır mısın?</item>
-        <item>💰 Yeni ödüller bekliyor!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Bugün hafızan nasıl?</item>
-        <item>🏆 En iyi skorunu geç!</item>
-        <item>🎴 Koleksiyonun seni özledi!</item>
+        <item>🃏 Kartların seni özlüyor!</item>
+        <item>🎴 Koleksiyonun eksik!</item>
         <item>✨ Meydan okuma zamanı!</item>
-        <item>💰 Paralar birikiyor!</item>
-        <item>🃏 Biraz kart karıştır!</item>
-        <item>🧠 Beynini zinde tut!</item>
+        <item>🃏 Kart çevirmeye hazır mısın?</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Eşleştir ve para kazan</item>
-        <item>Hızlı bir oyun çok işe yarar</item>
-        <item>Yeni kartlar açılmayı bekliyor</item>
-        <item>Karıştır, çevir ve eşleştir!</item>
-        <item>Koleksiyonunu bugün büyüt</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Hızlı bir oyun çok yardımcı olur</item>
+        <item>Geri gel ve eşleştir!</item>
         <item>Hızlı bir turda hafızanı test et</item>
-        <item>Koleksiyonun henüz tamamlanmadı</item>
-        <item>Geri gel ve biraz kart çevir</item>
-        <item>Paralar kendini toplamaz</item>
-        <item>Bir tur oyna ve eğlen</item>
+        <item>Karıştır, çevir ve eşleştir!</item>
+        <item>Beynini keskin tut!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Para ödülün hazır!</item>
         <item>✨ Paralar seni bekliyor!</item>
         <item>🏆 Ödülünü alma zamanı!</item>
+        <item>💰 Paraların geldi!</item>
+        <item>✨ Ödül açıldı!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Ücretsiz paralar seni bekliyor!</item>
         <item>Para ödülünü şimdi topla!</item>
         <item>Paraların hazır!</item>
+        <item>Daha fazla para için başka bir reklam izle</item>
+        <item>Mağazada paralarını al!</item>
     </string-array>
 
     <string name="enable_notifications_title">Daha fazla ödül aç!</string>
     <string name="enable_notifications_body">Paralar hazır olduğunda ve yeni kartlar açılmayı beklediğinde bildirim al!</string>
     <string name="enable_notifications_enable">Etkinleştir</string>
     <string name="enable_notifications_later">Sonra</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Serini devam ettir!</item>
+        <item>🎁 Günlük ödülün hazır!</item>
+        <item>💰 Mağazada ücretsiz paralar!</item>
+        <item>🔥 Serini kaybetme!</item>
+        <item>🎁 Bugünün ödülü bekliyor!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Gün bitmeden paraları topla!</item>
+        <item>Ödülün için mağazayı ziyaret et</item>
+        <item>Serin tehlikede!</item>
+        <item>Serini bozma!</item>
+        <item>Dükkânı aç ve paraları al</item>
+    </string-array>
+    <string name="free_coins">Ücretsiz paralar</string>
+    <string name="daily_reward_day">Gün %d</string>
+    <string name="daily_reward_collect">Topla %d</string>
+    <string name="daily_reward_back_tomorrow">Yarın tekrar gel</string>
+    <string name="share_text">memolki oyununda tüm eşleri buldum! Beni yenebilir misin? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

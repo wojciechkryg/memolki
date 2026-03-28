@@ -27,4 +27,7 @@ sealed class EndGameEffect : UiEffect {
         val googlePlayGames: GooglePlayGames,
         val totalCoins: Long
     ) : EndGameEffect()
+
+    object Share : EndGameEffect()
+    object OpenShopScreen : EndGameEffect()
 }

@@ -1,6 +1,8 @@
 package com.wojdor.memolki.ui.app
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
@@ -30,8 +32,17 @@ import com.wojdor.memolki.ui.feature.settings.SettingsScreen
 import com.wojdor.memolki.ui.feature.shop.ShopScreen
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    onNewIntent: Intent? = null,
+    onIntentHandled: () -> Unit = {}
+) {
     val navController = rememberNavController()
+    LaunchedEffect(onNewIntent) {
+        onNewIntent?.let {
+            navController.handleDeepLink(it)
+            onIntentHandled()
+        }
+    }
     NavHost(navController, startDestination = Route.MENU) {
         menuScreen(navController)
         gameFlow(navController)
@@ -132,10 +143,16 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
 private fun NavGraphBuilder.endGameScreen(navController: NavController) {
     composable(
         route = Route.END_GAME,
-        enterTransition = { slideInRight },
+        enterTransition = {
+            when (initialState.destination.route) {
+                Route.SHOP -> slideInBottom
+                else -> slideInRight
+            }
+        },
         exitTransition = {
             when (targetState.destination.route) {
                 Route.ENABLE_NOTIFICATIONS -> slideOutTop
+                Route.SHOP -> slideOutBottom
                 else -> slideOutRight
             }
         }

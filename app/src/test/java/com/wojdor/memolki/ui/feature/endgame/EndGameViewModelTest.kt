@@ -12,6 +12,10 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
+import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
+import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
@@ -73,6 +77,18 @@ class EndGameViewModelTest : AppTest() {
     lateinit var shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase
 
     @Inject
+    lateinit var rewardCoinsForShareUseCase: RewardCoinsForShareUseCase
+
+    @Inject
+    lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+
+    @Inject
+    lateinit var hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase
+
+    @Inject
+    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+
+    @Inject
     lateinit var userRepository: UserRepository
 
     private lateinit var sut: EndGameViewModel
@@ -88,13 +104,16 @@ class EndGameViewModelTest : AppTest() {
             allRewardedAds,
             reviewManager,
             googlePlayGames,
-            userRepository,
             incrementTotalGamesPlayedUseCase,
+            getTotalGamesPlayedUseCase,
             getCoinsUseCase,
             rewardCoinsForLevelUseCase,
             getTotalCoinsUseCase,
             canUnlockNewCardUseCase,
-            shouldShowNotificationRequestUseCase
+            shouldShowNotificationRequestUseCase,
+            rewardCoinsForShareUseCase,
+            hasReceivedShareRewardUseCase,
+            checkDailyLoginStreakUseCase
         )
     }
 
@@ -105,30 +124,32 @@ class EndGameViewModelTest : AppTest() {
     @Test
     fun `when OnEndGameShow intent is sent then the state is updated with the level and rewarded coins`() =
         runTest {
-            sut.uiState.test {
-                // given
-                val levelModel = LevelModel.Grid2x3(isUnlocked = true)
-                val rewardedCoins = 1L
-                skipItems(1)
+            // given
+            val levelModel = LevelModel.Grid2x3(isUnlocked = true)
+            val rewardedCoins = 1L
 
-                // when
-                sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
-                skipItems(4)
+            // when
+            sut.sendIntent(EndGameIntent.OnEndGameShow(levelModel))
+            testScheduler.advanceUntilIdle()
 
-                // then
-                val expected = EndGameState(
-                    level = levelModel,
-                    rewardedCoins = rewardedCoins,
-                    currentCoins = rewardedCoins,
-                    menu = listOf(
-                        EndGameMenuModel.PlayAgain,
-                        EndGameMenuModel.Menu
-                    ),
-                    animateCoins = true,
-                    showSparkles = true
-                )
-                assertEquals(expected, awaitItem())
-            }
+            // then
+            val expected = EndGameState(
+                level = levelModel,
+                rewardedCoins = rewardedCoins,
+                currentCoins = rewardedCoins,
+                menu = listOf(
+                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Menu,
+                    EndGameMenuModel.FreeCoins,
+                    EndGameMenuModel.Share(
+                        showReward = true,
+                        rewardCoins = RewardCoinsForShareUseCase.SHARE_REWARD_COINS
+                    )
+                ),
+                animateCoins = true,
+                showSparkles = true
+            )
+            assertEquals(expected, sut.uiState.value)
         }
 
     @Test
@@ -164,10 +185,15 @@ class EndGameViewModelTest : AppTest() {
                 animateCoins = false,
                 menu = listOf(
                     EndGameMenuModel.PlayAgain,
-                    EndGameMenuModel.Menu
+                    EndGameMenuModel.Menu,
+                    EndGameMenuModel.Share(
+                        showReward = false,
+                        rewardCoins = 0L
+                    )
                 )
             )
             assertEquals(expectedState, awaitItem())
         }
     }
+
 }

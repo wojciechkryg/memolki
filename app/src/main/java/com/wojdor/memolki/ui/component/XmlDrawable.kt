@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,14 +23,20 @@ import com.wojdor.memolki.ui.theme.AppTheme
 fun XmlDrawable(
     modifier: Modifier,
     @DrawableRes drawableRes: Int,
-    alignment: Alignment = Alignment.Center
+    alignment: Alignment = Alignment.Center,
+    contentDescription: String? = null
 ) {
     val context = LocalContext.current
     val drawable = remember(drawableRes) {
         AppCompatResources.getDrawable(context, drawableRes)
     }
+    val semanticsModifier = if (contentDescription != null) {
+        modifier.semantics { this.contentDescription = contentDescription }
+    } else {
+        modifier
+    }
     Canvas(
-        modifier = modifier,
+        modifier = semanticsModifier,
         onDraw = {
             drawable?.let {
                 val canvasWidth = size.width.toInt()

@@ -28,47 +28,64 @@
     <string name="setting_vibration">Δόνηση</string>
     <string name="setting_language">Γλώσσα</string>
     <string name="watch_ad">Δείτε τη διαφήμιση</string>
+    <string name="share">Κοινοποίηση</string>
+    <string name="content_description_locked">Κλειδωμένο</string>
+    <string name="leaderboard">Κατάταξη</string>
+    <string name="coins">Νομίσματα</string>
 
     <string name="notification_channel_reminders">Υπενθυμίσεις</string>
 
-    <string-array name="notification_daily_titles">
-        <item>🃏 Οι κάρτες σου περιμένουν!</item>
-        <item>✨ Έτοιμος να ξεκλειδώσεις νέες κάρτες;</item>
-        <item>💰 Νέες ανταμοιβές περιμένουν!</item>
+    <string-array name="notification_reminder_titles">
         <item>🧠 Πώς είναι η μνήμη σου σήμερα;</item>
-        <item>🏆 Ξεπέρασε το καλύτερό σου σκορ!</item>
-        <item>🎴 Η συλλογή σου σε περιμένει!</item>
+        <item>🃏 Οι κάρτες σου σε ψάχνουν!</item>
+        <item>🎴 Η συλλογή σου είναι ελλιπής!</item>
         <item>✨ Ώρα για πρόκληση!</item>
-        <item>💰 Τα νομίσματα συσσωρεύονται!</item>
-        <item>🃏 Ανακάτεψε μερικές κάρτες!</item>
-        <item>🧠 Κράτα το μυαλό σου σε φόρμα!</item>
+        <item>🃏 Έτοιμος να γυρίσεις κάρτες;</item>
     </string-array>
-    <string-array name="notification_daily_bodies">
-        <item>Ταίριαξε ζευγάρια και κέρδισε νομίσματα</item>
-        <item>Ένα γρήγορο παιχνίδι κάνει τη διαφορά</item>
-        <item>Νέες κάρτες περιμένουν να ξεκλειδωθούν</item>
+    <string-array name="notification_reminder_bodies">
+        <item>Ένα γρήγορο παιχνίδι βοηθάει πολύ</item>
+        <item>Γύρνα πίσω και ταίριαξε ζευγάρια!</item>
+        <item>Δοκίμασε τη μνήμη σου σε ένα γρήγορο γύρο</item>
         <item>Ανακάτεψε, γύρισε και ταίριαξε!</item>
-        <item>Μεγάλωσε τη συλλογή σου σήμερα</item>
-        <item>Δοκίμασε τη μνήμη σου σε έναν γρήγορο γύρο</item>
-        <item>Η συλλογή σου δεν είναι ακόμα πλήρης</item>
-        <item>Γύρνα πίσω και γύρισε μερικές κάρτες</item>
-        <item>Τα νομίσματα δεν μαζεύονται μόνα τους</item>
-        <item>Παίξε έναν γύρο και διασκέδασε</item>
+        <item>Κράτα το μυαλό σου κοφτερό!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Η ανταμοιβή σου σε νομίσματα είναι έτοιμη!</item>
         <item>✨ Νομίσματα σε περιμένουν!</item>
         <item>🏆 Ώρα να συλλέξεις την ανταμοιβή σου!</item>
+        <item>💰 Τα νομίσματά σου έφτασαν!</item>
+        <item>✨ Ανταμοιβή ξεκλειδώθηκε!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Δωρεάν νομίσματα σε περιμένουν!</item>
-        <item>Συλλέξτε την ανταμοιβή σας τώρα!</item>
-        <item>Τα νομίσματά σας είναι έτοιμα!</item>
+        <item>Σύλλεξε την ανταμοιβή σου τώρα!</item>
+        <item>Τα νομίσματά σου είναι έτοιμα!</item>
+        <item>Δες μια ακόμη διαφήμιση για περισσότερα νομίσματα</item>
+        <item>Πάρε τα νομίσματά σου στο κατάστημα!</item>
     </string-array>
 
     <string name="enable_notifications_title">Ξεκλείδωσε περισσότερες ανταμοιβές!</string>
     <string name="enable_notifications_body">Λάβε ειδοποιήσεις όταν τα νομίσματα είναι έτοιμα για συλλογή και νέες κάρτες περιμένουν να ξεκλειδωθούν!</string>
     <string name="enable_notifications_enable">Ενεργοποίηση</string>
     <string name="enable_notifications_later">Αργότερα</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Κράτα τη σερί σου ζωντανή!</item>
+        <item>🎁 Η ημερήσια ανταμοιβή σου είναι έτοιμη!</item>
+        <item>💰 Δωρεάν νομίσματα στο κατάστημα!</item>
+        <item>🔥 Μη χάσεις τη σερί σου!</item>
+        <item>🎁 Η σημερινή ανταμοιβή περιμένει!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Μάζεψε νομίσματα πριν τελειώσει η μέρα!</item>
+        <item>Επίσκεψου το κατάστημα για την ανταμοιβή</item>
+        <item>Η σερί σου κινδυνεύει!</item>
+        <item>Μη σπάσεις τη σερί σου!</item>
+        <item>Άνοιξε το κατάστημα και πάρε τα νομίσματά σου</item>
+    </string-array>
+    <string name="free_coins">Δωρεάν νομίσματα</string>
+    <string name="daily_reward_day">Ημέρα %d</string>
+    <string name="daily_reward_collect">Συλλογή %d</string>
+    <string name="daily_reward_back_tomorrow">Έλα αύριο</string>
+    <string name="share_text">Ταίριαξα όλα τα ζευγάρια στο παιχνίδι memolki! Μπορείς να με νικήσεις; 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 </resources>

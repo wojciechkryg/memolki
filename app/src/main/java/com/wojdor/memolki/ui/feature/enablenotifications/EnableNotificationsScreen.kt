@@ -44,6 +44,7 @@ import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.util.throttleClick
@@ -119,7 +120,7 @@ private fun EnableNotificationsScreen(
     ) {
         Image(
             painter = painterResource(R.drawable.ic_coins_sack),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.coins),
             modifier = Modifier.size(128.dp)
         )
         Spacer(modifier = Modifier.height(spacingXL))
@@ -151,7 +152,9 @@ private fun EnableNotificationsScreen(
         TextButton(
             onClick = throttleClick(onClick = callbacks.onLaterClick),
             enabled = isLaterVisible,
-            modifier = Modifier.alpha(laterAlpha)
+            modifier = Modifier
+                .padding(top = spacingL)
+                .alpha(laterAlpha)
         ) {
             Text(
                 text = stringResource(R.string.enable_notifications_later).lowercase(),
