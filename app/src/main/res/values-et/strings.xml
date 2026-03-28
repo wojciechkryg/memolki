@@ -30,6 +30,8 @@
     <string name="watch_ad">Vaata reklaami</string>
     <string name="share">Jaga</string>
     <string name="content_description_locked">Lukustatud</string>
+    <string name="leaderboard">Edetabel</string>
+    <string name="coins">Mündid</string>
 
     <string name="notification_channel_reminders">Meeldetuletused</string>
 

@@ -30,6 +30,8 @@
     <string name="watch_ad">Δείτε τη διαφήμιση</string>
     <string name="share">Κοινοποίηση</string>
     <string name="content_description_locked">Κλειδωμένο</string>
+    <string name="leaderboard">Κατάταξη</string>
+    <string name="coins">Νομίσματα</string>
 
     <string name="notification_channel_reminders">Υπενθυμίσεις</string>
 
@@ -57,8 +59,8 @@
     </string-array>
     <string-array name="notification_ad_reward_bodies">
         <item>Δωρεάν νομίσματα σε περιμένουν!</item>
-        <item>Συλλέξτε την ανταμοιβή σας τώρα!</item>
-        <item>Τα νομίσματά σας είναι έτοιμα!</item>
+        <item>Σύλλεξε την ανταμοιβή σου τώρα!</item>
+        <item>Τα νομίσματά σου είναι έτοιμα!</item>
         <item>Δες μια ακόμη διαφήμιση για περισσότερα νομίσματα</item>
         <item>Πάρε τα νομίσματά σου στο κατάστημα!</item>
     </string-array>

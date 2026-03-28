@@ -30,6 +30,8 @@
     <string name="watch_ad">Sledovať reklamu</string>
     <string name="share">Zdieľať</string>
     <string name="content_description_locked">Zamknuté</string>
+    <string name="leaderboard">Rebríček</string>
+    <string name="coins">Mince</string>
 
     <string name="notification_channel_reminders">Pripomienky</string>
 
@@ -52,7 +54,7 @@
         <item>💰 Tvoja odmena v minciach je pripravená!</item>
         <item>✨ Mince na teba čakajú!</item>
         <item>🏆 Čas vyzdvihnúť si odmenu!</item>
-        <item>💰 Tvoje mince dorazili!</item>
+        <item>💰 Tvoje mince dorazily!</item>
         <item>✨ Odmena odomknutá!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">

@@ -30,6 +30,8 @@
     <string name="watch_ad">Watch Ad</string>
     <string name="share">Share</string>
     <string name="content_description_locked">Locked</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="coins">Coins</string>
 
     <string name="notification_channel_reminders">Reminders</string>
 

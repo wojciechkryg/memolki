@@ -30,6 +30,8 @@
     <string name="watch_ad">Bekijk advertentie</string>
     <string name="share">Delen</string>
     <string name="content_description_locked">Vergrendeld</string>
+    <string name="leaderboard">Scorebord</string>
+    <string name="coins">Munten</string>
 
     <string name="notification_channel_reminders">Herinneringen</string>
 

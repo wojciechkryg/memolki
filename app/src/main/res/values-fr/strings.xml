@@ -30,6 +30,8 @@
     <string name="watch_ad">Regarder la publicité</string>
     <string name="share">Partager</string>
     <string name="content_description_locked">Verrouillé</string>
+    <string name="leaderboard">Classement</string>
+    <string name="coins">Pièces</string>
 
     <string name="notification_channel_reminders">Rappels</string>
 

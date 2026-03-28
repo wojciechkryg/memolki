@@ -30,6 +30,8 @@
     <string name="watch_ad">观看广告</string>
     <string name="share">分享</string>
     <string name="content_description_locked">已锁定</string>
+    <string name="leaderboard">排行榜</string>
+    <string name="coins">金币</string>
 
     <string name="notification_channel_reminders">提醒</string>
 

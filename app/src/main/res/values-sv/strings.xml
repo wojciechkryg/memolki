@@ -30,6 +30,8 @@
     <string name="watch_ad">Titta på annons</string>
     <string name="share">Dela</string>
     <string name="content_description_locked">Låst</string>
+    <string name="leaderboard">Topplista</string>
+    <string name="coins">Mynt</string>
 
     <string name="notification_channel_reminders">Påminnelser</string>
 

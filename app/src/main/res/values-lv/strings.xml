@@ -30,6 +30,8 @@
     <string name="watch_ad">Skatīties reklāmu</string>
     <string name="share">Dalīties</string>
     <string name="content_description_locked">Bloķēts</string>
+    <string name="leaderboard">Līderu tabula</string>
+    <string name="coins">Monētas</string>
 
     <string name="notification_channel_reminders">Atgādinājumi</string>
 

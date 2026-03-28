@@ -30,6 +30,8 @@
     <string name="watch_ad">Urmărește reclama</string>
     <string name="share">Distribuie</string>
     <string name="content_description_locked">Blocat</string>
+    <string name="leaderboard">Clasament</string>
+    <string name="coins">Monede</string>
 
     <string name="notification_channel_reminders">Memento-uri</string>
 

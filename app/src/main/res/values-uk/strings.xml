@@ -30,6 +30,8 @@
     <string name="watch_ad">Переглянути рекламу</string>
     <string name="share">Поділитися</string>
     <string name="content_description_locked">Заблоковано</string>
+    <string name="leaderboard">Таблиця лідерів</string>
+    <string name="coins">Монети</string>
 
     <string name="notification_channel_reminders">Нагадування</string>
 

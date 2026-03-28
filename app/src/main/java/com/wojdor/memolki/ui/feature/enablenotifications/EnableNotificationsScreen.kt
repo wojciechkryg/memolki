@@ -120,7 +120,7 @@ private fun EnableNotificationsScreen(
     ) {
         Image(
             painter = painterResource(R.drawable.ic_coins_sack),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.coins),
             modifier = Modifier.size(128.dp)
         )
         Spacer(modifier = Modifier.height(spacingXL))

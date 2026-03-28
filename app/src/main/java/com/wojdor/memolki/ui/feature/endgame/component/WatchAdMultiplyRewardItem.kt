@@ -56,7 +56,7 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
         Image(
             modifier = Modifier.size(64.dp),
             painter = painterResource(id = R.drawable.ic_coin),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.coins),
         )
         Spacer(modifier = Modifier.size(spacingXS))
         Text(

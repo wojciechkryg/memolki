@@ -30,6 +30,8 @@
     <string name="watch_ad">विज्ञापन देखें</string>
     <string name="share">साझा करें</string>
     <string name="content_description_locked">लॉक</string>
+    <string name="leaderboard">लीडरबोर्ड</string>
+    <string name="coins">सिक्के</string>
 
     <string name="notification_channel_reminders">रिमाइंडर</string>
 

@@ -30,6 +30,8 @@
     <string name="watch_ad">広告を見る</string>
     <string name="share">共有</string>
     <string name="content_description_locked">ロック中</string>
+    <string name="leaderboard">リーダーボード</string>
+    <string name="coins">コイン</string>
 
     <string name="notification_channel_reminders">リマインダー</string>
 

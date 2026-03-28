@@ -30,6 +30,8 @@
     <string name="watch_ad">Tonton Iklan</string>
     <string name="share">Bagikan</string>
     <string name="content_description_locked">Terkunci</string>
+    <string name="leaderboard">Papan peringkat</string>
+    <string name="coins">Koin</string>
 
     <string name="notification_channel_reminders">Pengingat</string>
 

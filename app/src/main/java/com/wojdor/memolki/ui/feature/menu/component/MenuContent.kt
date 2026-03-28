@@ -84,6 +84,7 @@ fun MenuContent(
             Row {
                 IconItem(
                     iconRes = R.drawable.ic_leaderboard,
+                    contentDescription = stringResource(R.string.leaderboard),
                     onClick = callbacks.onLeaderboardClick
                 )
             }

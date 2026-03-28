@@ -30,6 +30,8 @@
     <string name="watch_ad">Obejrzyj reklamę</string>
     <string name="share">Udostępnij</string>
     <string name="content_description_locked">Zablokowane</string>
+    <string name="leaderboard">Ranking</string>
+    <string name="coins">Monety</string>
 
     <string name="notification_channel_reminders">Przypomnienia</string>
 

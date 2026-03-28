@@ -30,6 +30,8 @@
     <string name="watch_ad">Assistir ao anúncio</string>
     <string name="share">Partilhar</string>
     <string name="content_description_locked">Bloqueado</string>
+    <string name="leaderboard">Classificação</string>
+    <string name="coins">Moedas</string>
 
     <string name="notification_channel_reminders">Lembretes</string>
 
@@ -49,22 +51,22 @@
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
-        <item>💰 Sua recompensa em moedas está pronta!</item>
-        <item>✨ Moedas estão esperando por você!</item>
-        <item>🏆 Hora de coletar sua recompensa!</item>
+        <item>💰 A tua recompensa em moedas está pronta!</item>
+        <item>✨ Moedas estão à tua espera!</item>
+        <item>🏆 Hora de recolher a tua recompensa!</item>
         <item>💰 As tuas moedas chegaram!</item>
         <item>✨ Recompensa desbloqueada!</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
-        <item>Moedas grátis estão esperando!</item>
-        <item>Colete sua recompensa de moedas agora!</item>
-        <item>Suas moedas estão prontas!</item>
+        <item>Moedas grátis à tua espera!</item>
+        <item>Recolhe a tua recompensa agora!</item>
+        <item>As tuas moedas estão prontas!</item>
         <item>Vê mais um anúncio para mais moedas</item>
         <item>Pega as moedas na loja!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Desbloqueie mais recompensas!</string>
-    <string name="enable_notifications_body">Receba notificações quando moedas estiverem prontas e novas cartas esperando para serem desbloqueadas!</string>
+    <string name="enable_notifications_title">Desbloqueia mais recompensas!</string>
+    <string name="enable_notifications_body">Recebe notificações quando moedas estiverem prontas e novas cartas à espera de serem desbloqueadas!</string>
     <string name="enable_notifications_enable">Ativar</string>
     <string name="enable_notifications_later">Depois</string>
     <string-array name="notification_daily_streak_titles">

@@ -30,6 +30,8 @@
     <string name="watch_ad">Смотреть рекламу</string>
     <string name="share">Поделиться</string>
     <string name="content_description_locked">Заблокировано</string>
+    <string name="leaderboard">Таблица лидеров</string>
+    <string name="coins">Монеты</string>
 
     <string name="notification_channel_reminders">Напоминания</string>
 

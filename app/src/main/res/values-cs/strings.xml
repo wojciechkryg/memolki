@@ -30,6 +30,8 @@
     <string name="watch_ad">Sledovat reklamu</string>
     <string name="share">Sdílet</string>
     <string name="content_description_locked">Zamčeno</string>
+    <string name="leaderboard">Žebříček</string>
+    <string name="coins">Mince</string>
 
     <string name="notification_channel_reminders">Připomínky</string>
 

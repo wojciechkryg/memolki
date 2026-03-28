@@ -30,6 +30,8 @@
     <string name="watch_ad">Reklám megtekintése</string>
     <string name="share">Megosztás</string>
     <string name="content_description_locked">Zárolva</string>
+    <string name="leaderboard">Ranglista</string>
+    <string name="coins">Érmék</string>
 
     <string name="notification_channel_reminders">Emlékeztetők</string>
 

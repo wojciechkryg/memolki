@@ -30,6 +30,8 @@
     <string name="watch_ad">Reklamı izle</string>
     <string name="share">Paylaş</string>
     <string name="content_description_locked">Kilitli</string>
+    <string name="leaderboard">Sıralama</string>
+    <string name="coins">Paralar</string>
 
     <string name="notification_channel_reminders">Hatırlatmalar</string>
 
@@ -60,7 +62,7 @@
         <item>Para ödülünü şimdi topla!</item>
         <item>Paraların hazır!</item>
         <item>Daha fazla para için başka bir reklam izle</item>
-        <item>Dükkânda paralarını al!</item>
+        <item>Mağazada paralarını al!</item>
     </string-array>
 
     <string name="enable_notifications_title">Daha fazla ödül aç!</string>
@@ -70,13 +72,13 @@
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Serini devam ettir!</item>
         <item>🎁 Günlük ödülün hazır!</item>
-        <item>💰 Dükkânda ücretsiz paralar!</item>
+        <item>💰 Mağazada ücretsiz paralar!</item>
         <item>🔥 Serini kaybetme!</item>
         <item>🎁 Bugünün ödülü bekliyor!</item>
     </string-array>
     <string-array name="notification_daily_streak_bodies">
         <item>Gün bitmeden paraları topla!</item>
-        <item>Ödülün için dükkânı ziyaret et</item>
+        <item>Ödülün için mağazayı ziyaret et</item>
         <item>Serin tehlikede!</item>
         <item>Serini bozma!</item>
         <item>Dükkânı aç ve paraları al</item>

@@ -30,6 +30,8 @@
     <string name="watch_ad">צפה במודעה</string>
     <string name="share">שיתוף</string>
     <string name="content_description_locked">נעול</string>
+    <string name="leaderboard">טבלת מובילים</string>
+    <string name="coins">מטבעות</string>
 
     <string name="notification_channel_reminders">תזכורות</string>
 

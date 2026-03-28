@@ -30,6 +30,8 @@
     <string name="watch_ad">Oglej si oglas</string>
     <string name="share">Deli</string>
     <string name="content_description_locked">Zaklenjeno</string>
+    <string name="leaderboard">Lestvica</string>
+    <string name="coins">Kovanci</string>
 
     <string name="notification_channel_reminders">Opomniki</string>
 

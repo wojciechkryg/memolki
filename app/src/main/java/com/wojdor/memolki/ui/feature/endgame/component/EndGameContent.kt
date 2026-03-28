@@ -171,7 +171,7 @@ private fun ShareRewardLabel(
         Image(
             modifier = Modifier.size(32.dp),
             painter = painterResource(R.drawable.ic_coin),
-            contentDescription = null
+            contentDescription = stringResource(R.string.coins)
         )
     }
 }

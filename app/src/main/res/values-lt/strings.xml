@@ -30,6 +30,8 @@
     <string name="watch_ad">Žiūrėti reklamą</string>
     <string name="share">Dalintis</string>
     <string name="content_description_locked">Užrakinta</string>
+    <string name="leaderboard">Lyderių lentelė</string>
+    <string name="coins">Monetos</string>
 
     <string name="notification_channel_reminders">Priminimai</string>
 
@@ -43,7 +45,7 @@
     <string-array name="notification_reminder_bodies">
         <item>Greitas žaidimas daug padeda</item>
         <item>Grįžk ir surask poras!</item>
-        <item>Patikrink atmintį greitu raundu</item>
+        <item>Patikrink atmintį greitame raunde</item>
         <item>Maišyk, versk ir rask!</item>
         <item>Laikyk smegenis aštriai!</item>
     </string-array>

@@ -15,6 +15,7 @@ import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
+import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
@@ -87,6 +88,8 @@ class EndGameViewModel @Inject constructor(
                     reloadCoins()
                     showMenu()
                 }
+            }.onFailure {
+                logE("Failed to reward share coins", it)
             }
         }.launchIn(viewModelScope)
         sendEffect(EndGameEffect.Share)
@@ -158,6 +161,8 @@ class EndGameViewModel @Inject constructor(
                 if (!isNotificationRequestDismissed) {
                     shouldShowNotificationRequest = it
                 }
+            }.onFailure {
+                shouldShowNotificationRequest = false
             }
         }.launchIn(viewModelScope)
     }
@@ -254,8 +259,8 @@ class EndGameViewModel @Inject constructor(
 
     private fun showMenu(isAdLoaded: Boolean) {
         this.isAdLoaded = isAdLoaded
-        viewModelScope.launch {
-            val canUnlockNewCard = canUnlockNewCardUseCase().first().getOrDefault(false)
+        canUnlockNewCardUseCase().onEach { result ->
+            val canUnlockNewCard = result.getOrDefault(false)
             val menu = mutableListOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu).apply {
                 if (isAdLoaded) {
                     add(0, EndGameMenuModel.WatchAd)
@@ -271,7 +276,7 @@ class EndGameViewModel @Inject constructor(
                 ))
             }
             sendState { copy(menu = menu) }
-        }
+        }.launchIn(viewModelScope)
     }
 
     private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {

@@ -30,6 +30,8 @@
     <string name="watch_ad">Xem quảng cáo</string>
     <string name="share">Chia sẻ</string>
     <string name="content_description_locked">Đã khóa</string>
+    <string name="leaderboard">Bảng xếp hạng</string>
+    <string name="coins">Xu</string>
 
     <string name="notification_channel_reminders">Nhắc nhở</string>
 
