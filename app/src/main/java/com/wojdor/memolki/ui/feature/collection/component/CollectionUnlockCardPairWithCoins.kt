@@ -45,7 +45,8 @@ fun CollectionUnlockCardPairWithCoins(
             .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
-                onClick = throttleClick(onClick = onClick),
+                onClickLabel = stringResource(R.string.accessibility_unlock_with_coins),
+                onClick = throttleClick(onClick = onClick)
             )
             .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
         contentAlignment = Alignment.Center

@@ -42,6 +42,10 @@ android {
         versionName = "1.3.16"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
     }
 
     signingConfigs {
@@ -142,7 +146,13 @@ dependencies {
     implementation(libs.material)
     implementation(libs.hilt.android)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.play.services.ads.api)
+    implementation(libs.play.services.ads)
+    implementation(libs.mediation.applovin)
+    implementation(libs.mediation.unity)
+    implementation(libs.mediation.ironsource)
+    implementation(libs.mediation.liftoff)
+    implementation(libs.mediation.inmobi)
+    implementation(libs.mediation.mintegral)
     implementation(libs.billing)
     implementation(libs.review.ktx)
     implementation(libs.app.update.ktx)

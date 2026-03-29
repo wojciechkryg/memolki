@@ -30,6 +30,10 @@
     <string name="watch_ad">观看广告</string>
     <string name="share">分享</string>
     <string name="content_description_locked">已锁定</string>
+    <string name="accessibility_flip_card">翻转卡片</string>
+    <string name="accessibility_view_card_pair">查看卡片对</string>
+    <string name="accessibility_unlock_with_coins">用金币解锁</string>
+    <string name="accessibility_unlock_with_ad">观看广告解锁</string>
     <string name="leaderboard">排行榜</string>
     <string name="coins">金币</string>
 

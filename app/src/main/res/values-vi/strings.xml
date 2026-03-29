@@ -30,6 +30,10 @@
     <string name="watch_ad">Xem quảng cáo</string>
     <string name="share">Chia sẻ</string>
     <string name="content_description_locked">Đã khóa</string>
+    <string name="accessibility_flip_card">Lật thẻ</string>
+    <string name="accessibility_view_card_pair">Xem cặp thẻ</string>
+    <string name="accessibility_unlock_with_coins">Mở khóa bằng xu</string>
+    <string name="accessibility_unlock_with_ad">Mở khóa bằng cách xem quảng cáo</string>
     <string name="leaderboard">Bảng xếp hạng</string>
     <string name="coins">Xu</string>
 

@@ -30,6 +30,10 @@
     <string name="watch_ad">Sledovat reklamu</string>
     <string name="share">Sdílet</string>
     <string name="content_description_locked">Zamčeno</string>
+    <string name="accessibility_flip_card">Otočit kartu</string>
+    <string name="accessibility_view_card_pair">Zobrazit pár karet</string>
+    <string name="accessibility_unlock_with_coins">Odemknout za mince</string>
+    <string name="accessibility_unlock_with_ad">Odemknout sledováním reklamy</string>
     <string name="leaderboard">Žebříček</string>
     <string name="coins">Mince</string>
 

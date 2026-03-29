@@ -30,6 +30,10 @@
     <string name="watch_ad">Ver anuncio</string>
     <string name="share">Compartir</string>
     <string name="content_description_locked">Bloqueado</string>
+    <string name="accessibility_flip_card">Voltear carta</string>
+    <string name="accessibility_view_card_pair">Ver par de cartas</string>
+    <string name="accessibility_unlock_with_coins">Desbloquear con monedas</string>
+    <string name="accessibility_unlock_with_ad">Desbloquear viendo un anuncio</string>
     <string name="leaderboard">Clasificación</string>
     <string name="coins">Monedas</string>
 

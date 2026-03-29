@@ -30,6 +30,10 @@
     <string name="watch_ad">Žiūrėti reklamą</string>
     <string name="share">Dalintis</string>
     <string name="content_description_locked">Užrakinta</string>
+    <string name="accessibility_flip_card">Apversti kortelę</string>
+    <string name="accessibility_view_card_pair">Peržiūrėti kortelių porą</string>
+    <string name="accessibility_unlock_with_coins">Atrakinti monetomis</string>
+    <string name="accessibility_unlock_with_ad">Atrakinti žiūrint reklamą</string>
     <string name="leaderboard">Lyderių lentelė</string>
     <string name="coins">Monetos</string>
 

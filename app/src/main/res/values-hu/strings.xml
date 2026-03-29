@@ -30,6 +30,10 @@
     <string name="watch_ad">Reklám megtekintése</string>
     <string name="share">Megosztás</string>
     <string name="content_description_locked">Zárolva</string>
+    <string name="accessibility_flip_card">Kártya megfordítása</string>
+    <string name="accessibility_view_card_pair">Kártyapár megtekintése</string>
+    <string name="accessibility_unlock_with_coins">Feloldás érmékkel</string>
+    <string name="accessibility_unlock_with_ad">Feloldás hirdetés megtekintésével</string>
     <string name="leaderboard">Ranglista</string>
     <string name="coins">Érmék</string>
 

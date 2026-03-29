@@ -30,6 +30,10 @@
     <string name="watch_ad">Regarder la publicité</string>
     <string name="share">Partager</string>
     <string name="content_description_locked">Verrouillé</string>
+    <string name="accessibility_flip_card">Retourner la carte</string>
+    <string name="accessibility_view_card_pair">Voir la paire de cartes</string>
+    <string name="accessibility_unlock_with_coins">Débloquer avec des pièces</string>
+    <string name="accessibility_unlock_with_ad">Débloquer en regardant une publicité</string>
     <string name="leaderboard">Classement</string>
     <string name="coins">Pièces</string>
 

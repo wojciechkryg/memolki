@@ -30,6 +30,10 @@
     <string name="watch_ad">Vaata reklaami</string>
     <string name="share">Jaga</string>
     <string name="content_description_locked">Lukustatud</string>
+    <string name="accessibility_flip_card">Keera kaart</string>
+    <string name="accessibility_view_card_pair">Vaata kaardipaar</string>
+    <string name="accessibility_unlock_with_coins">Ava müntidega</string>
+    <string name="accessibility_unlock_with_ad">Ava reklaami vaadates</string>
     <string name="leaderboard">Edetabel</string>
     <string name="coins">Mündid</string>
 

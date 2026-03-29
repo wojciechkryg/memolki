@@ -30,6 +30,10 @@
     <string name="watch_ad">Смотреть рекламу</string>
     <string name="share">Поделиться</string>
     <string name="content_description_locked">Заблокировано</string>
+    <string name="accessibility_flip_card">Перевернуть карту</string>
+    <string name="accessibility_view_card_pair">Посмотреть пару карт</string>
+    <string name="accessibility_unlock_with_coins">Разблокировать за монеты</string>
+    <string name="accessibility_unlock_with_ad">Разблокировать за просмотр рекламы</string>
     <string name="leaderboard">Таблица лидеров</string>
     <string name="coins">Монеты</string>
 

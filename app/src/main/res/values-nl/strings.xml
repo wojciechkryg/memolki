@@ -30,6 +30,10 @@
     <string name="watch_ad">Bekijk advertentie</string>
     <string name="share">Delen</string>
     <string name="content_description_locked">Vergrendeld</string>
+    <string name="accessibility_flip_card">Kaart omdraaien</string>
+    <string name="accessibility_view_card_pair">Kaartenpaar bekijken</string>
+    <string name="accessibility_unlock_with_coins">Ontgrendelen met munten</string>
+    <string name="accessibility_unlock_with_ad">Ontgrendelen door advertentie te bekijken</string>
     <string name="leaderboard">Scorebord</string>
     <string name="coins">Munten</string>
 

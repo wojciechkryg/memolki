@@ -30,6 +30,10 @@
     <string name="watch_ad">広告を見る</string>
     <string name="share">共有</string>
     <string name="content_description_locked">ロック中</string>
+    <string name="accessibility_flip_card">カードをめくる</string>
+    <string name="accessibility_view_card_pair">カードペアを見る</string>
+    <string name="accessibility_unlock_with_coins">コインで解除</string>
+    <string name="accessibility_unlock_with_ad">広告を見て解除</string>
     <string name="leaderboard">リーダーボード</string>
     <string name="coins">コイン</string>
 
