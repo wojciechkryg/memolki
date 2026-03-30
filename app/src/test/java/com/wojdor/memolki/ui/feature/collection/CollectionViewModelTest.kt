@@ -11,7 +11,6 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCase
-import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.test.AppTest
@@ -20,6 +19,7 @@ import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

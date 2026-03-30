@@ -16,11 +16,11 @@ import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToCardPairDetailsScreen
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToShop
-import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsIntent
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.collection.component.CollectionContent
+import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable

@@ -350,7 +350,7 @@ Automated promo video recording for Google Play Store ads. See `scripts/record_v
 ```
 
 ### Setup
-1. Set `RECORDING_MODE = true` in `ui/component/ClickIndicatorOverlay.kt`
+1. Set `RECORDING_MODE = true` in `util/provider/RecordingModeProvider.kt`
 2. Build and install all flavors on the **Pixel 2 emulator** (1080x1920, 9:16 — required for Play Store ads)
 3. Run the script — it handles demo mode, app data reset, per-app locale (`adb shell cmd locale set-app-locales`), recording, and cleanup
 4. Videos are saved to `~/Desktop/memolki_recordings/{flavor}/`
@@ -361,7 +361,7 @@ When `RECORDING_MODE = true`, the app changes:
 | Area | Effect |
 |------|--------|
 | Click overlay | Shows cursor animation at each tap, blocks rapid multi-taps |
-| Card order | Deterministic via fresh `Random(0)` per injection (not singleton) |
+| Card order | Deterministic via fresh `Random(0)` per injection (`di/module/AppModule.kt`, not singleton) |
 | Initial state | 20 unlocked cards, 473 coins (via `PrepareRecordingCoinsUseCase`) |
 | End game screen | Hides: Watch Ad, Free Coins, Share button. Shows coins display |
 | End game screen | Always shows "Unlock New Card" (even when daily streak available) |

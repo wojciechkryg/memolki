@@ -27,7 +27,6 @@ import com.wojdor.memolki.ui.feature.game.component.CardBorder
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingM
-import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable

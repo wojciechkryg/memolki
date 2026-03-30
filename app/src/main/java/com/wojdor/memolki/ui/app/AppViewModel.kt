@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
 import com.wojdor.memolki.domain.usecase.PrepareRecordingCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
-import com.wojdor.memolki.ui.component.RECORDING_MODE
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject

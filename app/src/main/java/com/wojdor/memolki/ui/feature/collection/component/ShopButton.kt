@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.wojdor.memolki.ui.theme.animated
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,6 +23,7 @@ import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
+import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXS
@@ -32,7 +32,9 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun ShopButton(onClick: () -> Unit = {}) {
     Button(
-        modifier = Modifier.pulseEffect().bounceClickEffect(),
+        modifier = Modifier
+            .pulseEffect()
+            .bounceClickEffect(),
         onClick = throttleClick(onClick = onClick),
         shape = FullRoundedShape,
         border = BorderStroke(CARD_BORDER_SIZE, colorResource(R.color.border)),

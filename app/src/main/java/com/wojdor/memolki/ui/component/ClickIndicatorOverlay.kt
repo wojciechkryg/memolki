@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,8 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
+import kotlinx.coroutines.launch
 
-const val RECORDING_MODE = false
 private const val INDICATOR_SIZE_DP = 160
 private const val FADE_IN_MS = 300
 private const val FADE_OUT_MS = 500

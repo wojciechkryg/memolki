@@ -3,7 +3,7 @@ package com.wojdor.memolki.domain.usecase
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
-import com.wojdor.memolki.ui.component.RECORDING_MODE
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

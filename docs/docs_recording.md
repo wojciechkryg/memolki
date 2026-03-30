@@ -5,7 +5,7 @@ Automated recording of promo videos using `adb` screen recording, tap automation
 ## Prerequisites
 
 - **Emulator**: Pixel 2 (1080x1920, 9:16) — required for Google Play Store ads format
-- **RECORDING_MODE**: `true` in `ui/component/ClickIndicatorOverlay.kt`
+- **RECORDING_MODE**: `true` in `util/provider/RecordingModeProvider.kt`
 - **App installed**: `./gradlew installFruitHalfDebug`
 - **ffmpeg-full**: `brew install ffmpeg-full` (needed for drawtext/freetype support)
 - Emulator running and connected via `adb`
@@ -56,12 +56,14 @@ The script navigates to the game board before recording starts, so the video ope
 
 ## RECORDING_MODE
 
-`RECORDING_MODE` is a compile-time constant in `ui/component/ClickIndicatorOverlay.kt`. When `true`, it affects:
+`RECORDING_MODE` is a compile-time constant in `util/provider/RecordingModeProvider.kt`. When `true`, it affects:
 
 | File | Effect |
 |------|--------|
-| `ClickIndicatorOverlay.kt` | Shows cursor overlay on taps, blocks rapid multi-taps, forced LTR |
+| `RecordingModeProvider.kt` | Single source of truth for the flag (`util/provider/`) |
+| `ClickIndicatorOverlay.kt` | Shows cursor overlay on taps, blocks rapid multi-taps |
 | `AppModule.kt` | Fresh `Random(0)` per injection (not singleton) for deterministic card order |
+| `AppActivity.kt` | Wraps entire app in `ForceLtr` for consistent tap coordinates in RTL locales |
 | `PrepareRecordingCoinsUseCase.kt` | Seeds 473 coins on first launch |
 | `UnlockedCardPairsLocalDataSource.kt` | Starts with 20 unlocked cards (instead of 5) |
 | `EndGameViewModel.kt` | Hides Watch Ad, Free Coins, Share; always shows Unlock New Card; skips notification request |

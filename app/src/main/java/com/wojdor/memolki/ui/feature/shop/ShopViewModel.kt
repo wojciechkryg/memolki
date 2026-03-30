@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
+import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.CollectDailyStreakRewardUseCase
-import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCase
@@ -15,12 +15,12 @@ import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
-import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingStatusListener
+import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
@@ -278,14 +278,14 @@ class ShopViewModel @Inject constructor(
                 menu.addAll(
                     listOf(
                         ShopMenuModel.WatchAd(isAdAvailable, coins),
-                            ShopMenuModel.BuyCoinsSmallAmount(
-                                prices[BillingHandler.IAP_COINS_SMALL] ?: DEFAULT_PRICE,
-                                SMALL_PURCHASE_COINS_REWARD
-                            ),
-                            ShopMenuModel.BuyCoinsBigAmount(
-                                prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
-                                BIG_PURCHASE_COINS_REWARD
-                            ),
+                        ShopMenuModel.BuyCoinsSmallAmount(
+                            prices[BillingHandler.IAP_COINS_SMALL] ?: DEFAULT_PRICE,
+                            SMALL_PURCHASE_COINS_REWARD
+                        ),
+                        ShopMenuModel.BuyCoinsBigAmount(
+                            prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
+                            BIG_PURCHASE_COINS_REWARD
+                        ),
                         ShopMenuModel.BuyAllCards(
                             prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
                         )

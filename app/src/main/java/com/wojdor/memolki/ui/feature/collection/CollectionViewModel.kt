@@ -14,10 +14,10 @@ import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.component.RECORDING_MODE
-import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.notification.NotificationScheduler
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

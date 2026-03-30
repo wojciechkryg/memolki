@@ -3,7 +3,7 @@ package com.wojdor.memolki.di.module
 import android.content.Context
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.wojdor.memolki.ui.component.RECORDING_MODE
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

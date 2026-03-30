@@ -19,13 +19,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.collection.component.CARD_PAIR_VERTICAL_PADDING
 import com.wojdor.memolki.ui.feature.collection.component.CollectionLockedCard
 import com.wojdor.memolki.ui.feature.collection.component.cardLeftModifier
 import com.wojdor.memolki.ui.feature.collection.component.cardRightModifier
 import com.wojdor.memolki.ui.feature.collection.component.rotatedCardPairShape
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
-import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingXS

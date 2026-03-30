@@ -5,26 +5,26 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
-import com.wojdor.memolki.ui.component.RECORDING_MODE
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
+import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
+import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
-import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
+import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
 import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -272,10 +272,12 @@ class EndGameViewModel @Inject constructor(
                     add(EndGameMenuModel.UnlockNewCard)
                 }
                 if (!RECORDING_MODE) {
-                    add(EndGameMenuModel.Share(
-                        showReward = isShareRewardAvailable,
-                        rewardCoins = if (isShareRewardAvailable) RewardCoinsForShareUseCase.SHARE_REWARD_COINS else 0L
-                    ))
+                    add(
+                        EndGameMenuModel.Share(
+                            showReward = isShareRewardAvailable,
+                            rewardCoins = if (isShareRewardAvailable) RewardCoinsForShareUseCase.SHARE_REWARD_COINS else 0L
+                        )
+                    )
                 }
             }
             sendState { copy(menu = menu) }

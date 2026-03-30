@@ -27,7 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -44,7 +43,12 @@ fun ToggleSettingButton(
         modifier = Modifier.bounceClickEffect(),
         // don't use throttleClick here
         onClick = onClick,
-        contentPadding = PaddingValues(top = spacingS, bottom = spacingS, start = spacingS, end = spacingL),
+        contentPadding = PaddingValues(
+            top = spacingS,
+            bottom = spacingS,
+            start = spacingS,
+            end = spacingL
+        ),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             disabledContainerColor = Color.Transparent

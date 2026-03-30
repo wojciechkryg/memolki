@@ -15,9 +15,9 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.app.AppActivity
 import com.wojdor.memolki.ui.app.AppNavigation.SHOP_DEEP_LINK
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.AD_REWARD_NOTIFICATION_ID
-import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.REMINDER_NOTIFICATION_ID
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.NOTIFICATION_CHANNEL_ID
+import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.REMINDER_NOTIFICATION_ID
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.STREAK_NOTIFICATION_ID
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE_AD_REWARD
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE_REMINDER

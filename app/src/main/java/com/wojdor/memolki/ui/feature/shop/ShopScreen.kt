@@ -8,11 +8,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.R
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.ShopMenuModel
-import androidx.navigation.NavController
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -21,6 +20,7 @@ import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.extension.showToast
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import kotlinx.coroutines.launch
 
 @Composable

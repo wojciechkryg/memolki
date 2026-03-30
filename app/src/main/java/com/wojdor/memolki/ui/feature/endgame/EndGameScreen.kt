@@ -3,12 +3,12 @@ package com.wojdor.memolki.ui.feature.endgame
 import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.LocalActivity
-import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
