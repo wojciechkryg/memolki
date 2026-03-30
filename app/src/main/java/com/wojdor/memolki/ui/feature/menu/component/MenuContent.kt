@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
+import com.wojdor.memolki.ui.component.RECORDING_MODE
 import com.wojdor.memolki.ui.component.XmlDrawable
 import com.wojdor.memolki.ui.feature.menu.MenuCallbacks
 import com.wojdor.memolki.ui.feature.menu.MenuState
@@ -89,12 +90,14 @@ fun MenuContent(
                 )
             }
         }
-        state.otherAppModel?.let {
-            MoreAppsItem(
-                modifier = Modifier.fillMaxWidth(),
-                appModel = it,
-                onClick = callbacks.onMoreAppsClick
-            )
+        if (!RECORDING_MODE) {
+            state.otherAppModel?.let {
+                MoreAppsItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    appModel = it,
+                    onClick = callbacks.onMoreAppsClick
+                )
+            }
         }
     }
 }

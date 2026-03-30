@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import com.wojdor.memolki.ui.component.RECORDING_MODE
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -15,8 +16,10 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
     suspend fun getUnlockedCardPairIds(): List<String> {
         val preferences = dataStore.data.first()
         return preferences[Key.UNLOCKED_CARD_PAIR_IDS]?.toList() ?: run {
+            val count = if (RECORDING_MODE) RECORDING_MODE_UNLOCKED_CARD_PAIRS_COUNT
+                else DEFAULT_UNLOCKED_CARD_PAIRS_COUNT
             val defaultCardPairIds = allCardPairsDataSource.getAllCardPairs()
-                .take(DEFAULT_UNLOCKED_CARD_PAIRS_COUNT)
+                .take(count)
                 .map { it.id }
             dataStore.edit { it[Key.UNLOCKED_CARD_PAIR_IDS] = defaultCardPairIds.toSet() }
             defaultCardPairIds
@@ -36,5 +39,6 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
 
     companion object {
         private const val DEFAULT_UNLOCKED_CARD_PAIRS_COUNT = 5
+        private const val RECORDING_MODE_UNLOCKED_CARD_PAIRS_COUNT = 20
     }
 }

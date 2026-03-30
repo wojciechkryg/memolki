@@ -3,6 +3,7 @@ package com.wojdor.memolki.di.module
 import android.content.Context
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.wojdor.memolki.ui.component.RECORDING_MODE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +17,7 @@ import kotlin.random.Random
 class AppModule {
 
     @Provides
-    @Singleton
-    fun provideRandom(): Random = Random.Default
+    fun provideRandom(): Random = if (RECORDING_MODE) Random(0) else Random.Default
 
     @Provides
     @Singleton

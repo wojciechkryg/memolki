@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -24,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.component.FadeEffectBottom
 import com.wojdor.memolki.ui.component.FadeEffectTop
@@ -69,14 +69,11 @@ fun CardPairsCollection(
         val cardPairSize = (shorterEdge - spacing * (columns - 1)) / columns
         val lazyGridState = rememberLazyGridState()
         val firstUnlockableIndex = remember(state.collectionCardPairs) {
-            val index = state.collectionCardPairs.indexOfFirst {
+            state.collectionCardPairs.indexOfFirst {
                 it is CollectionCardPairModel.LockedToUnlockWithCoins ||
                     it is CollectionCardPairModel.LockedToUnlockWithAd
             }
-            if (index == INDEX_NOT_FOUND) INDEX_NOT_FOUND else (index - columns).coerceAtLeast(0)
         }
-        val spacingInPixels = with(LocalDensity.current) { spacing.toPx() }
-        val cardPairSizeInPixels = with(LocalDensity.current) { cardPairSize.toPx() }
         var hasScrolled by remember {
             mutableStateOf(lazyGridState.firstVisibleItemIndex != 0)
         }
@@ -85,19 +82,7 @@ fun CardPairsCollection(
             if (firstUnlockableIndex > INDEX_NOT_FOUND && !hasScrolled) {
                 hasScrolled = true
                 delay(SCROLL_DELAY)
-                val rowIndex = firstUnlockableIndex / columns
-                val targetOffset = rowIndex * (cardPairSizeInPixels + spacingInPixels)
-                lazyGridState.scroll {
-                    var previousValue = lazyGridState.firstVisibleItemScrollOffset.toFloat()
-                    Animatable(previousValue).animateTo(
-                        targetValue = targetOffset,
-                        animationSpec = tween(durationMillis = SCROLL_DURATION)
-                    ) {
-                        val delta = value - previousValue
-                        scrollBy(delta)
-                        previousValue = value
-                    }
-                }
+                scrollToRowBefore(lazyGridState, firstUnlockableIndex, columns)
             }
         }
 
@@ -211,6 +196,29 @@ private fun BackSide(
                     // handled in FrontSide
                 }
             }
+        }
+    }
+}
+
+private suspend fun scrollToRowBefore(
+    lazyGridState: LazyGridState,
+    itemIndex: Int,
+    columns: Int
+) {
+    val visibleItems = lazyGridState.layoutInfo.visibleItemsInfo
+    if (visibleItems.size <= columns) return
+    val rowHeight = (visibleItems[columns].offset.y - visibleItems[0].offset.y).toFloat()
+    val targetRow = (itemIndex / columns - 1).coerceAtLeast(0)
+    val targetOffset = targetRow * rowHeight
+    lazyGridState.scroll {
+        var previousValue = lazyGridState.firstVisibleItemScrollOffset.toFloat()
+        Animatable(previousValue).animateTo(
+            targetValue = targetOffset,
+            animationSpec = tween(durationMillis = SCROLL_DURATION)
+        ) {
+            val delta = value - previousValue
+            scrollBy(delta)
+            previousValue = value
         }
     }
 }

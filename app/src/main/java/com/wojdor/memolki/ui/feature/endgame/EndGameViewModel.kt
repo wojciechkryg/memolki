@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.ui.component.RECORDING_MODE
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
@@ -240,7 +241,7 @@ class EndGameViewModel @Inject constructor(
         defaultEffect: EndGameEffect,
         levelModel: LevelModel? = null
     ) {
-        if (shouldShowNotificationRequest) {
+        if (!RECORDING_MODE && shouldShowNotificationRequest) {
             shouldShowNotificationRequest = false
             sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, levelModel))
         } else {
@@ -262,18 +263,20 @@ class EndGameViewModel @Inject constructor(
         canUnlockNewCardUseCase().onEach { result ->
             val canUnlockNewCard = result.getOrDefault(false)
             val menu = mutableListOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu).apply {
-                if (isAdLoaded) {
+                if (isAdLoaded && !RECORDING_MODE) {
                     add(0, EndGameMenuModel.WatchAd)
                 }
-                if (isDailyStreakRewardAvailable) {
+                if (!RECORDING_MODE && isDailyStreakRewardAvailable) {
                     add(EndGameMenuModel.FreeCoins)
                 } else if (canUnlockNewCard) {
                     add(EndGameMenuModel.UnlockNewCard)
                 }
-                add(EndGameMenuModel.Share(
-                    showReward = isShareRewardAvailable,
-                    rewardCoins = if (isShareRewardAvailable) RewardCoinsForShareUseCase.SHARE_REWARD_COINS else 0L
-                ))
+                if (!RECORDING_MODE) {
+                    add(EndGameMenuModel.Share(
+                        showReward = isShareRewardAvailable,
+                        rewardCoins = if (isShareRewardAvailable) RewardCoinsForShareUseCase.SHARE_REWARD_COINS else 0L
+                    ))
+                }
             }
             sendState { copy(menu = menu) }
         }.launchIn(viewModelScope)

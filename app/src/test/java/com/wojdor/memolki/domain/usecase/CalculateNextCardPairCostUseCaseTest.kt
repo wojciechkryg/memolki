@@ -52,93 +52,78 @@ class CalculateNextCardPairCostUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when no cards are unlocked then calculate initial cost`() = runTest {
-        // when
-        val result = sut().first()
+    fun `when 5 cards unlocked with 2x3 board then cost is low`() = runTest {
+        // given: 5 unlocked, biggest level 2x3 (3 pairs) → 5 * 3 / 5 = 3
+        val result = createSut(unlockedCount = 5, biggestLevel = LevelModel.Grid2x3())().first()
 
         // then
-        assertEquals(Result.success(11), result)
+        assertEquals(Result.success(3), result)
     }
 
     @Test
-    fun `when some cards are unlocked then calculate higher cost`() = runTest {
-        // given
-        unlockedCardPairsLocalDataSource.addUnlockedCardPairId("watermelon")
-        unlockedCardPairsLocalDataSource.addUnlockedCardPairId("mango")
-        unlockedCardPairsLocalDataSource.addUnlockedCardPairId("peach")
-
-        // when
-        val result = sut().first()
+    fun `when 10 cards unlocked with 4x5 board then cost scales linearly`() = runTest {
+        // given: 10 unlocked, biggest level 4x5 (10 pairs) → 10 * 10 / 5 = 20
+        val result = createSut(unlockedCount = 10, biggestLevel = LevelModel.Grid4x5())().first()
 
         // then
-        assertEquals(Result.success(56), result)
+        assertEquals(Result.success(20), result)
     }
 
     @Test
-    fun `when unlocking 60th card of 60 total then cost is smooth`() = runTest {
-        // when
-        val result = createSutForLargeCollection(totalPairs = 60, unlockedCount = 59)().first()
+    fun `when 20 cards unlocked with 5x6 board then cost is higher`() = runTest {
+        // given: 20 unlocked, biggest level 5x6 (15 pairs) → 20 * 15 / 5 = 60
+        val result = createSut(unlockedCount = 20, biggestLevel = LevelModel.Grid5x6())().first()
 
         // then
-        assertEquals(Result.success(230), result)
+        assertEquals(Result.success(60), result)
     }
 
     @Test
-    fun `when unlocking 80th card of 80 total then cost is smooth`() = runTest {
-        // when
-        val result = createSutForLargeCollection(totalPairs = 80, unlockedCount = 79)().first()
+    fun `when same unlock count then cost is same regardless of total cards`() = runTest {
+        // given: 20 unlocked, 5x6 board — cost should be identical for 60 and 80 total
+        val result60 = createSut(unlockedCount = 20, totalPairs = 60)().first()
+        val result80 = createSut(unlockedCount = 20, totalPairs = 80)().first()
 
         // then
-        assertEquals(Result.success(243), result)
-    }
-
-    @Test
-    fun `when unlocking 100th card of 100 total then cost is smooth`() = runTest {
-        // when
-        val result = createSutForLargeCollection(totalPairs = 100, unlockedCount = 99)().first()
-
-        // then
-        assertEquals(Result.success(252), result)
-    }
-
-    @Test
-    fun `when unlocking 120th card of 120 total then cost is smooth`() = runTest {
-        // when
-        val result = createSutForLargeCollection(totalPairs = 120, unlockedCount = 119)().first()
-
-        // then
-        assertEquals(Result.success(258), result)
+        assertEquals(result60, result80)
     }
 
     @Test
     fun `when all cards are unlocked then return no more cards`() = runTest {
         // given
-        cardRepository.getAllCardPairs().forEach {
-            unlockedCardPairsLocalDataSource.addUnlockedCardPairId((it.first.pairId))
-        }
-
-        // when
-        val result = sut().first()
+        val result = createSut(unlockedCount = 60, totalPairs = 60)().first()
 
         // then
         assertTrue(result.isSuccess)
         assertEquals(NO_MORE_CARDS, result.getOrThrow())
     }
 
-    private fun createSutForLargeCollection(
-        totalPairs: Int,
-        unlockedCount: Int
+    @Test
+    fun `when cost is very low then coerce to minimum`() = runTest {
+        // given: 1 unlocked, 2x3 (3 pairs) → 1 * 3 / 5 = 0 → coerced to 1
+        val result = createSut(unlockedCount = 1, biggestLevel = LevelModel.Grid2x3())().first()
+
+        // then
+        assertEquals(Result.success(1), result)
+    }
+
+    private fun createSut(
+        unlockedCount: Int,
+        totalPairs: Int = 60,
+        biggestLevel: LevelModel = LevelModel.Grid5x6(isUnlocked = true)
     ): CalculateNextCardPairCostUseCase {
-        val allLevelsUnlocked = listOf(
-            LevelModel.Grid2x3(isUnlocked = true),
-            LevelModel.Grid3x4(isUnlocked = true),
-            LevelModel.Grid4x4(isUnlocked = true),
-            LevelModel.Grid4x5(isUnlocked = true),
-            LevelModel.Grid4x6(isUnlocked = true),
-            LevelModel.Grid5x6(isUnlocked = true)
+        val biggestSize = biggestLevel.columns * biggestLevel.rows
+        val allLevelsUpTo = listOf(
+            LevelModel.Grid2x3(isUnlocked = 6 <= biggestSize),
+            LevelModel.Grid3x4(isUnlocked = 12 <= biggestSize),
+            LevelModel.Grid4x4(isUnlocked = 16 <= biggestSize),
+            LevelModel.Grid4x5(isUnlocked = 20 <= biggestSize),
+            LevelModel.Grid4x6(isUnlocked = 24 <= biggestSize),
+            LevelModel.Grid5x6(isUnlocked = 30 <= biggestSize)
         )
+
         val mockGetLevels = mockk<GetLevelsUseCase>()
-        every { mockGetLevels() } returns flowOf(Result.success(allLevelsUnlocked))
+        every { mockGetLevels() } returns flowOf(Result.success(allLevelsUpTo))
 
         val mockGetUnlockedCount = mockk<GetUnlockedCardPairsCountUseCase>()
         every { mockGetUnlockedCount() } returns flowOf(Result.success(unlockedCount))

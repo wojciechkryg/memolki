@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.EndGameMenuModel
+import com.wojdor.memolki.ui.component.RECORDING_MODE
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.component.SparklesOverlay
@@ -52,6 +53,7 @@ fun EndGameContent(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -81,7 +83,11 @@ fun EndGameContent(
                         verticalArrangement = Arrangement.spacedBy(spacingL),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        it.forEach { menuItem ->
+                        it.filterNot { item ->
+                            RECORDING_MODE && item is EndGameMenuModel.WatchAd
+                                    || RECORDING_MODE && item is EndGameMenuModel.FreeCoins
+                                    || RECORDING_MODE && item is EndGameMenuModel.Share
+                        }.forEach { menuItem ->
                             when (menuItem) {
                                 EndGameMenuModel.WatchAd ->
                                     WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)

@@ -28,6 +28,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCaseTest
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCaseTest
+import com.wojdor.memolki.domain.usecase.PrepareRecordingCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCaseTest
@@ -116,4 +117,5 @@ interface TestInjector {
     fun inject(test: SetLastShopAdShownTimestampUseCaseTest)
     fun inject(test: IsShopAdCooldownOverUseCaseTest)
     fun inject(test: HasReceivedShareRewardUseCaseTest)
+    fun inject(test: PrepareRecordingCoinsUseCaseTest)
 }
