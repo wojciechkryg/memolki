@@ -16,15 +16,13 @@ class PrepareRecordingCoinsUseCase @Inject constructor(
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
 
     override fun execute(): Flow<Result<Unit>> = flow {
-        if (!RECORDING_MODE) {
-            emit(Result.success(Unit))
-            return@flow
-        }
-        val currentCoins = userRepository.getCoins().first()
-        if (currentCoins == 0L) {
-            userRepository.addCoins(RECORDING_MODE_INITIAL_COINS)
-        }
-        emit(Result.success(Unit))
+        emit(runCatching {
+            if (!RECORDING_MODE) return@runCatching
+            val currentCoins = userRepository.getCoins().first()
+            if (currentCoins == 0L) {
+                userRepository.addCoins(RECORDING_MODE_INITIAL_COINS)
+            }
+        })
     }
 
     companion object {

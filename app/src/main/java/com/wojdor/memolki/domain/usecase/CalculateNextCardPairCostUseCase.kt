@@ -34,7 +34,8 @@ class CalculateNextCardPairCostUseCase @Inject constructor(
         val allPossibleCardPairsCount = cardRepository.getAllCardPairs().size
         if (unlockedCardPairsCount >= allPossibleCardPairsCount) return NO_MORE_CARDS
 
-        val biggestUnlockedLevel = levels.filter { it.isUnlocked }.maxBy { it.columns * it.rows }
+        val biggestUnlockedLevel = levels.filter { it.isUnlocked }.maxByOrNull { it.columns * it.rows }
+            ?: return MINIMUM_CARD_PAIR_COST
         val levelPairsCount = (biggestUnlockedLevel.columns * biggestUnlockedLevel.rows) / 2
         return (BASE_COST + unlockedCardPairsCount * levelPairsCount / COST_DIVISOR)
             .coerceAtLeast(MINIMUM_CARD_PAIR_COST)

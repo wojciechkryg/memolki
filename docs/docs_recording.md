@@ -87,7 +87,7 @@ All coordinates mapped via `adb shell uiautomator dump`.
 
 ### 3x4 game grid (with 20 unlocked cards, fresh Random(0))
 
-```
+```text
 ┌────────────┬────────────┬────────────┐
 │ plum half  │ apple whole│ plum whole │
 │ (201,452)  │ (540,452)  │ (879,452)  │

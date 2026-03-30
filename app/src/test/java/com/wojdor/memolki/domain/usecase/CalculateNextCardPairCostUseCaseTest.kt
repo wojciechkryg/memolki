@@ -85,6 +85,7 @@ class CalculateNextCardPairCostUseCaseTest : AppTest() {
         val result80 = createSut(unlockedCount = 20, totalPairs = 80)().first()
 
         // then
+        assertEquals(Result.success(60), result60)
         assertEquals(result60, result80)
     }
 
