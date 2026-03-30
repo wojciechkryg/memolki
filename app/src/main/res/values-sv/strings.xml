@@ -30,6 +30,10 @@
     <string name="watch_ad">Titta på annons</string>
     <string name="share">Dela</string>
     <string name="content_description_locked">Låst</string>
+    <string name="accessibility_flip_card">Vänd kort</string>
+    <string name="accessibility_view_card_pair">Visa kortpar</string>
+    <string name="accessibility_unlock_with_coins">Lås upp med mynt</string>
+    <string name="accessibility_unlock_with_ad">Lås upp genom att titta på en annons</string>
     <string name="leaderboard">Topplista</string>
     <string name="coins">Mynt</string>
 

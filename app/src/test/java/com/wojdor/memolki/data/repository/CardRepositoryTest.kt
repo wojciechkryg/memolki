@@ -15,6 +15,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
+import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 class CardRepositoryTest : AppTest() {
@@ -25,6 +26,9 @@ class CardRepositoryTest : AppTest() {
     @Inject
     lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
 
+    @Inject
+    lateinit var random: Random
+
     private lateinit var sut: CardRepository
 
     @Before
@@ -32,7 +36,8 @@ class CardRepositoryTest : AppTest() {
         super.setup()
         sut = CardRepository(
             allCardPairsDataSource,
-            unlockedCardPairsLocalDataSource
+            unlockedCardPairsLocalDataSource,
+            random
         )
     }
 

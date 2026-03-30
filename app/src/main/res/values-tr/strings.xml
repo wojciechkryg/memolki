@@ -30,6 +30,10 @@
     <string name="watch_ad">Reklamı izle</string>
     <string name="share">Paylaş</string>
     <string name="content_description_locked">Kilitli</string>
+    <string name="accessibility_flip_card">Kartı çevir</string>
+    <string name="accessibility_view_card_pair">Kart çiftini görüntüle</string>
+    <string name="accessibility_unlock_with_coins">Jetonlarla aç</string>
+    <string name="accessibility_unlock_with_ad">Reklam izleyerek aç</string>
     <string name="leaderboard">Sıralama</string>
     <string name="coins">Paralar</string>
 

@@ -30,6 +30,10 @@
     <string name="watch_ad">צפה במודעה</string>
     <string name="share">שיתוף</string>
     <string name="content_description_locked">נעול</string>
+    <string name="accessibility_flip_card">הפוך קלף</string>
+    <string name="accessibility_view_card_pair">הצג זוג קלפים</string>
+    <string name="accessibility_unlock_with_coins">פתח עם מטבעות</string>
+    <string name="accessibility_unlock_with_ad">פתח על ידי צפייה בפרסומת</string>
     <string name="leaderboard">טבלת מובילים</string>
     <string name="coins">מטבעות</string>
 

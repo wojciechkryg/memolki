@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
@@ -26,6 +26,7 @@ import com.wojdor.memolki.ui.feature.menu.MenuCallbacks
 import com.wojdor.memolki.ui.feature.menu.MenuState
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 
 @Composable
 fun MenuContent(
@@ -89,12 +90,14 @@ fun MenuContent(
                 )
             }
         }
-        state.otherAppModel?.let {
-            MoreAppsItem(
-                modifier = Modifier.fillMaxWidth(),
-                appModel = it,
-                onClick = callbacks.onMoreAppsClick
-            )
+        if (!RECORDING_MODE) {
+            state.otherAppModel?.let {
+                MoreAppsItem(
+                    modifier = Modifier.fillMaxWidth(),
+                    appModel = it,
+                    onClick = callbacks.onMoreAppsClick
+                )
+            }
         }
     }
 }

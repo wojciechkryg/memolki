@@ -9,7 +9,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.ui.app.navigateToChooseLevel
@@ -19,6 +18,7 @@ import com.wojdor.memolki.ui.app.navigateToSettings
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.menu.component.MenuContent
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 import kotlinx.coroutines.launch
 
 @Composable

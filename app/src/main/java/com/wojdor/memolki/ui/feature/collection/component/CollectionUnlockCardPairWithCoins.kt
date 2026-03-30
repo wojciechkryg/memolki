@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
-import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.isTablet
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingXS
@@ -45,7 +45,8 @@ fun CollectionUnlockCardPairWithCoins(
             .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
-                onClick = throttleClick(onClick = onClick),
+                onClickLabel = stringResource(R.string.accessibility_unlock_with_coins),
+                onClick = throttleClick(onClick = onClick)
             )
             .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
         contentAlignment = Alignment.Center

@@ -30,6 +30,10 @@
     <string name="watch_ad">Δείτε τη διαφήμιση</string>
     <string name="share">Κοινοποίηση</string>
     <string name="content_description_locked">Κλειδωμένο</string>
+    <string name="accessibility_flip_card">Γυρίστε την κάρτα</string>
+    <string name="accessibility_view_card_pair">Δείτε ζευγάρι καρτών</string>
+    <string name="accessibility_unlock_with_coins">Ξεκλείδωμα με νομίσματα</string>
+    <string name="accessibility_unlock_with_ad">Ξεκλείδωμα με παρακολούθηση διαφήμισης</string>
     <string name="leaderboard">Κατάταξη</string>
     <string name="coins">Νομίσματα</string>
 

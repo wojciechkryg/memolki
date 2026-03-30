@@ -19,3 +19,28 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Mediation SDK rules - Unity
+-dontwarn com.unity3d.ads.**
+-dontwarn com.unity3d.services.**
+
+# Mediation SDK rules - AppLovin
+-dontwarn com.applovin.**
+-keep class com.applovin.** { *; }
+-keep class com.google.android.gms.ads.mediation.** { *; }
+
+# Mediation SDK rules - ironSource
+-dontwarn com.ironsource.**
+-keep class com.ironsource.** { *; }
+
+# Mediation SDK rules - Liftoff (Vungle)
+-dontwarn com.vungle.**
+-keep class com.vungle.** { *; }
+
+# Mediation SDK rules - InMobi
+-dontwarn com.inmobi.**
+-keep class com.inmobi.** { *; }
+
+# Mediation SDK rules - Mintegral
+-dontwarn com.mbridge.**
+-keep class com.mbridge.** { *; }

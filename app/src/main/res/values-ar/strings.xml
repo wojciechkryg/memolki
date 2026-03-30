@@ -30,6 +30,10 @@
     <string name="watch_ad">شاهد الإعلان</string>
     <string name="share">مشاركة</string>
     <string name="content_description_locked">مقفل</string>
+    <string name="accessibility_flip_card">اقلب البطاقة</string>
+    <string name="accessibility_view_card_pair">عرض زوج البطاقات</string>
+    <string name="accessibility_unlock_with_coins">فتح بالعملات</string>
+    <string name="accessibility_unlock_with_ad">فتح بمشاهدة إعلان</string>
     <string name="leaderboard">المتصدرين</string>
     <string name="coins">عملات</string>
 

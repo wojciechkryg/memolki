@@ -30,6 +30,10 @@
     <string name="watch_ad">विज्ञापन देखें</string>
     <string name="share">साझा करें</string>
     <string name="content_description_locked">लॉक</string>
+    <string name="accessibility_flip_card">कार्ड पलटें</string>
+    <string name="accessibility_view_card_pair">कार्ड जोड़ी देखें</string>
+    <string name="accessibility_unlock_with_coins">सिक्कों से अनलॉक करें</string>
+    <string name="accessibility_unlock_with_ad">विज्ञापन देखकर अनलॉक करें</string>
     <string name="leaderboard">लीडरबोर्ड</string>
     <string name="coins">सिक्के</string>
 

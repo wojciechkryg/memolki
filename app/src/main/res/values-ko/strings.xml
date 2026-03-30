@@ -30,6 +30,10 @@
     <string name="watch_ad">광고 보기</string>
     <string name="share">공유</string>
     <string name="content_description_locked">잠김</string>
+    <string name="accessibility_flip_card">카드 뒤집기</string>
+    <string name="accessibility_view_card_pair">카드 쌍 보기</string>
+    <string name="accessibility_unlock_with_coins">코인으로 잠금 해제</string>
+    <string name="accessibility_unlock_with_ad">광고를 보고 잠금 해제</string>
     <string name="leaderboard">리더보드</string>
     <string name="coins">코인</string>
 

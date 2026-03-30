@@ -9,13 +9,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.collection.getCollectionStateForPreview
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.isTablet
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.util.throttleClick
@@ -33,7 +35,8 @@ fun CollectionUnlockedCardPair(
             .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
-                onClick = throttleClick(onClick = onClick),
+                onClickLabel = stringResource(R.string.accessibility_view_card_pair),
+                onClick = throttleClick(onClick = onClick)
             )
             .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
         contentAlignment = Alignment.Center

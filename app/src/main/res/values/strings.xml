@@ -30,6 +30,10 @@
     <string name="watch_ad">Watch Ad</string>
     <string name="share">Share</string>
     <string name="content_description_locked">Locked</string>
+    <string name="accessibility_flip_card">Flip card</string>
+    <string name="accessibility_view_card_pair">View card pair</string>
+    <string name="accessibility_unlock_with_coins">Unlock with coins</string>
+    <string name="accessibility_unlock_with_ad">Unlock by watching ad</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="coins">Coins</string>
 

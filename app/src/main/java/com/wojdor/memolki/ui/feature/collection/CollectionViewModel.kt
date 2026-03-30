@@ -14,9 +14,10 @@ import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.util.notification.NotificationScheduler
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -200,6 +201,7 @@ class CollectionViewModel @Inject constructor(
         isAdAvailable: Boolean
     ): List<CollectionCardPairModel> {
         return if (lockedCardPairsCount > LAST_LOCKED_CARD_PAIR) {
+            if (RECORDING_MODE) return List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.Locked }
             if (unlockedCardPairsFromAdsCount < MAX_UNLOCKED_CARD_PAIRS_WITH_ADS && isAdAvailable) {
                 List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.LockedToUnlockWithAd }
             } else {

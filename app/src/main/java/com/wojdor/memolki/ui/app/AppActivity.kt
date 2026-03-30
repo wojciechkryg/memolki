@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.compose.runtime.mutableStateOf
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,16 +12,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.ClickIndicatorOverlay
+import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.LocalWindowSize
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.notification.NotificationScheduler
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.update.InAppUpdate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -62,19 +65,22 @@ class AppActivity : ComponentActivity() {
             val windowSizeClass = calculateWindowSizeClass(this)
             CompositionLocalProvider(LocalWindowSize provides windowSizeClass) {
                 AppTheme {
-                    ClickIndicatorOverlay {
-                        Scaffold(
-                            containerColor = colorResource(R.color.primary),
-                            content = { innerPadding ->
-                                Box(modifier = Modifier.padding(innerPadding)) {
-                                    AppNavigation(
-                                        onNewIntent = newIntentState.value,
-                                        onIntentHandled = { newIntentState.value = null }
-                                    )
+                    val appContent = @Composable {
+                        ClickIndicatorOverlay {
+                            Scaffold(
+                                containerColor = colorResource(R.color.primary),
+                                content = { innerPadding ->
+                                    Box(modifier = Modifier.padding(innerPadding)) {
+                                        AppNavigation(
+                                            onNewIntent = newIntentState.value,
+                                            onIntentHandled = { newIntentState.value = null }
+                                        )
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
+                    if (RECORDING_MODE) ForceLtr { appContent() } else appContent()
                 }
             }
         }

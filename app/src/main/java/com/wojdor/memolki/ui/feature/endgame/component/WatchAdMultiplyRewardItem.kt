@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.wojdor.memolki.ui.theme.animated
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,6 +22,7 @@ import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingXS
@@ -31,7 +31,9 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
     Button(
-        modifier = Modifier.pulseEffect().bounceClickEffect(),
+        modifier = Modifier
+            .pulseEffect()
+            .bounceClickEffect(),
         onClick = throttleClick(onClick = onClick),
         shape = RoundedCornerShape(spacingL),
         colors = ButtonDefaults.buttonColors(

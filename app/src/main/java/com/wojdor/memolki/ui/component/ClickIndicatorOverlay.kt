@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import kotlinx.coroutines.launch
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -20,8 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
+import kotlinx.coroutines.launch
 
-private const val SHOW_CLICK_INDICATOR = false
 private const val INDICATOR_SIZE_DP = 160
 private const val FADE_IN_MS = 300
 private const val FADE_OUT_MS = 500
@@ -36,13 +36,12 @@ private const val FINGERTIP_Y_FRACTION = 0.06f
  * Temporary overlay for recording demo videos. Displays a cursor image (ic_cursor.png) at each
  * tap position with a fade-in/fade-out animation. Not intended for production use.
  *
- * To enable, set [SHOW_CLICK_INDICATOR] to true. To clean up, delete this file,
+ * To enable, set [RECORDING_MODE] to true. To clean up, delete this file,
  * remove the wrapper from AppActivity.kt, and delete res/drawable/ic_cursor.png.
  */
-@Suppress("KotlinConstantConditions")
 @Composable
 fun ClickIndicatorOverlay(content: @Composable () -> Unit) {
-    if (!SHOW_CLICK_INDICATOR) {
+    if (!RECORDING_MODE) {
         content()
         return
     }
@@ -53,8 +52,9 @@ fun ClickIndicatorOverlay(content: @Composable () -> Unit) {
             awaitPointerEventScope {
                 while (true) {
                     val event = awaitPointerEvent(PointerEventPass.Initial)
-                    event.changes.forEach { change ->
-                        if (change.pressed && !change.previousPressed) {
+                    val change = event.changes.first()
+                    if (change.pressed && !change.previousPressed) {
+                        if (indicators.isEmpty()) {
                             val id = nextId[0]++
                             indicators.add(
                                 ClickIndicator(
@@ -63,6 +63,8 @@ fun ClickIndicatorOverlay(content: @Composable () -> Unit) {
                                     y = change.position.y
                                 )
                             )
+                        } else {
+                            change.consume()
                         }
                     }
                 }
@@ -70,11 +72,13 @@ fun ClickIndicatorOverlay(content: @Composable () -> Unit) {
         }
     ) {
         content()
-        indicators.forEach { indicator ->
-            ClickIndicatorImage(
-                indicator = indicator,
-                onAnimationComplete = { indicators.remove(indicator) }
-            )
+        ForceLtr {
+            indicators.forEach { indicator ->
+                ClickIndicatorImage(
+                    indicator = indicator,
+                    onAnimationComplete = { indicators.remove(indicator) }
+                )
+            }
         }
     }
 }

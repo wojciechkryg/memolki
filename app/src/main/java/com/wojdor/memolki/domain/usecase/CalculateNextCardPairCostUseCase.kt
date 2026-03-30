@@ -7,7 +7,6 @@ import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
-import kotlin.math.log2
 
 class CalculateNextCardPairCostUseCase @Inject constructor(
     @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher,
@@ -32,40 +31,20 @@ class CalculateNextCardPairCostUseCase @Inject constructor(
         levels: List<LevelModel>,
         unlockedCardPairsCount: Int
     ): Int {
-        val unlockedLevels = levels.filter { it.isUnlocked }
-        val biggestUnlockedLevel = unlockedLevels.maxBy { it.columns * it.rows }
         val allPossibleCardPairsCount = cardRepository.getAllCardPairs().size
-        val missingCardPairsCountToCalculate = allPossibleCardPairsCount - unlockedCardPairsCount
+        if (unlockedCardPairsCount >= allPossibleCardPairsCount) return NO_MORE_CARDS
 
-        return if (missingCardPairsCountToCalculate > 0) {
-            val baseCardPairCost = getBaseCardPairCost(biggestUnlockedLevel)
-            val biggestUnlockedLevelCardPairsCount = getCardPairsCountForLevel(biggestUnlockedLevel)
-            val unlockedLevelAdditionalCost =
-                (biggestUnlockedLevelCardPairsCount.toDouble() * CARD_PAIR_COST_FACTOR).toInt()
-            val baseLevelCalculation = baseCardPairCost * log2(
-                biggestUnlockedLevelCardPairsCount.toDouble()
-            )
-            (((baseLevelCalculation / BASE_LEVEL_FACTOR) + unlockedLevelAdditionalCost) *
-                    (unlockedCardPairsCount.toDouble() / (allPossibleCardPairsCount + biggestUnlockedLevelCardPairsCount)))
-                .toInt()
-                .coerceAtLeast(MINIMUM_CARD_PAIR_COST)
-        } else {
-            NO_MORE_CARDS
-        }
-    }
-
-    private fun getCardPairsCountForLevel(level: LevelModel): Int {
-        return (level.columns * level.rows) / 2
-    }
-
-    private fun getBaseCardPairCost(level: LevelModel): Int {
-        return (level.columns * level.rows * CARD_PAIR_COST_FACTOR).toInt()
+        val biggestUnlockedLevel = levels.filter { it.isUnlocked }.maxByOrNull { it.columns * it.rows }
+            ?: return MINIMUM_CARD_PAIR_COST
+        val levelPairsCount = (biggestUnlockedLevel.columns * biggestUnlockedLevel.rows) / 2
+        return (BASE_COST + unlockedCardPairsCount * levelPairsCount / COST_DIVISOR)
+            .coerceAtLeast(MINIMUM_CARD_PAIR_COST)
     }
 
     companion object {
         const val NO_MORE_CARDS = Int.MAX_VALUE
-        const val CARD_PAIR_COST_FACTOR = 3.5
-        const val BASE_LEVEL_FACTOR = 1.7
         const val MINIMUM_CARD_PAIR_COST = 1
+        private const val BASE_COST = 0
+        private const val COST_DIVISOR = 5
     }
 }

@@ -5,10 +5,12 @@ import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import javax.inject.Inject
+import kotlin.random.Random
 
 class CardRepository @Inject constructor(
     private val allCardPairsDataSource: AllCardPairsDataSource,
-    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource,
+    private val random: Random
 ) {
 
     fun getAllCardPairs() = allCardPairsDataSource.getAllCardPairs().toModel()
@@ -29,7 +31,7 @@ class CardRepository @Inject constructor(
 
     suspend fun getRandomUnlockedCardPairIds(count: Int) =
         unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
-            .shuffled()
+            .shuffled(random)
             .take(count)
 
     suspend fun addUnlockedCardPairId(unlockedCardPairId: String) {

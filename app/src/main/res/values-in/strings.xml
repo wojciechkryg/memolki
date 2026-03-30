@@ -30,6 +30,10 @@
     <string name="watch_ad">Tonton Iklan</string>
     <string name="share">Bagikan</string>
     <string name="content_description_locked">Terkunci</string>
+    <string name="accessibility_flip_card">Balik kartu</string>
+    <string name="accessibility_view_card_pair">Lihat pasangan kartu</string>
+    <string name="accessibility_unlock_with_coins">Buka dengan koin</string>
+    <string name="accessibility_unlock_with_ad">Buka dengan menonton iklan</string>
     <string name="leaderboard">Papan peringkat</string>
     <string name="coins">Koin</string>
 

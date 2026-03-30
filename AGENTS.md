@@ -338,6 +338,51 @@ Native language names (e.g. "Polski", "Deutsch") are in `main/res/values/strings
 
 For each existing locale, create `app/src/{flavorName}/res/values-{locale}/strings.xml` containing translations of all card names from that flavor's default `values/strings.xml`. Copy the structure from an existing flavor (e.g. `app/src/fruitHalf/res/values-pl/strings.xml`).
 
+## Video Recording for Ads
+
+Automated promo video recording for Google Play Store ads. See `scripts/record_video.sh` for the full script and `docs/docs_recording.md` for detailed documentation.
+
+### Quick start
+```bash
+./scripts/record_video.sh fruit_half en          # Single video
+./scripts/record_all_videos.sh                   # All 4 flavors × 32 languages
+./scripts/record_all_videos.sh fruit_half        # All languages for one flavor
+```
+
+### Setup
+1. Set `RECORDING_MODE = true` in `util/provider/RecordingModeProvider.kt`
+2. Build and install all flavors on the **Pixel 2 emulator** (1080x1920, 9:16 — required for Play Store ads)
+3. Run the script — it handles demo mode, app data reset, per-app locale (`adb shell cmd locale set-app-locales`), recording, and cleanup
+4. Videos are saved to `~/Desktop/memolki_recordings/{flavor}/`
+
+### RECORDING_MODE behavior
+When `RECORDING_MODE = true`, the app changes:
+
+| Area | Effect |
+|------|--------|
+| Click overlay | Shows cursor animation at each tap, blocks rapid multi-taps |
+| Card order | Deterministic via fresh `Random(0)` per injection (`di/module/AppModule.kt`, not singleton) |
+| Initial state | 20 unlocked cards, 473 coins (via `PrepareRecordingCoinsUseCase`) |
+| End game screen | Hides: Watch Ad, Free Coins, Share button. Shows coins display |
+| End game screen | Always shows "Unlock New Card" (even when daily streak available) |
+| Collection | Hides Watch Ad unlock (replaced with locked slot to keep total count) |
+| Menu | Hides "more apps" section |
+| Notifications | Skips notification request screen |
+| RTL support | `ForceLtr` helper used for click overlay and level text |
+
+### Post-processing
+The script uses `ffmpeg-full` (with freetype) to:
+- Speed up video 1.5x
+- Add background music (`app/src/main/res/raw/music_background.ogg`) with fade-out at the end
+- Add blur overlay fading in at the end
+- Add localized "Can you do better?" text in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`)
+
+### CI guard
+The PR workflow (`pull_request.yml`) fails if `RECORDING_MODE = true` — must be disabled before merging.
+
+### Flavors and coordinates
+Card grid positions are identical across all flavors — fresh `Random(0)` per injection produces the same shuffle order. The script accepts a flavor parameter (`fruit_half`, `vegetable_half`, `mammal_side`, `bird_side`) and resolves the package name automatically.
+
 ## CI/CD
 
 - **PR (`.github/workflows/pull_request.yml`):** Runs unit tests on pull requests (skips for `chore/` commits)

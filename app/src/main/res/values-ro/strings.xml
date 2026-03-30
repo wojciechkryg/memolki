@@ -30,6 +30,10 @@
     <string name="watch_ad">Urmărește reclama</string>
     <string name="share">Distribuie</string>
     <string name="content_description_locked">Blocat</string>
+    <string name="accessibility_flip_card">Întoarce cartea</string>
+    <string name="accessibility_view_card_pair">Vezi perechea de cărți</string>
+    <string name="accessibility_unlock_with_coins">Deblochează cu monede</string>
+    <string name="accessibility_unlock_with_ad">Deblochează urmărind o reclamă</string>
     <string name="leaderboard">Clasament</string>
     <string name="coins">Monede</string>
 

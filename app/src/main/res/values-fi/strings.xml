@@ -30,6 +30,10 @@
     <string name="watch_ad">Katso mainos</string>
     <string name="share">Jaa</string>
     <string name="content_description_locked">Lukittu</string>
+    <string name="accessibility_flip_card">Käännä kortti</string>
+    <string name="accessibility_view_card_pair">Näytä korttipari</string>
+    <string name="accessibility_unlock_with_coins">Avaa kolikoilla</string>
+    <string name="accessibility_unlock_with_ad">Avaa katsomalla mainos</string>
     <string name="leaderboard">Tulostaulukko</string>
     <string name="coins">Kolikot</string>
 

@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.BaseMenuItem
+import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.theme.AppTheme
 
@@ -58,12 +59,14 @@ fun ChooseLevelItem(
                 contentDescription = stringResource(R.string.content_description_locked)
             )
         }
-        BaseMenuItem(
-            textId = textId,
-            isUppercase = false,
-            isEnabled = isEnabled,
-            onClick = onClick
-        )
+        ForceLtr {
+            BaseMenuItem(
+                textId = textId,
+                isUppercase = false,
+                isEnabled = isEnabled,
+                onClick = onClick
+            )
+        }
         if (!isEnabled) {
             Spacer(modifier = Modifier.size(LOCKED_ICON_SIZE))
         }

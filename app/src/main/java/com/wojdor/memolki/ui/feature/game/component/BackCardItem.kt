@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
@@ -24,7 +25,8 @@ fun BackCardItem(
             .bounceClickEffect()
             .clip(CardShape)
             .clickable(
-                onClick = throttleClick(onClick = onClick),
+                onClickLabel = stringResource(R.string.accessibility_flip_card),
+                onClick = throttleClick(onClick = onClick)
             )
     ) {
         XmlDrawable(

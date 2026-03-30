@@ -30,6 +30,10 @@
     <string name="watch_ad">Skatīties reklāmu</string>
     <string name="share">Dalīties</string>
     <string name="content_description_locked">Bloķēts</string>
+    <string name="accessibility_flip_card">Apgriezt kārti</string>
+    <string name="accessibility_view_card_pair">Skatīt kāršu pāri</string>
+    <string name="accessibility_unlock_with_coins">Atbloķēt ar monētām</string>
+    <string name="accessibility_unlock_with_ad">Atbloķēt skatoties reklāmu</string>
     <string name="leaderboard">Līderu tabula</string>
     <string name="coins">Monētas</string>
 
