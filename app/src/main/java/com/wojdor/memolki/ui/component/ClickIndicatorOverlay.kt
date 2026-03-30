@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 
-const val RECORDING_MODE = true
+const val RECORDING_MODE = false
 private const val INDICATOR_SIZE_DP = 160
 private const val FADE_IN_MS = 300
 private const val FADE_OUT_MS = 500
