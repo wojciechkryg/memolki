@@ -19,6 +19,7 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,6 +33,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MenuViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
     private val googlePlayGames: GooglePlayGames,
     private val getMenuUseCase: GetMenuUseCase,
@@ -70,6 +72,7 @@ class MenuViewModel @Inject constructor(
 
     private fun onLeaderboardClick() {
         hapticFeedback.vibrateLow()
+        analytics.logLeaderboardOpened()
         sendEffect(OpenLeaderboardScreen(googlePlayGames))
         sendLeaderboardScores()
     }
@@ -81,6 +84,7 @@ class MenuViewModel @Inject constructor(
 
     private fun onMoreAppsClick() {
         hapticFeedback.vibrateLow()
+        analytics.logMoreAppsClicked()
         sendEffect(OpenMoreAppsScreen)
     }
 

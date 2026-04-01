@@ -15,17 +15,15 @@ class RewardCoinsForShareUseCase @Inject constructor(
 ) : BaseUseCase<Boolean>(coroutineDispatcher) {
 
     override fun execute(): Flow<Result<Boolean>> = flow {
-        val result = runCatching {
-            val hasReceived = userRepository.getHasReceivedShareReward().first()
-            if (!hasReceived) {
-                userRepository.addCoins(SHARE_REWARD_COINS)
-                userRepository.setHasReceivedShareReward()
-                true
-            } else {
-                false
-            }
+        val hasReceived = userRepository.getHasReceivedShareReward().first()
+        val rewarded = if (!hasReceived) {
+            userRepository.addCoins(SHARE_REWARD_COINS)
+            userRepository.setHasReceivedShareReward()
+            true
+        } else {
+            false
         }
-        emit(result)
+        emit(Result.success(rewarded))
     }
 
     companion object {

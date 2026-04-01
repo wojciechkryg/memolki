@@ -20,11 +20,9 @@ class CalculateNextCardPairCostUseCase @Inject constructor(
             getLevelsUseCase(),
             getUnlockedCardPairsCountUseCase()
         ) { levelsResult, unlockedCardPairsCountResult ->
-            runCatching {
-                val levels = levelsResult.getOrThrow()
-                val unlockedCardPairsCount = unlockedCardPairsCountResult.getOrThrow()
-                calculateNextCardPairCost(levels, unlockedCardPairsCount)
-            }
+            val levels = levelsResult.getOrThrow()
+            val unlockedCardPairsCount = unlockedCardPairsCountResult.getOrThrow()
+            Result.success(calculateNextCardPairCost(levels, unlockedCardPairsCount))
         }
 
     private fun calculateNextCardPairCost(

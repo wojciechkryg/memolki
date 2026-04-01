@@ -36,7 +36,7 @@ class ChooseLevelViewModelTest : AppTest() {
         sut = ChooseLevelViewModel(
             savedStateHandle,
             hapticFeedback,
-            getLevelsUseCase,
+            getLevelsUseCase
         )
     }
 

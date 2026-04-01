@@ -21,6 +21,7 @@ import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
@@ -91,6 +92,9 @@ class EndGameViewModelTest : AppTest() {
     @Inject
     lateinit var userRepository: UserRepository
 
+    @Inject
+    lateinit var analytics: Analytics
+
     private lateinit var sut: EndGameViewModel
 
     @Before
@@ -98,6 +102,7 @@ class EndGameViewModelTest : AppTest() {
         super.setup()
         sut = EndGameViewModel(
             savedStateHandle,
+            analytics,
             levelCompletePlayer,
             coinsPlayer,
             hapticFeedback,
@@ -168,6 +173,40 @@ class EndGameViewModelTest : AppTest() {
                 verify { hapticFeedback.vibrateLow() }
             }
         }
+
+    @Test
+    fun `when share is clicked then logShareClicked is called`() = runTest {
+        // when
+        sut.sendIntent(EndGameIntent.OnShareClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logShareClicked(any()) }
+    }
+
+    @Test
+    fun `when ad reward is earned then logAdRewardFromEndGame is called`() = runTest {
+        // given
+        sut.sendIntent(EndGameIntent.OnEndGameShow(LevelModel.Grid2x3(isUnlocked = true)))
+        testScheduler.advanceUntilIdle()
+
+        // when
+        sut.sendIntent(EndGameIntent.OnAdDismiss(wasRewardGranted = true))
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logAdRewardFromEndGame() }
+    }
+
+    @Test
+    fun `when free coins is clicked then logShopOpenedFromEndGame is called`() = runTest {
+        // when
+        sut.sendIntent(EndGameIntent.OnFreeCoinsClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logShopOpenedFromEndGame() }
+    }
 
     @Test
     fun `when OnAdReward intent is sent then coins are rewarded and state is updated`() = runTest {

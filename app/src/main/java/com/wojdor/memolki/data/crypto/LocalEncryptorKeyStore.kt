@@ -20,6 +20,10 @@ class LocalEncryptorKeyStore @Inject constructor(
     private var cachedKey: SecretKey? = null
     private val mutex = Mutex()
 
+    suspend fun initialize() {
+        getSecretKey()
+    }
+
     suspend fun getSecretKey(): SecretKey = cachedKey ?: mutex.withLock {
         cachedKey ?: (getExistingKey() ?: generateAndStoreKey()).also { cachedKey = it }
     }

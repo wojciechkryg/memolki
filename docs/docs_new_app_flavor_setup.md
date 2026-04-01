@@ -61,6 +61,28 @@
     - copy `Ad Unit ID`s (looks like `ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX`) and add them to the
       flavor's `res/values/ad_mob_ids.xml`.
 
+1. Setup App Content in Google Play Console:
+    - go to the new app's `App content` section in Google Play Console
+    - copy the **Data safety** form from an existing flavor (same ad SDKs, same analytics, same data collection)
+    - copy the **Ads** declaration (contains ads)
+    - copy the **Target audience** settings (children-directed / COPPA)
+    - copy the **Privacy policy** URL
+    - copy the **Content rating** questionnaire answers
+
+1. Update Firebase:
+    - go to [Firebase Console](https://console.firebase.google.com) → project → Project settings → Add app
+    - add the new flavor's Android package name (e.g. `com.wojdor.memolki.newflavor`)
+    - download the updated `google-services.json` and replace `app/google-services.json`
+    - re-encode and update the `GOOGLE_SERVICES_JSON` GitHub secret:
+      ```bash
+      base64 -i app/google-services.json | pbcopy
+      ```
+    - go to GitHub → Settings → Secrets and variables → Actions → update `GOOGLE_SERVICES_JSON`
+
+1. Update mediation partners:
+    - go to https://admob.google.com/v2/mediation/groups/4675702647/edit
+    - add the new app in all AdMob mediation partners that require per-app configuration
+
 1. Setup new flavor in the CI:
     - go to file `.github/workflows/merge.yml`
     - add the new flavor to the `flavor` matrix

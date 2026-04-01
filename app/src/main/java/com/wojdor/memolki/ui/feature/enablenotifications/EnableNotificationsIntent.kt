@@ -5,5 +5,5 @@ import com.wojdor.memolki.ui.base.UiIntent
 sealed class EnableNotificationsIntent : UiIntent {
     object OnEnableClick : EnableNotificationsIntent()
     object OnLaterClick : EnableNotificationsIntent()
-    object OnPermissionResult : EnableNotificationsIntent()
+    data class OnPermissionResult(val isGranted: Boolean) : EnableNotificationsIntent()
 }

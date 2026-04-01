@@ -3,7 +3,7 @@ package com.wojdor.memolki.ui.feature.enablenotifications
 import com.wojdor.memolki.ui.app.Route
 
 enum class EnableNotificationDestination(val route: String) {
-    GAME(Route.GAME),
+    GAME(Route.GAME_BASE),
     MENU(Route.MENU),
     COLLECTION(Route.COLLECTION),
     SHOP(Route.SHOP);

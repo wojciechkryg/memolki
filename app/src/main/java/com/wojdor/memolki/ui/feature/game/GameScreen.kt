@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -85,6 +86,9 @@ private fun HandleState(
     viewModel: GameViewModel,
     state: GameState
 ) {
+    DisposableEffect(Unit) {
+        onDispose { viewModel.sendIntent(GameIntent.OnGameLeave) }
+    }
     val callbacks = GameCallbacks(
         onBackCardClick = { viewModel.sendIntent(GameIntent.OnBackCardClick(it)) },
         onFrontCardPress = { isPressed, card ->

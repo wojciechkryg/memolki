@@ -20,8 +20,10 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -57,6 +59,9 @@ class MenuViewModelTest : AppTest() {
     @Inject
     lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
 
+    @Inject
+    lateinit var analytics: Analytics
+
     private lateinit var sut: MenuViewModel
 
     @Before
@@ -64,6 +69,7 @@ class MenuViewModelTest : AppTest() {
         super.setup()
         sut = MenuViewModel(
             savedStateHandle,
+            analytics,
             hapticFeedback,
             googlePlayGames,
             getMenuUseCase,
@@ -154,4 +160,24 @@ class MenuViewModelTest : AppTest() {
                 assertEquals(OpenMoreAppsScreen, awaitItem())
             }
         }
+
+    @Test
+    fun `when leaderboard is clicked then logLeaderboardOpened is called`() = runTest {
+        // when
+        sut.sendIntent(OnLeaderboardClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logLeaderboardOpened() }
+    }
+
+    @Test
+    fun `when more apps is clicked then logMoreAppsClicked is called`() = runTest {
+        // when
+        sut.sendIntent(OnMoreAppsClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logMoreAppsClicked() }
+    }
 }

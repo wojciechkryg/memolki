@@ -3,24 +3,44 @@ package com.wojdor.memolki.ui.app
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.PrepareRecordingCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
+import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.util.provider.LocaleProvider
+import com.wojdor.memolki.util.provider.PushNotificationProvider
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AppViewModel @Inject constructor(
+    private val analytics: Analytics,
     private val unlockAllNewCardPairsIfPurchasedUseCase: UnlockAllNewCardPairsIfPurchasedUseCase,
     private val localEncryptorKeyStore: LocalEncryptorKeyStore,
-    private val prepareRecordingCoinsUseCase: PrepareRecordingCoinsUseCase
+    private val prepareRecordingCoinsUseCase: PrepareRecordingCoinsUseCase,
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
+    private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase,
+    private val localeProvider: LocaleProvider,
+    private val pushNotificationProvider: PushNotificationProvider
 ) : ViewModel() {
 
-    fun unlockAllNewCardPairsIfPurchased() {
+    fun onAppCreate() {
         viewModelScope.launch {
-            localEncryptorKeyStore.getSecretKey()
+            pushNotificationProvider.subscribeToTopics()
+            analytics.setUserLanguage(localeProvider.getLanguageTag())
+            val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
+            val unlockedCardsCount = getUnlockedCardPairsCountUseCase().first().getOrDefault(0)
+            analytics.logSessionStart(totalGamesPlayed, unlockedCardsCount)
+            localEncryptorKeyStore.initialize()
             if (RECORDING_MODE) prepareRecordingCoinsUseCase().collect()
             unlockAllNewCardPairsIfPurchasedUseCase().collect()
         }
+    }
+
+    fun onAppOpen(notificationType: String?) {
+        analytics.logAppOpened(notificationType)
     }
 }

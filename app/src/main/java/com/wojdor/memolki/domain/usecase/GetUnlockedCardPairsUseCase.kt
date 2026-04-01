@@ -14,6 +14,6 @@ class GetUnlockedCardPairsUseCase @Inject constructor(
 ) : BaseUseCase<List<CardPairModel>>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        emit(runCatching { cardRepository.getUnlockedCardPairs() })
+        emit(Result.success(cardRepository.getUnlockedCardPairs()))
     }
 }

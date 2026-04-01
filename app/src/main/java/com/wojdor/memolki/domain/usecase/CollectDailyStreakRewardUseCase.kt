@@ -18,15 +18,12 @@ class CollectDailyStreakRewardUseCase @Inject constructor(
 ) : BaseUseCase<Long>(coroutineDispatcher) {
 
     override fun execute(): Flow<Result<Long>> = flow {
-        val result = runCatching {
-            val streakResult = checkDailyLoginStreakUseCase().first().getOrThrow()
-            userRepository.addCoins(streakResult.coinsReward)
-            userRepository.setDailyStreakData(
-                count = streakResult.streakDay.toLong(),
-                timestamp = timeProvider.currentTimeMillis()
-            )
-            streakResult.coinsReward
-        }
-        emit(result)
+        val streakResult = checkDailyLoginStreakUseCase().first().getOrThrow()
+        userRepository.addCoins(streakResult.coinsReward)
+        userRepository.setDailyStreakData(
+            count = streakResult.streakDay.toLong(),
+            timestamp = timeProvider.currentTimeMillis()
+        )
+        emit(Result.success(streakResult.coinsReward))
     }
 }

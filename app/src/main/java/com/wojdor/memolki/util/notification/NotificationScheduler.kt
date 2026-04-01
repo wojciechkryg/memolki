@@ -1,18 +1,13 @@
 package com.wojdor.memolki.util.notification
 
-import android.Manifest
 import android.app.AlarmManager
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.wojdor.memolki.R
+import com.wojdor.memolki.util.provider.PermissionProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
 import javax.inject.Inject
@@ -20,7 +15,9 @@ import kotlin.random.Random
 
 open class NotificationScheduler @Inject constructor(
     @param:ApplicationContext private val context: Context,
-    private val random: Random
+    private val random: Random,
+    private val notificationCreator: NotificationCreator,
+    private val permissionProvider: PermissionProvider
 ) : DefaultLifecycleObserver {
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -88,27 +85,11 @@ open class NotificationScheduler @Inject constructor(
     }
 
     open fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,
-                context.getString(R.string.notification_channel_reminders),
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            val notificationManager =
-                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
+        notificationCreator.createNotificationChannel()
     }
 
     open fun hasNotificationPermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
+        return permissionProvider.hasNotificationPermission()
     }
 
     private fun calculateNextStreakTriggerTime(): Long {
@@ -154,10 +135,11 @@ open class NotificationScheduler @Inject constructor(
         internal const val REMINDER_NOTIFICATION_ID = 2001
         internal const val AD_REWARD_NOTIFICATION_ID = 2002
         internal const val STREAK_NOTIFICATION_ID = 2003
-        internal const val EXTRA_NOTIFICATION_TYPE = "notification_type"
+        const val EXTRA_NOTIFICATION_TYPE = "notification_type"
         internal const val TYPE_REMINDER = "reminder"
         internal const val TYPE_AD_REWARD = "ad_reward"
         internal const val TYPE_STREAK = "streak"
+        internal const val TYPE_PUSH = "push"
         internal const val SHOP_AD_COOLDOWN_MS = 30 * 60 * 1000L
         private const val AD_REWARD_WINDOW_MS = 30 * 60 * 1000L
         private const val REMINDER_INTERVAL_DAYS = 3

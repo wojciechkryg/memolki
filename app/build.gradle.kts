@@ -9,6 +9,8 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics.plugin)
 }
 
 val secretsPropertiesFile = rootProject.file("secrets.properties")
@@ -73,6 +75,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -129,6 +132,7 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.android.desugar)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
@@ -143,6 +147,10 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.play.services.ads)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.messaging)
     implementation(libs.mediation.applovin)
     implementation(libs.mediation.unity)
     implementation(libs.mediation.ironsource)

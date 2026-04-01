@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.app
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.core.net.toUri
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -25,6 +26,8 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.LocalWindowSize
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.notification.NotificationScheduler
+import com.wojdor.memolki.util.notification.DeepLinkBuilder
+import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.update.InAppUpdate
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +53,9 @@ class AppActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.unlockAllNewCardPairsIfPurchased()
+        viewModel.onAppCreate()
+        viewModel.onAppOpen(intent?.getStringExtra(EXTRA_NOTIFICATION_TYPE))
+        resolveDeepLinkIntent(intent)?.let { newIntentState.value = it }
         lifecycle.addObserver(backgroundMusicPlayer)
         lifecycle.addObserver(notificationScheduler)
         installSplashScreen()
@@ -89,7 +94,17 @@ class AppActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        newIntentState.value = intent
+        newIntentState.value = resolveDeepLinkIntent(intent) ?: intent
+        viewModel.onAppOpen(intent.getStringExtra(EXTRA_NOTIFICATION_TYPE))
+    }
+
+    private fun resolveDeepLinkIntent(intent: Intent?): Intent? {
+        if (intent == null) return null
+        if (intent.action == Intent.ACTION_VIEW && intent.data != null) return intent
+        val screen = intent.getStringExtra(DeepLinkBuilder.EXTRA_SCREEN) ?: return null
+        val level = intent.getStringExtra(DeepLinkBuilder.EXTRA_LEVEL)
+        val deepLinkUri = DeepLinkBuilder.buildUri(screen, level) ?: return null
+        return Intent(Intent.ACTION_VIEW, deepLinkUri.toUri(), this, AppActivity::class.java)
     }
 
     override fun onResume() {

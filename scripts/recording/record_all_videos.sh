@@ -8,8 +8,8 @@
 #     ./gradlew installFruitHalfDebug installVegetableHalfDebug installMammalSideDebug installBirdSideDebug
 #
 # Usage:
-#   ./scripts/record_all_videos.sh              # All flavors, all languages
-#   ./scripts/record_all_videos.sh fruit_half   # Single flavor, all languages
+#   ./scripts/recording/record_all_videos.sh              # All flavors, all languages
+#   ./scripts/recording/record_all_videos.sh fruit_half   # Single flavor, all languages
 
 set -e
 
@@ -29,7 +29,7 @@ for flavor in $FLAVORS; do
     for locale in $LOCALES; do
         COUNT=$((COUNT + 1))
         echo "[$COUNT/$TOTAL] $flavor / $locale"
-        ./scripts/record_video.sh "$flavor" "$locale"
+        ./scripts/recording/record_video.sh "$flavor" "$locale"
         echo ""
     done
 done

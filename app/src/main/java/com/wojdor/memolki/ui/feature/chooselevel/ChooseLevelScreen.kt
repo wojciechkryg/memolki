@@ -17,46 +17,29 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.app.navigateToGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.chooselevel.component.ChooseLevelItem
-import com.wojdor.memolki.ui.feature.game.GameIntent
-import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingXL
 
 @Composable
 fun ChooseLevelScreen(
     viewModel: ChooseLevelViewModel = hiltViewModel(),
-    gameViewModel: GameViewModel = hiltViewModel(),
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
-    HandleEffect(viewModel, gameViewModel, navController)
+    HandleEffect(viewModel, navController)
     HandleState(viewModel, state)
 }
 
 @Composable
 private fun HandleEffect(
     viewModel: ChooseLevelViewModel,
-    gameViewModel: GameViewModel,
     navController: NavController
 ) {
     CollectUiEffects(viewModel) {
         when (it) {
-            is ChooseLevelEffect.OpenGameScreen -> openGameScreen(
-                gameViewModel,
-                navController,
-                it.levelModel
-            )
+            is ChooseLevelEffect.OpenGameScreen -> navController.navigateToGame(it.levelModel.id)
         }
     }
-}
-
-private fun openGameScreen(
-    gameViewModel: GameViewModel,
-    navController: NavController,
-    level: LevelModel
-) {
-    gameViewModel.sendIntent(GameIntent.OnLevelStart(level))
-    navController.navigateToGame()
 }
 
 @Composable

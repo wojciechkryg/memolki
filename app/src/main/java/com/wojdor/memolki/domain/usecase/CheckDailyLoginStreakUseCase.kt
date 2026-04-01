@@ -17,8 +17,7 @@ class CheckDailyLoginStreakUseCase @Inject constructor(
 ) : BaseUseCase<CheckDailyLoginStreakUseCase.DailyStreakResult>(coroutineDispatcher) {
 
     override fun execute(): Flow<Result<DailyStreakResult>> = flow {
-        val result = runCatching { checkStreak() }
-        emit(result)
+        emit(Result.success(checkStreak()))
     }
 
     private suspend fun checkStreak(): DailyStreakResult {

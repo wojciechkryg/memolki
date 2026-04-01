@@ -31,7 +31,9 @@ After making changes, always install and launch the app on the connected device/
 
 ## Setup
 
-A `secrets.properties` file is needed in the root directory with a `<FLAVOR_UPPER_SNAKE>_BILLING_KEY` entry for each flavor. See `app/build.gradle.kts` for how these are read.
+A `secrets.properties` file is needed in the root directory with:
+- `<FLAVOR_UPPER_SNAKE>_BILLING_KEY` entry for each flavor (see `app/build.gradle.kts`)
+- `FIREBASE_PROJECT_ID` — required by `scripts/notifications/send_push_notification.sh`
 
 Adding a new flavor has a checklist in `docs/docs_new_app_flavor_setup.md`.
 
@@ -56,7 +58,7 @@ Conventions:
 - Constructor-injected with `@Inject`
 - **Dispatcher is always the 1st constructor parameter**
 - Dispatcher choice: `@IoDispatcher` for anything touching system services, repositories, or I/O; `@DefaultDispatcher` for pure in-memory computation; `@MainDispatcher` only when the Android API requires the main thread
-- Wrap repository/data calls in `runCatching { }` so exceptions are emitted as `Result.failure` instead of crashing the flow
+- **Do NOT use `runCatching`** — the base class `.catch` block handles exceptions and reports to Crashlytics (see Analytics & Crashlytics section)
 
 Reference examples:
 - Simple: `domain/usecase/GetSettingsUseCase.kt`
@@ -74,7 +76,7 @@ Reference: `domain/model/CardModel.kt`, `domain/model/SettingModel.kt`
 
 ### Data Layer
 
-- **Persistence:** Encrypted DataStore Preferences (see `data/crypto/` for Encryptor interface)
+- **Persistence:** Encrypted DataStore Preferences (see `data/crypto/` for Encryptor interface). **Always use DataStore for local persistence** — never use SharedPreferences, Room, or raw files
 - **Entities:** in `data/entity/`, mapped to domain models via extension functions in `data/mapper/` (e.g. `CardEntity.toModel()`)
 - **Repositories:** in `data/repository/`, orchestrate data sources from `data/local/`
 
@@ -100,7 +102,7 @@ ViewModel conventions:
 - When combining multiple use cases, create a new UseCase that uses `combine()` internally (see `CanUnlockNewCardUseCase`, `GetLanguagesWithCurrentUseCase`) — don't `combine` in ViewModels
 - Handle results with `.onSuccess { }` / `.onFailure { }` — never use `getOrNull()` or `first()` on use case flows (use case flows may emit multiple values over time, and `first()` silently drops updates; `getOrNull()` discards error information)
 - **No `delay()` for UI timing** — if the ViewModel needs to wait for an animation, let the UI send an intent when the animation completes instead
-- **No Android framework calls** in ViewModels or UseCases (e.g. `AppCompatDelegate`, `Context`, `LocaleManager`) — wrap them in Provider classes under `util/provider/`
+- **No Android framework calls** in ViewModels or UseCases (e.g. `AppCompatDelegate`, `Context`, `LocaleManager`) — wrap them in Provider classes under `util/provider/`. Analytics is the exception — use `util/analytics/Analytics` directly
 - **No redundant state** — don't create separate `var` flags when a state field already covers the same purpose
 - **Strict MVI communication** — View ↔ ViewModel communication only through State, Effect, and Intent. Never expose public properties or functions on ViewModels beyond `sendIntent()` and what `MviViewModel` provides
 - **Effects vs State** — Effects are for one-time events that the UI cannot derive from State (navigation, toasts, launching external intents). State is for anything that drives the UI (including flags like `isLanguageChangeInProgress` that control visibility, animations, or overlays). Never use an Effect to set local composable `remember` state — if the ViewModel knows about a condition, put it in State and let the UI observe it directly
@@ -187,6 +189,8 @@ Jetpack Compose Navigation with nested graphs (flows) in `ui/app/AppNavigation.k
 
 Shared ViewModels within a flow are scoped to the navigation graph's back stack entry (see `getGameViewModel()` pattern).
 
+Routes with arguments use path segments: `"route/{argName}"`. Navigation uses `.replace("{argName}", value)`. See `Route.ENABLE_NOTIFICATIONS` and `Route.GAME` for the pattern. Deep link navigation is handled by `navigateFromDeepLink()` in `AppNavigation.kt`, which parses the URI and calls the appropriate `navigateTo*` function — preserving MENU on the back stack.
+
 Navigation animations are centralized in `ui/app/NavAnimation.kt` (directional slides, consistent 500ms tween).
 
 ### Provider Pattern
@@ -217,7 +221,7 @@ Coroutine dispatchers are injected via qualifiers defined in `di/coroutine/`: `@
 
 - **Responsive spacing:** `ui/theme/Dimensions.kt` — `spacingXS`/`S`/`M`/`L`/`XL` are composable properties that adapt based on `isTablet` (WindowSizeClass)
 - **Click throttling:** `util/ClickUtils.kt` — `throttleClick()` composable wrapper prevents duplicate clicks (1s default)
-- **Logging:** `util/extension/` — `Any.logD()` / `Any.logE()` use the class name as tag
+- **Logging:** `util/extension/` — `Any.logD()` / `Any.logE()` use the class name as tag. `logE()` also reports to Firebase Crashlytics as a non-fatal exception
 
 ### Reusable Components
 
@@ -299,7 +303,11 @@ Code changes needed:
 
 ### Card Images
 
-Named `img_{name}_whole.jpg` and `img_{name}_half.jpg` (or `_side`/`_leaf` depending on flavor theme), provided at 5 density buckets. Full specs (dimensions, quality, naming): `docs/docs_images.md`, `docs/docs_icons.md`, `docs/docs_logo.md`
+Named `img_{name}_whole.jpg` and `img_{name}_half.jpg` (or `_side`/`_front` depending on flavor theme), provided at 5 density buckets (1024, 720, 512, 384, 256px square, JPEG quality 50).
+
+Card names for each flavor are listed in `list/{flavor}.txt` (one per line, human-readable).
+
+To generate and resize images use `scripts/image_generation/assist.py` — it walks through each card, copies the name to clipboard for pasting into Gemini, watches `~/Downloads` for the result, and auto-resizes to all densities. See `docs/docs_images.md` for details.
 
 ## Localization
 
@@ -333,6 +341,7 @@ Native language names (e.g. "Polski", "Deutsch") are in `main/res/values/strings
 2. Create `app/src/{flavorName}/res/values-{locale}/strings.xml` for **each flavor** — translate card names
 3. Add `language_{name}` entry (native name, `translatable="false"`) in `main/res/values/strings_non_translatable.xml`
 4. Add `LanguageModel(R.string.language_{name}, "{locale}")` to the list in `domain/usecase/GetSupportedLanguagesUseCase.kt`
+5. Add the locale to the `SUPPORTED_LANGUAGES` array in `scripts/notifications/send_push_notification.sh`
 
 ### Adding translations for a new flavor
 
@@ -340,13 +349,13 @@ For each existing locale, create `app/src/{flavorName}/res/values-{locale}/strin
 
 ## Video Recording for Ads
 
-Automated promo video recording for Google Play Store ads. See `scripts/record_video.sh` for the full script and `docs/docs_recording.md` for detailed documentation.
+Automated promo video recording for Google Play Store ads. See `scripts/recording/record_video.sh` for the full script and `docs/docs_recording.md` for detailed documentation.
 
 ### Quick start
 ```bash
-./scripts/record_video.sh fruit_half en          # Single video
-./scripts/record_all_videos.sh                   # All 4 flavors × 32 languages
-./scripts/record_all_videos.sh fruit_half        # All languages for one flavor
+./scripts/recording/record_video.sh fruit_half en          # Single video
+./scripts/recording/record_all_videos.sh                   # All 4 flavors × 32 languages
+./scripts/recording/record_all_videos.sh fruit_half        # All languages for one flavor
 ```
 
 ### Setup
@@ -375,7 +384,7 @@ The script uses `ffmpeg-full` (with freetype) to:
 - Speed up video 1.5x
 - Add background music (`app/src/main/res/raw/music_background.ogg`) with fade-out at the end
 - Add blur overlay fading in at the end
-- Add localized "Can you do better?" text in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`)
+- Add localized "Think you can solve it?" text in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`), with Arial Unicode fallback for CJK/RTL locales
 
 ### CI guard
 The PR workflow (`pull_request.yml`) fails if `RECORDING_MODE = true` — must be disabled before merging.
@@ -383,10 +392,72 @@ The PR workflow (`pull_request.yml`) fails if `RECORDING_MODE = true` — must b
 ### Flavors and coordinates
 Card grid positions are identical across all flavors — fresh `Random(0)` per injection produces the same shuffle order. The script accepts a flavor parameter (`fruit_half`, `vegetable_half`, `mammal_side`, `bird_side`) and resolves the package name automatically.
 
+## Push Notifications (FCM)
+
+Topic-based push notifications via Firebase Cloud Messaging. Users auto-subscribe to a **flavor topic** (e.g. `fruithalf`) and a **language topic** (e.g. `lang_pl`) on app create. Language topic updates on in-app language change.
+
+### Sending notifications
+
+```bash
+# Send immediately to all languages
+./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt
+
+# Send at 14:00-20:59 in each language's local timezone
+./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt --scheduled
+
+# Target a specific flavor
+./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt --flavor fruithalf --scheduled
+```
+
+### Translations file format (tab-separated)
+```
+en	Title here	Body here
+pl	Tytuł	Treść
+```
+
+### Deep links
+Notifications can open specific screens via `--screen` and `--level` options:
+```bash
+./scripts/notifications/send_push_notification.sh translations.txt --screen shop
+./scripts/notifications/send_push_notification.sh translations.txt --screen game --level 4x5
+```
+Screens: `shop`, `collection`, `more_apps`, `game`. Levels (game only): `2x3`, `3x4`, `4x4`, `4x5`, `4x6`, `5x6`.
+
+Deep link flow: script sends data-only FCM payload → `PushNotificationService.onMessageReceived` creates notification with `ACTION_VIEW` intent → `AppActivity.resolveDeepLinkIntent` converts FCM extras to deep link URI → `AppNavigation.navigateFromDeepLink` routes to the correct screen. Data-only payloads (no `notification` field) are used so `onMessageReceived` is always called regardless of foreground/background state.
+
+Deep link URIs use `DeepLinkBuilder` (`util/notification/DeepLinkBuilder.kt`) as the single source of truth for URI construction and screen constants.
+
+### Key files
+- `util/notification/PushNotificationService.kt` — receives FCM messages, shows notification with deep link intent
+- `util/notification/DeepLinkBuilder.kt` — builds deep link URIs, defines screen/level constants
+- `util/provider/PushNotificationProvider.kt` — subscribes/unsubscribes FCM topics, tracks previous language via SharedPreferences
+- `scripts/notifications/send_push_notification.sh` — sends via FCM v1 API, supports `--scheduled`, `--screen`, `--level`, `--flavor`
+- `scripts/notifications/example.txt` — template with all 32 languages
+
+### Config
+`FIREBASE_PROJECT_ID` is read from `secrets.properties` (gitignored). Required by the send script. The default FCM notification icon is set to `ic_notification` in `AndroidManifest.xml`.
+
 ## CI/CD
 
 - **PR (`.github/workflows/pull_request.yml`):** Runs unit tests on pull requests (skips for `chore/` commits)
 - **Merge to main (`.github/workflows/merge.yml`):** Builds release bundles for all flavors and uploads to Google Play, then auto-bumps version and creates a chore PR
+
+## Analytics & Crashlytics
+
+Firebase Analytics and Crashlytics are integrated via `google-services.json` (in `app/`, gitignored). Both are **disabled in debug builds** via `App.kt` (`disableFirebaseInDebug()`) — only release builds send data.
+
+### Analytics
+All custom events are logged through `util/analytics/Analytics.kt`. Injected into ViewModels as the **second constructor parameter** (after `savedStateHandle`). In tests, provided as `relaxedMockk()` from `TestModule` — verify calls with `verify { analytics.logX() }`.
+
+Event names, parameter keys, and values are organized in `private object Event`, `private object Key`, and `private object Value` inside `Analytics.kt`. Callers use typed helper methods (e.g. `logAdRewardFromShop()`, `logCardUnlockedWithCoins()`) — no raw string literals at call sites.
+
+User properties: `setUserLanguage()` sets a Firebase user property (not an event).
+
+### Crashlytics
+Non-fatal errors are reported via `logE()` in `util/extension/AnyExtensions.kt` — every `logE` call records to both Logcat and `FirebaseCrashlytics.recordException()`. This covers all base use case errors (via `BaseUseCase.catch`) and ViewModel failure handlers.
+
+### Use case error handling
+Use cases must **NOT** use `runCatching` to wrap their logic. The base class (`BaseUseCase` / `BaseParameterUseCase`) already has a `.catch` block that wraps exceptions in `Result.failure()` and logs them via `logE` (which reports to Crashlytics). Using `runCatching` silently swallows errors and prevents Crashlytics from seeing them.
 
 ## Code Style
 
@@ -397,7 +468,7 @@ Card grid positions are identical across all flavors — fresh `Random(0)` per i
 
 ## Key Conventions
 
-- Kotlin 2.2.21, JVM target 11, Compose enabled — versions managed via `gradle/libs.versions.toml`
+- Kotlin 2.3.20, JVM target 11, Compose enabled — versions managed via `gradle/libs.versions.toml`
 - Min SDK 23, Target/Compile SDK 36
 - Version format: MAJOR.MINOR.PATCH (versionCode encodes as MMMNNNPPP)
 - Product flavors use the "version" dimension; each flavor has its own package name and billing key
