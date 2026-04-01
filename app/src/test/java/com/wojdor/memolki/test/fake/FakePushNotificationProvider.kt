@@ -6,7 +6,6 @@ import javax.inject.Inject
 
 class FakePushNotificationProvider @Inject constructor() : PushNotificationProvider(
     mockk(),
-    FakePackageNameProvider(),
     FakeLocaleProvider(),
     mockk()
 ) {

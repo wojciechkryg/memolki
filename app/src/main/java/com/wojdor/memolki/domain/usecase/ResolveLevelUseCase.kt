@@ -19,7 +19,7 @@ class ResolveLevelUseCase @Inject constructor(
             }
         }
 
-    private fun resolveLevel(levels: List<LevelModel>, requestedLevelId: String?): LevelModel {
+    private fun resolveLevel(levels: List<LevelModel>, requestedLevelId: String): LevelModel {
         val unlockedLevels = levels.filter { it.isUnlocked }
         val requestedLevel = levels.find { it.id == requestedLevelId }
         return when {

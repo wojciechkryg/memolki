@@ -42,7 +42,7 @@ jobs:
           echo "lowercase_flavor=$(echo ${{ matrix.flavor }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Decode Google Services
-        run: echo ${{ secrets.GOOGLE_SERVICES_JSON }} | base64 --decode > app/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
       - name: Decode Keystore
         env:
