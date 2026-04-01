@@ -6,7 +6,9 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
+import com.wojdor.memolki.domain.usecase.ResolveLevelUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -21,12 +23,14 @@ import javax.inject.Inject
 @HiltViewModel
 class GameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val cardFlipPlayer: CardFlipPlayer,
     private val cardPairMatchedPlayer: CardPairMatchedPlayer,
     private val hapticFeedback: HapticFeedback,
     private val googlePlayGames: GooglePlayGames,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
-    private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase
+    private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase,
+    private val resolveLevelUseCase: ResolveLevelUseCase
 ) : MviViewModel<GameIntent, GameState>(
     savedStateHandle,
     GameState()
@@ -34,15 +38,24 @@ class GameViewModel @Inject constructor(
 
     override fun onIntent(intent: GameIntent) {
         when (intent) {
-            is GameIntent.OnLevelStart -> shuffleUnlockedCards(intent.levelModel)
+            is GameIntent.OnLevelStart -> resolveAndStartLevel(intent.levelId)
             is GameIntent.OnBackCardClick -> onBackCardClick(intent.cardModel)
             is GameIntent.OnFrontCardPress -> onFrontCardPress(intent.isPressed, intent.cardModel)
             GameIntent.OnMatchAnimationComplete -> onMatchAnimationComplete()
             GameIntent.OnMismatchShakeComplete -> onMismatchShakeComplete()
+            GameIntent.OnGameLeave -> onGameLeave()
         }
     }
 
+    private fun resolveAndStartLevel(levelId: String) {
+        resolveLevelUseCase(levelId).onEach { result ->
+            result.onSuccess { level -> shuffleUnlockedCards(level) }
+        }.launchIn(viewModelScope)
+    }
+
     private fun shuffleUnlockedCards(level: LevelModel) {
+        sendState { copy(mismatchCount = 0) }
+        analytics.logLevelStart(level)
         getShuffledUnlockedCardsUseCase(level).onEach {
             it.onSuccess { cards ->
                 sendState { copy(level = level, cards = cards) }
@@ -77,7 +90,7 @@ class GameViewModel @Inject constructor(
     private fun onMatchAnimationComplete() {
         mapCards { card ->
             if (card.isMatchAnimating) {
-                copyCard(card, isMatchAnimating = false)
+                card.copyState(isMatchAnimating = false)
             } else {
                 card
             }
@@ -87,7 +100,7 @@ class GameViewModel @Inject constructor(
     private fun onMismatchShakeComplete() {
         mapCards { card ->
             if (card.isMismatchShaking) {
-                copyCard(card, isMismatchShaking = false, isFlippedFront = false)
+                card.copyState(isMismatchShaking = false, isFlippedFront = false)
             } else {
                 card
             }
@@ -98,6 +111,7 @@ class GameViewModel @Inject constructor(
         viewModelScope.launch {
             val cards = uiState.value.cards
             if (cards.isNotEmpty() && cards.all { it.isPairMatched }) {
+                analytics.logLevelComplete(uiState.value.level, uiState.value.mismatchCount)
                 sendState { copy(isGameFinished = true) }
                 delay(END_GAME_DELAY)
                 sendEffect(GameEffect.OpenEndGameScreen(uiState.value.level))
@@ -106,7 +120,8 @@ class GameViewModel @Inject constructor(
                         isGameFinished = false,
                         shouldShowCardText = false,
                         shouldShowCardDetails = false,
-                        lastCardPressed = CardModel.Empty
+                        lastCardPressed = CardModel.Empty,
+                        mismatchCount = 0
                     )
                 }
             }
@@ -126,7 +141,7 @@ class GameViewModel @Inject constructor(
 
     private fun matchCards(frontUnmatchedCards: List<CardModel>) {
         val matchedCards = frontUnmatchedCards.map { card ->
-            copyCard(card, isPairMatched = true, isMatchAnimating = true)
+            card.copyState(isPairMatched = true, isMatchAnimating = true)
         }
         updateStateWith(matchedCards)
         showCardText(matchedCards)
@@ -167,8 +182,9 @@ class GameViewModel @Inject constructor(
         frontUnmatchedCards().size >= MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS
 
     private fun startMismatchShake() {
+        sendState { copy(mismatchCount = mismatchCount + 1) }
         val unmatchedCards = frontUnmatchedCards().map { card ->
-            copyCard(card, isMismatchShaking = true)
+            card.copyState(isMismatchShaking = true)
         }
         updateStateWith(unmatchedCards)
     }
@@ -181,36 +197,14 @@ class GameViewModel @Inject constructor(
 
     private fun flipToBackUnmatchedCards() {
         val changedCards = frontUnmatchedCards().map { card ->
-            copyCard(card, isFlippedFront = false, isMismatchShaking = false)
+            card.copyState(isFlippedFront = false, isMismatchShaking = false)
         }
         updateStateWith(changedCards)
     }
 
     private fun flipCardToFront(card: CardModel) {
         cardFlipPlayer.play()
-        updateStateWith(copyCard(card, isFlippedFront = true, isMismatchShaking = false))
-    }
-
-    private fun copyCard(
-        card: CardModel,
-        isFlippedFront: Boolean = card.isFlippedFront,
-        isPairMatched: Boolean = card.isPairMatched,
-        isMatchAnimating: Boolean = card.isMatchAnimating,
-        isMismatchShaking: Boolean = card.isMismatchShaking
-    ): CardModel = when (card) {
-        is CardModel.Text -> card.copy(
-            isFlippedFront = isFlippedFront,
-            isPairMatched = isPairMatched,
-            isMatchAnimating = isMatchAnimating,
-            isMismatchShaking = isMismatchShaking
-        )
-        is CardModel.Image -> card.copy(
-            isFlippedFront = isFlippedFront,
-            isPairMatched = isPairMatched,
-            isMatchAnimating = isMatchAnimating,
-            isMismatchShaking = isMismatchShaking
-        )
-        CardModel.Empty -> card
+        updateStateWith(card.copyState(isFlippedFront = true, isMismatchShaking = false))
     }
 
     private fun mapCards(transform: (CardModel) -> CardModel) {
@@ -259,6 +253,16 @@ class GameViewModel @Inject constructor(
 
     private fun hideCardText() {
         sendState { copy(shouldShowCardText = false) }
+    }
+
+    private fun onGameLeave() {
+        val state = uiState.value
+        val isGameInProgress = state.cards.isNotEmpty()
+                && !state.isGameFinished
+                && !state.cards.all { it.isPairMatched }
+        if (isGameInProgress) {
+            analytics.logLevelAbandon(state.level)
+        }
     }
 
     companion object {

@@ -4,14 +4,20 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.util.analytics.Analytics
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class EnableNotificationsViewModelTest : AppTest() {
+
+    @Inject
+    lateinit var analytics: Analytics
 
     private lateinit var sut: EnableNotificationsViewModel
 
@@ -26,7 +32,7 @@ class EnableNotificationsViewModelTest : AppTest() {
 
     private fun createSut(destination: String = "game") {
         val savedStateHandle = SavedStateHandle(mapOf("destination" to destination))
-        sut = EnableNotificationsViewModel(savedStateHandle)
+        sut = EnableNotificationsViewModel(savedStateHandle, analytics)
     }
 
     @Test
@@ -47,14 +53,14 @@ class EnableNotificationsViewModelTest : AppTest() {
     fun `when OnPermissionResult with game destination then NavigateToGame effect is sent`() =
         runTest {
             // given
-            createSut("game")
+            createSut(EnableNotificationDestination.GAME.route)
 
             sut.uiEffect.test {
                 // when
-                sut.sendIntent(EnableNotificationsIntent.OnPermissionResult)
+                sut.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
 
                 // then
-                assertEquals(EnableNotificationsEffect.NavigateToGame, awaitItem())
+                assertEquals(EnableNotificationsEffect.NavigateToGame(""), awaitItem())
             }
         }
 
@@ -62,11 +68,11 @@ class EnableNotificationsViewModelTest : AppTest() {
     fun `when OnPermissionResult with menu destination then NavigateToMenu effect is sent`() =
         runTest {
             // given
-            createSut("menu")
+            createSut(EnableNotificationDestination.MENU.route)
 
             sut.uiEffect.test {
                 // when
-                sut.sendIntent(EnableNotificationsIntent.OnPermissionResult)
+                sut.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
 
                 // then
                 assertEquals(EnableNotificationsEffect.NavigateToMenu, awaitItem())
@@ -77,11 +83,11 @@ class EnableNotificationsViewModelTest : AppTest() {
     fun `when OnPermissionResult with collection destination then NavigateToCollection effect is sent`() =
         runTest {
             // given
-            createSut("collection")
+            createSut(EnableNotificationDestination.COLLECTION.route)
 
             sut.uiEffect.test {
                 // when
-                sut.sendIntent(EnableNotificationsIntent.OnPermissionResult)
+                sut.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
 
                 // then
                 assertEquals(EnableNotificationsEffect.NavigateToCollection, awaitItem())
@@ -91,14 +97,55 @@ class EnableNotificationsViewModelTest : AppTest() {
     @Test
     fun `when OnLaterClick with game destination then NavigateToGame effect is sent`() = runTest {
         // given
-        createSut("game")
+        createSut(EnableNotificationDestination.GAME.route)
 
         sut.uiEffect.test {
             // when
             sut.sendIntent(EnableNotificationsIntent.OnLaterClick)
 
             // then
-            assertEquals(EnableNotificationsEffect.NavigateToGame, awaitItem())
+            assertEquals(EnableNotificationsEffect.NavigateToGame(""), awaitItem())
         }
+    }
+
+    @Test
+    fun `when notification permission is granted then logNotificationEnabled is called with true`() =
+        runTest {
+            // given
+            createSut()
+
+            // when
+            sut.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
+            testScheduler.advanceUntilIdle()
+
+            // then
+            verify { analytics.logNotificationEnabled(true) }
+        }
+
+    @Test
+    fun `when notification permission is denied then logNotificationEnabled is called with false`() =
+        runTest {
+            // given
+            createSut()
+
+            // when
+            sut.sendIntent(EnableNotificationsIntent.OnPermissionResult(false))
+            testScheduler.advanceUntilIdle()
+
+            // then
+            verify { analytics.logNotificationEnabled(false) }
+        }
+
+    @Test
+    fun `when later is clicked then logNotificationEnabled is called with false`() = runTest {
+        // given
+        createSut()
+
+        // when
+        sut.sendIntent(EnableNotificationsIntent.OnLaterClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logNotificationEnabled(false) }
     }
 }

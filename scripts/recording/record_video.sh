@@ -3,13 +3,13 @@
 # Record a promo video for memolki Google Play Store ads.
 #
 # Prerequisites:
-#   - RECORDING_MODE = true in ClickIndicatorOverlay.kt
+#   - RECORDING_MODE = true in util/provider/RecordingModeProvider.kt
 #   - App installed on Pixel 2 emulator (1080x1920, 9:16)
 #   - Emulator running and connected via adb
 #   - ffmpeg-full installed (brew install ffmpeg-full)
 #
 # Usage:
-#   ./scripts/record_video.sh [flavor] [locale]
+#   ./scripts/recording/record_video.sh [flavor] [locale]
 #
 # Video flow (~30s at 1.5x speed):
 #   1. 3x4 board: mismatches → rapid solve all pairs
@@ -40,9 +40,9 @@ RAW_FILE="${OUTPUT_DIR}/${LOCALE}_raw.mp4"
 OUTPUT_FILE="${OUTPUT_DIR}/${LOCALE}.mp4"
 DEVICE_FILE="/sdcard/memolki_recording.mp4"
 FFMPEG="/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg"
-FONT_PRIMARY="${SCRIPT_DIR}/../app/src/main/res/font/patrickhand_regular.ttf"
+FONT_PRIMARY="${SCRIPT_DIR}/../../app/src/main/res/font/patrickhand_regular.ttf"
 FONT_FALLBACK="/System/Library/Fonts/Supplemental/Arial Unicode.ttf"
-MUSIC_FILE="${SCRIPT_DIR}/../app/src/main/res/raw/music_background.ogg"
+MUSIC_FILE="${SCRIPT_DIR}/../../app/src/main/res/raw/music_background.ogg"
 
 mkdir -p "$OUTPUT_DIR"
 

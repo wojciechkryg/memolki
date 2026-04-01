@@ -19,6 +19,7 @@ import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -36,6 +37,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EndGameViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val levelCompletePlayer: LevelCompletePlayer,
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
@@ -80,6 +82,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun onShareClick() {
         hapticFeedback.vibrateLow()
+        analytics.logShareClicked(isShareRewardAvailable)
         rewardCoinsForShareUseCase().onEach { result ->
             result.onSuccess { wasRewarded ->
                 if (wasRewarded) {
@@ -116,6 +119,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun onFreeCoinsClick() {
         hapticFeedback.vibrateLow()
+        analytics.logShopOpenedFromEndGame()
         shouldShowNotificationRequest = false
         isNotificationRequestDismissed = true
         sendEffect(EndGameEffect.OpenShopScreen)
@@ -185,6 +189,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
+        analytics.logAdDismissed(PLACEMENT, wasRewardGranted)
         if (wasRewardGranted) {
             rewardCoinsForAd()
         }
@@ -192,6 +197,7 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun rewardCoinsForAd() {
+        analytics.logAdRewardFromEndGame()
         getCurrentCoinsAndReward(uiState.value.level, isRewardFromAd = true)
     }
 
@@ -251,6 +257,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun onWatchAdClick() {
         hapticFeedback.vibrateLow()
+        analytics.logAdShown(PLACEMENT)
         sendEffect(EndGameEffect.ShowAd(allRewardedAds.endGameCoinsAd))
     }
 
@@ -334,5 +341,6 @@ class EndGameViewModel @Inject constructor(
         const val LEVEL_COMPLETE_SOUND_DELAY = 250L
         const val REWARD_COINS_DELAY = 500L
         const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
+        private const val PLACEMENT = "end_game"
     }
 }

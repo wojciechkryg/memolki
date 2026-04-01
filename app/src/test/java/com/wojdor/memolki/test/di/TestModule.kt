@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.SavedStateHandle
 import com.google.android.play.core.review.ReviewManager
+import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
@@ -14,9 +15,12 @@ import com.wojdor.memolki.test.fake.FakeEncryptor
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
+import com.wojdor.memolki.test.fake.FakePermissionProvider
+import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.media.CardFlipPlayer
@@ -29,6 +33,8 @@ import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.AppInstalledProvider
 import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.util.provider.PackageNameProvider
+import com.wojdor.memolki.util.provider.PermissionProvider
+import com.wojdor.memolki.util.provider.PushNotificationProvider
 import com.wojdor.memolki.util.provider.TimeProvider
 import dagger.Binds
 import dagger.Module
@@ -72,6 +78,14 @@ abstract class TestModule {
     @Binds
     @Singleton
     abstract fun bindNotificationScheduler(fakeNotificationScheduler: FakeNotificationScheduler): NotificationScheduler
+
+    @Binds
+    @Singleton
+    abstract fun bindPermissionProvider(fakePermissionProvider: FakePermissionProvider): PermissionProvider
+
+    @Binds
+    @Singleton
+    abstract fun bindPushNotificationProvider(fakePushNotificationProvider: FakePushNotificationProvider): PushNotificationProvider
 
     @Binds
     @Singleton
@@ -130,5 +144,13 @@ abstract class TestModule {
         @Provides
         @Singleton
         fun provideGooglePlayGames(): GooglePlayGames = relaxedMockk()
+
+        @Provides
+        @Singleton
+        fun provideFirebaseMessaging(): FirebaseMessaging = relaxedMockk()
+
+        @Provides
+        @Singleton
+        fun provideAnalytics(): Analytics = relaxedMockk()
     }
 }

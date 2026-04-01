@@ -14,7 +14,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsScreen
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
@@ -24,12 +23,14 @@ import com.wojdor.memolki.ui.feature.collection.CollectionScreen
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationsScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
+import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameScreen
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuScreen
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsScreen
 import com.wojdor.memolki.ui.feature.settings.SettingsScreen
 import com.wojdor.memolki.ui.feature.shop.ShopScreen
+import com.wojdor.memolki.util.notification.DeepLinkBuilder
 
 @Composable
 fun AppNavigation(
@@ -39,7 +40,7 @@ fun AppNavigation(
     val navController = rememberNavController()
     LaunchedEffect(onNewIntent) {
         onNewIntent?.let {
-            navController.handleDeepLink(it)
+            navigateFromDeepLink(navController, it)
             onIntentHandled()
         }
     }
@@ -108,16 +109,16 @@ private fun NavGraphBuilder.chooseLevelScreen(navController: NavController) {
             }
         },
     ) {
-        ChooseLevelScreen(
-            navController = navController,
-            gameViewModel = getGameViewModel(it, navController)
-        )
+        ChooseLevelScreen(navController = navController)
     }
 }
 
 private fun NavGraphBuilder.gameScreen(navController: NavController) {
     composable(
         route = Route.GAME,
+        arguments = listOf(navArgument(AppNavigation.LEVEL_ARG) {
+            type = NavType.StringType
+        }),
         enterTransition = {
             when (initialState.destination.route) {
                 Route.END_GAME -> slideInLeft
@@ -131,11 +132,16 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
                 else -> slideOutLeft
             }
         }
-    ) {
+    ) { backStackEntry ->
+        val levelId = backStackEntry.arguments?.getString(AppNavigation.LEVEL_ARG)
+        val gameViewModel = getGameViewModel(backStackEntry, navController)
+        LaunchedEffect(levelId) {
+            levelId?.let { level -> gameViewModel.sendIntent(GameIntent.OnLevelStart(level)) }
+        }
         GameScreen(
             navController = navController,
-            viewModel = getGameViewModel(it, navController),
-            endGameViewModel = getEndGameViewModel(it, navController)
+            viewModel = gameViewModel,
+            endGameViewModel = getEndGameViewModel(backStackEntry, navController)
         )
     }
 }
@@ -156,11 +162,10 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
                 else -> slideOutRight
             }
         }
-    ) {
+    ) { backStackEntry ->
         EndGameScreen(
             navController = navController,
-            viewModel = getEndGameViewModel(it, navController),
-            gameViewModel = getGameViewModel(it, navController)
+            viewModel = getEndGameViewModel(backStackEntry, navController)
         )
     }
 }
@@ -168,9 +173,10 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
 private fun NavGraphBuilder.enableNotificationsScreen(navController: NavController) {
     composable(
         route = Route.ENABLE_NOTIFICATIONS,
-        arguments = listOf(navArgument(AppNavigation.DESTINATION_ARG) {
-            type = NavType.StringType
-        }),
+        arguments = listOf(
+            navArgument(AppNavigation.DESTINATION_ARG) { type = NavType.StringType },
+            navArgument(AppNavigation.LEVEL_ARG) { type = NavType.StringType }
+        ),
         enterTransition = { slideInBottom },
         exitTransition = { slideOutBottom }
     ) {
@@ -208,9 +214,9 @@ private fun NavGraphBuilder.collectionScreen(navController: NavController) {
                 else -> slideOutLeft
             }
         }
-    ) {
+    ) { backStackEntry ->
         CollectionScreen(
-            cardPairDetailsViewModel = getCardPairDetailsViewModel(it, navController),
+            cardPairDetailsViewModel = getCardPairDetailsViewModel(backStackEntry, navController),
             navController = navController
         )
     }
@@ -219,7 +225,6 @@ private fun NavGraphBuilder.collectionScreen(navController: NavController) {
 private fun NavGraphBuilder.shopScreen(navController: NavController) {
     composable(
         route = Route.SHOP,
-        deepLinks = listOf(navDeepLink { uriPattern = AppNavigation.SHOP_DEEP_LINK }),
         enterTransition = { slideInTop },
         exitTransition = { slideOutTop }
     ) {
@@ -232,9 +237,9 @@ private fun NavGraphBuilder.cardPairDetailsScreen(navController: NavController) 
         route = Route.CARD_PAIR_DETAILS,
         enterTransition = { slideInLeft },
         exitTransition = { slideOutLeft }
-    ) {
+    ) { backStackEntry ->
         CardPairDetailsScreen(
-            viewModel = getCardPairDetailsViewModel(it, navController),
+            viewModel = getCardPairDetailsViewModel(backStackEntry, navController)
         )
     }
 }
@@ -311,8 +316,8 @@ fun NavController.navigateToMoreApps() {
     navigate(Route.MORE_APPS)
 }
 
-fun NavController.navigateToGame() {
-    navigate(Route.GAME) {
+fun NavController.navigateToGame(levelId: String) {
+    navigate(Route.GAME.replace("{${AppNavigation.LEVEL_ARG}}", levelId)) {
         removeFromBackStack(Route.CHOOSE_LEVEL)
     }
 }
@@ -329,8 +334,8 @@ fun NavController.navigateToMenu() {
     }
 }
 
-fun NavController.navigateToGameFromEndGame() {
-    navigate(Route.GAME) {
+fun NavController.navigateToGameFromEndGame(levelId: String) {
+    navigate(Route.GAME.replace("{${AppNavigation.LEVEL_ARG}}", levelId)) {
         removeFromBackStack(Route.END_GAME)
     }
 }
@@ -345,8 +350,32 @@ fun NavController.navigateToCardPairDetailsScreen() {
     navigate(Route.CARD_PAIR_DETAILS)
 }
 
-fun NavController.navigateToEnableNotifications(destination: String) {
-    navigate(Route.ENABLE_NOTIFICATIONS.replace("{${AppNavigation.DESTINATION_ARG}}", destination))
+fun NavController.navigateToEnableNotifications(destination: String, levelId: String = "") {
+    navigate(
+        Route.ENABLE_NOTIFICATIONS
+            .replace("{${AppNavigation.DESTINATION_ARG}}", destination)
+            .replace("{${AppNavigation.LEVEL_ARG}}", levelId)
+    )
+}
+
+private fun NavController.navigateToGameFromDeepLink(level: String) {
+    navigate(Route.GAME.replace("{${AppNavigation.LEVEL_ARG}}", level)) {
+        removeFromBackStack(Route.MENU, isInclusive = false)
+    }
+}
+
+private fun navigateFromDeepLink(navController: NavController, intent: Intent) {
+    val screen = intent.data?.host ?: return
+    val pathSegments = intent.data?.pathSegments.orEmpty()
+    when (screen) {
+        DeepLinkBuilder.SCREEN_SHOP -> navController.navigateToShop()
+        DeepLinkBuilder.SCREEN_COLLECTION -> navController.navigateToCollection()
+        DeepLinkBuilder.SCREEN_MORE_APPS -> navController.navigateToMoreApps()
+        DeepLinkBuilder.SCREEN_GAME -> {
+            val level = pathSegments.firstOrNull().orEmpty()
+            navController.navigateToGameFromDeepLink(level)
+        }
+    }
 }
 
 private fun NavOptionsBuilder.removeFromBackStack(route: String, isInclusive: Boolean = true) {
@@ -391,7 +420,8 @@ private fun getCardPairDetailsViewModel(
 internal object Route {
     const val MENU = "menu"
     const val CHOOSE_LEVEL = "chose_level"
-    const val GAME = "game"
+    const val GAME_BASE = "game"
+    const val GAME = "$GAME_BASE/{${AppNavigation.LEVEL_ARG}}"
     const val END_GAME = "end_game"
     const val COLLECTION = "collection"
     const val SHOP = "shop"
@@ -399,7 +429,8 @@ internal object Route {
     const val SETTINGS = "settings"
     const val CHANGE_LANGUAGE = "change_language"
     const val MORE_APPS = "more_apps"
-    const val ENABLE_NOTIFICATIONS = "enable_notifications/{${AppNavigation.DESTINATION_ARG}}"
+    const val ENABLE_NOTIFICATIONS =
+        "enable_notifications/{${AppNavigation.DESTINATION_ARG}}/{${AppNavigation.LEVEL_ARG}}"
 }
 
 private object RouteFlow {
@@ -409,7 +440,6 @@ private object RouteFlow {
 }
 
 object AppNavigation {
-    private const val DEEP_LINK_SCHEME = "memolki"
-    internal const val SHOP_DEEP_LINK = "$DEEP_LINK_SCHEME://${Route.SHOP}"
     const val DESTINATION_ARG = "destination"
+    const val LEVEL_ARG = "level"
 }

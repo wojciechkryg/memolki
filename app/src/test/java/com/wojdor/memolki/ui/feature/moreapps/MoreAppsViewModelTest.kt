@@ -8,9 +8,11 @@ import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
+import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.OpenApp
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.ShowAppInstall
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsIntent.OnAppClick
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -24,6 +26,9 @@ class MoreAppsViewModelTest : AppTest() {
 
     @Inject
     lateinit var savedStateHandle: SavedStateHandle
+
+    @Inject
+    lateinit var analytics: Analytics
 
     @Inject
     lateinit var hapticFeedback: HapticFeedback
@@ -47,6 +52,7 @@ class MoreAppsViewModelTest : AppTest() {
         )
         sut = MoreAppsViewModel(
             savedStateHandle,
+            analytics,
             hapticFeedback,
             getMoreAppsUseCase,
             isAppInstalledUseCase
@@ -84,6 +90,38 @@ class MoreAppsViewModelTest : AppTest() {
 
             // then
             assertEquals(ShowAppInstall(app), awaitItem())
+        }
+    }
+
+    @Test
+    fun `when OnAppClick intent is sent with installed app then cross promotion app opened is logged`() = runTest {
+        // given
+        val app = AppModel.FruitHalf
+        fakeAppInstalledProvider.mockAppInstalled = true
+
+        sut.uiEffect.test {
+            // when
+            sut.sendIntent(OnAppClick(app))
+            awaitItem()
+
+            // then
+            verifyOnce { analytics.logCrossPromotionAppOpened(app.appId) }
+        }
+    }
+
+    @Test
+    fun `when OnAppClick intent is sent with not installed app then cross promotion store opened is logged`() = runTest {
+        // given
+        val app = AppModel.FruitHalf
+        fakeAppInstalledProvider.mockAppInstalled = false
+
+        sut.uiEffect.test {
+            // when
+            sut.sendIntent(OnAppClick(app))
+            awaitItem()
+
+            // then
+            verifyOnce { analytics.logCrossPromotionStoreOpened(app.appId) }
         }
     }
 

@@ -7,14 +7,17 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
+import com.wojdor.memolki.domain.usecase.ResolveLevelUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -50,7 +53,13 @@ class GameViewModelTest : AppTest() {
     lateinit var incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase
 
     @Inject
+    lateinit var resolveLevelUseCase: ResolveLevelUseCase
+
+    @Inject
     lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var analytics: Analytics
 
     private lateinit var sut: GameViewModel
 
@@ -59,14 +68,16 @@ class GameViewModelTest : AppTest() {
         super.setup()
         sut = GameViewModel(
             savedStateHandle,
+            analytics,
             cardFlipPlayer,
             cardPairMatchedPlayer,
             hapticFeedback,
             googlePlayGames,
             getShuffledUnlockedCardsUseCase,
             incrementTotalCardPairsMatchedUseCase,
+            resolveLevelUseCase
         )
-        every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
+        every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
             Result.success(mockShuffledCardsWithSamePairIds())
         )
     }
@@ -78,15 +89,12 @@ class GameViewModelTest : AppTest() {
     @Test
     fun `when OnLevelStart intent is sent then state is updated with new level`() = runTest {
         sut.uiState.test {
-            // given
-            val level = LevelModel.Grid2x3()
-
             // when
-            sut.sendIntent(GameIntent.OnLevelStart(level))
+            sut.sendIntent(GameIntent.OnLevelStart("2x3"))
 
             // then
             assertEquals(LevelModel.Empty, awaitItem().level)
-            assertEquals(LevelModel.Grid2x3(), awaitItem().level)
+            assertEquals(LevelModel.Grid2x3(isUnlocked = true), awaitItem().level)
         }
         userRepository.getTotalCardPairsMatched().test {
             assertEquals(0, awaitItem())
@@ -97,7 +105,7 @@ class GameViewModelTest : AppTest() {
     fun `when OnCardClick intent is sent then state is updated with flipped card`() = runTest {
         sut.uiState.test {
             // given
-            sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+            sut.sendIntent(GameIntent.OnLevelStart("2x3"))
             skipItems(1)
 
             // when
@@ -120,7 +128,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                sut.sendIntent(GameIntent.OnLevelStart("2x3"))
                 skipItems(1)
 
                 // when
@@ -129,14 +137,16 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(secondCardToClick))
 
                 // then
-                skipItems(1)
+                skipItems(2)
                 val result = awaitItem()
                 with(result.cards[0]) {
                     assertTrue(isFlippedFront)
+                    assertTrue(isMismatchShaking)
                     assertFalse(isPairMatched)
                 }
                 with(result.cards[2]) {
                     assertTrue(isFlippedFront)
+                    assertTrue(isMismatchShaking)
                     assertFalse(isPairMatched)
                 }
             }
@@ -150,7 +160,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                sut.sendIntent(GameIntent.OnLevelStart("2x3"))
                 skipItems(1)
 
                 // when
@@ -180,13 +190,13 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                sut.sendIntent(GameIntent.OnLevelStart("2x3"))
                 skipItems(1)
 
                 // when
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
-                skipItems(1)
+                skipItems(2)
                 val thirdCardToClick = awaitItem().cards[3]
                 sut.sendIntent(GameIntent.OnBackCardClick(thirdCardToClick))
                 skipItems(1)
@@ -216,7 +226,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                sut.sendIntent(GameIntent.OnLevelStart("2x3"))
                 skipItems(1)
 
 
@@ -253,10 +263,10 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
+                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
                     Result.success(mockShuffledCardsWithSameIds())
                 )
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                sut.sendIntent(GameIntent.OnLevelStart("2x3"))
                 skipItems(1)
 
 
@@ -296,10 +306,10 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                every { getShuffledUnlockedCardsUseCase.invoke(LevelModel.Grid2x3()) } returns flowOf(
+                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
                     Result.success(mockShuffledCardsWithSameIds())
                 )
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                sut.sendIntent(GameIntent.OnLevelStart("2x3"))
                 skipItems(1)
 
 
@@ -308,14 +318,16 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[7]))
 
                 // then
-                skipItems(1)
+                skipItems(2)
                 val result = awaitItem()
                 with(result.cards[1]) {
                     assertTrue(isFlippedFront)
+                    assertTrue(isMismatchShaking)
                     assertFalse(isPairMatched)
                 }
                 with(result.cards[7]) {
                     assertTrue(isFlippedFront)
+                    assertTrue(isMismatchShaking)
                     assertFalse(isPairMatched)
                 }
             }
@@ -329,7 +341,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                sut.sendIntent(GameIntent.OnLevelStart(LevelModel.Grid2x3()))
+                sut.sendIntent(GameIntent.OnLevelStart("2x3"))
                 skipItems(1)
 
                 // when
@@ -349,7 +361,7 @@ class GameViewModelTest : AppTest() {
                     assertTrue(awaitItem() is GameEffect.SendTotalCardPairsMatchedScore)
                     skipItems(1)
                     assertEquals(
-                        GameEffect.OpenEndGameScreen(LevelModel.Grid2x3()),
+                        GameEffect.OpenEndGameScreen(LevelModel.Grid2x3(isUnlocked = true)),
                         awaitItem()
                     )
                 }
@@ -359,6 +371,79 @@ class GameViewModelTest : AppTest() {
                 assertEquals(3, awaitItem())
             }
         }
+
+    @Test
+    fun `when level starts then logLevelStart is called`() = runTest {
+        // given
+        // when
+        sut.sendIntent(GameIntent.OnLevelStart("2x3"))
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logLevelStart(LevelModel.Grid2x3(isUnlocked = true)) }
+    }
+
+    @Test
+    fun `when all cards matched then logLevelComplete is called with mismatch count`() = runTest {
+        sut.uiState.test {
+            // given
+            sut.sendIntent(GameIntent.OnLevelStart("2x3"))
+            skipItems(1)
+
+            // when
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
+            cancelAndIgnoreRemainingEvents()
+        }
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logLevelComplete(LevelModel.Grid2x3(isUnlocked = true), 0) }
+    }
+
+    @Test
+    fun `when game is left without finishing then logLevelAbandon is called`() = runTest {
+        sut.uiState.test {
+            // given
+            sut.sendIntent(GameIntent.OnLevelStart("2x3"))
+            skipItems(1)
+            awaitItem()
+
+            // when
+            sut.sendIntent(GameIntent.OnGameLeave)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            verify { analytics.logLevelAbandon(LevelModel.Grid2x3(isUnlocked = true)) }
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `when game is left after finishing then logLevelAbandon is not called`() = runTest {
+        sut.uiState.test {
+            // given
+            sut.sendIntent(GameIntent.OnLevelStart("2x3"))
+            skipItems(1)
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
+            sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        // when
+        sut.sendIntent(GameIntent.OnGameLeave)
+
+        // then
+        verify(exactly = 0) { analytics.logLevelAbandon(any()) }
+    }
 
     private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {
         return listOf(

@@ -24,8 +24,6 @@ import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.component.EndGameContent
-import com.wojdor.memolki.ui.feature.game.GameIntent
-import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import kotlinx.coroutines.launch
@@ -33,7 +31,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun EndGameScreen(
     viewModel: EndGameViewModel = hiltViewModel(),
-    gameViewModel: GameViewModel = hiltViewModel(),
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -41,29 +38,22 @@ fun EndGameScreen(
         viewModel.sendIntent(EndGameIntent.OnScreenResume)
         onPauseOrDispose {}
     }
-    HandleEffect(viewModel, gameViewModel, navController)
+    HandleEffect(viewModel, navController)
     HandleState(viewModel, state)
 }
 
 @Composable
 private fun HandleEffect(
     viewModel: EndGameViewModel,
-    gameViewModel: GameViewModel,
     navController: NavController
 ) {
     val activity = LocalActivity.current
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            is EndGameEffect.OpenGameScreen -> openGameScreen(
-                gameViewModel,
-                navController,
-                effect.levelModel
-            )
-
+            is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.levelModel)
             EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
             EndGameEffect.OpenCollectionScreen -> navController.navigateToCollection()
             is EndGameEffect.OpenEnableNotificationsScreen -> openEnableNotificationsScreen(
-                gameViewModel,
                 navController,
                 effect
             )
@@ -102,23 +92,20 @@ private fun shareApp(activity: Activity) {
 }
 
 private fun openGameScreen(
-    gameViewModel: GameViewModel,
     navController: NavController,
     level: LevelModel
 ) {
-    gameViewModel.sendIntent(GameIntent.OnLevelStart(level))
-    navController.navigateToGameFromEndGame()
+    navController.navigateToGameFromEndGame(level.id)
 }
 
 private fun openEnableNotificationsScreen(
-    gameViewModel: GameViewModel,
     navController: NavController,
     effect: EndGameEffect.OpenEnableNotificationsScreen
 ) {
-    effect.levelModel?.let {
-        gameViewModel.sendIntent(GameIntent.OnLevelStart(it))
-    }
-    navController.navigateToEnableNotifications(effect.destination.route)
+    navController.navigateToEnableNotifications(
+        effect.destination.route,
+        effect.levelModel?.id.orEmpty()
+    )
 }
 
 private fun showAd(

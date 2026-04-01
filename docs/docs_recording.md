@@ -13,16 +13,16 @@ Automated recording of promo videos using `adb` screen recording, tap automation
 ## Usage
 
 ```bash
-./scripts/record_video.sh [flavor] [locale]
+./scripts/recording/record_video.sh [flavor] [locale]
 ```
 
 Examples:
 ```bash
-./scripts/record_video.sh                          # fruit_half, English
-./scripts/record_video.sh fruit_half pl             # fruit_half, Polish
-./scripts/record_video.sh vegetable_half de          # vegetable_half, German
-./scripts/record_all_videos.sh                      # All 4 flavors × 32 languages (128 videos)
-./scripts/record_all_videos.sh fruit_half           # All languages for one flavor
+./scripts/recording/record_video.sh                          # fruit_half, English
+./scripts/recording/record_video.sh fruit_half pl             # fruit_half, Polish
+./scripts/recording/record_video.sh vegetable_half de          # vegetable_half, German
+./scripts/recording/record_all_videos.sh                      # All 4 flavors × 32 languages (128 videos)
+./scripts/recording/record_all_videos.sh fruit_half           # All languages for one flavor
 ```
 
 Flavors: `fruit_half`, `vegetable_half`, `mammal_side`, `bird_side`

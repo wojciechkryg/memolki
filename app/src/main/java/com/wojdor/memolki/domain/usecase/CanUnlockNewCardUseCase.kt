@@ -18,14 +18,12 @@ class CanUnlockNewCardUseCase @Inject constructor(
             getCoinsUseCase(),
             calculateNextCardPairCostUseCase()
         ) { coinsResult, nextCardCostResult ->
-            runCatching {
-                val coins = coinsResult.getOrThrow()
-                val nextCardCost = nextCardCostResult.getOrThrow()
-                if (nextCardCost == CalculateNextCardPairCostUseCase.NO_MORE_CARDS) {
-                    false
-                } else {
-                    coins >= nextCardCost
-                }
+            val coins = coinsResult.getOrThrow()
+            val nextCardCost = nextCardCostResult.getOrThrow()
+            if (nextCardCost == CalculateNextCardPairCostUseCase.NO_MORE_CARDS) {
+                Result.success(false)
+            } else {
+                Result.success(coins >= nextCardCost)
             }
         }
 }

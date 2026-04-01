@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.provider.LocaleProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChangeLanguageViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
     private val getLanguagesWithCurrentUseCase: GetLanguagesWithCurrentUseCase,
     private val localeProvider: LocaleProvider
@@ -45,9 +47,11 @@ class ChangeLanguageViewModel @Inject constructor(
 
     private fun changeLanguage() {
         val tag = pendingLanguageTag ?: return
+        val fromLanguage = uiState.value.currentLanguage.tag
         runCatching {
             localeProvider.setLanguageTag(tag)
         }.onSuccess {
+            analytics.logLanguageChanged(fromLanguage, tag)
             pendingLanguageTag = null
         }.onFailure {
             sendState { copy(isLanguageChangeInProgress = false) }

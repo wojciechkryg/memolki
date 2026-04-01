@@ -34,6 +34,7 @@ import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountU
 import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCaseTest
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCaseTest
 import com.wojdor.memolki.domain.usecase.PrepareRecordingCoinsUseCaseTest
+import com.wojdor.memolki.domain.usecase.ResolveLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCaseTest
@@ -118,4 +119,5 @@ interface TestInjector {
     fun inject(test: IsShopAdCooldownOverUseCaseTest)
     fun inject(test: HasReceivedShareRewardUseCaseTest)
     fun inject(test: PrepareRecordingCoinsUseCaseTest)
+    fun inject(test: ResolveLevelUseCaseTest)
 }

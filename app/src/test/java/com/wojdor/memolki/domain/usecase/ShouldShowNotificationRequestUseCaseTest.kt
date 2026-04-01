@@ -4,6 +4,7 @@ import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
+import com.wojdor.memolki.test.fake.FakePermissionProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -20,6 +21,9 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
 
     @Inject
     lateinit var fakeNotificationScheduler: FakeNotificationScheduler
+
+    @Inject
+    lateinit var fakePermissionProvider: FakePermissionProvider
 
     private lateinit var sut: ShouldShowNotificationRequestUseCase
 
@@ -40,7 +44,7 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
     @Test
     fun `when permission already granted then return false`() = runTest {
         // given
-        fakeNotificationScheduler.hasPermission = true
+        fakePermissionProvider.hasPermission = true
 
         // when
         val result = sut().first()
@@ -52,7 +56,7 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
     @Test
     fun `when first game played then return true`() = runTest {
         // given
-        fakeNotificationScheduler.hasPermission = false
+        fakePermissionProvider.hasPermission = false
         userRepository.incrementTotalGamesPlayed()
 
         // when
@@ -65,7 +69,7 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
     @Test
     fun `when no games played then return false`() = runTest {
         // given
-        fakeNotificationScheduler.hasPermission = false
+        fakePermissionProvider.hasPermission = false
 
         // when
         val result = sut().first()
@@ -77,7 +81,7 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
     @Test
     fun `when 4 games played then return true`() = runTest {
         // given
-        fakeNotificationScheduler.hasPermission = false
+        fakePermissionProvider.hasPermission = false
         repeat(4) { userRepository.incrementTotalGamesPlayed() }
 
         // when
@@ -90,7 +94,7 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
     @Test
     fun `when 2 games played then return false`() = runTest {
         // given
-        fakeNotificationScheduler.hasPermission = false
+        fakePermissionProvider.hasPermission = false
         repeat(2) { userRepository.incrementTotalGamesPlayed() }
 
         // when

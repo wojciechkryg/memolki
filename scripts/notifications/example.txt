@@ -1,0 +1,34 @@
+# Push notification translations (tab-separated: language	title	body)
+# Lines starting with # are ignored
+en	New card deck available!	Check out the brand new theme
+ar	مجموعة بطاقات جديدة!	اكتشف الموضوع الجديد
+cs	Nový balíček karet!	Podívejte se na nové téma
+da	Nyt kortspil!	Se det helt nye tema
+de	Neues Kartendeck!	Entdecke das neue Thema
+el	Νέα τράπουλα!	Δείτε το νέο θέμα
+es	¡Nuevo mazo de cartas!	Descubre el nuevo tema
+et	Uus kaardipakk!	Vaata uut teemat
+fi	Uusi korttipakka!	Tutustu uuteen teemaan
+fr	Nouveau jeu de cartes !	Découvrez le nouveau thème
+hi	नया कार्ड डेक!	नई थीम देखें
+hu	Új kártyacsomag!	Nézd meg az új témát
+in	Dek kartu baru!	Lihat tema baru
+it	Nuovo mazzo di carte!	Scopri il nuovo tema
+iw	חפיסת קלפים חדשה!	גלו את הנושא החדש
+ja	新しいカードデッキ！	新しいテーマをチェック
+ko	새 카드 덱!	새 테마를 확인하세요
+lt	Naujas kortų rinkinys!	Pažiūrėkite naują temą
+lv	Jauna kāršu kava!	Apskatiet jauno tēmu
+nl	Nieuw kaartspel!	Bekijk het nieuwe thema
+no	Ny kortstokk!	Sjekk ut det nye temaet
+pl	Nowa talia kart!	Sprawdź nowy motyw
+pt	Novo baralho de cartas!	Confira o novo tema
+ro	Pachet nou de cărți!	Descoperă noua temă
+ru	Новая колода карт!	Посмотрите новую тему
+sk	Nový balíček kariet!	Pozrite si novú tému
+sl	Nov paket kart!	Oglejte si novo temo
+sv	Ny kortlek!	Kolla in det nya temat
+tr	Yeni kart destesi!	Yeni temaya göz atın
+uk	Нова колода карт!	Перегляньте нову тему
+vi	Bộ bài mới!	Xem chủ đề mới
+zh	新卡组！	查看全新主题

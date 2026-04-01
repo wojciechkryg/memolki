@@ -103,6 +103,12 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
+    val fcmLanguageTopic: Flow<String?> = dataRead.map { it[Key.FCM_LANGUAGE_TOPIC] }
+
+    suspend fun setFcmLanguageTopic(language: String) {
+        dataWrite.edit { it[Key.FCM_LANGUAGE_TOPIC] = language }
+    }
+
     private object Key {
         val COINS = stringPreferencesKey("coins")
         val TOTAL_COINS = stringPreferencesKey("total_coins")
@@ -116,5 +122,6 @@ class UserLocalDataSource @Inject constructor(
         val DAILY_STREAK_COUNT = stringPreferencesKey("daily_streak_count")
         val LAST_DAILY_STREAK_COLLECTED_TIMESTAMP =
             stringPreferencesKey("last_daily_streak_collected_timestamp")
+        val FCM_LANGUAGE_TOPIC = stringPreferencesKey("fcm_language_topic")
     }
 }

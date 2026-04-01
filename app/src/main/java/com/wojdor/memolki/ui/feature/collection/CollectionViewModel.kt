@@ -14,6 +14,7 @@ import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
@@ -32,6 +33,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
     private val allRewardedAds: AllRewardedAds,
@@ -50,6 +52,7 @@ class CollectionViewModel @Inject constructor(
 ) {
 
     private var loadCoinsJob: Job? = null
+    private var hasLoggedCollectionView = false
 
     init {
         loadData()
@@ -72,6 +75,7 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
+        analytics.logAdDismissed(PLACEMENT, wasRewardGranted)
         if (wasRewardGranted) {
             rewardCardForAd()
             checkShouldShowNotificationRequest()
@@ -88,6 +92,10 @@ class CollectionViewModel @Inject constructor(
     private fun rewardCardForAd() {
         unlockRandomCardUseCase().onEach { result ->
             result.onSuccess {
+                val unlockedCount = uiState.value.collectionCardPairs
+                    .count { it is CollectionCardPairModel.Unlocked } + 1
+                analytics.logCardUnlockedWithAd(unlockedCount)
+                analytics.logAdRewardFromCollection()
                 loadData()
             }
         }.launchIn(viewModelScope)
@@ -151,6 +159,12 @@ class CollectionViewModel @Inject constructor(
         }
             .distinctUntilChanged()
             .onEach { collectionCardPairs ->
+                if (!hasLoggedCollectionView) {
+                    hasLoggedCollectionView = true
+                    val unlockedCount =
+                        collectionCardPairs.count { it is CollectionCardPairModel.Unlocked }
+                    analytics.logCollectionViewed(unlockedCount, collectionCardPairs.size)
+                }
                 sendState {
                     copy(
                         collectionCardPairs = collectionCardPairs,
@@ -221,11 +235,13 @@ class CollectionViewModel @Inject constructor(
 
     private fun onShopClick() {
         hapticFeedback.vibrateLow()
+        analytics.logShopOpenedFromCollection()
         sendEffect(CollectionEffect.OpenShopScreen)
     }
 
     private fun onCardPairClick(intent: CollectionIntent.OnCardPairClick) {
         hapticFeedback.vibrateLow()
+        analytics.logCardPairDetailsViewed()
         sendEffect(
             CollectionEffect.OpenCardPairDetailsScreen(
                 intent.collectionCardPairModel.cardPair
@@ -237,10 +253,18 @@ class CollectionViewModel @Inject constructor(
         hapticFeedback.vibrateLow()
         unlockRandomCardIfEnoughCoinsUseCase().onEach { result ->
             result.onSuccess {
+                val unlockedCount = uiState.value.collectionCardPairs
+                    .count { it is CollectionCardPairModel.Unlocked } + 1
+                analytics.logCardUnlockedWithCoins(unlockedCount)
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
                 loadData(animateCoins = true)
             }.onFailure {
+                val cardCost = uiState.value.collectionCardPairs
+                    .filterIsInstance<CollectionCardPairModel.LockedToUnlockWithCoins>()
+                    .firstOrNull()?.coins ?: 0
+                analytics.logInsufficientCoinsShown(uiState.value.coins, cardCost)
+                analytics.logShopOpenedFromInsufficientCoins()
                 sendEffect(CollectionEffect.OpenShopScreen)
             }
         }.launchIn(viewModelScope)
@@ -248,6 +272,7 @@ class CollectionViewModel @Inject constructor(
 
     private fun onUnlockWithAdClick() {
         hapticFeedback.vibrateLow()
+        analytics.logAdShown(PLACEMENT)
         sendEffect(CollectionEffect.ShowAd(allRewardedAds.collectionCardPairAd))
     }
 
@@ -262,5 +287,6 @@ class CollectionViewModel @Inject constructor(
             UNLOCK_WITH_COINS_COUNT + UNLOCK_WITH_ADS_COUNT
 
         private const val COINS_SOUND_DELAY = 300L
+        private const val PLACEMENT = "collection"
     }
 }

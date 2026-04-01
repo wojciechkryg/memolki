@@ -1,0 +1,17 @@
+Generate a colorful image that depicts the given item or character.
+
+Here are the guidelines:
+- The image MUST be in a sketch style, look like a sketch, be a hand-drawn sketch.
+- The image MUST be colorful, but use subdued colors, with style of using watercolour
+- The outline MUST be black line
+- The image MUST have many precise details, so that it can be clearly identified as the given item or character.
+- The image MUST be as minimalist as possible!
+- The image MUST have a solid white background, color #ffffff!
+- There MUST be ABSOLUTELY NO additional colored lines, shapes, other embellishments, or shadows on the background, nor inside the item or character! Remember this, because I keep seeing colorful fringes.
+- The item or character in the image should not have any shadows; everything must be 2D, flat.
+- The image should look like a sketch from a scientific textbook or study book.
+- The image is to depict the specific item or character, without any strange alterations, in its most popular form.
+- There MUST be NO text/label name on the image
+- The image MUST be a square
+- The image MUST fit the whole content of the image
+- Strictly adhere to the style shown in the example pictures in the attachment.

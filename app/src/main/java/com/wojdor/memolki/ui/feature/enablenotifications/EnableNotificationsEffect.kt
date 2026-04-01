@@ -4,7 +4,7 @@ import com.wojdor.memolki.ui.base.UiEffect
 
 sealed class EnableNotificationsEffect : UiEffect {
     object RequestNotificationPermission : EnableNotificationsEffect()
-    object NavigateToGame : EnableNotificationsEffect()
+    data class NavigateToGame(val levelId: String) : EnableNotificationsEffect()
     object NavigateToMenu : EnableNotificationsEffect()
     object NavigateToCollection : EnableNotificationsEffect()
     object NavigateToShop : EnableNotificationsEffect()

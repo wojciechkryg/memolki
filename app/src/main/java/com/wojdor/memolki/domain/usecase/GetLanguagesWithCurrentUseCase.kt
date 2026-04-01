@@ -19,13 +19,11 @@ class GetLanguagesWithCurrentUseCase @Inject constructor(
             getSupportedLanguagesUseCase(),
             getCurrentLanguageTagUseCase()
         ) { languagesResult, tagResult ->
-            runCatching {
-                val languages = languagesResult.getOrThrow()
-                val currentTag = tagResult.getOrThrow()
-                val currentLanguage = languages.firstOrNull { it.tag == currentTag }
-                    ?: languages.first { it.tag == DEFAULT_LANGUAGE_TAG }
-                languages to currentLanguage
-            }
+            val languages = languagesResult.getOrThrow()
+            val currentTag = tagResult.getOrThrow()
+            val currentLanguage = languages.firstOrNull { it.tag == currentTag }
+                ?: languages.first { it.tag == DEFAULT_LANGUAGE_TAG }
+            Result.success(languages to currentLanguage)
         }
 
     companion object {

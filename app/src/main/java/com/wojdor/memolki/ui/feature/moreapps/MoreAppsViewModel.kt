@@ -9,6 +9,7 @@ import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.OpenApp
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.ShowAppInstall
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsIntent.OnAppClick
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MoreAppsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
     private val getMoreAppsUseCase: GetMoreAppsUseCase,
     private val isAppInstalledUseCase: IsAppInstalledUseCase,
@@ -41,8 +43,10 @@ class MoreAppsViewModel @Inject constructor(
         isAppInstalledUseCase(app.appId).onEach {
             it.onSuccess { isInstalled ->
                 if (isInstalled) {
+                    analytics.logCrossPromotionAppOpened(app.appId)
                     sendEffect(OpenApp(app))
                 } else {
+                    analytics.logCrossPromotionStoreOpened(app.appId)
                     sendEffect(ShowAppInstall(app))
                 }
             }

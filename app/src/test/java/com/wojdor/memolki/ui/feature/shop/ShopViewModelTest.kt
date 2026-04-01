@@ -17,11 +17,16 @@ import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.ads.AllRewardedAds
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
+import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.playgames.GooglePlayGames
+import io.mockk.every
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -88,6 +93,9 @@ class ShopViewModelTest : AppTest() {
     @Inject
     lateinit var collectDailyStreakRewardUseCase: CollectDailyStreakRewardUseCase
 
+    @Inject
+    lateinit var analytics: Analytics
+
     private lateinit var sut: ShopViewModel
 
     @Before
@@ -95,6 +103,7 @@ class ShopViewModelTest : AppTest() {
         super.setup()
         sut = ShopViewModel(
             savedStateHandle,
+            analytics,
             hapticFeedback,
             coinsPlayer,
             allRewardedAds,
@@ -141,5 +150,87 @@ class ShopViewModelTest : AppTest() {
             val watchAd = state.menu.filterIsInstance<ShopMenuModel.WatchAd>().first()
             assertEquals(false, watchAd.isAvailable)
         }
+    }
+
+    @Test
+    fun `when purchase is completed then logPurchaseCompleted is called`() = runTest {
+        // given
+        val listenerSlot = slot<BillingStatusListener>()
+        every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
+        sut = ShopViewModel(
+            savedStateHandle,
+            analytics,
+            hapticFeedback,
+            coinsPlayer,
+            allRewardedAds,
+            billingHandler,
+            googlePlayGames,
+            isShopAdCooldownOverUseCase,
+            setLastShopAdShownTimestampUseCase,
+            getCoinsUseCase,
+            calculateCoinsForShopAdUseCase,
+            rewardCoinsForShopAdUseCase,
+            rewardCoinsForShopPurchaseUseCase,
+            unlockAllCardPairsUseCase,
+            getTotalCoinsUseCase,
+            scheduleAdRewardNotificationUseCase,
+            notificationScheduler,
+            checkDailyLoginStreakUseCase,
+            collectDailyStreakRewardUseCase
+        )
+        testScheduler.advanceUntilIdle()
+
+        // when
+        listenerSlot.captured.onPurchaseSuccessful("coins_small")
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logPurchaseCompleted("coins_small") }
+    }
+
+    @Test
+    fun `when purchase fails then logPurchaseFailed is called`() = runTest {
+        // given
+        val listenerSlot = slot<BillingStatusListener>()
+        every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
+        sut = ShopViewModel(
+            savedStateHandle,
+            analytics,
+            hapticFeedback,
+            coinsPlayer,
+            allRewardedAds,
+            billingHandler,
+            googlePlayGames,
+            isShopAdCooldownOverUseCase,
+            setLastShopAdShownTimestampUseCase,
+            getCoinsUseCase,
+            calculateCoinsForShopAdUseCase,
+            rewardCoinsForShopAdUseCase,
+            rewardCoinsForShopPurchaseUseCase,
+            unlockAllCardPairsUseCase,
+            getTotalCoinsUseCase,
+            scheduleAdRewardNotificationUseCase,
+            notificationScheduler,
+            checkDailyLoginStreakUseCase,
+            collectDailyStreakRewardUseCase
+        )
+        testScheduler.advanceUntilIdle()
+
+        // when
+        listenerSlot.captured.onPurchaseFailed()
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logPurchaseFailed() }
+    }
+
+    @Test
+    fun `when ad reward is earned then logAdRewardFromShop is called`() = runTest {
+        // when
+        sut.sendIntent(ShopIntent.OnAdDismiss(wasRewardGranted = true))
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logAdRewardFromShop() }
     }
 }

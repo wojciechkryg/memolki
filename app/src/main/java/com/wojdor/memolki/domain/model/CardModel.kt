@@ -18,6 +18,29 @@ sealed class CardModel : Parcelable {
     abstract val isMatchAnimating: Boolean
     abstract val isMismatchShaking: Boolean
 
+    fun copyState(
+        isFlippedFront: Boolean = this.isFlippedFront,
+        isPairMatched: Boolean = this.isPairMatched,
+        isMatchAnimating: Boolean = this.isMatchAnimating,
+        isMismatchShaking: Boolean = this.isMismatchShaking
+    ): CardModel = when (this) {
+        is Text -> copy(
+            isFlippedFront = isFlippedFront,
+            isPairMatched = isPairMatched,
+            isMatchAnimating = isMatchAnimating,
+            isMismatchShaking = isMismatchShaking
+        )
+
+        is Image -> copy(
+            isFlippedFront = isFlippedFront,
+            isPairMatched = isPairMatched,
+            isMatchAnimating = isMatchAnimating,
+            isMismatchShaking = isMismatchShaking
+        )
+
+        Empty -> this
+    }
+
     object Empty : CardModel() {
         @IgnoredOnParcel
         override val id: String = ""

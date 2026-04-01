@@ -67,15 +67,15 @@ private fun HandleEffect(
 ) {
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) {
-        viewModel.sendIntent(EnableNotificationsIntent.OnPermissionResult)
+    ) { isGranted ->
+        viewModel.sendIntent(EnableNotificationsIntent.OnPermissionResult(isGranted))
     }
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             EnableNotificationsEffect.RequestNotificationPermission ->
                 requestNotificationPermission(permissionLauncher, viewModel)
 
-            EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame()
+            is EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame(effect.levelId)
             EnableNotificationsEffect.NavigateToMenu -> navController.navigateToMenu()
             EnableNotificationsEffect.NavigateToCollection -> navController.navigateToCollection()
             EnableNotificationsEffect.NavigateToShop -> navController.navigateToShop()
@@ -90,7 +90,7 @@ private fun requestNotificationPermission(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     } else {
-        viewModel.sendIntent(EnableNotificationsIntent.OnPermissionResult)
+        viewModel.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
     }
 }
 

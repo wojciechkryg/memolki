@@ -18,6 +18,7 @@ import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.extension.logE
@@ -37,6 +38,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ShopViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
     private val coinsPlayer: CoinsPlayer,
     private val allRewardedAds: AllRewardedAds,
@@ -116,6 +118,9 @@ class ShopViewModel @Inject constructor(
         hapticFeedback.vibrateLow()
         collectDailyStreakRewardUseCase().onEach { result ->
             result.onSuccess {
+                dailyStreakResult?.let {
+                    analytics.logDailyStreakCollected(it.streakDay, it.coinsReward)
+                }
                 notificationScheduler.scheduleStreakNotification()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
@@ -133,6 +138,7 @@ class ShopViewModel @Inject constructor(
 
     private fun onWatchAdClick() {
         hapticFeedback.vibrateLow()
+        analytics.logAdShown(PLACEMENT)
         sendEffect(ShopEffect.ShowAd(allRewardedAds.shopCoinsAd))
     }
 
@@ -141,6 +147,7 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
+        analytics.logAdDismissed(PLACEMENT, wasRewardGranted)
         if (wasRewardGranted) {
             setLastShopAdShownTimestampUseCase().onEach { result ->
                 result.onSuccess {
@@ -212,6 +219,7 @@ class ShopViewModel @Inject constructor(
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->
             result.onSuccess {
+                analytics.logAdRewardFromShop()
                 sendTotalCoinsScore()
                 delay(COINS_SOUND_DELAY)
                 coinsPlayer.play()
@@ -302,6 +310,7 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun onPurchaseSuccessful(productId: String) {
+        analytics.logPurchaseCompleted(productId)
         when (productId) {
             in billingHandler.consumableProductIds -> {
                 val coins = when (productId) {
@@ -320,6 +329,7 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun onPurchaseFailed() {
+        analytics.logPurchaseFailed()
         sendEffect(ShopEffect.ShowPurchaseFailedError)
     }
 
@@ -336,3 +346,4 @@ private const val COINS_SOUND_DELAY = 300L
 const val DEFAULT_PRICE = "???"
 const val SMALL_PURCHASE_COINS_REWARD = 500L
 const val BIG_PURCHASE_COINS_REWARD = 3000L
+private const val PLACEMENT = "shop"

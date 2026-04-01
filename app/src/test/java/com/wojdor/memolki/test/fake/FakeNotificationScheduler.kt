@@ -1,13 +1,15 @@
 package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.util.notification.NotificationScheduler
+import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.mockk
 import javax.inject.Inject
 import kotlin.random.Random
 
 class FakeNotificationScheduler @Inject constructor(
-    random: Random
-) : NotificationScheduler(mockk(), random) {
+    random: Random,
+    permissionProvider: PermissionProvider
+) : NotificationScheduler(mockk(), random, mockk(), permissionProvider) {
 
     var reminderNotificationScheduled = false
         private set
@@ -26,8 +28,6 @@ class FakeNotificationScheduler @Inject constructor(
 
     var channelCreated = false
         private set
-
-    var hasPermission = false
 
     override fun scheduleReminderNotification() {
         reminderNotificationScheduled = true
@@ -53,7 +53,4 @@ class FakeNotificationScheduler @Inject constructor(
         channelCreated = true
     }
 
-    override fun hasNotificationPermission(): Boolean {
-        return hasPermission
-    }
 }

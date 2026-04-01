@@ -17,9 +17,11 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.ui.ads.AllRewardedAds
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -72,6 +74,9 @@ class CollectionViewModelTest : AppTest() {
     @Inject
     lateinit var userRepository: UserRepository
 
+    @Inject
+    lateinit var analytics: Analytics
+
     private lateinit var sut: CollectionViewModel
 
     @Before
@@ -79,6 +84,7 @@ class CollectionViewModelTest : AppTest() {
         super.setup()
         sut = CollectionViewModel(
             savedStateHandle,
+            analytics,
             coinsPlayer,
             hapticFeedback,
             allRewardedAds,
@@ -154,4 +160,50 @@ class CollectionViewModelTest : AppTest() {
                 assertEquals(CollectionEffect.OpenShopScreen, awaitItem())
             }
         }
+
+    @Test
+    fun `when collection is loaded then logCollectionViewed is called once`() = runTest {
+        sut.uiState.test {
+            // given
+            skipItems(2)
+
+            // when
+            awaitItem()
+
+            // then
+            verify(exactly = 1) { analytics.logCollectionViewed(any(), any()) }
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `when card is unlocked with coins then logCardUnlockedWithCoins is called`() = runTest {
+        // given
+        userRepository.addCoins(1000)
+        sut.uiState.test {
+            skipItems(2)
+            val state = awaitItem()
+            val lockedWithCoins = state.collectionCardPairs
+                .filterIsInstance<CollectionCardPairModel.LockedToUnlockWithCoins>()
+                .first()
+
+            // when
+            sut.sendIntent(CollectionIntent.OnUnlockWithCoinsClick(lockedWithCoins))
+            cancelAndIgnoreRemainingEvents()
+        }
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logCardUnlockedWithCoins(any()) }
+    }
+
+    @Test
+    fun `when shop button is clicked then logShopOpenedFromCollection is called`() = runTest {
+        // when
+        sut.sendIntent(CollectionIntent.OnShopClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logShopOpenedFromCollection() }
+    }
 }
