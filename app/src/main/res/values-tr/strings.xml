@@ -87,6 +87,9 @@
         <item>Serini bozma!</item>
         <item>Dükkânı aç ve paraları al</item>
     </string-array>
+    <string name="shortcut_daily_reward">Günlük ödül</string>
+    <string name="shortcut_play">Oyna</string>
+
     <string name="free_coins">Ücretsiz paralar</string>
     <string name="daily_reward_day">Gün %d</string>
     <string name="daily_reward_collect">Topla %d</string>

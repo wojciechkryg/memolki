@@ -87,6 +87,9 @@
         <item>Brich deine Serie nicht ab!</item>
         <item>Öffne den Shop und hol dir Münzen</item>
     </string-array>
+    <string name="shortcut_daily_reward">Tägliche Belohnung</string>
+    <string name="shortcut_play">Spielen</string>
+
     <string name="free_coins">Gratis Münzen</string>
     <string name="daily_reward_day">Tag %d</string>
     <string name="daily_reward_collect">Sammle %d</string>

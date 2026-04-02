@@ -20,6 +20,9 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# WorkManager (transitive via Firebase Messaging) - R8 strips Room-generated classes
+-keep class androidx.work.impl.** { *; }
+
 # Mediation SDK rules - Unity
 -dontwarn com.unity3d.ads.**
 -dontwarn com.unity3d.services.**

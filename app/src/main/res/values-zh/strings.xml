@@ -87,6 +87,9 @@
         <item>别中断你的连续！</item>
         <item>打开商店拿金币</item>
     </string-array>
+    <string name="shortcut_daily_reward">每日奖励</string>
+    <string name="shortcut_play">开始游戏</string>
+
     <string name="free_coins">免费金币</string>
     <string name="daily_reward_day">第%d天</string>
     <string name="daily_reward_collect">收集 %d</string>

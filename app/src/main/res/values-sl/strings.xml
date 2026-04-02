@@ -87,6 +87,9 @@
         <item>Ne prekini serije!</item>
         <item>Odpri trgovino in vzemi kovance</item>
     </string-array>
+    <string name="shortcut_daily_reward">Dnevna nagrada</string>
+    <string name="shortcut_play">Igraj</string>
+
     <string name="free_coins">Brezplačni kovanci</string>
     <string name="daily_reward_day">Dan %d</string>
     <string name="daily_reward_collect">Zberi %d</string>

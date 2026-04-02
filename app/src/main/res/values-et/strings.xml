@@ -87,6 +87,9 @@
         <item>Ära katkesta seeriat!</item>
         <item>Ava pood ja võta oma mündid</item>
     </string-array>
+    <string name="shortcut_daily_reward">Päeva auhind</string>
+    <string name="shortcut_play">Mängi</string>
+
     <string name="free_coins">Tasuta mündid</string>
     <string name="daily_reward_day">Päev %d</string>
     <string name="daily_reward_collect">Kogu %d</string>

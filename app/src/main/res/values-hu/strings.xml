@@ -87,6 +87,9 @@
         <item>Ne szakítsd meg a sorozatot!</item>
         <item>Nyisd meg a boltot és vedd el az érméket</item>
     </string-array>
+    <string name="shortcut_daily_reward">Napi jutalom</string>
+    <string name="shortcut_play">Játék</string>
+
     <string name="free_coins">Ingyenes érmék</string>
     <string name="daily_reward_day">%d. nap</string>
     <string name="daily_reward_collect">Gyűjts %d</string>

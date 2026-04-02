@@ -283,8 +283,10 @@ app/src/{flavorName}/
 │   │   ├── strings.xml                     # Card names (translatable)
 │   │   ├── strings_non_translatable.xml    # Google Play Games IDs
 │   │   └── ad_mob_ids.xml                  # AdMob app/unit IDs
-│   └── values-{locale}/
-│       └── strings.xml                     # Translated card names
+│   ├── values-{locale}/
+│   │   └── strings.xml                     # Translated card names
+│   └── xml/
+│       └── shortcuts.xml                   # App shortcuts with flavor's applicationId
 ```
 
 ### Adding a New Flavor (code-side checklist)
@@ -299,7 +301,8 @@ Code changes needed:
 5. Add `primary_{flavor}` color in `main/res/values/colors.xml`
 6. Create the flavor source set directory with the structure above
 7. Create `AllCardPairsLocalDataSource.kt` with card pair definitions (reference: `app/src/fruitHalf/`)
-8. Add flavor to CI matrix in `.github/workflows/merge.yml`
+8. Create `res/xml/shortcuts.xml` with the flavor's `applicationId` in `targetPackage` (copy from existing flavor)
+9. Add flavor to CI matrix in `.github/workflows/merge.yml`
 
 ### Card Images
 

@@ -87,6 +87,9 @@
         <item>Đừng phá vỡ chuỗi!</item>
         <item>Mở cửa hàng và lấy xu</item>
     </string-array>
+    <string name="shortcut_daily_reward">Phần thưởng hàng ngày</string>
+    <string name="shortcut_play">Chơi</string>
+
     <string name="free_coins">Xu miễn phí</string>
     <string name="daily_reward_day">Ngày %d</string>
     <string name="daily_reward_collect">Thu thập %d</string>

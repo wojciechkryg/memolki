@@ -87,6 +87,9 @@
         <item>Μη σπάσεις τη σερί σου!</item>
         <item>Άνοιξε το κατάστημα και πάρε τα νομίσματά σου</item>
     </string-array>
+    <string name="shortcut_daily_reward">Ημερήσιο δώρο</string>
+    <string name="shortcut_play">Παιχνίδι</string>
+
     <string name="free_coins">Δωρεάν νομίσματα</string>
     <string name="daily_reward_day">Ημέρα %d</string>
     <string name="daily_reward_collect">Συλλογή %d</string>

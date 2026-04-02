@@ -116,9 +116,10 @@ class Analytics @Inject constructor(
         })
     }
 
-    fun logAppOpened(notificationType: String? = null) {
+    fun logAppOpened(notificationType: String? = null, shortcutId: String? = null) {
         firebaseAnalytics.logEvent(Event.APP_OPENED, Bundle().apply {
             notificationType?.let { putString(Key.NOTIFICATION_TYPE, it) }
+            shortcutId?.let { putString(Key.SHORTCUT_ID, it) }
         })
     }
 
@@ -236,6 +237,7 @@ private object Key {
     const val TOTAL_GAMES_PLAYED = "total_games_played"
     const val FROM_LANGUAGE = "from_language"
     const val TO_LANGUAGE = "to_language"
+    const val SHORTCUT_ID = "shortcut_id"
     const val LANGUAGE = "language"
 }
 

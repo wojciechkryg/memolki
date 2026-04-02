@@ -40,7 +40,7 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    fun onAppOpen(notificationType: String?) {
-        analytics.logAppOpened(notificationType)
+    fun onAppOpen(notificationType: String?, shortcutId: String? = null) {
+        analytics.logAppOpened(notificationType, shortcutId)
     }
 }
