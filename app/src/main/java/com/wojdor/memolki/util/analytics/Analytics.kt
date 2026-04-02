@@ -119,8 +119,13 @@ class Analytics @Inject constructor(
     fun logAppOpened(notificationType: String? = null, shortcutId: String? = null) {
         firebaseAnalytics.logEvent(Event.APP_OPENED, Bundle().apply {
             notificationType?.let { putString(Key.NOTIFICATION_TYPE, it) }
-            shortcutId?.let { putString(Key.SHORTCUT_ID, it) }
+            shortcutId?.takeIf { it in ALLOWED_SHORTCUT_IDS }
+                ?.let { putString(Key.SHORTCUT_ID, it) }
         })
+    }
+
+    companion object {
+        private val ALLOWED_SHORTCUT_IDS = setOf("daily_reward", "play_game")
     }
 
     fun logMoreAppsClicked() {
