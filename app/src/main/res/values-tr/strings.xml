@@ -85,7 +85,7 @@
         <item>Ödülün için mağazayı ziyaret et</item>
         <item>Serin tehlikede!</item>
         <item>Serini bozma!</item>
-        <item>Dükkânı aç ve paraları al</item>
+        <item>Mağazayı aç ve paraları al</item>
     </string-array>
     <string name="shortcut_daily_reward">Günlük ödül</string>
     <string name="shortcut_play">Oyna</string>
@@ -94,5 +94,27 @@
     <string name="daily_reward_day">Gün %d</string>
     <string name="daily_reward_collect">Topla %d</string>
     <string name="daily_reward_back_tomorrow">Yarın tekrar gel</string>
-    <string name="share_text">memolki oyununda tüm eşleri buldum! Beni yenebilir misin? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">memolki\'de tüm eşleri buldum! Daha fazla kart toplayabilir misin? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Günlük meydan okuma</string>
+    <string name="daily_challenge_compare">Karşılaştır</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Günlük meydan okumayı unutma!</item>
+        <item>⭐ Günlük meydan okuma bekliyor!</item>
+        <item>🧠 Bugünkü meydan okumaya hazır mısın?</item>
+        <item>💪 Günlük beyin egzersizin!</item>
+        <item>🏆 Bugün kendine meydan oku!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Bugünün benzersiz tahtasıyla hafızanı test et</item>
+        <item>Dünkü skoru yenebilir misin?</item>
+        <item>Yeni bir bulmaca seni bekliyor</item>
+        <item>Tüm eşleri bul ve sonuçlarını paylaş</item>
+        <item>Herkes aynı tahtayı alıyor — sen nasıl yapacaksın?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d hata</item>
+        <item quantity="other">%d hata</item>
+    </plurals>
 </resources>

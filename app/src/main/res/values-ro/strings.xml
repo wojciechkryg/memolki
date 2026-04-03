@@ -94,5 +94,28 @@
     <string name="daily_reward_day">Ziua %d</string>
     <string name="daily_reward_collect">Colectează %d</string>
     <string name="daily_reward_back_tomorrow">Revino mâine</string>
-    <string name="share_text">Am potrivit toate perechile în jocul memolki! Poți să mă învingi? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Am găsit toate perechile în memolki! Poți să colecționezi mai multe cărți? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Provocarea zilei</string>
+    <string name="daily_challenge_compare">Compară</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Nu uita de provocarea zilei!</item>
+        <item>⭐ Provocarea zilei te așteaptă!</item>
+        <item>🧠 Ești pregătit pentru provocarea de azi?</item>
+        <item>💪 Antrenamentul tău cerebral zilnic!</item>
+        <item>🏆 Provoacă-te azi!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Testează-ți memoria cu tabla unică de azi</item>
+        <item>Poți depăși scorul de ieri?</item>
+        <item>Un nou puzzle te așteaptă</item>
+        <item>Găsește toate perechile și împărtășește rezultatele</item>
+        <item>Toți primesc aceeași tablă — tu cum te descurci?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d greșeală</item>
+        <item quantity="few">%d greșeli</item>
+        <item quantity="other">%d greșeli</item>
+    </plurals>
 </resources>

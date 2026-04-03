@@ -16,26 +16,26 @@ sealed class CardModel : Parcelable {
     abstract val isFlippedFront: Boolean
     abstract val isPairMatched: Boolean
     abstract val isMatchAnimating: Boolean
-    abstract val isMismatchShaking: Boolean
+    abstract val isMistakeShaking: Boolean
 
     fun copyState(
         isFlippedFront: Boolean = this.isFlippedFront,
         isPairMatched: Boolean = this.isPairMatched,
         isMatchAnimating: Boolean = this.isMatchAnimating,
-        isMismatchShaking: Boolean = this.isMismatchShaking
+        isMistakeShaking: Boolean = this.isMistakeShaking
     ): CardModel = when (this) {
         is Text -> copy(
             isFlippedFront = isFlippedFront,
             isPairMatched = isPairMatched,
             isMatchAnimating = isMatchAnimating,
-            isMismatchShaking = isMismatchShaking
+            isMistakeShaking = isMistakeShaking
         )
 
         is Image -> copy(
             isFlippedFront = isFlippedFront,
             isPairMatched = isPairMatched,
             isMatchAnimating = isMatchAnimating,
-            isMismatchShaking = isMismatchShaking
+            isMistakeShaking = isMistakeShaking
         )
 
         Empty -> this
@@ -61,7 +61,7 @@ sealed class CardModel : Parcelable {
         override val isMatchAnimating: Boolean = false
 
         @IgnoredOnParcel
-        override val isMismatchShaking: Boolean = false
+        override val isMistakeShaking: Boolean = false
     }
 
     data class Text(
@@ -71,7 +71,7 @@ sealed class CardModel : Parcelable {
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false,
         override val isMatchAnimating: Boolean = false,
-        override val isMismatchShaking: Boolean = false
+        override val isMistakeShaking: Boolean = false
     ) : CardModel()
 
     data class Image(
@@ -82,6 +82,6 @@ sealed class CardModel : Parcelable {
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false,
         override val isMatchAnimating: Boolean = false,
-        override val isMismatchShaking: Boolean = false
+        override val isMistakeShaking: Boolean = false
     ) : CardModel()
 }

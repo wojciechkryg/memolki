@@ -16,4 +16,6 @@ sealed class EndGameMenuModel(@field:StringRes val textId: Int = R.string.empty)
         val showReward: Boolean,
         val rewardCoins: Long = 0L
     ) : EndGameMenuModel()
+
+    object Compare : EndGameMenuModel(R.string.daily_challenge_compare)
 }

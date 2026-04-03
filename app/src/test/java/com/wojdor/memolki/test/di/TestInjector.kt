@@ -4,6 +4,7 @@ import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSourceTest
 import com.wojdor.memolki.data.local.settings.SettingsLocalDataSourceTest
 import com.wojdor.memolki.data.local.user.UserLocalDataSourceTest
 import com.wojdor.memolki.data.repository.CardRepositoryTest
+import com.wojdor.memolki.data.repository.DailyChallengeRepositoryTest
 import com.wojdor.memolki.data.repository.SettingsRepositoryTest
 import com.wojdor.memolki.data.repository.UserRepositoryTest
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCaseTest
@@ -14,6 +15,7 @@ import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCurrentLanguageTagUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMenuUseCaseTest
@@ -21,12 +23,14 @@ import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSupportedLanguagesUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCaseTest
+import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCaseTest
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCaseTest
@@ -38,6 +42,7 @@ import com.wojdor.memolki.domain.usecase.ResolveLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCaseTest
+import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCaseTest
 import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCaseTest
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCaseTest
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCaseTest
@@ -67,6 +72,7 @@ interface TestInjector {
     fun inject(test: SettingsLocalDataSourceTest)
     fun inject(test: UserLocalDataSourceTest)
     fun inject(test: CardRepositoryTest)
+    fun inject(test: DailyChallengeRepositoryTest)
     fun inject(test: SettingsRepositoryTest)
     fun inject(test: UserRepositoryTest)
     fun inject(test: ShopViewModelTest)
@@ -120,4 +126,8 @@ interface TestInjector {
     fun inject(test: HasReceivedShareRewardUseCaseTest)
     fun inject(test: PrepareRecordingCoinsUseCaseTest)
     fun inject(test: ResolveLevelUseCaseTest)
+    fun inject(test: HasPlayedTodayDailyChallengeUseCaseTest)
+    fun inject(test: SaveDailyChallengeUseCaseTest)
+    fun inject(test: GetTodayDailyChallengeUseCaseTest)
+    fun inject(test: GetDailyChallengeCardsUseCaseTest)
 }

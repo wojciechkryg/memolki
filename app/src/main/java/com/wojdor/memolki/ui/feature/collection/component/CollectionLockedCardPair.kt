@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.ui.theme.isTablet
+import com.wojdor.memolki.ui.theme.isLargeScreen
 import com.wojdor.memolki.ui.theme.spacingL
 
 @Composable
@@ -34,7 +34,7 @@ fun CollectionLockedCardPair(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(if (isTablet) spacingL else 0.dp)
+            .padding(if (isLargeScreen) spacingL else 0.dp)
             .graphicsLayer { translationX = shakeOffset }
             .clip(rotatedCardPairShape)
             .clickable(

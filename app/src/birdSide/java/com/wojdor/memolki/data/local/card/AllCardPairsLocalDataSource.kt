@@ -3,6 +3,7 @@ package com.wojdor.memolki.data.local.card
 import com.wojdor.memolki.R
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
+import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import javax.inject.Inject
 
 class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource {

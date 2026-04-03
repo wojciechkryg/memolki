@@ -94,5 +94,28 @@
     <string name="daily_reward_day">Den %d</string>
     <string name="daily_reward_collect">Sebrat %d</string>
     <string name="daily_reward_back_tomorrow">Přijď zítra</string>
-    <string name="share_text">Spojil jsem všechny páry ve hře memolki! Dokážeš mě porazit? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Spároval jsem všechny páry v memolki! Dokážeš nasbírat více karet? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Denní výzva</string>
+    <string name="daily_challenge_compare">Porovnat</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Nezapomeň na denní výzvu!</item>
+        <item>⭐ Denní výzva čeká!</item>
+        <item>🧠 Jsi připraven na dnešní výzvu?</item>
+        <item>💪 Tvůj denní trénink mozku!</item>
+        <item>🏆 Vyzvi se dnes!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Otestuj svou paměť s dnešní jedinečnou deskou</item>
+        <item>Dokážeš překonat včerejší skóre?</item>
+        <item>Nový hlavolam na tebe čeká</item>
+        <item>Spáruj všechny páry a sdílej výsledky</item>
+        <item>Všichni mají stejnou desku — jak si povedeš?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d chyba</item>
+        <item quantity="few">%d chyby</item>
+        <item quantity="many">%d chyb</item>
+        <item quantity="other">%d chyb</item>
+    </plurals>
 </resources>

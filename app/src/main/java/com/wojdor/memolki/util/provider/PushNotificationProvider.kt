@@ -2,7 +2,7 @@ package com.wojdor.memolki.util.provider
 
 import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.BuildConfig
-import com.wojdor.memolki.data.local.user.UserLocalDataSource
+import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 

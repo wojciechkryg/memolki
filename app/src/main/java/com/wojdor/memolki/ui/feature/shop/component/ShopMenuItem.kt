@@ -88,8 +88,8 @@ fun ShopMenuItem(
                             contentDescription = null
                         )
                         AutoSizeText(
-                            text = priceText.uppercase(),
-                            style = MaterialTheme.typography.bodyLarge
+                            text = priceText.lowercase(),
+                            style = MaterialTheme.typography.bodySmall
                         )
                     }
                 } else {

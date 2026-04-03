@@ -45,6 +45,8 @@ Adding a new flavor has a checklist in `docs/docs_new_app_flavor_setup.md`.
 UI (Compose) → Domain (Use Cases) → Data (Repositories → DataSources)
 ```
 
+**Layer boundaries are strict:** Use cases depend only on repositories (and other use cases) — never import data-layer internals (`data/local/database/` entities, `data/mapper/`). Repositories are responsible for mapping between data entities and domain models.
+
 ### UseCase Layer
 
 Two base classes in `domain/usecase/base/`:
@@ -76,9 +78,12 @@ Reference: `domain/model/CardModel.kt`, `domain/model/SettingModel.kt`
 
 ### Data Layer
 
-- **Persistence:** Encrypted DataStore Preferences (see `data/crypto/` for Encryptor interface). **Always use DataStore for local persistence** — never use SharedPreferences, Room, or raw files
-- **Entities:** in `data/entity/`, mapped to domain models via extension functions in `data/mapper/` (e.g. `CardEntity.toModel()`)
-- **Repositories:** in `data/repository/`, orchestrate data sources from `data/local/`
+- **Persistence:** Two storage mechanisms:
+  - **Encrypted DataStore Preferences** (`data/local/datastore/`) — for key-value settings and user data (coins, streaks, unlocked cards). Uses `data/crypto/Encryptor` for sensitive values. Never use SharedPreferences.
+  - **Room Database** (`data/local/database/`) — for structured, growing data (e.g. daily challenge results). `AppDatabase` in `data/local/database/`, entities and DAOs in subdirectories. Provided via Hilt in `DataModule`. Database version tracked as `private const val DATABASE_VERSION` in `AppDatabase.kt`. When bumping `DATABASE_VERSION`, add a proper migration to preserve user data.
+- **Entities:** DataStore entities in `data/entity/`, mapped via `data/mapper/`. Room entities live next to their DAOs in `data/local/database/`.
+- **Repositories:** in `data/repository/`, orchestrate data sources from `data/local/`. Repositories map between data entities and domain models — never expose Room entities or DataStore keys in the public API
+- **Backup & Restore:** `res/xml/backup_rules.xml` (API < 31) and `res/xml/data_extraction_rules.xml` (API 31+) include the `sharedpref` and `database` domains, plus the `file` domain with `path="datastore/"`. When adding a new persistence mechanism, update both files
 
 ### MVI Pattern
 
@@ -100,13 +105,14 @@ ViewModel conventions:
 - Handle intents in `onIntent()` with `when` expression — delegate to small private functions
 - Call use cases as `useCase().onEach { ... }.launchIn(viewModelScope)`. For fire-and-forget: `useCase(param).launchIn(viewModelScope)` (no empty `onEach {}`)
 - When combining multiple use cases, create a new UseCase that uses `combine()` internally (see `CanUnlockNewCardUseCase`, `GetLanguagesWithCurrentUseCase`) — don't `combine` in ViewModels
-- Handle results with `.onSuccess { }` / `.onFailure { }` — never use `getOrNull()` or `first()` on use case flows (use case flows may emit multiple values over time, and `first()` silently drops updates; `getOrNull()` discards error information)
+- Handle results with `.onSuccess { }` / `.onFailure { }` — never use `getOrNull()`, `getOrThrow()`, or `first()` on use case flows (use case flows may emit multiple values over time, and `first()` silently drops updates; `getOrNull()` discards error information; `getOrThrow()` crashes on failure)
 - **No `delay()` for UI timing** — if the ViewModel needs to wait for an animation, let the UI send an intent when the animation completes instead
 - **No Android framework calls** in ViewModels or UseCases (e.g. `AppCompatDelegate`, `Context`, `LocaleManager`) — wrap them in Provider classes under `util/provider/`. Analytics is the exception — use `util/analytics/Analytics` directly
 - **No redundant state** — don't create separate `var` flags when a state field already covers the same purpose
 - **Strict MVI communication** — View ↔ ViewModel communication only through State, Effect, and Intent. Never expose public properties or functions on ViewModels beyond `sendIntent()` and what `MviViewModel` provides
 - **Effects vs State** — Effects are for one-time events that the UI cannot derive from State (navigation, toasts, launching external intents). State is for anything that drives the UI (including flags like `isLanguageChangeInProgress` that control visibility, animations, or overlays). Never use an Effect to set local composable `remember` state — if the ViewModel knows about a condition, put it in State and let the UI observe it directly
 - ViewModels survive activity recreation (config changes, locale changes)
+- **All ViewModel state that affects behavior must go through `SavedStateHandle`** — private `var` fields reset on process death while `UiState` survives. If a flag drives branching logic (e.g. `isDailyChallenge`), it must be in State or SavedStateHandle, not a plain `var`
 
 ### Screen Composition (Three-Level Hierarchy)
 
@@ -213,7 +219,7 @@ Examples: `LocaleProvider` / `FakeLocaleProvider`, `AppInstalledProvider` / `Fak
 
 Hilt with KSP. Modules in `di/module/`:
 - `AppModule.kt` — app-wide bindings (DataStore, encryption, providers)
-- `DataModule.kt` — repositories and data sources
+- `DataModule.kt` — data sources, Room database (`AppDatabase`, DAOs), DataStore
 
 Coroutine dispatchers are injected via qualifiers defined in `di/coroutine/`: `@DefaultDispatcher`, `@IoDispatcher`, `@MainDispatcher`. Never hardcode `Dispatchers.*` directly.
 
@@ -222,6 +228,19 @@ Coroutine dispatchers are injected via qualifiers defined in `di/coroutine/`: `@
 - **Responsive spacing:** `ui/theme/Dimensions.kt` — `spacingXS`/`S`/`M`/`L`/`XL` are composable properties that adapt based on `isTablet` (WindowSizeClass)
 - **Click throttling:** `util/ClickUtils.kt` — `throttleClick()` composable wrapper prevents duplicate clicks (1s default)
 - **Logging:** `util/extension/` — `Any.logD()` / `Any.logE()` use the class name as tag. `logE()` also reports to Firebase Crashlytics as a non-fatal exception
+
+### Compose Style Conventions
+
+- **Modifier chaining:** Each modifier on its own line when there are 2+ modifiers:
+  ```kotlin
+  modifier = Modifier
+      .pulseEffect()
+      .bounceClickEffect(),
+  ```
+- **Animated buttons:** When a button uses `pulseEffect()`, its text style must use `.animated()` (e.g. `MaterialTheme.typography.displaySmall.animated()`) so text scales with the pulse
+- **Button with icon pattern:** Use `PaddingValues(top = spacingS, bottom = spacingS, start = spacingS, end = spacingL)` for buttons with a leading icon (see `ToggleSettingButton`, `CompareButton`)
+- **Inline dp values:** Don't extract to a private val unless the value is reused — prefer `Modifier.size(64.dp)` over `private val ICON_SIZE = 64.dp`
+- **Don't store transient UI data in the database:** Only persist data needed for retrieval. Transient display data (e.g. grid flip counts, challenge numbers) should flow through state/effects, not be stored in Room
 
 ### Reusable Components
 
@@ -424,16 +443,25 @@ Notifications can open specific screens via `--screen` and `--level` options:
 ./scripts/notifications/send_push_notification.sh translations.txt --screen shop
 ./scripts/notifications/send_push_notification.sh translations.txt --screen game --level 4x5
 ```
-Screens: `shop`, `collection`, `more_apps`, `game`. Levels (game only): `2x3`, `3x4`, `4x4`, `4x5`, `4x6`, `5x6`.
+Screens: `shop`, `collection`, `more_apps`, `game`, `daily_challenge`. Levels (game only): `2x3`, `3x4`, `4x4`, `4x5`, `4x6`, `5x6`.
 
 Deep link flow: script sends data-only FCM payload → `PushNotificationService.onMessageReceived` creates notification with `ACTION_VIEW` intent → `AppActivity.resolveDeepLinkIntent` converts FCM extras to deep link URI → `AppNavigation.navigateFromDeepLink` routes to the correct screen. Data-only payloads (no `notification` field) are used so `onMessageReceived` is always called regardless of foreground/background state.
 
 Deep link URIs use `DeepLinkBuilder` (`util/notification/DeepLinkBuilder.kt`) as the single source of truth for URI construction and screen constants.
 
+### Local notifications
+`NotificationScheduler` (`util/notification/NotificationScheduler.kt`) schedules local alarms via `AlarmManager`:
+- Daily challenge reminder at 20:00 local time (re-scheduled after each trigger and on device boot via `BootReceiver`)
+- Daily streak reminders and other scheduled notifications
+
+`NotificationAlarmReceiver` (`util/notification/NotificationAlarmReceiver.kt`) handles alarm triggers. For daily challenge, it checks `DailyChallengeRepository.hasPlayed()` before showing the notification — suppresses it if already played today.
+
 ### Key files
 - `util/notification/PushNotificationService.kt` — receives FCM messages, shows notification with deep link intent
 - `util/notification/DeepLinkBuilder.kt` — builds deep link URIs, defines screen/level constants
-- `util/provider/PushNotificationProvider.kt` — subscribes/unsubscribes FCM topics, tracks previous language via SharedPreferences
+- `util/notification/NotificationScheduler.kt` — schedules local alarms (daily challenge, streak reminders)
+- `util/notification/NotificationAlarmReceiver.kt` — handles alarm triggers, builds and shows notifications
+- `util/provider/PushNotificationProvider.kt` — subscribes/unsubscribes FCM topics, tracks previous language via DataStore
 - `scripts/notifications/send_push_notification.sh` — sends via FCM v1 API, supports `--scheduled`, `--screen`, `--level`, `--flavor`
 - `scripts/notifications/example.txt` — template with all 32 languages
 

@@ -3,7 +3,6 @@ package com.wojdor.memolki.ui.app
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.core.net.toUri
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -17,16 +16,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.ClickIndicatorOverlay
 import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.LocalScreenHeight
 import com.wojdor.memolki.ui.theme.LocalWindowSize
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
-import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.notification.DeepLinkBuilder
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.update.InAppUpdate
@@ -75,7 +78,12 @@ class AppActivity : ComponentActivity() {
         inAppUpdate.checkUpdate(this)
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
-            CompositionLocalProvider(LocalWindowSize provides windowSizeClass) {
+            val configuration = LocalConfiguration.current
+            val screenHeight = configuration.screenHeightDp.dp
+            CompositionLocalProvider(
+                LocalWindowSize provides windowSizeClass,
+                LocalScreenHeight provides screenHeight
+            ) {
                 AppTheme {
                     val appContent = @Composable {
                         ClickIndicatorOverlay {
@@ -92,6 +100,7 @@ class AppActivity : ComponentActivity() {
                             )
                         }
                     }
+                    @Suppress("KotlinConstantConditions")
                     if (RECORDING_MODE) ForceLtr { appContent() } else appContent()
                 }
             }

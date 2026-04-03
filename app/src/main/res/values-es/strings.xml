@@ -94,5 +94,27 @@
     <string name="daily_reward_day">Día %d</string>
     <string name="daily_reward_collect">Recoger %d</string>
     <string name="daily_reward_back_tomorrow">Vuelve mañana</string>
-    <string name="share_text">¡Emparejé todos los pares en el juego memolki! ¿Puedes ganarme? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">¡Encontré todos los pares en memolki! ¿Puedes coleccionar más cartas? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Desafío diario</string>
+    <string name="daily_challenge_compare">Comparar</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 ¡No olvides tu desafío diario!</item>
+        <item>⭐ ¡El desafío diario te espera!</item>
+        <item>🧠 ¿Listo para el desafío de hoy?</item>
+        <item>💪 ¡Tu entrenamiento cerebral diario!</item>
+        <item>🏆 ¡Desafíate hoy!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Pon a prueba tu memoria con el tablero único de hoy</item>
+        <item>¿Puedes superar la puntuación de ayer?</item>
+        <item>Un nuevo rompecabezas te espera</item>
+        <item>Encuentra todos los pares y comparte tus resultados</item>
+        <item>Todos reciben el mismo tablero — ¿cómo te irá?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d error</item>
+        <item quantity="other">%d errores</item>
+    </plurals>
 </resources>

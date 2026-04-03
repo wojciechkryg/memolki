@@ -1,7 +1,7 @@
 package com.wojdor.memolki.data.repository
 
-import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
-import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
+import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
@@ -122,6 +122,16 @@ class CardRepositoryTest : AppTest() {
         // then
         assertEquals(count, result.size)
         assertTrue(unlockedCardPairsLocalDataSource.getUnlockedCardPairIds().containsAll(result))
+    }
+
+    @Test
+    fun `when getAllCardPairIds then return sorted ids`() {
+        // when
+        val result = sut.getAllCardPairIds()
+
+        // then
+        assertEquals(result, result.sorted())
+        assertTrue(result.isNotEmpty())
     }
 
     @Test

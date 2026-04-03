@@ -1,7 +1,7 @@
 package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.data.crypto.Encryptor
-import com.wojdor.memolki.data.local.user.UserLocalDataSource
+import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi

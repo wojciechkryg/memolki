@@ -10,10 +10,12 @@ import com.wojdor.memolki.ui.theme.AppTheme
 @Composable
 fun MenuItem(
     @StringRes textId: Int,
+    isUppercase: Boolean = true,
     onClick: () -> Unit = {}
 ) {
     BaseMenuItem(
         textId = textId,
+        isUppercase = isUppercase,
         onClick = onClick
     )
 }

@@ -1,7 +1,7 @@
 package com.wojdor.memolki.data.repository
 
-import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
-import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
+import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import javax.inject.Inject
@@ -45,4 +45,7 @@ class CardRepository @Inject constructor(
     }
 
     fun getCardPairById(pairId: String) = allCardPairsDataSource.getCardPairById(pairId)?.toModel()
+
+    fun getAllCardPairIds(): List<String> =
+        allCardPairsDataSource.getAllCardPairs().map { it.id }.sorted()
 }

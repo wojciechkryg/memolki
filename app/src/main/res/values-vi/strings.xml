@@ -94,5 +94,26 @@
     <string name="daily_reward_day">Ngày %d</string>
     <string name="daily_reward_collect">Thu thập %d</string>
     <string name="daily_reward_back_tomorrow">Quay lại ngày mai</string>
-    <string name="share_text">Tôi đã ghép tất cả các cặp trong trò chơi memolki! Bạn có thể thắng tôi không? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Tôi đã ghép tất cả các cặp trong memolki! Bạn có thể thu thập thêm thẻ không? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Thử thách hàng ngày</string>
+    <string name="daily_challenge_compare">So sánh</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Đừng quên thử thách hàng ngày!</item>
+        <item>⭐ Thử thách hàng ngày đang chờ!</item>
+        <item>🧠 Sẵn sàng cho thử thách hôm nay?</item>
+        <item>💪 Bài tập não hàng ngày!</item>
+        <item>🏆 Thử thách bản thân hôm nay!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Kiểm tra trí nhớ với bàn chơi độc đáo hôm nay</item>
+        <item>Bạn có thể vượt qua điểm hôm qua?</item>
+        <item>Một câu đố mới đang chờ bạn</item>
+        <item>Ghép tất cả các cặp và chia sẻ kết quả</item>
+        <item>Mọi người đều có cùng bàn chơi — bạn sẽ thế nào?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d lỗi</item>
+    </plurals>
 </resources>

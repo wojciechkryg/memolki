@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
+import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelEffect.OpenGameScreen
@@ -28,6 +29,9 @@ class ChooseLevelViewModelTest : AppTest() {
     @Inject
     lateinit var getLevelsUseCase: GetLevelsUseCase
 
+    @Inject
+    lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
+
     private lateinit var sut: ChooseLevelViewModel
 
     @Before
@@ -36,7 +40,8 @@ class ChooseLevelViewModelTest : AppTest() {
         sut = ChooseLevelViewModel(
             savedStateHandle,
             hapticFeedback,
-            getLevelsUseCase
+            getLevelsUseCase,
+            hasPlayedTodayDailyChallengeUseCase
         )
     }
 

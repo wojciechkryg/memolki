@@ -134,9 +134,12 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
         }
     ) { backStackEntry ->
         val levelId = backStackEntry.arguments?.getString(AppNavigation.LEVEL_ARG)
+        val isDailyChallenge = levelId == DAILY_CHALLENGE_LEVEL_ID
         val gameViewModel = getGameViewModel(backStackEntry, navController)
         LaunchedEffect(levelId) {
-            levelId?.let { level -> gameViewModel.sendIntent(GameIntent.OnLevelStart(level)) }
+            levelId?.let { level ->
+                gameViewModel.sendIntent(GameIntent.OnLevelStart(level, isDailyChallenge))
+            }
         }
         GameScreen(
             navController = navController,
@@ -340,6 +343,10 @@ fun NavController.navigateToGameFromEndGame(levelId: String) {
     }
 }
 
+fun NavController.navigateToDailyChallenge() {
+    navigateToGame(DAILY_CHALLENGE_LEVEL_ID)
+}
+
 fun NavController.navigateToShop() {
     navigate(Route.SHOP) {
         removeFromBackStack(Route.SHOP)
@@ -375,6 +382,10 @@ private fun navigateFromDeepLink(navController: NavController, intent: Intent) {
             val level = pathSegments.firstOrNull().orEmpty()
             navController.navigateToGameFromDeepLink(level)
         }
+
+        DeepLinkBuilder.SCREEN_DAILY_CHALLENGE -> navController.navigateToGameFromDeepLink(
+            DAILY_CHALLENGE_LEVEL_ID
+        )
     }
 }
 
@@ -416,6 +427,8 @@ private fun getCardPairDetailsViewModel(
     }
     return hiltViewModel(flowBackStackEntry)
 }
+
+private const val DAILY_CHALLENGE_LEVEL_ID = "daily_challenge"
 
 internal object Route {
     const val MENU = "menu"

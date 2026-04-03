@@ -41,6 +41,7 @@ private const val FINGERTIP_Y_FRACTION = 0.06f
  */
 @Composable
 fun ClickIndicatorOverlay(content: @Composable () -> Unit) {
+    @Suppress("KotlinConstantConditions")
     if (!RECORDING_MODE) {
         content()
         return

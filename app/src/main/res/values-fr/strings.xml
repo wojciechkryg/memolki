@@ -94,5 +94,27 @@
     <string name="daily_reward_day">Jour %d</string>
     <string name="daily_reward_collect">Collecter %d</string>
     <string name="daily_reward_back_tomorrow">Reviens demain</string>
-    <string name="share_text">J\'ai trouvé toutes les paires dans le jeu memolki ! Peux-tu me battre ? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">J\'ai trouvé toutes les paires dans memolki ! Peux-tu collecter plus de cartes ? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Défi quotidien</string>
+    <string name="daily_challenge_compare">Comparer</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 N\'oublie pas ton défi quotidien !</item>
+        <item>⭐ Le défi quotidien t\'attend !</item>
+        <item>🧠 Prêt pour le défi du jour ?</item>
+        <item>💪 Ton entraînement cérébral quotidien !</item>
+        <item>🏆 Défie-toi aujourd\'hui !</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Teste ta mémoire avec le plateau unique du jour</item>
+        <item>Peux-tu battre le score d\'hier ?</item>
+        <item>Un nouveau puzzle t\'attend</item>
+        <item>Trouve toutes les paires et partage tes résultats</item>
+        <item>Tout le monde a le même plateau — comment vas-tu te comparer ?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d erreur</item>
+        <item quantity="other">%d erreurs</item>
+    </plurals>
 </resources>

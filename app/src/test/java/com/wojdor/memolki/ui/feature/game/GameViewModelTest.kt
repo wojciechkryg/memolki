@@ -5,9 +5,13 @@ import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
+import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
+import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.ResolveLevelUseCase
+import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.util.analytics.Analytics
@@ -15,6 +19,7 @@ import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.provider.TimeProvider
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.verify
@@ -56,6 +61,21 @@ class GameViewModelTest : AppTest() {
     lateinit var resolveLevelUseCase: ResolveLevelUseCase
 
     @Inject
+    lateinit var getDailyChallengeCardsUseCase: GetDailyChallengeCardsUseCase
+
+    @Inject
+    lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
+
+    @Inject
+    lateinit var saveDailyChallengeUseCase: SaveDailyChallengeUseCase
+
+    @Inject
+    lateinit var getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase
+
+    @Inject
+    lateinit var timeProvider: TimeProvider
+
+    @Inject
     lateinit var userRepository: UserRepository
 
     @Inject
@@ -75,7 +95,12 @@ class GameViewModelTest : AppTest() {
             googlePlayGames,
             getShuffledUnlockedCardsUseCase,
             incrementTotalCardPairsMatchedUseCase,
-            resolveLevelUseCase
+            resolveLevelUseCase,
+            getDailyChallengeCardsUseCase,
+            hasPlayedTodayDailyChallengeUseCase,
+            saveDailyChallengeUseCase,
+            getTodayDailyChallengeUseCase,
+            timeProvider
         )
         every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
             Result.success(mockShuffledCardsWithSamePairIds())
@@ -137,16 +162,16 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(secondCardToClick))
 
                 // then
-                skipItems(2)
+                skipItems(1)
                 val result = awaitItem()
                 with(result.cards[0]) {
                     assertTrue(isFlippedFront)
-                    assertTrue(isMismatchShaking)
+                    assertTrue(isMistakeShaking)
                     assertFalse(isPairMatched)
                 }
                 with(result.cards[2]) {
                     assertTrue(isFlippedFront)
-                    assertTrue(isMismatchShaking)
+                    assertTrue(isMistakeShaking)
                     assertFalse(isPairMatched)
                 }
             }
@@ -196,7 +221,7 @@ class GameViewModelTest : AppTest() {
                 // when
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
-                skipItems(2)
+                skipItems(1)
                 val thirdCardToClick = awaitItem().cards[3]
                 sut.sendIntent(GameIntent.OnBackCardClick(thirdCardToClick))
                 skipItems(1)
@@ -318,16 +343,16 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[7]))
 
                 // then
-                skipItems(2)
+                skipItems(1)
                 val result = awaitItem()
                 with(result.cards[1]) {
                     assertTrue(isFlippedFront)
-                    assertTrue(isMismatchShaking)
+                    assertTrue(isMistakeShaking)
                     assertFalse(isPairMatched)
                 }
                 with(result.cards[7]) {
                     assertTrue(isFlippedFront)
-                    assertTrue(isMismatchShaking)
+                    assertTrue(isMistakeShaking)
                     assertFalse(isPairMatched)
                 }
             }
@@ -360,10 +385,10 @@ class GameViewModelTest : AppTest() {
                     skipItems(1)
                     assertTrue(awaitItem() is GameEffect.SendTotalCardPairsMatchedScore)
                     skipItems(1)
-                    assertEquals(
-                        GameEffect.OpenEndGameScreen(LevelModel.Grid2x3(isUnlocked = true)),
-                        awaitItem()
-                    )
+                    val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
+                    assertEquals(LevelModel.Grid2x3(isUnlocked = true), endGameEffect.levelModel)
+                    assertEquals(0, endGameEffect.mistakeCount)
+                    assertEquals(3, endGameEffect.cardFlipCounts.size)
                 }
                 skipItems(2)
             }
@@ -418,7 +443,7 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logLevelAbandon(LevelModel.Grid2x3(isUnlocked = true)) }
+            verify { analytics.logLevelAbandoned(LevelModel.Grid2x3(isUnlocked = true)) }
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -442,7 +467,7 @@ class GameViewModelTest : AppTest() {
         sut.sendIntent(GameIntent.OnGameLeave)
 
         // then
-        verify(exactly = 0) { analytics.logLevelAbandon(any()) }
+        verify(exactly = 0) { analytics.logLevelAbandoned(any()) }
     }
 
     private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {

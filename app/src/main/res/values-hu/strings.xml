@@ -94,5 +94,27 @@
     <string name="daily_reward_day">%d. nap</string>
     <string name="daily_reward_collect">Gyűjts %d</string>
     <string name="daily_reward_back_tomorrow">Gyere vissza holnap</string>
-    <string name="share_text">Megtaláltam az összes párt a memolki játékban! Le tudsz győzni? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Megtaláltam az összes párt a memolkiban! Tudsz több kártyát gyűjteni? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Napi kihívás</string>
+    <string name="daily_challenge_compare">Összehasonlítás</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Ne felejtsd el a napi kihívást!</item>
+        <item>⭐ A napi kihívás vár!</item>
+        <item>🧠 Készen állsz a mai kihívásra?</item>
+        <item>💪 A napi agytornád!</item>
+        <item>🏆 Kihívd magad ma!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Teszteld a memóriád a mai egyedi táblával</item>
+        <item>Le tudod győzni a tegnapi eredményt?</item>
+        <item>Egy új fejtörő vár rád</item>
+        <item>Találd meg az összes párt és oszd meg az eredményeidet</item>
+        <item>Mindenki ugyanazt a táblát kapja — te hogyan teljesítesz?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d hiba</item>
+        <item quantity="other">%d hiba</item>
+    </plurals>
 </resources>

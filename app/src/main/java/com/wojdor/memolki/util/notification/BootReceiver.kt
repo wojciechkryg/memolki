@@ -15,5 +15,6 @@ class BootReceiver : BroadcastReceiver() {
         )
         entryPoint.notificationScheduler().scheduleReminderNotification()
         entryPoint.notificationScheduler().scheduleStreakNotification()
+        entryPoint.notificationScheduler().scheduleDailyChallengeNotification()
     }
 }

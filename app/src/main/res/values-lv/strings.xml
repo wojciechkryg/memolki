@@ -51,7 +51,7 @@
         <item>Atgriezies un atrodi pārus!</item>
         <item>Pārbaudi atmiņu ātrā raundā</item>
         <item>Sajauc, apgriez un saskaņo!</item>
-        <item>Uzturi smadzenes asu!</item>
+        <item>Uzturi smadzenes asas!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
@@ -94,5 +94,28 @@
     <string name="daily_reward_day">%d. diena</string>
     <string name="daily_reward_collect">Savākt %d</string>
     <string name="daily_reward_back_tomorrow">Atgriezies rīt</string>
-    <string name="share_text">Es atradu visus pārus spēlē memolki! Vai tu vari mani pārspēt? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Es atradu visus pārus memolki! Vai vari savākt vairāk kāršu? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Dienas izaicinājums</string>
+    <string name="daily_challenge_compare">Salīdzināt</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Neaizmirsti savu dienas izaicinājumu!</item>
+        <item>⭐ Dienas izaicinājums gaida!</item>
+        <item>🧠 Gatavs šodienas izaicinājumam?</item>
+        <item>💪 Tava ikdienas smadzeņu treniņš!</item>
+        <item>🏆 Izaicini sevi šodien!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Pārbaudi savu atmiņu ar šodienas unikālo laukumu</item>
+        <item>Vai vari pārspēt vakardienas rezultātu?</item>
+        <item>Jauna mīkla tevi gaida</item>
+        <item>Atrodi visus pārus un dalies ar rezultātiem</item>
+        <item>Visi saņem to pašu laukumu — kā tev veiksies?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="zero">%d kļūdu</item>
+        <item quantity="one">%d kļūda</item>
+        <item quantity="other">%d kļūdas</item>
+    </plurals>
 </resources>

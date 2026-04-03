@@ -21,7 +21,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -46,10 +48,22 @@ import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
-fun EndGameContent(
+fun CasualEndGameContent(
     state: EndGameState,
-    callbacks: EndGameCallbacks = EndGameCallbacks()
+    callbacks: EndGameCallbacks
 ) {
+    LaunchedEffect(state.showSparkles) {
+        if (state.showSparkles) {
+            delay(LEVEL_COMPLETE_DELAY)
+            callbacks.onLevelComplete()
+        }
+    }
+    LaunchedEffect(state.rewardedCoins) {
+        if (state.rewardedCoins > 0) {
+            delay(REWARD_COINS_DELAY)
+            callbacks.onRewardCoinsReady()
+        }
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -66,12 +80,12 @@ fun EndGameContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.weight(0.15f))
+                Spacer(modifier = Modifier.weight(1f))
                 CoinsReward(
                     rewardedCoins = state.rewardedCoins,
                     animate = state.animateRewardCoins
                 )
-                Spacer(modifier = Modifier.weight(0.1f))
+                Spacer(modifier = Modifier.weight(1f))
                 AnimatedContent(
                     state.menu,
                     transitionSpec = {
@@ -83,6 +97,7 @@ fun EndGameContent(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         it.filterNot { item ->
+                            @Suppress("KotlinConstantConditions")
                             RECORDING_MODE && item is EndGameMenuModel.WatchAd
                                     || RECORDING_MODE && item is EndGameMenuModel.FreeCoins
                                     || RECORDING_MODE && item is EndGameMenuModel.Share
@@ -101,11 +116,13 @@ fun EndGameContent(
 
                                 EndGameMenuModel.PlayAgain -> MenuItem(
                                     textId = menuItem.textId,
+                                    isUppercase = false,
                                     onClick = callbacks.onPlayAgainClick
                                 )
 
                                 EndGameMenuModel.Menu -> MenuItem(
                                     textId = menuItem.textId,
+                                    isUppercase = false,
                                     onClick = callbacks.onMenuClick
                                 )
 
@@ -113,11 +130,13 @@ fun EndGameContent(
                                     shareModel = menuItem,
                                     onClick = callbacks.onShareClick
                                 )
+
+                                else -> {}
                             }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.weight(0.3f))
+                Spacer(modifier = Modifier.weight(2f))
             }
         }
         SparklesOverlay(isActive = state.showSparkles)
@@ -183,9 +202,9 @@ private fun ShareRewardLabel(
 
 @Composable
 @Preview
-private fun EndGameContentPreview() {
+private fun CasualEndGameContentPreview() {
     AppTheme {
-        EndGameContent(
+        CasualEndGameContent(
             state = EndGameState(
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
@@ -197,16 +216,17 @@ private fun EndGameContentPreview() {
                     EndGameMenuModel.UnlockNewCard,
                     EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
-            )
+            ),
+            callbacks = EndGameCallbacks()
         )
     }
 }
 
 @Composable
 @Preview
-private fun EndGameContentWithoutAdPreview() {
+private fun CasualEndGameContentWithoutAdPreview() {
     AppTheme {
-        EndGameContent(
+        CasualEndGameContent(
             state = EndGameState(
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
@@ -216,16 +236,17 @@ private fun EndGameContentWithoutAdPreview() {
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.Share(showReward = false)
                 )
-            )
+            ),
+            callbacks = EndGameCallbacks()
         )
     }
 }
 
 @Composable
 @Preview
-private fun EndGameContentWithFreeCoinsPreview() {
+private fun CasualEndGameContentWithFreeCoinsPreview() {
     AppTheme {
-        EndGameContent(
+        CasualEndGameContent(
             state = EndGameState(
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
@@ -237,7 +258,11 @@ private fun EndGameContentWithFreeCoinsPreview() {
                     EndGameMenuModel.FreeCoins,
                     EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
-            )
+            ),
+            callbacks = EndGameCallbacks()
         )
     }
 }
+
+private const val LEVEL_COMPLETE_DELAY = 250L
+private const val REWARD_COINS_DELAY = 500L

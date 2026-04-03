@@ -1,4 +1,4 @@
-package com.wojdor.memolki.data.local.card
+package com.wojdor.memolki.data.local.datastore.card
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -16,8 +16,12 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
     suspend fun getUnlockedCardPairIds(): List<String> {
         val preferences = dataStore.data.first()
         return preferences[Key.UNLOCKED_CARD_PAIR_IDS]?.toList() ?: run {
-            val count = if (RECORDING_MODE) RECORDING_MODE_UNLOCKED_CARD_PAIRS_COUNT
-                else DEFAULT_UNLOCKED_CARD_PAIRS_COUNT
+            @Suppress("KotlinConstantConditions")
+            val count = if (RECORDING_MODE) {
+                RECORDING_MODE_UNLOCKED_CARD_PAIRS_COUNT
+            } else {
+                DEFAULT_UNLOCKED_CARD_PAIRS_COUNT
+            }
             val defaultCardPairIds = allCardPairsDataSource.getAllCardPairs()
                 .take(count)
                 .map { it.id }

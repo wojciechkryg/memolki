@@ -19,9 +19,9 @@ fun FlippableCardItem(
         onComplete = callbacks.onMatchAnimationComplete
     )
     val shakeOffset = rememberShakeOffset(
-        isShaking = card.isMismatchShaking,
-        delayMs = MISMATCH_VIEW_DELAY,
-        onComplete = callbacks.onMismatchShakeComplete
+        isShaking = card.isMistakeShaking,
+        delayMs = MISTAKE_VIEW_DELAY,
+        onComplete = callbacks.onMistakeShakeComplete
     )
     Flippable(
         modifier = modifier.graphicsLayer {
@@ -46,4 +46,4 @@ fun FlippableCardItem(
     )
 }
 
-private const val MISMATCH_VIEW_DELAY = 1700L
+private const val MISTAKE_VIEW_DELAY = 1700L

@@ -94,36 +94,38 @@ class MoreAppsViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnAppClick intent is sent with installed app then cross promotion app opened is logged`() = runTest {
-        // given
-        val app = AppModel.FruitHalf
-        fakeAppInstalledProvider.mockAppInstalled = true
+    fun `when OnAppClick intent is sent with installed app then cross promotion app opened is logged`() =
+        runTest {
+            // given
+            val app = AppModel.FruitHalf
+            fakeAppInstalledProvider.mockAppInstalled = true
 
-        sut.uiEffect.test {
-            // when
-            sut.sendIntent(OnAppClick(app))
-            awaitItem()
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(OnAppClick(app))
+                awaitItem()
 
-            // then
-            verifyOnce { analytics.logCrossPromotionAppOpened(app.appId) }
+                // then
+                verifyOnce { analytics.logCrossPromotionAppOpened(app.appId) }
+            }
         }
-    }
 
     @Test
-    fun `when OnAppClick intent is sent with not installed app then cross promotion store opened is logged`() = runTest {
-        // given
-        val app = AppModel.FruitHalf
-        fakeAppInstalledProvider.mockAppInstalled = false
+    fun `when OnAppClick intent is sent with not installed app then cross promotion store opened is logged`() =
+        runTest {
+            // given
+            val app = AppModel.FruitHalf
+            fakeAppInstalledProvider.mockAppInstalled = false
 
-        sut.uiEffect.test {
-            // when
-            sut.sendIntent(OnAppClick(app))
-            awaitItem()
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(OnAppClick(app))
+                awaitItem()
 
-            // then
-            verifyOnce { analytics.logCrossPromotionStoreOpened(app.appId) }
+                // then
+                verifyOnce { analytics.logCrossPromotionStoreOpened(app.appId) }
+            }
         }
-    }
 
     @Test
     fun `when OnAppClick intent is send then the OpenApp effect is send`() = runTest {

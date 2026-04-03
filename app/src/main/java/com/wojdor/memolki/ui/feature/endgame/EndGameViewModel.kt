@@ -21,13 +21,13 @@ import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDesti
 import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.extension.logE
+import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -53,7 +53,8 @@ class EndGameViewModel @Inject constructor(
     private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase,
     private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase,
     private val hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase,
-    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase,
+    private val dailyChallengeShareFormatter: DailyChallengeShareFormatter
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
     EndGameState()
@@ -64,10 +65,13 @@ class EndGameViewModel @Inject constructor(
     private var isNotificationRequestDismissed = false
     private var isDailyStreakRewardAvailable = false
     private var isShareRewardAvailable = false
+    private var pendingRewardedCoins = 0L
+    private var pendingCurrentCoins = 0L
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
-            is EndGameIntent.OnEndGameShow -> onEndGameShow(intent.levelModel)
+            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.levelModel)
+            is EndGameIntent.OnDailyChallengeEndGameShow -> onDailyChallengeEndGameShow(intent)
             is EndGameIntent.OnPlayAgainClick -> onPlayAgainClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
             EndGameIntent.OnUnlockNewCardClick -> onUnlockNewCardClick()
@@ -77,6 +81,10 @@ class EndGameViewModel @Inject constructor(
             EndGameIntent.OnShareClick -> onShareClick()
             EndGameIntent.OnFreeCoinsClick -> onFreeCoinsClick()
             EndGameIntent.OnScreenResume -> onScreenResume()
+            EndGameIntent.OnDailyChallengeStarsAnimationFinished -> onDailyChallengeStarsAnimationFinished()
+            EndGameIntent.OnDailyChallengeShareClick -> onDailyChallengeShareClick()
+            EndGameIntent.OnLevelComplete -> levelCompletePlayer.play()
+            EndGameIntent.OnRewardCoinsReady -> onRewardCoinsReady()
         }
     }
 
@@ -145,7 +153,7 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onEndGameShow(level: LevelModel) {
+    private fun onCasualEndGameShow(level: LevelModel) {
         sendState { EndGameState(showSparkles = true) }
         loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
@@ -154,8 +162,6 @@ class EndGameViewModel @Inject constructor(
         checkDailyStreakRewardAvailable()
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
-            delay(LEVEL_COMPLETE_SOUND_DELAY)
-            levelCompletePlayer.play()
             requestReview()
         }
     }
@@ -189,11 +195,20 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
-        analytics.logAdDismissed(PLACEMENT, wasRewardGranted)
-        if (wasRewardGranted) {
-            rewardCoinsForAd()
+        val placement = if (uiState.value.isDailyChallenge) DAILY_CHALLENGE_PLACEMENT else PLACEMENT
+        analytics.logAdDismissed(placement, wasRewardGranted)
+        if (uiState.value.isDailyChallenge) {
+            if (wasRewardGranted) {
+                rewardDailyChallengeCoins(uiState.value.currentCoins)
+                showMenu()
+            }
+            loadAd(wasRewardGranted)
+        } else {
+            if (wasRewardGranted) {
+                rewardCoinsForAd()
+            }
+            loadAd(wasRewardGranted)
         }
-        loadAd(wasRewardGranted)
     }
 
     private fun rewardCoinsForAd() {
@@ -228,10 +243,14 @@ class EndGameViewModel @Inject constructor(
 
     private fun onMenuClick() {
         hapticFeedback.vibrateLow()
-        navigateOrShowNotificationRequest(
-            destination = EnableNotificationDestination.MENU,
-            defaultEffect = EndGameEffect.OpenMenuScreen
-        )
+        if (uiState.value.isDailyChallenge) {
+            sendEffect(EndGameEffect.OpenMenuScreen)
+        } else {
+            navigateOrShowNotificationRequest(
+                destination = EnableNotificationDestination.MENU,
+                defaultEffect = EndGameEffect.OpenMenuScreen
+            )
+        }
     }
 
     private fun onUnlockNewCardClick() {
@@ -247,6 +266,7 @@ class EndGameViewModel @Inject constructor(
         defaultEffect: EndGameEffect,
         levelModel: LevelModel? = null
     ) {
+        @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE && shouldShowNotificationRequest) {
             shouldShowNotificationRequest = false
             sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, levelModel))
@@ -257,7 +277,8 @@ class EndGameViewModel @Inject constructor(
 
     private fun onWatchAdClick() {
         hapticFeedback.vibrateLow()
-        analytics.logAdShown(PLACEMENT)
+        val placement = if (uiState.value.isDailyChallenge) DAILY_CHALLENGE_PLACEMENT else PLACEMENT
+        analytics.logAdShown(placement)
         sendEffect(EndGameEffect.ShowAd(allRewardedAds.endGameCoinsAd))
     }
 
@@ -267,17 +288,32 @@ class EndGameViewModel @Inject constructor(
 
     private fun showMenu(isAdLoaded: Boolean) {
         this.isAdLoaded = isAdLoaded
+        if (uiState.value.isDailyChallenge) {
+            val menu = mutableListOf<EndGameMenuModel>(
+                EndGameMenuModel.Compare,
+                EndGameMenuModel.Menu
+            ).apply {
+                if (isAdLoaded) {
+                    add(0, EndGameMenuModel.WatchAd)
+                }
+            }
+            sendState { copy(menu = menu) }
+            return
+        }
         canUnlockNewCardUseCase().onEach { result ->
             val canUnlockNewCard = result.getOrDefault(false)
             val menu = mutableListOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu).apply {
+                @Suppress("KotlinConstantConditions")
                 if (isAdLoaded && !RECORDING_MODE) {
                     add(0, EndGameMenuModel.WatchAd)
                 }
+                @Suppress("KotlinConstantConditions")
                 if (!RECORDING_MODE && isDailyStreakRewardAvailable) {
                     add(EndGameMenuModel.FreeCoins)
                 } else if (canUnlockNewCard) {
                     add(EndGameMenuModel.UnlockNewCard)
                 }
+                @Suppress("KotlinConstantConditions")
                 if (!RECORDING_MODE) {
                     add(
                         EndGameMenuModel.Share(
@@ -309,22 +345,14 @@ class EndGameViewModel @Inject constructor(
     private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
         viewModelScope.launch {
             rewardCoinsForLevelUseCase(level).first().onSuccess { rewardedCoins ->
+                pendingRewardedCoins = rewardedCoins
+                pendingCurrentCoins = currentCoins
                 sendState {
                     copy(
                         rewardedCoins = if (isRewardFromAd) uiState.value.rewardedCoins + rewardedCoins else rewardedCoins,
                         animateRewardCoins = isRewardFromAd
                     )
                 }
-                delay(REWARD_COINS_DELAY)
-                coinsPlayer.play()
-                sendState {
-                    copy(
-                        currentCoins = currentCoins + rewardedCoins,
-                        animateCoins = true
-                    )
-                }
-                showMenu()
-                sendTotalCoinsScore()
             }
         }
     }
@@ -337,10 +365,72 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
+    private fun onDailyChallengeEndGameShow(intent: EndGameIntent.OnDailyChallengeEndGameShow) {
+        val result = intent.dailyChallengeModel
+        sendState {
+            EndGameState(
+                level = intent.levelModel,
+                dailyChallenge = result,
+                isDailyChallenge = true,
+                showSparkles = true
+            )
+        }
+        loadAd()
+        loadCurrentCoins()
+    }
+
+    private fun loadCurrentCoins() {
+        viewModelScope.launch {
+            getCoinsUseCase().first().onSuccess { currentCoins ->
+                sendState { copy(currentCoins = currentCoins, animateCoins = false) }
+            }
+        }
+    }
+
+    private fun onDailyChallengeStarsAnimationFinished() {
+        rewardDailyChallengeCoins(uiState.value.currentCoins)
+    }
+
+    private fun rewardDailyChallengeCoins(currentCoins: Long) {
+        viewModelScope.launch {
+            rewardCoinsForLevelUseCase(uiState.value.level).first()
+                .onSuccess { rewardedCoins ->
+                    pendingRewardedCoins = rewardedCoins
+                    pendingCurrentCoins = currentCoins
+                    sendState { copy(rewardedCoins = rewardedCoins) }
+                }
+        }
+    }
+
+    private fun onRewardCoinsReady() {
+        coinsPlayer.play()
+        sendState {
+            copy(
+                currentCoins = pendingCurrentCoins + pendingRewardedCoins,
+                animateCoins = true
+            )
+        }
+        showMenu()
+        sendTotalCoinsScore()
+    }
+
+    private fun onDailyChallengeShareClick() {
+        val state = uiState.value
+        val result = state.dailyChallenge
+        val grid = result.cardFlipCounts
+            .map { row -> row.map { it <= MAX_PERFECT_FLIPS } }
+        val shareText = dailyChallengeShareFormatter.format(
+            result = result,
+            grid = grid
+        )
+        sendEffect(EndGameEffect.ShareDailyChallenge(shareText))
+        analytics.logDailyChallengeShare(result.epochDay, result.starCount)
+    }
+
     companion object {
-        const val LEVEL_COMPLETE_SOUND_DELAY = 250L
-        const val REWARD_COINS_DELAY = 500L
         const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
         private const val PLACEMENT = "end_game"
+        private const val DAILY_CHALLENGE_PLACEMENT = "daily_challenge_end_game"
+        private const val MAX_PERFECT_FLIPS = 2
     }
 }

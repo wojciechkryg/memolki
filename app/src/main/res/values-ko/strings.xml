@@ -94,5 +94,26 @@
     <string name="daily_reward_day">%d일차</string>
     <string name="daily_reward_collect">%d개 수집</string>
     <string name="daily_reward_back_tomorrow">내일 다시 오세요</string>
-    <string name="share_text">memolki 게임에서 모든 짝을 맞췄어요! 저를 이길 수 있나요? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">memolki에서 모든 짝을 맞췄어! 더 많은 카드를 모을 수 있어? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">일일 도전</string>
+    <string name="daily_challenge_compare">비교하기</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 일일 도전을 잊지 마세요!</item>
+        <item>⭐ 일일 도전이 기다리고 있어요!</item>
+        <item>🧠 오늘의 도전 준비됐나요?</item>
+        <item>💪 매일 두뇌 운동!</item>
+        <item>🏆 오늘 자신에게 도전하세요!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>오늘의 특별한 보드로 기억력을 테스트하세요</item>
+        <item>어제 점수를 넘을 수 있나요?</item>
+        <item>새로운 퍼즐이 기다리고 있어요</item>
+        <item>모든 짝을 맞추고 결과를 공유하세요</item>
+        <item>모두 같은 보드를 받아요 — 당신은 어떨까요?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d 실수</item>
+    </plurals>
 </resources>

@@ -94,5 +94,27 @@
     <string name="daily_reward_day">Dag %d</string>
     <string name="daily_reward_collect">Saml %d</string>
     <string name="daily_reward_back_tomorrow">Kom igen i morgen</string>
-    <string name="share_text">Jeg matchede alle par i spillet memolki! Kan du slå mig? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Jeg matchede alle par i memolki! Kan du samle flere kort? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Daglig udfordring</string>
+    <string name="daily_challenge_compare">Sammenlign</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Glem ikke din daglige udfordring!</item>
+        <item>⭐ Daglig udfordring venter!</item>
+        <item>🧠 Klar til dagens udfordring?</item>
+        <item>💪 Din daglige hjernetræning!</item>
+        <item>🏆 Udfordr dig selv i dag!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Test din hukommelse med dagens unikke bræt</item>
+        <item>Kan du slå gårsdagens score?</item>
+        <item>Et nyt puslespil venter på dig</item>
+        <item>Match alle par og del dine resultater</item>
+        <item>Alle får det samme bræt — hvordan klarer du dig?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d fejl</item>
+        <item quantity="other">%d fejl</item>
+    </plurals>
 </resources>

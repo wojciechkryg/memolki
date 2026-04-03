@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.ui.component.CoinsAmount
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.feature.shop.ShopCallbacks
 import com.wojdor.memolki.ui.feature.shop.ShopState
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -55,31 +56,41 @@ fun ShopContent(
                 it.forEach { menuItem ->
                     Spacer(modifier = Modifier.height(spacingL))
                     when (menuItem) {
-                        is ShopMenuModel.DailyReward -> ShopMenuItem(
-                            priceText = stringResource(R.string.daily_reward_day, menuItem.streakDay),
-                            descriptionText = if (menuItem.isAvailable) {
-                                stringResource(R.string.daily_reward_collect, menuItem.coinsToGrant)
-                            } else {
-                                stringResource(R.string.daily_reward_back_tomorrow)
-                            },
-                            leftDrawableRes = R.drawable.ic_daily_reward,
-                            rightDrawableRes = R.drawable.ic_coins_pile_small,
-                            onClick = callbacks.onDailyRewardCollectClick,
-                            isEnabled = menuItem.isAvailable
-                        )
+                        is ShopMenuModel.DailyReward -> EdgeSparklesEffect {
+                            ShopMenuItem(
+                                priceText = stringResource(
+                                    R.string.daily_reward_day,
+                                    menuItem.streakDay
+                                ),
+                                descriptionText = if (menuItem.isAvailable) {
+                                    stringResource(
+                                        R.string.daily_reward_collect,
+                                        menuItem.coinsToGrant
+                                    )
+                                } else {
+                                    stringResource(R.string.daily_reward_back_tomorrow)
+                                },
+                                leftDrawableRes = R.drawable.ic_daily_reward,
+                                rightDrawableRes = R.drawable.ic_coins_pile_small,
+                                onClick = callbacks.onDailyRewardCollectClick,
+                                isEnabled = menuItem.isAvailable
+                            )
+                        }
 
-                        is ShopMenuModel.WatchAd -> ShopMenuItem(
-                            priceText = stringResource(R.string.watch_ad),
-                            descriptionText = if (menuItem.isAvailable) {
-                                stringResource(R.string.shop_obtain, menuItem.coinsToGrant)
-                            } else {
-                                stringResource(R.string.shop_back_later)
-                            },
-                            leftDrawableRes = R.drawable.ic_ads,
-                            rightDrawableRes = R.drawable.ic_coins_pile_small,
-                            onClick = callbacks.onWatchAdClick,
-                            isEnabled = menuItem.isAvailable
-                        )
+                        is ShopMenuModel.WatchAd -> EdgeSparklesEffect {
+                            ShopMenuItem(
+                                priceText = stringResource(R.string.watch_ad),
+                                descriptionText = if (menuItem.isAvailable) {
+                                    stringResource(R.string.shop_obtain, menuItem.coinsToGrant)
+                                } else {
+                                    stringResource(R.string.shop_back_later)
+                                },
+                                leftDrawableRes = R.drawable.ic_ads,
+                                rightDrawableRes = R.drawable.ic_coins_pile_small,
+                                onClick = callbacks.onWatchAdClick,
+                                isEnabled = menuItem.isAvailable
+                            )
+                        }
 
                         is ShopMenuModel.BuyCoinsSmallAmount -> ShopMenuItem(
                             priceText = menuItem.formattedPrice,

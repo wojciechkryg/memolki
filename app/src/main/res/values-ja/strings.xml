@@ -94,5 +94,25 @@
     <string name="daily_reward_day">%d日目</string>
     <string name="daily_reward_collect">%d枚を集める</string>
     <string name="daily_reward_back_tomorrow">明日また来てね</string>
-    <string name="share_text">memolkiゲームで全ペアを揃えたよ！君は僕に勝てるかな？🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">memolkiで全てのペアを見つけた！もっとカードを集められる？ 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">デイリーチャレンジ</string>
+    <string name="daily_challenge_compare">比較する</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 デイリーチャレンジを忘れずに！</item>
+        <item>⭐ デイリーチャレンジが待ってるよ！</item>
+        <item>🧠 今日のチャレンジの準備はできた？</item>
+        <item>💪 毎日の脳トレ！</item>
+        <item>🏆 今日の自分に挑戦！</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>今日のユニークなボードで記憶力を試そう</item>
+        <item>昨日のスコアを超えられる？</item>
+        <item>新しいパズルが待ってるよ</item>
+        <item>全てのペアを見つけて結果をシェアしよう</item>
+        <item>みんな同じボード — あなたはどう？</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d ミス</item>
+    </plurals>
 </resources>

@@ -17,6 +17,9 @@ class FakeNotificationScheduler @Inject constructor(
     var adRewardNotificationScheduled = false
         private set
 
+    var dailyChallengeNotificationScheduled = false
+        private set
+
     var streakNotificationScheduled = false
         private set
 
@@ -35,6 +38,10 @@ class FakeNotificationScheduler @Inject constructor(
 
     override fun scheduleAdRewardNotification() {
         adRewardNotificationScheduled = true
+    }
+
+    override fun scheduleDailyChallengeNotification() {
+        dailyChallengeNotificationScheduled = true
     }
 
     override fun scheduleStreakNotification() {

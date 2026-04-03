@@ -215,6 +215,7 @@ class CollectionViewModel @Inject constructor(
         isAdAvailable: Boolean
     ): List<CollectionCardPairModel> {
         return if (lockedCardPairsCount > LAST_LOCKED_CARD_PAIR) {
+            @Suppress("KotlinConstantConditions")
             if (RECORDING_MODE) return List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.Locked }
             if (unlockedCardPairsFromAdsCount < MAX_UNLOCKED_CARD_PAIRS_WITH_ADS && isAdAvailable) {
                 List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.LockedToUnlockWithAd }

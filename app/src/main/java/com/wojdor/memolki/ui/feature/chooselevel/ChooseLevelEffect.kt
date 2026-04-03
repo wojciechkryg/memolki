@@ -5,4 +5,5 @@ import com.wojdor.memolki.ui.base.UiEffect
 
 sealed class ChooseLevelEffect : UiEffect {
     data class OpenGameScreen(val levelModel: LevelModel) : ChooseLevelEffect()
+    object OpenDailyChallengeScreen : ChooseLevelEffect()
 }

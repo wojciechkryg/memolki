@@ -14,9 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.ui.app.navigateToDailyChallenge
 import com.wojdor.memolki.ui.app.navigateToGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.chooselevel.component.ChooseLevelItem
+import com.wojdor.memolki.ui.feature.chooselevel.component.DailyChallengeItem
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingXL
 
@@ -38,6 +40,7 @@ private fun HandleEffect(
     CollectUiEffects(viewModel) {
         when (it) {
             is ChooseLevelEffect.OpenGameScreen -> navController.navigateToGame(it.levelModel.id)
+            ChooseLevelEffect.OpenDailyChallengeScreen -> navController.navigateToDailyChallenge()
         }
     }
 }
@@ -48,7 +51,8 @@ private fun HandleState(
     state: ChooseLevelState
 ) {
     val callbacks = ChooseLevelCallbacks(
-        onLevelClick = { viewModel.sendIntent(ChooseLevelIntent.OnLevelClick(it)) }
+        onLevelClick = { viewModel.sendIntent(ChooseLevelIntent.OnLevelClick(it)) },
+        onDailyChallengeClick = { viewModel.sendIntent(ChooseLevelIntent.OnDailyChallengeClick) }
     )
     ChooseLevelScreen(state, callbacks)
 }
@@ -67,10 +71,15 @@ private fun ChooseLevelScreen(
             Spacer(modifier = Modifier.height(spacingXL))
             ChooseLevelItem(
                 textId = level.textId,
-                isEnabled =  level.isUnlocked,
+                isEnabled = level.isUnlocked,
                 onClick = { callbacks.onLevelClick(level) }
             )
         }
+        Spacer(modifier = Modifier.height(spacingXL))
+        DailyChallengeItem(
+            isCompleted = state.isDailyChallengeCompleted,
+            onClick = { callbacks.onDailyChallengeClick() }
+        )
     }
 }
 
@@ -88,6 +97,27 @@ private fun ChooseLevelScreenPreview() {
                     LevelModel.Grid4x6(),
                     LevelModel.Grid5x6()
                 )
+            ),
+            callbacks = ChooseLevelCallbacks()
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ChooseLevelScreenDailyChallengeCompletedPreview() {
+    AppTheme {
+        ChooseLevelScreen(
+            state = ChooseLevelState(
+                levels = listOf(
+                    LevelModel.Grid2x3(isUnlocked = true),
+                    LevelModel.Grid3x4(isUnlocked = true),
+                    LevelModel.Grid4x4(),
+                    LevelModel.Grid4x5(),
+                    LevelModel.Grid4x6(),
+                    LevelModel.Grid5x6()
+                ),
+                isDailyChallengeCompleted = true
             ),
             callbacks = ChooseLevelCallbacks()
         )
