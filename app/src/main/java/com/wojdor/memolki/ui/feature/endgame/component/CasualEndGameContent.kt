@@ -54,7 +54,7 @@ fun CasualEndGameContent(
 ) {
     LaunchedEffect(state.showSparkles) {
         if (state.showSparkles) {
-            delay(LEVEL_COMPLETE_SOUND_DELAY)
+            delay(LEVEL_COMPLETE_DELAY)
             callbacks.onLevelComplete()
         }
     }
@@ -264,5 +264,5 @@ private fun CasualEndGameContentWithFreeCoinsPreview() {
     }
 }
 
-private const val LEVEL_COMPLETE_SOUND_DELAY = 250L
+private const val LEVEL_COMPLETE_DELAY = 250L
 private const val REWARD_COINS_DELAY = 500L

@@ -88,7 +88,7 @@ fun DailyChallengeEndGameContent(
     }
     LaunchedEffect(state.showSparkles) {
         if (state.showSparkles) {
-            delay(LEVEL_COMPLETE_SOUND_DELAY)
+            delay(LEVEL_COMPLETE_DELAY)
             callbacks.onLevelComplete()
         }
     }
@@ -250,7 +250,7 @@ private const val STAR_INITIAL_DELAY = 300L
 private const val STAR_DELAY = 500L
 private const val STAR_SPRING_DURATION = 300L
 private const val FADE_IN_DURATION = 500
-private const val LEVEL_COMPLETE_SOUND_DELAY = 250L
+private const val LEVEL_COMPLETE_DELAY = 250L
 private const val REWARD_COINS_DELAY = 500L
 
 @Composable
