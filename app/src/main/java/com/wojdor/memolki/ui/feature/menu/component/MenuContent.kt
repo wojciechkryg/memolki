@@ -5,12 +5,14 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,73 +35,81 @@ fun MenuContent(
     state: MenuState,
     callbacks: MenuCallbacks
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        XmlDrawable(
-            modifier = Modifier
-                .size(320.dp)
-                .weight(2f),
-            drawableRes = R.drawable.ic_logo,
-            alignment = Alignment.BottomCenter,
-            contentDescription = stringResource(R.string.app_logo)
-        )
-        Spacer(modifier = Modifier.weight(0.4f))
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.weight(3f),
-            verticalArrangement = Arrangement.Top,
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AnimatedContent(
-                targetState = state.menu,
-                transitionSpec = {
-                    fadeIn() togetherWith fadeOut()
-                }
+            XmlDrawable(
+                modifier = Modifier
+                    .size(320.dp)
+                    .weight(2f),
+                drawableRes = R.drawable.ic_logo,
+                alignment = Alignment.BottomCenter,
+                contentDescription = stringResource(R.string.app_logo)
+            )
+            Spacer(modifier = Modifier.weight(0.4f))
+            Column(
+                modifier = Modifier.weight(3f),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(spacingL),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                AnimatedContent(
+                    targetState = state.menu,
+                    transitionSpec = {
+                        fadeIn() togetherWith fadeOut()
+                    }
                 ) {
-                    it.forEach { menuItem ->
-                        when (menuItem) {
-                            is MenuModel.NewGame -> MenuItem(
-                                textId = menuItem.textId,
-                                onClick = callbacks.onNewGameClick
-                            )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(spacingL),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        it.forEach { menuItem ->
+                            when (menuItem) {
+                                is MenuModel.NewGame -> MenuItem(
+                                    textId = menuItem.textId,
+                                    onClick = callbacks.onNewGameClick
+                                )
 
-                            is MenuModel.Collection -> MenuItem(
-                                textId = menuItem.textId,
-                                onClick = callbacks.onCollectionClick
-                            )
+                                is MenuModel.Collection -> MenuItem(
+                                    textId = menuItem.textId,
+                                    onClick = callbacks.onCollectionClick
+                                )
 
-                            is MenuModel.Settings -> MenuItem(
-                                textId = R.string.settings,
-                                onClick = callbacks.onSettingsClick
-                            )
+                                is MenuModel.Settings -> {}
+                            }
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(spacingL))
+                Row {
+                    IconItem(
+                        iconRes = R.drawable.ic_leaderboard,
+                        contentDescription = stringResource(R.string.leaderboard),
+                        onClick = callbacks.onLeaderboardClick
+                    )
+                }
             }
-            Spacer(modifier = Modifier.height(spacingL))
-            Row {
-                IconItem(
-                    iconRes = R.drawable.ic_leaderboard,
-                    contentDescription = stringResource(R.string.leaderboard),
-                    onClick = callbacks.onLeaderboardClick
-                )
+            @Suppress("KotlinConstantConditions")
+            if (!RECORDING_MODE) {
+                state.otherAppModel?.let {
+                    MoreAppsItem(
+                        modifier = Modifier.fillMaxWidth(),
+                        appModel = it,
+                        onClick = callbacks.onMoreAppsClick
+                    )
+                }
             }
         }
-        @Suppress("KotlinConstantConditions")
-        if (!RECORDING_MODE) {
-            state.otherAppModel?.let {
-                MoreAppsItem(
-                    modifier = Modifier.fillMaxWidth(),
-                    appModel = it,
-                    onClick = callbacks.onMoreAppsClick
-                )
-            }
-        }
+        IconItem(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(spacingL),
+            iconRes = R.drawable.ic_settings,
+            size = 32.dp,
+            contentDescription = stringResource(R.string.settings),
+            onClick = callbacks.onSettingsClick
+        )
     }
 }
 

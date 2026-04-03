@@ -104,6 +104,7 @@ class GameViewModel @Inject constructor(
     }
 
     private fun openAlreadyPlayedDailyChallenge(epochDay: Long) {
+        analytics.logDailyChallengeAlreadyPlayed(epochDay)
         getTodayDailyChallengeUseCase().onEach { result ->
             result.onSuccess { challenge ->
                 sendEffect(

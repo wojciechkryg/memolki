@@ -215,6 +215,12 @@ class Analytics @Inject constructor(
         })
     }
 
+    fun logDailyChallengeAlreadyPlayed(epochDay: Long) {
+        firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_ALREADY_PLAYED, Bundle().apply {
+            putLong(Key.CHALLENGE_NUMBER, epochDay)
+        })
+    }
+
     fun logDailyChallengeAbandoned(epochDay: Long) {
         firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_ABANDONED, Bundle().apply {
             putLong(Key.CHALLENGE_NUMBER, epochDay)
@@ -252,6 +258,7 @@ private object Event {
     const val DAILY_CHALLENGE_STARTED = "daily_challenge_started"
     const val DAILY_CHALLENGE_COMPLETED = "daily_challenge_completed"
     const val DAILY_CHALLENGE_SHARED = "daily_challenge_shared"
+    const val DAILY_CHALLENGE_ALREADY_PLAYED = "daily_challenge_already_played"
     const val DAILY_CHALLENGE_ABANDONED = "daily_challenge_abandoned"
 }
 
