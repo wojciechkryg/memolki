@@ -94,8 +94,7 @@
     <string name="daily_reward_day">Päivä %d</string>
     <string name="daily_reward_collect">Kerää %d</string>
     <string name="daily_reward_back_tomorrow">Tule takaisin huomenna</string>
-    <string name="share_text">Löysin kaikki parit memolkissa! Voitko kerätä enemmän kortteja? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Löysin kaikki parit memolkissa! Voitko kerätä enemmän kortteja? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Päivän haaste</string>
     <string name="daily_challenge_compare">Vertaa</string>

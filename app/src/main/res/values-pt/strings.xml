@@ -94,24 +94,23 @@
     <string name="daily_reward_day">Dia %d</string>
     <string name="daily_reward_collect">Recolher %d</string>
     <string name="daily_reward_back_tomorrow">Volta amanhã</string>
-    <string name="share_text">Encontrei todos os pares no memolki! Consegue colecionar mais cartas? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Encontrei todos os pares no memolki! Consegue colecionar mais cartas? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Desafio diário</string>
     <string name="daily_challenge_compare">Comparar</string>
     <string-array name="notification_daily_challenge_titles">
-        <item>🃏 Não esqueça seu desafio diário!</item>
-        <item>⭐ O desafio diário espera!</item>
+        <item>🃏 Não te esqueças do teu desafio diário!</item>
+        <item>⭐ O desafio diário espera por ti!</item>
         <item>🧠 Pronto para o desafio de hoje?</item>
-        <item>💪 Seu treino cerebral diário!</item>
-        <item>🏆 Desafie-se hoje!</item>
+        <item>💪 O teu treino cerebral diário!</item>
+        <item>🏆 Desafia-te hoje!</item>
     </string-array>
     <string-array name="notification_daily_challenge_bodies">
-        <item>Teste sua memória com o tabuleiro único de hoje</item>
-        <item>Consegue superar a pontuação de ontem?</item>
-        <item>Um novo quebra-cabeça espera por você</item>
-        <item>Encontre todos os pares e compartilhe seus resultados</item>
-        <item>Todos recebem o mesmo tabuleiro — como você se sairá?</item>
+        <item>Testa a tua memória com o tabuleiro único de hoje</item>
+        <item>Consegues superar a pontuação de ontem?</item>
+        <item>Um novo quebra-cabeças espera por ti</item>
+        <item>Encontra todos os pares e partilha os teus resultados</item>
+        <item>Todos recebem o mesmo tabuleiro — como te vais sair?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
         <item quantity="one">%d erro</item>

@@ -83,7 +83,7 @@ Reference: `domain/model/CardModel.kt`, `domain/model/SettingModel.kt`
   - **Room Database** (`data/local/database/`) — for structured, growing data (e.g. daily challenge results). `AppDatabase` in `data/local/database/`, entities and DAOs in subdirectories. Provided via Hilt in `DataModule`. Database version tracked as `private const val DATABASE_VERSION` in `AppDatabase.kt`. When bumping `DATABASE_VERSION`, add a proper migration to preserve user data.
 - **Entities:** DataStore entities in `data/entity/`, mapped via `data/mapper/`. Room entities live next to their DAOs in `data/local/database/`.
 - **Repositories:** in `data/repository/`, orchestrate data sources from `data/local/`. Repositories map between data entities and domain models — never expose Room entities or DataStore keys in the public API
-- **Backup & Restore:** `res/xml/backup_rules.xml` (API < 31) and `res/xml/data_extraction_rules.xml` (API 31+) include `sharedpref`, `datastore/`, and `database` domains. When adding a new persistence mechanism, update both files
+- **Backup & Restore:** `res/xml/backup_rules.xml` (API < 31) and `res/xml/data_extraction_rules.xml` (API 31+) include the `sharedpref` and `database` domains, plus the `file` domain with `path="datastore/"`. When adding a new persistence mechanism, update both files
 
 ### MVI Pattern
 

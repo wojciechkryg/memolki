@@ -15,7 +15,7 @@ set -euo pipefail
 #   pl	Nowa talia kart!	Sprawdź nowy motyw ze zwierzętami
 #   de	Neues Kartendeck!	Entdecke das neue Tierthema
 #
-# Screen options: shop, collection, more_apps, game
+# Screen options: shop, collection, more_apps, game, daily_challenge
 # Level options (only for game screen): 2x3, 3x4, 4x4, 4x5, 4x6, 5x6
 #
 # Examples:

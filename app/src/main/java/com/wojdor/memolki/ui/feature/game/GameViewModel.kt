@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.game
 
-import android.app.Activity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.CardModel
@@ -56,10 +55,6 @@ class GameViewModel @Inject constructor(
             GameIntent.OnMatchAnimationComplete -> onMatchAnimationComplete()
             GameIntent.OnMistakeShakeComplete -> onMistakeShakeComplete()
             GameIntent.OnGameLeave -> onGameLeave()
-            is GameIntent.OnSubmitTotalCardPairsMatched -> onSubmitTotalCardPairsMatched(
-                intent.activity,
-                intent.totalCardPairsMatched
-            )
         }
     }
 
@@ -115,7 +110,7 @@ class GameViewModel @Inject constructor(
                     GameEffect.OpenEndGameScreen(
                         levelModel = DAILY_CHALLENGE_LEVEL,
                         mistakeCount = challenge.mistakeCount,
-                        cardFlipCounts = emptyList(),
+                        cardFlipCounts = challenge.cardFlipCounts,
                         dailyChallenge = challenge.copy(epochDay = epochDay)
                     )
                 )
@@ -278,7 +273,7 @@ class GameViewModel @Inject constructor(
         showCardText(matchedCards)
         incrementTotalCardPairsMatchedUseCase().onEach { result ->
             result.onSuccess {
-                sendEffect(GameEffect.SendTotalCardPairsMatchedScore(it))
+                sendEffect(GameEffect.SendTotalCardPairsMatchedScore(googlePlayGames, it))
                 delay(MATCH_SOUND_DELAY)
                 cardPairMatchedPlayer.play()
             }
@@ -445,12 +440,6 @@ class GameViewModel @Inject constructor(
 
     private fun emptyFlipCountsGrid(cards: List<CardModel>, columns: Int): List<List<Int>> =
         cards.chunked(columns.coerceAtLeast(1)).map { row -> List(row.size) { 0 } }
-
-    private fun onSubmitTotalCardPairsMatched(activity: Activity, totalCardPairsMatched: Long) {
-        viewModelScope.launch {
-            googlePlayGames.submitTotalCardPairsMatched(activity, totalCardPairsMatched)
-        }
-    }
 
     companion object {
         val DAILY_CHALLENGE_LEVEL = LevelModel.Grid5x6(isUnlocked = true)

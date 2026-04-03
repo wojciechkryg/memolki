@@ -102,11 +102,13 @@ fun CasualEndGameContent(
 
                                 EndGameMenuModel.PlayAgain -> MenuItem(
                                     textId = menuItem.textId,
+                                    isUppercase = false,
                                     onClick = callbacks.onPlayAgainClick
                                 )
 
                                 EndGameMenuModel.Menu -> MenuItem(
                                     textId = menuItem.textId,
+                                    isUppercase = false,
                                     onClick = callbacks.onMenuClick
                                 )
 

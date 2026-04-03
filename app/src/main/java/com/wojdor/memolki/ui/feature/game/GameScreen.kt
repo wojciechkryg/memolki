@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -20,6 +21,8 @@ import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.component.GameContent
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.playgames.GooglePlayGames
+import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen(
@@ -39,6 +42,7 @@ private fun HandleEffect(
     navController: NavController
 ) {
     val activity = LocalActivity.current
+    val coroutineScope = rememberCoroutineScope()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is GameEffect.OpenEndGameScreen -> openEndGameScreen(
@@ -48,12 +52,24 @@ private fun HandleEffect(
             )
 
             is GameEffect.SendTotalCardPairsMatchedScore -> activity?.let {
-                viewModel.sendIntent(
-                    GameIntent.OnSubmitTotalCardPairsMatched(it, effect.totalCardPairsMatched)
-                )
+                coroutineScope.launch {
+                    submitTotalCardPairsMatched(
+                        it,
+                        effect.googlePlayGames,
+                        effect.totalCardPairsMatched
+                    )
+                }
             }
         }
     }
+}
+
+private suspend fun submitTotalCardPairsMatched(
+    activity: Activity,
+    googlePlayGames: GooglePlayGames,
+    totalCardPairsMatched: Long
+) {
+    googlePlayGames.submitTotalCardPairsMatched(activity, totalCardPairsMatched)
 }
 
 private fun openEndGameScreen(

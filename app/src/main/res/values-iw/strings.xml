@@ -114,7 +114,7 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item>כולם מקבלים את אותו הלוח — איך תשתווה?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">שגיאה %d</item>
+        <item quantity="one">%d שגיאה</item>
         <item quantity="two">%d שגיאות</item>
         <item quantity="many">%d שגיאות</item>
         <item quantity="other">%d שגיאות</item>

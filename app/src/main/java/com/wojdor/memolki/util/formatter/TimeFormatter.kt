@@ -5,10 +5,11 @@ import javax.inject.Inject
 class TimeFormatter @Inject constructor() {
 
     fun format(timeMillis: Long): FormattedTime {
-        val totalSeconds = timeMillis / 1000
+        val safeTimeMillis = timeMillis.coerceAtLeast(0)
+        val totalSeconds = safeTimeMillis / 1000
         val minutes = totalSeconds / 60
         val seconds = totalSeconds % 60
-        val millis = timeMillis % 1000
+        val millis = safeTimeMillis % 1000
         return FormattedTime(
             main = "$minutes:${seconds.toString().padStart(2, '0')}",
             millis = ".${millis.toString().padStart(3, '0')}"

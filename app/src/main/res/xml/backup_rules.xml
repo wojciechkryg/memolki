@@ -8,5 +8,5 @@
         path="datastore/" />
     <include
         domain="database"
-        path="." />
+        path="memolki_database" />
 </full-backup-content>

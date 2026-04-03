@@ -94,8 +94,7 @@
     <string name="daily_reward_day">%d日目</string>
     <string name="daily_reward_collect">%d枚を集める</string>
     <string name="daily_reward_back_tomorrow">明日また来てね</string>
-    <string name="share_text">memolkiで全てのペアを見つけた！もっとカードを集められる？ 🃏
-https://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">memolkiで全てのペアを見つけた！もっとカードを集められる？ 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">デイリーチャレンジ</string>
     <string name="daily_challenge_compare">比較する</string>

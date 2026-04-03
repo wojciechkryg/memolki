@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -27,27 +28,30 @@ import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun FreeCoinsItem(onClick: () -> Unit = {}) {
-    Button(
+    EdgeSparklesEffect(
         modifier = Modifier
             .pulseEffect()
-            .bounceClickEffect(),
-        onClick = throttleClick(onClick = onClick),
-        shape = RoundedCornerShape(spacingL),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent
-        )
+            .bounceClickEffect()
     ) {
-        Image(
-            modifier = Modifier.size(64.dp),
-            alignment = Alignment.Center,
-            painter = painterResource(R.drawable.ic_daily_reward),
-            contentDescription = stringResource(R.string.free_coins)
-        )
-        Spacer(modifier = Modifier.size(spacingM))
-        AutoSizeText(
-            text = stringResource(R.string.free_coins).uppercase(),
-            style = MaterialTheme.typography.headlineSmall.animated()
-        )
+        Button(
+            onClick = throttleClick(onClick = onClick),
+            shape = RoundedCornerShape(spacingL),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent
+            )
+        ) {
+            Image(
+                modifier = Modifier.size(64.dp),
+                alignment = Alignment.Center,
+                painter = painterResource(R.drawable.ic_daily_reward),
+                contentDescription = stringResource(R.string.free_coins)
+            )
+            Spacer(modifier = Modifier.size(spacingM))
+            AutoSizeText(
+                text = stringResource(R.string.free_coins).uppercase(),
+                style = MaterialTheme.typography.headlineSmall.animated()
+            )
+        }
     }
 }
 

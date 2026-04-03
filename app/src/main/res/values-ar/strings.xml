@@ -102,13 +102,13 @@ https://play.google.com/store/apps/details?id=%s</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 لا تنسَ تحديك اليومي!</item>
         <item>⭐ التحدي اليومي بانتظارك!</item>
-        <item>🧠 هل أنت مستعد لتحدي اليوم?</item>
+        <item>🧠 هل أنت مستعد لتحدي اليوم؟</item>
         <item>💪 تمرين الدماغ اليومي!</item>
         <item>🏆 تحدَّ نفسك اليوم!</item>
     </string-array>
     <string-array name="notification_daily_challenge_bodies">
         <item>اختبر ذاكرتك بلوحة اليوم الفريدة</item>
-        <item>هل يمكنك التغلب على نتيجة الأمس?</item>
+        <item>هل يمكنك التغلب على نتيجة الأمس؟</item>
         <item>لغز جديد ينتظرك</item>
         <item>طابق كل الأزواج وشارك نتائجك</item>
         <item>الجميع يحصل على نفس اللوحة — كيف ستقارن؟</item>

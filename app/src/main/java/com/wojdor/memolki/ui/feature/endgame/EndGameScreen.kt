@@ -6,6 +6,7 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -26,6 +27,8 @@ import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.component.CasualEndGameContent
 import com.wojdor.memolki.ui.feature.endgame.component.DailyChallengeEndGameContent
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.playgames.GooglePlayGames
+import kotlinx.coroutines.launch
 
 @Composable
 fun EndGameScreen(
@@ -47,6 +50,7 @@ private fun HandleEffect(
     navController: NavController
 ) {
     val activity = LocalActivity.current
+    val coroutineScope = rememberCoroutineScope()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.levelModel)
@@ -59,17 +63,13 @@ private fun HandleEffect(
 
             is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
             is EndGameEffect.RequestReview -> activity?.let {
-                launchReviewFlow(
-                    it,
-                    effect.reviewManager,
-                    effect.reviewInfo
-                )
+                launchReviewFlow(it, effect.reviewManager, effect.reviewInfo)
             }
 
             is EndGameEffect.SendTotalCoinsScore -> activity?.let {
-                viewModel.sendIntent(
-                    EndGameIntent.OnSubmitTotalCoinsScore(it, effect.totalCoins)
-                )
+                coroutineScope.launch {
+                    submitTotalCoinsScore(it, effect.googlePlayGames, effect.totalCoins)
+                }
             }
 
             EndGameEffect.Share -> activity?.let { shareApp(it) }
@@ -125,6 +125,14 @@ private fun showAd(
         onGrantReward = { viewModel.sendIntent(EndGameIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(EndGameIntent.OnAdDismiss(it)) }
     )
+}
+
+private suspend fun submitTotalCoinsScore(
+    activity: Activity,
+    googlePlayGames: GooglePlayGames,
+    totalCoins: Long
+) {
+    googlePlayGames.submitTotalCoins(activity, totalCoins)
 }
 
 private fun launchReviewFlow(

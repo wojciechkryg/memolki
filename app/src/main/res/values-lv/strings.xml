@@ -51,7 +51,7 @@
         <item>Atgriezies un atrodi pārus!</item>
         <item>Pārbaudi atmiņu ātrā raundā</item>
         <item>Sajauc, apgriez un saskaņo!</item>
-        <item>Uzturi smadzenes asu!</item>
+        <item>Uzturi smadzenes asas!</item>
     </string-array>
 
     <string-array name="notification_ad_reward_titles">
@@ -109,7 +109,7 @@ https://play.google.com/store/apps/details?id=%s</string>
     <string-array name="notification_daily_challenge_bodies">
         <item>Pārbaudi savu atmiņu ar šodienas unikālo laukumu</item>
         <item>Vai vari pārspēt vakardienas rezultātu?</item>
-        <item>Jauns mīkla tevi gaida</item>
+        <item>Jauna mīkla tevi gaida</item>
         <item>Atrodi visus pārus un dalies ar rezultātiem</item>
         <item>Visi saņem to pašu laukumu — kā tev veiksies?</item>
     </string-array>

@@ -1,7 +1,12 @@
 package com.wojdor.memolki.ui.feature.endgame.component
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -27,9 +32,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +53,7 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.ui.component.CoinsAmount
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.SparklesOverlay
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
@@ -49,10 +61,12 @@ import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
 import com.wojdor.memolki.ui.feature.menu.component.MenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.isSmallScreen
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
+import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.util.throttleClick
 import kotlinx.coroutines.delay
 
@@ -101,7 +115,8 @@ private fun DailyChallengeContent(
             val isPreview = LocalInspectionMode.current
             val starCount = state.dailyChallenge.starCount
             val hasRewards = state.rewardedCoins > 0
-            val lastStarFinished = STAR_INITIAL_DELAY + STAR_DELAY * (starCount - 1).coerceAtLeast(0) + STAR_SPRING_DURATION
+            val lastStarFinished =
+                STAR_INITIAL_DELAY + STAR_DELAY * (starCount - 1).coerceAtLeast(0) + STAR_SPRING_DURATION
 
             var starsFinished by remember { mutableStateOf(false) }
             LaunchedEffect(Unit) {
@@ -109,14 +124,15 @@ private fun DailyChallengeContent(
                 starsFinished = true
                 callbacks.onDailyChallengeStarsAnimationFinished()
             }
-            val showDetails = (hasRewards && starsFinished) || isPreview
+            val showDetails = starsFinished || isPreview
+            val showReward = hasRewards && showDetails
             val detailsAlpha by animateFloatAsState(
                 targetValue = if (showDetails) 1f else 0f,
                 animationSpec = tween(durationMillis = FADE_IN_DURATION),
                 label = "details_alpha"
             )
             val contentAlpha by animateFloatAsState(
-                targetValue = if (showDetails) 1f else 0f,
+                targetValue = if (showReward) 1f else 0f,
                 animationSpec = tween(durationMillis = FADE_IN_DURATION),
                 label = "content_alpha"
             )
@@ -163,6 +179,7 @@ private fun DailyChallengeContent(
                         EndGameMenuModel.Compare -> CompareButton(onClick = callbacks.onDailyChallengeShareClick)
                         EndGameMenuModel.Menu -> MenuItem(
                             textId = menuItem.textId,
+                            isUppercase = false,
                             onClick = callbacks.onMenuClick
                         )
 
@@ -253,33 +270,63 @@ private fun TimeDisplay(modifier: Modifier = Modifier, timeMillis: Long) {
 
 @Composable
 private fun CompareButton(onClick: () -> Unit) {
-    Button(
+    val fontColor = colorResource(R.color.font)
+    val infiniteTransition = rememberInfiniteTransition(label = "compare")
+    val shimmerOffset by infiniteTransition.animateFloat(
+        initialValue = -SHIMMER_WIDTH_FRACTION,
+        targetValue = 1f + SHIMMER_WIDTH_FRACTION,
+        animationSpec = infiniteRepeatable(
+            animation = tween(SHIMMER_DURATION_MS, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "shimmer"
+    )
+    EdgeSparklesEffect(
         modifier = Modifier
             .pulseEffect()
-            .bounceClickEffect(),
-        onClick = throttleClick(onClick = onClick),
-        contentPadding = PaddingValues(
-            top = spacingS,
-            bottom = spacingS,
-            start = spacingS,
-            end = spacingL
-        ),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent
-        )
+            .bounceClickEffect()
     ) {
-        Image(
-            modifier = Modifier.size(64.dp),
-            painter = painterResource(R.drawable.ic_leaderboard),
-            contentDescription = null
-        )
-        Spacer(modifier = Modifier.size(spacingS))
-        Text(
-            text = stringResource(R.string.daily_challenge_compare).uppercase(),
-            style = MaterialTheme.typography.displaySmall.animated()
-        )
+        Button(
+            onClick = throttleClick(onClick = onClick),
+            contentPadding = PaddingValues(
+                horizontal = spacingXL + spacingL,
+                vertical = spacingL
+            ),
+            shape = FullRoundedShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent
+            ),
+            modifier = Modifier
+                .clip(FullRoundedShape)
+                .drawWithContent {
+                    drawContent()
+                    val shimmerCenter = shimmerOffset * size.width
+                    val shimmerW = SHIMMER_WIDTH_FRACTION * size.width
+                    drawRect(
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Color.Transparent,
+                                fontColor.copy(alpha = SHIMMER_ALPHA),
+                                Color.Transparent
+                            ),
+                            start = Offset(shimmerCenter - shimmerW, 0f),
+                            end = Offset(shimmerCenter + shimmerW, size.height)
+                        ),
+                        blendMode = BlendMode.SrcAtop
+                    )
+                }
+        ) {
+            Text(
+                text = stringResource(R.string.daily_challenge_compare).uppercase(),
+                style = MaterialTheme.typography.displaySmall.animated()
+            )
+        }
     }
 }
+
+private const val SHIMMER_DURATION_MS = 2500
+private const val SHIMMER_WIDTH_FRACTION = 0.35f
+private const val SHIMMER_ALPHA = 0.08f
 
 @Composable
 @Preview

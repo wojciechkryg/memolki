@@ -1,6 +1,7 @@
 package com.wojdor.memolki.domain.usecase
 
 import android.util.Log
+import app.cash.turbine.test
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
@@ -14,7 +15,6 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -67,10 +67,7 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
         )
         coEvery { dailyChallengeDao.getResult(epochDay) } returns entity
 
-        // when
-        val result = sut().first()
-
-        // then
+        // when / then
         val expected = DailyChallengeModel(
             epochDay = epochDay,
             mistakeCount = 3,
@@ -78,7 +75,10 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
             timeMillis = 45000L,
             cardFlipCounts = listOf(listOf(1, 2), listOf(3, 4))
         )
-        assertEquals(Result.success(expected), result)
+        sut().test {
+            assertEquals(Result.success(expected), awaitItem())
+            awaitComplete()
+        }
     }
 
     @Test
@@ -89,11 +89,12 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
         val epochDay = today.toEpochDay()
         coEvery { dailyChallengeDao.getResult(epochDay) } returns null
 
-        // when
-        val result = sut().first()
-
-        // then
-        assertTrue(result.isFailure)
-        assertTrue(result.exceptionOrNull() is IllegalStateException)
+        // when / then
+        sut().test {
+            val result = awaitItem()
+            assertTrue(result.isFailure)
+            assertTrue(result.exceptionOrNull() is IllegalStateException)
+            awaitComplete()
+        }
     }
 }

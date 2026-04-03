@@ -15,23 +15,23 @@
     <string name="settings">Ρυθμίσεις</string>
     <string name="more">Περισσότερα;</string>
     <string name="menu">Μενού</string>
-    <string name="play_again">Παίξτε ξανά</string>
+    <string name="play_again">Παίξε ξανά</string>
     <string name="shop">Κατάστημα</string>
-    <string name="shop_obtain">Λάβετε %d</string>
-    <string name="shop_back_later">Επιστρέψτε αργότερα</string>
-    <string name="shop_buy">Αγορά %d</string>
-    <string name="shop_unlock_all_cards">Ξεκλειδώστε όλες τις κάρτες</string>
+    <string name="shop_obtain">Πάρε %d</string>
+    <string name="shop_back_later">Επίστρεψε αργότερα</string>
+    <string name="shop_buy">Αγόρασε %d</string>
+    <string name="shop_unlock_all_cards">Ξεκλείδωσε όλες τις κάρτες</string>
     <string name="shop_purchase_failed_error">Πρόβλημα αγοράς</string>
     <string name="shop_connection_error">Σφάλμα σύνδεσης</string>
     <string name="setting_music">Μουσική</string>
     <string name="setting_sound">Ήχος</string>
     <string name="setting_vibration">Δόνηση</string>
     <string name="setting_language">Γλώσσα</string>
-    <string name="watch_ad">Δείτε τη διαφήμιση</string>
+    <string name="watch_ad">Δες τη διαφήμιση</string>
     <string name="share">Κοινοποίηση</string>
     <string name="content_description_locked">Κλειδωμένο</string>
-    <string name="accessibility_flip_card">Γυρίστε την κάρτα</string>
-    <string name="accessibility_view_card_pair">Δείτε ζευγάρι καρτών</string>
+    <string name="accessibility_flip_card">Γύρισε την κάρτα</string>
+    <string name="accessibility_view_card_pair">Δες ζευγάρι καρτών</string>
     <string name="accessibility_unlock_with_coins">Ξεκλείδωμα με νομίσματα</string>
     <string name="accessibility_unlock_with_ad">Ξεκλείδωμα με παρακολούθηση διαφήμισης</string>
     <string name="leaderboard">Κατάταξη</string>
@@ -92,7 +92,7 @@
 
     <string name="free_coins">Δωρεάν νομίσματα</string>
     <string name="daily_reward_day">Ημέρα %d</string>
-    <string name="daily_reward_collect">Συλλογή %d</string>
+    <string name="daily_reward_collect">Σύλλεξε %d</string>
     <string name="daily_reward_back_tomorrow">Έλα αύριο</string>
     <string name="share_text">Βρήκα όλα τα ζευγάρια στο memolki! Μπορείς να μαζέψεις περισσότερες κάρτες; 🃏
 https://play.google.com/store/apps/details?id=%s</string>
@@ -102,13 +102,13 @@ https://play.google.com/store/apps/details?id=%s</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Μην ξεχάσεις την ημερήσια πρόκληση!</item>
         <item>⭐ Η ημερήσια πρόκληση σε περιμένει!</item>
-        <item>🧠 Έτοιμος για τη σημερινή πρόκληση?</item>
+        <item>🧠 Έτοιμος για τη σημερινή πρόκληση;</item>
         <item>💪 Η ημερήσια γυμναστική του μυαλού!</item>
         <item>🏆 Προκάλεσε τον εαυτό σου σήμερα!</item>
     </string-array>
     <string-array name="notification_daily_challenge_bodies">
         <item>Δοκίμασε τη μνήμη σου με το σημερινό μοναδικό ταμπλό</item>
-        <item>Μπορείς να νικήσεις το χθεσινό σκορ?</item>
+        <item>Μπορείς να νικήσεις το χθεσινό σκορ;</item>
         <item>Ένα νέο παζλ σε περιμένει</item>
         <item>Βρες όλα τα ζευγάρια και μοιράσου τα αποτελέσματα</item>
         <item>Όλοι παίρνουν το ίδιο ταμπλό — πώς θα τα πας;</item>

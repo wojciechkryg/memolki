@@ -94,8 +94,7 @@
     <string name="daily_reward_day">Dan %d</string>
     <string name="daily_reward_collect">Zberi %d</string>
     <string name="daily_reward_back_tomorrow">Vrni se jutri</string>
-    <string name="share_text">Našel sem vse pare v memolki! Lahko zbereš več kart? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Našel sem vse pare v memolki! Lahko zbereš več kart? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Dnevni izziv</string>
     <string name="daily_challenge_compare">Primerjaj</string>
@@ -108,7 +107,7 @@ https://play.google.com/store/apps/details?id=%s</string>
     </string-array>
     <string-array name="notification_daily_challenge_bodies">
         <item>Preizkusi svoj spomin z današnjo edinstveno ploščo</item>
-        <item>Ali lahko premagas včerajšnji rezultat?</item>
+        <item>Ali lahko premagaš včerajšnji rezultat?</item>
         <item>Nova uganka te čaka</item>
         <item>Poišči vse pare in deli rezultate</item>
         <item>Vsi dobijo isto ploščo — kako boš ti?</item>

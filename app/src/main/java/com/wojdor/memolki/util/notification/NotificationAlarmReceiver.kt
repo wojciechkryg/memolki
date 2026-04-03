@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import androidx.core.net.toUri
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.app.AppActivity
+import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.AD_REWARD_NOTIFICATION_ID
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.DAILY_CHALLENGE_NOTIFICATION_ID
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
@@ -17,7 +18,6 @@ import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE_DAILY_CHALLENGE
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE_REMINDER
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE_STREAK
-import com.wojdor.memolki.util.extension.logE
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

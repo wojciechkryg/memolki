@@ -52,7 +52,7 @@ val isSmallScreen: Boolean
 
 private val SMALL_SCREEN_HEIGHT_THRESHOLD = 750.dp
 
-val LocalScreenHeight = compositionLocalOf { 0.dp }
+val LocalScreenHeight = compositionLocalOf { SMALL_SCREEN_HEIGHT_THRESHOLD }
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 val LocalWindowSize = compositionLocalOf {

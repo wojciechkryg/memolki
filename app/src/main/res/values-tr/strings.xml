@@ -85,7 +85,7 @@
         <item>Ödülün için mağazayı ziyaret et</item>
         <item>Serin tehlikede!</item>
         <item>Serini bozma!</item>
-        <item>Dükkânı aç ve paraları al</item>
+        <item>Mağazayı aç ve paraları al</item>
     </string-array>
     <string name="shortcut_daily_reward">Günlük ödül</string>
     <string name="shortcut_play">Oyna</string>

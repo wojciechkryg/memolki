@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -55,24 +56,29 @@ fun CollectionUnlockCardPairWithAd(
             contentAlignment = Alignment.Center
         ) {
             CollectionLockedCard()
-            Column(
+            EdgeSparklesEffect(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(CARD_BORDER_SIZE)
-                    .background(color = Color.White.copy(alpha = 0.5F), CardShape)
-                    .padding(6.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
             ) {
-                Image(
-                    modifier = Modifier.size(64.dp),
-                    painter = painterResource(R.drawable.ic_ads),
-                    contentDescription = stringResource(R.string.watch_ad),
-                )
-                AutoSizeText(
-                    text = stringResource(R.string.watch_ad).uppercase(),
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.White.copy(alpha = 0.5F), CardShape)
+                        .padding(6.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        modifier = Modifier.size(64.dp),
+                        painter = painterResource(R.drawable.ic_ads),
+                        contentDescription = stringResource(R.string.watch_ad),
+                    )
+                    AutoSizeText(
+                        text = stringResource(R.string.watch_ad).lowercase(),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
             }
         }
     }

@@ -23,8 +23,13 @@ class GetDailyChallengeCardsUseCase @Inject constructor(
         val seed = timeProvider.currentLocalDate().toEpochDay()
         val random = Random(seed)
         val allCardPairIds = cardRepository.getAllCardPairIds()
+        require(allCardPairIds.size >= pairCount) {
+            "Not enough card pairs for $level. Required=$pairCount, available=${allCardPairIds.size}"
+        }
         val selectedPairIds = allCardPairIds.shuffled(random).take(pairCount)
-        val shuffledCards = selectedPairIds.mapNotNull { cardRepository.getCardPairById(it) }
+        val shuffledCards = selectedPairIds.map { id ->
+            requireNotNull(cardRepository.getCardPairById(id)) { "Missing card pair for id=$id" }
+        }
             .flatMap { listOf(it.first, it.second) }
             .shuffled(random)
         emit(Result.success(shuffledCards))

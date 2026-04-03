@@ -20,7 +20,7 @@ fun FlippableCardItem(
     )
     val shakeOffset = rememberShakeOffset(
         isShaking = card.isMistakeShaking,
-        delayMs = MISMATCH_VIEW_DELAY,
+        delayMs = MISTAKE_VIEW_DELAY,
         onComplete = callbacks.onMistakeShakeComplete
     )
     Flippable(
@@ -46,4 +46,4 @@ fun FlippableCardItem(
     )
 }
 
-private const val MISMATCH_VIEW_DELAY = 1700L
+private const val MISTAKE_VIEW_DELAY = 1700L

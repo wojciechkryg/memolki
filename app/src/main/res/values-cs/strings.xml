@@ -94,8 +94,7 @@
     <string name="daily_reward_day">Den %d</string>
     <string name="daily_reward_collect">Sebrat %d</string>
     <string name="daily_reward_back_tomorrow">Přijď zítra</string>
-    <string name="share_text">Spároval jsem všechny páry v memolki! Dokážeš nasbírat více karet? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Spároval jsem všechny páry v memolki! Dokážeš nasbírat více karet? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Denní výzva</string>
     <string name="daily_challenge_compare">Porovnat</string>

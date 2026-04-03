@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -31,44 +32,46 @@ import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun WatchAdMultiplyRewardItem(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
-    Button(
+    EdgeSparklesEffect(
         modifier = modifier
             .pulseEffect()
-            .bounceClickEffect(),
-        onClick = throttleClick(onClick = onClick),
-        shape = RoundedCornerShape(spacingL),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Transparent,
-            disabledContainerColor = Color.Transparent
-        ),
+            .bounceClickEffect()
     ) {
-        val adIconSize = if (isSmallScreen) 80.dp else 128.dp
-        val coinIconSize = if (isSmallScreen) 40.dp else 64.dp
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Button(
+            onClick = throttleClick(onClick = onClick),
+            shape = RoundedCornerShape(spacingL),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                disabledContainerColor = Color.Transparent
+            ),
+        ) {
+            val adIconSize = if (isSmallScreen) 80.dp else 128.dp
+            val coinIconSize = if (isSmallScreen) 40.dp else 64.dp
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(
+                    modifier = Modifier
+                        .size(adIconSize),
+                    alignment = Alignment.Center,
+                    painter = painterResource(R.drawable.ic_ads),
+                    contentDescription = stringResource(R.string.watch_ad)
+                )
+                AutoSizeText(
+                    text = stringResource(R.string.watch_ad).lowercase(),
+                    style = MaterialTheme.typography.bodyLarge.animated()
+                )
+            }
+            Spacer(modifier = Modifier.size(spacingM))
             Image(
-                modifier = Modifier
-                    .size(adIconSize),
-                alignment = Alignment.Center,
-                painter = painterResource(R.drawable.ic_ads),
-                contentDescription = stringResource(R.string.watch_ad)
+                modifier = Modifier.size(coinIconSize),
+                painter = painterResource(id = R.drawable.ic_coin),
+                contentDescription = stringResource(R.string.coins),
             )
-            AutoSizeText(
-                text = stringResource(R.string.watch_ad).uppercase(),
-                style = MaterialTheme.typography.headlineSmall.animated()
+            Spacer(modifier = Modifier.size(spacingXS))
+            Text(
+                text = stringResource(id = R.string.end_game_watch_ad_reward).lowercase(),
+                style = MaterialTheme.typography.displayMedium.animated()
             )
         }
-        Spacer(modifier = Modifier.size(spacingM))
-        Image(
-            modifier = Modifier.size(coinIconSize),
-            painter = painterResource(id = R.drawable.ic_coin),
-            contentDescription = stringResource(R.string.coins),
-        )
-        Spacer(modifier = Modifier.size(spacingXS))
-        Text(
-            text = stringResource(id = R.string.end_game_watch_ad_reward).lowercase(),
-            style = MaterialTheme.typography.displayMedium.animated()
-        )
-
     }
 }
 

@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.game
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.base.UiEffect
+import com.wojdor.memolki.util.playgames.GooglePlayGames
 
 sealed class GameEffect : UiEffect {
     data class OpenEndGameScreen(
@@ -12,5 +13,8 @@ sealed class GameEffect : UiEffect {
         val dailyChallenge: DailyChallengeModel = DailyChallengeModel()
     ) : GameEffect()
 
-    data class SendTotalCardPairsMatchedScore(val totalCardPairsMatched: Long) : GameEffect()
+    data class SendTotalCardPairsMatchedScore(
+        val googlePlayGames: GooglePlayGames,
+        val totalCardPairsMatched: Long
+    ) : GameEffect()
 }

@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.endgame
 
-import android.app.Activity
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.base.UiIntent
@@ -23,5 +22,4 @@ sealed class EndGameIntent : UiIntent {
     object OnScreenResume : EndGameIntent()
     object OnDailyChallengeStarsAnimationFinished : EndGameIntent()
     object OnDailyChallengeShareClick : EndGameIntent()
-    data class OnSubmitTotalCoinsScore(val activity: Activity, val totalCoins: Long) : EndGameIntent()
 }

@@ -18,7 +18,6 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
         return preferences[Key.UNLOCKED_CARD_PAIR_IDS]?.toList() ?: run {
             @Suppress("KotlinConstantConditions")
             val count = if (RECORDING_MODE) {
-                @Suppress("KotlinConstantConditions")
                 RECORDING_MODE_UNLOCKED_CARD_PAIRS_COUNT
             } else {
                 DEFAULT_UNLOCKED_CARD_PAIRS_COUNT

@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.endgame
 
-import android.app.Activity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
@@ -83,7 +82,6 @@ class EndGameViewModel @Inject constructor(
             EndGameIntent.OnScreenResume -> onScreenResume()
             EndGameIntent.OnDailyChallengeStarsAnimationFinished -> onDailyChallengeStarsAnimationFinished()
             EndGameIntent.OnDailyChallengeShareClick -> onDailyChallengeShareClick()
-            is EndGameIntent.OnSubmitTotalCoinsScore -> onSubmitTotalCoinsScore(intent.activity, intent.totalCoins)
         }
     }
 
@@ -201,6 +199,7 @@ class EndGameViewModel @Inject constructor(
         if (uiState.value.isDailyChallenge) {
             if (wasRewardGranted) {
                 rewardDailyChallengeCoins(uiState.value.currentCoins)
+                showMenu()
             }
             loadAd(wasRewardGranted)
         } else {
@@ -368,14 +367,8 @@ class EndGameViewModel @Inject constructor(
     private fun sendTotalCoinsScore() {
         viewModelScope.launch {
             getTotalCoinsUseCase().first().onSuccess { totalCoins ->
-                sendEffect(SendTotalCoinsScore(totalCoins))
+                sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
             }
-        }
-    }
-
-    private fun onSubmitTotalCoinsScore(activity: Activity, totalCoins: Long) {
-        viewModelScope.launch {
-            googlePlayGames.submitTotalCoins(activity, totalCoins)
         }
     }
 

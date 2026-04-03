@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
@@ -36,8 +37,7 @@ class PrepareRecordingCoinsUseCaseTest : AppTest() {
 
     @Test
     fun `when recording mode is enabled and coins are zero then add initial coins`() = runTest {
-        @Suppress("KotlinConstantConditions")
-        if (!RECORDING_MODE) return@runTest
+        assumeTrue(RECORDING_MODE)
 
         // when
         sut().first()
@@ -49,8 +49,7 @@ class PrepareRecordingCoinsUseCaseTest : AppTest() {
 
     @Test
     fun `when recording mode is enabled and coins already exist then do not add coins`() = runTest {
-        @Suppress("KotlinConstantConditions")
-        if (!RECORDING_MODE) return@runTest
+        assumeTrue(RECORDING_MODE)
 
         // given
         userRepository.addCoins(100L)

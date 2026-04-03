@@ -1,12 +1,12 @@
 package com.wojdor.memolki.domain.usecase
 
+import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
@@ -46,12 +46,12 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
         val level = LevelModel.Grid2x3()
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
 
-        // when
-        val result = sut(level).first()
-
-        // then
+        // when / then
         val expectedCardCount = level.columns * level.rows
-        assertEquals(expectedCardCount, result.getOrThrow().size)
+        sut(level).test {
+            assertEquals(expectedCardCount, awaitItem().getOrThrow().size)
+            awaitComplete()
+        }
     }
 
     @Test
@@ -60,12 +60,12 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
         val level = LevelModel.Grid4x4()
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
 
-        // when
-        val result = sut(level).first()
-
-        // then
+        // when / then
         val expectedCardCount = level.columns * level.rows
-        assertEquals(expectedCardCount, result.getOrThrow().size)
+        sut(level).test {
+            assertEquals(expectedCardCount, awaitItem().getOrThrow().size)
+            awaitComplete()
+        }
     }
 
     @Test
@@ -75,8 +75,16 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
 
         // when
-        val result1 = sut(level).first().getOrThrow()
-        val result2 = sut(level).first().getOrThrow()
+        var result1: List<*>? = null
+        sut(level).test {
+            result1 = awaitItem().getOrThrow()
+            awaitComplete()
+        }
+        var result2: List<*>? = null
+        sut(level).test {
+            result2 = awaitItem().getOrThrow()
+            awaitComplete()
+        }
 
         // then
         assertEquals(result1, result2)
@@ -89,9 +97,17 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
 
         // when
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
-        val result1 = sut(level).first().getOrThrow()
+        var result1: List<*>? = null
+        sut(level).test {
+            result1 = awaitItem().getOrThrow()
+            awaitComplete()
+        }
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 27)
-        val result2 = sut(level).first().getOrThrow()
+        var result2: List<*>? = null
+        sut(level).test {
+            result2 = awaitItem().getOrThrow()
+            awaitComplete()
+        }
 
         // then
         assertNotEquals(result1, result2)
