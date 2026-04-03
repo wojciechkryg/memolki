@@ -87,6 +87,9 @@
         <item>Non interrompere la serie!</item>
         <item>Apri il negozio e prendi le monete</item>
     </string-array>
+    <string name="shortcut_daily_reward">Premio giornaliero</string>
+    <string name="shortcut_play">Gioca</string>
+
     <string name="free_coins">Monete gratis</string>
     <string name="daily_reward_day">Giorno %d</string>
     <string name="daily_reward_collect">Raccogli %d</string>

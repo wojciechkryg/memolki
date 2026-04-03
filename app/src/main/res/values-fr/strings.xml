@@ -87,6 +87,9 @@
         <item>Ne brise pas ta série !</item>
         <item>Ouvre la boutique et prends tes pièces</item>
     </string-array>
+    <string name="shortcut_daily_reward">Récompense du jour</string>
+    <string name="shortcut_play">Jouer</string>
+
     <string name="free_coins">Pièces gratuites</string>
     <string name="daily_reward_day">Jour %d</string>
     <string name="daily_reward_collect">Collecter %d</string>

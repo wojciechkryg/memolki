@@ -87,6 +87,9 @@
         <item>連続記録を途切れさせないで！</item>
         <item>ショップを開いてコインをゲット</item>
     </string-array>
+    <string name="shortcut_daily_reward">デイリー報酬</string>
+    <string name="shortcut_play">プレイ</string>
+
     <string name="free_coins">無料コイン</string>
     <string name="daily_reward_day">%d日目</string>
     <string name="daily_reward_collect">%d枚を集める</string>

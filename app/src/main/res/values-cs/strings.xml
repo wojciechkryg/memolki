@@ -87,6 +87,9 @@
         <item>Nepřerušuj sérii!</item>
         <item>Otevři obchod a vezmi si mince</item>
     </string-array>
+    <string name="shortcut_daily_reward">Denní odměna</string>
+    <string name="shortcut_play">Hrát</string>
+
     <string name="free_coins">Mince zdarma</string>
     <string name="daily_reward_day">Den %d</string>
     <string name="daily_reward_collect">Sebrat %d</string>

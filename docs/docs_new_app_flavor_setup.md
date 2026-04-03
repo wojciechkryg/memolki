@@ -26,6 +26,10 @@
     - select proper flavor
     - create a flavor specific `ic_logo.xml` in the `{flavor}/res/drawable` folder
 
+1. Add app shortcuts:
+    - create `{flavor}/res/xml/shortcuts.xml` by copying from an existing flavor
+    - update `android:targetPackage` to the new flavor's application ID (e.g. `com.wojdor.memolki.newflavor`)
+
 1. Setup new flavor in the Google Play Console:
     - go to https://play.google.com/console/u/0/developers/9083635429558058910/create-new-app
     - enter app name `memolki • {name connected to flavor}`

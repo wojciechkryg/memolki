@@ -87,6 +87,9 @@
         <item>Не прерывай серию!</item>
         <item>Открой магазин и забери монеты</item>
     </string-array>
+    <string name="shortcut_daily_reward">Ежедневная награда</string>
+    <string name="shortcut_play">Играть</string>
+
     <string name="free_coins">Бесплатные монеты</string>
     <string name="daily_reward_day">День %d</string>
     <string name="daily_reward_collect">Собрать %d</string>

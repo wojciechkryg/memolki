@@ -50,11 +50,18 @@ class AppActivity : ComponentActivity() {
 
     private val newIntentState = mutableStateOf<Intent?>(null)
 
+    companion object {
+        private const val EXTRA_SHORTCUT_ID = "shortcut_id"
+    }
+
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.onAppCreate()
-        viewModel.onAppOpen(intent?.getStringExtra(EXTRA_NOTIFICATION_TYPE))
+        viewModel.onAppOpen(
+            notificationType = intent?.getStringExtra(EXTRA_NOTIFICATION_TYPE),
+            shortcutId = intent?.getStringExtra(EXTRA_SHORTCUT_ID)
+        )
         resolveDeepLinkIntent(intent)?.let { newIntentState.value = it }
         lifecycle.addObserver(backgroundMusicPlayer)
         lifecycle.addObserver(notificationScheduler)
@@ -95,7 +102,10 @@ class AppActivity : ComponentActivity() {
         super.onNewIntent(intent)
         setIntent(intent)
         newIntentState.value = resolveDeepLinkIntent(intent) ?: intent
-        viewModel.onAppOpen(intent.getStringExtra(EXTRA_NOTIFICATION_TYPE))
+        viewModel.onAppOpen(
+            notificationType = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE),
+            shortcutId = intent.getStringExtra(EXTRA_SHORTCUT_ID)
+        )
     }
 
     private fun resolveDeepLinkIntent(intent: Intent?): Intent? {

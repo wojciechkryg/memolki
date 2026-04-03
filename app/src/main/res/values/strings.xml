@@ -86,6 +86,9 @@
         <item>Open the shop and grab your coins</item>
     </string-array>
 
+    <string name="shortcut_daily_reward">Daily Reward</string>
+    <string name="shortcut_play">Play</string>
+
     <string name="free_coins">Free Coins</string>
 
     <string name="daily_reward_day">Day %d</string>
