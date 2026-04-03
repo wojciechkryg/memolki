@@ -61,7 +61,7 @@ private fun HandleEffect(
                 }
             }
 
-            is GameEffect.PlayMatchSound -> viewModel.playMatchSound()
+            is GameEffect.OnPairMatched -> viewModel.playMatchSound()
         }
     }
 }

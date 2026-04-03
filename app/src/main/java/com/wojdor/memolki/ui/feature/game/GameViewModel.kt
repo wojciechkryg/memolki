@@ -209,7 +209,7 @@ class GameViewModel @Inject constructor(
                 card
             }
         }
-        sendEffect(GameEffect.PlayMatchSound)
+        sendEffect(GameEffect.OnPairMatched)
     }
 
     fun playMatchSound() {

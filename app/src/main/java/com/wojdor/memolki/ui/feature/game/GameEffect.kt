@@ -18,5 +18,5 @@ sealed class GameEffect : UiEffect {
         val totalCardPairsMatched: Long
     ) : GameEffect()
 
-    data object PlayMatchSound : GameEffect()
+    data object OnPairMatched : GameEffect()
 }
