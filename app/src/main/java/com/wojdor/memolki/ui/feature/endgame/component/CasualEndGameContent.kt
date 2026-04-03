@@ -46,9 +46,9 @@ import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
-fun EndGameContent(
+fun CasualEndGameContent(
     state: EndGameState,
-    callbacks: EndGameCallbacks = EndGameCallbacks()
+    callbacks: EndGameCallbacks
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -66,12 +66,12 @@ fun EndGameContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.weight(0.15f))
+                Spacer(modifier = Modifier.weight(1f))
                 CoinsReward(
                     rewardedCoins = state.rewardedCoins,
                     animate = state.animateRewardCoins
                 )
-                Spacer(modifier = Modifier.weight(0.1f))
+                Spacer(modifier = Modifier.weight(1f))
                 AnimatedContent(
                     state.menu,
                     transitionSpec = {
@@ -83,6 +83,7 @@ fun EndGameContent(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         it.filterNot { item ->
+                            @Suppress("KotlinConstantConditions")
                             RECORDING_MODE && item is EndGameMenuModel.WatchAd
                                     || RECORDING_MODE && item is EndGameMenuModel.FreeCoins
                                     || RECORDING_MODE && item is EndGameMenuModel.Share
@@ -113,11 +114,13 @@ fun EndGameContent(
                                     shareModel = menuItem,
                                     onClick = callbacks.onShareClick
                                 )
+
+                                else -> {}
                             }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.weight(0.3f))
+                Spacer(modifier = Modifier.weight(2f))
             }
         }
         SparklesOverlay(isActive = state.showSparkles)
@@ -183,9 +186,9 @@ private fun ShareRewardLabel(
 
 @Composable
 @Preview
-private fun EndGameContentPreview() {
+private fun CasualEndGameContentPreview() {
     AppTheme {
-        EndGameContent(
+        CasualEndGameContent(
             state = EndGameState(
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
@@ -197,16 +200,17 @@ private fun EndGameContentPreview() {
                     EndGameMenuModel.UnlockNewCard,
                     EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
-            )
+            ),
+            callbacks = EndGameCallbacks()
         )
     }
 }
 
 @Composable
 @Preview
-private fun EndGameContentWithoutAdPreview() {
+private fun CasualEndGameContentWithoutAdPreview() {
     AppTheme {
-        EndGameContent(
+        CasualEndGameContent(
             state = EndGameState(
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
@@ -216,16 +220,17 @@ private fun EndGameContentWithoutAdPreview() {
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.Share(showReward = false)
                 )
-            )
+            ),
+            callbacks = EndGameCallbacks()
         )
     }
 }
 
 @Composable
 @Preview
-private fun EndGameContentWithFreeCoinsPreview() {
+private fun CasualEndGameContentWithFreeCoinsPreview() {
     AppTheme {
-        EndGameContent(
+        CasualEndGameContent(
             state = EndGameState(
                 level = LevelModel.Grid2x3(),
                 rewardedCoins = 1234,
@@ -237,7 +242,8 @@ private fun EndGameContentWithFreeCoinsPreview() {
                     EndGameMenuModel.FreeCoins,
                     EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
-            )
+            ),
+            callbacks = EndGameCallbacks()
         )
     }
 }

@@ -13,5 +13,8 @@ data class GameState(
     val lastCardPressed: CardModel = CardModel.Empty,
     val shouldShowCardText: Boolean = false,
     val shouldShowCardDetails: Boolean = false,
-    val mismatchCount: Int = 0
+    val mistakeCount: Int = 0,
+    val cardFlipCounts: List<List<Int>> = emptyList(),
+    val epochDay: Long = 0L,
+    val startTimeMillis: Long = 0L
 ) : UiState

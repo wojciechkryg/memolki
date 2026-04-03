@@ -94,5 +94,29 @@
     <string name="daily_reward_day">День %d</string>
     <string name="daily_reward_collect">Зібрати %d</string>
     <string name="daily_reward_back_tomorrow">Повертайся завтра</string>
-    <string name="share_text">Я знайшов усі пари в грі memolki! Зможеш мене перемогти? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Я знайшов усі пари в memolki! Зможеш зібрати більше карток? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Щоденний виклик</string>
+    <string name="daily_challenge_compare">Порівняти</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Не забудь про щоденний виклик!</item>
+        <item>⭐ Щоденний виклик чекає!</item>
+        <item>🧠 Готовий до сьогоднішнього виклику?</item>
+        <item>💪 Твоє щоденне тренування мозку!</item>
+        <item>🏆 Кинь собі виклик сьогодні!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Перевір свою пам\'ять на сьогоднішній унікальній дошці</item>
+        <item>Зможеш побити вчорашній результат?</item>
+        <item>Нова головоломка чекає на тебе</item>
+        <item>Знайди всі пари та поділись результатами</item>
+        <item>У всіх однакова дошка — як справишся ти?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d помилка</item>
+        <item quantity="few">%d помилки</item>
+        <item quantity="many">%d помилок</item>
+        <item quantity="other">%d помилок</item>
+    </plurals>
 </resources>

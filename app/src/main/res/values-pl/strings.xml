@@ -94,5 +94,29 @@
     <string name="daily_reward_day">Dzień %d</string>
     <string name="daily_reward_collect">Odbierz %d</string>
     <string name="daily_reward_back_tomorrow">Wróć jutro</string>
-    <string name="share_text">Dopasowałem wszystkie pary w grze memolki! Dasz radę mnie pokonać? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Dopasowałem wszystkie pary w memolki! Czy możesz zebrać więcej kart? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Wyzwanie dnia</string>
+    <string name="daily_challenge_compare">Porównaj</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Nie zapomnij o wyzwaniu dnia!</item>
+        <item>⭐ Wyzwanie dnia czeka!</item>
+        <item>🧠 Gotowy na dzisiejsze wyzwanie?</item>
+        <item>💪 Twój codzienny trening mózgu!</item>
+        <item>🏆 Wyzwij się dzisiaj!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Sprawdź swoją pamięć na dzisiejszej unikalnej planszy</item>
+        <item>Czy pokonasz wczorajszy wynik?</item>
+        <item>Nowa łamigłówka na Ciebie czeka</item>
+        <item>Dopasuj wszystkie pary i podziel się wynikami</item>
+        <item>Wszyscy dostają tę samą planszę — jak wypadniesz?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d błąd</item>
+        <item quantity="few">%d błędy</item>
+        <item quantity="many">%d błędów</item>
+        <item quantity="other">%d błędów</item>
+    </plurals>
 </resources>

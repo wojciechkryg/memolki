@@ -36,6 +36,7 @@ class PrepareRecordingCoinsUseCaseTest : AppTest() {
 
     @Test
     fun `when recording mode is enabled and coins are zero then add initial coins`() = runTest {
+        @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE) return@runTest
 
         // when
@@ -48,6 +49,7 @@ class PrepareRecordingCoinsUseCaseTest : AppTest() {
 
     @Test
     fun `when recording mode is enabled and coins already exist then do not add coins`() = runTest {
+        @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE) return@runTest
 
         // given

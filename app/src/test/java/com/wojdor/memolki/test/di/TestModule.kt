@@ -7,7 +7,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.google.android.play.core.review.ReviewManager
 import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.data.crypto.Encryptor
-import com.wojdor.memolki.data.local.card.AllCardPairsDataSource
+import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
+import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
 import com.wojdor.memolki.test.fake.FakeDataStore
@@ -152,5 +153,9 @@ abstract class TestModule {
         @Provides
         @Singleton
         fun provideAnalytics(): Analytics = relaxedMockk()
+
+        @Provides
+        @Singleton
+        fun provideDailyChallengeDao(): DailyChallengeDao = relaxedMockk()
     }
 }

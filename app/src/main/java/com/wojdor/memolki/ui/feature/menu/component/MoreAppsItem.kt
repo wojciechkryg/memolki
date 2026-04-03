@@ -45,9 +45,11 @@ fun MoreAppsItem(
             text = stringResource(R.string.more).lowercase(),
             style = MaterialTheme.typography.headlineLarge
         )
-        CardBorder(modifier = Modifier
-            .pulseEffect()
-            .bounceClickEffect()) {
+        CardBorder(
+            modifier = Modifier
+                .pulseEffect()
+                .bounceClickEffect()
+        ) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = throttleClick(onClick),

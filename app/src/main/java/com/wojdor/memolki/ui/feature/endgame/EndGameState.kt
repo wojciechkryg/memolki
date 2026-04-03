@@ -1,5 +1,6 @@
 package com.wojdor.memolki.ui.feature.endgame
 
+import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.base.UiState
@@ -13,5 +14,7 @@ data class EndGameState(
     val menu: List<EndGameMenuModel> = emptyList(),
     val animateCoins: Boolean = false,
     val animateRewardCoins: Boolean = false,
-    val showSparkles: Boolean = false
+    val showSparkles: Boolean = false,
+    val dailyChallenge: DailyChallengeModel = DailyChallengeModel(),
+    val isDailyChallenge: Boolean = false
 ) : UiState

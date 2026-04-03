@@ -6,5 +6,7 @@ data class EndGameCallbacks(
     val onUnlockNewCardClick: () -> Unit = {},
     val onWatchAdClick: () -> Unit = {},
     val onShareClick: () -> Unit = {},
-    val onFreeCoinsClick: () -> Unit = {}
+    val onFreeCoinsClick: () -> Unit = {},
+    val onDailyChallengeStarsAnimationFinished: () -> Unit = {},
+    val onDailyChallengeShareClick: () -> Unit = {}
 )

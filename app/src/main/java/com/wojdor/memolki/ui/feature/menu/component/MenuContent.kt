@@ -90,6 +90,7 @@ fun MenuContent(
                 )
             }
         }
+        @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE) {
             state.otherAppModel?.let {
                 MoreAppsItem(

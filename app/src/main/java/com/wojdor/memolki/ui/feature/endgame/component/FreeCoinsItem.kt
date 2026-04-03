@@ -28,7 +28,9 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun FreeCoinsItem(onClick: () -> Unit = {}) {
     Button(
-        modifier = Modifier.pulseEffect().bounceClickEffect(),
+        modifier = Modifier
+            .pulseEffect()
+            .bounceClickEffect(),
         onClick = throttleClick(onClick = onClick),
         shape = RoundedCornerShape(spacingL),
         colors = ButtonDefaults.buttonColors(

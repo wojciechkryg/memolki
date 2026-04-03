@@ -6,7 +6,6 @@ import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.base.UiEffect
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 
 sealed class EndGameEffect : UiEffect {
     data class OpenGameScreen(val levelModel: LevelModel) : EndGameEffect()
@@ -23,11 +22,9 @@ sealed class EndGameEffect : UiEffect {
         val reviewInfo: ReviewInfo
     ) : EndGameEffect()
 
-    data class SendTotalCoinsScore(
-        val googlePlayGames: GooglePlayGames,
-        val totalCoins: Long
-    ) : EndGameEffect()
+    data class SendTotalCoinsScore(val totalCoins: Long) : EndGameEffect()
 
     object Share : EndGameEffect()
     object OpenShopScreen : EndGameEffect()
+    data class ShareDailyChallenge(val text: String) : EndGameEffect()
 }

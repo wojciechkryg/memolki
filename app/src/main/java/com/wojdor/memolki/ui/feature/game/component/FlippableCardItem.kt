@@ -19,9 +19,9 @@ fun FlippableCardItem(
         onComplete = callbacks.onMatchAnimationComplete
     )
     val shakeOffset = rememberShakeOffset(
-        isShaking = card.isMismatchShaking,
+        isShaking = card.isMistakeShaking,
         delayMs = MISMATCH_VIEW_DELAY,
-        onComplete = callbacks.onMismatchShakeComplete
+        onComplete = callbacks.onMistakeShakeComplete
     )
     Flippable(
         modifier = modifier.graphicsLayer {

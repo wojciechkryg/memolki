@@ -94,5 +94,26 @@
     <string name="daily_reward_day">Hari %d</string>
     <string name="daily_reward_collect">Kumpulkan %d</string>
     <string name="daily_reward_back_tomorrow">Kembali besok</string>
-    <string name="share_text">Saya mencocokkan semua pasangan di game memolki! Bisakah kamu mengalahkan saya? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Aku mencocokkan semua pasangan di memolki! Bisakah kamu mengumpulkan lebih banyak kartu? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Tantangan harian</string>
+    <string name="daily_challenge_compare">Bandingkan</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Jangan lupa tantangan harianmu!</item>
+        <item>⭐ Tantangan harian menunggu!</item>
+        <item>🧠 Siap untuk tantangan hari ini?</item>
+        <item>💪 Latihan otak harianmu!</item>
+        <item>🏆 Tantang dirimu hari ini!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Uji ingatanmu dengan papan unik hari ini</item>
+        <item>Bisakah kamu mengalahkan skor kemarin?</item>
+        <item>Teka-teki baru menunggumu</item>
+        <item>Cocokkan semua pasangan dan bagikan hasilmu</item>
+        <item>Semua mendapat papan yang sama — bagaimana hasilmu?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d kesalahan</item>
+    </plurals>
 </resources>

@@ -9,10 +9,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
+import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.ui.app.navigateToEndGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -20,8 +20,6 @@ import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.component.GameContent
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.util.playgames.GooglePlayGames
-import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen(
@@ -46,15 +44,12 @@ private fun HandleEffect(
             is GameEffect.OpenEndGameScreen -> openEndGameScreen(
                 endGameViewModel,
                 navController,
-                effect.levelModel
+                effect
             )
 
             is GameEffect.SendTotalCardPairsMatchedScore -> activity?.let {
-                sendTotalCardPairsMatchedScore(
-                    it,
-                    viewModel,
-                    effect.googlePlayGames,
-                    effect.totalCardPairsMatched
+                viewModel.sendIntent(
+                    GameIntent.OnSubmitTotalCardPairsMatched(it, effect.totalCardPairsMatched)
                 )
             }
         }
@@ -64,21 +59,20 @@ private fun HandleEffect(
 private fun openEndGameScreen(
     endGameViewModel: EndGameViewModel,
     navController: NavController,
-    level: LevelModel
+    effect: GameEffect.OpenEndGameScreen
 ) {
-    endGameViewModel.sendIntent(EndGameIntent.OnEndGameShow(level))
-    navController.navigateToEndGame()
-}
-
-private fun sendTotalCardPairsMatchedScore(
-    activity: Activity,
-    viewModel: GameViewModel,
-    googlePlayGames: GooglePlayGames,
-    totalCardPairsMatched: Long
-) {
-    viewModel.viewModelScope.launch {
-        googlePlayGames.submitTotalCardPairsMatched(activity, totalCardPairsMatched)
+    val dailyChallenge = effect.dailyChallenge
+    if (dailyChallenge != DailyChallengeModel()) {
+        endGameViewModel.sendIntent(
+            EndGameIntent.OnDailyChallengeEndGameShow(
+                levelModel = effect.levelModel,
+                dailyChallengeModel = dailyChallenge
+            )
+        )
+    } else {
+        endGameViewModel.sendIntent(EndGameIntent.OnCasualEndGameShow(effect.levelModel))
     }
+    navController.navigateToEndGame()
 }
 
 @Composable
@@ -95,13 +89,13 @@ private fun HandleState(
             viewModel.sendIntent(GameIntent.OnFrontCardPress(isPressed, card))
         },
         onMatchAnimationComplete = { viewModel.sendIntent(GameIntent.OnMatchAnimationComplete) },
-        onMismatchShakeComplete = { viewModel.sendIntent(GameIntent.OnMismatchShakeComplete) }
+        onMistakeShakeComplete = { viewModel.sendIntent(GameIntent.OnMistakeShakeComplete) }
     )
     GameScreen(state, callbacks)
 }
 
 @Composable
-fun GameScreen(
+private fun GameScreen(
     state: GameState,
     callbacks: GameCallbacks = GameCallbacks()
 ) {

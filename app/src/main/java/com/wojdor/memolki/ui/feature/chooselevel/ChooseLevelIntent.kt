@@ -5,4 +5,5 @@ import com.wojdor.memolki.ui.base.UiIntent
 
 sealed class ChooseLevelIntent : UiIntent {
     data class OnLevelClick(val levelModel: LevelModel) : ChooseLevelIntent()
+    object OnDailyChallengeClick : ChooseLevelIntent()
 }

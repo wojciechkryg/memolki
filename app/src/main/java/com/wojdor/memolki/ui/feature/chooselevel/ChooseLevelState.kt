@@ -6,5 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ChooseLevelState(
-    val levels: List<LevelModel> = emptyList()
+    val levels: List<LevelModel> = emptyList(),
+    val isDailyChallengeCompleted: Boolean = false
 ) : UiState

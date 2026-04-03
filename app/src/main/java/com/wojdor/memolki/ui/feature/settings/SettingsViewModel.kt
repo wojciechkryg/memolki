@@ -36,6 +36,7 @@ class SettingsViewModel @Inject constructor(
                     it.onSuccess { setting -> handleTogglingSetting(setting) }
                 }.launchIn(viewModelScope)
             }
+
             is SettingsIntent.OnLanguageClick -> sendEffect(SettingsEffect.OpenChangeLanguageScreen)
         }
     }

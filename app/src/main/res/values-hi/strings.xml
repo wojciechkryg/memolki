@@ -94,5 +94,27 @@
     <string name="daily_reward_day">दिन %d</string>
     <string name="daily_reward_collect">इकट्ठा करें %d</string>
     <string name="daily_reward_back_tomorrow">कल वापस आएं</string>
-    <string name="share_text">मैंने memolki गेम में सभी जोड़े मिला लिए! क्या तुम मुझे हरा सकते हो? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">मैंने memolki में सभी जोड़े मिला लिए! क्या तुम ज़्यादा कार्ड इकट्ठा कर सकते हो? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">दैनिक चुनौती</string>
+    <string name="daily_challenge_compare">तुलना करें</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 अपनी दैनिक चुनौती मत भूलो!</item>
+        <item>⭐ दैनिक चुनौती इंतज़ार कर रही है!</item>
+        <item>🧠 आज की चुनौती के लिए तैयार?</item>
+        <item>💪 आपकी दैनिक दिमागी कसरत!</item>
+        <item>🏆 आज खुद को चुनौती दो!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>आज के अनोखे बोर्ड से अपनी याददाश्त परखें</item>
+        <item>क्या आप कल का स्कोर तोड़ सकते हैं?</item>
+        <item>एक नई पहेली आपका इंतज़ार कर रही है</item>
+        <item>सभी जोड़े मिलाएँ और अपने परिणाम साझा करें</item>
+        <item>सबको एक ही बोर्ड मिलता है — आप कैसा करेंगे?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d गलती</item>
+        <item quantity="other">%d गलतियाँ</item>
+    </plurals>
 </resources>

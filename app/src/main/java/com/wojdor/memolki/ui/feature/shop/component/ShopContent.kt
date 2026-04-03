@@ -56,7 +56,10 @@ fun ShopContent(
                     Spacer(modifier = Modifier.height(spacingL))
                     when (menuItem) {
                         is ShopMenuModel.DailyReward -> ShopMenuItem(
-                            priceText = stringResource(R.string.daily_reward_day, menuItem.streakDay),
+                            priceText = stringResource(
+                                R.string.daily_reward_day,
+                                menuItem.streakDay
+                            ),
                             descriptionText = if (menuItem.isAvailable) {
                                 stringResource(R.string.daily_reward_collect, menuItem.coinsToGrant)
                             } else {

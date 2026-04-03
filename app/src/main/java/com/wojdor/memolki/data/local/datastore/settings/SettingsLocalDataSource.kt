@@ -1,4 +1,4 @@
-package com.wojdor.memolki.data.local.settings
+package com.wojdor.memolki.data.local.datastore.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

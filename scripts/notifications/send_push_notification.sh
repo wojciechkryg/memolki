@@ -52,7 +52,7 @@ usage() {
     echo ""
     echo "Options:"
     echo "  --flavor <flavor>      Target specific flavor (fruithalf, vegetablehalf, mammalside, birdside)"
-    echo "  --screen <screen>      Deep link target: shop, collection, more_apps, game"
+    echo "  --screen <screen>      Deep link target: shop, collection, more_apps, game, daily_challenge"
     echo "  --level <level>        Game level: 2x3, 3x4, 4x4, 4x5, 4x6, 5x6 (only with --screen game)"
     echo "  --scheduled            Send between ${WINDOW_START}:00-${WINDOW_END}:00 in each language's timezone"
     echo ""

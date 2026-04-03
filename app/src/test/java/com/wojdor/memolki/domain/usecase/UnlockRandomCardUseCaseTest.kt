@@ -1,6 +1,6 @@
 package com.wojdor.memolki.domain.usecase
 
-import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector

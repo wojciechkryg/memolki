@@ -94,5 +94,29 @@
     <string name="daily_reward_day">יום %d</string>
     <string name="daily_reward_collect">אסוף %d</string>
     <string name="daily_reward_back_tomorrow">חזור מחר</string>
-    <string name="share_text">התאמתי את כל הזוגות במשחק memolki! אתה יכול לנצח אותי? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">מצאתי את כל הזוגות ב-memolki! אתה יכול לאסוף עוד קלפים? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">אתגר יומי</string>
+    <string name="daily_challenge_compare">השווה</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 אל תשכח את האתגר היומי!</item>
+        <item>⭐ האתגר היומי מחכה!</item>
+        <item>🧠 מוכן לאתגר של היום?</item>
+        <item>💪 אימון המוח היומי שלך!</item>
+        <item>🏆 תאתגר את עצמך היום!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>בדוק את הזיכרון שלך עם הלוח הייחודי של היום</item>
+        <item>אתה יכול לנצח את התוצאה של אתמול?</item>
+        <item>פאזל חדש מחכה לך</item>
+        <item>מצא את כל הזוגות ושתף את התוצאות</item>
+        <item>כולם מקבלים את אותו הלוח — איך תשתווה?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">שגיאה %d</item>
+        <item quantity="two">%d שגיאות</item>
+        <item quantity="many">%d שגיאות</item>
+        <item quantity="other">%d שגיאות</item>
+    </plurals>
 </resources>

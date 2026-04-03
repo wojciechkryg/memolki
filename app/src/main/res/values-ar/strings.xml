@@ -94,5 +94,31 @@
     <string name="daily_reward_day">يوم %d</string>
     <string name="daily_reward_collect">اجمع %d</string>
     <string name="daily_reward_back_tomorrow">عد غداً</string>
-    <string name="share_text">لقد طابقت جميع الأزواج في لعبة memolki! هل يمكنك التغلب علي؟ 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">لقد طابقت كل الأزواج في memolki! هل يمكنك جمع المزيد من البطاقات؟ 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">التحدي اليومي</string>
+    <string name="daily_challenge_compare">قارن</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 لا تنسَ تحديك اليومي!</item>
+        <item>⭐ التحدي اليومي بانتظارك!</item>
+        <item>🧠 هل أنت مستعد لتحدي اليوم?</item>
+        <item>💪 تمرين الدماغ اليومي!</item>
+        <item>🏆 تحدَّ نفسك اليوم!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>اختبر ذاكرتك بلوحة اليوم الفريدة</item>
+        <item>هل يمكنك التغلب على نتيجة الأمس?</item>
+        <item>لغز جديد ينتظرك</item>
+        <item>طابق كل الأزواج وشارك نتائجك</item>
+        <item>الجميع يحصل على نفس اللوحة — كيف ستقارن؟</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="zero">%d أخطاء</item>
+        <item quantity="one">خطأ واحد</item>
+        <item quantity="two">خطآن</item>
+        <item quantity="few">%d أخطاء</item>
+        <item quantity="many">%d خطأ</item>
+        <item quantity="other">%d خطأ</item>
+    </plurals>
 </resources>

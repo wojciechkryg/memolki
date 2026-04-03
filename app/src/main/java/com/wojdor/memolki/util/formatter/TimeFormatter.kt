@@ -1,0 +1,21 @@
+package com.wojdor.memolki.util.formatter
+
+import javax.inject.Inject
+
+class TimeFormatter @Inject constructor() {
+
+    fun format(timeMillis: Long): FormattedTime {
+        val totalSeconds = timeMillis / 1000
+        val minutes = totalSeconds / 60
+        val seconds = totalSeconds % 60
+        val millis = timeMillis % 1000
+        return FormattedTime(
+            main = "$minutes:${seconds.toString().padStart(2, '0')}",
+            millis = ".${millis.toString().padStart(3, '0')}"
+        )
+    }
+
+    data class FormattedTime(val main: String, val millis: String) {
+        override fun toString(): String = "$main$millis"
+    }
+}

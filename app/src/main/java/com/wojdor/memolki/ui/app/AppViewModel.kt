@@ -33,8 +33,9 @@ class AppViewModel @Inject constructor(
             analytics.setUserLanguage(localeProvider.getLanguageTag())
             val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
             val unlockedCardsCount = getUnlockedCardPairsCountUseCase().first().getOrDefault(0)
-            analytics.logSessionStart(totalGamesPlayed, unlockedCardsCount)
+            analytics.logAppSessionStart(totalGamesPlayed, unlockedCardsCount)
             localEncryptorKeyStore.initialize()
+            @Suppress("KotlinConstantConditions")
             if (RECORDING_MODE) prepareRecordingCoinsUseCase().collect()
             unlockAllNewCardPairsIfPurchasedUseCase().collect()
         }

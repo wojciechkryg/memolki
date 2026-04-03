@@ -68,6 +68,7 @@ class CheckDailyLoginStreakUseCase @Inject constructor(
             streakDay >= MAX_REWARD_DAY -> MAX_DAILY_REWARD
             else -> streakDay.toLong()
         }
+
         const val MAX_DAILY_REWARD = 5L
         private const val MAX_REWARD_DAY = 4
     }

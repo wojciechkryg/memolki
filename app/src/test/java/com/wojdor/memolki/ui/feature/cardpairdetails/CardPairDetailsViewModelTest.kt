@@ -41,7 +41,12 @@ class CardPairDetailsViewModelTest : AppTest() {
             skipItems(1)
 
             // when
-            viewModel.sendIntent(CardPairDetailsIntent.OnCardPairDetailsShow(cardPairModels, initialPage))
+            viewModel.sendIntent(
+                CardPairDetailsIntent.OnCardPairDetailsShow(
+                    cardPairModels,
+                    initialPage
+                )
+            )
 
             // then
             val state = awaitItem()

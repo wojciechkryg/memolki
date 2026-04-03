@@ -1,6 +1,6 @@
 package com.wojdor.memolki.test.fake
 
-import com.wojdor.memolki.data.local.settings.SettingsLocalDataSource
+import com.wojdor.memolki.data.local.datastore.settings.SettingsLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 

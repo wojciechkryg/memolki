@@ -28,6 +28,7 @@ class EnableNotificationsViewModel @Inject constructor(
                 analytics.logNotificationEnabled(false)
                 navigateToDestination()
             }
+
             is EnableNotificationsIntent.OnPermissionResult -> {
                 analytics.logNotificationEnabled(intent.isGranted)
                 navigateToDestination()

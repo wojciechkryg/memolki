@@ -94,5 +94,26 @@
     <string name="daily_reward_day">第%d天</string>
     <string name="daily_reward_collect">收集 %d</string>
     <string name="daily_reward_back_tomorrow">明天再来</string>
-    <string name="share_text">我在memolki游戏中配对了所有卡片！你能打败我吗？🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">我在memolki中配对了所有卡片！你能收集更多卡片吗？ 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">每日挑战</string>
+    <string name="daily_challenge_compare">比较</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 别忘了每日挑战！</item>
+        <item>⭐ 每日挑战等你来！</item>
+        <item>🧠 准备好迎接今天的挑战了吗？</item>
+        <item>💪 每日大脑锻炼！</item>
+        <item>🏆 今天挑战自己！</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>用今天独特的棋盘测试你的记忆</item>
+        <item>你能超越昨天的分数吗？</item>
+        <item>新的谜题在等你</item>
+        <item>找到所有配对并分享你的结果</item>
+        <item>每个人都是同一块棋盘——你能做到多好？</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d 个错误</item>
+    </plurals>
 </resources>

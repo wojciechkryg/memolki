@@ -69,7 +69,22 @@
         <item>Grab your coins in the shop!</item>
     </string-array>
 
-    <string name="share_text">I matched all pairs in game memolki! Can you beat me? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Don\'t forget your Daily Challenge!</item>
+        <item>⭐ Daily Challenge awaits!</item>
+        <item>🧠 Ready for today\'s challenge?</item>
+        <item>💪 Your daily brain workout!</item>
+        <item>🏆 Challenge yourself today!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Test your memory with today\'s unique board</item>
+        <item>Can you beat yesterday\'s score?</item>
+        <item>A new puzzle is waiting for you</item>
+        <item>Match all pairs and share your results</item>
+        <item>Everyone gets the same board — how will you compare?</item>
+    </string-array>
+
+    <string name="share_text">I matched all pairs in memolki! Can you collect more cards? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Keep your streak alive!</item>
@@ -99,4 +114,11 @@
     <string name="enable_notifications_body">Get notified when coins are ready to collect and new cards are waiting to be unlocked!</string>
     <string name="enable_notifications_enable">Enable</string>
     <string name="enable_notifications_later">Later</string>
+
+    <string name="daily_challenge">Daily Challenge</string>
+    <string name="daily_challenge_compare">Compare</string>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d mistake</item>
+        <item quantity="other">%d mistakes</item>
+    </plurals>
 </resources>

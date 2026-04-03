@@ -37,8 +37,20 @@ class RotatedCardPairShape(
         val yOffsetPx = with(density) { yOffset.toPx() }
         val cardOutline = cardShape.createOutline(cardSize, layoutDirection, density)
 
-        val path1 = createTransformedPath(cardOutline, cardRect, rotation, xOffset = xOffsetPx, yOffset = yOffsetPx)
-        val path2 = createTransformedPath(cardOutline, cardRect, -rotation, xOffset = -xOffsetPx, yOffset = yOffsetPx)
+        val path1 = createTransformedPath(
+            cardOutline,
+            cardRect,
+            rotation,
+            xOffset = xOffsetPx,
+            yOffset = yOffsetPx
+        )
+        val path2 = createTransformedPath(
+            cardOutline,
+            cardRect,
+            -rotation,
+            xOffset = -xOffsetPx,
+            yOffset = yOffsetPx
+        )
 
         val finalPath = Path().apply {
             op(path1, path2, PathOperation.Union)

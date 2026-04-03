@@ -71,7 +71,7 @@ fun CardPairsCollection(
         val firstUnlockableIndex = remember(state.collectionCardPairs) {
             state.collectionCardPairs.indexOfFirst {
                 it is CollectionCardPairModel.LockedToUnlockWithCoins ||
-                    it is CollectionCardPairModel.LockedToUnlockWithAd
+                        it is CollectionCardPairModel.LockedToUnlockWithAd
             }
         }
         var hasScrolled by remember {

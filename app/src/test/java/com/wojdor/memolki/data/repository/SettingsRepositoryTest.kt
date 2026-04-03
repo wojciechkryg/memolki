@@ -1,6 +1,6 @@
 package com.wojdor.memolki.data.repository
 
-import com.wojdor.memolki.data.local.settings.SettingsLocalDataSource
+import com.wojdor.memolki.data.local.datastore.settings.SettingsLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi

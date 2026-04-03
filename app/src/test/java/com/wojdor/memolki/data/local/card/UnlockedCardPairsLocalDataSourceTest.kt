@@ -3,6 +3,8 @@ package com.wojdor.memolki.data.local.card
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
+import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi

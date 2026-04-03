@@ -94,5 +94,27 @@
     <string name="daily_reward_day">Päev %d</string>
     <string name="daily_reward_collect">Kogu %d</string>
     <string name="daily_reward_back_tomorrow">Tule homme tagasi</string>
-    <string name="share_text">Leidsin kõik paarid mängus memolki! Kas sa suudad mind võita? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Leidsin kõik paarid memolkis! Kas suudad koguda rohkem kaarte? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Päeva väljakutse</string>
+    <string name="daily_challenge_compare">Võrdle</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Ära unusta oma päeva väljakutset!</item>
+        <item>⭐ Päeva väljakutse ootab!</item>
+        <item>🧠 Valmis tänaseks väljakutseks?</item>
+        <item>💪 Sinu igapäevane ajutreening!</item>
+        <item>🏆 Esita endale väljakutse täna!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Testi oma mälu tänase unikaalse lauaga</item>
+        <item>Kas suudad eilset tulemust ületada?</item>
+        <item>Uus mõistatus ootab sind</item>
+        <item>Leia kõik paarid ja jaga oma tulemusi</item>
+        <item>Kõik saavad sama laua — kuidas sina hakkama saad?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d viga</item>
+        <item quantity="other">%d viga</item>
+    </plurals>
 </resources>

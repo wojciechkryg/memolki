@@ -10,22 +10,22 @@ class Analytics @Inject constructor(
 ) {
 
     fun logLevelStart(level: LevelModel) {
-        firebaseAnalytics.logEvent(Event.LEVEL_START, Bundle().apply {
+        firebaseAnalytics.logEvent(Event.LEVEL_STARTED, Bundle().apply {
             putString(Key.LEVEL_SIZE, "${level.columns}x${level.rows}")
             putInt(Key.CARD_COUNT, level.columns * level.rows)
         })
     }
 
-    fun logLevelComplete(level: LevelModel, mismatchCount: Int) {
-        firebaseAnalytics.logEvent(Event.LEVEL_COMPLETE, Bundle().apply {
+    fun logLevelComplete(level: LevelModel, mistakeCount: Int) {
+        firebaseAnalytics.logEvent(Event.LEVEL_COMPLETED, Bundle().apply {
             putString(Key.LEVEL_SIZE, "${level.columns}x${level.rows}")
             putInt(Key.CARD_COUNT, level.columns * level.rows)
-            putInt(Key.MISMATCH_COUNT, mismatchCount)
+            putInt(Key.MISMATCH_COUNT, mistakeCount)
         })
     }
 
-    fun logLevelAbandon(level: LevelModel) {
-        firebaseAnalytics.logEvent(Event.LEVEL_ABANDON, Bundle().apply {
+    fun logLevelAbandoned(level: LevelModel) {
+        firebaseAnalytics.logEvent(Event.LEVEL_ABANDONED, Bundle().apply {
             putString(Key.LEVEL_SIZE, "${level.columns}x${level.rows}")
         })
     }
@@ -124,10 +124,6 @@ class Analytics @Inject constructor(
         })
     }
 
-    companion object {
-        private val ALLOWED_SHORTCUT_IDS = setOf("daily_reward", "play_game")
-    }
-
     fun logMoreAppsClicked() {
         firebaseAnalytics.logEvent(Event.MORE_APPS_CLICKED, null)
     }
@@ -166,8 +162,8 @@ class Analytics @Inject constructor(
         })
     }
 
-    fun logSessionStart(totalGamesPlayed: Long, unlockedCardsCount: Int) {
-        firebaseAnalytics.logEvent(Event.SESSION_START, Bundle().apply {
+    fun logAppSessionStart(totalGamesPlayed: Long, unlockedCardsCount: Int) {
+        firebaseAnalytics.logEvent(Event.APP_SESSION_START, Bundle().apply {
             putLong(Key.TOTAL_GAMES_PLAYED, totalGamesPlayed)
             putInt(Key.UNLOCKED_COUNT, unlockedCardsCount)
         })
@@ -191,12 +187,49 @@ class Analytics @Inject constructor(
     fun logLeaderboardOpened() {
         firebaseAnalytics.logEvent(Event.LEADERBOARD_OPENED, null)
     }
+
+    fun logDailyChallengeStart(epochDay: Long) {
+        firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_STARTED, Bundle().apply {
+            putLong(Key.CHALLENGE_NUMBER, epochDay)
+        })
+    }
+
+    fun logDailyChallengeComplete(
+        epochDay: Long,
+        mistakeCount: Int,
+        starCount: Int,
+        timeMillis: Long
+    ) {
+        firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_COMPLETED, Bundle().apply {
+            putLong(Key.CHALLENGE_NUMBER, epochDay)
+            putInt(Key.MISMATCH_COUNT, mistakeCount)
+            putInt(Key.STAR_COUNT, starCount)
+            putLong(Key.TIME_MILLIS, timeMillis)
+        })
+    }
+
+    fun logDailyChallengeShare(epochDay: Long, starCount: Int) {
+        firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_SHARED, Bundle().apply {
+            putLong(Key.CHALLENGE_NUMBER, epochDay)
+            putInt(Key.STAR_COUNT, starCount)
+        })
+    }
+
+    fun logDailyChallengeAbandoned(epochDay: Long) {
+        firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_ABANDONED, Bundle().apply {
+            putLong(Key.CHALLENGE_NUMBER, epochDay)
+        })
+    }
+
+    companion object {
+        private val ALLOWED_SHORTCUT_IDS = setOf("daily_reward", "play_game")
+    }
 }
 
 private object Event {
-    const val LEVEL_START = "level_start"
-    const val LEVEL_COMPLETE = "level_complete"
-    const val LEVEL_ABANDON = "level_abandon"
+    const val LEVEL_STARTED = "level_started"
+    const val LEVEL_COMPLETED = "level_completed"
+    const val LEVEL_ABANDONED = "level_abandoned"
     const val AD_REWARD_EARNED = "ad_reward_earned"
     const val CARD_UNLOCKED = "card_unlocked"
     const val SHOP_OPENED = "shop_opened"
@@ -212,10 +245,14 @@ private object Event {
     const val AD_SHOWN = "ad_shown"
     const val AD_DISMISSED = "ad_dismissed"
     const val INSUFFICIENT_COINS_SHOWN = "insufficient_coins_shown"
-    const val SESSION_START = "session_start"
+    const val APP_SESSION_START = "app_session_start"
     const val LANGUAGE_CHANGED = "language_changed"
     const val CARD_PAIR_DETAILS_VIEWED = "card_pair_details_viewed"
     const val LEADERBOARD_OPENED = "leaderboard_opened"
+    const val DAILY_CHALLENGE_STARTED = "daily_challenge_started"
+    const val DAILY_CHALLENGE_COMPLETED = "daily_challenge_completed"
+    const val DAILY_CHALLENGE_SHARED = "daily_challenge_shared"
+    const val DAILY_CHALLENGE_ABANDONED = "daily_challenge_abandoned"
 }
 
 private object Key {
@@ -244,6 +281,9 @@ private object Key {
     const val TO_LANGUAGE = "to_language"
     const val SHORTCUT_ID = "shortcut_id"
     const val LANGUAGE = "language"
+    const val CHALLENGE_NUMBER = "challenge_number"
+    const val STAR_COUNT = "star_count"
+    const val TIME_MILLIS = "time_millis"
 }
 
 private object Value {

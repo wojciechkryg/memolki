@@ -94,5 +94,27 @@
     <string name="daily_reward_day">Ημέρα %d</string>
     <string name="daily_reward_collect">Συλλογή %d</string>
     <string name="daily_reward_back_tomorrow">Έλα αύριο</string>
-    <string name="share_text">Ταίριαξα όλα τα ζευγάρια στο παιχνίδι memolki! Μπορείς να με νικήσεις; 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Βρήκα όλα τα ζευγάρια στο memolki! Μπορείς να μαζέψεις περισσότερες κάρτες; 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Ημερήσια πρόκληση</string>
+    <string name="daily_challenge_compare">Σύγκριση</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Μην ξεχάσεις την ημερήσια πρόκληση!</item>
+        <item>⭐ Η ημερήσια πρόκληση σε περιμένει!</item>
+        <item>🧠 Έτοιμος για τη σημερινή πρόκληση?</item>
+        <item>💪 Η ημερήσια γυμναστική του μυαλού!</item>
+        <item>🏆 Προκάλεσε τον εαυτό σου σήμερα!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Δοκίμασε τη μνήμη σου με το σημερινό μοναδικό ταμπλό</item>
+        <item>Μπορείς να νικήσεις το χθεσινό σκορ?</item>
+        <item>Ένα νέο παζλ σε περιμένει</item>
+        <item>Βρες όλα τα ζευγάρια και μοιράσου τα αποτελέσματα</item>
+        <item>Όλοι παίρνουν το ίδιο ταμπλό — πώς θα τα πας;</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d λάθος</item>
+        <item quantity="other">%d λάθη</item>
+    </plurals>
 </resources>

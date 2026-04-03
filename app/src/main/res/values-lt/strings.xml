@@ -94,5 +94,29 @@
     <string name="daily_reward_day">%d diena</string>
     <string name="daily_reward_collect">Surinkti %d</string>
     <string name="daily_reward_back_tomorrow">Grįžk rytoj</string>
-    <string name="share_text">Suradau visas poras žaidime memolki! Ar gali mane įveikti? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Suradau visas poras memolki! Ar gali surinkti daugiau kortelių? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Dienos iššūkis</string>
+    <string name="daily_challenge_compare">Palyginti</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Nepamiršk savo dienos iššūkio!</item>
+        <item>⭐ Dienos iššūkis laukia!</item>
+        <item>🧠 Pasiruošęs šiandienos iššūkiui?</item>
+        <item>💪 Tavo kasdienis proto treniruotė!</item>
+        <item>🏆 Mesti sau iššūkį šiandien!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Išbandyk savo atmintį su šiandienos unikaliu lenta</item>
+        <item>Ar gali įveikti vakarykštį rezultatą?</item>
+        <item>Naujas galvosūkis tavęs laukia</item>
+        <item>Surask visas poras ir pasidalink rezultatais</item>
+        <item>Visi gauna tą pačią lentą — kaip tu pasirodysI?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d klaida</item>
+        <item quantity="few">%d klaidos</item>
+        <item quantity="many">%d klaidų</item>
+        <item quantity="other">%d klaidų</item>
+    </plurals>
 </resources>

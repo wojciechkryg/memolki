@@ -23,15 +23,16 @@ import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.animated
+import com.wojdor.memolki.ui.theme.isSmallScreen
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
-fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
+fun WatchAdMultiplyRewardItem(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     Button(
-        modifier = Modifier
+        modifier = modifier
             .pulseEffect()
             .bounceClickEffect(),
         onClick = throttleClick(onClick = onClick),
@@ -41,10 +42,12 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
             disabledContainerColor = Color.Transparent
         ),
     ) {
+        val adIconSize = if (isSmallScreen) 80.dp else 128.dp
+        val coinIconSize = if (isSmallScreen) 40.dp else 64.dp
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 modifier = Modifier
-                    .size(128.dp),
+                    .size(adIconSize),
                 alignment = Alignment.Center,
                 painter = painterResource(R.drawable.ic_ads),
                 contentDescription = stringResource(R.string.watch_ad)
@@ -56,7 +59,7 @@ fun WatchAdMultiplyRewardItem(onClick: () -> Unit = {}) {
         }
         Spacer(modifier = Modifier.size(spacingM))
         Image(
-            modifier = Modifier.size(64.dp),
+            modifier = Modifier.size(coinIconSize),
             painter = painterResource(id = R.drawable.ic_coin),
             contentDescription = stringResource(R.string.coins),
         )

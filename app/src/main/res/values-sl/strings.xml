@@ -94,5 +94,29 @@
     <string name="daily_reward_day">Dan %d</string>
     <string name="daily_reward_collect">Zberi %d</string>
     <string name="daily_reward_back_tomorrow">Vrni se jutri</string>
-    <string name="share_text">Ujel sem vse pare v igri memolki! Me lahko premagate? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_text">Našel sem vse pare v memolki! Lahko zbereš več kart? 🃏
+https://play.google.com/store/apps/details?id=%s</string>
+
+    <string name="daily_challenge">Dnevni izziv</string>
+    <string name="daily_challenge_compare">Primerjaj</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Ne pozabi na dnevni izziv!</item>
+        <item>⭐ Dnevni izziv čaka!</item>
+        <item>🧠 Pripravljen na današnji izziv?</item>
+        <item>💪 Tvoja dnevna možganska vadba!</item>
+        <item>🏆 Izzovi se danes!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Preizkusi svoj spomin z današnjo edinstveno ploščo</item>
+        <item>Ali lahko premagas včerajšnji rezultat?</item>
+        <item>Nova uganka te čaka</item>
+        <item>Poišči vse pare in deli rezultate</item>
+        <item>Vsi dobijo isto ploščo — kako boš ti?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d napaka</item>
+        <item quantity="two">%d napaki</item>
+        <item quantity="few">%d napake</item>
+        <item quantity="other">%d napak</item>
+    </plurals>
 </resources>

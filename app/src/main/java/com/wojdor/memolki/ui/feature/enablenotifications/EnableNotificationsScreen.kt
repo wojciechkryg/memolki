@@ -75,7 +75,10 @@ private fun HandleEffect(
             EnableNotificationsEffect.RequestNotificationPermission ->
                 requestNotificationPermission(permissionLauncher, viewModel)
 
-            is EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame(effect.levelId)
+            is EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame(
+                effect.levelId
+            )
+
             EnableNotificationsEffect.NavigateToMenu -> navController.navigateToMenu()
             EnableNotificationsEffect.NavigateToCollection -> navController.navigateToCollection()
             EnableNotificationsEffect.NavigateToShop -> navController.navigateToShop()

@@ -2,6 +2,7 @@ package com.wojdor.memolki.data.local.settings
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.wojdor.memolki.data.local.datastore.settings.SettingsLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
