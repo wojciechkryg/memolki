@@ -57,7 +57,7 @@ private fun HandleState(
 }
 
 @Composable
-private fun SettingsScreen(
+internal fun SettingsScreen(
     state: SettingsState,
     callbacks: SettingsCallbacks = SettingsCallbacks()
 ) {

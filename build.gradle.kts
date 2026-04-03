@@ -6,4 +6,5 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics.plugin) apply false
+    alias(libs.plugins.compose.screenshot) apply false
 }
