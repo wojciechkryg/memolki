@@ -248,7 +248,10 @@ class GameViewModel @Inject constructor(
                         shouldShowCardDetails = false,
                         lastCardPressed = CardModel.Empty,
                         mistakeCount = 0,
-                        cardFlipCounts = emptyList()
+                        cardFlipCounts = emptyList(),
+                        cards = emptyList(),
+                        epochDay = 0L,
+                        startTimeMillis = 0L
                     )
                 }
             }
