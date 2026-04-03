@@ -86,6 +86,18 @@ fun DailyChallengeEndGameContent(
             showSparkles = true
         }
     }
+    LaunchedEffect(state.showSparkles) {
+        if (state.showSparkles) {
+            delay(LEVEL_COMPLETE_SOUND_DELAY)
+            callbacks.onLevelCompleteSoundReady()
+        }
+    }
+    LaunchedEffect(state.rewardedCoins) {
+        if (state.rewardedCoins > 0) {
+            delay(REWARD_COINS_DELAY)
+            callbacks.onRewardCoinsSoundReady()
+        }
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         DailyChallengeContent(state, callbacks)
         SparklesOverlay(isActive = showSparkles)
@@ -238,6 +250,8 @@ private const val STAR_INITIAL_DELAY = 300L
 private const val STAR_DELAY = 500L
 private const val STAR_SPRING_DURATION = 300L
 private const val FADE_IN_DURATION = 500
+private const val LEVEL_COMPLETE_SOUND_DELAY = 250L
+private const val REWARD_COINS_DELAY = 500L
 
 @Composable
 private fun MistakeCount(modifier: Modifier = Modifier, mistakeCount: Int) {

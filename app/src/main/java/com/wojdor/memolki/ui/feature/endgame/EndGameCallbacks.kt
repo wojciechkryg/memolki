@@ -8,5 +8,7 @@ data class EndGameCallbacks(
     val onShareClick: () -> Unit = {},
     val onFreeCoinsClick: () -> Unit = {},
     val onDailyChallengeStarsAnimationFinished: () -> Unit = {},
-    val onDailyChallengeShareClick: () -> Unit = {}
+    val onDailyChallengeShareClick: () -> Unit = {},
+    val onLevelCompleteSoundReady: () -> Unit = {},
+    val onRewardCoinsSoundReady: () -> Unit = {}
 )

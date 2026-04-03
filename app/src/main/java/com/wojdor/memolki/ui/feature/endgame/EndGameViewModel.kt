@@ -28,7 +28,6 @@ import com.wojdor.memolki.util.media.LevelCompletePlayer
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -66,6 +65,8 @@ class EndGameViewModel @Inject constructor(
     private var isNotificationRequestDismissed = false
     private var isDailyStreakRewardAvailable = false
     private var isShareRewardAvailable = false
+    private var pendingRewardedCoins = 0L
+    private var pendingCurrentCoins = 0L
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
@@ -82,6 +83,8 @@ class EndGameViewModel @Inject constructor(
             EndGameIntent.OnScreenResume -> onScreenResume()
             EndGameIntent.OnDailyChallengeStarsAnimationFinished -> onDailyChallengeStarsAnimationFinished()
             EndGameIntent.OnDailyChallengeShareClick -> onDailyChallengeShareClick()
+            EndGameIntent.OnLevelCompleteSoundReady -> levelCompletePlayer.play()
+            EndGameIntent.OnRewardCoinsSoundReady -> onRewardCoinsSoundReady()
         }
     }
 
@@ -92,7 +95,7 @@ class EndGameViewModel @Inject constructor(
             result.onSuccess { wasRewarded ->
                 if (wasRewarded) {
                     isShareRewardAvailable = false
-                    sendEffect(EndGameEffect.PlayCoinsSound)
+                    coinsPlayer.play()
                     sendState { copy(animateCoins = true) }
                     reloadCoins()
                     showMenu()
@@ -159,8 +162,6 @@ class EndGameViewModel @Inject constructor(
         checkDailyStreakRewardAvailable()
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
-            delay(LEVEL_COMPLETE_SOUND_DELAY)
-            sendEffect(EndGameEffect.PlayLevelCompleteSound)
             requestReview()
         }
     }
@@ -344,22 +345,14 @@ class EndGameViewModel @Inject constructor(
     private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
         viewModelScope.launch {
             rewardCoinsForLevelUseCase(level).first().onSuccess { rewardedCoins ->
+                pendingRewardedCoins = rewardedCoins
+                pendingCurrentCoins = currentCoins
                 sendState {
                     copy(
                         rewardedCoins = if (isRewardFromAd) uiState.value.rewardedCoins + rewardedCoins else rewardedCoins,
                         animateRewardCoins = isRewardFromAd
                     )
                 }
-                delay(REWARD_COINS_DELAY)
-                sendEffect(EndGameEffect.PlayCoinsSound)
-                sendState {
-                    copy(
-                        currentCoins = currentCoins + rewardedCoins,
-                        animateCoins = true
-                    )
-                }
-                showMenu()
-                sendTotalCoinsScore()
             }
         }
     }
@@ -384,10 +377,6 @@ class EndGameViewModel @Inject constructor(
         }
         loadAd()
         loadCurrentCoins()
-        viewModelScope.launch {
-            delay(LEVEL_COMPLETE_SOUND_DELAY)
-            sendEffect(EndGameEffect.PlayLevelCompleteSound)
-        }
     }
 
     private fun loadCurrentCoins() {
@@ -406,18 +395,23 @@ class EndGameViewModel @Inject constructor(
         viewModelScope.launch {
             rewardCoinsForLevelUseCase(uiState.value.level).first()
                 .onSuccess { rewardedCoins ->
+                    pendingRewardedCoins = rewardedCoins
+                    pendingCurrentCoins = currentCoins
                     sendState { copy(rewardedCoins = rewardedCoins) }
-                    delay(REWARD_COINS_DELAY)
-                    sendEffect(EndGameEffect.PlayCoinsSound)
-                    sendState {
-                        copy(
-                            currentCoins = currentCoins + rewardedCoins,
-                            animateCoins = true
-                        )
-                    }
-                    sendTotalCoinsScore()
                 }
         }
+    }
+
+    private fun onRewardCoinsSoundReady() {
+        coinsPlayer.play()
+        sendState {
+            copy(
+                currentCoins = pendingCurrentCoins + pendingRewardedCoins,
+                animateCoins = true
+            )
+        }
+        showMenu()
+        sendTotalCoinsScore()
     }
 
     private fun onDailyChallengeShareClick() {
@@ -433,17 +427,7 @@ class EndGameViewModel @Inject constructor(
         analytics.logDailyChallengeShare(result.epochDay, result.starCount)
     }
 
-    fun playLevelCompleteSound() {
-        levelCompletePlayer.play()
-    }
-
-    fun playCoinsSound() {
-        coinsPlayer.play()
-    }
-
     companion object {
-        const val LEVEL_COMPLETE_SOUND_DELAY = 250L
-        const val REWARD_COINS_DELAY = 500L
         const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
         private const val PLACEMENT = "end_game"
         private const val DAILY_CHALLENGE_PLACEMENT = "daily_challenge_end_game"

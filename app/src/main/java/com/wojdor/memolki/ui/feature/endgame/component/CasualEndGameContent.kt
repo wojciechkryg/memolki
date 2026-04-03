@@ -21,7 +21,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -50,6 +52,18 @@ fun CasualEndGameContent(
     state: EndGameState,
     callbacks: EndGameCallbacks
 ) {
+    LaunchedEffect(state.showSparkles) {
+        if (state.showSparkles) {
+            delay(LEVEL_COMPLETE_SOUND_DELAY)
+            callbacks.onLevelCompleteSoundReady()
+        }
+    }
+    LaunchedEffect(state.rewardedCoins) {
+        if (state.rewardedCoins > 0) {
+            delay(REWARD_COINS_DELAY)
+            callbacks.onRewardCoinsSoundReady()
+        }
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -249,3 +263,6 @@ private fun CasualEndGameContentWithFreeCoinsPreview() {
         )
     }
 }
+
+private const val LEVEL_COMPLETE_SOUND_DELAY = 250L
+private const val REWARD_COINS_DELAY = 500L

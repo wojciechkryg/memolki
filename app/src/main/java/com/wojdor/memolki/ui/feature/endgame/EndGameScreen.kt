@@ -77,9 +77,6 @@ private fun HandleEffect(
             is EndGameEffect.ShareDailyChallenge -> activity?.let {
                 shareDailyChallenge(it, effect.text)
             }
-
-            EndGameEffect.PlayLevelCompleteSound -> viewModel.playLevelCompleteSound()
-            EndGameEffect.PlayCoinsSound -> viewModel.playCoinsSound()
         }
     }
 }
@@ -159,7 +156,9 @@ private fun HandleState(
         onShareClick = { viewModel.sendIntent(EndGameIntent.OnShareClick) },
         onFreeCoinsClick = { viewModel.sendIntent(EndGameIntent.OnFreeCoinsClick) },
         onDailyChallengeStarsAnimationFinished = { viewModel.sendIntent(EndGameIntent.OnDailyChallengeStarsAnimationFinished) },
-        onDailyChallengeShareClick = { viewModel.sendIntent(EndGameIntent.OnDailyChallengeShareClick) }
+        onDailyChallengeShareClick = { viewModel.sendIntent(EndGameIntent.OnDailyChallengeShareClick) },
+        onLevelCompleteSoundReady = { viewModel.sendIntent(EndGameIntent.OnLevelCompleteSoundReady) },
+        onRewardCoinsSoundReady = { viewModel.sendIntent(EndGameIntent.OnRewardCoinsSoundReady) }
     )
     EndGameScreen(state, callbacks)
 }
