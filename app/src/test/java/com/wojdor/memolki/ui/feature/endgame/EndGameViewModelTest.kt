@@ -146,7 +146,7 @@ class EndGameViewModelTest : AppTest() {
             val expected = EndGameState(
                 level = levelModel,
                 rewardedCoins = rewardedCoins,
-                currentCoins = rewardedCoins,
+                currentCoins = 0L,
                 menu = listOf(
                     EndGameMenuModel.PlayAgain,
                     EndGameMenuModel.Menu,
@@ -156,7 +156,7 @@ class EndGameViewModelTest : AppTest() {
                         rewardCoins = RewardCoinsForShareUseCase.SHARE_REWARD_COINS
                     )
                 ),
-                animateCoins = true,
+                animateCoins = false,
                 showSparkles = true
             )
             assertEquals(expected, sut.uiState.value)
