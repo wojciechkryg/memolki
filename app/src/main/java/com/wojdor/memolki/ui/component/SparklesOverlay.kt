@@ -10,22 +10,12 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.StrokeJoin
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
 import kotlinx.coroutines.delay
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
 import kotlin.random.Random
 
 @Composable
@@ -109,7 +99,7 @@ private fun SparklesOverlayPreview() {
                 Triple(0.75f, 0.92f, 7f)
             )
             positions.forEachIndexed { index, (xFrac, yFrac, sizeDp) ->
-                drawPreviewSparkle(
+                drawSparkle(
                     center = Offset(xFrac * size.width, yFrac * size.height),
                     radius = sizeDp * density,
                     color = fontColor,
@@ -120,42 +110,4 @@ private fun SparklesOverlayPreview() {
             }
         }
     }
-}
-
-private fun DrawScope.drawPreviewSparkle(
-    center: Offset,
-    radius: Float,
-    color: Color,
-    strokeWidth: Float,
-    rotation: Float,
-    cornerRadius: Float,
-    points: Int = 4
-) {
-    val path = Path()
-    val innerRadius = radius * 0.2f
-    val stepAngle = PI / points
-    for (i in 0 until points) {
-        val tipAngle = rotation + (PI / 2) + (i * 2 * stepAngle)
-        val valleyAngle = tipAngle + stepAngle
-        val nextTipAngle = tipAngle + 2 * stepAngle
-        val tipX = center.x + (radius * cos(tipAngle)).toFloat()
-        val tipY = center.y - (radius * sin(tipAngle)).toFloat()
-        val valleyX = center.x + (innerRadius * cos(valleyAngle)).toFloat()
-        val valleyY = center.y - (innerRadius * sin(valleyAngle)).toFloat()
-        val nextTipX = center.x + (radius * cos(nextTipAngle)).toFloat()
-        val nextTipY = center.y - (radius * sin(nextTipAngle)).toFloat()
-        if (i == 0) path.moveTo(tipX, tipY)
-        path.quadraticTo(valleyX, valleyY, nextTipX, nextTipY)
-    }
-    path.close()
-    drawPath(
-        path,
-        color,
-        style = Stroke(
-            width = strokeWidth,
-            cap = StrokeCap.Round,
-            join = StrokeJoin.Round,
-            pathEffect = PathEffect.cornerPathEffect(cornerRadius)
-        )
-    )
 }

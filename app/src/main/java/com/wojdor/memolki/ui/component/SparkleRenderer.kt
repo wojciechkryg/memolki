@@ -47,7 +47,7 @@ fun SparkleCanvas(
     }
 }
 
-private fun DrawScope.drawSparkle(
+internal fun DrawScope.drawSparkle(
     center: Offset,
     radius: Float,
     color: Color,
