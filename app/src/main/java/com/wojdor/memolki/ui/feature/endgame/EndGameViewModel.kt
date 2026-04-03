@@ -415,6 +415,7 @@ class EndGameViewModel @Inject constructor(
                             animateCoins = true
                         )
                     }
+                    sendTotalCoinsScore()
                 }
         }
     }
