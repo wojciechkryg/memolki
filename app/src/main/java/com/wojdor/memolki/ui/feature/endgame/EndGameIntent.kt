@@ -22,6 +22,6 @@ sealed class EndGameIntent : UiIntent {
     object OnScreenResume : EndGameIntent()
     object OnDailyChallengeStarsAnimationFinished : EndGameIntent()
     object OnDailyChallengeShareClick : EndGameIntent()
-    object OnLevelCompleteSoundReady : EndGameIntent()
-    object OnRewardCoinsSoundReady : EndGameIntent()
+    object OnLevelComplete : EndGameIntent()
+    object OnRewardCoinsReady : EndGameIntent()
 }

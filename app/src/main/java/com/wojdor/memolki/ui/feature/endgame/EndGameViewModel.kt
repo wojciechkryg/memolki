@@ -83,8 +83,8 @@ class EndGameViewModel @Inject constructor(
             EndGameIntent.OnScreenResume -> onScreenResume()
             EndGameIntent.OnDailyChallengeStarsAnimationFinished -> onDailyChallengeStarsAnimationFinished()
             EndGameIntent.OnDailyChallengeShareClick -> onDailyChallengeShareClick()
-            EndGameIntent.OnLevelCompleteSoundReady -> levelCompletePlayer.play()
-            EndGameIntent.OnRewardCoinsSoundReady -> onRewardCoinsSoundReady()
+            EndGameIntent.OnLevelComplete -> levelCompletePlayer.play()
+            EndGameIntent.OnRewardCoinsReady -> onRewardCoinsReady()
         }
     }
 
@@ -402,7 +402,7 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onRewardCoinsSoundReady() {
+    private fun onRewardCoinsReady() {
         coinsPlayer.play()
         sendState {
             copy(

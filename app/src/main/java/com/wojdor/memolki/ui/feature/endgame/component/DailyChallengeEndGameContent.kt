@@ -89,13 +89,13 @@ fun DailyChallengeEndGameContent(
     LaunchedEffect(state.showSparkles) {
         if (state.showSparkles) {
             delay(LEVEL_COMPLETE_SOUND_DELAY)
-            callbacks.onLevelCompleteSoundReady()
+            callbacks.onLevelComplete()
         }
     }
     LaunchedEffect(state.rewardedCoins) {
         if (state.rewardedCoins > 0) {
             delay(REWARD_COINS_DELAY)
-            callbacks.onRewardCoinsSoundReady()
+            callbacks.onRewardCoinsReady()
         }
     }
     Box(modifier = Modifier.fillMaxSize()) {

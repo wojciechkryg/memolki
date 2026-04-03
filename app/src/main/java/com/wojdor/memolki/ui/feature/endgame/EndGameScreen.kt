@@ -157,8 +157,8 @@ private fun HandleState(
         onFreeCoinsClick = { viewModel.sendIntent(EndGameIntent.OnFreeCoinsClick) },
         onDailyChallengeStarsAnimationFinished = { viewModel.sendIntent(EndGameIntent.OnDailyChallengeStarsAnimationFinished) },
         onDailyChallengeShareClick = { viewModel.sendIntent(EndGameIntent.OnDailyChallengeShareClick) },
-        onLevelCompleteSoundReady = { viewModel.sendIntent(EndGameIntent.OnLevelCompleteSoundReady) },
-        onRewardCoinsSoundReady = { viewModel.sendIntent(EndGameIntent.OnRewardCoinsSoundReady) }
+        onLevelComplete = { viewModel.sendIntent(EndGameIntent.OnLevelComplete) },
+        onRewardCoinsReady = { viewModel.sendIntent(EndGameIntent.OnRewardCoinsReady) }
     )
     EndGameScreen(state, callbacks)
 }
