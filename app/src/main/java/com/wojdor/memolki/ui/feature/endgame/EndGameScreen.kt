@@ -77,6 +77,9 @@ private fun HandleEffect(
             is EndGameEffect.ShareDailyChallenge -> activity?.let {
                 shareDailyChallenge(it, effect.text)
             }
+
+            EndGameEffect.PlayLevelCompleteSound -> viewModel.playLevelCompleteSound()
+            EndGameEffect.PlayCoinsSound -> viewModel.playCoinsSound()
         }
     }
 }

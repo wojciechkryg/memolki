@@ -92,7 +92,7 @@ class EndGameViewModel @Inject constructor(
             result.onSuccess { wasRewarded ->
                 if (wasRewarded) {
                     isShareRewardAvailable = false
-                    coinsPlayer.play()
+                    sendEffect(EndGameEffect.PlayCoinsSound)
                     sendState { copy(animateCoins = true) }
                     reloadCoins()
                     showMenu()
@@ -160,7 +160,7 @@ class EndGameViewModel @Inject constructor(
         getCurrentCoinsAndReward(level)
         viewModelScope.launch {
             delay(LEVEL_COMPLETE_SOUND_DELAY)
-            levelCompletePlayer.play()
+            sendEffect(EndGameEffect.PlayLevelCompleteSound)
             requestReview()
         }
     }
@@ -351,7 +351,7 @@ class EndGameViewModel @Inject constructor(
                     )
                 }
                 delay(REWARD_COINS_DELAY)
-                coinsPlayer.play()
+                sendEffect(EndGameEffect.PlayCoinsSound)
                 sendState {
                     copy(
                         currentCoins = currentCoins + rewardedCoins,
@@ -386,7 +386,7 @@ class EndGameViewModel @Inject constructor(
         loadCurrentCoins()
         viewModelScope.launch {
             delay(LEVEL_COMPLETE_SOUND_DELAY)
-            levelCompletePlayer.play()
+            sendEffect(EndGameEffect.PlayLevelCompleteSound)
         }
     }
 
@@ -408,7 +408,7 @@ class EndGameViewModel @Inject constructor(
                 .onSuccess { rewardedCoins ->
                     sendState { copy(rewardedCoins = rewardedCoins) }
                     delay(REWARD_COINS_DELAY)
-                    coinsPlayer.play()
+                    sendEffect(EndGameEffect.PlayCoinsSound)
                     sendState {
                         copy(
                             currentCoins = currentCoins + rewardedCoins,
@@ -431,6 +431,14 @@ class EndGameViewModel @Inject constructor(
         )
         sendEffect(EndGameEffect.ShareDailyChallenge(shareText))
         analytics.logDailyChallengeShare(result.epochDay, result.starCount)
+    }
+
+    fun playLevelCompleteSound() {
+        levelCompletePlayer.play()
+    }
+
+    fun playCoinsSound() {
+        coinsPlayer.play()
     }
 
     companion object {
