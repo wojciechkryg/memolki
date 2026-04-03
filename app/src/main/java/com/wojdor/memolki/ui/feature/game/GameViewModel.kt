@@ -209,6 +209,11 @@ class GameViewModel @Inject constructor(
                 card
             }
         }
+        sendEffect(GameEffect.PlayMatchSound)
+    }
+
+    fun playMatchSound() {
+        cardPairMatchedPlayer.play()
     }
 
     private fun onMistakeShakeComplete() {
@@ -278,8 +283,6 @@ class GameViewModel @Inject constructor(
         incrementTotalCardPairsMatchedUseCase().onEach { result ->
             result.onSuccess {
                 sendEffect(GameEffect.SendTotalCardPairsMatchedScore(googlePlayGames, it))
-                delay(MATCH_SOUND_DELAY)
-                cardPairMatchedPlayer.play()
             }
         }.launchIn(viewModelScope)
     }
@@ -449,7 +452,7 @@ class GameViewModel @Inject constructor(
         val DAILY_CHALLENGE_LEVEL = LevelModel.Grid5x6(isUnlocked = true)
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
         const val END_GAME_DELAY = 1000L
-        const val MATCH_SOUND_DELAY = 250L
+
         const val MAX_STARS = 3
         const val TWO_STARS = 2
         const val MIN_STARS = 1

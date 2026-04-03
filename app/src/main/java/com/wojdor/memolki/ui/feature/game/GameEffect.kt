@@ -17,4 +17,6 @@ sealed class GameEffect : UiEffect {
         val googlePlayGames: GooglePlayGames,
         val totalCardPairsMatched: Long
     ) : GameEffect()
+
+    data object PlayMatchSound : GameEffect()
 }
