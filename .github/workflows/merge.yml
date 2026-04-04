@@ -84,8 +84,8 @@ jobs:
 
       - name: Add Internal App Sharing link to summary
         run: |
-          echo "### 📱 Internal App Sharing — ${{ matrix.flavor }}" >> $GITHUB_STEP_SUMMARY
-          echo "[${{ env.lowercase_flavor }} download link](${{ steps.internal_sharing.outputs.internalSharingDownloadUrl }})" >> $GITHUB_STEP_SUMMARY
+          echo "### 📱✨ Internal App Sharing — ${{ matrix.flavor }}" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [${{ env.lowercase_flavor }} download link](${{ steps.internal_sharing.outputs.internalSharingDownloadUrl }}) 🚀" >> $GITHUB_STEP_SUMMARY
 
   tag_and_bump_version:
     needs: build_and_upload
