@@ -17,7 +17,7 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.ui.app.navigateToChangeLanguage
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.feature.menu.component.MenuItem
+import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.feature.settings.component.ToggleSettingButton
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingXL
@@ -72,7 +72,7 @@ private fun SettingsScreen(
             }
             Spacer(modifier = Modifier.height(spacingXL))
         }
-        MenuItem(textId = R.string.setting_language) {
+        BaseMenuItem(textId = R.string.setting_language) {
             callbacks.onLanguageClick()
         }
     }

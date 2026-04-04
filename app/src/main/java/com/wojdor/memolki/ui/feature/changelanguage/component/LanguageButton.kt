@@ -79,7 +79,7 @@ fun LanguageButton(
                 )
             }
             Text(
-                text = stringResource(id = language.textId).uppercase(),
+                text = stringResource(id = language.textId).lowercase(),
                 style = MaterialTheme.typography.displaySmall
             )
         }
