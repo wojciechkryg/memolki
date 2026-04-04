@@ -21,7 +21,8 @@ class CardPairMapperTest : AppTest() {
         val sut = CardPairEntity(
             id = "pairId",
             pair = CardEntity.Image("id", 123, 321) to
-                    CardEntity.Text("id", 123)
+                    CardEntity.Text("id", 123),
+            addedEpochDay = 20439L
         )
 
         // when
@@ -30,7 +31,8 @@ class CardPairMapperTest : AppTest() {
         // then
         val expected = CardPairModel(
             CardModel.Image("id", "pairId", 123, 321),
-            CardModel.Text("id", "pairId", 123)
+            CardModel.Text("id", "pairId", 123),
+            addedEpochDay = 20439L
         )
         assertEquals(expected, result)
     }

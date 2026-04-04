@@ -21,27 +21,25 @@ class GetDailyChallengeCardsUseCase @Inject constructor(
     override fun execute(level: LevelModel) = flow {
         val pairCount = (level.columns * level.rows) / 2
         val seed = timeProvider.currentLocalDate().toEpochDay()
-        val allCardPairs = cardRepository.getAllCardPairsWithAddedEpochDay()
+        val allCardPairs = cardRepository.getAllCardPairs()
         require(allCardPairs.size >= pairCount) {
             "Not enough card pairs for $level. Required=$pairCount, available=${allCardPairs.size}"
         }
-        val selectedPairIds = allCardPairs
-            .map { (id, addedEpochDay) ->
-                val daysSinceAdded = seed - addedEpochDay
+        val selectedPairs = allCardPairs
+            .map { cardPair ->
+                val daysSinceAdded = seed - cardPair.addedEpochDay
                 val score = if (daysSinceAdded < NEW_CARD_GRACE_PERIOD_DAYS) {
                     0.0
                 } else {
-                    Random(seed * 31 + id.hashCode().toLong()).nextDouble()
+                    Random(seed * 31 + cardPair.first.pairId.hashCode().toLong()).nextDouble()
                 }
-                id to score
+                cardPair to score
             }
             .sortedByDescending { it.second }
             .take(pairCount)
             .map { it.first }
         val boardRandom = Random(seed)
-        val shuffledCards = selectedPairIds.map { id ->
-            requireNotNull(cardRepository.getCardPairById(id)) { "Missing card pair for id=$id" }
-        }
+        val shuffledCards = selectedPairs
             .flatMap { listOf(it.first, it.second) }
             .shuffled(boardRandom)
         emit(Result.success(shuffledCards))
