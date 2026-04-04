@@ -1,7 +1,7 @@
 name: Pull Request Workflow
 
 on:
-  pull_request_target:
+  pull_request:
 
 jobs:
   tests-execution:
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
           cache: 'gradle'
 
       - uses: gradle/actions/setup-gradle@v4
@@ -25,7 +25,21 @@ jobs:
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
       - name: Run unit tests
-        run: gradle testFruitHalfDebugUnitTest --build-cache
+        run: ./gradlew testFruitHalfDebugUnitTest --build-cache
+
+      # TODO: Remove continue-on-error once Paparazzi 2.0.0-alpha05 adds AGP 9 support
+      # Tracked: https://github.com/cashapp/paparazzi/pull/2198
+      - name: Verify screenshot tests
+        continue-on-error: true
+        run: ./gradlew verifyPaparazziFruitHalfDebug --build-cache
+
+      - name: Upload screenshot failures
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-failures
+          path: app/build/paparazzi/failures/
+          retention-days: 14
 
   debug-flags-check:
     runs-on: ubuntu-latest
