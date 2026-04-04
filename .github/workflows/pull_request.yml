@@ -37,7 +37,7 @@ jobs:
       - name: Check for enabled debug flags
         run: |
           if grep -r 'RECORDING_MODE = true' app/src/; then
-            echo "::error::RECORDING_MODE is enabled. Disable it before merging."
+            echo "::error::🚨 RECORDING_MODE is enabled. Disable it before merging."
             exit 1
           fi
 
@@ -47,4 +47,4 @@ jobs:
     if: ${{ always() && (needs.tests-execution.result == 'success' || needs.tests-execution.result == 'skipped') && needs.debug-flags-check.result == 'success' }}
     steps:
       - name: All checks passed
-        run: echo "All checks passed or were intentionally skipped."
+        run: echo "✅ All checks passed or were intentionally skipped."
