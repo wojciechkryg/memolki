@@ -27,7 +27,7 @@ class PreviewTest(
     val paparazzi = Paparazzi(
         deviceConfig = DeviceConfig.PIXEL_5.copy(nightMode = NightMode.NOTNIGHT),
         renderingMode = RenderingMode.SHRINK,
-        maxPercentDifference = 0.1
+        maxPercentDifference = 0.001
     )
 
     @Test
