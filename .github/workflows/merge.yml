@@ -73,6 +73,20 @@ jobs:
           mappingFile: "app/build/outputs/mapping/${{ matrix.flavor }}Release/mapping.txt"
           track: production
 
+      - name: Upload to Internal App Sharing
+        id: internal_sharing
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
+          releaseFiles: "app/build/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab"
+          track: internalsharing
+
+      - name: Add Internal App Sharing link to summary
+        run: |
+          echo "### 📱 Internal App Sharing — ${{ matrix.flavor }}" >> $GITHUB_STEP_SUMMARY
+          echo "[${{ env.lowercase_flavor }} download link](${{ steps.internal_sharing.outputs.internalSharingDownloadUrl }})" >> $GITHUB_STEP_SUMMARY
+
   tag_and_bump_version:
     needs: build_and_upload
     runs-on: ubuntu-latest
