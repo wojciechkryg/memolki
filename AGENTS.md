@@ -27,7 +27,15 @@ After making changes, always install and launch the app on the connected device/
 
 # Run a single test method
 ./gradlew testFruitHalfDebugUnitTest --tests "com.wojdor.memolki.ui.feature.menu.MenuViewModelTest.when initial load is done then the state is updated with menu"
+
+# Verify screenshot tests — run after building/installing to catch visual regressions
+./gradlew verifyPaparazziFruitHalfDebug
+
+# Record new screenshot references — run after intentional UI changes
+./gradlew recordPaparazziFruitHalfDebug
 ```
+
+After making UI changes, always run `verifyPaparazziFruitHalfDebug` alongside the build/install step. If screenshots differ intentionally, run `recordPaparazziFruitHalfDebug` to update the references and commit the updated PNGs.
 
 ## Setup
 

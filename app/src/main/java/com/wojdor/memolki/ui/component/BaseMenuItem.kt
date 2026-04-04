@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -17,8 +18,8 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun BaseMenuItem(
     @StringRes textId: Int,
-    isUppercase: Boolean = true,
     isEnabled: Boolean = true,
+    textStyle: TextStyle = MaterialTheme.typography.displaySmall,
     onClick: () -> Unit = {}
 ) {
     Button(
@@ -31,21 +32,15 @@ fun BaseMenuItem(
         enabled = isEnabled
     ) {
         Text(
-            text = stringResource(textId).run {
-                if (isUppercase) {
-                    uppercase()
-                } else {
-                    lowercase()
-                }
-            },
-            style = MaterialTheme.typography.displaySmall
+            text = stringResource(textId).lowercase(),
+            style = textStyle
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun BaseMenuItemUppercasePreview() {
+private fun BaseMenuItemPreview() {
     AppTheme {
         BaseMenuItem(R.string.app_name)
     }
@@ -53,16 +48,8 @@ private fun BaseMenuItemUppercasePreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun BaseMenuItemLowercasePreview() {
-    AppTheme {
-        BaseMenuItem(R.string.app_name, isUppercase = false)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
 private fun BaseMenuItemDisabledPreview() {
     AppTheme {
-        BaseMenuItem(R.string.app_name, isUppercase = false, isEnabled = false)
+        BaseMenuItem(R.string.app_name, isEnabled = false)
     }
 }

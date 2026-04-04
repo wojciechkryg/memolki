@@ -46,6 +46,4 @@ class CardRepository @Inject constructor(
 
     fun getCardPairById(pairId: String) = allCardPairsDataSource.getCardPairById(pairId)?.toModel()
 
-    fun getAllCardPairIds(): List<String> =
-        allCardPairsDataSource.getAllCardPairs().map { it.id }.sorted()
 }

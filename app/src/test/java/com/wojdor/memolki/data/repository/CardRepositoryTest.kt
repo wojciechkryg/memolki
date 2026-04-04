@@ -125,16 +125,6 @@ class CardRepositoryTest : AppTest() {
     }
 
     @Test
-    fun `when getAllCardPairIds then return sorted ids`() {
-        // when
-        val result = sut.getAllCardPairIds()
-
-        // then
-        assertEquals(result, result.sorted())
-        assertTrue(result.isNotEmpty())
-    }
-
-    @Test
     fun `should return card pair by id`() {
         // given
         val pairId = "banana"

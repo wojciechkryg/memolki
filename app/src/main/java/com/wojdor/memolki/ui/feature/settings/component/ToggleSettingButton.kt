@@ -71,7 +71,7 @@ fun ToggleSettingButton(
             }
             Spacer(modifier = Modifier.size(spacingXS))
             Text(
-                text = stringResource(id = setting.textId).uppercase(),
+                text = stringResource(id = setting.textId).lowercase(),
                 style = MaterialTheme.typography.displaySmall
             )
         }

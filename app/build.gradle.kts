@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics.plugin)
+    alias(libs.plugins.paparazzi)
 }
 
 val secretsPropertiesFile = rootProject.file("secrets.properties")
@@ -40,8 +41,8 @@ android {
         applicationId = "com.wojdor.memolki"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1003020
-        versionName = "1.3.20"
+        versionCode = 1003022
+        versionName = "1.3.22"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -103,6 +104,7 @@ android {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
+
 
     val resolvedBillingKeys = flavorConfigs.associate { (flavor, keyName) ->
         flavor to getSecretValue(keyName)
@@ -176,4 +178,8 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
+
+    testImplementation(libs.paparazzi)
+    testImplementation(libs.composable.preview.scanner)
+    testImplementation(libs.test.parameter.injector)
 }

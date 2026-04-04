@@ -7,5 +7,6 @@ fun List<CardPairEntity>.toModel() = map { it.toModel() }
 
 fun CardPairEntity.toModel() = CardPairModel(
     first = pair.first.toModel(id),
-    second = pair.second.toModel(id)
+    second = pair.second.toModel(id),
+    addedEpochDay = addedEpochDay
 )

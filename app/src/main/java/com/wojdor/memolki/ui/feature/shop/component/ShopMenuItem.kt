@@ -124,7 +124,7 @@ private const val NO_DRAWABLE = -1
 
 @Preview
 @Composable
-fun ShopMenuItemShortPreview() {
+private fun ShopMenuItemShortPreview() {
     AppTheme {
         ShopMenuItem(
             priceText = "0.99 PLN",
@@ -136,7 +136,7 @@ fun ShopMenuItemShortPreview() {
 
 @Preview
 @Composable
-fun ShopMenuItemLongPreview() {
+private fun ShopMenuItemLongPreview() {
     AppTheme {
         ShopMenuItem(
             priceText = "149.99 PLN",
@@ -148,7 +148,7 @@ fun ShopMenuItemLongPreview() {
 
 @Preview
 @Composable
-fun ShopMenuItemAdsPreview() {
+private fun ShopMenuItemAdsPreview() {
     AppTheme {
         ShopMenuItem(
             leftDrawableRes = R.drawable.ic_ads,

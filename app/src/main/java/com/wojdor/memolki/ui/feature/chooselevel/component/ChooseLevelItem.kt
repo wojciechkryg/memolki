@@ -62,7 +62,6 @@ fun ChooseLevelItem(
         ForceLtr {
             BaseMenuItem(
                 textId = textId,
-                isUppercase = false,
                 isEnabled = isEnabled,
                 onClick = onClick
             )

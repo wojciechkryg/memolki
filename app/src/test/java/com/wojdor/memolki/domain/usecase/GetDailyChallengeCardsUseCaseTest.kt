@@ -1,25 +1,32 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
+import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
 import javax.inject.Inject
+import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 class GetDailyChallengeCardsUseCaseTest : AppTest() {
 
     @Inject
     lateinit var cardRepository: CardRepository
+
+    @Inject
+    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
 
     @Inject
     lateinit var fakeTimeProvider: FakeTimeProvider
@@ -111,5 +118,38 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
 
         // then
         assertNotEquals(result1, result2)
+    }
+
+    @Test
+    fun `when cards are within grace period then they are deprioritized`() = runTest {
+        // given
+        val level = LevelModel.Grid2x3()
+        val testDate = LocalDate.of(2026, 3, 26)
+        val testEpochDay = testDate.toEpochDay()
+        fakeTimeProvider.mockCurrentDate = testDate
+        val fakeDataSource = FakeAllCardPairsDataSource()
+        fakeDataSource.addedEpochDayOverrides = mapOf(
+            "banana" to testEpochDay - 10,
+            "apple" to testEpochDay - 10,
+            "strawberry" to testEpochDay - 10
+        )
+        sut = GetDailyChallengeCardsUseCase(
+            testDispatcher,
+            CardRepository(fakeDataSource, unlockedCardPairsLocalDataSource, Random(0)),
+            fakeTimeProvider
+        )
+        val pairCount = (level.columns * level.rows) / 2
+
+        // when
+        sut(level).test {
+            val cards = awaitItem().getOrThrow()
+            val selectedPairIds = cards.map { it.pairId }.distinct()
+
+            // then
+            val gracePeriodIds = setOf("banana", "apple", "strawberry")
+            val nonGracePeriodSelected = selectedPairIds.count { it !in gracePeriodIds }
+            assertEquals(pairCount, nonGracePeriodSelected)
+            awaitComplete()
+        }
     }
 }

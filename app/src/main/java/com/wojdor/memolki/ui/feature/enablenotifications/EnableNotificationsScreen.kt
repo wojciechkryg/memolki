@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -28,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,8 +44,10 @@ import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
-import com.wojdor.memolki.ui.component.BaseMenuItem
+import com.wojdor.memolki.ui.component.bounceClickEffect
+import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingXL
@@ -139,10 +144,20 @@ private fun EnableNotificationsScreen(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(spacingXL))
-        BaseMenuItem(
-            textId = R.string.enable_notifications_enable,
-            onClick = callbacks.onEnableClick
-        )
+        Button(
+            modifier = Modifier
+                .pulseEffect()
+                .bounceClickEffect(),
+            onClick = throttleClick(onClick = callbacks.onEnableClick),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent
+            )
+        ) {
+            Text(
+                text = stringResource(R.string.enable_notifications_enable).uppercase(),
+                style = MaterialTheme.typography.displaySmall.animated()
+            )
+        }
         var isLaterVisible by remember { mutableStateOf(false) }
         LaunchedEffect(Unit) {
             delay(LATER_BUTTON_DELAY)
@@ -170,8 +185,8 @@ private fun EnableNotificationsScreen(
 
 private const val LATER_BUTTON_DELAY = 1500L
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun EnableNotificationsScreenPreview() {
     AppTheme {
         EnableNotificationsScreen(

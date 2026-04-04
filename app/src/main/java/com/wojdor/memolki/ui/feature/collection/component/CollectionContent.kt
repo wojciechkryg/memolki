@@ -43,8 +43,8 @@ fun CollectionContent(
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun CollectionPreview() {
     AppTheme {
         CollectionContent(

@@ -59,7 +59,7 @@ import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
-import com.wojdor.memolki.ui.feature.menu.component.MenuItem
+import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.animated
@@ -189,9 +189,8 @@ private fun DailyChallengeContent(
                     when (menuItem) {
                         EndGameMenuModel.WatchAd -> WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
                         EndGameMenuModel.Compare -> CompareButton(onClick = callbacks.onDailyChallengeShareClick)
-                        EndGameMenuModel.Menu -> MenuItem(
+                        EndGameMenuModel.Menu -> BaseMenuItem(
                             textId = menuItem.textId,
-                            isUppercase = false,
                             onClick = callbacks.onMenuClick
                         )
 
@@ -342,8 +341,8 @@ private const val SHIMMER_DURATION_MS = 2500
 private const val SHIMMER_WIDTH_FRACTION = 0.35f
 private const val SHIMMER_ALPHA = 0.08f
 
-@Composable
 @Preview
+@Composable
 private fun DailyChallengeEndGameContentPreview() {
     AppTheme {
         DailyChallengeEndGameContent(
@@ -362,8 +361,8 @@ private fun DailyChallengeEndGameContentPreview() {
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun DailyChallengeEndGameContentTwoStarsPreview() {
     AppTheme {
         DailyChallengeEndGameContent(
@@ -382,8 +381,8 @@ private fun DailyChallengeEndGameContentTwoStarsPreview() {
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun DailyChallengeEndGameContentOneStarPreview() {
     AppTheme {
         DailyChallengeEndGameContent(
