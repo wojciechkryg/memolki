@@ -170,8 +170,8 @@ private fun EnableNotificationsScreen(
 
 private const val LATER_BUTTON_DELAY = 1500L
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun EnableNotificationsScreenPreview() {
     AppTheme {
         EnableNotificationsScreen(

@@ -129,8 +129,8 @@ fun ShopContent(
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun ShopContentPreview() {
     AppTheme {
         ShopContent(
@@ -148,8 +148,8 @@ private fun ShopContentPreview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun ShopContentDailyRewardCollectedPreview() {
     AppTheme {
         ShopContent(

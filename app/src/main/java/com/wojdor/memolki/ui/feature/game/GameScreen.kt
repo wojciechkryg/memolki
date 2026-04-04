@@ -124,8 +124,8 @@ private fun GameScreen(
     )
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun GameScreenGrid2x3Preview() {
     AppTheme {
         GameScreen(
@@ -143,8 +143,8 @@ private fun GameScreenGrid2x3Preview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun GameScreenGrid3x4Preview() {
     AppTheme {
         GameScreen(
@@ -162,8 +162,8 @@ private fun GameScreenGrid3x4Preview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun GameScreenGrid4x4Preview() {
     AppTheme {
         GameScreen(
@@ -181,8 +181,8 @@ private fun GameScreenGrid4x4Preview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun GameScreenGrid4x5Preview() {
     AppTheme {
         GameScreen(
@@ -201,8 +201,8 @@ private fun GameScreenGrid4x5Preview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun GameScreenGrid4x6Preview() {
     AppTheme {
         GameScreen(
@@ -220,8 +220,8 @@ private fun GameScreenGrid4x6Preview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun GameScreenGrid5x6Preview() {
     AppTheme {
         GameScreen(

@@ -148,3 +148,20 @@ private fun MenuScreenPreview() {
         )
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+private fun MenuScreenWithoutMoreAppsPreview() {
+    AppTheme {
+        MenuScreen(
+            state = MenuState(
+                listOf(
+                    MenuModel.NewGame,
+                    MenuModel.Collection,
+                    MenuModel.Settings
+                )
+            ),
+            callbacks = MenuCallbacks()
+        )
+    }
+}

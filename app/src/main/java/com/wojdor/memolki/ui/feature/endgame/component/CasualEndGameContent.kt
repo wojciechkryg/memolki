@@ -200,8 +200,8 @@ private fun ShareRewardLabel(
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun CasualEndGameContentPreview() {
     AppTheme {
         CasualEndGameContent(
@@ -222,8 +222,8 @@ private fun CasualEndGameContentPreview() {
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun CasualEndGameContentWithoutAdPreview() {
     AppTheme {
         CasualEndGameContent(
@@ -242,8 +242,8 @@ private fun CasualEndGameContentWithoutAdPreview() {
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun CasualEndGameContentWithFreeCoinsPreview() {
     AppTheme {
         CasualEndGameContent(

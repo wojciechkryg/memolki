@@ -342,8 +342,8 @@ private const val SHIMMER_DURATION_MS = 2500
 private const val SHIMMER_WIDTH_FRACTION = 0.35f
 private const val SHIMMER_ALPHA = 0.08f
 
-@Composable
 @Preview
+@Composable
 private fun DailyChallengeEndGameContentPreview() {
     AppTheme {
         DailyChallengeEndGameContent(
@@ -362,8 +362,8 @@ private fun DailyChallengeEndGameContentPreview() {
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun DailyChallengeEndGameContentTwoStarsPreview() {
     AppTheme {
         DailyChallengeEndGameContent(
@@ -382,8 +382,8 @@ private fun DailyChallengeEndGameContentTwoStarsPreview() {
     }
 }
 
-@Composable
 @Preview
+@Composable
 private fun DailyChallengeEndGameContentOneStarPreview() {
     AppTheme {
         DailyChallengeEndGameContent(

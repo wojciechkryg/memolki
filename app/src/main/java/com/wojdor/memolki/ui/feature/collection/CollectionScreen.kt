@@ -122,8 +122,8 @@ fun CollectionScreen(
     CollectionContent(state, callbacks)
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun CollectionPreview() {
     AppTheme {
         CollectionContent(

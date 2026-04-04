@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +29,8 @@ import com.wojdor.memolki.ui.feature.menu.MenuCallbacks
 import com.wojdor.memolki.ui.feature.menu.MenuState
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingM
+import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 
 @Composable
@@ -101,10 +104,16 @@ fun MenuContent(
                 }
             }
         }
+        val cardHeight = CARD_IMAGE_HEIGHT + spacingM * 2
+        val settingsBottomPadding = if (state.otherAppModel != null && !RECORDING_MODE) {
+            spacingL + cardHeight + spacingS
+        } else {
+            spacingL
+        }
         IconItem(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(spacingL),
+                .padding(end = spacingL, bottom = settingsBottomPadding),
             iconRes = R.drawable.ic_settings,
             size = 32.dp,
             contentDescription = stringResource(R.string.settings),
@@ -125,6 +134,23 @@ private fun MenuContentPreview() {
                     MenuModel.Settings
                 ),
                 AppModel.VegetableHalf
+            ),
+            callbacks = MenuCallbacks()
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun MenuContentWithoutMoreAppsPreview() {
+    AppTheme {
+        MenuContent(
+            state = MenuState(
+                listOf(
+                    MenuModel.NewGame,
+                    MenuModel.Collection,
+                    MenuModel.Settings
+                )
             ),
             callbacks = MenuCallbacks()
         )
