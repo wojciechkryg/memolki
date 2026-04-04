@@ -40,7 +40,7 @@ import com.wojdor.memolki.ui.component.SparklesOverlay
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
-import com.wojdor.memolki.ui.feature.menu.component.MenuItem
+import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
@@ -114,15 +114,13 @@ fun CasualEndGameContent(
                                     onClick = callbacks.onFreeCoinsClick
                                 )
 
-                                EndGameMenuModel.PlayAgain -> MenuItem(
+                                EndGameMenuModel.PlayAgain -> BaseMenuItem(
                                     textId = menuItem.textId,
-                                    isUppercase = false,
                                     onClick = callbacks.onPlayAgainClick
                                 )
 
-                                EndGameMenuModel.Menu -> MenuItem(
+                                EndGameMenuModel.Menu -> BaseMenuItem(
                                     textId = menuItem.textId,
-                                    isUppercase = false,
                                     onClick = callbacks.onMenuClick
                                 )
 

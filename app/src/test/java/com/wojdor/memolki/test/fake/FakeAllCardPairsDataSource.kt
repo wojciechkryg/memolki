@@ -7,7 +7,14 @@ import javax.inject.Inject
 
 class FakeAllCardPairsDataSource @Inject constructor() : AllCardPairsDataSource {
 
-    override fun getAllCardPairs() = listOf(
+    var addedEpochDayOverrides: Map<String, Long> = emptyMap()
+
+    override fun getAllCardPairs() = baseCardPairs().map { entity ->
+        val override = addedEpochDayOverrides[entity.id]
+        if (override != null) entity.copy(addedEpochDay = override) else entity
+    }
+
+    private fun baseCardPairs() = listOf(
         CardPairEntity(
             "banana",
             CardEntity.Image("banana_whole", 1, 1) to

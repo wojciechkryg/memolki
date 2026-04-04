@@ -128,7 +128,7 @@ class AppActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        inAppUpdate.resumeUpdate()
+        inAppUpdate.resumeUpdate(this)
     }
 
     override fun onDestroy() {

@@ -51,7 +51,7 @@ jobs:
           echo $KEYSTORE_BASE64 | base64 --decode > key.jks
 
       - name: Build with Gradle
-        run: gradle app:bundle${{ env.capitalized_flavor }}Release --stacktrace --build-cache
+        run: ./gradlew app:bundle${{ env.capitalized_flavor }}Release --stacktrace --build-cache
         env:
           FRUIT_HALF_BILLING_KEY: ${{ secrets.FRUIT_HALF_BILLING_KEY }}
           VEGETABLE_HALF_BILLING_KEY: ${{ secrets.VEGETABLE_HALF_BILLING_KEY }}
