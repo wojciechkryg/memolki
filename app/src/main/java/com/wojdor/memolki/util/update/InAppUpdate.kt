@@ -14,10 +14,7 @@ class InAppUpdate @Inject constructor() {
 
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var installStateUpdatedListener: InstallStateUpdatedListener
-    private var activity: Activity? = null
-
     fun checkUpdate(activity: Activity) {
-        this.activity = activity
         appUpdateManager = AppUpdateManagerFactory.create(activity)
         installStateUpdatedListener = InstallStateUpdatedListener {
             if (it.installStatus() == InstallStatus.DOWNLOADED) {
@@ -28,19 +25,17 @@ class InAppUpdate @Inject constructor() {
         listenForUpdate(activity)
     }
 
-    fun resumeUpdate() {
+    fun resumeUpdate(activity: Activity) {
         if (!this::appUpdateManager.isInitialized) return
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 completeUpdate()
             } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                activity?.let {
-                    appUpdateManager.startUpdateFlow(
-                        appUpdateInfo,
-                        it,
-                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
-                    )
-                }
+                appUpdateManager.startUpdateFlow(
+                    appUpdateInfo,
+                    activity,
+                    AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                )
             }
         }
     }
