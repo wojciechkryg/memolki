@@ -14,8 +14,10 @@ class InAppUpdate @Inject constructor() {
 
     private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var installStateUpdatedListener: InstallStateUpdatedListener
+    private var activity: Activity? = null
 
     fun checkUpdate(activity: Activity) {
+        this.activity = activity
         appUpdateManager = AppUpdateManagerFactory.create(activity)
         installStateUpdatedListener = InstallStateUpdatedListener {
             if (it.installStatus() == InstallStatus.DOWNLOADED) {
@@ -31,6 +33,14 @@ class InAppUpdate @Inject constructor() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 completeUpdate()
+            } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                activity?.let {
+                    appUpdateManager.startUpdateFlow(
+                        appUpdateInfo,
+                        it,
+                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                    )
+                }
             }
         }
     }
@@ -39,14 +49,23 @@ class InAppUpdate @Inject constructor() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 completeUpdate()
-            } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
-                appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
-            ) {
-                appUpdateManager.startUpdateFlow(
-                    appUpdateInfo,
-                    activity,
-                    AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build()
-                )
+            } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                val stalenessDays = appUpdateInfo.clientVersionStalenessDays() ?: 0
+                if (stalenessDays >= FORCE_UPDATE_STALENESS_DAYS &&
+                    appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+                ) {
+                    appUpdateManager.startUpdateFlow(
+                        appUpdateInfo,
+                        activity,
+                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+                    )
+                } else if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    appUpdateManager.startUpdateFlow(
+                        appUpdateInfo,
+                        activity,
+                        AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build()
+                    )
+                }
             }
         }
     }
@@ -59,5 +78,9 @@ class InAppUpdate @Inject constructor() {
         if (this::appUpdateManager.isInitialized) {
             appUpdateManager.unregisterListener(installStateUpdatedListener)
         }
+    }
+
+    companion object {
+        private const val FORCE_UPDATE_STALENESS_DAYS = 14
     }
 }

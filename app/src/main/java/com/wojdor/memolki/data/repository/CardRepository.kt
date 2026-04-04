@@ -48,4 +48,7 @@ class CardRepository @Inject constructor(
 
     fun getAllCardPairIds(): List<String> =
         allCardPairsDataSource.getAllCardPairs().map { it.id }.sorted()
+
+    fun getAllCardPairsWithAddedEpochDay(): List<Pair<String, Long>> =
+        allCardPairsDataSource.getAllCardPairs().map { it.id to it.addedEpochDay }
 }
