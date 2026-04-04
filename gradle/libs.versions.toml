@@ -1,6 +1,8 @@
 [versions]
 activityCompose = "1.13.0"
-composeScreenshot = "0.0.1-alpha13"
+composablePreviewScanner = "0.8.2"
+paparazzi = "2.0.0-alpha04"
+testParameterInjector = "1.18"
 agp = "9.0.1"
 appcompat = "1.7.1"
 appUpdateKtx = "2.1.0"
@@ -83,10 +85,12 @@ play-services-auth = { group = "com.google.android.gms", name = "play-services-a
 play-services-games = { group = "com.google.android.gms", name = "play-services-games-v2", version.ref = "playServicesGames" }
 review-ktx = { group = "com.google.android.play", name = "review-ktx", version.ref = "reviewKtx" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-screenshot-validation-api = { group = "com.android.tools.screenshot", name = "screenshot-validation-api", version.ref = "composeScreenshot" }
+composable-preview-scanner = { module = "io.github.sergio-sastre.ComposablePreviewScanner:android", version.ref = "composablePreviewScanner" }
+paparazzi = { module = "app.cash.paparazzi:paparazzi", version.ref = "paparazzi" }
+test-parameter-injector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 
 [plugins]
-compose-screenshot = { id = "com.android.compose.screenshot", version.ref = "composeScreenshot" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 firebase-crashlytics-plugin = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }

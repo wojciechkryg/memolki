@@ -175,8 +175,8 @@ private fun EndGameScreen(
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun EndGameScreenPreview() {
     AppTheme {
         EndGameScreen(
@@ -193,8 +193,8 @@ private fun EndGameScreenPreview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun EndGameScreenWithAdPreview() {
     AppTheme {
         EndGameScreen(
@@ -213,8 +213,8 @@ private fun EndGameScreenWithAdPreview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun EndGameScreenDailyChallengeThreeStarsPreview() {
     AppTheme {
         EndGameScreen(
@@ -233,8 +233,8 @@ private fun EndGameScreenDailyChallengeThreeStarsPreview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun EndGameScreenDailyChallengeTwoStarsPreview() {
     AppTheme {
         EndGameScreen(
@@ -253,8 +253,8 @@ private fun EndGameScreenDailyChallengeTwoStarsPreview() {
     }
 }
 
-@Composable
 @Preview(showBackground = true)
+@Composable
 private fun EndGameScreenDailyChallengeOneStarPreview() {
     AppTheme {
         EndGameScreen(

@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
           cache: 'gradle'
 
       - uses: gradle/actions/setup-gradle@v4
@@ -26,6 +26,17 @@ jobs:
 
       - name: Run unit tests
         run: gradle testFruitHalfDebugUnitTest --build-cache
+
+      - name: Verify screenshot tests
+        run: gradle verifyPaparazziFruitHalfDebug --build-cache
+
+      - name: Upload screenshot failures
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-failures
+          path: app/build/paparazzi/failures/
+          retention-days: 14
 
   debug-flags-check:
     runs-on: ubuntu-latest

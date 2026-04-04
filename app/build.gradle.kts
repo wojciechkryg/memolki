@@ -11,7 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics.plugin)
-    alias(libs.plugins.compose.screenshot)
+    alias(libs.plugins.paparazzi)
 }
 
 val secretsPropertiesFile = rootProject.file("secrets.properties")
@@ -105,7 +105,6 @@ android {
         unitTests.isReturnDefaultValues = true
     }
 
-    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
     val resolvedBillingKeys = flavorConfigs.associate { (flavor, keyName) ->
         flavor to getSecretValue(keyName)
@@ -180,6 +179,7 @@ dependencies {
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
 
-    screenshotTestImplementation(libs.screenshot.validation.api)
-    screenshotTestImplementation(libs.androidx.ui.tooling)
+    testImplementation(libs.paparazzi)
+    testImplementation(libs.composable.preview.scanner)
+    testImplementation(libs.test.parameter.injector)
 }

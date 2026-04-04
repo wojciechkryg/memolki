@@ -65,7 +65,7 @@ fun MoreAppsItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Image(
-                        modifier = Modifier.height(48.dp),
+                        modifier = Modifier.height(CARD_IMAGE_HEIGHT),
                         painter = painterResource(appModel.imageRes),
                         contentDescription = stringResource(appModel.textRes)
                     )
@@ -79,6 +79,8 @@ fun MoreAppsItem(
         }
     }
 }
+
+val CARD_IMAGE_HEIGHT = 48.dp
 
 @Preview
 @Composable
