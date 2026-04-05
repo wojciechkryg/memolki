@@ -15,7 +15,7 @@
     <string name="settings">الإعدادات</string>
     <string name="more">هل تريد المزيد؟</string>
     <string name="menu">القائمة</string>
-    <string name="play_again">العب مرة أخرى</string>
+    <string name="continue_game">متابعة</string>
     <string name="shop">المتجر</string>
     <string name="shop_obtain">الحصول على %d</string>
     <string name="shop_back_later">عد لاحقًا</string>

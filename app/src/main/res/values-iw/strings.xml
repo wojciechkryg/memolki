@@ -15,7 +15,7 @@
     <string name="settings">הגדרות</string>
     <string name="more">עוד?</string>
     <string name="menu">תפריט</string>
-    <string name="play_again">שחק שוב</string>
+    <string name="continue_game">המשך</string>
     <string name="shop">חנות</string>
     <string name="shop_obtain">השג %d</string>
     <string name="shop_back_later">חזור מאוחר יותר</string>

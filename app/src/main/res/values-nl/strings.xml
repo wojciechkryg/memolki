@@ -15,7 +15,7 @@
     <string name="settings">Instellingen</string>
     <string name="more">Meer?</string>
     <string name="menu">Menu</string>
-    <string name="play_again">Opnieuw spelen</string>
+    <string name="continue_game">Doorgaan</string>
     <string name="shop">Winkel</string>
     <string name="shop_obtain">Halen %d</string>
     <string name="shop_back_later">Kom later terug</string>

@@ -9,6 +9,8 @@
     <string name="level4x6" translatable="false">4 x 6</string>
     <string name="level5x6" translatable="false">5 x 6</string>
 
+    <string name="level_count" translatable="false">level %d</string>
+
     <string name="app_logo" translatable="false">memolki</string>
 
     <string name="end_game_watch_ad_reward" translatable="false">x2</string>

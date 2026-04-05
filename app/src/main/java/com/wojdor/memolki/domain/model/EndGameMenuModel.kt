@@ -10,7 +10,7 @@ sealed class EndGameMenuModel(@field:StringRes val textId: Int = R.string.empty)
     object WatchAd : EndGameMenuModel()
     object UnlockNewCard : EndGameMenuModel()
     object FreeCoins : EndGameMenuModel(R.string.free_coins)
-    object PlayAgain : EndGameMenuModel(R.string.play_again)
+    object Continue : EndGameMenuModel(R.string.continue_game)
     object Menu : EndGameMenuModel(R.string.menu)
     data class Share(
         val showReward: Boolean,

@@ -15,7 +15,7 @@
     <string name="settings">Nastavitve</string>
     <string name="more">Več?</string>
     <string name="menu">Meni</string>
-    <string name="play_again">Igraj ponovno</string>
+    <string name="continue_game">Nadaljuj</string>
     <string name="shop">Trgovina</string>
     <string name="shop_obtain">Pridobi %d</string>
     <string name="shop_back_later">Vrni se kasneje</string>

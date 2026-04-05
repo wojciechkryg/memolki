@@ -15,7 +15,7 @@
     <string name="settings">Ρυθμίσεις</string>
     <string name="more">Περισσότερα;</string>
     <string name="menu">Μενού</string>
-    <string name="play_again">Παίξε ξανά</string>
+    <string name="continue_game">Συνέχεια</string>
     <string name="shop">Κατάστημα</string>
     <string name="shop_obtain">Πάρε %d</string>
     <string name="shop_back_later">Επίστρεψε αργότερα</string>

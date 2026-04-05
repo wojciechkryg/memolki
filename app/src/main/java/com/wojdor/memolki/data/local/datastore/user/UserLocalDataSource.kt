@@ -103,6 +103,17 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
+    fun encryptedLevelPlayedCount(levelId: String): Flow<String?> =
+        dataRead.map { it[stringPreferencesKey("level_played_count_$levelId")] }
+
+    suspend fun setEncryptedLevelPlayedCount(
+        levelId: String,
+        transform: suspend (encryptedValue: String?) -> String
+    ) {
+        val key = stringPreferencesKey("level_played_count_$levelId")
+        dataWrite.edit { prefs -> prefs[key] = transform(prefs[key]) }
+    }
+
     val fcmLanguageTopic: Flow<String?> = dataRead.map { it[Key.FCM_LANGUAGE_TOPIC] }
 
     suspend fun setFcmLanguageTopic(language: String) {

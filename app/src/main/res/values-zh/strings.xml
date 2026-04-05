@@ -15,7 +15,7 @@
     <string name="settings">设置</string>
     <string name="more">更多？</string>
     <string name="menu">菜单</string>
-    <string name="play_again">再玩一次</string>
+    <string name="continue_game">继续</string>
     <string name="shop">商店</string>
     <string name="shop_obtain">获得 %d</string>
     <string name="shop_back_later">稍后再回来</string>

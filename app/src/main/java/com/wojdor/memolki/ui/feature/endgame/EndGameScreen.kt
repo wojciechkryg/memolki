@@ -149,7 +149,7 @@ private fun HandleState(
     state: EndGameState
 ) {
     val callbacks = EndGameCallbacks(
-        onPlayAgainClick = { viewModel.sendIntent(EndGameIntent.OnPlayAgainClick(state.level)) },
+        onContinueClick = { viewModel.sendIntent(EndGameIntent.OnContinueClick(state.level)) },
         onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) },
         onUnlockNewCardClick = { viewModel.sendIntent(EndGameIntent.OnUnlockNewCardClick) },
         onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) },
@@ -185,7 +185,7 @@ private fun EndGameScreenPreview() {
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu
                 )
             )
@@ -205,7 +205,7 @@ private fun EndGameScreenWithAdPreview() {
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
                     EndGameMenuModel.UnlockNewCard,
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu
                 )
             )

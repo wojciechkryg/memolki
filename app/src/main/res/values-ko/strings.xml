@@ -15,7 +15,7 @@
     <string name="settings">설정</string>
     <string name="more">더?</string>
     <string name="menu">메뉴</string>
-    <string name="play_again">다시 플레이</string>
+    <string name="continue_game">계속하기</string>
     <string name="shop">상점</string>
     <string name="shop_obtain">획득 %d</string>
     <string name="shop_back_later">나중에 다시 오세요</string>

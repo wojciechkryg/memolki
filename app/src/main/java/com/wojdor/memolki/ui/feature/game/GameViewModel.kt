@@ -6,9 +6,11 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.LevelModel
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
+import com.wojdor.memolki.domain.usecase.GetLevelPlayedCountUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
+import com.wojdor.memolki.domain.usecase.IncrementLevelPlayedCountUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.ResolveLevelUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
@@ -36,6 +38,8 @@ class GameViewModel @Inject constructor(
     private val googlePlayGames: GooglePlayGames,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
     private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase,
+    private val getLevelPlayedCountUseCase: GetLevelPlayedCountUseCase,
+    private val incrementLevelPlayedCountUseCase: IncrementLevelPlayedCountUseCase,
     private val resolveLevelUseCase: ResolveLevelUseCase,
     private val getDailyChallengeCardsUseCase: GetDailyChallengeCardsUseCase,
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
@@ -85,6 +89,11 @@ class GameViewModel @Inject constructor(
                         cardFlipCounts = emptyFlipCountsGrid(cards, level.columns)
                     )
                 }
+            }
+        }.launchIn(viewModelScope)
+        getLevelPlayedCountUseCase(level.id).onEach { result ->
+            result.onSuccess { count ->
+                sendState { copy(levelPlayedCount = count) }
             }
         }.launchIn(viewModelScope)
     }
@@ -232,6 +241,7 @@ class GameViewModel @Inject constructor(
             if (cards.isNotEmpty() && cards.all { it.isPairMatched }) {
                 if (!isDailyChallenge()) {
                     analytics.logLevelComplete(uiState.value.level, uiState.value.mistakeCount)
+                    incrementLevelPlayedCountUseCase(uiState.value.level.id).launchIn(viewModelScope)
                 }
                 sendState { copy(isGameFinished = true) }
                 delay(END_GAME_DELAY)
@@ -256,7 +266,8 @@ class GameViewModel @Inject constructor(
                         cardFlipCounts = emptyList(),
                         cards = emptyList(),
                         epochDay = 0L,
-                        startTimeMillis = 0L
+                        startTimeMillis = 0L,
+                        levelPlayedCount = 0
                     )
                 }
             }

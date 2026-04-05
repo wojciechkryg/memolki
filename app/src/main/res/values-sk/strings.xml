@@ -15,7 +15,7 @@
     <string name="settings">Nastavenia</string>
     <string name="more">Viac?</string>
     <string name="menu">Menu</string>
-    <string name="play_again">Hrať znova</string>
+    <string name="continue_game">Pokračovať</string>
     <string name="shop">Obchod</string>
     <string name="shop_obtain">Získať %d</string>
     <string name="shop_back_later">Vráť sa neskôr</string>

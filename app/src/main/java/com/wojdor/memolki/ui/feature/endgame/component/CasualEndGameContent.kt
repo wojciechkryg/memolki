@@ -114,9 +114,9 @@ fun CasualEndGameContent(
                                     onClick = callbacks.onFreeCoinsClick
                                 )
 
-                                EndGameMenuModel.PlayAgain -> BaseMenuItem(
+                                EndGameMenuModel.Continue -> BaseMenuItem(
                                     textId = menuItem.textId,
-                                    onClick = callbacks.onPlayAgainClick
+                                    onClick = callbacks.onContinueClick
                                 )
 
                                 EndGameMenuModel.Menu -> BaseMenuItem(
@@ -209,7 +209,7 @@ private fun CasualEndGameContentPreview() {
                 currentCoins = 5678,
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.UnlockNewCard,
                     EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
@@ -230,7 +230,7 @@ private fun CasualEndGameContentWithoutAdPreview() {
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.Share(showReward = false)
                 )
@@ -251,7 +251,7 @@ private fun CasualEndGameContentWithFreeCoinsPreview() {
                 currentCoins = 5678,
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.FreeCoins,
                     EndGameMenuModel.Share(showReward = true, rewardCoins = 3)

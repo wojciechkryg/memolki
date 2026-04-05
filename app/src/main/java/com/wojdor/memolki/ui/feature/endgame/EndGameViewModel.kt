@@ -72,7 +72,7 @@ class EndGameViewModel @Inject constructor(
         when (intent) {
             is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.levelModel)
             is EndGameIntent.OnDailyChallengeEndGameShow -> onDailyChallengeEndGameShow(intent)
-            is EndGameIntent.OnPlayAgainClick -> onPlayAgainClick(intent)
+            is EndGameIntent.OnContinueClick -> onContinueClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
             EndGameIntent.OnUnlockNewCardClick -> onUnlockNewCardClick()
             EndGameIntent.OnWatchAdClick -> onWatchAdClick()
@@ -232,7 +232,7 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onPlayAgainClick(intent: EndGameIntent.OnPlayAgainClick) {
+    private fun onContinueClick(intent: EndGameIntent.OnContinueClick) {
         hapticFeedback.vibrateLow()
         navigateOrShowNotificationRequest(
             destination = EnableNotificationDestination.GAME,
@@ -302,7 +302,7 @@ class EndGameViewModel @Inject constructor(
         }
         canUnlockNewCardUseCase().onEach { result ->
             val canUnlockNewCard = result.getOrDefault(false)
-            val menu = mutableListOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu).apply {
+            val menu = mutableListOf(EndGameMenuModel.Continue, EndGameMenuModel.Menu).apply {
                 @Suppress("KotlinConstantConditions")
                 if (isAdLoaded && !RECORDING_MODE) {
                     add(0, EndGameMenuModel.WatchAd)

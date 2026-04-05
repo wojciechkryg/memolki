@@ -15,7 +15,7 @@
     <string name="settings">Einstellungen</string>
     <string name="more">Mehr?</string>
     <string name="menu">Menü</string>
-    <string name="play_again">Nochmal spielen</string>
+    <string name="continue_game">Weiter</string>
     <string name="shop">Shop</string>
     <string name="shop_obtain">%d erhalten</string>
     <string name="shop_back_later">Später wiederkommen</string>

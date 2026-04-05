@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,6 +34,7 @@ import com.wojdor.memolki.ui.feature.game.GameState
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXL
 import kotlin.math.ceil
@@ -74,11 +76,32 @@ private fun CardsGridWithText(
             val actualGridHeight = cardSize * rows + spacing * (rows - 1)
             val topSpace = maxHeight * TOP_SPACE_RATIO
             val gridTopPadding = topSpace + (gridAreaHeight - actualGridHeight) / 2
+            val progress = state.cards.count { it.isPairMatched }.toFloat() /
+                state.cards.size.coerceAtLeast(1)
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(gridTopPadding))
+                Box(
+                    modifier = Modifier
+                        .height(gridTopPadding)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (state.epochDay == 0L && state.levelPlayedCount > 0) {
+                        Text(
+                            text = stringResource(R.string.level_count, state.levelPlayedCount),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = colorResource(R.color.font)
+                        )
+                    }
+                }
+                GameProgressBar(
+                    progress = progress,
+                    isGameFinished = state.isGameFinished,
+                    modifier = Modifier.padding(horizontal = spacingM)
+                )
+                Spacer(modifier = Modifier.height(spacingS))
                 CardsGrid(
                     state = state,
                     callbacks = callbacks,

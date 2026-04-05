@@ -16,5 +16,6 @@ data class GameState(
     val mistakeCount: Int = 0,
     val cardFlipCounts: List<List<Int>> = emptyList(),
     val epochDay: Long = 0L,
-    val startTimeMillis: Long = 0L
+    val startTimeMillis: Long = 0L,
+    val levelPlayedCount: Long = 0
 ) : UiState

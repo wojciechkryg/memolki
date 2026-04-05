@@ -15,7 +15,7 @@
     <string name="settings">Innstillinger</string>
     <string name="more">Mer?</string>
     <string name="menu">Meny</string>
-    <string name="play_again">Spill igjen</string>
+    <string name="continue_game">Fortsett</string>
     <string name="shop">Butikk</string>
     <string name="shop_obtain">Hent %d</string>
     <string name="shop_back_later">Kom tilbake senere</string>

@@ -148,7 +148,7 @@ class EndGameViewModelTest : AppTest() {
                 rewardedCoins = rewardedCoins,
                 currentCoins = 0L,
                 menu = listOf(
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.FreeCoins,
                     EndGameMenuModel.Share(
@@ -228,7 +228,7 @@ class EndGameViewModelTest : AppTest() {
                 currentCoins = 0L,
                 animateCoins = false,
                 menu = listOf(
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.Share(
                         showReward = false,

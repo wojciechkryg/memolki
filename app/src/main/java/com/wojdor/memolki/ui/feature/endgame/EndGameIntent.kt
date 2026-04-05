@@ -11,7 +11,7 @@ sealed class EndGameIntent : UiIntent {
         val dailyChallengeModel: DailyChallengeModel
     ) : EndGameIntent()
 
-    data class OnPlayAgainClick(val levelModel: LevelModel) : EndGameIntent()
+    data class OnContinueClick(val levelModel: LevelModel) : EndGameIntent()
     object OnMenuClick : EndGameIntent()
     object OnUnlockNewCardClick : EndGameIntent()
     object OnWatchAdClick : EndGameIntent()

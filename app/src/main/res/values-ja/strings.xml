@@ -15,7 +15,7 @@
     <string name="settings">設定</string>
     <string name="more">もっと？</string>
     <string name="menu">メニュー</string>
-    <string name="play_again">もう一度プレイ</string>
+    <string name="continue_game">続ける</string>
     <string name="shop">ショップ</string>
     <string name="shop_obtain">獲得 %d</string>
     <string name="shop_back_later">後で戻って</string>

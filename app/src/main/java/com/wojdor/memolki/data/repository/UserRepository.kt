@@ -68,6 +68,17 @@ class UserRepository @Inject constructor(
         }
     }
 
+    fun getLevelPlayedCount(levelId: String): Flow<Long> =
+        decryptLong(userLocalDataSource.encryptedLevelPlayedCount(levelId))
+
+    suspend fun incrementLevelPlayedCount(levelId: String): Long {
+        userLocalDataSource.setEncryptedLevelPlayedCount(levelId) { encrypted ->
+            val count = decryptLong(encrypted)
+            encryptor.encrypt(count + 1)
+        }
+        return getLevelPlayedCount(levelId).first()
+    }
+
     fun getHasReceivedShareReward(): Flow<Boolean> =
         decryptLong(userLocalDataSource.encryptedHasReceivedShareReward).map { it == 1L }
 
