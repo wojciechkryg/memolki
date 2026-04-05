@@ -41,8 +41,8 @@ android {
         applicationId = "com.wojdor.memolki"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1003022
-        versionName = "1.3.22"
+        versionCode = 1003023
+        versionName = "1.3.23"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

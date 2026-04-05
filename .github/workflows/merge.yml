@@ -75,6 +75,7 @@ jobs:
 
       - name: Upload to Internal App Sharing
         id: internal_sharing
+        continue-on-error: true
         uses: r0adkll/upload-google-play@v1.1.3
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
@@ -83,6 +84,7 @@ jobs:
           track: internalsharing
 
       - name: Add Internal App Sharing link to summary
+        if: steps.internal_sharing.outcome == 'success'
         run: |
           echo "### 📱 Internal App Sharing — ${{ matrix.flavor }}" >> $GITHUB_STEP_SUMMARY
           echo "🔗 [${{ env.lowercase_flavor }} download link](${{ steps.internal_sharing.outputs.internalSharingDownloadUrl }})" >> $GITHUB_STEP_SUMMARY
