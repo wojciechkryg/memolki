@@ -70,7 +70,7 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    private fun isDailyChallenge() = uiState.value.epochDay > 0L
+    private fun isDailyChallenge() = uiState.value.isDailyChallenge
 
     private fun resolveAndStartLevel(levelId: String) {
         resolveLevelUseCase(levelId).onEach { result ->
@@ -145,6 +145,7 @@ class GameViewModel @Inject constructor(
                         level = DAILY_CHALLENGE_LEVEL,
                         cards = cards,
                         cardFlipCounts = emptyFlipCountsGrid(cards, DAILY_CHALLENGE_LEVEL.columns),
+                        isDailyChallenge = true,
                         epochDay = epochDay
                     )
                 }
@@ -265,9 +266,10 @@ class GameViewModel @Inject constructor(
                         mistakeCount = 0,
                         cardFlipCounts = emptyList(),
                         cards = emptyList(),
+                        isDailyChallenge = false,
                         epochDay = 0L,
                         startTimeMillis = 0L,
-                        levelPlayedCount = 0
+                        levelPlayedCount = 1L
                     )
                 }
             }

@@ -88,7 +88,7 @@ private fun CardsGridWithText(
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (state.epochDay == 0L && state.levelPlayedCount > 0) {
+                    if (!state.isDailyChallenge) {
                         Text(
                             text = stringResource(R.string.level_count, state.levelPlayedCount),
                             style = MaterialTheme.typography.headlineSmall,

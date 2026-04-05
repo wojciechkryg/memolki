@@ -15,7 +15,8 @@ data class GameState(
     val shouldShowCardDetails: Boolean = false,
     val mistakeCount: Int = 0,
     val cardFlipCounts: List<List<Int>> = emptyList(),
+    val isDailyChallenge: Boolean = false,
     val epochDay: Long = 0L,
     val startTimeMillis: Long = 0L,
-    val levelPlayedCount: Long = 0L
+    val levelPlayedCount: Long = 1L
 ) : UiState
