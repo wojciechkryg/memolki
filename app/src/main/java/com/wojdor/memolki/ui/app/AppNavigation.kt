@@ -18,7 +18,7 @@ import androidx.navigation.navigation
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsScreen
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageScreen
-import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelScreen
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardScreen
 import com.wojdor.memolki.ui.feature.collection.CollectionScreen
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationsScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
@@ -59,7 +59,7 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
         route = Route.MENU,
         enterTransition = {
             when (initialState.destination.route) {
-                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideInLeft
+                Route.CHOOSE_BOARD, Route.GAME, Route.END_GAME -> slideInLeft
                 Route.ENABLE_NOTIFICATIONS -> slideInTop
                 Route.COLLECTION -> slideInRight
                 Route.SETTINGS -> slideInTop
@@ -69,7 +69,7 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
         },
         exitTransition = {
             when (targetState.destination.route) {
-                Route.CHOOSE_LEVEL, Route.GAME, Route.END_GAME -> slideOutLeft
+                Route.CHOOSE_BOARD, Route.GAME, Route.END_GAME -> slideOutLeft
                 Route.ENABLE_NOTIFICATIONS -> slideOutTop
                 Route.COLLECTION -> slideOutRight
                 Route.SETTINGS -> slideOutTop
@@ -84,18 +84,18 @@ private fun NavGraphBuilder.menuScreen(navController: NavController) {
 
 private fun NavGraphBuilder.gameFlow(navController: NavController) {
     navigation(
-        startDestination = Route.CHOOSE_LEVEL,
+        startDestination = Route.CHOOSE_BOARD,
         route = RouteFlow.GAME
     ) {
-        chooseLevelScreen(navController)
+        chooseBoardScreen(navController)
         gameScreen(navController)
         endGameScreen(navController)
     }
 }
 
-private fun NavGraphBuilder.chooseLevelScreen(navController: NavController) {
+private fun NavGraphBuilder.chooseBoardScreen(navController: NavController) {
     composable(
-        route = Route.CHOOSE_LEVEL,
+        route = Route.CHOOSE_BOARD,
         enterTransition = {
             when (initialState.destination.route) {
                 Route.MENU -> slideInRight
@@ -109,14 +109,14 @@ private fun NavGraphBuilder.chooseLevelScreen(navController: NavController) {
             }
         },
     ) {
-        ChooseLevelScreen(navController = navController)
+        ChooseBoardScreen(navController = navController)
     }
 }
 
 private fun NavGraphBuilder.gameScreen(navController: NavController) {
     composable(
         route = Route.GAME,
-        arguments = listOf(navArgument(AppNavigation.LEVEL_ARG) {
+        arguments = listOf(navArgument(AppNavigation.BOARD_ARG) {
             type = NavType.StringType
         }),
         enterTransition = {
@@ -133,12 +133,12 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
             }
         }
     ) { backStackEntry ->
-        val levelId = backStackEntry.arguments?.getString(AppNavigation.LEVEL_ARG)
-        val isDailyChallenge = levelId == DAILY_CHALLENGE_LEVEL_ID
+        val boardId = backStackEntry.arguments?.getString(AppNavigation.BOARD_ARG)
+        val isDailyChallenge = boardId == DAILY_CHALLENGE_BOARD_ID
         val gameViewModel = getGameViewModel(backStackEntry, navController)
-        LaunchedEffect(levelId) {
-            levelId?.let { level ->
-                gameViewModel.sendIntent(GameIntent.OnLevelStart(level, isDailyChallenge))
+        LaunchedEffect(boardId) {
+            boardId?.let { board ->
+                gameViewModel.sendIntent(GameIntent.OnBoardStart(board, isDailyChallenge))
             }
         }
         GameScreen(
@@ -178,7 +178,7 @@ private fun NavGraphBuilder.enableNotificationsScreen(navController: NavControll
         route = Route.ENABLE_NOTIFICATIONS,
         arguments = listOf(
             navArgument(AppNavigation.DESTINATION_ARG) { type = NavType.StringType },
-            navArgument(AppNavigation.LEVEL_ARG) { type = NavType.StringType }
+            navArgument(AppNavigation.BOARD_ARG) { type = NavType.StringType }
         ),
         enterTransition = { slideInBottom },
         exitTransition = { slideOutBottom }
@@ -297,8 +297,8 @@ private fun NavGraphBuilder.moreAppsScreen() {
     }
 }
 
-fun NavController.navigateToChooseLevel() {
-    navigate(Route.CHOOSE_LEVEL)
+fun NavController.navigateToChooseBoard() {
+    navigate(Route.CHOOSE_BOARD)
 }
 
 fun NavController.navigateToCollection() {
@@ -319,9 +319,9 @@ fun NavController.navigateToMoreApps() {
     navigate(Route.MORE_APPS)
 }
 
-fun NavController.navigateToGame(levelId: String) {
-    navigate(Route.GAME.replace("{${AppNavigation.LEVEL_ARG}}", levelId)) {
-        removeFromBackStack(Route.CHOOSE_LEVEL)
+fun NavController.navigateToGame(boardId: String) {
+    navigate(Route.GAME.replace("{${AppNavigation.BOARD_ARG}}", boardId)) {
+        removeFromBackStack(Route.CHOOSE_BOARD)
     }
 }
 
@@ -337,14 +337,14 @@ fun NavController.navigateToMenu() {
     }
 }
 
-fun NavController.navigateToGameFromEndGame(levelId: String) {
-    navigate(Route.GAME.replace("{${AppNavigation.LEVEL_ARG}}", levelId)) {
+fun NavController.navigateToGameFromEndGame(boardId: String) {
+    navigate(Route.GAME.replace("{${AppNavigation.BOARD_ARG}}", boardId)) {
         removeFromBackStack(Route.END_GAME)
     }
 }
 
 fun NavController.navigateToDailyChallenge() {
-    navigateToGame(DAILY_CHALLENGE_LEVEL_ID)
+    navigateToGame(DAILY_CHALLENGE_BOARD_ID)
 }
 
 fun NavController.navigateToShop() {
@@ -357,16 +357,16 @@ fun NavController.navigateToCardPairDetailsScreen() {
     navigate(Route.CARD_PAIR_DETAILS)
 }
 
-fun NavController.navigateToEnableNotifications(destination: String, levelId: String = "") {
+fun NavController.navigateToEnableNotifications(destination: String, boardId: String = "") {
     navigate(
         Route.ENABLE_NOTIFICATIONS
             .replace("{${AppNavigation.DESTINATION_ARG}}", destination)
-            .replace("{${AppNavigation.LEVEL_ARG}}", levelId)
+            .replace("{${AppNavigation.BOARD_ARG}}", boardId)
     )
 }
 
-private fun NavController.navigateToGameFromDeepLink(level: String) {
-    navigate(Route.GAME.replace("{${AppNavigation.LEVEL_ARG}}", level)) {
+private fun NavController.navigateToGameFromDeepLink(board: String) {
+    navigate(Route.GAME.replace("{${AppNavigation.BOARD_ARG}}", board)) {
         removeFromBackStack(Route.MENU, isInclusive = false)
     }
 }
@@ -379,12 +379,12 @@ private fun navigateFromDeepLink(navController: NavController, intent: Intent) {
         DeepLinkBuilder.SCREEN_COLLECTION -> navController.navigateToCollection()
         DeepLinkBuilder.SCREEN_MORE_APPS -> navController.navigateToMoreApps()
         DeepLinkBuilder.SCREEN_GAME -> {
-            val level = pathSegments.firstOrNull().orEmpty()
-            navController.navigateToGameFromDeepLink(level)
+            val board = pathSegments.firstOrNull().orEmpty()
+            navController.navigateToGameFromDeepLink(board)
         }
 
         DeepLinkBuilder.SCREEN_DAILY_CHALLENGE -> navController.navigateToGameFromDeepLink(
-            DAILY_CHALLENGE_LEVEL_ID
+            DAILY_CHALLENGE_BOARD_ID
         )
     }
 }
@@ -428,13 +428,13 @@ private fun getCardPairDetailsViewModel(
     return hiltViewModel(flowBackStackEntry)
 }
 
-private const val DAILY_CHALLENGE_LEVEL_ID = "daily_challenge"
+private const val DAILY_CHALLENGE_BOARD_ID = "daily_challenge"
 
 internal object Route {
     const val MENU = "menu"
-    const val CHOOSE_LEVEL = "chose_level"
+    const val CHOOSE_BOARD = "choose_board"
     const val GAME_BASE = "game"
-    const val GAME = "$GAME_BASE/{${AppNavigation.LEVEL_ARG}}"
+    const val GAME = "$GAME_BASE/{${AppNavigation.BOARD_ARG}}"
     const val END_GAME = "end_game"
     const val COLLECTION = "collection"
     const val SHOP = "shop"
@@ -443,7 +443,7 @@ internal object Route {
     const val CHANGE_LANGUAGE = "change_language"
     const val MORE_APPS = "more_apps"
     const val ENABLE_NOTIFICATIONS =
-        "enable_notifications/{${AppNavigation.DESTINATION_ARG}}/{${AppNavigation.LEVEL_ARG}}"
+        "enable_notifications/{${AppNavigation.DESTINATION_ARG}}/{${AppNavigation.BOARD_ARG}}"
 }
 
 private object RouteFlow {
@@ -454,5 +454,5 @@ private object RouteFlow {
 
 object AppNavigation {
     const val DESTINATION_ARG = "destination"
-    const val LEVEL_ARG = "level"
+    const val BOARD_ARG = "board"
 }

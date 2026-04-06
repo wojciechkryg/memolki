@@ -15,7 +15,7 @@
     <string name="settings">Ayarlar</string>
     <string name="more">Daha?</string>
     <string name="menu">Menü</string>
-    <string name="play_again">Tekrar oyna</string>
+    <string name="continue_game">Devam et</string>
     <string name="shop">Mağaza</string>
     <string name="shop_obtain">Al %d</string>
     <string name="shop_back_later">Daha sonra geri dön</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Gün %d</string>
     <string name="daily_reward_collect">Topla %d</string>
     <string name="daily_reward_back_tomorrow">Yarın tekrar gel</string>
-    <string name="share_text">memolki\'de tüm eşleri buldum! Daha fazla kart toplayabilir misin? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Günlük meydan okuma</string>
     <string name="daily_challenge_compare">Karşılaştır</string>
@@ -117,4 +115,6 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d hata</item>
         <item quantity="other">%d hata</item>
     </plurals>
+    <string name="share_casual">Beni yenebileceğini mi düşünüyorsun? 🧠🔥</string>
+    <string name="level_count">seviye %d</string>
 </resources>

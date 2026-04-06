@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.feature.chooselevel.component
+package com.wojdor.memolki.ui.feature.chooseboard.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

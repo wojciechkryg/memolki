@@ -15,7 +15,7 @@
     <string name="settings">Paramètres</string>
     <string name="more">Plus?</string>
     <string name="menu">Menu</string>
-    <string name="play_again">Rejouer</string>
+    <string name="continue_game">Continuer</string>
     <string name="shop">Boutique</string>
     <string name="shop_obtain">Obtenir %d</string>
     <string name="shop_back_later">Revenir plus tard</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Jour %d</string>
     <string name="daily_reward_collect">Collecter %d</string>
     <string name="daily_reward_back_tomorrow">Reviens demain</string>
-    <string name="share_text">J\'ai trouvé toutes les paires dans memolki ! Peux-tu collecter plus de cartes ? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Défi quotidien</string>
     <string name="daily_challenge_compare">Comparer</string>
@@ -117,4 +115,6 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d erreur</item>
         <item quantity="other">%d erreurs</item>
     </plurals>
+    <string name="share_casual">Tu penses pouvoir me battre ? 🧠🔥</string>
+    <string name="level_count">niveau %d</string>
 </resources>

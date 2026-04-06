@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
@@ -12,7 +12,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -21,6 +21,7 @@ import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDesti
 import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.extension.logE
+import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -47,13 +48,14 @@ class EndGameViewModel @Inject constructor(
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
+    private val rewardCoinsForBoardUseCase: RewardCoinsForBoardUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase,
     private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase,
     private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase,
     private val hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase,
     private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase,
+    private val casualShareFormatter: CasualShareFormatter,
     private val dailyChallengeShareFormatter: DailyChallengeShareFormatter
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
@@ -70,9 +72,9 @@ class EndGameViewModel @Inject constructor(
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
-            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.levelModel)
+            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.boardModel, intent.level)
             is EndGameIntent.OnDailyChallengeEndGameShow -> onDailyChallengeEndGameShow(intent)
-            is EndGameIntent.OnPlayAgainClick -> onPlayAgainClick(intent)
+            is EndGameIntent.OnContinueClick -> onContinueClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
             EndGameIntent.OnUnlockNewCardClick -> onUnlockNewCardClick()
             EndGameIntent.OnWatchAdClick -> onWatchAdClick()
@@ -104,7 +106,9 @@ class EndGameViewModel @Inject constructor(
                 logE("Failed to reward share coins", it)
             }
         }.launchIn(viewModelScope)
-        sendEffect(EndGameEffect.Share)
+        val state = uiState.value
+        val shareText = casualShareFormatter.format(state.board, state.level)
+        sendEffect(EndGameEffect.Share(shareText))
     }
 
     private fun checkShareRewardAvailable() {
@@ -153,14 +157,14 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onCasualEndGameShow(level: LevelModel) {
-        sendState { EndGameState(showSparkles = true) }
+    private fun onCasualEndGameShow(board: BoardModel, level: Long) {
+        sendState { EndGameState(board = board, showSparkles = true, level = level) }
         loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         checkShouldShowNotificationRequest()
         checkShareRewardAvailable()
         checkDailyStreakRewardAvailable()
-        getCurrentCoinsAndReward(level)
+        getCurrentCoinsAndReward(board)
         viewModelScope.launch {
             requestReview()
         }
@@ -213,7 +217,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun rewardCoinsForAd() {
         analytics.logAdRewardFromEndGame()
-        getCurrentCoinsAndReward(uiState.value.level, isRewardFromAd = true)
+        getCurrentCoinsAndReward(uiState.value.board, isRewardFromAd = true)
     }
 
     private fun loadAd(wasRewardGranted: Boolean = false) {
@@ -232,12 +236,12 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onPlayAgainClick(intent: EndGameIntent.OnPlayAgainClick) {
+    private fun onContinueClick(intent: EndGameIntent.OnContinueClick) {
         hapticFeedback.vibrateLow()
         navigateOrShowNotificationRequest(
             destination = EnableNotificationDestination.GAME,
-            defaultEffect = EndGameEffect.OpenGameScreen(intent.levelModel),
-            levelModel = intent.levelModel
+            defaultEffect = EndGameEffect.OpenGameScreen(intent.boardModel),
+            boardModel = intent.boardModel
         )
     }
 
@@ -264,12 +268,12 @@ class EndGameViewModel @Inject constructor(
     private fun navigateOrShowNotificationRequest(
         destination: EnableNotificationDestination,
         defaultEffect: EndGameEffect,
-        levelModel: LevelModel? = null
+        boardModel: BoardModel? = null
     ) {
         @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE && shouldShowNotificationRequest) {
             shouldShowNotificationRequest = false
-            sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, levelModel))
+            sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, boardModel))
         } else {
             sendEffect(defaultEffect)
         }
@@ -302,7 +306,7 @@ class EndGameViewModel @Inject constructor(
         }
         canUnlockNewCardUseCase().onEach { result ->
             val canUnlockNewCard = result.getOrDefault(false)
-            val menu = mutableListOf(EndGameMenuModel.PlayAgain, EndGameMenuModel.Menu).apply {
+            val menu = mutableListOf(EndGameMenuModel.Continue, EndGameMenuModel.Menu).apply {
                 @Suppress("KotlinConstantConditions")
                 if (isAdLoaded && !RECORDING_MODE) {
                     add(0, EndGameMenuModel.WatchAd)
@@ -327,24 +331,24 @@ class EndGameViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {
+    private fun getCurrentCoinsAndReward(board: BoardModel, isRewardFromAd: Boolean = false) {
         viewModelScope.launch {
             getCoinsUseCase().first().onSuccess { currentCoins ->
                 sendState {
                     copy(
-                        level = level,
+                        board = board,
                         currentCoins = currentCoins,
                         animateCoins = false
                     )
                 }
-                rewardCoins(level, currentCoins, isRewardFromAd)
+                rewardCoins(board, currentCoins, isRewardFromAd)
             }
         }
     }
 
-    private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
+    private fun rewardCoins(board: BoardModel, currentCoins: Long, isRewardFromAd: Boolean) {
         viewModelScope.launch {
-            rewardCoinsForLevelUseCase(level).first().onSuccess { rewardedCoins ->
+            rewardCoinsForBoardUseCase(board).first().onSuccess { rewardedCoins ->
                 pendingRewardedCoins = rewardedCoins
                 pendingCurrentCoins = currentCoins
                 sendState {
@@ -369,7 +373,7 @@ class EndGameViewModel @Inject constructor(
         val result = intent.dailyChallengeModel
         sendState {
             EndGameState(
-                level = intent.levelModel,
+                board = intent.boardModel,
                 dailyChallenge = result,
                 isDailyChallenge = true,
                 showSparkles = true
@@ -393,7 +397,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun rewardDailyChallengeCoins(currentCoins: Long) {
         viewModelScope.launch {
-            rewardCoinsForLevelUseCase(uiState.value.level).first()
+            rewardCoinsForBoardUseCase(uiState.value.board).first()
                 .onSuccess { rewardedCoins ->
                     pendingRewardedCoins = rewardedCoins
                     pendingCurrentCoins = currentCoins

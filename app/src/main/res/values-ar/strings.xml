@@ -15,7 +15,7 @@
     <string name="settings">الإعدادات</string>
     <string name="more">هل تريد المزيد؟</string>
     <string name="menu">القائمة</string>
-    <string name="play_again">العب مرة أخرى</string>
+    <string name="continue_game">متابعة</string>
     <string name="shop">المتجر</string>
     <string name="shop_obtain">الحصول على %d</string>
     <string name="shop_back_later">عد لاحقًا</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">يوم %d</string>
     <string name="daily_reward_collect">اجمع %d</string>
     <string name="daily_reward_back_tomorrow">عد غداً</string>
-    <string name="share_text">لقد طابقت كل الأزواج في memolki! هل يمكنك جمع المزيد من البطاقات؟ 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">التحدي اليومي</string>
     <string name="daily_challenge_compare">قارن</string>
@@ -121,4 +119,6 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="many">%d خطأ</item>
         <item quantity="other">%d خطأ</item>
     </plurals>
+    <string name="share_casual">هل تعتقد أنك تستطيع التغلب عليّ؟ 🧠🔥</string>
+    <string name="level_count">المستوى %d</string>
 </resources>

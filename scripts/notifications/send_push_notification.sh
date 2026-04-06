@@ -8,7 +8,7 @@ set -euo pipefail
 #     (run: gcloud auth login && gcloud config set project <firebase-project-id>)
 #
 # Usage:
-#   ./scripts/notifications/send_push_notification.sh <translations_file> [--flavor <flavor>] [--scheduled] [--screen <screen>] [--level <level>]
+#   ./scripts/notifications/send_push_notification.sh <translations_file> [--flavor <flavor>] [--scheduled] [--screen <screen>] [--board <level>]
 #
 # Translations file format (one language per line, tab-separated):
 #   en	New card deck!	Check out the new animals theme
@@ -16,12 +16,12 @@ set -euo pipefail
 #   de	Neues Kartendeck!	Entdecke das neue Tierthema
 #
 # Screen options: shop, collection, more_apps, game, daily_challenge
-# Level options (only for game screen): 2x3, 3x4, 4x4, 4x5, 4x6, 5x6
+# Board options (only for game screen): 2x3, 3x4, 4x4, 4x5, 4x6, 5x6
 #
 # Examples:
 #   ./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt
 #   ./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt --screen shop
-#   ./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt --screen game --level 4x5
+#   ./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt --screen game --board 4x5
 #   ./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt --flavor fruithalf --scheduled
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -44,7 +44,7 @@ WINDOW_START=14
 WINDOW_END=21
 
 usage() {
-    echo "Usage: $0 <translations_file> [--flavor <flavor>] [--scheduled] [--screen <screen>] [--level <level>]"
+    echo "Usage: $0 <translations_file> [--flavor <flavor>] [--scheduled] [--screen <screen>] [--board <level>]"
     echo ""
     echo "Translations file format (tab-separated):"
     echo "  en	Title text	Body text"
@@ -53,7 +53,7 @@ usage() {
     echo "Options:"
     echo "  --flavor <flavor>      Target specific flavor (fruithalf, vegetablehalf, mammalside, birdside)"
     echo "  --screen <screen>      Deep link target: shop, collection, more_apps, game, daily_challenge"
-    echo "  --level <level>        Game level: 2x3, 3x4, 4x4, 4x5, 4x6, 5x6 (only with --screen game)"
+    echo "  --board <level>        Game board: 2x3, 3x4, 4x4, 4x5, 4x6, 5x6 (only with --screen game)"
     echo "  --scheduled            Send between ${WINDOW_START}:00-${WINDOW_END}:00 in each language's timezone"
     echo ""
     echo "Config:"
@@ -70,7 +70,7 @@ shift
 
 FLAVOR=""
 SCREEN=""
-LEVEL=""
+BOARD=""
 SCHEDULED=false
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -82,8 +82,8 @@ while [ $# -gt 0 ]; do
             SCREEN="$2"
             shift 2
             ;;
-        --level)
-            LEVEL="$2"
+        --board)
+            BOARD="$2"
             shift 2
             ;;
         --scheduled)
@@ -96,6 +96,11 @@ while [ $# -gt 0 ]; do
             ;;
     esac
 done
+
+if [ -n "$BOARD" ] && [ "$SCREEN" != "game" ]; then
+    echo "Error: --board can only be used with --screen game"
+    exit 1
+fi
 
 if [ ! -f "$TRANSLATIONS_FILE" ]; then
     echo "Error: Translations file not found: $TRANSLATIONS_FILE"
@@ -203,8 +208,8 @@ send_notification() {
     local data_fields="\"title\": $(printf '%s' "$title" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))'), \"body\": $(printf '%s' "$body" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')"
     if [ -n "$SCREEN" ]; then
         data_fields="$data_fields, \"screen\": \"$SCREEN\""
-        if [ -n "$LEVEL" ]; then
-            data_fields="$data_fields, \"level\": \"$LEVEL\""
+        if [ -n "$BOARD" ]; then
+            data_fields="$data_fields, \"board\": \"$BOARD\""
         fi
     fi
 

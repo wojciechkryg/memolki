@@ -2,7 +2,7 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,7 +46,7 @@ class GetShuffledUnlockedCardsUseCaseTest : AppTest() {
         unlockedCardPairsLocalDataSource.addUnlockedCardPairId("mango")
 
         // when
-        val result = sut(LevelModel.Grid2x3()).first()
+        val result = sut(BoardModel.Grid2x3()).first()
 
         // then
         assertEquals(6, result.getOrThrow().size)

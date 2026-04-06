@@ -2,12 +2,13 @@
 <resources>
     <string name="empty" translatable="false" />
 
-    <string name="level2x3" translatable="false">2 x 3</string>
-    <string name="level3x4" translatable="false">3 x 4</string>
-    <string name="level4x4" translatable="false">4 x 4</string>
-    <string name="level4x5" translatable="false">4 x 5</string>
-    <string name="level4x6" translatable="false">4 x 6</string>
-    <string name="level5x6" translatable="false">5 x 6</string>
+    <string name="board2x3" translatable="false">2 x 3</string>
+    <string name="board3x4" translatable="false">3 x 4</string>
+    <string name="board4x4" translatable="false">4 x 4</string>
+    <string name="board4x5" translatable="false">4 x 5</string>
+    <string name="board4x6" translatable="false">4 x 6</string>
+    <string name="board5x6" translatable="false">5 x 6</string>
+
 
     <string name="app_logo" translatable="false">memolki</string>
 

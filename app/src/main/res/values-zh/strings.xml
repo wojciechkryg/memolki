@@ -15,7 +15,7 @@
     <string name="settings">设置</string>
     <string name="more">更多？</string>
     <string name="menu">菜单</string>
-    <string name="play_again">再玩一次</string>
+    <string name="continue_game">继续</string>
     <string name="shop">商店</string>
     <string name="shop_obtain">获得 %d</string>
     <string name="shop_back_later">稍后再回来</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">第%d天</string>
     <string name="daily_reward_collect">收集 %d</string>
     <string name="daily_reward_back_tomorrow">明天再来</string>
-    <string name="share_text">我在memolki中配对了所有卡片！你能收集更多卡片吗？ 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">每日挑战</string>
     <string name="daily_challenge_compare">比较</string>
@@ -116,4 +114,6 @@ https://play.google.com/store/apps/details?id=%s</string>
     <plurals name="daily_challenge_mistakes">
         <item quantity="other">%d 个错误</item>
     </plurals>
+    <string name="share_casual">你觉得你能赢我吗？🧠🔥</string>
+    <string name="level_count">等级 %d</string>
 </resources>

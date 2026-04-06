@@ -15,7 +15,7 @@
     <string name="settings">Nastavitve</string>
     <string name="more">Več?</string>
     <string name="menu">Meni</string>
-    <string name="play_again">Igraj ponovno</string>
+    <string name="continue_game">Nadaljuj</string>
     <string name="shop">Trgovina</string>
     <string name="shop_obtain">Pridobi %d</string>
     <string name="shop_back_later">Vrni se kasneje</string>
@@ -94,7 +94,6 @@
     <string name="daily_reward_day">Dan %d</string>
     <string name="daily_reward_collect">Zberi %d</string>
     <string name="daily_reward_back_tomorrow">Vrni se jutri</string>
-    <string name="share_text">Našel sem vse pare v memolki! Lahko zbereš več kart? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Dnevni izziv</string>
     <string name="daily_challenge_compare">Primerjaj</string>
@@ -118,4 +117,6 @@
         <item quantity="few">%d napake</item>
         <item quantity="other">%d napak</item>
     </plurals>
+    <string name="share_casual">Misliš, da me lahko premaganš? 🧠🔥</string>
+    <string name="level_count">raven %d</string>
 </resources>

@@ -3,7 +3,7 @@ package com.wojdor.memolki.domain.usecase
 import app.cash.turbine.test
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
@@ -50,12 +50,12 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     @Test
     fun `when get cards for level then return correct number of cards`() = runTest {
         // given
-        val level = LevelModel.Grid2x3()
+        val board = BoardModel.Grid2x3()
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
 
         // when / then
-        val expectedCardCount = level.columns * level.rows
-        sut(level).test {
+        val expectedCardCount = board.columns * board.rows
+        sut(board).test {
             assertEquals(expectedCardCount, awaitItem().getOrThrow().size)
             awaitComplete()
         }
@@ -64,12 +64,12 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     @Test
     fun `when get cards for larger level then return correct number of cards`() = runTest {
         // given
-        val level = LevelModel.Grid4x4()
+        val board = BoardModel.Grid4x4()
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
 
         // when / then
-        val expectedCardCount = level.columns * level.rows
-        sut(level).test {
+        val expectedCardCount = board.columns * board.rows
+        sut(board).test {
             assertEquals(expectedCardCount, awaitItem().getOrThrow().size)
             awaitComplete()
         }
@@ -78,17 +78,17 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     @Test
     fun `when same date then return same cards`() = runTest {
         // given
-        val level = LevelModel.Grid2x3()
+        val board = BoardModel.Grid2x3()
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
 
         // when
         var result1: List<*>? = null
-        sut(level).test {
+        sut(board).test {
             result1 = awaitItem().getOrThrow()
             awaitComplete()
         }
         var result2: List<*>? = null
-        sut(level).test {
+        sut(board).test {
             result2 = awaitItem().getOrThrow()
             awaitComplete()
         }
@@ -100,18 +100,18 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     @Test
     fun `when different date then return different cards`() = runTest {
         // given
-        val level = LevelModel.Grid2x3()
+        val board = BoardModel.Grid2x3()
 
         // when
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
         var result1: List<*>? = null
-        sut(level).test {
+        sut(board).test {
             result1 = awaitItem().getOrThrow()
             awaitComplete()
         }
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 27)
         var result2: List<*>? = null
-        sut(level).test {
+        sut(board).test {
             result2 = awaitItem().getOrThrow()
             awaitComplete()
         }
@@ -123,7 +123,7 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     @Test
     fun `when cards are within grace period then they are deprioritized`() = runTest {
         // given
-        val level = LevelModel.Grid2x3()
+        val board = BoardModel.Grid2x3()
         val testDate = LocalDate.of(2026, 3, 26)
         val testEpochDay = testDate.toEpochDay()
         fakeTimeProvider.mockCurrentDate = testDate
@@ -138,10 +138,10 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
             CardRepository(fakeDataSource, unlockedCardPairsLocalDataSource, Random(0)),
             fakeTimeProvider
         )
-        val pairCount = (level.columns * level.rows) / 2
+        val pairCount = (board.columns * board.rows) / 2
 
         // when
-        sut(level).test {
+        sut(board).test {
             val cards = awaitItem().getOrThrow()
             val selectedPairIds = cards.map { it.pairId }.distinct()
 

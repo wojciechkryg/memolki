@@ -15,7 +15,7 @@
     <string name="settings">Cài đặt</string>
     <string name="more">Thêm?</string>
     <string name="menu">Menu</string>
-    <string name="play_again">Chơi lại</string>
+    <string name="continue_game">Tiếp tục</string>
     <string name="shop">Cửa hàng</string>
     <string name="shop_obtain">Lấy %d</string>
     <string name="shop_back_later">Quay lại sau</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Ngày %d</string>
     <string name="daily_reward_collect">Thu thập %d</string>
     <string name="daily_reward_back_tomorrow">Quay lại ngày mai</string>
-    <string name="share_text">Tôi đã ghép tất cả các cặp trong memolki! Bạn có thể thu thập thêm thẻ không? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Thử thách hàng ngày</string>
     <string name="daily_challenge_compare">So sánh</string>
@@ -116,4 +114,6 @@ https://play.google.com/store/apps/details?id=%s</string>
     <plurals name="daily_challenge_mistakes">
         <item quantity="other">%d lỗi</item>
     </plurals>
+    <string name="share_casual">Bạn nghĩ có thể thắng tôi không? 🧠🔥</string>
+    <string name="level_count">cấp %d</string>
 </resources>

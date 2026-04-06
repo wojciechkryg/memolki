@@ -15,7 +15,7 @@
     <string name="settings">Innstillinger</string>
     <string name="more">Mer?</string>
     <string name="menu">Meny</string>
-    <string name="play_again">Spill igjen</string>
+    <string name="continue_game">Fortsett</string>
     <string name="shop">Butikk</string>
     <string name="shop_obtain">Hent %d</string>
     <string name="shop_back_later">Kom tilbake senere</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Dag %d</string>
     <string name="daily_reward_collect">Samle %d</string>
     <string name="daily_reward_back_tomorrow">Kom tilbake i morgen</string>
-    <string name="share_text">Jeg matchet alle parene i memolki! Kan du samle flere kort? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Daglig utfordring</string>
     <string name="daily_challenge_compare">Sammenlign</string>
@@ -117,4 +115,6 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d feil</item>
         <item quantity="other">%d feil</item>
     </plurals>
+    <string name="share_casual">Tror du at du kan slå meg? 🧠🔥</string>
+    <string name="level_count">nivå %d</string>
 </resources>

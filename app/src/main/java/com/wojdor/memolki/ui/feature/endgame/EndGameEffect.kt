@@ -2,19 +2,19 @@ package com.wojdor.memolki.ui.feature.endgame
 
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.base.UiEffect
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 
 sealed class EndGameEffect : UiEffect {
-    data class OpenGameScreen(val levelModel: LevelModel) : EndGameEffect()
+    data class OpenGameScreen(val boardModel: BoardModel) : EndGameEffect()
     object OpenMenuScreen : EndGameEffect()
     object OpenCollectionScreen : EndGameEffect()
     data class OpenEnableNotificationsScreen(
         val destination: EnableNotificationDestination,
-        val levelModel: LevelModel?
+        val boardModel: BoardModel?
     ) : EndGameEffect()
 
     data class ShowAd(val rewardedAd: RewardedAd) : EndGameEffect()
@@ -28,7 +28,7 @@ sealed class EndGameEffect : UiEffect {
         val totalCoins: Long
     ) : EndGameEffect()
 
-    object Share : EndGameEffect()
+    data class Share(val text: String) : EndGameEffect()
     object OpenShopScreen : EndGameEffect()
     data class ShareDailyChallenge(val text: String) : EndGameEffect()
 }

@@ -110,4 +110,41 @@ class UserLocalDataSourceTest : AppTest() {
         // then
         assertEquals(expected, result)
     }
+
+    @Test
+    fun `when no level then return default value`() = runTest {
+        // when
+        val result = sut.encryptedLevel("2x3").first()
+
+        // then
+        assertNull(result)
+    }
+
+    @Test
+    fun `when level exists then return this value`() = runTest {
+        // given
+        val expected = "5"
+        sut.setEncryptedLevel("2x3") { expected }
+
+        // when
+        val result = sut.encryptedLevel("2x3").first()
+
+        // then
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `when level for different boards then return independent values`() = runTest {
+        // given
+        sut.setEncryptedLevel("2x3") { "10" }
+        sut.setEncryptedLevel("4x4") { "20" }
+
+        // when
+        val result2x3 = sut.encryptedLevel("2x3").first()
+        val result4x4 = sut.encryptedLevel("4x4").first()
+
+        // then
+        assertEquals("10", result2x3)
+        assertEquals("20", result4x4)
+    }
 }

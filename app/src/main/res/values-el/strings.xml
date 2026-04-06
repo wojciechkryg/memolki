@@ -15,7 +15,7 @@
     <string name="settings">Ρυθμίσεις</string>
     <string name="more">Περισσότερα;</string>
     <string name="menu">Μενού</string>
-    <string name="play_again">Παίξε ξανά</string>
+    <string name="continue_game">Συνέχεια</string>
     <string name="shop">Κατάστημα</string>
     <string name="shop_obtain">Πάρε %d</string>
     <string name="shop_back_later">Επίστρεψε αργότερα</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Ημέρα %d</string>
     <string name="daily_reward_collect">Σύλλεξε %d</string>
     <string name="daily_reward_back_tomorrow">Έλα αύριο</string>
-    <string name="share_text">Βρήκα όλα τα ζευγάρια στο memolki! Μπορείς να μαζέψεις περισσότερες κάρτες; 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Ημερήσια πρόκληση</string>
     <string name="daily_challenge_compare">Σύγκριση</string>
@@ -117,4 +115,6 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d λάθος</item>
         <item quantity="other">%d λάθη</item>
     </plurals>
+    <string name="share_casual">Νομίζεις ότι μπορείς να με νικήσεις; 🧠🔥</string>
+    <string name="level_count">επίπεδο %d</string>
 </resources>

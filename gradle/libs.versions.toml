@@ -2,7 +2,7 @@
 activityCompose = "1.13.0"
 composablePreviewScanner = "0.8.2"
 paparazzi = "2.0.0-alpha04"
-testParameterInjector = "1.18"
+testParameterInjector = "1.21"
 agp = "9.0.1"
 appcompat = "1.7.1"
 appUpdateKtx = "2.1.0"
@@ -24,10 +24,9 @@ ksp = "2.3.2"
 material = "1.13.0"
 material3 = "1.4.0"
 material3WindowSizeClass = "1.4.0"
-mediationApplovin = "13.6.2.0"
 mediationInmobi = "11.2.0.0"
 mediationIronsource = "9.3.0.2"
-mediationLiftoff = "7.7.1.0"
+mediationLiftoff = "7.7.2.0"
 mediationMintegral = "17.1.31.0"
 mediationUnity = "4.17.0.0"
 mockk = "1.14.9"
@@ -72,7 +71,6 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-mediation-applovin = { group = "com.google.ads.mediation", name = "applovin", version.ref = "mediationApplovin" }
 mediation-inmobi = { group = "com.google.ads.mediation", name = "inmobi", version.ref = "mediationInmobi" }
 mediation-ironsource = { group = "com.google.ads.mediation", name = "ironsource", version.ref = "mediationIronsource" }
 mediation-liftoff = { group = "com.google.ads.mediation", name = "vungle", version.ref = "mediationLiftoff" }

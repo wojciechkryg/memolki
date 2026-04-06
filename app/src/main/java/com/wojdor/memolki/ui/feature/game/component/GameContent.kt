@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.game.component
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,13 +28,14 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
 import com.wojdor.memolki.ui.feature.game.GameState
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXL
 import kotlin.math.ceil
@@ -64,7 +67,7 @@ private fun CardsGridWithText(
             .padding(horizontal = spacingL),
     ) {
         val spacing = spacingS
-        val columns = state.level.columns
+        val columns = state.board.columns
         if (columns > 0 && state.cards.isNotEmpty()) {
             val rows = ceil(state.cards.size / columns.toFloat()).toInt()
             val gridAreaHeight = maxHeight * GRID_AREA_RATIO
@@ -78,7 +81,24 @@ private fun CardsGridWithText(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(gridTopPadding))
+                Column(
+                    modifier = Modifier
+                        .height(gridTopPadding)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    if (!state.isDailyChallenge) {
+                        AutoSizeText(
+                            text = stringResource(R.string.level_count, state.level),
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
+                    GameProgressBar(
+                        progress = state.progress,
+                        modifier = Modifier.padding(spacingL)
+                    )
+                }
                 CardsGrid(
                     state = state,
                     callbacks = callbacks,
@@ -164,7 +184,8 @@ private fun StartGameContentPreview() {
     AppTheme {
         GameContent(
             state = GameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
+                level = 5L,
                 cards = List(6) {
                     CardModel.Text(
                         id = "id",
@@ -179,12 +200,29 @@ private fun StartGameContentPreview() {
 
 @Preview
 @Composable
+private fun CardsGridPartialProgressPreview() {
+    AppTheme {
+        GameContent(
+            state = GameState(
+                board = BoardModel.Grid2x3(),
+                level = 12L,
+                progress = 0.5f,
+                cards = getPreviewCards(matchedCount = 3)
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
 private fun CardsGridPreview() {
     val cards = getPreviewCards()
     AppTheme {
         GameContent(
             state = GameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
+                level = 42L,
+                progress = 1f,
                 cards = cards,
                 lastCardPressed = cards.first(),
                 shouldShowCardText = true
@@ -200,7 +238,9 @@ private fun CardsGridPressedPreview() {
     AppTheme {
         GameContent(
             state = GameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
+                level = 7L,
+                progress = 1f,
                 cards = cards,
                 lastCardPressed = cards.first(),
                 shouldShowCardDetails = true
@@ -209,13 +249,28 @@ private fun CardsGridPressedPreview() {
     }
 }
 
-private fun getPreviewCards() = List(6) {
+@Preview
+@Composable
+private fun CardsGridDailyChallengePreview() {
+    AppTheme {
+        GameContent(
+            state = GameState(
+                board = BoardModel.Grid2x3(),
+                isDailyChallenge = true,
+                progress = 0.33f,
+                cards = getPreviewCards(matchedCount = 2)
+            )
+        )
+    }
+}
+
+private fun getPreviewCards(matchedCount: Int = 6) = List(6) {
     CardModel.Image(
         id = "id",
         pairId = "pairId",
         textRes = R.string.empty,
         imageRes = if (it % 2 == 0) R.drawable.img_test_whole else R.drawable.img_test_half,
         isFlippedFront = true,
-        isPairMatched = true
+        isPairMatched = it < matchedCount
     )
 }

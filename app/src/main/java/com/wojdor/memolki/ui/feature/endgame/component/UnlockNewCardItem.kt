@@ -19,7 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
+import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.collection.component.CARD_PAIR_VERTICAL_PADDING
 import com.wojdor.memolki.ui.feature.collection.component.CollectionLockedCard
 import com.wojdor.memolki.ui.feature.collection.component.cardLeftModifier
@@ -28,6 +30,7 @@ import com.wojdor.memolki.ui.feature.collection.component.rotatedCardPairShape
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
@@ -35,37 +38,40 @@ import com.wojdor.memolki.util.throttleClick
 fun UnlockNewCardItem(
     onClick: () -> Unit = {}
 ) {
-    Box(
-        modifier = Modifier
-            .width(144.dp)
-            .bounceClickEffect()
-            .clip(rotatedCardPairShape)
-            .clickable(
-                onClick = throttleClick(onClick = onClick),
-            )
-            .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
-        contentAlignment = Alignment.Center
-    ) {
-        CollectionLockedCard(modifier = cardLeftModifier)
+    EdgeSparklesEffect {
         Box(
-            modifier = cardRightModifier,
+            modifier = Modifier
+                .width(144.dp)
+                .pulseEffect()
+                .bounceClickEffect()
+                .clip(rotatedCardPairShape)
+                .clickable(
+                    onClick = throttleClick(onClick = onClick),
+                )
+                .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
             contentAlignment = Alignment.Center
         ) {
-            CollectionLockedCard()
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(CARD_BORDER_SIZE)
-                    .background(color = Color.White.copy(alpha = 0.5f), CardShape)
-                    .padding(6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+            CollectionLockedCard(modifier = cardLeftModifier)
+            Box(
+                modifier = cardRightModifier,
+                contentAlignment = Alignment.Center
             ) {
-                AutoSizeText(
-                    modifier = Modifier.padding(start = spacingXS),
-                    text = stringResource(R.string.new_card_to_unlock).uppercase(),
-                    style = MaterialTheme.typography.displaySmall,
-                )
+                CollectionLockedCard()
+                Row(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(CARD_BORDER_SIZE)
+                        .background(color = Color.White.copy(alpha = 0.5f), CardShape)
+                        .padding(6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    AutoSizeText(
+                        modifier = Modifier.padding(start = spacingXS),
+                        text = stringResource(R.string.new_card_to_unlock).uppercase(),
+                        style = MaterialTheme.typography.displaySmall.animated(),
+                    )
+                }
             }
         }
     }

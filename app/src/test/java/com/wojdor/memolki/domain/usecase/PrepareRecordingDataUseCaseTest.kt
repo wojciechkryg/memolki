@@ -15,17 +15,17 @@ import org.junit.Test
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class PrepareRecordingCoinsUseCaseTest : AppTest() {
+class PrepareRecordingDataUseCaseTest : AppTest() {
 
     @Inject
     lateinit var userRepository: UserRepository
 
-    private lateinit var sut: PrepareRecordingCoinsUseCase
+    private lateinit var sut: PrepareRecordingDataUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = PrepareRecordingCoinsUseCase(
+        sut = PrepareRecordingDataUseCase(
             testDispatcher,
             userRepository
         )

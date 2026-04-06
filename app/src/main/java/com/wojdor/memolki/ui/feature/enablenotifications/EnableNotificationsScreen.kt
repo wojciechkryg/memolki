@@ -44,6 +44,7 @@ import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -81,7 +82,7 @@ private fun HandleEffect(
                 requestNotificationPermission(permissionLauncher, viewModel)
 
             is EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame(
-                effect.levelId
+                effect.boardId
             )
 
             EnableNotificationsEffect.NavigateToMenu -> navController.navigateToMenu()
@@ -144,19 +145,21 @@ private fun EnableNotificationsScreen(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(spacingXL))
-        Button(
-            modifier = Modifier
-                .pulseEffect()
-                .bounceClickEffect(),
-            onClick = throttleClick(onClick = callbacks.onEnableClick),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent
-            )
-        ) {
-            Text(
-                text = stringResource(R.string.enable_notifications_enable).uppercase(),
-                style = MaterialTheme.typography.displaySmall.animated()
-            )
+        EdgeSparklesEffect {
+            Button(
+                modifier = Modifier
+                    .pulseEffect()
+                    .bounceClickEffect(),
+                onClick = throttleClick(onClick = callbacks.onEnableClick),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent
+                )
+            ) {
+                Text(
+                    text = stringResource(R.string.enable_notifications_enable).uppercase(),
+                    style = MaterialTheme.typography.displaySmall.animated()
+                )
+            }
         }
         var isLaterVisible by remember { mutableStateOf(false) }
         LaunchedEffect(Unit) {
@@ -183,7 +186,7 @@ private fun EnableNotificationsScreen(
     }
 }
 
-private const val LATER_BUTTON_DELAY = 1500L
+private const val LATER_BUTTON_DELAY = 3000L
 
 @Preview(showBackground = true)
 @Composable

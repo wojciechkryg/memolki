@@ -13,20 +13,20 @@ import org.junit.Test
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class ResolveLevelUseCaseTest : AppTest() {
+class GetBiggestUnlockedBoardUseCaseTest : AppTest() {
 
     @Inject
-    lateinit var getLevelsUseCase: GetLevelsUseCase
+    lateinit var getBoardsUseCase: GetBoardsUseCase
 
     @Inject
     lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
 
-    private lateinit var sut: ResolveLevelUseCase
+    private lateinit var sut: GetBiggestUnlockedBoardUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = ResolveLevelUseCase(testDispatcher, getLevelsUseCase)
+        sut = GetBiggestUnlockedBoardUseCase(testDispatcher, getBoardsUseCase)
     }
 
     override fun inject(injector: TestInjector) {

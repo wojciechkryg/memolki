@@ -15,7 +15,7 @@
     <string name="settings">Настройки</string>
     <string name="more">Еще?</string>
     <string name="menu">Меню</string>
-    <string name="play_again">Играть снова</string>
+    <string name="continue_game">Продолжить</string>
     <string name="shop">Магазин</string>
     <string name="shop_obtain">Получить %d</string>
     <string name="shop_back_later">Вернуться позже</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">День %d</string>
     <string name="daily_reward_collect">Собрать %d</string>
     <string name="daily_reward_back_tomorrow">Возвращайся завтра</string>
-    <string name="share_text">Я нашёл все пары в memolki! Сможешь собрать больше карточек? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Ежедневный вызов</string>
     <string name="daily_challenge_compare">Сравнить</string>
@@ -119,4 +117,6 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="many">%d ошибок</item>
         <item quantity="other">%d ошибок</item>
     </plurals>
+    <string name="share_casual">Думаешь, сможешь меня обыграть? 🧠🔥</string>
+    <string name="level_count">уровень %d</string>
 </resources>

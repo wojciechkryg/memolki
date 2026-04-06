@@ -11,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
-import com.wojdor.memolki.ui.app.navigateToChooseLevel
+import com.wojdor.memolki.ui.app.navigateToChooseBoard
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToMoreApps
 import com.wojdor.memolki.ui.app.navigateToSettings
@@ -39,7 +39,7 @@ private fun HandleEffect(
     val activity = LocalActivity.current
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            MenuEffect.OpenChooseLevelScreen -> navController.navigateToChooseLevel()
+            MenuEffect.OpenChooseBoardScreen -> navController.navigateToChooseBoard()
             MenuEffect.OpenCollectionScreen -> navController.navigateToCollection()
             is MenuEffect.OpenLeaderboardScreen -> activity?.let {
                 openLeaderboardScreen(

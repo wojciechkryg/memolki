@@ -14,7 +14,7 @@ import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.app.navigateToEndGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
@@ -83,12 +83,12 @@ private fun openEndGameScreen(
     if (dailyChallenge != DailyChallengeModel()) {
         endGameViewModel.sendIntent(
             EndGameIntent.OnDailyChallengeEndGameShow(
-                levelModel = effect.levelModel,
+                boardModel = effect.boardModel,
                 dailyChallengeModel = dailyChallenge
             )
         )
     } else {
-        endGameViewModel.sendIntent(EndGameIntent.OnCasualEndGameShow(effect.levelModel))
+        endGameViewModel.sendIntent(EndGameIntent.OnCasualEndGameShow(effect.boardModel, effect.level))
     }
     navController.navigateToEndGame()
 }
@@ -130,7 +130,7 @@ private fun GameScreenGrid2x3Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 cards = List(6) {
                     CardModel.Text(
                         id = "id",
@@ -149,7 +149,7 @@ private fun GameScreenGrid3x4Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid3x4(),
+                board = BoardModel.Grid3x4(),
                 cards = List(12) {
                     CardModel.Text(
                         id = "id",
@@ -168,7 +168,7 @@ private fun GameScreenGrid4x4Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid4x4(),
+                board = BoardModel.Grid4x4(),
                 cards = List(16) {
                     CardModel.Text(
                         id = "id",
@@ -187,7 +187,7 @@ private fun GameScreenGrid4x5Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid4x5(),
+                board = BoardModel.Grid4x5(),
                 cards = List(20) {
                     CardModel.Text(
                         id = "id",
@@ -207,7 +207,7 @@ private fun GameScreenGrid4x6Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid4x6(),
+                board = BoardModel.Grid4x6(),
                 cards = List(24) {
                     CardModel.Text(
                         id = "id",
@@ -226,7 +226,7 @@ private fun GameScreenGrid5x6Preview() {
     AppTheme {
         GameScreen(
             state = GameState(
-                level = LevelModel.Grid5x6(),
+                board = BoardModel.Grid5x6(),
                 cards = List(30) {
                     CardModel.Text(
                         id = "id",

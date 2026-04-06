@@ -13,10 +13,9 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
@@ -53,7 +52,7 @@ private fun HandleEffect(
     val coroutineScope = rememberCoroutineScope()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.levelModel)
+            is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.boardModel)
             EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
             EndGameEffect.OpenCollectionScreen -> navController.navigateToCollection()
             is EndGameEffect.OpenEnableNotificationsScreen -> openEnableNotificationsScreen(
@@ -72,16 +71,16 @@ private fun HandleEffect(
                 }
             }
 
-            EndGameEffect.Share -> activity?.let { shareApp(it) }
+            is EndGameEffect.Share -> activity?.let { share(it, effect.text) }
             EndGameEffect.OpenShopScreen -> navController.navigateToShop()
             is EndGameEffect.ShareDailyChallenge -> activity?.let {
-                shareDailyChallenge(it, effect.text)
+                share(it, effect.text)
             }
         }
     }
 }
 
-private fun shareDailyChallenge(activity: Activity, text: String) {
+private fun share(activity: Activity, text: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, text)
@@ -89,20 +88,11 @@ private fun shareDailyChallenge(activity: Activity, text: String) {
     activity.startActivity(Intent.createChooser(intent, null))
 }
 
-private fun shareApp(activity: Activity) {
-    val shareText = activity.getString(R.string.share_text, activity.packageName)
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, shareText)
-    }
-    activity.startActivity(Intent.createChooser(intent, null))
-}
-
 private fun openGameScreen(
     navController: NavController,
-    level: LevelModel
+    board: BoardModel
 ) {
-    navController.navigateToGameFromEndGame(level.id)
+    navController.navigateToGameFromEndGame(board.id)
 }
 
 private fun openEnableNotificationsScreen(
@@ -111,7 +101,7 @@ private fun openEnableNotificationsScreen(
 ) {
     navController.navigateToEnableNotifications(
         effect.destination.route,
-        effect.levelModel?.id.orEmpty()
+        effect.boardModel?.id.orEmpty()
     )
 }
 
@@ -149,7 +139,7 @@ private fun HandleState(
     state: EndGameState
 ) {
     val callbacks = EndGameCallbacks(
-        onPlayAgainClick = { viewModel.sendIntent(EndGameIntent.OnPlayAgainClick(state.level)) },
+        onContinueClick = { viewModel.sendIntent(EndGameIntent.OnContinueClick(state.board)) },
         onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) },
         onUnlockNewCardClick = { viewModel.sendIntent(EndGameIntent.OnUnlockNewCardClick) },
         onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) },
@@ -181,11 +171,11 @@ private fun EndGameScreenPreview() {
     AppTheme {
         EndGameScreen(
             state = EndGameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu
                 )
             )
@@ -199,13 +189,13 @@ private fun EndGameScreenWithAdPreview() {
     AppTheme {
         EndGameScreen(
             state = EndGameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
                     EndGameMenuModel.UnlockNewCard,
-                    EndGameMenuModel.PlayAgain,
+                    EndGameMenuModel.Continue,
                     EndGameMenuModel.Menu
                 )
             )

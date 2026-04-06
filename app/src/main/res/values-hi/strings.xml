@@ -15,7 +15,7 @@
     <string name="settings">सेटिंग्स</string>
     <string name="more">और?</string>
     <string name="menu">मेनू</string>
-    <string name="play_again">फिर से खेलें</string>
+    <string name="continue_game">जारी रखें</string>
     <string name="shop">दुकान</string>
     <string name="shop_obtain">प्राप्त करें %d</string>
     <string name="shop_back_later">बाद में वापस आएं</string>
@@ -94,7 +94,6 @@
     <string name="daily_reward_day">दिन %d</string>
     <string name="daily_reward_collect">इकट्ठा करें %d</string>
     <string name="daily_reward_back_tomorrow">कल वापस आएं</string>
-    <string name="share_text">मैंने memolki में सभी जोड़े मिला लिए! क्या तुम ज़्यादा कार्ड इकट्ठा कर सकते हो? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">दैनिक चुनौती</string>
     <string name="daily_challenge_compare">तुलना करें</string>
@@ -116,4 +115,6 @@
         <item quantity="one">%d गलती</item>
         <item quantity="other">%d गलतियाँ</item>
     </plurals>
+    <string name="share_casual">क्या तुम मुझे हरा सकते हो? 🧠🔥</string>
+    <string name="level_count">स्तर %d</string>
 </resources>

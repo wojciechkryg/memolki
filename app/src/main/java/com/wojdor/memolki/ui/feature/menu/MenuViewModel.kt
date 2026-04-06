@@ -9,7 +9,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseBoardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenMoreAppsScreen
@@ -62,7 +62,7 @@ class MenuViewModel @Inject constructor(
 
     private fun onNewGameClick() {
         hapticFeedback.vibrateLow()
-        sendEffect(OpenChooseLevelScreen)
+        sendEffect(OpenChooseBoardScreen)
     }
 
     private fun onCollectionClick() {

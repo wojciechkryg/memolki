@@ -15,7 +15,7 @@
     <string name="settings">Asetukset</string>
     <string name="more">Lisää?</string>
     <string name="menu">Valikko</string>
-    <string name="play_again">Pelaa uudelleen</string>
+    <string name="continue_game">Jatka</string>
     <string name="shop">Kauppa</string>
     <string name="shop_obtain">Hanki %d</string>
     <string name="shop_back_later">Tule takaisin myöhemmin</string>
@@ -94,7 +94,6 @@
     <string name="daily_reward_day">Päivä %d</string>
     <string name="daily_reward_collect">Kerää %d</string>
     <string name="daily_reward_back_tomorrow">Tule takaisin huomenna</string>
-    <string name="share_text">Löysin kaikki parit memolkissa! Voitko kerätä enemmän kortteja? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Päivän haaste</string>
     <string name="daily_challenge_compare">Vertaa</string>
@@ -116,4 +115,6 @@
         <item quantity="one">%d virhe</item>
         <item quantity="other">%d virhettä</item>
     </plurals>
+    <string name="share_casual">Luuletko voittavasi minut? 🧠🔥</string>
+    <string name="level_count">taso %d</string>
 </resources>

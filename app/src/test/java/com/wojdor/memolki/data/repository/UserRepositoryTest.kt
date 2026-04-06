@@ -185,4 +185,52 @@ class UserRepositoryTest : AppTest() {
             val expected = initialCount + 1
             assertEquals(expected, result)
         }
+
+    @Test
+    fun `when getLevel with no data then should return default of one`() = runTest {
+        // when
+        val result = sut.getLevel("2x3").first()
+
+        // then
+        assertEquals(1L, result)
+    }
+
+    @Test
+    fun `when incrementLevel then should return incremented value`() = runTest {
+        // when
+        val result = sut.incrementLevel("2x3")
+
+        // then
+        assertEquals(2L, result)
+    }
+
+    @Test
+    fun `when incrementLevel twice then should return second incremented value`() =
+        runTest {
+            // given
+            sut.incrementLevel("2x3")
+
+            // when
+            val result = sut.incrementLevel("2x3")
+
+            // then
+            assertEquals(3L, result)
+        }
+
+    @Test
+    fun `when getLevel for different levels then should return independent counts`() =
+        runTest {
+            // given
+            sut.incrementLevel("2x3")
+            sut.incrementLevel("2x3")
+            sut.incrementLevel("4x4")
+
+            // when
+            val result2x3 = sut.getLevel("2x3").first()
+            val result4x4 = sut.getLevel("4x4").first()
+
+            // then
+            assertEquals(3L, result2x3)
+            assertEquals(2L, result4x4)
+        }
 }

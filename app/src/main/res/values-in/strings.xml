@@ -15,7 +15,7 @@
     <string name="settings">Pengaturan</string>
     <string name="more">Lagi?</string>
     <string name="menu">Menu</string>
-    <string name="play_again">Main lagi</string>
+    <string name="continue_game">Lanjutkan</string>
     <string name="shop">Toko</string>
     <string name="shop_obtain">Dapatkan %d</string>
     <string name="shop_back_later">Kembali nanti</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Hari %d</string>
     <string name="daily_reward_collect">Kumpulkan %d</string>
     <string name="daily_reward_back_tomorrow">Kembali besok</string>
-    <string name="share_text">Aku mencocokkan semua pasangan di memolki! Bisakah kamu mengumpulkan lebih banyak kartu? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Tantangan harian</string>
     <string name="daily_challenge_compare">Bandingkan</string>
@@ -116,4 +114,6 @@ https://play.google.com/store/apps/details?id=%s</string>
     <plurals name="daily_challenge_mistakes">
         <item quantity="other">%d kesalahan</item>
     </plurals>
+    <string name="share_casual">Menurutmu bisa mengalahkanku? 🧠🔥</string>
+    <string name="level_count">level %d</string>
 </resources>

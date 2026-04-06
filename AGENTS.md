@@ -197,7 +197,7 @@ Every screen and reusable component has `@Preview` functions. Conventions:
 ### Navigation
 
 Jetpack Compose Navigation with nested graphs (flows) in `ui/app/AppNavigation.kt`:
-- **Game flow:** ChooseLevel → Game → EndGame (ViewModels shared via flow scope)
+- **Game flow:** ChooseBoard → Game → EndGame (ViewModels shared via flow scope)
 - **Collection flow:** Collection → Shop → CardPairDetails
 - **Settings flow:** Settings → ChangeLanguage
 
@@ -407,13 +407,14 @@ When `RECORDING_MODE = true`, the app changes:
 | Collection | Hides Watch Ad unlock (replaced with locked slot to keep total count) |
 | Menu | Hides "more apps" section |
 | Notifications | Skips notification request screen |
-| RTL support | `ForceLtr` helper used for click overlay and level text |
+| RTL support | `ForceLtr` helper used for click overlay and board text |
 
 ### Post-processing
 The script uses `ffmpeg-full` (with freetype) to:
 - Speed up video 1.5x
 - Add background music (`app/src/main/res/raw/music_background.ogg`) with fade-out at the end
 - Add blur overlay fading in at the end
+- Add flavor logo (`app/src/main/res/drawable/ic_logo_{flavor}.png`) fading in above the text with circular background
 - Add localized "Think you can solve it?" text in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`), with Arial Unicode fallback for CJK/RTL locales
 
 ### CI guard
@@ -446,12 +447,12 @@ pl	Tytuł	Treść
 ```
 
 ### Deep links
-Notifications can open specific screens via `--screen` and `--level` options:
+Notifications can open specific screens via `--screen` and `--board` options:
 ```bash
 ./scripts/notifications/send_push_notification.sh translations.txt --screen shop
-./scripts/notifications/send_push_notification.sh translations.txt --screen game --level 4x5
+./scripts/notifications/send_push_notification.sh translations.txt --screen game --board 4x5
 ```
-Screens: `shop`, `collection`, `more_apps`, `game`, `daily_challenge`. Levels (game only): `2x3`, `3x4`, `4x4`, `4x5`, `4x6`, `5x6`.
+Screens: `shop`, `collection`, `more_apps`, `game`, `daily_challenge`. Boards (game only): `2x3`, `3x4`, `4x4`, `4x5`, `4x6`, `5x6`, `biggest` (biggest unlocked board — also the default when `--board` is omitted).
 
 Deep link flow: script sends data-only FCM payload → `PushNotificationService.onMessageReceived` creates notification with `ACTION_VIEW` intent → `AppActivity.resolveDeepLinkIntent` converts FCM extras to deep link URI → `AppNavigation.navigateFromDeepLink` routes to the correct screen. Data-only payloads (no `notification` field) are used so `onMessageReceived` is always called regardless of foreground/background state.
 
@@ -466,11 +467,11 @@ Deep link URIs use `DeepLinkBuilder` (`util/notification/DeepLinkBuilder.kt`) as
 
 ### Key files
 - `util/notification/PushNotificationService.kt` — receives FCM messages, shows notification with deep link intent
-- `util/notification/DeepLinkBuilder.kt` — builds deep link URIs, defines screen/level constants
+- `util/notification/DeepLinkBuilder.kt` — builds deep link URIs, defines screen/board constants
 - `util/notification/NotificationScheduler.kt` — schedules local alarms (daily challenge, streak reminders)
 - `util/notification/NotificationAlarmReceiver.kt` — handles alarm triggers, builds and shows notifications
 - `util/provider/PushNotificationProvider.kt` — subscribes/unsubscribes FCM topics, tracks previous language via DataStore
-- `scripts/notifications/send_push_notification.sh` — sends via FCM v1 API, supports `--scheduled`, `--screen`, `--level`, `--flavor`
+- `scripts/notifications/send_push_notification.sh` — sends via FCM v1 API, supports `--scheduled`, `--screen`, `--board`, `--flavor`
 - `scripts/notifications/example.txt` — template with all 32 languages
 
 ### Config

@@ -2,6 +2,7 @@ package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.util.extension.logE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -66,6 +67,26 @@ class UserRepository @Inject constructor(
             val count = decryptLong(encryptedCount)
             encryptor.encrypt(count + 1)
         }
+    }
+
+    fun getLevel(boardId: String): Flow<Long> =
+        decryptLong(userLocalDataSource.encryptedLevel(boardId))
+            .map { it.coerceAtLeast(BoardModel.DEFAULT_LEVEL) }
+
+    // Used only in recording mode to pre-populate level data
+    suspend fun setLevel(boardId: String, level: Long) {
+        userLocalDataSource.setEncryptedLevel(boardId) { encryptor.encrypt(level) }
+    }
+
+    suspend fun incrementLevel(boardId: String): Long {
+        var newLevel = BoardModel.DEFAULT_LEVEL
+        userLocalDataSource.setEncryptedLevel(boardId) { encrypted ->
+            val count = decryptLong(encrypted)
+                .coerceAtLeast(BoardModel.DEFAULT_LEVEL)
+            newLevel = count + 1
+            encryptor.encrypt(newLevel)
+        }
+        return newLevel
     }
 
     fun getHasReceivedShareReward(): Flow<Boolean> =

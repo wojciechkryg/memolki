@@ -14,14 +14,14 @@ import javax.inject.Inject
 class CalculateCoinsForShopAdUseCaseTest : AppTest() {
 
     @Inject
-    lateinit var getLevelsUseCase: GetLevelsUseCase
+    lateinit var getBoardsUseCase: GetBoardsUseCase
 
     private lateinit var sut: CalculateCoinsForShopAdUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = CalculateCoinsForShopAdUseCase(testDispatcher, getLevelsUseCase)
+        sut = CalculateCoinsForShopAdUseCase(testDispatcher, getBoardsUseCase)
     }
 
     override fun inject(injector: TestInjector) {

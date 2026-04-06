@@ -10,7 +10,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
-import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseLevelScreen
+import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseBoardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenMoreAppsScreen
@@ -102,14 +102,14 @@ class MenuViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnNewGameClick intent is send then the OpenChooseLevelScreen effect is send`() =
+    fun `when OnNewGameClick intent is send then the OpenChooseBoardScreen effect is send`() =
         runTest {
             sut.uiEffect.test {
                 // when
                 sut.sendIntent(OnNewGameClick)
 
                 // then
-                assertEquals(OpenChooseLevelScreen, awaitItem())
+                assertEquals(OpenChooseBoardScreen, awaitItem())
             }
         }
 

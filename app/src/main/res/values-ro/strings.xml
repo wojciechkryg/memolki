@@ -15,7 +15,7 @@
     <string name="settings">Setări</string>
     <string name="more">Mai mult?</string>
     <string name="menu">Meniu</string>
-    <string name="play_again">Joacă din nou</string>
+    <string name="continue_game">Continuă</string>
     <string name="shop">Magazin</string>
     <string name="shop_obtain">Obține %d</string>
     <string name="shop_back_later">Revino mai târziu</string>
@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Ziua %d</string>
     <string name="daily_reward_collect">Colectează %d</string>
     <string name="daily_reward_back_tomorrow">Revino mâine</string>
-    <string name="share_text">Am găsit toate perechile în memolki! Poți să colecționezi mai multe cărți? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Provocarea zilei</string>
     <string name="daily_challenge_compare">Compară</string>
@@ -118,4 +116,6 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="few">%d greșeli</item>
         <item quantity="other">%d greșeli</item>
     </plurals>
+    <string name="share_casual">Crezi că mă poți bate? 🧠🔥</string>
+    <string name="level_count">nivel %d</string>
 </resources>
