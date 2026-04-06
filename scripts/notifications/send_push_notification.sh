@@ -16,7 +16,7 @@ set -euo pipefail
 #   de	Neues Kartendeck!	Entdecke das neue Tierthema
 #
 # Screen options: shop, collection, more_apps, game, daily_challenge
-# Level options (only for game screen): 2x3, 3x4, 4x4, 4x5, 4x6, 5x6
+# Board options (only for game screen): 2x3, 3x4, 4x4, 4x5, 4x6, 5x6
 #
 # Examples:
 #   ./scripts/notifications/send_push_notification.sh scripts/notifications/example.txt
@@ -96,6 +96,11 @@ while [ $# -gt 0 ]; do
             ;;
     esac
 done
+
+if [ -n "$BOARD" ] && [ "$SCREEN" != "game" ]; then
+    echo "Error: --board can only be used with --screen game"
+    exit 1
+fi
 
 if [ ! -f "$TRANSLATIONS_FILE" ]; then
     echo "Error: Translations file not found: $TRANSLATIONS_FILE"
