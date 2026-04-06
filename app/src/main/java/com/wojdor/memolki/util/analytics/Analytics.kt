@@ -80,6 +80,18 @@ class Analytics @Inject constructor(
         })
     }
 
+    fun logShopOpenedFromDailyReward() {
+        firebaseAnalytics.logEvent(Event.SHOP_OPENED, Bundle().apply {
+            putString(Key.SOURCE, Value.DAILY_REWARD)
+        })
+    }
+
+    fun logCollectionOpenedFromLockedBoard() {
+        firebaseAnalytics.logEvent(Event.COLLECTION_VIEWED, Bundle().apply {
+            putString(Key.SOURCE, Value.LOCKED_BOARD)
+        })
+    }
+
     fun logPurchaseCompleted(product: String) {
         firebaseAnalytics.logEvent(Event.PURCHASE_COMPLETED, Bundle().apply {
             putString(Key.PRODUCT, product)
@@ -295,6 +307,8 @@ private object Key {
 
 private object Value {
     const val END_GAME = "end_game"
+    const val DAILY_REWARD = "daily_reward"
+    const val LOCKED_BOARD = "locked_board"
     const val COLLECTION = "collection"
     const val SHOP = "shop"
     const val COINS = "coins"

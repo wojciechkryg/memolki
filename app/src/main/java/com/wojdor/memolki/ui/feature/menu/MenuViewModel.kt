@@ -74,7 +74,7 @@ class MenuViewModel @Inject constructor(
 
     private fun onDailyRewardClick() {
         hapticFeedback.vibrateLow()
-        analytics.logShopOpenedFromEndGame()
+        analytics.logShopOpenedFromDailyReward()
         sendEffect(MenuEffect.OpenShopScreen)
     }
 
@@ -111,7 +111,7 @@ class MenuViewModel @Inject constructor(
             val totalGamesPlayed = totalGamesPlayedResult.getOrDefault(0)
             var randomApp: AppModel? = null
             if (totalGamesPlayed >= MINIMUM_GAMES_PLAYED) {
-                randomApp = moreAppsResult.getOrDefault(emptyList()).random()
+                randomApp = moreAppsResult.getOrDefault(emptyList()).randomOrNull()
             }
             @Suppress("KotlinConstantConditions")
             val isDailyRewardAvailable = !RECORDING_MODE && totalGamesPlayed > 0 &&

@@ -5,6 +5,7 @@ import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.GetBoardsUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardEffect.OpenGameScreen
@@ -24,6 +25,9 @@ class ChooseBoardViewModelTest : AppTest() {
     lateinit var savedStateHandle: SavedStateHandle
 
     @Inject
+    lateinit var analytics: Analytics
+
+    @Inject
     lateinit var hapticFeedback: HapticFeedback
 
     @Inject
@@ -39,6 +43,7 @@ class ChooseBoardViewModelTest : AppTest() {
         super.setup()
         sut = ChooseBoardViewModel(
             savedStateHandle,
+            analytics,
             hapticFeedback,
             getBoardsUseCase,
             hasPlayedTodayDailyChallengeUseCase

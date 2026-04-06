@@ -8,6 +8,7 @@ import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnBoardClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnLockedBoardClick
+import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChooseBoardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
     private val getBoardsUseCase: GetBoardsUseCase,
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
@@ -50,6 +52,7 @@ class ChooseBoardViewModel @Inject constructor(
 
     private fun onLockedBoardClick() {
         hapticFeedback.vibrateLow()
+        analytics.logCollectionOpenedFromLockedBoard()
         sendEffect(ChooseBoardEffect.OpenCollectionScreen)
     }
 
