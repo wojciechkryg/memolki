@@ -15,7 +15,6 @@
     <string name="settings">设置</string>
     <string name="more">更多？</string>
     <string name="menu">菜单</string>
-    <string name="continue_game">继续</string>
     <string name="shop">商店</string>
     <string name="shop_obtain">获得 %d</string>
     <string name="shop_back_later">稍后再回来</string>
@@ -116,4 +115,9 @@
     </plurals>
     <string name="share_casual">你觉得你能赢我吗？🧠🔥</string>
     <string name="level_count">等级 %d</string>
+
+    <string name="need_more_cards">需要更多卡片</string>
+    <string name="next">下一个</string>
+    <string name="play">开始</string>
+    <string name="daily_reward">每日奖励</string>
 </resources>

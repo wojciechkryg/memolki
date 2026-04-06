@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.endgame.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,11 +28,14 @@ import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.isSmallScreen
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
-import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
-fun WatchAdMultiplyRewardItem(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+fun WatchAdForCoinsItem(
+    modifier: Modifier = Modifier,
+    rewardedCoins: Long = 0L,
+    onClick: () -> Unit = {}
+) {
     EdgeSparklesEffect(
         modifier = modifier
             .pulseEffect()
@@ -60,25 +64,29 @@ fun WatchAdMultiplyRewardItem(modifier: Modifier = Modifier, onClick: () -> Unit
                     style = MaterialTheme.typography.bodyLarge.animated()
                 )
             }
-            Spacer(modifier = Modifier.size(spacingM))
-            Image(
-                modifier = Modifier.size(coinIconSize),
-                painter = painterResource(id = R.drawable.ic_coin),
-                contentDescription = stringResource(R.string.coins),
-            )
-            Spacer(modifier = Modifier.size(spacingXS))
-            Text(
-                text = stringResource(id = R.string.end_game_watch_ad_reward).lowercase(),
-                style = MaterialTheme.typography.displayMedium.animated()
-            )
+            if (rewardedCoins > 0) {
+                Spacer(modifier = Modifier.size(spacingM))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "+ $rewardedCoins",
+                        style = MaterialTheme.typography.displayMedium.animated()
+                    )
+                    Spacer(modifier = Modifier.size(spacingM))
+                    Image(
+                        modifier = Modifier.size(coinIconSize),
+                        painter = painterResource(id = R.drawable.ic_coin),
+                        contentDescription = stringResource(R.string.coins),
+                    )
+                }
+            }
         }
     }
 }
 
 @Preview
 @Composable
-private fun WatchAdMultiplyRewardItemPreview() {
+private fun WatchAdForCoinsItemPreview() {
     AppTheme {
-        WatchAdMultiplyRewardItem()
+        WatchAdForCoinsItem(rewardedCoins = 12)
     }
 }

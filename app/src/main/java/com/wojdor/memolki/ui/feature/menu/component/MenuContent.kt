@@ -7,7 +7,6 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -69,9 +68,9 @@ fun MenuContent(
                     ) {
                         it.forEach { menuItem ->
                             when (menuItem) {
-                                is MenuModel.NewGame -> MenuItem(
+                                is MenuModel.Play -> MenuItem(
                                     textId = menuItem.textId,
-                                    onClick = callbacks.onNewGameClick
+                                    onClick = callbacks.onPlayClick
                                 )
 
                                 is MenuModel.Collection -> MenuItem(
@@ -79,18 +78,20 @@ fun MenuContent(
                                     onClick = callbacks.onCollectionClick
                                 )
 
+                                is MenuModel.DailyReward -> DailyRewardItem(
+                                    onClick = callbacks.onDailyRewardClick
+                                )
+
+                                is MenuModel.Leaderboard -> IconItem(
+                                    iconRes = R.drawable.ic_leaderboard,
+                                    contentDescription = stringResource(R.string.leaderboard),
+                                    onClick = callbacks.onLeaderboardClick
+                                )
+
                                 is MenuModel.Settings -> {}
                             }
                         }
                     }
-                }
-                Spacer(modifier = Modifier.height(spacingL))
-                Row {
-                    IconItem(
-                        iconRes = R.drawable.ic_leaderboard,
-                        contentDescription = stringResource(R.string.leaderboard),
-                        onClick = callbacks.onLeaderboardClick
-                    )
                 }
             }
             @Suppress("KotlinConstantConditions")
@@ -129,8 +130,9 @@ private fun MenuContentPreview() {
         MenuContent(
             state = MenuState(
                 listOf(
-                    MenuModel.NewGame,
+                    MenuModel.Play,
                     MenuModel.Collection,
+                    MenuModel.Leaderboard,
                     MenuModel.Settings
                 ),
                 AppModel.VegetableHalf
@@ -147,8 +149,9 @@ private fun MenuContentWithoutMoreAppsPreview() {
         MenuContent(
             state = MenuState(
                 listOf(
-                    MenuModel.NewGame,
+                    MenuModel.Play,
                     MenuModel.Collection,
+                    MenuModel.Leaderboard,
                     MenuModel.Settings
                 )
             ),

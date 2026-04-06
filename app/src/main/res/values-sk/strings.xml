@@ -15,7 +15,6 @@
     <string name="settings">Nastavenia</string>
     <string name="more">Viac?</string>
     <string name="menu">Menu</string>
-    <string name="continue_game">Pokračovať</string>
     <string name="shop">Obchod</string>
     <string name="shop_obtain">Získať %d</string>
     <string name="shop_back_later">Vráť sa neskôr</string>
@@ -119,4 +118,9 @@
     </plurals>
     <string name="share_casual">Myslíš, že ma porazíš? 🧠🔥</string>
     <string name="level_count">úroveň %d</string>
+
+    <string name="need_more_cards">Potrebuješ viac kariet</string>
+    <string name="next">Ďalej</string>
+    <string name="play">Hrať</string>
+    <string name="daily_reward">Denná odmena</string>
 </resources>

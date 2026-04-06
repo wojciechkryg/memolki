@@ -7,7 +7,6 @@ import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
-import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
@@ -83,9 +82,6 @@ class EndGameViewModelTest : AppTest() {
     lateinit var rewardCoinsForShareUseCase: RewardCoinsForShareUseCase
 
     @Inject
-    lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
-
-    @Inject
     lateinit var hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase
 
     @Inject
@@ -126,7 +122,6 @@ class EndGameViewModelTest : AppTest() {
             shouldShowNotificationRequestUseCase,
             rewardCoinsForShareUseCase,
             hasReceivedShareRewardUseCase,
-            checkDailyLoginStreakUseCase,
             casualShareFormatter,
             dailyChallengeShareFormatter
         )
@@ -153,9 +148,8 @@ class EndGameViewModelTest : AppTest() {
                 rewardedCoins = rewardedCoins,
                 currentCoins = 0L,
                 menu = listOf(
-                    EndGameMenuModel.Continue,
+                    EndGameMenuModel.Next,
                     EndGameMenuModel.Menu,
-                    EndGameMenuModel.FreeCoins,
                     EndGameMenuModel.Share(
                         showReward = true,
                         rewardCoins = RewardCoinsForShareUseCase.SHARE_REWARD_COINS
@@ -209,16 +203,6 @@ class EndGameViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when free coins is clicked then logShopOpenedFromEndGame is called`() = runTest {
-        // when
-        sut.sendIntent(EndGameIntent.OnFreeCoinsClick)
-        testScheduler.advanceUntilIdle()
-
-        // then
-        verify { analytics.logShopOpenedFromEndGame() }
-    }
-
-    @Test
     fun `when OnAdReward intent is sent then coins are rewarded and state is updated`() = runTest {
         sut.uiState.test {
             // given
@@ -233,7 +217,7 @@ class EndGameViewModelTest : AppTest() {
                 currentCoins = 0L,
                 animateCoins = false,
                 menu = listOf(
-                    EndGameMenuModel.Continue,
+                    EndGameMenuModel.Next,
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.Share(
                         showReward = false,

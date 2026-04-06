@@ -15,7 +15,6 @@
     <string name="settings">Pengaturan</string>
     <string name="more">Lagi?</string>
     <string name="menu">Menu</string>
-    <string name="continue_game">Lanjutkan</string>
     <string name="shop">Toko</string>
     <string name="shop_obtain">Dapatkan %d</string>
     <string name="shop_back_later">Kembali nanti</string>
@@ -116,4 +115,9 @@
     </plurals>
     <string name="share_casual">Menurutmu bisa mengalahkanku? 🧠🔥</string>
     <string name="level_count">level %d</string>
+
+    <string name="need_more_cards">Perlu lebih banyak kartu</string>
+    <string name="next">Berikutnya</string>
+    <string name="play">Main</string>
+    <string name="daily_reward">Hadiah harian</string>
 </resources>

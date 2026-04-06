@@ -47,7 +47,10 @@ import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
+import com.wojdor.memolki.ui.component.shimmerEffect
+import androidx.compose.ui.draw.clip
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
@@ -149,8 +152,11 @@ private fun EnableNotificationsScreen(
             Button(
                 modifier = Modifier
                     .pulseEffect()
-                    .bounceClickEffect(),
+                    .bounceClickEffect()
+                    .clip(FullRoundedShape)
+                    .shimmerEffect(),
                 onClick = throttleClick(onClick = callbacks.onEnableClick),
+                shape = FullRoundedShape,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent
                 )

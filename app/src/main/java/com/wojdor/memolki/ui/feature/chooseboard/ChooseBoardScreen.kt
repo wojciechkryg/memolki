@@ -5,22 +5,29 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToDailyChallenge
 import com.wojdor.memolki.ui.app.navigateToGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.chooseboard.component.ChooseBoardItem
 import com.wojdor.memolki.ui.feature.chooseboard.component.DailyChallengeItem
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXL
+import com.wojdor.memolki.ui.theme.spacingXXXL
 
 @Composable
 fun ChooseBoardScreen(
@@ -41,6 +48,7 @@ private fun HandleEffect(
         when (it) {
             is ChooseBoardEffect.OpenGameScreen -> navController.navigateToGame(it.boardModel.id)
             ChooseBoardEffect.OpenDailyChallengeScreen -> navController.navigateToDailyChallenge()
+            ChooseBoardEffect.OpenCollectionScreen -> navController.navigateToCollection()
         }
     }
 }
@@ -52,7 +60,8 @@ private fun HandleState(
 ) {
     val callbacks = ChooseBoardCallbacks(
         onBoardClick = { viewModel.sendIntent(ChooseBoardIntent.OnBoardClick(it)) },
-        onDailyChallengeClick = { viewModel.sendIntent(ChooseBoardIntent.OnDailyChallengeClick) }
+        onDailyChallengeClick = { viewModel.sendIntent(ChooseBoardIntent.OnDailyChallengeClick) },
+        onLockedBoardClick = { viewModel.sendIntent(ChooseBoardIntent.OnLockedBoardClick) }
     )
     ChooseBoardScreen(state, callbacks)
 }
@@ -62,24 +71,43 @@ private fun ChooseBoardScreen(
     state: ChooseBoardState,
     callbacks: ChooseBoardCallbacks
 ) {
+    val (unlockedBoards, lockedBoards) = state.boards.partition { it.isUnlocked }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        state.boards.forEach { board ->
-            Spacer(modifier = Modifier.height(spacingXL))
+        unlockedBoards.forEach { board ->
             ChooseBoardItem(
                 textId = board.textId,
-                isEnabled = board.isUnlocked,
+                isEnabled = true,
                 onClick = { callbacks.onBoardClick(board) }
             )
+            Spacer(modifier = Modifier.height(spacingXL))
         }
-        Spacer(modifier = Modifier.height(spacingXL))
         DailyChallengeItem(
             isCompleted = state.isDailyChallengeCompleted,
             onClick = { callbacks.onDailyChallengeClick() }
         )
+        if (lockedBoards.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(spacingXXXL))
+            Text(
+                text = stringResource(R.string.need_more_cards).lowercase(),
+                style = MaterialTheme.typography.headlineMedium
+            )
+            Spacer(modifier = Modifier.height(spacingS))
+        }
+        lockedBoards.forEachIndexed { index, board ->
+            ChooseBoardItem(
+                textId = board.textId,
+                isEnabled = false,
+                onClick = { callbacks.onBoardClick(board) },
+                onLockedClick = { callbacks.onLockedBoardClick() }
+            )
+            if (index != lockedBoards.lastIndex) {
+                Spacer(modifier = Modifier.height(spacingXL))
+            }
+        }
     }
 }
 

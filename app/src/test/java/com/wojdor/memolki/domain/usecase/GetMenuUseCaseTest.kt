@@ -32,8 +32,9 @@ class GetMenuUseCaseTest : AppTest() {
             // then
             val expected = Result.success(
                 listOf(
-                    MenuModel.NewGame,
+                    MenuModel.Play,
                     MenuModel.Collection,
+                    MenuModel.Leaderboard,
                     MenuModel.Settings
                 )
             )

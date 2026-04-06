@@ -15,7 +15,6 @@
     <string name="settings">Cài đặt</string>
     <string name="more">Thêm?</string>
     <string name="menu">Menu</string>
-    <string name="continue_game">Tiếp tục</string>
     <string name="shop">Cửa hàng</string>
     <string name="shop_obtain">Lấy %d</string>
     <string name="shop_back_later">Quay lại sau</string>
@@ -116,4 +115,9 @@
     </plurals>
     <string name="share_casual">Bạn nghĩ có thể thắng tôi không? 🧠🔥</string>
     <string name="level_count">cấp %d</string>
+
+    <string name="need_more_cards">Cần thêm thẻ</string>
+    <string name="next">Tiếp</string>
+    <string name="play">Chơi</string>
+    <string name="daily_reward">Phần thưởng hàng ngày</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.feature.endgame.component
+package com.wojdor.memolki.ui.feature.menu.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +27,7 @@ import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
-fun FreeCoinsItem(onClick: () -> Unit = {}) {
+fun DailyRewardItem(onClick: () -> Unit = {}) {
     EdgeSparklesEffect(
         modifier = Modifier
             .pulseEffect()
@@ -44,11 +44,11 @@ fun FreeCoinsItem(onClick: () -> Unit = {}) {
                 modifier = Modifier.size(64.dp),
                 alignment = Alignment.Center,
                 painter = painterResource(R.drawable.ic_daily_reward),
-                contentDescription = stringResource(R.string.free_coins)
+                contentDescription = stringResource(R.string.daily_reward)
             )
             Spacer(modifier = Modifier.size(spacingM))
             AutoSizeText(
-                text = stringResource(R.string.free_coins).uppercase(),
+                text = stringResource(R.string.daily_reward).uppercase(),
                 style = MaterialTheme.typography.headlineSmall.animated()
             )
         }
@@ -57,8 +57,8 @@ fun FreeCoinsItem(onClick: () -> Unit = {}) {
 
 @Preview
 @Composable
-private fun FreeCoinsItemPreview() {
+private fun DailyRewardItemPreview() {
     AppTheme {
-        FreeCoinsItem()
+        DailyRewardItem()
     }
 }

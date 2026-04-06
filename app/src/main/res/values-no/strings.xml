@@ -15,7 +15,6 @@
     <string name="settings">Innstillinger</string>
     <string name="more">Mer?</string>
     <string name="menu">Meny</string>
-    <string name="continue_game">Fortsett</string>
     <string name="shop">Butikk</string>
     <string name="shop_obtain">Hent %d</string>
     <string name="shop_back_later">Kom tilbake senere</string>
@@ -117,4 +116,9 @@
     </plurals>
     <string name="share_casual">Tror du at du kan slå meg? 🧠🔥</string>
     <string name="level_count">nivå %d</string>
+
+    <string name="need_more_cards">Trenger flere kort</string>
+    <string name="next">Neste</string>
+    <string name="play">Spill</string>
+    <string name="daily_reward">Daglig belønning</string>
 </resources>

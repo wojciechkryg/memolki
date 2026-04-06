@@ -21,7 +21,6 @@ import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
-import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.component.CasualEndGameContent
 import com.wojdor.memolki.ui.feature.endgame.component.DailyChallengeEndGameContent
@@ -72,7 +71,6 @@ private fun HandleEffect(
             }
 
             is EndGameEffect.Share -> activity?.let { share(it, effect.text) }
-            EndGameEffect.OpenShopScreen -> navController.navigateToShop()
             is EndGameEffect.ShareDailyChallenge -> activity?.let {
                 share(it, effect.text)
             }
@@ -139,12 +137,11 @@ private fun HandleState(
     state: EndGameState
 ) {
     val callbacks = EndGameCallbacks(
-        onContinueClick = { viewModel.sendIntent(EndGameIntent.OnContinueClick(state.board)) },
+        onNextClick = { viewModel.sendIntent(EndGameIntent.OnNextClick(state.board)) },
         onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) },
         onUnlockNewCardClick = { viewModel.sendIntent(EndGameIntent.OnUnlockNewCardClick) },
         onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) },
         onShareClick = { viewModel.sendIntent(EndGameIntent.OnShareClick) },
-        onFreeCoinsClick = { viewModel.sendIntent(EndGameIntent.OnFreeCoinsClick) },
         onDailyChallengeStarsAnimationFinished = { viewModel.sendIntent(EndGameIntent.OnDailyChallengeStarsAnimationFinished) },
         onDailyChallengeShareClick = { viewModel.sendIntent(EndGameIntent.OnDailyChallengeShareClick) },
         onLevelComplete = { viewModel.sendIntent(EndGameIntent.OnLevelComplete) },
@@ -175,7 +172,7 @@ private fun EndGameScreenPreview() {
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
-                    EndGameMenuModel.Continue,
+                    EndGameMenuModel.Next,
                     EndGameMenuModel.Menu
                 )
             )
@@ -195,7 +192,7 @@ private fun EndGameScreenWithAdPreview() {
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
                     EndGameMenuModel.UnlockNewCard,
-                    EndGameMenuModel.Continue,
+                    EndGameMenuModel.Next,
                     EndGameMenuModel.Menu
                 )
             )

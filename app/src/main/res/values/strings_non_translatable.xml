@@ -12,8 +12,6 @@
 
     <string name="app_logo" translatable="false">memolki</string>
 
-    <string name="end_game_watch_ad_reward" translatable="false">x2</string>
-
     <string name="new_card_to_unlock" translatable="false">New!</string>
 
     <string name="language_english" translatable="false">English</string>

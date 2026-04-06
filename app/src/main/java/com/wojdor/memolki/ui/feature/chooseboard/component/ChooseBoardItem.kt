@@ -31,10 +31,14 @@ import com.wojdor.memolki.ui.theme.AppTheme
 fun ChooseBoardItem(
     @StringRes textId: Int,
     isEnabled: Boolean = true,
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
+    onLockedClick: () -> Unit = {}
 ) {
     var isShaking by remember { mutableStateOf(false) }
-    val shakeOffset = rememberShakeOffset(isShaking) { isShaking = false }
+    val shakeOffset = rememberShakeOffset(isShaking) {
+        isShaking = false
+        onLockedClick()
+    }
     Row(
         modifier = Modifier
             .graphicsLayer { translationX = shakeOffset }

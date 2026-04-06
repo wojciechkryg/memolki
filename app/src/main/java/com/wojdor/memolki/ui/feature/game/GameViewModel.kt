@@ -264,6 +264,7 @@ class GameViewModel @Inject constructor(
                 }
                 levelFlowJob?.cancel()
                 levelFlowJob = null
+                delay(RESET_STATE_DELAY)
                 sendState {
                     copy(
                         isGameFinished = false,
@@ -474,6 +475,7 @@ class GameViewModel @Inject constructor(
     companion object {
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
         const val END_GAME_DELAY = 1000L
+        private const val RESET_STATE_DELAY = 1000L
 
         const val MAX_STARS = 3
         const val TWO_STARS = 2

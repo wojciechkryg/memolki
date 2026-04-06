@@ -6,7 +6,6 @@ import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
-import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
@@ -54,7 +53,6 @@ class EndGameViewModel @Inject constructor(
     private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase,
     private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase,
     private val hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase,
-    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase,
     private val casualShareFormatter: CasualShareFormatter,
     private val dailyChallengeShareFormatter: DailyChallengeShareFormatter
 ) : MviViewModel<EndGameIntent, EndGameState>(
@@ -65,7 +63,6 @@ class EndGameViewModel @Inject constructor(
     private var isAdLoaded = false
     private var shouldShowNotificationRequest = false
     private var isNotificationRequestDismissed = false
-    private var isDailyStreakRewardAvailable = false
     private var isShareRewardAvailable = false
     private var pendingRewardedCoins = 0L
     private var pendingCurrentCoins = 0L
@@ -74,14 +71,13 @@ class EndGameViewModel @Inject constructor(
         when (intent) {
             is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.boardModel, intent.level)
             is EndGameIntent.OnDailyChallengeEndGameShow -> onDailyChallengeEndGameShow(intent)
-            is EndGameIntent.OnContinueClick -> onContinueClick(intent)
+            is EndGameIntent.OnNextClick -> onNextClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
             EndGameIntent.OnUnlockNewCardClick -> onUnlockNewCardClick()
             EndGameIntent.OnWatchAdClick -> onWatchAdClick()
             EndGameIntent.OnAdReward -> onAdReward()
             is EndGameIntent.OnAdDismiss -> onAdDismiss(intent.wasRewardGranted)
             EndGameIntent.OnShareClick -> onShareClick()
-            EndGameIntent.OnFreeCoinsClick -> onFreeCoinsClick()
             EndGameIntent.OnScreenResume -> onScreenResume()
             EndGameIntent.OnDailyChallengeStarsAnimationFinished -> onDailyChallengeStarsAnimationFinished()
             EndGameIntent.OnDailyChallengeShareClick -> onDailyChallengeShareClick()
@@ -125,28 +121,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun onScreenResume() {
         checkShareRewardAvailable()
-        checkDailyStreakRewardAvailable()
         reloadCoins()
-    }
-
-    private fun onFreeCoinsClick() {
-        hapticFeedback.vibrateLow()
-        analytics.logShopOpenedFromEndGame()
-        shouldShowNotificationRequest = false
-        isNotificationRequestDismissed = true
-        sendEffect(EndGameEffect.OpenShopScreen)
-    }
-
-    private fun checkDailyStreakRewardAvailable() {
-        checkDailyLoginStreakUseCase().onEach { result ->
-            result.onSuccess { streakResult ->
-                isDailyStreakRewardAvailable = streakResult.isRewardAvailable
-                showMenu()
-            }.onFailure {
-                isDailyStreakRewardAvailable = false
-                showMenu()
-            }
-        }.launchIn(viewModelScope)
     }
 
     private fun reloadCoins() {
@@ -163,7 +138,6 @@ class EndGameViewModel @Inject constructor(
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         checkShouldShowNotificationRequest()
         checkShareRewardAvailable()
-        checkDailyStreakRewardAvailable()
         getCurrentCoinsAndReward(board)
         viewModelScope.launch {
             requestReview()
@@ -236,7 +210,7 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onContinueClick(intent: EndGameIntent.OnContinueClick) {
+    private fun onNextClick(intent: EndGameIntent.OnNextClick) {
         hapticFeedback.vibrateLow()
         navigateOrShowNotificationRequest(
             destination = EnableNotificationDestination.GAME,
@@ -306,17 +280,16 @@ class EndGameViewModel @Inject constructor(
         }
         canUnlockNewCardUseCase().onEach { result ->
             val canUnlockNewCard = result.getOrDefault(false)
-            val menu = mutableListOf(EndGameMenuModel.Continue, EndGameMenuModel.Menu).apply {
+            val menu = mutableListOf<EndGameMenuModel>().apply {
                 @Suppress("KotlinConstantConditions")
                 if (isAdLoaded && !RECORDING_MODE) {
-                    add(0, EndGameMenuModel.WatchAd)
+                    add(EndGameMenuModel.WatchAd)
                 }
-                @Suppress("KotlinConstantConditions")
-                if (!RECORDING_MODE && isDailyStreakRewardAvailable) {
-                    add(EndGameMenuModel.FreeCoins)
-                } else if (canUnlockNewCard) {
+                if (canUnlockNewCard) {
                     add(EndGameMenuModel.UnlockNewCard)
                 }
+                add(EndGameMenuModel.Next)
+                add(EndGameMenuModel.Menu)
                 @Suppress("KotlinConstantConditions")
                 if (!RECORDING_MODE) {
                     add(

@@ -15,7 +15,6 @@
     <string name="settings">الإعدادات</string>
     <string name="more">هل تريد المزيد؟</string>
     <string name="menu">القائمة</string>
-    <string name="continue_game">متابعة</string>
     <string name="shop">المتجر</string>
     <string name="shop_obtain">الحصول على %d</string>
     <string name="shop_back_later">عد لاحقًا</string>
@@ -121,4 +120,9 @@
     </plurals>
     <string name="share_casual">هل تعتقد أنك تستطيع التغلب عليّ؟ 🧠🔥</string>
     <string name="level_count">المستوى %d</string>
+
+    <string name="need_more_cards">تحتاج المزيد من البطاقات</string>
+    <string name="next">التالي</string>
+    <string name="play">العب</string>
+    <string name="daily_reward">المكافأة اليومية</string>
 </resources>

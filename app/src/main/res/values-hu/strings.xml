@@ -15,7 +15,6 @@
     <string name="settings">Beállítások</string>
     <string name="more">Több?</string>
     <string name="menu">Menü</string>
-    <string name="continue_game">Folytatás</string>
     <string name="shop">Bolt</string>
     <string name="shop_obtain">Szerezd meg %d</string>
     <string name="shop_back_later">Gyere vissza később</string>
@@ -117,4 +116,9 @@
     </plurals>
     <string name="share_casual">Szerinted le tudsz győzni? 🧠🔥</string>
     <string name="level_count">szint %d</string>
+
+    <string name="need_more_cards">Több kártya szükséges</string>
+    <string name="next">Következő</string>
+    <string name="play">Játék</string>
+    <string name="daily_reward">Napi jutalom</string>
 </resources>

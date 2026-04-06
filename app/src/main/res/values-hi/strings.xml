@@ -15,7 +15,6 @@
     <string name="settings">सेटिंग्स</string>
     <string name="more">और?</string>
     <string name="menu">मेनू</string>
-    <string name="continue_game">जारी रखें</string>
     <string name="shop">दुकान</string>
     <string name="shop_obtain">प्राप्त करें %d</string>
     <string name="shop_back_later">बाद में वापस आएं</string>
@@ -117,4 +116,9 @@
     </plurals>
     <string name="share_casual">क्या तुम मुझे हरा सकते हो? 🧠🔥</string>
     <string name="level_count">स्तर %d</string>
+
+    <string name="need_more_cards">और कार्ड चाहिए</string>
+    <string name="next">अगला</string>
+    <string name="play">खेलें</string>
+    <string name="daily_reward">दैनिक पुरस्कार</string>
 </resources>

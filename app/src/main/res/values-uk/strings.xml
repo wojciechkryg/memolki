@@ -15,7 +15,6 @@
     <string name="settings">Налаштування</string>
     <string name="more">Більше?</string>
     <string name="menu">Меню</string>
-    <string name="continue_game">Продовжити</string>
     <string name="shop">Магазин</string>
     <string name="shop_obtain">Отримати %d</string>
     <string name="shop_back_later">Поверніться пізніше</string>
@@ -119,4 +118,9 @@
     </plurals>
     <string name="share_casual">Думаєш, зможеш мене обіграти? 🧠🔥</string>
     <string name="level_count">рівень %d</string>
+
+    <string name="need_more_cards">Потрібно більше карток</string>
+    <string name="next">Далі</string>
+    <string name="play">Грати</string>
+    <string name="daily_reward">Щоденна нагорода</string>
 </resources>

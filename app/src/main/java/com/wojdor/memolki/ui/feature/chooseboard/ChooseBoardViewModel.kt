@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnBoardClick
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnLockedBoardClick
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -33,6 +34,7 @@ class ChooseBoardViewModel @Inject constructor(
         when (intent) {
             is OnBoardClick -> onBoardClick(intent)
             is OnDailyChallengeClick -> onDailyChallengeClick()
+            is OnLockedBoardClick -> onLockedBoardClick()
         }
     }
 
@@ -44,6 +46,11 @@ class ChooseBoardViewModel @Inject constructor(
     private fun onDailyChallengeClick() {
         hapticFeedback.vibrateLow()
         sendEffect(ChooseBoardEffect.OpenDailyChallengeScreen)
+    }
+
+    private fun onLockedBoardClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(ChooseBoardEffect.OpenCollectionScreen)
     }
 
     private fun checkDailyChallengeStatus() {

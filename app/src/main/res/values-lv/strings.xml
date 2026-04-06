@@ -15,7 +15,6 @@
     <string name="settings">Iestatījumi</string>
     <string name="more">Vairāk?</string>
     <string name="menu">Izvēlne</string>
-    <string name="continue_game">Turpināt</string>
     <string name="shop">Veikals</string>
     <string name="shop_obtain">Iegūt %d</string>
     <string name="shop_back_later">Atgriezties vēlāk</string>
@@ -118,4 +117,9 @@
     </plurals>
     <string name="share_casual">Domā, ka mani pārspēsi? 🧠🔥</string>
     <string name="level_count">līmenis %d</string>
+
+    <string name="need_more_cards">Nepieciešams vairāk kāršu</string>
+    <string name="next">Nākamais</string>
+    <string name="play">Spēlēt</string>
+    <string name="daily_reward">Dienas balva</string>
 </resources>

@@ -29,6 +29,5 @@ sealed class EndGameEffect : UiEffect {
     ) : EndGameEffect()
 
     data class Share(val text: String) : EndGameEffect()
-    object OpenShopScreen : EndGameEffect()
     data class ShareDailyChallenge(val text: String) : EndGameEffect()
 }
