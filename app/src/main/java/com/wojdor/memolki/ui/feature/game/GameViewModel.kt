@@ -4,15 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
-import com.wojdor.memolki.domain.usecase.GetLevelPlayedCountUseCase
+import com.wojdor.memolki.domain.usecase.GetLevelUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
-import com.wojdor.memolki.domain.usecase.IncrementLevelPlayedCountUseCase
+import com.wojdor.memolki.domain.usecase.IncrementLevelUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
-import com.wojdor.memolki.domain.usecase.ResolveLevelUseCase
+import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.analytics.Analytics
@@ -38,9 +38,9 @@ class GameViewModel @Inject constructor(
     private val googlePlayGames: GooglePlayGames,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
     private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase,
-    private val getLevelPlayedCountUseCase: GetLevelPlayedCountUseCase,
-    private val incrementLevelPlayedCountUseCase: IncrementLevelPlayedCountUseCase,
-    private val resolveLevelUseCase: ResolveLevelUseCase,
+    private val getLevelUseCase: GetLevelUseCase,
+    private val incrementLevelUseCase: IncrementLevelUseCase,
+    private val getBiggestUnlockedBoardUseCase: GetBiggestUnlockedBoardUseCase,
     private val getDailyChallengeCardsUseCase: GetDailyChallengeCardsUseCase,
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
     private val saveDailyChallengeUseCase: SaveDailyChallengeUseCase,
@@ -53,7 +53,7 @@ class GameViewModel @Inject constructor(
 
     override fun onIntent(intent: GameIntent) {
         when (intent) {
-            is GameIntent.OnLevelStart -> onLevelStart(intent.levelId, intent.isDailyChallenge)
+            is GameIntent.OnBoardStart -> onBoardStart(intent.boardId, intent.isDailyChallenge)
             is GameIntent.OnBackCardClick -> onBackCardClick(intent.cardModel)
             is GameIntent.OnFrontCardPress -> onFrontCardPress(intent.isPressed, intent.cardModel)
             GameIntent.OnMatchAnimationComplete -> onMatchAnimationComplete()
@@ -62,38 +62,38 @@ class GameViewModel @Inject constructor(
         }
     }
 
-    private fun onLevelStart(levelId: String, isDailyChallenge: Boolean) {
+    private fun onBoardStart(boardId: String, isDailyChallenge: Boolean) {
         if (isDailyChallenge) {
             onDailyChallengeStart()
         } else {
-            resolveAndStartLevel(levelId)
+            getAndStartBoard(boardId)
         }
     }
 
-    private fun isDailyChallenge() = uiState.value.isDailyChallenge
-
-    private fun resolveAndStartLevel(levelId: String) {
-        resolveLevelUseCase(levelId).onEach { result ->
-            result.onSuccess { level -> shuffleUnlockedCards(level) }
+    private fun getAndStartBoard(boardId: String) {
+        getBiggestUnlockedBoardUseCase(boardId).onEach { result ->
+            result.onSuccess { board -> shuffleUnlockedCards(board) }
         }.launchIn(viewModelScope)
     }
 
-    private fun shuffleUnlockedCards(level: LevelModel) {
-        analytics.logLevelStart(level)
-        getShuffledUnlockedCardsUseCase(level).onEach {
+    private fun shuffleUnlockedCards(board: BoardModel) {
+        analytics.logBoardStart(board)
+        getShuffledUnlockedCardsUseCase(board).onEach {
             it.onSuccess { cards ->
                 sendState {
                     copy(
-                        level = level,
+                        board = board,
                         cards = cards,
-                        cardFlipCounts = emptyFlipCountsGrid(cards, level.columns)
+                        cardFlipCounts = emptyFlipCountsGrid(cards, board.columns)
                     )
                 }
             }
         }.launchIn(viewModelScope)
-        getLevelPlayedCountUseCase(level.id).onEach { result ->
+        getLevelUseCase(board.id).onEach { result ->
             result.onSuccess { count ->
-                sendState { copy(levelPlayedCount = count) }
+                if (!uiState.value.isGameFinished) {
+                    sendState { copy(level = count) }
+                }
             }
         }.launchIn(viewModelScope)
     }
@@ -118,7 +118,7 @@ class GameViewModel @Inject constructor(
             result.onSuccess { challenge ->
                 sendEffect(
                     GameEffect.OpenEndGameScreen(
-                        levelModel = DAILY_CHALLENGE_LEVEL,
+                        boardModel = DAILY_CHALLENGE_BOARD,
                         mistakeCount = challenge.mistakeCount,
                         cardFlipCounts = challenge.cardFlipCounts,
                         dailyChallenge = challenge.copy(epochDay = epochDay)
@@ -138,13 +138,13 @@ class GameViewModel @Inject constructor(
     }
 
     private fun loadDailyChallengeCards(epochDay: Long) {
-        getDailyChallengeCardsUseCase(DAILY_CHALLENGE_LEVEL).onEach { result ->
+        getDailyChallengeCardsUseCase(DAILY_CHALLENGE_BOARD).onEach { result ->
             result.onSuccess { cards ->
                 sendState {
                     copy(
-                        level = DAILY_CHALLENGE_LEVEL,
+                        board = DAILY_CHALLENGE_BOARD,
                         cards = cards,
-                        cardFlipCounts = emptyFlipCountsGrid(cards, DAILY_CHALLENGE_LEVEL.columns),
+                        cardFlipCounts = emptyFlipCountsGrid(cards, DAILY_CHALLENGE_BOARD.columns),
                         isDailyChallenge = true,
                         epochDay = epochDay
                     )
@@ -173,7 +173,7 @@ class GameViewModel @Inject constructor(
         saveDailyChallengeUseCase(result).launchIn(viewModelScope)
         sendEffect(
             GameEffect.OpenEndGameScreen(
-                levelModel = DAILY_CHALLENGE_LEVEL,
+                boardModel = DAILY_CHALLENGE_BOARD,
                 mistakeCount = state.mistakeCount,
                 cardFlipCounts = state.cardFlipCounts,
                 dailyChallenge = result
@@ -240,18 +240,18 @@ class GameViewModel @Inject constructor(
         viewModelScope.launch {
             val cards = uiState.value.cards
             if (cards.isNotEmpty() && cards.all { it.isPairMatched }) {
-                if (!isDailyChallenge()) {
-                    analytics.logLevelComplete(uiState.value.level, uiState.value.mistakeCount)
-                    incrementLevelPlayedCountUseCase(uiState.value.level.id).launchIn(viewModelScope)
+                if (!uiState.value.isDailyChallenge) {
+                    analytics.logBoardComplete(uiState.value.board, uiState.value.mistakeCount)
+                    incrementLevelUseCase(uiState.value.board.id).launchIn(viewModelScope)
                 }
                 sendState { copy(isGameFinished = true) }
                 delay(END_GAME_DELAY)
-                if (isDailyChallenge()) {
+                if (uiState.value.isDailyChallenge) {
                     saveDailyChallengeAndOpenEndScreen()
                 } else {
                     sendEffect(
                         GameEffect.OpenEndGameScreen(
-                            levelModel = uiState.value.level,
+                            boardModel = uiState.value.board,
                             mistakeCount = uiState.value.mistakeCount,
                             cardFlipCounts = uiState.value.cardFlipCounts
                         )
@@ -268,8 +268,7 @@ class GameViewModel @Inject constructor(
                         cards = emptyList(),
                         isDailyChallenge = false,
                         epochDay = 0L,
-                        startTimeMillis = 0L,
-                        levelPlayedCount = 1L
+                        startTimeMillis = 0L
                     )
                 }
             }
@@ -352,7 +351,7 @@ class GameViewModel @Inject constructor(
     private fun getFlipCount(card: CardModel): Int {
         val index = findCardIndex(card)
         if (index < 0) return 0
-        val columns = uiState.value.level.columns
+        val columns = uiState.value.board.columns
         return uiState.value.cardFlipCounts[index / columns][index % columns]
     }
 
@@ -372,7 +371,7 @@ class GameViewModel @Inject constructor(
             copy(
                 cards = updatedCards,
                 cardFlipCounts = updatedFlipCounts,
-                startTimeMillis = if (isDailyChallenge() && startTimeMillis == 0L) timeProvider.currentTimeMillis() else startTimeMillis
+                startTimeMillis = if (uiState.value.isDailyChallenge && startTimeMillis == 0L) timeProvider.currentTimeMillis() else startTimeMillis
             )
         }
     }
@@ -382,7 +381,7 @@ class GameViewModel @Inject constructor(
 
     private fun incrementFlipCount(index: Int): List<List<Int>> {
         if (index < 0) return uiState.value.cardFlipCounts
-        val columns = uiState.value.level.columns
+        val columns = uiState.value.board.columns
         val targetRow = index / columns
         val targetColumn = index % columns
         return uiState.value.cardFlipCounts.mapIndexed { rowIndex, rowList ->
@@ -450,10 +449,10 @@ class GameViewModel @Inject constructor(
                 && !state.isGameFinished
                 && !state.cards.all { it.isPairMatched }
         if (isGameInProgress) {
-            if (isDailyChallenge()) {
+            if (uiState.value.isDailyChallenge) {
                 analytics.logDailyChallengeAbandoned(state.epochDay)
             } else {
-                analytics.logLevelAbandoned(state.level)
+                analytics.logBoardAbandoned(state.board)
             }
         }
     }
@@ -462,7 +461,7 @@ class GameViewModel @Inject constructor(
         cards.chunked(columns.coerceAtLeast(1)).map { row -> List(row.size) { 0 } }
 
     companion object {
-        val DAILY_CHALLENGE_LEVEL = LevelModel.Grid5x6(isUnlocked = true)
+        val DAILY_CHALLENGE_BOARD = BoardModel.Grid5x6(isUnlocked = true)
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
         const val END_GAME_DELAY = 1000L
 

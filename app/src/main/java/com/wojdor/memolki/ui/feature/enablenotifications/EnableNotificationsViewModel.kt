@@ -19,7 +19,7 @@ class EnableNotificationsViewModel @Inject constructor(
     private val destination = EnableNotificationDestination.fromRoute(
         savedStateHandle.get<String>(AppNavigation.DESTINATION_ARG).orEmpty()
     )
-    private val levelId = savedStateHandle.get<String>(AppNavigation.LEVEL_ARG).orEmpty()
+    private val boardId = savedStateHandle.get<String>(AppNavigation.BOARD_ARG).orEmpty()
 
     override fun onIntent(intent: EnableNotificationsIntent) {
         when (intent) {
@@ -42,7 +42,7 @@ class EnableNotificationsViewModel @Inject constructor(
 
     private fun navigateToDestination() {
         val effect = when (destination) {
-            EnableNotificationDestination.GAME -> EnableNotificationsEffect.NavigateToGame(levelId)
+            EnableNotificationDestination.GAME -> EnableNotificationsEffect.NavigateToGame(boardId)
             EnableNotificationDestination.MENU -> EnableNotificationsEffect.NavigateToMenu
             EnableNotificationDestination.COLLECTION -> EnableNotificationsEffect.NavigateToCollection
             EnableNotificationDestination.SHOP -> EnableNotificationsEffect.NavigateToShop

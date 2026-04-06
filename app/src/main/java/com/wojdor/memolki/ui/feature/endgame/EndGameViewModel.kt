@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
@@ -12,7 +12,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -47,7 +47,7 @@ class EndGameViewModel @Inject constructor(
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase,
+    private val rewardCoinsForBoardUseCase: RewardCoinsForBoardUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase,
     private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase,
@@ -70,7 +70,7 @@ class EndGameViewModel @Inject constructor(
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
-            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.levelModel)
+            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.boardModel)
             is EndGameIntent.OnDailyChallengeEndGameShow -> onDailyChallengeEndGameShow(intent)
             is EndGameIntent.OnContinueClick -> onContinueClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
@@ -153,14 +153,14 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onCasualEndGameShow(level: LevelModel) {
+    private fun onCasualEndGameShow(board: BoardModel) {
         sendState { EndGameState(showSparkles = true) }
         loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         checkShouldShowNotificationRequest()
         checkShareRewardAvailable()
         checkDailyStreakRewardAvailable()
-        getCurrentCoinsAndReward(level)
+        getCurrentCoinsAndReward(board)
         viewModelScope.launch {
             requestReview()
         }
@@ -213,7 +213,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun rewardCoinsForAd() {
         analytics.logAdRewardFromEndGame()
-        getCurrentCoinsAndReward(uiState.value.level, isRewardFromAd = true)
+        getCurrentCoinsAndReward(uiState.value.board, isRewardFromAd = true)
     }
 
     private fun loadAd(wasRewardGranted: Boolean = false) {
@@ -236,8 +236,8 @@ class EndGameViewModel @Inject constructor(
         hapticFeedback.vibrateLow()
         navigateOrShowNotificationRequest(
             destination = EnableNotificationDestination.GAME,
-            defaultEffect = EndGameEffect.OpenGameScreen(intent.levelModel),
-            levelModel = intent.levelModel
+            defaultEffect = EndGameEffect.OpenGameScreen(intent.boardModel),
+            boardModel = intent.boardModel
         )
     }
 
@@ -264,12 +264,12 @@ class EndGameViewModel @Inject constructor(
     private fun navigateOrShowNotificationRequest(
         destination: EnableNotificationDestination,
         defaultEffect: EndGameEffect,
-        levelModel: LevelModel? = null
+        boardModel: BoardModel? = null
     ) {
         @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE && shouldShowNotificationRequest) {
             shouldShowNotificationRequest = false
-            sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, levelModel))
+            sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, boardModel))
         } else {
             sendEffect(defaultEffect)
         }
@@ -327,24 +327,24 @@ class EndGameViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getCurrentCoinsAndReward(level: LevelModel, isRewardFromAd: Boolean = false) {
+    private fun getCurrentCoinsAndReward(board: BoardModel, isRewardFromAd: Boolean = false) {
         viewModelScope.launch {
             getCoinsUseCase().first().onSuccess { currentCoins ->
                 sendState {
                     copy(
-                        level = level,
+                        board = board,
                         currentCoins = currentCoins,
                         animateCoins = false
                     )
                 }
-                rewardCoins(level, currentCoins, isRewardFromAd)
+                rewardCoins(board, currentCoins, isRewardFromAd)
             }
         }
     }
 
-    private fun rewardCoins(level: LevelModel, currentCoins: Long, isRewardFromAd: Boolean) {
+    private fun rewardCoins(board: BoardModel, currentCoins: Long, isRewardFromAd: Boolean) {
         viewModelScope.launch {
-            rewardCoinsForLevelUseCase(level).first().onSuccess { rewardedCoins ->
+            rewardCoinsForBoardUseCase(board).first().onSuccess { rewardedCoins ->
                 pendingRewardedCoins = rewardedCoins
                 pendingCurrentCoins = currentCoins
                 sendState {
@@ -369,7 +369,7 @@ class EndGameViewModel @Inject constructor(
         val result = intent.dailyChallengeModel
         sendState {
             EndGameState(
-                level = intent.levelModel,
+                board = intent.boardModel,
                 dailyChallenge = result,
                 isDailyChallenge = true,
                 showSparkles = true
@@ -393,7 +393,7 @@ class EndGameViewModel @Inject constructor(
 
     private fun rewardDailyChallengeCoins(currentCoins: Long) {
         viewModelScope.launch {
-            rewardCoinsForLevelUseCase(uiState.value.level).first()
+            rewardCoinsForBoardUseCase(uiState.value.board).first()
                 .onSuccess { rewardedCoins ->
                     pendingRewardedCoins = rewardedCoins
                     pendingCurrentCoins = currentCoins

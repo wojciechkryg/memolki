@@ -1,12 +1,12 @@
-package com.wojdor.memolki.ui.feature.chooselevel
+package com.wojdor.memolki.ui.feature.chooseboard
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
+import com.wojdor.memolki.domain.usecase.GetBoardsUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnDailyChallengeClick
-import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnLevelClick
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeClick
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnBoardClick
 import com.wojdor.memolki.util.media.HapticFeedback
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -14,36 +14,36 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class ChooseLevelViewModel @Inject constructor(
+class ChooseBoardViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val hapticFeedback: HapticFeedback,
-    private val getLevelsUseCase: GetLevelsUseCase,
+    private val getBoardsUseCase: GetBoardsUseCase,
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
-) : MviViewModel<ChooseLevelIntent, ChooseLevelState>(
+) : MviViewModel<ChooseBoardIntent, ChooseBoardState>(
     savedStateHandle,
-    ChooseLevelState()
+    ChooseBoardState()
 ) {
 
     init {
-        loadLevels()
+        loadBoards()
         checkDailyChallengeStatus()
     }
 
-    override fun onIntent(intent: ChooseLevelIntent) {
+    override fun onIntent(intent: ChooseBoardIntent) {
         when (intent) {
-            is OnLevelClick -> onLevelClick(intent)
+            is OnBoardClick -> onBoardClick(intent)
             is OnDailyChallengeClick -> onDailyChallengeClick()
         }
     }
 
-    private fun onLevelClick(intent: OnLevelClick) {
+    private fun onBoardClick(intent: OnBoardClick) {
         hapticFeedback.vibrateLow()
-        sendEffect(ChooseLevelEffect.OpenGameScreen(levelModel = intent.levelModel))
+        sendEffect(ChooseBoardEffect.OpenGameScreen(boardModel = intent.boardModel))
     }
 
     private fun onDailyChallengeClick() {
         hapticFeedback.vibrateLow()
-        sendEffect(ChooseLevelEffect.OpenDailyChallengeScreen)
+        sendEffect(ChooseBoardEffect.OpenDailyChallengeScreen)
     }
 
     private fun checkDailyChallengeStatus() {
@@ -54,10 +54,10 @@ class ChooseLevelViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun loadLevels() {
-        getLevelsUseCase().onEach {
-            it.onSuccess { levels ->
-                sendState { copy(levels = levels) }
+    private fun loadBoards() {
+        getBoardsUseCase().onEach {
+            it.onSuccess { boards ->
+                sendState { copy(boards = boards) }
             }
         }.launchIn(viewModelScope)
     }

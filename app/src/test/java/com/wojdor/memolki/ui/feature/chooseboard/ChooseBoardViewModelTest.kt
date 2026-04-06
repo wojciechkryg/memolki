@@ -1,14 +1,14 @@
-package com.wojdor.memolki.ui.feature.chooselevel
+package com.wojdor.memolki.ui.feature.chooseboard
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.wojdor.memolki.domain.model.LevelModel
-import com.wojdor.memolki.domain.usecase.GetLevelsUseCase
+import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.usecase.GetBoardsUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
-import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelEffect.OpenGameScreen
-import com.wojdor.memolki.ui.feature.chooselevel.ChooseLevelIntent.OnLevelClick
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardEffect.OpenGameScreen
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnBoardClick
 import com.wojdor.memolki.util.media.HapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -18,7 +18,7 @@ import org.junit.Test
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class ChooseLevelViewModelTest : AppTest() {
+class ChooseBoardViewModelTest : AppTest() {
 
     @Inject
     lateinit var savedStateHandle: SavedStateHandle
@@ -27,20 +27,20 @@ class ChooseLevelViewModelTest : AppTest() {
     lateinit var hapticFeedback: HapticFeedback
 
     @Inject
-    lateinit var getLevelsUseCase: GetLevelsUseCase
+    lateinit var getBoardsUseCase: GetBoardsUseCase
 
     @Inject
     lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
 
-    private lateinit var sut: ChooseLevelViewModel
+    private lateinit var sut: ChooseBoardViewModel
 
     @Before
     override fun setup() {
         super.setup()
-        sut = ChooseLevelViewModel(
+        sut = ChooseBoardViewModel(
             savedStateHandle,
             hapticFeedback,
-            getLevelsUseCase,
+            getBoardsUseCase,
             hasPlayedTodayDailyChallengeUseCase
         )
     }
@@ -50,17 +50,17 @@ class ChooseLevelViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnLevelClick then send OpenGameScreen effect`() =
+    fun `when OnBoardClick then send OpenGameScreen effect`() =
         runTest {
             sut.uiEffect.test {
                 // given
-                val levelModel = LevelModel.Grid2x3()
+                val boardModel = BoardModel.Grid2x3()
 
                 // when
-                sut.sendIntent(OnLevelClick(levelModel))
+                sut.sendIntent(OnBoardClick(boardModel))
 
                 // then
-                assertEquals(OpenGameScreen(levelModel), awaitItem())
+                assertEquals(OpenGameScreen(boardModel), awaitItem())
             }
         }
 }

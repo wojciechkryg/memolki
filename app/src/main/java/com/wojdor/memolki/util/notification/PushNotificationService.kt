@@ -16,7 +16,7 @@ class PushNotificationService : FirebaseMessagingService() {
         val title = remoteMessage.notification?.title ?: data["title"]
         val body = remoteMessage.notification?.body ?: data["body"]
         val screen = data[DeepLinkBuilder.EXTRA_SCREEN]
-        val level = data[DeepLinkBuilder.EXTRA_LEVEL]
+        val board = data[DeepLinkBuilder.EXTRA_BOARD]
         val notificationCreator = EntryPointAccessors.fromApplication(
             applicationContext,
             PushNotificationServiceEntryPoint::class.java
@@ -26,14 +26,14 @@ class PushNotificationService : FirebaseMessagingService() {
             notificationId = PUSH_NOTIFICATION_ID,
             title = title,
             body = body,
-            contentIntent = createPendingIntent(screen, level)
+            contentIntent = createPendingIntent(screen, board)
         )
     }
 
     override fun onNewToken(token: String) = Unit
 
-    private fun createPendingIntent(screen: String?, level: String?): PendingIntent {
-        val deepLinkUri = DeepLinkBuilder.buildUri(screen, level)
+    private fun createPendingIntent(screen: String?, board: String?): PendingIntent {
+        val deepLinkUri = DeepLinkBuilder.buildUri(screen, board)
         val intent = if (deepLinkUri != null) {
             Intent(Intent.ACTION_VIEW, deepLinkUri.toUri(), this, AppActivity::class.java)
         } else {

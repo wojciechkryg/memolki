@@ -1,4 +1,4 @@
-package com.wojdor.memolki.ui.feature.chooselevel.component
+package com.wojdor.memolki.ui.feature.chooseboard.component
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -28,7 +28,7 @@ import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
-fun ChooseLevelItem(
+fun ChooseBoardItem(
     @StringRes textId: Int,
     isEnabled: Boolean = true,
     onClick: () -> Unit = {}
@@ -76,16 +76,16 @@ private val LOCKED_ICON_SIZE = 48.dp
 
 @Preview(showBackground = true)
 @Composable
-private fun ChooseLevelItemDisabledPreview() {
+private fun ChooseBoardItemDisabledPreview() {
     AppTheme {
-        ChooseLevelItem(R.string.level2x3, isEnabled = false)
+        ChooseBoardItem(R.string.board2x3, isEnabled = false)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun ChooseLevelItemEnabledPreview() {
+private fun ChooseBoardItemEnabledPreview() {
     AppTheme {
-        ChooseLevelItem(R.string.level2x3, isEnabled = true)
+        ChooseBoardItem(R.string.board2x3, isEnabled = true)
     }
 }

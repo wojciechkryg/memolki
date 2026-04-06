@@ -5,7 +5,7 @@ import app.cash.turbine.test
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
@@ -13,7 +13,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForLevelUseCase
+import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.test.AppTest
@@ -67,7 +67,7 @@ class EndGameViewModelTest : AppTest() {
     lateinit var getCoinsUseCase: GetCoinsUseCase
 
     @Inject
-    lateinit var rewardCoinsForLevelUseCase: RewardCoinsForLevelUseCase
+    lateinit var rewardCoinsForBoardUseCase: RewardCoinsForBoardUseCase
 
     @Inject
     lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
@@ -116,7 +116,7 @@ class EndGameViewModelTest : AppTest() {
             incrementTotalGamesPlayedUseCase,
             getTotalGamesPlayedUseCase,
             getCoinsUseCase,
-            rewardCoinsForLevelUseCase,
+            rewardCoinsForBoardUseCase,
             getTotalCoinsUseCase,
             canUnlockNewCardUseCase,
             shouldShowNotificationRequestUseCase,
@@ -132,19 +132,19 @@ class EndGameViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnEndGameShow intent is sent then the state is updated with the level and rewarded coins`() =
+    fun `when OnEndGameShow intent is sent then the state is updated with the board and rewarded coins`() =
         runTest {
             // given
-            val levelModel = LevelModel.Grid2x3(isUnlocked = true)
+            val boardModel = BoardModel.Grid2x3(isUnlocked = true)
             val rewardedCoins = 1L
 
             // when
-            sut.sendIntent(EndGameIntent.OnCasualEndGameShow(levelModel))
+            sut.sendIntent(EndGameIntent.OnCasualEndGameShow(boardModel))
             testScheduler.advanceUntilIdle()
 
             // then
             val expected = EndGameState(
-                level = levelModel,
+                board = boardModel,
                 rewardedCoins = rewardedCoins,
                 currentCoins = 0L,
                 menu = listOf(
@@ -192,7 +192,7 @@ class EndGameViewModelTest : AppTest() {
     @Test
     fun `when ad reward is earned then logAdRewardFromEndGame is called`() = runTest {
         // given
-        sut.sendIntent(EndGameIntent.OnCasualEndGameShow(LevelModel.Grid2x3(isUnlocked = true)))
+        sut.sendIntent(EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true)))
         testScheduler.advanceUntilIdle()
 
         // when

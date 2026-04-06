@@ -1,7 +1,7 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,17 +12,17 @@ import org.junit.Test
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class GetLevelsUseCaseTest : AppTest() {
+class GetBoardsUseCaseTest : AppTest() {
 
     @Inject
     lateinit var getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
 
-    private lateinit var sut: GetLevelsUseCase
+    private lateinit var sut: GetBoardsUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = GetLevelsUseCase(
+        sut = GetBoardsUseCase(
             testDispatcher,
             getUnlockedCardPairsCountUseCase
         )
@@ -39,12 +39,12 @@ class GetLevelsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(
                 listOf(
-                    LevelModel.Grid2x3(isUnlocked = true),
-                    LevelModel.Grid3x4(isUnlocked = false),
-                    LevelModel.Grid4x4(isUnlocked = false),
-                    LevelModel.Grid4x5(isUnlocked = false),
-                    LevelModel.Grid4x6(isUnlocked = false),
-                    LevelModel.Grid5x6(isUnlocked = false),
+                    BoardModel.Grid2x3(isUnlocked = true),
+                    BoardModel.Grid3x4(isUnlocked = false),
+                    BoardModel.Grid4x4(isUnlocked = false),
+                    BoardModel.Grid4x5(isUnlocked = false),
+                    BoardModel.Grid4x6(isUnlocked = false),
+                    BoardModel.Grid5x6(isUnlocked = false),
                 )
             )
             assertEquals(expected, awaitItem())

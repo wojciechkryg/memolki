@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.game.component
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
 import com.wojdor.memolki.ui.feature.game.GameState
@@ -66,7 +67,7 @@ private fun CardsGridWithText(
             .padding(horizontal = spacingL),
     ) {
         val spacing = spacingS
-        val columns = state.level.columns
+        val columns = state.board.columns
         if (columns > 0 && state.cards.isNotEmpty()) {
             val rows = ceil(state.cards.size / columns.toFloat()).toInt()
             val gridAreaHeight = maxHeight * GRID_AREA_RATIO
@@ -82,26 +83,25 @@ private fun CardsGridWithText(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Box(
+                Column(
                     modifier = Modifier
                         .height(gridTopPadding)
                         .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Bottom
                 ) {
                     if (!state.isDailyChallenge) {
                         Text(
-                            text = stringResource(R.string.level_count, state.levelPlayedCount),
+                            text = stringResource(R.string.level_count, state.level),
                             style = MaterialTheme.typography.headlineSmall,
                             color = colorResource(R.color.font)
                         )
                     }
+                    GameProgressBar(
+                        progress = progress,
+                        modifier = Modifier.padding(spacingL)
+                    )
                 }
-                GameProgressBar(
-                    progress = progress,
-                    isGameFinished = state.isGameFinished,
-                    modifier = Modifier.padding(horizontal = spacingM)
-                )
-                Spacer(modifier = Modifier.height(spacingS))
                 CardsGrid(
                     state = state,
                     callbacks = callbacks,
@@ -187,7 +187,7 @@ private fun StartGameContentPreview() {
     AppTheme {
         GameContent(
             state = GameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 cards = List(6) {
                     CardModel.Text(
                         id = "id",
@@ -207,7 +207,7 @@ private fun CardsGridPreview() {
     AppTheme {
         GameContent(
             state = GameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 cards = cards,
                 lastCardPressed = cards.first(),
                 shouldShowCardText = true
@@ -223,7 +223,7 @@ private fun CardsGridPressedPreview() {
     AppTheme {
         GameContent(
             state = GameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 cards = cards,
                 lastCardPressed = cards.first(),
                 shouldShowCardDetails = true

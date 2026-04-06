@@ -16,7 +16,7 @@ import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
@@ -53,7 +53,7 @@ private fun HandleEffect(
     val coroutineScope = rememberCoroutineScope()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.levelModel)
+            is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.boardModel)
             EndGameEffect.OpenMenuScreen -> navController.navigateToMenu()
             EndGameEffect.OpenCollectionScreen -> navController.navigateToCollection()
             is EndGameEffect.OpenEnableNotificationsScreen -> openEnableNotificationsScreen(
@@ -100,9 +100,9 @@ private fun shareApp(activity: Activity) {
 
 private fun openGameScreen(
     navController: NavController,
-    level: LevelModel
+    board: BoardModel
 ) {
-    navController.navigateToGameFromEndGame(level.id)
+    navController.navigateToGameFromEndGame(board.id)
 }
 
 private fun openEnableNotificationsScreen(
@@ -111,7 +111,7 @@ private fun openEnableNotificationsScreen(
 ) {
     navController.navigateToEnableNotifications(
         effect.destination.route,
-        effect.levelModel?.id.orEmpty()
+        effect.boardModel?.id.orEmpty()
     )
 }
 
@@ -149,7 +149,7 @@ private fun HandleState(
     state: EndGameState
 ) {
     val callbacks = EndGameCallbacks(
-        onContinueClick = { viewModel.sendIntent(EndGameIntent.OnContinueClick(state.level)) },
+        onContinueClick = { viewModel.sendIntent(EndGameIntent.OnContinueClick(state.board)) },
         onMenuClick = { viewModel.sendIntent(EndGameIntent.OnMenuClick) },
         onUnlockNewCardClick = { viewModel.sendIntent(EndGameIntent.OnUnlockNewCardClick) },
         onWatchAdClick = { viewModel.sendIntent(EndGameIntent.OnWatchAdClick) },
@@ -181,7 +181,7 @@ private fun EndGameScreenPreview() {
     AppTheme {
         EndGameScreen(
             state = EndGameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
@@ -199,7 +199,7 @@ private fun EndGameScreenWithAdPreview() {
     AppTheme {
         EndGameScreen(
             state = EndGameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(

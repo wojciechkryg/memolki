@@ -2,31 +2,31 @@ package com.wojdor.memolki.util.analytics
 
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import javax.inject.Inject
 
 class Analytics @Inject constructor(
     private val firebaseAnalytics: FirebaseAnalytics
 ) {
 
-    fun logLevelStart(level: LevelModel) {
-        firebaseAnalytics.logEvent(Event.LEVEL_STARTED, Bundle().apply {
-            putString(Key.LEVEL_SIZE, "${level.columns}x${level.rows}")
-            putInt(Key.CARD_COUNT, level.columns * level.rows)
+    fun logBoardStart(board: BoardModel) {
+        firebaseAnalytics.logEvent(Event.BOARD_STARTED, Bundle().apply {
+            putString(Key.LEVEL_SIZE, "${board.columns}x${board.rows}")
+            putInt(Key.CARD_COUNT, board.columns * board.rows)
         })
     }
 
-    fun logLevelComplete(level: LevelModel, mistakeCount: Int) {
-        firebaseAnalytics.logEvent(Event.LEVEL_COMPLETED, Bundle().apply {
-            putString(Key.LEVEL_SIZE, "${level.columns}x${level.rows}")
-            putInt(Key.CARD_COUNT, level.columns * level.rows)
+    fun logBoardComplete(board: BoardModel, mistakeCount: Int) {
+        firebaseAnalytics.logEvent(Event.BOARD_COMPLETED, Bundle().apply {
+            putString(Key.LEVEL_SIZE, "${board.columns}x${board.rows}")
+            putInt(Key.CARD_COUNT, board.columns * board.rows)
             putInt(Key.MISMATCH_COUNT, mistakeCount)
         })
     }
 
-    fun logLevelAbandoned(level: LevelModel) {
-        firebaseAnalytics.logEvent(Event.LEVEL_ABANDONED, Bundle().apply {
-            putString(Key.LEVEL_SIZE, "${level.columns}x${level.rows}")
+    fun logBoardAbandoned(board: BoardModel) {
+        firebaseAnalytics.logEvent(Event.BOARD_ABANDONED, Bundle().apply {
+            putString(Key.LEVEL_SIZE, "${board.columns}x${board.rows}")
         })
     }
 
@@ -233,9 +233,9 @@ class Analytics @Inject constructor(
 }
 
 private object Event {
-    const val LEVEL_STARTED = "level_started"
-    const val LEVEL_COMPLETED = "level_completed"
-    const val LEVEL_ABANDONED = "level_abandoned"
+    const val BOARD_STARTED = "board_started"
+    const val BOARD_COMPLETED = "board_completed"
+    const val BOARD_ABANDONED = "board_abandoned"
     const val AD_REWARD_EARNED = "ad_reward_earned"
     const val CARD_UNLOCKED = "card_unlocked"
     const val SHOP_OPENED = "shop_opened"

@@ -121,8 +121,8 @@ class AppActivity : ComponentActivity() {
         if (intent == null) return null
         if (intent.action == Intent.ACTION_VIEW && intent.data != null) return intent
         val screen = intent.getStringExtra(DeepLinkBuilder.EXTRA_SCREEN) ?: return null
-        val level = intent.getStringExtra(DeepLinkBuilder.EXTRA_LEVEL)
-        val deepLinkUri = DeepLinkBuilder.buildUri(screen, level) ?: return null
+        val board = intent.getStringExtra(DeepLinkBuilder.EXTRA_BOARD)
+        val deepLinkUri = DeepLinkBuilder.buildUri(screen, board) ?: return null
         return Intent(Intent.ACTION_VIEW, deepLinkUri.toUri(), this, AppActivity::class.java)
     }
 

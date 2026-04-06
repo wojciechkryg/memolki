@@ -68,15 +68,17 @@ class UserRepository @Inject constructor(
         }
     }
 
-    fun getLevelPlayedCount(levelId: String): Flow<Long> =
-        decryptLong(userLocalDataSource.encryptedLevelPlayedCount(levelId))
+    fun getLevel(boardId: String): Flow<Long> =
+        decryptLong(userLocalDataSource.encryptedLevel(boardId))
+            .map { it.coerceAtLeast(DEFAULT_LEVEL) }
 
-    suspend fun incrementLevelPlayedCount(levelId: String): Long {
-        userLocalDataSource.setEncryptedLevelPlayedCount(levelId) { encrypted ->
+    suspend fun incrementLevel(boardId: String): Long {
+        userLocalDataSource.setEncryptedLevel(boardId) { encrypted ->
             val count = decryptLong(encrypted)
+                .coerceAtLeast(DEFAULT_LEVEL)
             encryptor.encrypt(count + 1)
         }
-        return getLevelPlayedCount(levelId).first()
+        return getLevel(boardId).first()
     }
 
     fun getHasReceivedShareReward(): Flow<Boolean> =
@@ -125,5 +127,6 @@ class UserRepository @Inject constructor(
 
     companion object {
         private const val DEFAULT_LONG_VALUE = 0L
+        private const val DEFAULT_LEVEL = 1L
     }
 }

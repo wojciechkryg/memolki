@@ -4,7 +4,7 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.base.UiIntent
 
 sealed class GameIntent : UiIntent {
-    data class OnLevelStart(val levelId: String, val isDailyChallenge: Boolean = false) :
+    data class OnBoardStart(val boardId: String, val isDailyChallenge: Boolean = false) :
         GameIntent()
 
     data class OnBackCardClick(val cardModel: CardModel) : GameIntent()

@@ -1,7 +1,7 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.UserRepository
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,17 +13,17 @@ import org.junit.Test
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class RewardCoinsForLevelUseCaseTest : AppTest() {
+class RewardCoinsForBoardUseCaseTest : AppTest() {
 
     @Inject
     lateinit var userRepository: UserRepository
 
-    private lateinit var sut: RewardCoinsForLevelUseCase
+    private lateinit var sut: RewardCoinsForBoardUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = RewardCoinsForLevelUseCase(
+        sut = RewardCoinsForBoardUseCase(
             testDispatcher,
             userRepository
         )
@@ -35,12 +35,12 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
 
 
     @Test
-    fun `when level with 3 pairs then reward 1 coin`() = runTest {
+    fun `when board with 3 pairs then reward 1 coin`() = runTest {
         // given
-        val level = LevelModel.Grid2x3()
+        val board = BoardModel.Grid2x3()
 
         // when
-        val result = sut(level).first()
+        val result = sut(board).first()
 
         // then
         val expectedCoins = 1L
@@ -49,12 +49,12 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when level with 6 pairs then reward 3 coins`() = runTest {
+    fun `when board with 6 pairs then reward 3 coins`() = runTest {
         // given
-        val level = LevelModel.Grid3x4()
+        val board = BoardModel.Grid3x4()
 
         // when
-        val result = sut(level).first()
+        val result = sut(board).first()
 
         // then
         val expectedCoins = 3L
@@ -63,12 +63,12 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when level with 16 pairs then reward 5 coins`() = runTest {
+    fun `when board with 16 pairs then reward 5 coins`() = runTest {
         // given
-        val level = LevelModel.Grid4x4()
+        val board = BoardModel.Grid4x4()
 
         // when
-        val result = sut(level).first()
+        val result = sut(board).first()
 
         // then
         val expectedCoins = 5L
@@ -77,12 +77,12 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when level with 20 pairs then reward 7 coins`() = runTest {
+    fun `when board with 20 pairs then reward 7 coins`() = runTest {
         // given
-        val level = LevelModel.Grid4x5()
+        val board = BoardModel.Grid4x5()
 
         // when
-        val result = sut(level).first()
+        val result = sut(board).first()
 
         // then
         val expectedCoins = 7L
@@ -91,12 +91,12 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when level with 24 pairs then reward 10 coins`() = runTest {
+    fun `when board with 24 pairs then reward 10 coins`() = runTest {
         // given
-        val level = LevelModel.Grid4x6()
+        val board = BoardModel.Grid4x6()
 
         // when
-        val result = sut(level).first()
+        val result = sut(board).first()
 
         // then
         val expectedCoins = 10L
@@ -105,12 +105,12 @@ class RewardCoinsForLevelUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when level with 30 pairs then reward 13 coins`() = runTest {
+    fun `when board with 30 pairs then reward 13 coins`() = runTest {
         // given
-        val level = LevelModel.Grid5x6()
+        val board = BoardModel.Grid5x6()
 
         // when
-        val result = sut(level).first()
+        val result = sut(board).first()
 
         // then
         val expectedCoins = 13L

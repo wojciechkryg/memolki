@@ -3,7 +3,7 @@ package com.wojdor.memolki.domain.usecase
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.CardModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
 import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,15 +15,15 @@ class GetDailyChallengeCardsUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository,
     private val timeProvider: TimeProvider
-) : BaseParameterUseCase<LevelModel, List<CardModel>>(coroutineDispatcher) {
+) : BaseParameterUseCase<BoardModel, List<CardModel>>(coroutineDispatcher) {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun execute(level: LevelModel) = flow {
-        val pairCount = (level.columns * level.rows) / 2
+    override fun execute(board: BoardModel) = flow {
+        val pairCount = (board.columns * board.rows) / 2
         val seed = timeProvider.currentLocalDate().toEpochDay()
         val allCardPairs = cardRepository.getAllCardPairs()
         require(allCardPairs.size >= pairCount) {
-            "Not enough card pairs for $level. Required=$pairCount, available=${allCardPairs.size}"
+            "Not enough card pairs for $board. Required=$pairCount, available=${allCardPairs.size}"
         }
         val selectedPairs = allCardPairs
             .map { cardPair ->

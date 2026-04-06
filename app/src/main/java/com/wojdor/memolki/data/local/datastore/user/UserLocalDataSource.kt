@@ -103,14 +103,14 @@ class UserLocalDataSource @Inject constructor(
         }
     }
 
-    fun encryptedLevelPlayedCount(levelId: String): Flow<String?> =
-        dataRead.map { it[stringPreferencesKey("level_played_count_$levelId")] }
+    fun encryptedLevel(boardId: String): Flow<String?> =
+        dataRead.map { it[stringPreferencesKey("level_$boardId")] }
 
-    suspend fun setEncryptedLevelPlayedCount(
-        levelId: String,
+    suspend fun setEncryptedLevel(
+        boardId: String,
         transform: suspend (encryptedValue: String?) -> String
     ) {
-        val key = stringPreferencesKey("level_played_count_$levelId")
+        val key = stringPreferencesKey("level_$boardId")
         dataWrite.edit { prefs -> prefs[key] = transform(prefs[key]) }
     }
 

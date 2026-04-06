@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
-import com.wojdor.memolki.ui.component.EdgeSparklesEffect
+import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
 
 @Composable
 fun GameProgressBar(
     progress: Float,
-    isGameFinished: Boolean,
     modifier: Modifier = Modifier
 ) {
     val animatedProgress by animateFloatAsState(
@@ -33,31 +33,48 @@ fun GameProgressBar(
         ),
         label = "progress bar animation"
     )
-    val barContent: @Composable () -> Unit = {
-        Box(
-            modifier = modifier
-                .height(PROGRESS_BAR_HEIGHT)
-                .fillMaxWidth()
-                .clip(FullRoundedShape)
-                .border(CARD_BORDER_SIZE, colorResource(R.color.border), FullRoundedShape)
-        ) {
-            if (animatedProgress > 0f) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(animatedProgress.coerceIn(MIN_VISIBLE_FRACTION, 1f))
-                        .clip(FullRoundedShape)
-                        .background(colorResource(R.color.font))
-                )
-            }
+    Box(
+        modifier = modifier
+            .height(PROGRESS_BAR_HEIGHT)
+            .fillMaxWidth()
+            .clip(FullRoundedShape)
+            .border(CARD_BORDER_SIZE, colorResource(R.color.border), FullRoundedShape)
+    ) {
+        if (animatedProgress > 0f) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(animatedProgress.coerceIn(MIN_VISIBLE_FRACTION, 1f))
+                    .clip(FullRoundedShape)
+                    .background(colorResource(R.color.font))
+            )
         }
-    }
-    if (isGameFinished) {
-        EdgeSparklesEffect { barContent() }
-    } else {
-        barContent()
     }
 }
 
 private val PROGRESS_BAR_HEIGHT = 10.dp
 private const val MIN_VISIBLE_FRACTION = 0.05f
+
+@Preview(showBackground = true)
+@Composable
+private fun GameProgressBarEmptyPreview() {
+    AppTheme {
+        GameProgressBar(progress = 0f)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun GameProgressBarHalfPreview() {
+    AppTheme {
+        GameProgressBar(progress = 0.5f)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun GameProgressBarFullPreview() {
+    AppTheme {
+        GameProgressBar(progress = 1f)
+    }
+}

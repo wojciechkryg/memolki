@@ -70,7 +70,7 @@ The script navigates to the game board before recording starts, so the video ope
 | `EndGameContent.kt` | Shows coins display, filters monetization menu items |
 | `CollectionViewModel.kt` | Hides Watch Ad unlock (replaces with locked slot to preserve total count) |
 | `MenuContent.kt` | Hides "more apps" section |
-| `ForceLtr.kt` | Helper composable used for click overlay and level text in RTL locales |
+| `ForceLtr.kt` | Helper composable used for click overlay and board text in RTL locales |
 
 **CI guard**: `pull_request.yml` checks for `RECORDING_MODE = true` and fails the build — must be set to `false` before merging.
 
@@ -110,8 +110,8 @@ All coordinates mapped via `adb shell uiautomator dump`.
 | Element | Tap center |
 |---------|-----------|
 | Menu → New Game | 540, 945 |
-| Choose Level → 3x4 | 540, 642 |
-| Choose Level → 5x6 | 540, 1574 |
+| Choose Board → 3x4 | 540, 642 |
+| Choose Board → 5x6 | 540, 1574 |
 | End game → Unlock New Card | 541, 1297 |
 | Collection → coin-unlock card | 283, 938 |
 
@@ -143,6 +143,6 @@ Card grid positions are identical across all flavors — fresh `Random(0)` per i
 - **Cards not flipping**: Increase `DELAY_OVERLAY` or `DELAY_5X6_CARD` — the click overlay blocks taps while animating.
 - **Mismatch cards not flipping back**: Increase `DELAY_MISMATCH`.
 - **Language not changing**: The app uses per-app locale (`LocaleManager` on API 33+). The script uses `adb shell cmd locale set-app-locales`. System locale commands won't work.
-- **Level text reversed in RTL**: Fixed via `ForceLtr` composable. If other text reverses, wrap it similarly.
+- **Board text reversed in RTL**: Fixed via `ForceLtr` composable. If other text reverses, wrap it similarly.
 - **ffmpeg drawtext not found**: Install `ffmpeg-full` (`brew install ffmpeg-full`), not the regular `ffmpeg`.
 - **Tests failing**: Expected when `RECORDING_MODE = true` — the test suite expects production defaults (5 cards, 0 coins).

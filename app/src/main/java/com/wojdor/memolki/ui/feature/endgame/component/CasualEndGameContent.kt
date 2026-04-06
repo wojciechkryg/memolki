@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.component.SparklesOverlay
 import com.wojdor.memolki.ui.component.bounceClickEffect
@@ -204,7 +204,7 @@ private fun CasualEndGameContentPreview() {
     AppTheme {
         CasualEndGameContent(
             state = EndGameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
@@ -226,7 +226,7 @@ private fun CasualEndGameContentWithoutAdPreview() {
     AppTheme {
         CasualEndGameContent(
             state = EndGameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
@@ -246,7 +246,7 @@ private fun CasualEndGameContentWithFreeCoinsPreview() {
     AppTheme {
         CasualEndGameContent(
             state = EndGameState(
-                level = LevelModel.Grid2x3(),
+                board = BoardModel.Grid2x3(),
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(

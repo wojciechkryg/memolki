@@ -1,17 +1,17 @@
 package com.wojdor.memolki.ui.feature.endgame
 
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.domain.model.LevelModel
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.base.UiIntent
 
 sealed class EndGameIntent : UiIntent {
-    data class OnCasualEndGameShow(val levelModel: LevelModel) : EndGameIntent()
+    data class OnCasualEndGameShow(val boardModel: BoardModel) : EndGameIntent()
     data class OnDailyChallengeEndGameShow(
-        val levelModel: LevelModel,
+        val boardModel: BoardModel,
         val dailyChallengeModel: DailyChallengeModel
     ) : EndGameIntent()
 
-    data class OnContinueClick(val levelModel: LevelModel) : EndGameIntent()
+    data class OnContinueClick(val boardModel: BoardModel) : EndGameIntent()
     object OnMenuClick : EndGameIntent()
     object OnUnlockNewCardClick : EndGameIntent()
     object OnWatchAdClick : EndGameIntent()
