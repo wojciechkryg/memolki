@@ -30,6 +30,7 @@ mediationLiftoff = "7.7.2.0"
 mediationMintegral = "17.1.31.0"
 mediationUnity = "4.17.0.0"
 mockk = "1.14.9"
+gradlePlayPublisher = "3.12.0"
 navigationCompose = "2.9.7"
 playServicesAds = "25.1.0"
 playServicesAuth = "21.5.1"
@@ -97,3 +98,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+play-publisher = { id = "com.github.triplet.play", version.ref = "gradlePlayPublisher" }

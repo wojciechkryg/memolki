@@ -6,6 +6,20 @@ This file provides guidance to AI coding agents when working with code in this r
 
 Memolki is an Android card-matching memory game built with Jetpack Compose. It ships as multiple app flavors (each with a unique theme, package name, and billing key). Check `app/build.gradle.kts` for the current list of flavors under `productFlavors`.
 
+## Documentation
+
+Detailed docs live in `docs/`. Consult the relevant doc before working in that area:
+
+| Doc | Topic |
+|-----|-------|
+| [`docs/docs_logo.md`](docs/docs_logo.md) | Logo generation and specifications |
+| [`docs/docs_images.md`](docs/docs_images.md) | Card image generation, resizing, and density buckets |
+| [`docs/docs_icons.md`](docs/docs_icons.md) | App icon setup and guidelines |
+| [`docs/docs_new_app_flavor_setup.md`](docs/docs_new_app_flavor_setup.md) | Full checklist for adding a new WLA flavor |
+| [`docs/docs_click_indicator.md`](docs/docs_click_indicator.md) | Click indicator overlay for recording mode |
+| [`docs/docs_listing.md`](docs/docs_listing.md) | Play Store listing management (fetch/update scripts, character limits) |
+| [`docs/docs_youtube.md`](docs/docs_youtube.md) | YouTube video upload and Play Store linking |
+
 ## Build & Test Commands
 
 The **default flavor** is `fruitHalf` — use it for builds, tests, and installs unless told otherwise.
@@ -376,6 +390,42 @@ Native language names (e.g. "Polski", "Deutsch") are in `main/res/values/strings
 ### Adding translations for a new flavor
 
 For each existing locale, create `app/src/{flavorName}/res/values-{locale}/strings.xml` containing translations of all card names from that flavor's default `values/strings.xml`. Copy the structure from an existing flavor (e.g. `app/src/fruitHalf/res/values-pl/strings.xml`).
+
+## Play Store Listings
+
+Managed via [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publisher). Listings live at `app/src/{flavor}/play/listings/{locale}/`. Full docs: `docs/docs_listing.md`.
+
+### Character limits
+
+| File | Max length |
+|------|-----------|
+| `title.txt` | 30 characters |
+| `short-description.txt` | 80 characters |
+| `full-description.txt` | 4000 characters |
+
+**Always respect these limits when generating or editing listing text.** Titles over 30 chars will be rejected by Play Store.
+
+### Scripts
+
+```bash
+./scripts/listing/fetch_listings.sh              # Fetch all flavors from Play Store
+./scripts/listing/update_listings.sh              # Push all flavors to Play Store
+./scripts/listing/update_listings.sh fruitHalf    # Push specific flavor
+```
+
+### Listing structure per locale
+
+```
+app/src/{flavor}/play/
+├── contact-email.txt
+├── contact-website.txt
+├── default-language.txt
+└── listings/{locale}/
+    ├── title.txt
+    ├── short-description.txt
+    ├── full-description.txt
+    └── graphics/phone-screenshots/*.jpg
+```
 
 ## Video Recording for Ads
 
