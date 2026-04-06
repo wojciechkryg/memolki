@@ -15,7 +15,6 @@
     <string name="settings">Seaded</string>
     <string name="more">Rohkem?</string>
     <string name="menu">Menüü</string>
-    <string name="continue_game">Jätka</string>
     <string name="shop">Pood</string>
     <string name="shop_obtain">Hangi %d</string>
     <string name="shop_back_later">Tule hiljem tagasi</string>
@@ -117,4 +116,9 @@
     </plurals>
     <string name="share_casual">Arvad, et saad minust üle? 🧠🔥</string>
     <string name="level_count">tase %d</string>
+
+    <string name="need_more_cards">Vaja rohkem kaarte</string>
+    <string name="next">Järgmine</string>
+    <string name="play">Mängi</string>
+    <string name="daily_reward">Päeva auhind</string>
 </resources>

@@ -1,12 +1,7 @@
 package com.wojdor.memolki.ui.feature.endgame.component
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -33,14 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -57,6 +47,7 @@ import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.SparklesOverlay
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
+import com.wojdor.memolki.ui.component.shimmerEffect
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
 import com.wojdor.memolki.ui.component.BaseMenuItem
@@ -187,7 +178,7 @@ private fun DailyChallengeContent(
             ) {
                 state.menu.forEach { menuItem ->
                     when (menuItem) {
-                        EndGameMenuModel.WatchAd -> WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
+                        EndGameMenuModel.WatchAd -> WatchAdForCoinsItem(rewardedCoins = state.rewardedCoins, onClick = callbacks.onWatchAdClick)
                         EndGameMenuModel.Compare -> CompareButton(onClick = callbacks.onDailyChallengeShareClick)
                         EndGameMenuModel.Menu -> BaseMenuItem(
                             textId = menuItem.textId,
@@ -283,17 +274,6 @@ private fun TimeDisplay(modifier: Modifier = Modifier, timeMillis: Long) {
 
 @Composable
 private fun CompareButton(onClick: () -> Unit) {
-    val fontColor = colorResource(R.color.font)
-    val infiniteTransition = rememberInfiniteTransition(label = "compare")
-    val shimmerOffset by infiniteTransition.animateFloat(
-        initialValue = -SHIMMER_WIDTH_FRACTION,
-        targetValue = 1f + SHIMMER_WIDTH_FRACTION,
-        animationSpec = infiniteRepeatable(
-            animation = tween(SHIMMER_DURATION_MS, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "shimmer"
-    )
     EdgeSparklesEffect(
         modifier = Modifier
             .pulseEffect()
@@ -311,23 +291,7 @@ private fun CompareButton(onClick: () -> Unit) {
             ),
             modifier = Modifier
                 .clip(FullRoundedShape)
-                .drawWithContent {
-                    drawContent()
-                    val shimmerCenter = shimmerOffset * size.width
-                    val shimmerW = SHIMMER_WIDTH_FRACTION * size.width
-                    drawRect(
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                fontColor.copy(alpha = SHIMMER_ALPHA),
-                                Color.Transparent
-                            ),
-                            start = Offset(shimmerCenter - shimmerW, 0f),
-                            end = Offset(shimmerCenter + shimmerW, size.height)
-                        ),
-                        blendMode = BlendMode.SrcAtop
-                    )
-                }
+                .shimmerEffect()
         ) {
             Text(
                 text = stringResource(R.string.daily_challenge_compare).uppercase(),
@@ -336,10 +300,6 @@ private fun CompareButton(onClick: () -> Unit) {
         }
     }
 }
-
-private const val SHIMMER_DURATION_MS = 2500
-private const val SHIMMER_WIDTH_FRACTION = 0.35f
-private const val SHIMMER_ALPHA = 0.08f
 
 @Preview
 @Composable

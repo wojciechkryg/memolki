@@ -19,4 +19,5 @@ sealed class MenuEffect : UiEffect {
 
     object OpenSettingsScreen : MenuEffect()
     object OpenMoreAppsScreen : MenuEffect()
+    object OpenShopScreen : MenuEffect()
 }

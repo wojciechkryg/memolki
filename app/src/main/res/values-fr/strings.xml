@@ -15,7 +15,6 @@
     <string name="settings">Paramètres</string>
     <string name="more">Plus?</string>
     <string name="menu">Menu</string>
-    <string name="continue_game">Continuer</string>
     <string name="shop">Boutique</string>
     <string name="shop_obtain">Obtenir %d</string>
     <string name="shop_back_later">Revenir plus tard</string>
@@ -117,4 +116,9 @@
     </plurals>
     <string name="share_casual">Tu penses pouvoir me battre ? 🧠🔥</string>
     <string name="level_count">niveau %d</string>
+
+    <string name="need_more_cards">Besoin de plus de cartes</string>
+    <string name="next">Suivant</string>
+    <string name="play">Jouer</string>
+    <string name="daily_reward">Récompense quotidienne</string>
 </resources>

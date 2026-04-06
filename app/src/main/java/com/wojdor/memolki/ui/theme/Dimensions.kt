@@ -44,6 +44,20 @@ val spacingXL: Dp
         else -> 24.dp
     }
 
+val spacingXXL: Dp
+    @Composable get() = when {
+        isLargeScreen -> 64.dp
+        isSmallScreen -> 16.dp
+        else -> 32.dp
+    }
+
+val spacingXXXL: Dp
+    @Composable get() = when {
+        isLargeScreen -> 96.dp
+        isSmallScreen -> 24.dp
+        else -> 48.dp
+    }
+
 val isLargeScreen: Boolean
     @Composable get() = LocalWindowSize.current.widthSizeClass >= WindowWidthSizeClass.Medium
 

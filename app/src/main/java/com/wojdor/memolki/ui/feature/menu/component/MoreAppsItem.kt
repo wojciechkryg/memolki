@@ -33,13 +33,14 @@ import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingS
+import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
 fun MoreAppsItem(
     modifier: Modifier = Modifier, appModel: AppModel, onClick: () -> Unit = {}
 ) {
-    Column(modifier = modifier.padding(spacingL)) {
+    Column(modifier = modifier.padding(horizontal = spacingXL, vertical = spacingL)) {
         Text(
             modifier = Modifier.padding(start = spacingS),
             text = stringResource(R.string.more).lowercase(),

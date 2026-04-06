@@ -15,7 +15,6 @@
     <string name="settings">Nustatymai</string>
     <string name="more">Daugiau?</string>
     <string name="menu">Meniu</string>
-    <string name="continue_game">Tęsti</string>
     <string name="shop">Parduotuvė</string>
     <string name="shop_obtain">Gauti %d</string>
     <string name="shop_back_later">Grįžk vėliau</string>
@@ -119,4 +118,9 @@
     </plurals>
     <string name="share_casual">Manai, kad mane įveiksi? 🧠🔥</string>
     <string name="level_count">lygis %d</string>
+
+    <string name="need_more_cards">Reikia daugiau kortelių</string>
+    <string name="next">Kitas</string>
+    <string name="play">Žaisti</string>
+    <string name="daily_reward">Dienos atlygis</string>
 </resources>

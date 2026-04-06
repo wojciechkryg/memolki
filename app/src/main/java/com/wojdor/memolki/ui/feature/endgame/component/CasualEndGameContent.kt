@@ -23,7 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -33,19 +32,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
-import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.EndGameMenuModel
+import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.component.SparklesOverlay
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
-import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.throttleClick
+import kotlinx.coroutines.delay
 
 @Composable
 fun CasualEndGameContent(
@@ -99,24 +99,22 @@ fun CasualEndGameContent(
                         it.filterNot { item ->
                             @Suppress("KotlinConstantConditions")
                             RECORDING_MODE && item is EndGameMenuModel.WatchAd
-                                    || RECORDING_MODE && item is EndGameMenuModel.FreeCoins
                                     || RECORDING_MODE && item is EndGameMenuModel.Share
                         }.forEach { menuItem ->
                             when (menuItem) {
                                 EndGameMenuModel.WatchAd ->
-                                    WatchAdMultiplyRewardItem(onClick = callbacks.onWatchAdClick)
+                                    WatchAdForCoinsItem(
+                                        rewardedCoins = state.rewardedCoins,
+                                        onClick = callbacks.onWatchAdClick
+                                    )
 
                                 EndGameMenuModel.UnlockNewCard -> UnlockNewCardItem(
                                     onClick = callbacks.onUnlockNewCardClick
                                 )
 
-                                EndGameMenuModel.FreeCoins -> FreeCoinsItem(
-                                    onClick = callbacks.onFreeCoinsClick
-                                )
-
-                                EndGameMenuModel.Continue -> BaseMenuItem(
+                                EndGameMenuModel.Next -> BaseMenuItem(
                                     textId = menuItem.textId,
-                                    onClick = callbacks.onContinueClick
+                                    onClick = callbacks.onNextClick
                                 )
 
                                 EndGameMenuModel.Menu -> BaseMenuItem(
@@ -187,7 +185,7 @@ private fun ShareRewardLabel(
         horizontalArrangement = Arrangement.spacedBy(spacingS)
     ) {
         Text(
-            text = "+$coins",
+            text = "+ $coins",
             style = MaterialTheme.typography.headlineSmall
         )
         Image(
@@ -209,9 +207,9 @@ private fun CasualEndGameContentPreview() {
                 currentCoins = 5678,
                 menu = listOf(
                     EndGameMenuModel.WatchAd,
-                    EndGameMenuModel.Continue,
-                    EndGameMenuModel.Menu,
                     EndGameMenuModel.UnlockNewCard,
+                    EndGameMenuModel.Next,
+                    EndGameMenuModel.Menu,
                     EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
             ),
@@ -230,31 +228,9 @@ private fun CasualEndGameContentWithoutAdPreview() {
                 rewardedCoins = 1234,
                 currentCoins = 5678,
                 menu = listOf(
-                    EndGameMenuModel.Continue,
+                    EndGameMenuModel.Next,
                     EndGameMenuModel.Menu,
                     EndGameMenuModel.Share(showReward = false)
-                )
-            ),
-            callbacks = EndGameCallbacks()
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun CasualEndGameContentWithFreeCoinsPreview() {
-    AppTheme {
-        CasualEndGameContent(
-            state = EndGameState(
-                board = BoardModel.Grid2x3(),
-                rewardedCoins = 1234,
-                currentCoins = 5678,
-                menu = listOf(
-                    EndGameMenuModel.WatchAd,
-                    EndGameMenuModel.Continue,
-                    EndGameMenuModel.Menu,
-                    EndGameMenuModel.FreeCoins,
-                    EndGameMenuModel.Share(showReward = true, rewardCoins = 3)
                 )
             ),
             callbacks = EndGameCallbacks()

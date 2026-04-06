@@ -104,7 +104,7 @@ private fun NavGraphBuilder.chooseBoardScreen(navController: NavController) {
         },
         exitTransition = {
             when (targetState.destination.route) {
-                Route.MENU -> slideOutRight
+                Route.MENU, Route.COLLECTION -> slideOutRight
                 else -> slideOutLeft
             }
         },

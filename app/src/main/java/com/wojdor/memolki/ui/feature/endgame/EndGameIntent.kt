@@ -11,14 +11,13 @@ sealed class EndGameIntent : UiIntent {
         val dailyChallengeModel: DailyChallengeModel
     ) : EndGameIntent()
 
-    data class OnContinueClick(val boardModel: BoardModel) : EndGameIntent()
+    data class OnNextClick(val boardModel: BoardModel) : EndGameIntent()
     object OnMenuClick : EndGameIntent()
     object OnUnlockNewCardClick : EndGameIntent()
     object OnWatchAdClick : EndGameIntent()
     object OnAdReward : EndGameIntent()
     data class OnAdDismiss(val wasRewardGranted: Boolean) : EndGameIntent()
     object OnShareClick : EndGameIntent()
-    object OnFreeCoinsClick : EndGameIntent()
     object OnScreenResume : EndGameIntent()
     object OnDailyChallengeStarsAnimationFinished : EndGameIntent()
     object OnDailyChallengeShareClick : EndGameIntent()

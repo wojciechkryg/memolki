@@ -15,7 +15,6 @@
     <string name="settings">Nastavitve</string>
     <string name="more">Več?</string>
     <string name="menu">Meni</string>
-    <string name="continue_game">Nadaljuj</string>
     <string name="shop">Trgovina</string>
     <string name="shop_obtain">Pridobi %d</string>
     <string name="shop_back_later">Vrni se kasneje</string>
@@ -119,4 +118,9 @@
     </plurals>
     <string name="share_casual">Misliš, da me lahko premaganš? 🧠🔥</string>
     <string name="level_count">raven %d</string>
+
+    <string name="need_more_cards">Potrebuješ več kart</string>
+    <string name="next">Naprej</string>
+    <string name="play">Igraj</string>
+    <string name="daily_reward">Dnevna nagrada</string>
 </resources>

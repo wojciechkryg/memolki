@@ -13,8 +13,9 @@ class GetMenuUseCase @Inject constructor(
 
     override fun execute() = flow {
         val menuItems = listOf(
-            MenuModel.NewGame,
+            MenuModel.Play,
             MenuModel.Collection,
+            MenuModel.Leaderboard,
             MenuModel.Settings
         )
         emit(Result.success(menuItems))

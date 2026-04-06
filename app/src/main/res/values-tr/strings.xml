@@ -15,7 +15,6 @@
     <string name="settings">Ayarlar</string>
     <string name="more">Daha?</string>
     <string name="menu">Menü</string>
-    <string name="continue_game">Devam et</string>
     <string name="shop">Mağaza</string>
     <string name="shop_obtain">Al %d</string>
     <string name="shop_back_later">Daha sonra geri dön</string>
@@ -117,4 +116,9 @@
     </plurals>
     <string name="share_casual">Beni yenebileceğini mi düşünüyorsun? 🧠🔥</string>
     <string name="level_count">seviye %d</string>
+
+    <string name="need_more_cards">Daha fazla kart gerekli</string>
+    <string name="next">Sonraki</string>
+    <string name="play">Oyna</string>
+    <string name="daily_reward">Günlük ödül</string>
 </resources>

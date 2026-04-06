@@ -15,7 +15,6 @@
     <string name="settings">הגדרות</string>
     <string name="more">עוד?</string>
     <string name="menu">תפריט</string>
-    <string name="continue_game">המשך</string>
     <string name="shop">חנות</string>
     <string name="shop_obtain">השג %d</string>
     <string name="shop_back_later">חזור מאוחר יותר</string>
@@ -119,4 +118,9 @@
     </plurals>
     <string name="share_casual">חושב שתצליח לנצח אותי? 🧠🔥</string>
     <string name="level_count">שלב %d</string>
+
+    <string name="need_more_cards">צריך עוד קלפים</string>
+    <string name="next">הבא</string>
+    <string name="play">שחק</string>
+    <string name="daily_reward">פרס יומי</string>
 </resources>

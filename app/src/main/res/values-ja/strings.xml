@@ -15,7 +15,6 @@
     <string name="settings">設定</string>
     <string name="more">もっと？</string>
     <string name="menu">メニュー</string>
-    <string name="continue_game">続ける</string>
     <string name="shop">ショップ</string>
     <string name="shop_obtain">獲得 %d</string>
     <string name="shop_back_later">後で戻って</string>
@@ -116,4 +115,9 @@
     </plurals>
     <string name="share_casual">私に勝てると思う？🧠🔥</string>
     <string name="level_count">レベル %d</string>
+
+    <string name="need_more_cards">もっとカードが必要</string>
+    <string name="next">次へ</string>
+    <string name="play">プレイ</string>
+    <string name="daily_reward">デイリー報酬</string>
 </resources>

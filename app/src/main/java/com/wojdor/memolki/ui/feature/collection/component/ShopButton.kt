@@ -19,6 +19,8 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
+import com.wojdor.memolki.ui.component.shimmerEffect
+import androidx.compose.ui.draw.clip
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.animated
@@ -42,6 +44,9 @@ fun ShopButton(onClick: () -> Unit = {}) {
                 containerColor = Color.Transparent,
                 disabledContainerColor = Color.Transparent
             ),
+            modifier = Modifier
+                .clip(FullRoundedShape)
+                .shimmerEffect()
         ) {
             Image(
                 modifier = Modifier.size(56.dp),

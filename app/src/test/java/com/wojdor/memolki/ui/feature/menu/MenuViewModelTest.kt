@@ -18,7 +18,8 @@ import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
-import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnNewGameClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnPlayClick
+import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -62,6 +63,9 @@ class MenuViewModelTest : AppTest() {
     @Inject
     lateinit var analytics: Analytics
 
+    @Inject
+    lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+
     private lateinit var sut: MenuViewModel
 
     @Before
@@ -76,7 +80,8 @@ class MenuViewModelTest : AppTest() {
             getMoreAppsUseCase,
             getTotalCoinsUseCase,
             getTotalCardPairsMatchedUseCase,
-            getTotalGamesPlayedUseCase
+            getTotalGamesPlayedUseCase,
+            checkDailyLoginStreakUseCase
         )
     }
 
@@ -94,19 +99,20 @@ class MenuViewModelTest : AppTest() {
             val state = awaitItem()
 
             // then
-            assertEquals(3, state.menu.size)
-            assertEquals(MenuModel.NewGame, state.menu[0])
+            assertEquals(4, state.menu.size)
+            assertEquals(MenuModel.Play, state.menu[0])
             assertEquals(MenuModel.Collection, state.menu[1])
-            assertEquals(MenuModel.Settings, state.menu[2])
+            assertEquals(MenuModel.Leaderboard, state.menu[2])
+            assertEquals(MenuModel.Settings, state.menu[3])
         }
     }
 
     @Test
-    fun `when OnNewGameClick intent is send then the OpenChooseBoardScreen effect is send`() =
+    fun `when OnPlayClick intent is send then the OpenChooseBoardScreen effect is send`() =
         runTest {
             sut.uiEffect.test {
                 // when
-                sut.sendIntent(OnNewGameClick)
+                sut.sendIntent(OnPlayClick)
 
                 // then
                 assertEquals(OpenChooseBoardScreen, awaitItem())

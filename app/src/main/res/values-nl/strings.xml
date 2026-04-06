@@ -15,7 +15,6 @@
     <string name="settings">Instellingen</string>
     <string name="more">Meer?</string>
     <string name="menu">Menu</string>
-    <string name="continue_game">Doorgaan</string>
     <string name="shop">Winkel</string>
     <string name="shop_obtain">Halen %d</string>
     <string name="shop_back_later">Kom later terug</string>
@@ -117,4 +116,9 @@
     </plurals>
     <string name="share_casual">Denk je dat je mij kunt verslaan? 🧠🔥</string>
     <string name="level_count">niveau %d</string>
+
+    <string name="need_more_cards">Meer kaarten nodig</string>
+    <string name="next">Volgende</string>
+    <string name="play">Spelen</string>
+    <string name="daily_reward">Dagelijkse beloning</string>
 </resources>
