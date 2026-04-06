@@ -33,5 +33,14 @@ render.experimental.xml
 # Google Services (e.g. APIs or Firebase)
 google-services.json
 
+# Google Play service account
+*-service-account*.json
+
+
 # Android Profiling
 *.hprof
+
+# YouTube OAuth
+client_secret*.json
+token.json
+upload_progress.json

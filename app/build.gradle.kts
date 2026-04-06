@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics.plugin)
     alias(libs.plugins.paparazzi)
+    alias(libs.plugins.play.publisher)
 }
 
 val secretsPropertiesFile = rootProject.file("secrets.properties")
@@ -33,6 +34,14 @@ val flavorConfigs = listOf(
     "birdSide" to "BIRD_SIDE_BILLING_KEY"
 )
 
+play {
+    val serviceAccountPath = getSecretValue("PLAY_SERVICE_ACCOUNT_PATH")
+    if (serviceAccountPath.isNotBlank()) {
+        serviceAccountCredentials.set(file(serviceAccountPath))
+    }
+    track.set("production")
+}
+
 android {
     namespace = "com.wojdor.memolki"
     compileSdk = 36
@@ -41,8 +50,8 @@ android {
         applicationId = "com.wojdor.memolki"
         minSdk = 23
         targetSdk = 36
-        versionCode = 1003024
-        versionName = "1.3.24"
+        versionCode = 1003025
+        versionName = "1.3.25"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
