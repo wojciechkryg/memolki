@@ -386,7 +386,7 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
-                skipItems(6)
+                skipItems(5)
 
                 // then
                 val result = awaitItem()

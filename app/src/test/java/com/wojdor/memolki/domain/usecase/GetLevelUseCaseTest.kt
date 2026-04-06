@@ -33,7 +33,7 @@ class GetLevelUseCaseTest : AppTest() {
     }
 
     @Test
-    fun `when no level played count then returns default of one`() = runTest {
+    fun `when no level then returns default of one`() = runTest {
         // when
         sut("2x3").test {
             // then

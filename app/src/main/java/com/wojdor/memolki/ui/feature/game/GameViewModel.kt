@@ -22,6 +22,7 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.TimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -50,6 +51,8 @@ class GameViewModel @Inject constructor(
     savedStateHandle,
     GameState()
 ) {
+
+    private var levelFlowJob: Job? = null
 
     override fun onIntent(intent: GameIntent) {
         when (intent) {
@@ -89,7 +92,8 @@ class GameViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-        getLevelUseCase(board.id).onEach { result ->
+        levelFlowJob?.cancel()
+        levelFlowJob = getLevelUseCase(board.id).onEach { result ->
             result.onSuccess { count ->
                 if (!uiState.value.isGameFinished) {
                     sendState { copy(level = count) }
@@ -257,6 +261,8 @@ class GameViewModel @Inject constructor(
                         )
                     )
                 }
+                levelFlowJob?.cancel()
+                levelFlowJob = null
                 sendState {
                     copy(
                         isGameFinished = false,
@@ -268,7 +274,8 @@ class GameViewModel @Inject constructor(
                         cards = emptyList(),
                         isDailyChallenge = false,
                         epochDay = 0L,
-                        startTimeMillis = 0L
+                        startTimeMillis = 0L,
+                        progress = 0f
                     )
                 }
             }
@@ -408,8 +415,11 @@ class GameViewModel @Inject constructor(
         val updatedCards = uiState.value.cards.map { card ->
             cardsToUpdate.find { it.pairId == card.pairId && it.id == card.id } ?: card
         }
-        sendState { copy(cards = updatedCards) }
+        sendState { copy(cards = updatedCards, progress = calculateProgress(updatedCards)) }
     }
+
+    private fun calculateProgress(cards: List<CardModel>): Float =
+        cards.count { it.isPairMatched }.toFloat() / cards.size.coerceAtLeast(1)
 
     private fun showCardDetails(card: CardModel) {
         sendState {

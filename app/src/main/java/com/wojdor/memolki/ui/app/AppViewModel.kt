@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
-import com.wojdor.memolki.domain.usecase.PrepareRecordingCoinsUseCase
+import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.provider.LocaleProvider
@@ -20,7 +20,7 @@ class AppViewModel @Inject constructor(
     private val analytics: Analytics,
     private val unlockAllNewCardPairsIfPurchasedUseCase: UnlockAllNewCardPairsIfPurchasedUseCase,
     private val localEncryptorKeyStore: LocalEncryptorKeyStore,
-    private val prepareRecordingCoinsUseCase: PrepareRecordingCoinsUseCase,
+    private val prepareRecordingDataUseCase: PrepareRecordingDataUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase,
     private val localeProvider: LocaleProvider,
@@ -36,7 +36,7 @@ class AppViewModel @Inject constructor(
             analytics.logAppSessionStart(totalGamesPlayed, unlockedCardsCount)
             localEncryptorKeyStore.initialize()
             @Suppress("KotlinConstantConditions")
-            if (RECORDING_MODE) prepareRecordingCoinsUseCase().collect()
+            if (RECORDING_MODE) prepareRecordingDataUseCase().collect()
             unlockAllNewCardPairsIfPurchasedUseCase().collect()
         }
     }

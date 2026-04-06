@@ -72,6 +72,11 @@ class UserRepository @Inject constructor(
         decryptLong(userLocalDataSource.encryptedLevel(boardId))
             .map { it.coerceAtLeast(DEFAULT_LEVEL) }
 
+    // Used only in recording mode to pre-populate level data
+    suspend fun setLevel(boardId: String, level: Long) {
+        userLocalDataSource.setEncryptedLevel(boardId) { encryptor.encrypt(level) }
+    }
+
     suspend fun incrementLevel(boardId: String): Long {
         userLocalDataSource.setEncryptedLevel(boardId) { encrypted ->
             val count = decryptLong(encrypted)

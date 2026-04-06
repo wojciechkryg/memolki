@@ -39,7 +39,7 @@ import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCaseTest
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCaseTest
-import com.wojdor.memolki.domain.usecase.PrepareRecordingCoinsUseCaseTest
+import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
@@ -126,7 +126,7 @@ interface TestInjector {
     fun inject(test: SetLastShopAdShownTimestampUseCaseTest)
     fun inject(test: IsShopAdCooldownOverUseCaseTest)
     fun inject(test: HasReceivedShareRewardUseCaseTest)
-    fun inject(test: PrepareRecordingCoinsUseCaseTest)
+    fun inject(test: PrepareRecordingDataUseCaseTest)
     fun inject(test: GetBiggestUnlockedBoardUseCaseTest)
     fun inject(test: HasPlayedTodayDailyChallengeUseCaseTest)
     fun inject(test: SaveDailyChallengeUseCaseTest)

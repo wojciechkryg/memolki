@@ -77,8 +77,6 @@ private fun CardsGridWithText(
             val actualGridHeight = cardSize * rows + spacing * (rows - 1)
             val topSpace = maxHeight * TOP_SPACE_RATIO
             val gridTopPadding = topSpace + (gridAreaHeight - actualGridHeight) / 2
-            val progress = state.cards.count { it.isPairMatched }.toFloat() /
-                state.cards.size.coerceAtLeast(1)
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -98,7 +96,7 @@ private fun CardsGridWithText(
                         )
                     }
                     GameProgressBar(
-                        progress = progress,
+                        progress = state.progress,
                         modifier = Modifier.padding(spacingL)
                     )
                 }

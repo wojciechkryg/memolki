@@ -6,10 +6,12 @@ import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
+import kotlin.random.Random
 
 class UnlockRandomCardUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
-    private val cardRepository: CardRepository
+    private val cardRepository: CardRepository,
+    private val random: Random
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
 
     override fun execute() = flow {
@@ -17,7 +19,7 @@ class UnlockRandomCardUseCase @Inject constructor(
         if (lockedCardPairs.isEmpty()) {
             emit(Result.failure(IllegalStateException("All card pairs are already unlocked")))
         } else {
-            val randomCardPairToUnlock = lockedCardPairs.random()
+            val randomCardPairToUnlock = lockedCardPairs.random(random)
             cardRepository.addUnlockedCardPairId(randomCardPairToUnlock.first.pairId)
             emit(Result.success(Unit))
         }

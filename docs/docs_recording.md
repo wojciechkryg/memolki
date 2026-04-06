@@ -41,7 +41,7 @@ The script navigates to the game board before recording starts, so the video ope
 | 4. Collection | Tap "Unlock New Card" → unlock a card with coins |
 | 5. Navigate to 5x6 | Back → Menu → New Game → 5x6 |
 | 6. Struggle on 5x6 | Random-looking attempts, keep failing |
-| 7. End card | Blur fades in + localized "Can you do better?" text |
+| 7. End card | Blur fades in + flavor logo + localized "Can you do better?" text |
 
 ## What the script does
 
@@ -82,6 +82,7 @@ The script uses `ffmpeg-full` (`/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg`) to:
 2. **Add background music** — `app/src/main/res/raw/music_background.ogg` at normal speed, fades out at the end
 3. **Blur ending** — `boxblur=8:8` fades in over 0.4s during the last 3 seconds
 4. **Localized text** — "Can you do better?" in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`), fades in 0.5s after blur starts, translated for each of the 32 locales
+5. **Flavor logo** — per-flavor logo (`app/src/main/res/drawable/ic_logo_{flavor}.png`) fades in above the text, scaled to 450px wide, with a circular background in the flavor's primary color
 
 ## Tap coordinates (Pixel 2, 1080x1920)
 
@@ -110,8 +111,8 @@ All coordinates mapped via `adb shell uiautomator dump`.
 | Element | Tap center |
 |---------|-----------|
 | Menu → New Game | 540, 945 |
-| Choose Board → 3x4 | 540, 642 |
-| Choose Board → 5x6 | 540, 1574 |
+| Choose Board → 3x4 | 540, 572 |
+| Choose Board → 5x6 | 540, 1380 |
 | End game → Unlock New Card | 541, 1297 |
 | Collection → coin-unlock card | 283, 938 |
 

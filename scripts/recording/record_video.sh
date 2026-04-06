@@ -15,7 +15,7 @@
 #   1. 3x4 board: mismatches → rapid solve all pairs
 #   2. End game: coin reward with total coins
 #   3. Unlock New Card → Collection → unlock a card
-#   4. 5x6 board: struggle with mismatches → blur + "Can you do better?"
+#   4. 5x6 board: struggle with mismatches → blur + logo + "Can you do better?"
 
 set -e
 
@@ -43,6 +43,7 @@ FFMPEG="/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg"
 FONT_PRIMARY="${SCRIPT_DIR}/../../app/src/main/res/font/patrickhand_regular.ttf"
 FONT_FALLBACK="/System/Library/Fonts/Supplemental/Arial Unicode.ttf"
 MUSIC_FILE="${SCRIPT_DIR}/../../app/src/main/res/raw/music_background.ogg"
+LOGO_FILE="${SCRIPT_DIR}/../../app/src/main/res/drawable/ic_logo_${FLAVOR}.png"
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -65,6 +66,17 @@ FADE_IN_BLUR=0.4
 FADE_IN_TEXT=0.2
 TEXT_DELAY=0.5
 TEXT_SIZE=100
+LOGO_WIDTH=450
+CIRCLE_SIZE=600
+BADGE_OFFSET=480
+TEXT_SHIFT=200
+
+case "$FLAVOR" in
+    fruit_half)      CIRCLE_COLOR="0xFFEAA1" ;;
+    vegetable_half)  CIRCLE_COLOR="0xE6A0A0" ;;
+    mammal_side)     CIRCLE_COLOR="0xE2BA8B" ;;
+    bird_side)       CIRCLE_COLOR="0xB1DBE7" ;;
+esac
 
 # ─── Helpers ─────────────────────────────────────────────────────
 
@@ -133,9 +145,9 @@ get_end_text() {
 # Menu
 MENU_NEW_GAME="540 945"
 
-# Choose level
-LEVEL_3X4="540 642"
-LEVEL_5X6="540 1574"
+# Choose board
+BOARD_3X4="540 572"
+BOARD_5X6="540 1380"
 
 # 3x4 game grid
 #   ┌────────────┬────────────┬────────────┐
@@ -182,7 +194,7 @@ echo "[$FLAVOR/$LOCALE] Navigating to 3x4..."
 adb shell monkey -p "$PACKAGE" -c android.intent.category.LAUNCHER 1 > /dev/null 2>&1
 sleep 4
 tap $MENU_NEW_GAME; wait_overlay; wait_transition
-tap $LEVEL_3X4;     wait_overlay; wait_transition
+tap $BOARD_3X4;     wait_overlay; wait_transition
 sleep 1.5
 
 echo "[$FLAVOR/$LOCALE] Recording..."
@@ -213,7 +225,7 @@ tap $COLL_UNLOCK; wait_overlay; sleep 1.0
 # Act 5: Back → Menu → 5x6
 adb shell input keyevent KEYCODE_BACK; sleep 1.0
 tap $MENU_NEW_GAME; sleep 1.0
-tap $LEVEL_5X6; sleep 1.0
+tap $BOARD_5X6; sleep 1.0
 
 # Act 6: Struggle on 5x6
 tap $G5_R2C3; sleep $DELAY_5X6_CARD; tap $G5_R5C1; wait_mismatch
@@ -245,21 +257,32 @@ FAST_DURATION=$(echo "$RAW_DURATION / $SPEED" | bc -l)
 BLUR_START=$(echo "$FAST_DURATION - $BLUR_DURATION" | bc -l)
 TEXT_START=$(echo "$BLUR_START + $TEXT_DELAY" | bc -l)
 
+BADGE_FILE="${OUTPUT_DIR}/${LOCALE}_badge.png"
+CIRCLE_RADIUS=$((CIRCLE_SIZE / 2))
+$FFMPEG -y \
+  -f lavfi -i "color=c=${CIRCLE_COLOR}:s=${CIRCLE_SIZE}x${CIRCLE_SIZE},format=rgba,geq=r='r(X,Y)':g='g(X,Y)':b='b(X,Y)':a='clip(255*(${CIRCLE_RADIUS}+0.5-hypot(X-${CIRCLE_RADIUS},Y-${CIRCLE_RADIUS})),0,255)'" \
+  -i "$LOGO_FILE" \
+  -filter_complex "[1:v]scale=${LOGO_WIDTH}:-1[logo];[0:v][logo]overlay=(W-w)/2:(H-h)/2" \
+  -frames:v 1 "$BADGE_FILE" -loglevel error
+
 echo "[$FLAVOR/$LOCALE] Post-processing..."
-$FFMPEG -y -i "$RAW_FILE" -i "$MUSIC_FILE" -filter_complex "
+$FFMPEG -y -i "$RAW_FILE" -i "$MUSIC_FILE" -loop 1 -i "$BADGE_FILE" -filter_complex "
   [0:v]setpts=PTS/$SPEED,split=2[main][blur_src];
   [blur_src]boxblur=${BLUR_STRENGTH}:${BLUR_STRENGTH},format=yuva420p,
     fade=t=in:st=${BLUR_START}:d=${FADE_IN_BLUR}:alpha=1[blurred];
-  [main][blurred]overlay=format=auto,
+  [2:v]format=yuva420p,
+    fade=t=in:st=${TEXT_START}:d=${FADE_IN_TEXT}:alpha=1[badge];
+  [main][blurred]overlay=format=auto[with_blur];
+  [with_blur][badge]overlay=x=(W-w)/2:y=H/2-${BADGE_OFFSET}-h/2:shortest=1,
   drawtext=text='${LINE1}':fontfile='${FONT_FILE}':fontsize=${TEXT_SIZE}:fontcolor=black:
     alpha='if(gte(t\,${TEXT_START})\,min((t-${TEXT_START})/${FADE_IN_TEXT}\,1)\,0)':
-    x=(w-text_w)/2:y=(h/2-text_h-10),
+    x=(w-text_w)/2:y=(h/2-text_h-10+${TEXT_SHIFT}),
   drawtext=text='${LINE2}':fontfile='${FONT_FILE}':fontsize=${TEXT_SIZE}:fontcolor=black:
     alpha='if(gte(t\,${TEXT_START})\,min((t-${TEXT_START})/${FADE_IN_TEXT}\,1)\,0)':
-    x=(w-text_w)/2:y=(h/2+10)[final]
+    x=(w-text_w)/2:y=(h/2+10+${TEXT_SHIFT})[final]
 " -af "afade=t=out:st=${BLUR_START}:d=${BLUR_DURATION}" \
   -map "[final]" -map 1:a -shortest \
   "$OUTPUT_FILE" -loglevel error
-rm "$RAW_FILE"
+rm "$RAW_FILE" "$BADGE_FILE"
 
 echo "[$FLAVOR/$LOCALE] Saved: $OUTPUT_FILE"

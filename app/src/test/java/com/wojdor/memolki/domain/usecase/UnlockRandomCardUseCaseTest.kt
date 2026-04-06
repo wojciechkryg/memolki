@@ -12,6 +12,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
+import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 class UnlockRandomCardUseCaseTest : AppTest() {
@@ -22,12 +23,15 @@ class UnlockRandomCardUseCaseTest : AppTest() {
     @Inject
     lateinit var cardRepository: CardRepository
 
+    @Inject
+    lateinit var random: Random
+
     private lateinit var sut: UnlockRandomCardUseCase
 
     @Before
     override fun setup() {
         super.setup()
-        sut = UnlockRandomCardUseCase(testDispatcher, cardRepository)
+        sut = UnlockRandomCardUseCase(testDispatcher, cardRepository, random)
     }
 
     override fun inject(injector: TestInjector) {

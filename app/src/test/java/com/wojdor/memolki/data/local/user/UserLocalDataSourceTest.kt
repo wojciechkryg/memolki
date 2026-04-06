@@ -112,7 +112,7 @@ class UserLocalDataSourceTest : AppTest() {
     }
 
     @Test
-    fun `when no level count then return default value`() = runTest {
+    fun `when no level then return default value`() = runTest {
         // when
         val result = sut.encryptedLevel("2x3").first()
 
@@ -121,7 +121,7 @@ class UserLocalDataSourceTest : AppTest() {
     }
 
     @Test
-    fun `when level count exists then return this value`() = runTest {
+    fun `when level exists then return this value`() = runTest {
         // given
         val expected = "5"
         sut.setEncryptedLevel("2x3") { expected }
@@ -134,7 +134,7 @@ class UserLocalDataSourceTest : AppTest() {
     }
 
     @Test
-    fun `when level count for different boards then return independent values`() = runTest {
+    fun `when level for different boards then return independent values`() = runTest {
         // given
         sut.setEncryptedLevel("2x3") { "10" }
         sut.setEncryptedLevel("4x4") { "20" }

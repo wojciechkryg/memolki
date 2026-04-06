@@ -414,6 +414,7 @@ The script uses `ffmpeg-full` (with freetype) to:
 - Speed up video 1.5x
 - Add background music (`app/src/main/res/raw/music_background.ogg`) with fade-out at the end
 - Add blur overlay fading in at the end
+- Add flavor logo (`app/src/main/res/drawable/ic_logo_{flavor}.png`) fading in above the text with circular background
 - Add localized "Think you can solve it?" text in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`), with Arial Unicode fallback for CJK/RTL locales
 
 ### CI guard
