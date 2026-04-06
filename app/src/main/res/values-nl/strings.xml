@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Dag %d</string>
     <string name="daily_reward_collect">Verzamel %d</string>
     <string name="daily_reward_back_tomorrow">Kom morgen terug</string>
-    <string name="share_text">Ik heb alle paren gevonden in memolki! Kun jij meer kaarten verzamelen? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Dagelijkse uitdaging</string>
     <string name="daily_challenge_compare">Vergelijk</string>
@@ -117,4 +115,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d fout</item>
         <item quantity="other">%d fouten</item>
     </plurals>
+    <string name="share_casual">Denk je dat je mij kunt verslaan? 🧠🔥</string>
 </resources>

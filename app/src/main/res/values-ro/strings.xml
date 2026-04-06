@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Ziua %d</string>
     <string name="daily_reward_collect">Colectează %d</string>
     <string name="daily_reward_back_tomorrow">Revino mâine</string>
-    <string name="share_text">Am găsit toate perechile în memolki! Poți să colecționezi mai multe cărți? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Provocarea zilei</string>
     <string name="daily_challenge_compare">Compară</string>
@@ -118,4 +116,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="few">%d greșeli</item>
         <item quantity="other">%d greșeli</item>
     </plurals>
+    <string name="share_casual">Crezi că mă poți bate? 🧠🔥</string>
 </resources>

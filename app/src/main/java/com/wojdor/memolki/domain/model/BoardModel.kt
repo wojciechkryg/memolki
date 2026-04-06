@@ -44,4 +44,9 @@ sealed class BoardModel(
     data class Grid5x6(
         override val isUnlocked: Boolean = false
     ) : BoardModel("5x6", R.string.board5x6, 5, 6)
+
+    companion object {
+        const val DEFAULT_LEVEL = 1L
+        val DAILY_CHALLENGE = Grid5x6(isUnlocked = true)
+    }
 }

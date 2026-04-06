@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Gün %d</string>
     <string name="daily_reward_collect">Topla %d</string>
     <string name="daily_reward_back_tomorrow">Yarın tekrar gel</string>
-    <string name="share_text">memolki\'de tüm eşleri buldum! Daha fazla kart toplayabilir misin? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Günlük meydan okuma</string>
     <string name="daily_challenge_compare">Karşılaştır</string>
@@ -117,4 +115,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d hata</item>
         <item quantity="other">%d hata</item>
     </plurals>
+    <string name="share_casual">Beni yenebileceğini mi düşünüyorsun? 🧠🔥</string>
 </resources>

@@ -94,8 +94,6 @@
     <string name="daily_reward_day">День %d</string>
     <string name="daily_reward_collect">Зібрати %d</string>
     <string name="daily_reward_back_tomorrow">Повертайся завтра</string>
-    <string name="share_text">Я знайшов усі пари в memolki! Зможеш зібрати більше карток? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Щоденний виклик</string>
     <string name="daily_challenge_compare">Порівняти</string>
@@ -119,4 +117,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="many">%d помилок</item>
         <item quantity="other">%d помилок</item>
     </plurals>
+    <string name="share_casual">Думаєш, зможеш мене обіграти? 🧠🔥</string>
 </resources>

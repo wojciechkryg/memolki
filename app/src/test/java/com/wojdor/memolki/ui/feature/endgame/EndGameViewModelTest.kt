@@ -22,6 +22,7 @@ import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -97,6 +98,9 @@ class EndGameViewModelTest : AppTest() {
     lateinit var analytics: Analytics
 
     @Inject
+    lateinit var casualShareFormatter: CasualShareFormatter
+
+    @Inject
     lateinit var dailyChallengeShareFormatter: DailyChallengeShareFormatter
 
     private lateinit var sut: EndGameViewModel
@@ -123,6 +127,7 @@ class EndGameViewModelTest : AppTest() {
             rewardCoinsForShareUseCase,
             hasReceivedShareRewardUseCase,
             checkDailyLoginStreakUseCase,
+            casualShareFormatter,
             dailyChallengeShareFormatter
         )
     }
@@ -139,7 +144,7 @@ class EndGameViewModelTest : AppTest() {
             val rewardedCoins = 1L
 
             // when
-            sut.sendIntent(EndGameIntent.OnCasualEndGameShow(boardModel))
+            sut.sendIntent(EndGameIntent.OnCasualEndGameShow(boardModel, 1L))
             testScheduler.advanceUntilIdle()
 
             // then
@@ -192,7 +197,7 @@ class EndGameViewModelTest : AppTest() {
     @Test
     fun `when ad reward is earned then logAdRewardFromEndGame is called`() = runTest {
         // given
-        sut.sendIntent(EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true)))
+        sut.sendIntent(EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true), 1L))
         testScheduler.advanceUntilIdle()
 
         // when

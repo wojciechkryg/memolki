@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Päev %d</string>
     <string name="daily_reward_collect">Kogu %d</string>
     <string name="daily_reward_back_tomorrow">Tule homme tagasi</string>
-    <string name="share_text">Leidsin kõik paarid memolkis! Kas suudad koguda rohkem kaarte? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Päeva väljakutse</string>
     <string name="daily_challenge_compare">Võrdle</string>
@@ -117,4 +115,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d viga</item>
         <item quantity="other">%d viga</item>
     </plurals>
+    <string name="share_casual">Arvad, et saad minust üle? 🧠🔥</string>
 </resources>

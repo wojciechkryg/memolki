@@ -16,5 +16,6 @@ data class EndGameState(
     val animateRewardCoins: Boolean = false,
     val showSparkles: Boolean = false,
     val dailyChallenge: DailyChallengeModel = DailyChallengeModel(),
-    val isDailyChallenge: Boolean = false
+    val isDailyChallenge: Boolean = false,
+    val level: Long = BoardModel.DEFAULT_LEVEL
 ) : UiState

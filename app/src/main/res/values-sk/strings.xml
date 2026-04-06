@@ -94,7 +94,6 @@
     <string name="daily_reward_day">Deň %d</string>
     <string name="daily_reward_collect">Zozbieraj %d</string>
     <string name="daily_reward_back_tomorrow">Príď zajtra</string>
-    <string name="share_text">Našiel som všetky páry v memolki! Dokážeš nazbierať viac kariet? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Denná výzva</string>
     <string name="daily_challenge_compare">Porovnať</string>
@@ -118,4 +117,5 @@
         <item quantity="many">%d chýb</item>
         <item quantity="other">%d chýb</item>
     </plurals>
+    <string name="share_casual">Myslíš, že ma porazíš? 🧠🔥</string>
 </resources>

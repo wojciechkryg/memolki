@@ -186,6 +186,7 @@ private fun StartGameContentPreview() {
         GameContent(
             state = GameState(
                 board = BoardModel.Grid2x3(),
+                level = 5L,
                 cards = List(6) {
                     CardModel.Text(
                         id = "id",
@@ -200,12 +201,29 @@ private fun StartGameContentPreview() {
 
 @Preview
 @Composable
+private fun CardsGridPartialProgressPreview() {
+    AppTheme {
+        GameContent(
+            state = GameState(
+                board = BoardModel.Grid2x3(),
+                level = 12L,
+                progress = 0.5f,
+                cards = getPreviewCards(matchedCount = 3)
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
 private fun CardsGridPreview() {
     val cards = getPreviewCards()
     AppTheme {
         GameContent(
             state = GameState(
                 board = BoardModel.Grid2x3(),
+                level = 42L,
+                progress = 1f,
                 cards = cards,
                 lastCardPressed = cards.first(),
                 shouldShowCardText = true
@@ -222,6 +240,8 @@ private fun CardsGridPressedPreview() {
         GameContent(
             state = GameState(
                 board = BoardModel.Grid2x3(),
+                level = 7L,
+                progress = 1f,
                 cards = cards,
                 lastCardPressed = cards.first(),
                 shouldShowCardDetails = true
@@ -230,13 +250,28 @@ private fun CardsGridPressedPreview() {
     }
 }
 
-private fun getPreviewCards() = List(6) {
+@Preview
+@Composable
+private fun CardsGridDailyChallengePreview() {
+    AppTheme {
+        GameContent(
+            state = GameState(
+                board = BoardModel.Grid2x3(),
+                isDailyChallenge = true,
+                progress = 0.33f,
+                cards = getPreviewCards(matchedCount = 2)
+            )
+        )
+    }
+}
+
+private fun getPreviewCards(matchedCount: Int = 6) = List(6) {
     CardModel.Image(
         id = "id",
         pairId = "pairId",
         textRes = R.string.empty,
         imageRes = if (it % 2 == 0) R.drawable.img_test_whole else R.drawable.img_test_half,
         isFlippedFront = true,
-        isPairMatched = true
+        isPairMatched = it < matchedCount
     )
 }

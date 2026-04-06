@@ -122,7 +122,7 @@ class GameViewModel @Inject constructor(
             result.onSuccess { challenge ->
                 sendEffect(
                     GameEffect.OpenEndGameScreen(
-                        boardModel = DAILY_CHALLENGE_BOARD,
+                        boardModel = BoardModel.DAILY_CHALLENGE,
                         mistakeCount = challenge.mistakeCount,
                         cardFlipCounts = challenge.cardFlipCounts,
                         dailyChallenge = challenge.copy(epochDay = epochDay)
@@ -142,13 +142,13 @@ class GameViewModel @Inject constructor(
     }
 
     private fun loadDailyChallengeCards(epochDay: Long) {
-        getDailyChallengeCardsUseCase(DAILY_CHALLENGE_BOARD).onEach { result ->
+        getDailyChallengeCardsUseCase(BoardModel.DAILY_CHALLENGE).onEach { result ->
             result.onSuccess { cards ->
                 sendState {
                     copy(
-                        board = DAILY_CHALLENGE_BOARD,
+                        board = BoardModel.DAILY_CHALLENGE,
                         cards = cards,
-                        cardFlipCounts = emptyFlipCountsGrid(cards, DAILY_CHALLENGE_BOARD.columns),
+                        cardFlipCounts = emptyFlipCountsGrid(cards, BoardModel.DAILY_CHALLENGE.columns),
                         isDailyChallenge = true,
                         epochDay = epochDay
                     )
@@ -177,7 +177,7 @@ class GameViewModel @Inject constructor(
         saveDailyChallengeUseCase(result).launchIn(viewModelScope)
         sendEffect(
             GameEffect.OpenEndGameScreen(
-                boardModel = DAILY_CHALLENGE_BOARD,
+                boardModel = BoardModel.DAILY_CHALLENGE,
                 mistakeCount = state.mistakeCount,
                 cardFlipCounts = state.cardFlipCounts,
                 dailyChallenge = result
@@ -257,7 +257,8 @@ class GameViewModel @Inject constructor(
                         GameEffect.OpenEndGameScreen(
                             boardModel = uiState.value.board,
                             mistakeCount = uiState.value.mistakeCount,
-                            cardFlipCounts = uiState.value.cardFlipCounts
+                            cardFlipCounts = uiState.value.cardFlipCounts,
+                            level = uiState.value.level
                         )
                     )
                 }
@@ -471,7 +472,6 @@ class GameViewModel @Inject constructor(
         cards.chunked(columns.coerceAtLeast(1)).map { row -> List(row.size) { 0 } }
 
     companion object {
-        val DAILY_CHALLENGE_BOARD = BoardModel.Grid5x6(isUnlocked = true)
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
         const val END_GAME_DELAY = 1000L
 

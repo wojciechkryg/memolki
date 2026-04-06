@@ -84,7 +84,7 @@
         <item>Everyone gets the same board — how will you compare?</item>
     </string-array>
 
-    <string name="share_text">I matched all pairs in memolki! Can you collect more cards? 🃏\nhttps://play.google.com/store/apps/details?id=%s</string>
+    <string name="share_casual">Think you can beat me? 🧠🔥</string>
 
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Keep your streak alive!</item>

@@ -18,6 +18,6 @@ data class GameState(
     val isDailyChallenge: Boolean = false,
     val epochDay: Long = 0L,
     val startTimeMillis: Long = 0L,
-    val level: Long = 1L,
+    val level: Long = BoardModel.DEFAULT_LEVEL,
     val progress: Float = 0f
 ) : UiState

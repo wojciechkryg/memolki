@@ -204,7 +204,7 @@ send_notification() {
     if [ -n "$SCREEN" ]; then
         data_fields="$data_fields, \"screen\": \"$SCREEN\""
         if [ -n "$BOARD" ]; then
-            data_fields="$data_fields, \"level\": \"$BOARD\""
+            data_fields="$data_fields, \"board\": \"$BOARD\""
         fi
     fi
 

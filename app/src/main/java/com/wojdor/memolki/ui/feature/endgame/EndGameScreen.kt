@@ -13,7 +13,6 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.BoardModel
@@ -72,28 +71,19 @@ private fun HandleEffect(
                 }
             }
 
-            EndGameEffect.Share -> activity?.let { shareApp(it) }
+            is EndGameEffect.Share -> activity?.let { share(it, effect.text) }
             EndGameEffect.OpenShopScreen -> navController.navigateToShop()
             is EndGameEffect.ShareDailyChallenge -> activity?.let {
-                shareDailyChallenge(it, effect.text)
+                share(it, effect.text)
             }
         }
     }
 }
 
-private fun shareDailyChallenge(activity: Activity, text: String) {
+private fun share(activity: Activity, text: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, text)
-    }
-    activity.startActivity(Intent.createChooser(intent, null))
-}
-
-private fun shareApp(activity: Activity) {
-    val shareText = activity.getString(R.string.share_text, activity.packageName)
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, shareText)
     }
     activity.startActivity(Intent.createChooser(intent, null))
 }

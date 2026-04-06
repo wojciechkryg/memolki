@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Dzień %d</string>
     <string name="daily_reward_collect">Odbierz %d</string>
     <string name="daily_reward_back_tomorrow">Wróć jutro</string>
-    <string name="share_text">Dopasowałem wszystkie pary w memolki! Czy możesz zebrać więcej kart? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Wyzwanie dnia</string>
     <string name="daily_challenge_compare">Porównaj</string>
@@ -119,4 +117,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="many">%d błędów</item>
         <item quantity="other">%d błędów</item>
     </plurals>
+    <string name="share_casual">Myślisz, że mnie pokonasz? 🧠🔥</string>
 </resources>

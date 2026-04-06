@@ -29,7 +29,7 @@ fun GameProgressBar(
         targetValue = progress,
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = 300f
+            stiffness = 100f
         ),
         label = "progress bar animation"
     )

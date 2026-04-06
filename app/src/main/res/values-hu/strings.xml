@@ -94,8 +94,6 @@
     <string name="daily_reward_day">%d. nap</string>
     <string name="daily_reward_collect">Gyűjts %d</string>
     <string name="daily_reward_back_tomorrow">Gyere vissza holnap</string>
-    <string name="share_text">Megtaláltam az összes párt a memolkiban! Tudsz több kártyát gyűjteni? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Napi kihívás</string>
     <string name="daily_challenge_compare">Összehasonlítás</string>
@@ -117,4 +115,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d hiba</item>
         <item quantity="other">%d hiba</item>
     </plurals>
+    <string name="share_casual">Szerinted le tudsz győzni? 🧠🔥</string>
 </resources>

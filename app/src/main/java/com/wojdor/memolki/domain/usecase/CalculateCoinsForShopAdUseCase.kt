@@ -23,7 +23,7 @@ class CalculateCoinsForShopAdUseCase @Inject constructor(
 
     private suspend fun calculateRewardedCoins(): Long {
         val unlockedBoards = getBoardsUseCase().first().getOrNull() ?: return DEFAULT_REWARDED_COINS
-        val biggestUnlockedBoard = unlockedBoards.filter { it.isUnlocked }.maxByOrNull { it.id }
+        val biggestUnlockedBoard = unlockedBoards.filter { it.isUnlocked }.maxByOrNull { it.columns * it.rows }
         return biggestUnlockedBoard?.let {
             it.columns * it.rows.toLong()
         } ?: DEFAULT_REWARDED_COINS

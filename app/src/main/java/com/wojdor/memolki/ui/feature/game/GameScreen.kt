@@ -88,7 +88,7 @@ private fun openEndGameScreen(
             )
         )
     } else {
-        endGameViewModel.sendIntent(EndGameIntent.OnCasualEndGameShow(effect.boardModel))
+        endGameViewModel.sendIntent(EndGameIntent.OnCasualEndGameShow(effect.boardModel, effect.level))
     }
     navController.navigateToEndGame()
 }

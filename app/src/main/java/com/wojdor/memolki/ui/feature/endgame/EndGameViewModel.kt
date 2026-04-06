@@ -21,6 +21,7 @@ import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDesti
 import com.wojdor.memolki.ui.feature.endgame.EndGameEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.extension.logE
+import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -54,6 +55,7 @@ class EndGameViewModel @Inject constructor(
     private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase,
     private val hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase,
     private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase,
+    private val casualShareFormatter: CasualShareFormatter,
     private val dailyChallengeShareFormatter: DailyChallengeShareFormatter
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
@@ -70,7 +72,7 @@ class EndGameViewModel @Inject constructor(
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
-            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.boardModel)
+            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.boardModel, intent.level)
             is EndGameIntent.OnDailyChallengeEndGameShow -> onDailyChallengeEndGameShow(intent)
             is EndGameIntent.OnContinueClick -> onContinueClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
@@ -104,7 +106,9 @@ class EndGameViewModel @Inject constructor(
                 logE("Failed to reward share coins", it)
             }
         }.launchIn(viewModelScope)
-        sendEffect(EndGameEffect.Share)
+        val state = uiState.value
+        val shareText = casualShareFormatter.format(state.board, state.level)
+        sendEffect(EndGameEffect.Share(shareText))
     }
 
     private fun checkShareRewardAvailable() {
@@ -153,8 +157,8 @@ class EndGameViewModel @Inject constructor(
         }
     }
 
-    private fun onCasualEndGameShow(board: BoardModel) {
-        sendState { EndGameState(showSparkles = true) }
+    private fun onCasualEndGameShow(board: BoardModel, level: Long) {
+        sendState { EndGameState(showSparkles = true, level = level) }
         loadAd()
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         checkShouldShowNotificationRequest()

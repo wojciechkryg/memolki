@@ -94,8 +94,6 @@
     <string name="daily_reward_day">Tag %d</string>
     <string name="daily_reward_collect">Sammle %d</string>
     <string name="daily_reward_back_tomorrow">Komm morgen wieder</string>
-    <string name="share_text">Ich habe alle Paare in memolki gefunden! Kannst du mehr Karten sammeln? 🃏
-https://play.google.com/store/apps/details?id=%s</string>
 
     <string name="daily_challenge">Tägliche Herausforderung</string>
     <string name="daily_challenge_compare">Vergleichen</string>
@@ -117,4 +115,5 @@ https://play.google.com/store/apps/details?id=%s</string>
         <item quantity="one">%d Fehler</item>
         <item quantity="other">%d Fehler</item>
     </plurals>
+    <string name="share_casual">Glaubst du, du kannst mich schlagen? 🧠🔥</string>
 </resources>

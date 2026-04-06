@@ -5,7 +5,7 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.base.UiIntent
 
 sealed class EndGameIntent : UiIntent {
-    data class OnCasualEndGameShow(val boardModel: BoardModel) : EndGameIntent()
+    data class OnCasualEndGameShow(val boardModel: BoardModel, val level: Long) : EndGameIntent()
     data class OnDailyChallengeEndGameShow(
         val boardModel: BoardModel,
         val dailyChallengeModel: DailyChallengeModel

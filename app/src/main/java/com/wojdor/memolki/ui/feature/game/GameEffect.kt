@@ -10,6 +10,7 @@ sealed class GameEffect : UiEffect {
         val boardModel: BoardModel,
         val mistakeCount: Int,
         val cardFlipCounts: List<List<Int>>,
+        val level: Long = BoardModel.DEFAULT_LEVEL,
         val dailyChallenge: DailyChallengeModel = DailyChallengeModel()
     ) : GameEffect()
 
