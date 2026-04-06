@@ -116,4 +116,5 @@
         <item quantity="other">%d hiba</item>
     </plurals>
     <string name="share_casual">Szerinted le tudsz győzni? 🧠🔥</string>
+    <string name="level_count">szint %d</string>
 </resources>

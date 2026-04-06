@@ -115,4 +115,5 @@
         <item quantity="other">%d ミス</item>
     </plurals>
     <string name="share_casual">私に勝てると思う？🧠🔥</string>
+    <string name="level_count">レベル %d</string>
 </resources>

@@ -20,16 +20,14 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# Mediation SDK rules - Unity
+# Mediation SDK rules
+-keep class com.google.android.gms.ads.mediation.** { *; }
+
+# Unity
 -dontwarn com.unity3d.ads.**
 -dontwarn com.unity3d.services.**
 
-# Mediation SDK rules - AppLovin
--dontwarn com.applovin.**
--keep class com.applovin.** { *; }
--keep class com.google.android.gms.ads.mediation.** { *; }
-
-# Mediation SDK rules - ironSource
+# ironSource
 -dontwarn com.ironsource.**
 -keep class com.ironsource.** { *; }
 

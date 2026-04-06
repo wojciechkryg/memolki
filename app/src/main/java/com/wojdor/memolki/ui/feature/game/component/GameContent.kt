@@ -89,10 +89,9 @@ private fun CardsGridWithText(
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     if (!state.isDailyChallenge) {
-                        Text(
+                        AutoSizeText(
                             text = stringResource(R.string.level_count, state.level),
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = colorResource(R.color.font)
+                            style = MaterialTheme.typography.headlineSmall
                         )
                     }
                     GameProgressBar(

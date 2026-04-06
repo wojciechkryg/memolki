@@ -118,4 +118,5 @@
         <item quantity="other">%d помилок</item>
     </plurals>
     <string name="share_casual">Думаєш, зможеш мене обіграти? 🧠🔥</string>
+    <string name="level_count">рівень %d</string>
 </resources>

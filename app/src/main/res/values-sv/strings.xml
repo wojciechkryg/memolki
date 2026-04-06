@@ -116,4 +116,5 @@
         <item quantity="other">%d fel</item>
     </plurals>
     <string name="share_casual">Tror du att du kan slå mig? 🧠🔥</string>
+    <string name="level_count">nivå %d</string>
 </resources>

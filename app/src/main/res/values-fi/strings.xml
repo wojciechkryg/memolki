@@ -116,4 +116,5 @@
         <item quantity="other">%d virhettä</item>
     </plurals>
     <string name="share_casual">Luuletko voittavasi minut? 🧠🔥</string>
+    <string name="level_count">taso %d</string>
 </resources>

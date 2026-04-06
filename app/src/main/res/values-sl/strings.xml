@@ -118,4 +118,5 @@
         <item quantity="other">%d napak</item>
     </plurals>
     <string name="share_casual">Misliš, da me lahko premaganš? 🧠🔥</string>
+    <string name="level_count">raven %d</string>
 </resources>

@@ -156,7 +156,6 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.messaging)
-    implementation(libs.mediation.applovin)
     implementation(libs.mediation.unity)
     implementation(libs.mediation.ironsource)
     implementation(libs.mediation.liftoff)

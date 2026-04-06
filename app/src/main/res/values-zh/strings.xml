@@ -115,4 +115,5 @@
         <item quantity="other">%d 个错误</item>
     </plurals>
     <string name="share_casual">你觉得你能赢我吗？🧠🔥</string>
+    <string name="level_count">等级 %d</string>
 </resources>

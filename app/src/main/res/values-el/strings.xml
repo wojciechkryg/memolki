@@ -116,4 +116,5 @@
         <item quantity="other">%d λάθη</item>
     </plurals>
     <string name="share_casual">Νομίζεις ότι μπορείς να με νικήσεις; 🧠🔥</string>
+    <string name="level_count">επίπεδο %d</string>
 </resources>

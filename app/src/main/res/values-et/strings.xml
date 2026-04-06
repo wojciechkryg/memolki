@@ -116,4 +116,5 @@
         <item quantity="other">%d viga</item>
     </plurals>
     <string name="share_casual">Arvad, et saad minust üle? 🧠🔥</string>
+    <string name="level_count">tase %d</string>
 </resources>

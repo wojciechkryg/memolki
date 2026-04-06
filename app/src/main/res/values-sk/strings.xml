@@ -118,4 +118,5 @@
         <item quantity="other">%d chýb</item>
     </plurals>
     <string name="share_casual">Myslíš, že ma porazíš? 🧠🔥</string>
+    <string name="level_count">úroveň %d</string>
 </resources>

@@ -117,4 +117,5 @@
         <item quantity="other">%d greșeli</item>
     </plurals>
     <string name="share_casual">Crezi că mă poți bate? 🧠🔥</string>
+    <string name="level_count">nivel %d</string>
 </resources>

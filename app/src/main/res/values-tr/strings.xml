@@ -116,4 +116,5 @@
         <item quantity="other">%d hata</item>
     </plurals>
     <string name="share_casual">Beni yenebileceğini mi düşünüyorsun? 🧠🔥</string>
+    <string name="level_count">seviye %d</string>
 </resources>

@@ -115,4 +115,5 @@
         <item quantity="other">%d lỗi</item>
     </plurals>
     <string name="share_casual">Bạn nghĩ có thể thắng tôi không? 🧠🔥</string>
+    <string name="level_count">cấp %d</string>
 </resources>

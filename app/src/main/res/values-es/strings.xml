@@ -116,4 +116,5 @@
         <item quantity="other">%d errores</item>
     </plurals>
     <string name="share_casual">¿Crees que puedes ganarme? 🧠🔥</string>
+    <string name="level_count">nivel %d</string>
 </resources>

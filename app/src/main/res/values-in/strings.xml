@@ -115,4 +115,5 @@
         <item quantity="other">%d kesalahan</item>
     </plurals>
     <string name="share_casual">Menurutmu bisa mengalahkanku? 🧠🔥</string>
+    <string name="level_count">level %d</string>
 </resources>
