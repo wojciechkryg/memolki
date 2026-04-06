@@ -75,7 +75,7 @@ fun WatchAdForCoinsItem(
                     Image(
                         modifier = Modifier.size(coinIconSize),
                         painter = painterResource(id = R.drawable.ic_coin),
-                        contentDescription = stringResource(R.string.coins),
+                        contentDescription = stringResource(R.string.coins)
                     )
                 }
             }
