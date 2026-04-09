@@ -3,23 +3,41 @@
 > A production Android memory card game built with Jetpack Compose, published on Google Play in multiple themed flavors with multi-language support.
 
 ![Build](https://github.com/wojciechkryg/memolki/actions/workflows/pull_request.yml/badge.svg)
+![Merge](https://github.com/wojciechkryg/memolki/actions/workflows/merge.yml/badge.svg)
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/wojciechkryg/50dd6c0bdbfeddc1279c185252d2f170/raw/memolki-coverage.json)
-![Kotlin](https://img.shields.io/badge/Kotlin-2.3-7F52FF?logo=kotlin&logoColor=white)
+<br>
 ![Android](https://img.shields.io/badge/API-23%2B-34A853?logo=android&logoColor=white)
-![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?logo=jetpackcompose&logoColor=white)
 
-## 📲 google play
+## 📲 Google Play
 
-[![memolki • fruits](https://img.shields.io/badge/🍌_memolki_•_fruits-34A853?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.wojdor.memolki.fruithalf)
-[![memolki • vegetables](https://img.shields.io/badge/🍅_memolki_•_vegetables-34A853?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.wojdor.memolki.vegetablehalf)
-[![memolki • mammals](https://img.shields.io/badge/🦁_memolki_•_mammals-34A853?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.wojdor.memolki.mammalside)
-[![memolki • birds](https://img.shields.io/badge/🦅_memolki_•_birds-34A853?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.wojdor.memolki.birdside)
+<table>
+  <tr>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.fruithalf"><img src="app/src/fruitHalf/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • fruits" width="64"></a></td>
+    <td valign="middle"><b>memolki • fruits</b></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.fruithalf"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
+  </tr>
+  <tr>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.vegetablehalf"><img src="app/src/vegetableHalf/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • vegetables" width="64"></a></td>
+    <td valign="middle"><b>memolki • vegetables</b></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.vegetablehalf"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
+  </tr>
+  <tr>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.mammalside"><img src="app/src/mammalSide/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • mammals" width="64"></a></td>
+    <td valign="middle"><b>memolki • mammals</b></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.mammalside"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
+  </tr>
+  <tr>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.birdside"><img src="app/src/birdSide/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • birds" width="64"></a></td>
+    <td valign="middle"><b>memolki • birds</b></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.birdside"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
+  </tr>
+</table>
 
-## 🎯 overview
+## 🎯 Overview
 
 Memolki is a card-matching memory game where players flip cards to find matching pairs. The app ships as **multiple themed flavors** — each with unique branding, card artwork, and Play Store listing — all powered by a shared game engine.
 
-## ✨ features
+## ✨ Features
 
 **Core Gameplay**
 - Multiple board sizes with casual and daily challenge modes
@@ -48,7 +66,7 @@ Memolki is a card-matching memory game where players flip cards to find matching
 - Deep link routing to specific screens (shop, daily challenge, collection)
 - Local alarm reminders (daily challenge, streak)
 
-## 🏗️ architecture
+## 🏗️ Architecture
 
 **MVI + Clean Architecture** with strict unidirectional data flow:
 
@@ -62,7 +80,7 @@ Data Layer (Repositories → DataSources)
 UI Layer (Jetpack Compose)
 ```
 
-### screen structure
+### Screen Structure
 
 Every feature screen follows a consistent **3-level composable hierarchy**:
 
@@ -72,7 +90,7 @@ Every feature screen follows a consistent **3-level composable hierarchy**:
 
 This pattern enforces separation of concerns, enables previews for every screen, and keeps navigation logic isolated.
 
-### key design decisions
+### Key Design Decisions
 
 - **Use Cases** — each encapsulates a single business operation, returns `Flow<Result<T>>`
 - **Strict layer boundaries** — domain never imports data-layer internals
@@ -81,7 +99,7 @@ This pattern enforces separation of concerns, enables previews for every screen,
 - **Encrypted DataStore** — AES encryption for sensitive persistent data (coins, streaks)
 - **Room Database** — structured storage for daily challenge history with proper migrations
 
-## 🛠️ tech stack
+## 🛠️ Tech Stack
 
 | Category | Technology |
 |----------|-----------|
@@ -101,7 +119,7 @@ This pattern enforces separation of concerns, enables previews for every screen,
 | **Testing** | JUnit 4, MockK, Turbine, Paparazzi |
 | **Coverage** | Kover with badge generation |
 
-## 🧪 testing
+## 🧪 Testing
 
 Covers the full business logic layer:
 
@@ -122,7 +140,7 @@ Covers the full business logic layer:
 ./gradlew koverXmlReportFruitHalfDebug
 ```
 
-## 🔄 ci/cd
+## 🔄 CI/CD
 
 | Workflow | Trigger | Actions |
 |----------|---------|---------|
@@ -130,13 +148,13 @@ Covers the full business logic layer:
 | **Coverage** | Merge to main | Generate unit test coverage badge, update via GitHub Gist |
 | **Merge** | Merge to main | Build release bundles for all flavors, publish to Google Play |
 
-## 🛡️ anti-cheat & security
+## 🛡️ Anti-Cheat & Security
 
 - **Encrypted game state** — all critical values (coins, levels, streaks, matched pairs) stored with AES-256-GCM authenticated encryption via a custom `Encryptor` layer on top of DataStore
 - **IAP signature verification** — purchase validation using RSA + SHA1 against the Google Play billing public key, with proactive hacked signature detection that rejects tampered billing systems
 - **R8 obfuscation** — release builds use ProGuard/R8 with resource shrinking enabled to hinder reverse engineering
 
-## 🎨 custom compose components
+## 🎨 Custom Compose Components
 
 Reusable composable library including:
 
@@ -146,7 +164,7 @@ Reusable composable library including:
 - **Click effects** — `bounceClickEffect()` with throttle protection
 - **Recording overlay** — `ClickIndicatorOverlay` showing tap points during video capture
 
-## 🎬 automation & tooling
+## 🎬 Automation & Tooling
 
 | Script | Purpose |
 |--------|---------|
@@ -156,11 +174,11 @@ Reusable composable library including:
 | `scripts/notifications/` | FCM push notification sender |
 | `scripts/image_generation/` | Card image resizing across density buckets |
 
-## 📚 documentation
+## 📚 Documentation
 
 Detailed docs live in [`docs/`](./docs/docs.md) covering logo generation, card image preparation, app icon setup, flavor onboarding, Play Store listing management, screenshot & video automation, and more.
 
-## 📄 license
+## 📄 License
 
 ```
 Copyright 2026 Wojciech Kryg. All Rights Reserved.
