@@ -6,6 +6,7 @@ import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -61,6 +62,7 @@ class DailyChallengeShareFormatterTest {
 
         // then
         assertTrue(text.contains("⭐⭐"))
+        assertFalse(text.contains("⭐⭐⭐"))
     }
 
     @Test
@@ -79,6 +81,7 @@ class DailyChallengeShareFormatterTest {
 
         // then
         assertTrue(text.contains("⭐"))
+        assertFalse(text.contains("⭐⭐"))
     }
 
     @Test

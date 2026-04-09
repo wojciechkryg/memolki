@@ -3,6 +3,7 @@ package com.wojdor.memolki.util.provider
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.LocalDate
+import java.time.ZoneId
 
 class TimeProviderTest {
 
@@ -10,12 +11,18 @@ class TimeProviderTest {
 
     @Test
     fun `toLocalDate converts timestamp to local date`() {
+        // given
+        val expected = LocalDate.of(2024, 1, 1)
+        val timestamp = expected
+            .atStartOfDay(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
+
         // when
-        val result = sut.toLocalDate(1704067200000L)
+        val result = sut.toLocalDate(timestamp)
 
         // then
-        assertEquals(2024, result.year)
-        assertEquals(1, result.monthValue)
+        assertEquals(expected, result)
     }
 
     @Test
