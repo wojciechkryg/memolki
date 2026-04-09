@@ -233,4 +233,86 @@ class UserRepositoryTest : AppTest() {
             assertEquals(3L, result2x3)
             assertEquals(2L, result4x4)
         }
+
+    @Test
+    fun `when setLevel then level is stored`() = runTest {
+        // when
+        sut.setLevel("2x3", 42L)
+
+        // then
+        val result = sut.getLevel("2x3").first()
+        assertEquals(42L, result)
+    }
+
+    @Test
+    fun `when removeCoins then coins are reduced`() = runTest {
+        // given
+        sut.addCoins(100L)
+
+        // when
+        sut.removeCoins(30L)
+
+        // then
+        val result = sut.getCoins().first()
+        assertEquals(70L, result)
+    }
+
+    @Test
+    fun `when getHasReceivedShareReward with no data then returns false`() = runTest {
+        // when
+        val result = sut.getHasReceivedShareReward().first()
+
+        // then
+        assertEquals(false, result)
+    }
+
+    @Test
+    fun `when setHasReceivedShareReward then returns true`() = runTest {
+        // given
+        sut.setHasReceivedShareReward()
+
+        // when
+        val result = sut.getHasReceivedShareReward().first()
+
+        // then
+        assertEquals(true, result)
+    }
+
+    @Test
+    fun `when getDailyStreakCount with no data then returns zero`() = runTest {
+        // when
+        val result = sut.getDailyStreakCount().first()
+
+        // then
+        assertEquals(0L, result)
+    }
+
+    @Test
+    fun `when setDailyStreakData then count and timestamp are stored`() = runTest {
+        // when
+        sut.setDailyStreakData(5L, 1000L)
+
+        // then
+        assertEquals(5L, sut.getDailyStreakCount().first())
+        assertEquals(1000L, sut.getLastDailyStreakCollectedTimestamp().first())
+    }
+
+    @Test
+    fun `when getLastShopAdShownTimestamp with no data then returns zero`() = runTest {
+        // when
+        val result = sut.getLastShopAdShownTimestamp().first()
+
+        // then
+        assertEquals(0L, result)
+    }
+
+    @Test
+    fun `when setLastShopAdShownTimestamp then timestamp is stored`() = runTest {
+        // when
+        sut.setLastShopAdShownTimestamp(5000L)
+
+        // then
+        val result = sut.getLastShopAdShownTimestamp().first()
+        assertEquals(5000L, result)
+    }
 }

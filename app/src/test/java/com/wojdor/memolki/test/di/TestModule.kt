@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.google.android.play.core.review.ReviewManager
 import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.data.crypto.Encryptor
+import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
@@ -21,6 +22,7 @@ import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
+import io.mockk.every
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
@@ -132,7 +134,13 @@ abstract class TestModule {
 
         @Provides
         @Singleton
-        fun provideAllRewardedAds(): AllRewardedAds = relaxedMockk()
+        fun provideAllRewardedAds(): AllRewardedAds = relaxedMockk<AllRewardedAds>().also { ads ->
+            listOf(ads.endGameCoinsAd, ads.collectionCardPairAd, ads.shopCoinsAd).forEach { ad ->
+                every { ad.loadAndNotify(any(), any()) } answers {
+                    secondArg<(Boolean) -> Unit>().invoke(false)
+                }
+            }
+        }
 
         @Provides
         @Singleton
@@ -157,5 +165,9 @@ abstract class TestModule {
         @Provides
         @Singleton
         fun provideDailyChallengeDao(): DailyChallengeDao = relaxedMockk()
+
+        @Provides
+        @Singleton
+        fun provideLocalEncryptorKeyStore(): LocalEncryptorKeyStore = relaxedMockk()
     }
 }

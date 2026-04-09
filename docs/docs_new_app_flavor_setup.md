@@ -106,6 +106,21 @@
     - go to `Version` section and check the `Creation of production builds`
     - click `Publish`
 
+1. Generate Play Store listing assets:
+    - add translations for the new flavor's screenshot texts in `compose_screenshots.py` → `get_texts()`
+    - add translations for the new flavor's feature graphic chips in `generate_feature_graphic.py` → `get_chips()`
+    - add the flavor's background color to `FLAVOR_COLORS` in both scripts
+    - generate screenshots: `./scripts/screenshot/generate_all_screenshots.sh {flavor_name}`
+    - generate feature graphics: `./scripts/screenshot/generate_feature_graphics.sh {flavor_name}`
+    - see [docs_screenshot.md](docs_screenshot.md) for details
+
+1. Push listings to Play Console:
+    - push all listing assets (titles, descriptions, screenshots, feature graphics):
+      ```bash
+      ./scripts/listing/update_listings.sh {flavorCamelCase}
+      ```
+    - see [docs_listing.md](docs_listing.md) for details
+
 1. Push build:
     - change the `minor` version to the `minor + 1` and `patch` to `0`
     - create a new branch

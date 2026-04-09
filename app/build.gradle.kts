@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics.plugin)
     alias(libs.plugins.paparazzi)
     alias(libs.plugins.play.publisher)
+    alias(libs.plugins.kover)
 }
 
 val secretsPropertiesFile = rootProject.file("secrets.properties")
@@ -142,12 +143,69 @@ android {
     }
 }
 
+tasks.withType<Test>().configureEach {
+    val include = project.findProperty("coverageTestFilter") as String?
+    val exclude = project.findProperty("coverageTestExclude") as String?
+    if (include != null) filter { includeTestsMatching(include) }
+    if (exclude != null) filter { excludeTestsMatching(exclude) }
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                androidGeneratedClasses()
+                classes(
+                    "*.BuildConfig",
+                    "*_Factory",
+                    "*_Factory\$*",
+                    "*_HiltModules*",
+                    "*_Impl",
+                    "*_MembersInjector",
+                    "dagger.hilt.*",
+                    "hilt_aggregated_deps.*",
+                )
+                annotatedBy(
+                    "androidx.compose.ui.tooling.preview.Preview",
+                    "androidx.compose.runtime.Composable",
+                )
+                packages(
+                    "com.wojdor.memolki.di",
+                    "com.wojdor.memolki.ui.component",
+                    "com.wojdor.memolki.ui.theme",
+                    "com.wojdor.memolki.ui.shape",
+                    "com.wojdor.memolki.ui.ads",
+                    "com.wojdor.memolki.ui.app",
+                    "com.wojdor.memolki.util.notification",
+                    "com.wojdor.memolki.util.media",
+                    "com.wojdor.memolki.util.billing",
+                    "com.wojdor.memolki.util.update",
+                    "com.wojdor.memolki.util.playgames",
+                    "com.wojdor.memolki.data.crypto",
+                    "com.wojdor.memolki.data.local.database",
+                    "com.wojdor.memolki.util.provider",
+                )
+                classes(
+                    "com.wojdor.memolki.ui.feature.*.component.*",
+                    "*ScreenKt*",
+                    "*Callbacks",
+                    "ComposableSingletons*",
+                    "*Dao_Impl",
+                    "*_Impl",
+                    "*Database_Impl",
+                )
+            }
+        }
+    }
+}
+
 dependencies {
     coreLibraryDesugaring(libs.android.desugar)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)

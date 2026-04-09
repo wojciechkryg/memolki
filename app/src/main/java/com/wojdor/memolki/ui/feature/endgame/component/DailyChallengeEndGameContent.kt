@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.SparklesOverlay
@@ -69,18 +70,16 @@ fun DailyChallengeEndGameContent(
     val starCount = state.dailyChallenge.starCount
     var showSparkles by remember { mutableStateOf(false) }
     LaunchedEffect(state.showSparkles) {
-        if (state.showSparkles && starCount > 0) {
-            val lastStarDelay = STAR_INITIAL_DELAY +
-                    STAR_DELAY * (starCount - 1) +
-                    STAR_SPRING_DURATION
-            delay(lastStarDelay)
-            showSparkles = true
-        }
-    }
-    LaunchedEffect(state.showSparkles) {
         if (state.showSparkles) {
             delay(LEVEL_COMPLETE_DELAY)
             callbacks.onLevelComplete()
+            if (starCount > 0) {
+                val lastStarDelay = STAR_INITIAL_DELAY +
+                        STAR_DELAY * (starCount - 1) +
+                        STAR_SPRING_DURATION
+                delay(lastStarDelay - LEVEL_COMPLETE_DELAY)
+                showSparkles = true
+            }
         }
     }
     LaunchedEffect(state.rewardedCoins) {
@@ -177,6 +176,7 @@ private fun DailyChallengeContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 state.menu.forEach { menuItem ->
+                    if (RECORDING_MODE && menuItem is EndGameMenuModel.WatchAd) return@forEach
                     when (menuItem) {
                         EndGameMenuModel.WatchAd -> WatchAdForCoinsItem(rewardedCoins = state.rewardedCoins, onClick = callbacks.onWatchAdClick)
                         EndGameMenuModel.Compare -> CompareButton(onClick = callbacks.onDailyChallengeShareClick)

@@ -140,8 +140,7 @@ open class NotificationScheduler @Inject constructor(
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
-        val windowEnd = calendar.timeInMillis + DAILY_CHALLENGE_WINDOW_MS
-        if (System.currentTimeMillis() > windowEnd) {
+        if (System.currentTimeMillis() >= calendar.timeInMillis) {
             calendar.add(Calendar.DAY_OF_YEAR, 1)
         }
         return calendar.timeInMillis

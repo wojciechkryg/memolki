@@ -8,6 +8,9 @@ import com.google.firebase.messaging.RemoteMessage
 import com.wojdor.memolki.ui.app.AppActivity
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
 import dagger.hilt.android.EntryPointAccessors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PushNotificationService : FirebaseMessagingService() {
 
@@ -17,17 +20,21 @@ class PushNotificationService : FirebaseMessagingService() {
         val body = remoteMessage.notification?.body ?: data["body"]
         val screen = data[DeepLinkBuilder.EXTRA_SCREEN]
         val board = data[DeepLinkBuilder.EXTRA_BOARD]
-        val notificationCreator = EntryPointAccessors.fromApplication(
+        val entryPoint = EntryPointAccessors.fromApplication(
             applicationContext,
             PushNotificationServiceEntryPoint::class.java
-        ).notificationCreator()
-        notificationCreator.createNotificationChannel()
-        notificationCreator.showNotification(
+        )
+        entryPoint.notificationCreator().createNotificationChannel()
+        entryPoint.notificationCreator().showNotification(
             notificationId = PUSH_NOTIFICATION_ID,
             title = title,
             body = body,
             contentIntent = createPendingIntent(screen, board)
         )
+        CoroutineScope(Dispatchers.IO).launch {
+            entryPoint.notificationRepository()
+                .setLastShownTimestamp(System.currentTimeMillis())
+        }
     }
 
     override fun onNewToken(token: String) = Unit

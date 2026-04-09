@@ -97,7 +97,6 @@ fun CasualEndGameContent(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         it.filterNot { item ->
-                            @Suppress("KotlinConstantConditions")
                             RECORDING_MODE && item is EndGameMenuModel.WatchAd
                                     || RECORDING_MODE && item is EndGameMenuModel.Share
                         }.forEach { menuItem ->

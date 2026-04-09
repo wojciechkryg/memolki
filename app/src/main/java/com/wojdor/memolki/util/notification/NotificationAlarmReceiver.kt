@@ -21,6 +21,7 @@ import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -33,15 +34,39 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         )
         val localizedContext = createLocalizedContext(context, entryPoint)
         val type = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE) ?: return
-        when (type) {
-            TYPE_REMINDER -> handleReminderNotification(context, localizedContext, entryPoint)
-            TYPE_AD_REWARD -> handleAdRewardNotification(context, localizedContext, entryPoint)
-            TYPE_STREAK -> handleStreakNotification(context, localizedContext, entryPoint)
-            TYPE_DAILY_CHALLENGE -> handleDailyChallengeNotification(
-                context,
-                localizedContext,
-                entryPoint
-            )
+        val pendingResult = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                when (type) {
+                    TYPE_REMINDER -> handleReminderNotification(
+                        context,
+                        localizedContext,
+                        entryPoint
+                    )
+
+                    TYPE_AD_REWARD -> handleAdRewardNotification(
+                        context,
+                        localizedContext,
+                        entryPoint
+                    )
+
+                    TYPE_STREAK -> handleStreakNotification(
+                        context,
+                        localizedContext,
+                        entryPoint
+                    )
+
+                    TYPE_DAILY_CHALLENGE -> handleDailyChallengeNotification(
+                        context,
+                        localizedContext,
+                        entryPoint
+                    )
+                }
+            } catch (e: Exception) {
+                logE("Failed to handle notification", e)
+            } finally {
+                pendingResult.finish()
+            }
         }
     }
 
@@ -57,7 +82,7 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         return context.createConfigurationContext(config)
     }
 
-    private fun handleReminderNotification(
+    private suspend fun handleReminderNotification(
         context: Context,
         localizedContext: Context,
         entryPoint: NotificationAlarmReceiverEntryPoint
@@ -72,7 +97,7 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         showNotification(entryPoint, REMINDER_NOTIFICATION_ID, title, body, contentIntent)
     }
 
-    private fun handleAdRewardNotification(
+    private suspend fun handleAdRewardNotification(
         context: Context,
         localizedContext: Context,
         entryPoint: NotificationAlarmReceiverEntryPoint
@@ -88,11 +113,13 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         showNotification(entryPoint, AD_REWARD_NOTIFICATION_ID, title, body, contentIntent)
     }
 
-    private fun handleStreakNotification(
+    private suspend fun handleStreakNotification(
         context: Context,
         localizedContext: Context,
         entryPoint: NotificationAlarmReceiverEntryPoint
     ) {
+        val streakCount = entryPoint.userRepository().getDailyStreakCount().first()
+        if (streakCount <= 0) return
         val random = entryPoint.random()
         val titles =
             localizedContext.resources.getStringArray(R.array.notification_daily_streak_titles)
@@ -104,48 +131,47 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         showNotification(entryPoint, STREAK_NOTIFICATION_ID, title, body, contentIntent)
     }
 
-    private fun handleDailyChallengeNotification(
+    private suspend fun handleDailyChallengeNotification(
         context: Context,
         localizedContext: Context,
         entryPoint: NotificationAlarmReceiverEntryPoint
     ) {
         entryPoint.notificationScheduler().scheduleDailyChallengeNotification()
-        val pendingResult = goAsync()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val epochDay = entryPoint.timeProvider().currentLocalDate().toEpochDay()
-                val hasPlayed = entryPoint.dailyChallengeRepository().hasPlayed(epochDay)
-                if (hasPlayed) return@launch
-                val random = entryPoint.random()
-                val titles =
-                    localizedContext.resources.getStringArray(R.array.notification_daily_challenge_titles)
-                val bodies =
-                    localizedContext.resources.getStringArray(R.array.notification_daily_challenge_bodies)
-                val title = titles[random.nextInt(titles.size)]
-                val body = bodies[random.nextInt(bodies.size)]
-                val contentIntent = createDailyChallengeDeepLinkIntent(context)
-                showNotification(
-                    entryPoint,
-                    DAILY_CHALLENGE_NOTIFICATION_ID,
-                    title,
-                    body,
-                    contentIntent
-                )
-            } catch (e: Exception) {
-                logE("Failed to handle daily challenge notification", e)
-            } finally {
-                pendingResult.finish()
-            }
-        }
+        val epochDay = entryPoint.timeProvider().currentLocalDate().toEpochDay()
+        val hasPlayed = entryPoint.dailyChallengeRepository().hasPlayed(epochDay)
+        if (hasPlayed) return
+        val random = entryPoint.random()
+        val titles =
+            localizedContext.resources.getStringArray(R.array.notification_daily_challenge_titles)
+        val bodies =
+            localizedContext.resources.getStringArray(R.array.notification_daily_challenge_bodies)
+        val title = titles[random.nextInt(titles.size)]
+        val body = bodies[random.nextInt(bodies.size)]
+        val contentIntent = createDailyChallengeDeepLinkIntent(context)
+        showNotification(
+            entryPoint,
+            DAILY_CHALLENGE_NOTIFICATION_ID,
+            title,
+            body,
+            contentIntent,
+            skipGapCheck = true
+        )
     }
 
-    private fun showNotification(
+    private suspend fun showNotification(
         entryPoint: NotificationAlarmReceiverEntryPoint,
         notificationId: Int,
         title: String,
         body: String,
-        contentIntent: PendingIntent
+        contentIntent: PendingIntent,
+        skipGapCheck: Boolean = false
     ) {
+        if (entryPoint.appForegroundProvider().isAppInForeground()) return
+        val repository = entryPoint.notificationRepository()
+        val now = System.currentTimeMillis()
+        val lastShown = repository.getLastShownTimestamp()
+        if (!skipGapCheck && now - lastShown < MIN_NOTIFICATION_GAP_MS) return
+        repository.setLastShownTimestamp(now)
         entryPoint.notificationCreator()
             .showNotification(notificationId, title, body, contentIntent)
     }
@@ -200,5 +226,9 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+    }
+
+    companion object {
+        private const val MIN_NOTIFICATION_GAP_MS = 60 * 60 * 1000L
     }
 }

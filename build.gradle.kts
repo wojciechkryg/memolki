@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.firebase.crashlytics.plugin) apply false
     alias(libs.plugins.paparazzi) apply false
     alias(libs.plugins.play.publisher) apply false
+    alias(libs.plugins.kover) apply false
 }

@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.menu
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
@@ -16,6 +17,7 @@ import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenMoreAppsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnDailyRewardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnPlayClick
@@ -26,6 +28,8 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -65,6 +69,9 @@ class MenuViewModelTest : AppTest() {
 
     @Inject
     lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+
+    @Inject
+    lateinit var userRepository: UserRepository
 
     private lateinit var sut: MenuViewModel
 
@@ -185,5 +192,109 @@ class MenuViewModelTest : AppTest() {
 
         // then
         verify { analytics.logMoreAppsClicked() }
+    }
+
+    @Test
+    fun `when OnDailyRewardClick intent is sent then the OpenShopScreen effect is sent`() =
+        runTest {
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(OnDailyRewardClick)
+
+                // then
+                assertEquals(MenuEffect.OpenShopScreen, awaitItem())
+            }
+        }
+
+    @Test
+    fun `when daily reward is clicked then logShopOpenedFromDailyReward is called`() = runTest {
+        // when
+        sut.sendIntent(OnDailyRewardClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { analytics.logShopOpenedFromDailyReward() }
+    }
+
+    @Test
+    fun `when OnPlayClick then haptic feedback is triggered`() = runTest {
+        // when
+        sut.sendIntent(OnPlayClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { hapticFeedback.vibrateLow() }
+    }
+
+    @Test
+    fun `when OnCollectionClick then haptic feedback is triggered`() = runTest {
+        // when
+        sut.sendIntent(OnCollectionClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { hapticFeedback.vibrateLow() }
+    }
+
+    @Test
+    fun `when OnSettingsClick then haptic feedback is triggered`() = runTest {
+        // when
+        sut.sendIntent(OnSettingsClick)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify { hapticFeedback.vibrateLow() }
+    }
+
+    @Test
+    fun `when leaderboard is clicked then leaderboard scores are sent`() = runTest {
+        sut.uiEffect.test {
+            // when
+            sut.sendIntent(OnLeaderboardClick)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            skipItems(1)
+            assertTrue(awaitItem() is MenuEffect.SendTotalCoinsScore)
+            assertTrue(awaitItem() is MenuEffect.SendTotalCardPairsMatchedScore)
+        }
+    }
+
+    @Test
+    fun `when OnScreenResume then daily reward state is refreshed`() = runTest {
+        // given
+        testScheduler.advanceUntilIdle()
+
+        // when
+        sut.sendIntent(MenuIntent.OnScreenResume)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        val state = sut.uiState.value
+        assertTrue(state.menu.isNotEmpty())
+    }
+
+    @Test
+    fun `when enough games played then other app model is shown`() = runTest {
+        // given
+        repeat(3) { userRepository.incrementTotalGamesPlayed() }
+        testScheduler.advanceUntilIdle()
+
+        sut = MenuViewModel(
+            savedStateHandle,
+            analytics,
+            hapticFeedback,
+            googlePlayGames,
+            getMenuUseCase,
+            getMoreAppsUseCase,
+            getTotalCoinsUseCase,
+            getTotalCardPairsMatchedUseCase,
+            getTotalGamesPlayedUseCase,
+            checkDailyLoginStreakUseCase
+        )
+        testScheduler.advanceUntilIdle()
+
+        // then
+        assertNotNull(sut.uiState.value.otherAppModel)
     }
 }

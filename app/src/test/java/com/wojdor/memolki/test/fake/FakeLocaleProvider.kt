@@ -7,12 +7,14 @@ import javax.inject.Inject
 class FakeLocaleProvider @Inject constructor() : LocaleProvider(mockk()) {
 
     private var languageTag = DEFAULT_LANGUAGE_TAG
+    var shouldThrowOnSet = false
 
     override fun getLanguageTag(): String {
         return languageTag
     }
 
     override fun setLanguageTag(tag: String) {
+        if (shouldThrowOnSet) throw RuntimeException("Locale change failed")
         languageTag = tag
     }
 

@@ -26,7 +26,8 @@ class DailyChallengeShareFormatter @Inject constructor(
             result.mistakeCount,
             result.mistakeCount
         )
-        val timeText = timeFormatter.format(result.timeMillis)
+        val time = timeFormatter.format(result.timeMillis)
+        val timeText = "${time.main}\u200B${time.millis}"
         val gridText = buildGrid(grid)
         val storeLink = "https://play.google.com/store/apps/details?id=${context.packageName}"
         return buildString {

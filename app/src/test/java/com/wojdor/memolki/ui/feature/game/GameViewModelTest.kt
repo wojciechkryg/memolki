@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CardModel
+import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetLevelUseCase
@@ -33,6 +34,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -68,16 +70,16 @@ class GameViewModelTest : AppTest() {
     @Inject
     lateinit var getBiggestUnlockedBoardUseCase: GetBiggestUnlockedBoardUseCase
 
-    @Inject
+    @RelaxedMockK
     lateinit var getDailyChallengeCardsUseCase: GetDailyChallengeCardsUseCase
 
-    @Inject
+    @RelaxedMockK
     lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
 
-    @Inject
+    @RelaxedMockK
     lateinit var saveDailyChallengeUseCase: SaveDailyChallengeUseCase
 
-    @Inject
+    @RelaxedMockK
     lateinit var getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase
 
     @Inject
@@ -391,16 +393,17 @@ class GameViewModelTest : AppTest() {
                 // then
                 val result = awaitItem()
                 assertTrue(result.cards.all { it.isFlippedFront && it.isPairMatched })
+                sut.sendIntent(GameIntent.OnMatchAnimationComplete)
                 sut.uiEffect.test {
                     skipItems(1)
                     assertTrue(awaitItem() is GameEffect.SendTotalCardPairsMatchedScore)
-                    skipItems(1)
+                    skipItems(2)
                     val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
                     assertEquals(BoardModel.Grid2x3(isUnlocked = true), endGameEffect.boardModel)
                     assertEquals(0, endGameEffect.mistakeCount)
                     assertEquals(3, endGameEffect.cardFlipCounts.size)
                 }
-                skipItems(2)
+                skipItems(3)
             }
             userRepository.getTotalCardPairsMatched().test {
                 assertEquals(3, awaitItem())
@@ -478,6 +481,523 @@ class GameViewModelTest : AppTest() {
 
         // then
         verify(exactly = 0) { analytics.logBoardAbandoned(any()) }
+    }
+
+    @Test
+    fun `when match animation completes twice then OpenEndGameScreen effect is sent only once`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                sut.sendIntent(GameIntent.OnBoardStart("2x3"))
+                skipItems(1)
+
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
+                skipItems(5)
+                awaitItem()
+
+                // when
+                sut.sendIntent(GameIntent.OnMatchAnimationComplete)
+                sut.sendIntent(GameIntent.OnMatchAnimationComplete)
+
+                // then
+                sut.uiEffect.test {
+                    skipItems(1)
+                    assertTrue(awaitItem() is GameEffect.SendTotalCardPairsMatchedScore)
+                    skipItems(2)
+                    val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
+                    assertEquals(BoardModel.Grid2x3(isUnlocked = true), endGameEffect.boardModel)
+                    expectNoEvents()
+                }
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `when OnBoardStart with isDailyChallenge true then state is updated with daily challenge board`() =
+        runTest {
+            // given
+            val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(false)
+            )
+            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
+                Result.success(Unit)
+            )
+            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
+                Result.success(dailyChallengeCards)
+            )
+
+            sut.uiState.test {
+                // when
+                sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+
+                // then
+                assertEquals(BoardModel.Empty, awaitItem().board)
+                val state = awaitItem()
+                assertEquals(BoardModel.DAILY_CHALLENGE, state.board)
+                assertTrue(state.isDailyChallenge)
+                assertEquals(dailyChallengeCards.size, state.cards.size)
+            }
+        }
+
+    @Test
+    fun `when OnBoardStart with isDailyChallenge true then logDailyChallengeStart is called`() =
+        runTest {
+            // given
+            val epochDay = LocalDate.of(2026, 3, 26).toEpochDay()
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(false)
+            )
+            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
+                Result.success(Unit)
+            )
+            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
+                Result.success(mockShuffledCardsWithSamePairIds())
+            )
+
+            // when
+            sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+            testScheduler.advanceUntilIdle()
+
+            // then
+            verify { analytics.logDailyChallengeStart(epochDay) }
+        }
+
+    @Test
+    fun `when OnFrontCardPress with isPressed true on matched Image card then card details are shown`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
+                    Result.success(mockShuffledCardsWithSameIds())
+                )
+                sut.sendIntent(GameIntent.OnBoardStart("2x3"))
+                skipItems(1)
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                skipItems(2)
+                val stateAfterMatch = awaitItem()
+                val matchedImageCard = stateAfterMatch.cards[0]
+                assertTrue(matchedImageCard.isPairMatched)
+                assertTrue(matchedImageCard is CardModel.Image)
+
+                // when
+                sut.sendIntent(GameIntent.OnFrontCardPress(isPressed = true, matchedImageCard))
+                skipItems(1)
+
+                // then
+                val result = awaitItem()
+                assertTrue(result.shouldShowCardDetails)
+                assertEquals(matchedImageCard, result.lastCardPressed)
+            }
+        }
+
+    @Test
+    fun `when OnFrontCardPress with isPressed true on matched Image card then haptic is triggered`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
+                    Result.success(mockShuffledCardsWithSameIds())
+                )
+                sut.sendIntent(GameIntent.OnBoardStart("2x3"))
+                skipItems(1)
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                skipItems(2)
+                val matchedImageCard = awaitItem().cards[0]
+
+                // when
+                sut.sendIntent(GameIntent.OnFrontCardPress(isPressed = true, matchedImageCard))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            // then
+            verify { hapticFeedback.vibrateLow() }
+        }
+
+    @Test
+    fun `when OnFrontCardPress with isPressed false then card details are hidden`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
+                    Result.success(mockShuffledCardsWithSameIds())
+                )
+                sut.sendIntent(GameIntent.OnBoardStart("2x3"))
+                skipItems(1)
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                skipItems(2)
+                val matchedCard = awaitItem().cards[0]
+                sut.sendIntent(GameIntent.OnFrontCardPress(isPressed = true, matchedCard))
+                skipItems(1)
+                val stateWithDetails = awaitItem()
+                assertTrue(stateWithDetails.shouldShowCardDetails)
+
+                // when
+                sut.sendIntent(GameIntent.OnFrontCardPress(isPressed = false, matchedCard))
+
+                // then
+                val result = awaitItem()
+                assertFalse(result.shouldShowCardDetails)
+            }
+        }
+
+    @Test
+    fun `when OnMatchAnimationComplete with no cards animating then state is unchanged`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                sut.sendIntent(GameIntent.OnBoardStart("2x3"))
+                skipItems(1)
+                awaitItem()
+
+                // when
+                sut.sendIntent(GameIntent.OnMatchAnimationComplete)
+                testScheduler.advanceUntilIdle()
+
+                // then
+                expectNoEvents()
+            }
+        }
+
+    @Test
+    fun `when game is left during daily challenge then logDailyChallengeAbandoned is called`() =
+        runTest {
+            // given
+            val epochDay = LocalDate.of(2026, 3, 26).toEpochDay()
+            val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(false)
+            )
+            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
+                Result.success(Unit)
+            )
+            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
+                Result.success(dailyChallengeCards)
+            )
+
+            sut.uiState.test {
+                sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+                skipItems(1)
+                awaitItem()
+
+                // when
+                sut.sendIntent(GameIntent.OnGameLeave)
+                testScheduler.advanceUntilIdle()
+
+                // then
+                verify { analytics.logDailyChallengeAbandoned(epochDay) }
+                verify(exactly = 0) { analytics.logBoardAbandoned(any()) }
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `when daily challenge completed with 0 mistakes then 3 stars are awarded`() =
+        runTest {
+            // given
+            val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(false)
+            )
+            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
+                Result.success(Unit)
+            )
+            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
+                Result.success(dailyChallengeCards)
+            )
+
+            sut.uiState.test {
+                sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+                skipItems(1)
+
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            assertEquals(0, sut.uiState.value.mistakeCount)
+            assertTrue(sut.uiState.value.isGameFinished)
+
+            // when
+            sut.sendIntent(GameIntent.OnMatchAnimationComplete)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            sut.uiEffect.test {
+                skipItems(3)
+                assertTrue(awaitItem() is GameEffect.OnPairMatched)
+                val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
+                assertEquals(BoardModel.DAILY_CHALLENGE, endGameEffect.boardModel)
+                assertEquals(0, endGameEffect.mistakeCount)
+                assertEquals(GameViewModel.MAX_STARS, endGameEffect.dailyChallenge.starCount)
+            }
+        }
+
+    @Test
+    fun `when daily challenge completed with 1 mistake then 2 stars are awarded`() =
+        runTest {
+            // given
+            val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(false)
+            )
+            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
+                Result.success(Unit)
+            )
+            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
+                Result.success(dailyChallengeCards)
+            )
+
+            sut.uiState.test {
+                sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+                skipItems(1)
+                val cards = awaitItem().cards
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[2]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            sut.uiState.test {
+                awaitItem()
+                sut.sendIntent(GameIntent.OnBackCardClick(dailyChallengeCards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            sut.uiState.test {
+                awaitItem()
+                sut.sendIntent(GameIntent.OnBackCardClick(dailyChallengeCards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            val mistakeCount = sut.uiState.value.mistakeCount
+            assertTrue("Expected 1-4 mistakes, got $mistakeCount", mistakeCount in 1..4)
+            assertTrue(sut.uiState.value.isGameFinished)
+
+            // when
+            sut.sendIntent(GameIntent.OnMatchAnimationComplete)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            sut.uiEffect.test {
+                skipItems(3)
+                assertTrue(awaitItem() is GameEffect.OnPairMatched)
+                val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
+                assertEquals(GameViewModel.TWO_STARS, endGameEffect.dailyChallenge.starCount)
+            }
+        }
+
+    @Test
+    fun `when daily challenge completed with 5 or more mistakes then 1 star is awarded`() =
+        runTest {
+            // given
+            val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(false)
+            )
+            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
+                Result.success(Unit)
+            )
+            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
+                Result.success(dailyChallengeCards)
+            )
+
+            sut.uiState.test {
+                sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+                skipItems(1)
+                val cards = awaitItem().cards
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[2]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            repeat(4) {
+                sut.uiState.test {
+                    awaitItem()
+                    sut.sendIntent(GameIntent.OnBackCardClick(dailyChallengeCards[0]))
+                    sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                    cancelAndIgnoreRemainingEvents()
+                }
+                testScheduler.advanceUntilIdle()
+            }
+
+            sut.uiState.test {
+                awaitItem()
+                sut.sendIntent(GameIntent.OnBackCardClick(dailyChallengeCards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[3]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[4]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[5]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            assertTrue(
+                "Expected 5+ mistakes, got ${sut.uiState.value.mistakeCount}",
+                sut.uiState.value.mistakeCount >= 5
+            )
+            assertTrue(sut.uiState.value.isGameFinished)
+
+            // when
+            sut.sendIntent(GameIntent.OnMatchAnimationComplete)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            sut.uiEffect.test {
+                skipItems(3)
+                assertTrue(awaitItem() is GameEffect.OnPairMatched)
+                val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
+                assertEquals(GameViewModel.MIN_STARS, endGameEffect.dailyChallenge.starCount)
+            }
+        }
+
+    @Test
+    fun `when same card is flipped twice then mistake count increases`() =
+        runTest {
+            // given
+            sut.uiState.test {
+                sut.sendIntent(GameIntent.OnBoardStart("2x3"))
+                skipItems(1)
+                val cards = awaitItem().cards
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[2]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            val originalCards = mockShuffledCardsWithSamePairIds()
+
+            // when
+            sut.uiState.test {
+                awaitItem()
+                sut.sendIntent(GameIntent.OnBackCardClick(originalCards[0]))
+                sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[2]))
+                cancelAndIgnoreRemainingEvents()
+            }
+            testScheduler.advanceUntilIdle()
+
+            // then
+            assertTrue(
+                "Expected mistake count > 0, got ${sut.uiState.value.mistakeCount}",
+                sut.uiState.value.mistakeCount > 0
+            )
+        }
+
+    @Test
+    fun `when daily challenge already played then OpenEndGameScreen is sent with today challenge data`() =
+        runTest {
+            // given
+            val todayChallenge = DailyChallengeModel(
+                mistakeCount = 3,
+                starCount = 2,
+                timeMillis = 12000L,
+                epochDay = 0L,
+                cardFlipCounts = listOf(listOf(1, 2), listOf(3, 1))
+            )
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(true)
+            )
+            every { getTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(todayChallenge)
+            )
+
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+                testScheduler.advanceUntilIdle()
+
+                // then
+                val effect = awaitItem() as GameEffect.OpenEndGameScreen
+                assertEquals(BoardModel.DAILY_CHALLENGE, effect.boardModel)
+                assertEquals(3, effect.mistakeCount)
+                assertEquals(todayChallenge.cardFlipCounts, effect.cardFlipCounts)
+            }
+        }
+
+    @Test
+    fun `when daily challenge already played then logDailyChallengeAlreadyPlayed is called`() =
+        runTest {
+            // given
+            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(true)
+            )
+            every { getTodayDailyChallengeUseCase.invoke() } returns flowOf(
+                Result.success(
+                    DailyChallengeModel(
+                        mistakeCount = 0,
+                        starCount = 3,
+                        timeMillis = 5000L,
+                        epochDay = 0L,
+                        cardFlipCounts = listOf(listOf(1))
+                    )
+                )
+            )
+
+            // when
+            sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+            testScheduler.advanceUntilIdle()
+
+            // then
+            verify { analytics.logDailyChallengeAlreadyPlayed(any()) }
+        }
+
+    @Test
+    fun `when daily challenge start with cards already loaded then does nothing`() = runTest {
+        // given
+        val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
+        every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
+            Result.success(false)
+        )
+        every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
+            Result.success(Unit)
+        )
+        every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
+            Result.success(dailyChallengeCards)
+        )
+
+        sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+        testScheduler.advanceUntilIdle()
+        assertTrue(sut.uiState.value.cards.isNotEmpty())
+
+        // when
+        sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verify(exactly = 1) { hasPlayedTodayDailyChallengeUseCase.invoke() }
+    }
+
+    @Test
+    fun `when play match sound then card pair matched player is played`() = runTest {
+        // when
+        sut.playMatchSound()
+
+        // then
+        verify { cardPairMatchedPlayer.play() }
     }
 
     private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {

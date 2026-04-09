@@ -1,5 +1,6 @@
 # 📚 documentation
 
+- [🔧 setup](./docs_setup.md)
 - [🃏 logo](./docs_logo.md)
 - [🖼 images](./docs_images.md)
 - [💠 icons](./docs_icons.md)

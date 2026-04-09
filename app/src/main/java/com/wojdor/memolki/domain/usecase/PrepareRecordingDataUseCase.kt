@@ -17,7 +17,6 @@ class PrepareRecordingDataUseCase @Inject constructor(
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
 
     override fun execute(): Flow<Result<Unit>> = flow {
-        @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE) {
             emit(Result.success(Unit))
             return@flow
