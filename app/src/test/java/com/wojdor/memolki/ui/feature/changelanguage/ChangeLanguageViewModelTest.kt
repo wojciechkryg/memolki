@@ -5,6 +5,7 @@ import app.cash.turbine.test
 import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -135,6 +136,64 @@ class ChangeLanguageViewModelTest : AppTest() {
 
             // then
             expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `when language change is ready then locale is updated and analytics is logged`() = runTest {
+        // given
+        sut.uiState.test {
+            skipItems(1)
+            awaitItem()
+
+            val polishLanguage = sut.uiState.value.languages.first { it.tag == "pl" }
+            sut.sendIntent(ChangeLanguageIntent.OnLanguageClick(polishLanguage))
+            awaitItem()
+
+            // when
+            sut.sendIntent(ChangeLanguageIntent.OnLanguageChangeReady)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            assertEquals("pl", localeProvider.getLanguageTag())
+            verifyOnce { analytics.logLanguageChanged("en", "pl") }
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `when language change ready without pending language then nothing happens`() = runTest {
+        // given
+        testScheduler.advanceUntilIdle()
+        val tagBefore = localeProvider.getLanguageTag()
+
+        // when
+        sut.sendIntent(ChangeLanguageIntent.OnLanguageChangeReady)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        assertEquals(tagBefore, localeProvider.getLanguageTag())
+    }
+
+    @Test
+    fun `when language change fails then isLanguageChangeInProgress is reset`() = runTest {
+        // given
+        (localeProvider as FakeLocaleProvider).shouldThrowOnSet = true
+        sut.uiState.test {
+            skipItems(1)
+            awaitItem()
+
+            val polishLanguage = sut.uiState.value.languages.first { it.tag == "pl" }
+            sut.sendIntent(ChangeLanguageIntent.OnLanguageClick(polishLanguage))
+            awaitItem()
+            assertTrue(sut.uiState.value.isLanguageChangeInProgress)
+
+            // when
+            sut.sendIntent(ChangeLanguageIntent.OnLanguageChangeReady)
+
+            // then
+            val state = awaitItem()
+            assertFalse(state.isLanguageChangeInProgress)
         }
     }
 }

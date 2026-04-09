@@ -19,7 +19,6 @@ import kotlin.random.Random
 class AppModule {
 
     @Provides
-    @Suppress("KotlinConstantConditions")
     fun provideRandom(): Random = if (RECORDING_MODE) Random(0) else Random.Default
 
     @Provides

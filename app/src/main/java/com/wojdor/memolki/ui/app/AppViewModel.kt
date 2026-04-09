@@ -9,6 +9,7 @@ import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.provider.LocaleProvider
+import com.wojdor.memolki.util.provider.PermissionProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.flow.collect
@@ -24,6 +25,7 @@ class AppViewModel @Inject constructor(
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase,
     private val localeProvider: LocaleProvider,
+    private val permissionProvider: PermissionProvider,
     private val pushNotificationProvider: PushNotificationProvider
 ) : ViewModel() {
 
@@ -31,11 +33,11 @@ class AppViewModel @Inject constructor(
         viewModelScope.launch {
             pushNotificationProvider.subscribeToTopics()
             analytics.setUserLanguage(localeProvider.getLanguageTag())
+            analytics.setNotificationPermission(permissionProvider.hasNotificationPermission())
             val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
             val unlockedCardsCount = getUnlockedCardPairsCountUseCase().first().getOrDefault(0)
             analytics.logAppSessionStart(totalGamesPlayed, unlockedCardsCount)
             localEncryptorKeyStore.initialize()
-            @Suppress("KotlinConstantConditions")
             if (RECORDING_MODE) prepareRecordingDataUseCase().collect()
             unlockAllNewCardPairsIfPurchasedUseCase().collect()
         }

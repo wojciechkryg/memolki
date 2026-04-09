@@ -63,7 +63,7 @@ class MenuViewModel @Inject constructor(
             OnSettingsClick -> onSettingsClick()
             OnMoreAppsClick -> onMoreAppsClick()
             OnDailyRewardClick -> onDailyRewardClick()
-            MenuIntent.OnScreenResume -> loadMenu()
+            MenuIntent.OnScreenResume -> refreshDailyReward()
         }
     }
 
@@ -101,6 +101,26 @@ class MenuViewModel @Inject constructor(
         sendEffect(OpenMoreAppsScreen)
     }
 
+    private fun refreshDailyReward() {
+        viewModelScope.launch {
+            val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0)
+            val streakResult = checkDailyLoginStreakUseCase().first()
+            val isDailyRewardAvailable = !RECORDING_MODE && totalGamesPlayed > 0 &&
+                streakResult.getOrNull()?.isRewardAvailable == true
+            sendState {
+                val baseMenu = menu.filterNot { it is MenuModel.DailyReward }
+                val menuItems = baseMenu.toMutableList().apply {
+                    if (isDailyRewardAvailable) {
+                        val insertIndex = indexOfFirst { it is MenuModel.Collection }
+                            .takeIf { it >= 0 }?.let { it + 1 } ?: size
+                        add(insertIndex, MenuModel.DailyReward)
+                    }
+                }
+                copy(menu = menuItems)
+            }
+        }
+    }
+
     private fun loadMenu() {
         combine(
             getMenuUseCase(),
@@ -109,11 +129,14 @@ class MenuViewModel @Inject constructor(
             checkDailyLoginStreakUseCase()
         ) { menuResult, moreAppsResult, totalGamesPlayedResult, streakResult ->
             val totalGamesPlayed = totalGamesPlayedResult.getOrDefault(0)
-            var randomApp: AppModel? = null
-            if (totalGamesPlayed >= MINIMUM_GAMES_PLAYED) {
-                randomApp = moreAppsResult.getOrDefault(emptyList()).randomOrNull()
+            val currentApp = uiState.value.otherAppModel
+            val randomApp = if (currentApp != null) {
+                currentApp
+            } else if (totalGamesPlayed >= MINIMUM_GAMES_PLAYED) {
+                moreAppsResult.getOrDefault(emptyList()).randomOrNull()
+            } else {
+                null
             }
-            @Suppress("KotlinConstantConditions")
             val isDailyRewardAvailable = !RECORDING_MODE && totalGamesPlayed > 0 &&
                 streakResult.getOrNull()?.isRewardAvailable == true
             val baseMenu = menuResult.getOrNull() ?: uiState.value.menu
@@ -124,12 +147,12 @@ class MenuViewModel @Inject constructor(
                     add(insertIndex, MenuModel.DailyReward)
                 }
             }
-            Triple(menuItems, randomApp, uiState.value.otherAppModel)
-        }.onEach { (menuItems, randomApp, currentApp) ->
+            menuItems to randomApp
+        }.onEach { (menuItems, randomApp) ->
             sendState {
                 copy(
                     menu = menuItems,
-                    otherAppModel = randomApp ?: currentApp
+                    otherAppModel = randomApp ?: otherAppModel
                 )
             }
         }.launchIn(viewModelScope)

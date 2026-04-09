@@ -216,14 +216,14 @@ class GameViewModel @Inject constructor(
     }
 
     private fun onMatchAnimationComplete() {
+        if (uiState.value.cards.none { it.isMatchAnimating }) return
         mapCards { card ->
-            if (card.isMatchAnimating) {
-                card.copyState(isMatchAnimating = false)
-            } else {
-                card
-            }
+            if (card.isMatchAnimating) card.copyState(isMatchAnimating = false) else card
         }
         sendEffect(GameEffect.OnPairMatched)
+        if (uiState.value.isGameFinished) {
+            navigateToEndGame()
+        }
     }
 
     fun playMatchSound() {
@@ -241,46 +241,34 @@ class GameViewModel @Inject constructor(
     }
 
     private fun checkForEndGame() {
-        viewModelScope.launch {
-            val cards = uiState.value.cards
-            if (cards.isNotEmpty() && cards.all { it.isPairMatched }) {
-                if (!uiState.value.isDailyChallenge) {
-                    analytics.logBoardComplete(uiState.value.board, uiState.value.mistakeCount)
-                    incrementLevelUseCase(uiState.value.board.id).launchIn(viewModelScope)
-                }
-                sendState { copy(isGameFinished = true) }
-                delay(END_GAME_DELAY)
-                if (uiState.value.isDailyChallenge) {
-                    saveDailyChallengeAndOpenEndScreen()
-                } else {
-                    sendEffect(
-                        GameEffect.OpenEndGameScreen(
-                            boardModel = uiState.value.board,
-                            mistakeCount = uiState.value.mistakeCount,
-                            cardFlipCounts = uiState.value.cardFlipCounts,
-                            level = uiState.value.level
-                        )
-                    )
-                }
-                levelFlowJob?.cancel()
-                levelFlowJob = null
-                delay(RESET_STATE_DELAY)
-                sendState {
-                    copy(
-                        isGameFinished = false,
-                        shouldShowCardText = false,
-                        shouldShowCardDetails = false,
-                        lastCardPressed = CardModel.Empty,
-                        mistakeCount = 0,
-                        cardFlipCounts = emptyList(),
-                        cards = emptyList(),
-                        isDailyChallenge = false,
-                        epochDay = 0L,
-                        startTimeMillis = 0L,
-                        progress = 0f
-                    )
-                }
+        val cards = uiState.value.cards
+        if (cards.isNotEmpty() && cards.all { it.isPairMatched }) {
+            if (!uiState.value.isDailyChallenge) {
+                analytics.logBoardComplete(uiState.value.board, uiState.value.mistakeCount)
+                incrementLevelUseCase(uiState.value.board.id).launchIn(viewModelScope)
             }
+            sendState { copy(isGameFinished = true) }
+        }
+    }
+
+    private fun navigateToEndGame() {
+        viewModelScope.launch {
+            if (uiState.value.isDailyChallenge) {
+                saveDailyChallengeAndOpenEndScreen()
+            } else {
+                sendEffect(
+                    GameEffect.OpenEndGameScreen(
+                        boardModel = uiState.value.board,
+                        mistakeCount = uiState.value.mistakeCount,
+                        cardFlipCounts = uiState.value.cardFlipCounts,
+                        level = uiState.value.level
+                    )
+                )
+            }
+            levelFlowJob?.cancel()
+            levelFlowJob = null
+            delay(RESET_STATE_DELAY)
+            sendState { GameState() }
         }
     }
 
@@ -474,7 +462,6 @@ class GameViewModel @Inject constructor(
 
     companion object {
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
-        const val END_GAME_DELAY = 1000L
         private const val RESET_STATE_DELAY = 1000L
 
         const val MAX_STARS = 3

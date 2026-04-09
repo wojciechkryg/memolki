@@ -21,6 +21,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.component.ClickIndicatorOverlay
 import com.wojdor.memolki.ui.component.ForceLtr
@@ -75,6 +77,14 @@ class AppActivity : ComponentActivity() {
                 Color.TRANSPARENT
             )
         )
+
+        if (RECORDING_MODE) {
+            WindowInsetsControllerCompat(window, window.decorView).apply {
+                hide(WindowInsetsCompat.Type.systemBars())
+                systemBarsBehavior =
+                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        }
         inAppUpdate.checkUpdate(this)
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
@@ -100,7 +110,6 @@ class AppActivity : ComponentActivity() {
                             )
                         }
                     }
-                    @Suppress("KotlinConstantConditions")
                     if (RECORDING_MODE) ForceLtr { appContent() } else appContent()
                 }
             }

@@ -47,6 +47,12 @@ After making changes, always install and launch the app on the connected device/
 
 # Record new screenshot references — run after intentional UI changes
 ./gradlew recordPaparazziFruitHalfDebug
+
+# Generate unit test coverage report (excludes screenshot tests)
+./gradlew koverXmlReportFruitHalfDebug -PcoverageTestExclude='com.wojdor.memolki.screenshot.*'
+
+# Generate screenshot test coverage report
+./gradlew clean koverXmlReportFruitHalfDebug -PcoverageTestFilter='com.wojdor.memolki.screenshot.*'
 ```
 
 After making UI changes, always run `verifyPaparazziFruitHalfDebug` alongside the build/install step. If screenshots differ intentionally, run `recordPaparazziFruitHalfDebug` to update the references and commit the updated PNGs.
@@ -283,20 +289,17 @@ Conventions:
 - Wrap tests in `runTest {}`, assert flows with Turbine's `.test { awaitItem() }`
 - For one-shot flows (e.g. `flow { emit(...) }`), call `awaitComplete()` after consuming items to avoid "Unconsumed events" errors
 - For long-lived flows (e.g. DataStore, StateFlow), no `awaitComplete()` needed
-- Comments follow `// given`, `// when`, `// then`
+- Comments in tests are **only** `// given`, `// when`, `// then` — no other comments (no inline explanations, no `// region`/`// endregion`, no trailing descriptions)
+- Use `assertTrue()`/`assertFalse()` — never `assertEquals(true, ...)` or `assertEquals(false, ...)`
 - For static Android APIs (e.g. `AppCompatDelegate`), use `mockkStatic(...)` in `@Before`
 - Add `fun inject(test: YourTestClass)` to `TestInjector` for each new test class
 - **Fake singleton scoping:** `@Binds @Singleton` scopes the parent type (e.g. `LocaleProvider`), not the Fake itself. Injecting `FakeLocaleProvider` directly in a test creates a separate instance from the one Hilt gives to UseCases via `LocaleProvider`. When testing a UseCase that depends on other UseCases that use Fakes, construct the child UseCase manually with the injected Fake (see `GetLanguagesWithCurrentUseCaseTest`)
 
-### What needs tests
+### Coverage expectations
 
-- **All UseCases** — every use case gets a test class
-- **All ViewModels** — every ViewModel gets a test class
-- **Repositories and DataSources** — every repository and local data source gets a test class
+Every testable class must have a corresponding test class with **full branch coverage** — all code paths, conditions, and edge cases. When adding or modifying code, always add or update tests to cover every new/changed path.
 
-### What does NOT need tests
-
-- State/Intent/Effect data classes, Callbacks, Screen composables, DI modules, domain models
+**Must have tests:** UseCases, ViewModels, Repositories, DataSources, domain models, State/Intent/Effect data classes
 
 Reference examples:
 - UseCase test: `test/.../domain/usecase/GetSettingsUseCaseTest.kt`
@@ -427,6 +430,61 @@ app/src/{flavor}/play/
     └── graphics/phone-screenshots/*.jpg
 ```
 
+## Play Store Screenshots & Feature Graphics
+
+Automated generation of listing screenshots and feature graphics. Scripts in `scripts/screenshot/`.
+
+### Bulk Generation
+
+```bash
+./scripts/screenshot/generate_all_screenshots.sh                              # Default: fruit_half mammal_side bird_side × 32 locales
+./scripts/screenshot/generate_all_screenshots.sh fruit_half                   # Single flavor × 32 locales
+./scripts/screenshot/generate_all_screenshots.sh "fruit_half bird_side" en,pl # Specific flavors + locales
+```
+
+Orchestrator that automatically builds + installs each flavor via `./gradlew install{FlavorCamel}Debug`, then runs capture + compose for every locale. Default flavors exclude `vegetable_half` — pass it explicitly if needed.
+
+### Screenshots (5 per locale)
+
+```bash
+./scripts/screenshot/take_screenshots.sh fruit_half en                  # Capture 5 raw PNGs from emulator
+python3 scripts/screenshot/compose_screenshots.py fruit_half en ~/raw   # Compose final JPEGs with device frames
+```
+
+| # | Screen | Layout |
+|---|--------|--------|
+| 1 | 3×4 Gameplay (2 matched pairs + 1 revealed) | text top, device bottom |
+| 2 | Collection (unlocked cards, scrolled to top) | device top, text bottom |
+| 3 | 5×6 Gameplay (12 of 15 pairs matched) | text top, device bottom |
+| 4 | Daily Challenge End Game (3 stars) | device top, text bottom |
+| 5 | Collection (locked cards, scrolled to bottom) | text top, device bottom |
+
+**Design:** Wave layout — devices alternate top/bottom positions with localized lowercase text in the opposite area. 7° rotation, anti-aliased device frames (4x supersample + 2x rotation supersample), per-screenshot layering (main device on top, neighbor edges behind), horizontal offset computed from rotation geometry for equal visual gaps.
+
+Both the regular board (`Random(0)`) and daily challenge board (seed fixed to `0` in RECORDING_MODE) are fully deterministic — card positions are stable across dates.
+
+### Feature Graphics (1024×500)
+
+```bash
+python3 scripts/screenshot/generate_feature_graphic.py fruit_half       # All 32 locales
+python3 scripts/screenshot/generate_feature_graphic.py fruit_half pl    # Single locale
+./scripts/screenshot/generate_feature_graphics.sh                       # All 4 flavors × 32 locales
+```
+
+Layout: flavor background color, `ic_logo_{flavor}.png` on left, localized label chips on right (auto-sized font for long translations). Chips use Patrick Hand font with Arial Unicode fallback for CJK/Cyrillic/Arabic.
+
+### Output paths
+
+```
+app/src/{flavor}/play/listings/{locale}/graphics/phone-screenshots/{1..5}.jpg
+app/src/{flavor}/play/listings/{locale}/graphics/feature-graphic/1.png
+```
+
+### Prerequisites
+- `RECORDING_MODE = true` in `RecordingModeProvider.kt`
+- Pixel 9 Pro emulator (1280×2856) running + connected via ADB
+- Python 3 + Pillow (`pip install Pillow`)
+
 ## Video Recording for Ads
 
 Automated promo video recording for Google Play Store ads. See `scripts/recording/record_video.sh` for the full script and `docs/docs_recording.md` for detailed documentation.
@@ -452,7 +510,8 @@ When `RECORDING_MODE = true`, the app changes:
 | Click overlay | Shows cursor animation at each tap, blocks rapid multi-taps |
 | Card order | Deterministic via fresh `Random(0)` per injection (`di/module/AppModule.kt`, not singleton) |
 | Initial state | 20 unlocked cards, 473 coins (via `PrepareRecordingCoinsUseCase`) |
-| End game screen | Hides: Watch Ad, Free Coins, Share button. Shows coins display |
+| Casual end game | Hides: Watch Ad, Share button. Shows coins display |
+| Daily challenge end game | Hides: Watch Ad. Shows Compare button |
 | End game screen | Always shows "Unlock New Card" (even when daily streak available) |
 | Collection | Hides Watch Ad unlock (replaced with locked slot to keep total count) |
 | Menu | Hides "more apps" section |
@@ -467,8 +526,8 @@ The script uses `ffmpeg-full` (with freetype) to:
 - Add flavor logo (`app/src/main/res/drawable/ic_logo_{flavor}.png`) fading in above the text with circular background
 - Add localized "Think you can solve it?" text in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`), with Arial Unicode fallback for CJK/RTL locales
 
-### CI guard
-The PR workflow (`pull_request.yml`) fails if `RECORDING_MODE = true` — must be disabled before merging.
+### RECORDING_MODE guard
+Unit tests fail when `RECORDING_MODE = true` — must be set to `false` before merging.
 
 ### Flavors and coordinates
 Card grid positions are identical across all flavors — fresh `Random(0)` per injection produces the same shuffle order. The script accepts a flavor parameter (`fruit_half`, `vegetable_half`, `mammal_side`, `bird_side`) and resolves the package name automatically.
@@ -529,7 +588,8 @@ Deep link URIs use `DeepLinkBuilder` (`util/notification/DeepLinkBuilder.kt`) as
 
 ## CI/CD
 
-- **PR (`.github/workflows/pull_request.yml`):** Runs unit tests on pull requests (skips for `chore/` commits)
+- **PR (`.github/workflows/pull_request.yml`):** Runs unit tests with coverage report on pull requests (skips for `chore/` commits)
+- **Coverage (`.github/workflows/coverage.yml`):** Generates unit test and screenshot test coverage badges on merge to main (via Gist + shields.io)
 - **Merge to main (`.github/workflows/merge.yml`):** Builds release bundles for all flavors and uploads to Google Play, then auto-bumps version and creates a chore PR
 
 ## Analytics & Crashlytics
@@ -562,3 +622,32 @@ Use cases must **NOT** use `runCatching` to wrap their logic. The base class (`B
 - Min SDK 23, Target/Compile SDK 36
 - Version format: MAJOR.MINOR.PATCH (versionCode encodes as MMMNNNPPP)
 - Product flavors use the "version" dimension; each flavor has its own package name and billing key
+
+## Common Mistakes
+
+Recurring errors to avoid — check this list before submitting changes.
+
+### Build & Gradle
+- **Wrong task name casing:** Gradle tasks use camelCase flavor names — `installFruitHalfDebug`, NOT `installFruit_halfDebug`
+- **Forgetting flavor in test commands:** Always specify flavor — `testFruitHalfDebugUnitTest`, not bare `test`
+
+### RECORDING_MODE
+- **Leaving RECORDING_MODE = true:** Unit tests fail when `RECORDING_MODE = true`. Always set back to `false` before merging
+- **Navigation with KEYCODE_BACK:** Pressing BACK too many times exits the app to the home screen. Count back presses carefully — one BACK from a game goes to choose board or menu, two exits the app
+
+### Architecture
+- **No `runCatching` in use cases:** Base class already handles exceptions and reports to Crashlytics
+- **No `delay()` for UI timing in ViewModels:** Let the UI send an intent when animation completes
+- **No Android framework calls in ViewModels/UseCases:** Wrap in Provider classes under `util/provider/`
+- **`first()` is fine for one-shot BaseUseCase flows:** `BaseUseCase.execute()` emits exactly once; `.first()` is idiomatic for these. Only avoid `first()` on continuous flows (DataStore, combine, etc.)
+- **No `getOrNull()` / `getOrThrow()`:** Handle results with `.onSuccess { }` / `.onFailure { }`
+- **Compose use cases with sequential `first()`, not `combine()`:** Nesting `combine()` inside `BaseUseCase.execute()` creates layered `flowOn` chains that break `StandardTestDispatcher` in tests. Use `flow { val x = otherUseCase().first().getOrThrow(); ... }` instead (see `UnlockRandomCardIfEnoughCoinsUseCase`)
+- **Don't hack production code to fix test issues:** If `relaxedMockk` swallows a call, stub it properly in `TestModule` — don't convert member functions to extensions or restructure production code as a workaround
+- **Fix root causes, don't scatter suppressions:** If a warning appears in many files, fix the source (e.g. `const val` → `val`) instead of adding `@Suppress` everywhere
+
+### Testing
+- **Always add tests for new UseCases/ViewModels:** Every new UseCase and ViewModel must have a test class — don't skip this step
+
+### Play Store
+- **Feature graphic uses existing assets as source:** Don't use old feature graphics (they bake in English text). Use `ic_logo_{flavor}.png` from `res/drawable/` as the clean logo source
+- **Character limits are strict:** title.txt = 30 chars, short-description.txt = 80 chars, full-description.txt = 4000 chars

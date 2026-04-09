@@ -196,6 +196,10 @@ class Analytics @Inject constructor(
         firebaseAnalytics.setUserProperty(Key.LANGUAGE, languageTag)
     }
 
+    fun setNotificationPermission(isEnabled: Boolean) {
+        firebaseAnalytics.setUserProperty(Key.NOTIFICATION_PERMISSION, isEnabled.toString())
+    }
+
     fun logLeaderboardOpened() {
         firebaseAnalytics.logEvent(Event.LEADERBOARD_OPENED, null)
     }
@@ -300,6 +304,7 @@ private object Key {
     const val TO_LANGUAGE = "to_language"
     const val SHORTCUT_ID = "shortcut_id"
     const val LANGUAGE = "language"
+    const val NOTIFICATION_PERMISSION = "notification_permission"
     const val CHALLENGE_NUMBER = "challenge_number"
     const val STAR_COUNT = "star_count"
     const val TIME_MILLIS = "time_millis"

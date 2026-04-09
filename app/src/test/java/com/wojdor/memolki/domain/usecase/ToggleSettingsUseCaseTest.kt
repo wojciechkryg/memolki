@@ -9,6 +9,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
@@ -45,7 +47,7 @@ class ToggleSettingsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(setting.copy(isEnabled = false))
             assertEquals(expected, awaitItem())
-            assertEquals(false, settingsRepository.getMusicEnabled().first())
+            assertFalse(settingsRepository.getMusicEnabled().first())
             awaitComplete()
         }
     }
@@ -61,7 +63,7 @@ class ToggleSettingsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(setting.copy(isEnabled = true))
             assertEquals(expected, awaitItem())
-            assertEquals(true, settingsRepository.getSoundEnabled().first())
+            assertTrue(settingsRepository.getSoundEnabled().first())
             awaitComplete()
         }
     }
@@ -77,7 +79,7 @@ class ToggleSettingsUseCaseTest : AppTest() {
             // then
             val expected = Result.success(setting.copy(isEnabled = false))
             assertEquals(expected, awaitItem())
-            assertEquals(false, settingsRepository.getVibrationEnabled().first())
+            assertFalse(settingsRepository.getVibrationEnabled().first())
             awaitComplete()
         }
     }

@@ -4,11 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
-import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase
-import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
-import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCase
-import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCase
+import com.wojdor.memolki.domain.usecase.GetCollectionDataUseCase
 import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
@@ -21,12 +18,7 @@ import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -38,12 +30,9 @@ class CollectionViewModel @Inject constructor(
     private val hapticFeedback: HapticFeedback,
     private val allRewardedAds: AllRewardedAds,
     private val getCoinsUseCase: GetCoinsUseCase,
-    private val getUnlockedCardPairsUseCase: GetUnlockedCardPairsUseCase,
-    private val getAllCardPairsCountUseCase: GetAllCardPairsCountUseCase,
-    private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase,
+    private val getCollectionDataUseCase: GetCollectionDataUseCase,
     private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase,
     private val unlockRandomCardUseCase: UnlockRandomCardUseCase,
-    private val getUnlockedCardPairsFromAdsCountUseCase: GetUnlockedCardPairsFromAdsCountUseCase,
     private val incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase,
     private val notificationScheduler: NotificationScheduler
 ) : MviViewModel<CollectionIntent, CollectionState>(
@@ -102,20 +91,8 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun loadCardPairsAndAd(wasRewardGranted: Boolean = false) {
-        if (allRewardedAds.collectionCardPairAd.isLoaded && !wasRewardGranted) {
-            loadCardPairs(isAdAvailable = true)
-        } else {
-            loadCardPairs(isAdAvailable = false)
-            allRewardedAds.collectionCardPairAd.load(
-                onLoaded = {
-                    if (!wasRewardGranted) {
-                        loadCardPairs(isAdAvailable = true)
-                    }
-                },
-                onFailed = {
-                    loadCardPairs(isAdAvailable = false)
-                }
-            )
+        allRewardedAds.collectionCardPairAd.loadAndNotify(wasRewardGranted) { isAvailable ->
+            loadCardPairs(isAdAvailable = isAvailable)
         }
     }
 
@@ -134,44 +111,25 @@ class CollectionViewModel @Inject constructor(
     }
 
     private fun loadCardPairs(isAdAvailable: Boolean) {
-        combine(
-            getUnlockedCardPairsUseCase()
-                .map { it.getOrNull() }
-                .filterNotNull(),
-            getAllCardPairsCountUseCase()
-                .map { it.getOrNull() }
-                .filterNotNull(),
-            calculateNextCardPairCostUseCase()
-                .map { it.getOrNull() }
-                .filterNotNull(),
-            getUnlockedCardPairsFromAdsCountUseCase()
-                .map { it.getOrNull()?.toInt() }
-                .filterNotNull()
-        ) { unlockedCardPairs, allCardPairsCount, cardPairCost, unlockedCardPairsFromAdsCount ->
-            val lockedCardPairsCount = allCardPairsCount - unlockedCardPairs.size
-            getCollectionCardPairs(
-                unlockedCardPairs,
-                lockedCardPairsCount,
-                cardPairCost,
-                unlockedCardPairsFromAdsCount,
-                isAdAvailable
-            )
-        }
-            .distinctUntilChanged()
-            .onEach { collectionCardPairs ->
+        getCollectionDataUseCase().onEach { result ->
+            result.onSuccess { data ->
+                val lockedCardPairsCount = data.allCardPairsCount - data.unlockedCardPairs.size
+                val collectionCardPairs = getCollectionCardPairs(
+                    data.unlockedCardPairs,
+                    lockedCardPairsCount,
+                    data.nextCardPairCost,
+                    data.unlockedCardPairsFromAdsCount,
+                    isAdAvailable
+                )
                 if (!hasLoggedCollectionView) {
                     hasLoggedCollectionView = true
                     val unlockedCount =
                         collectionCardPairs.count { it is CollectionCardPairModel.Unlocked }
                     analytics.logCollectionViewed(unlockedCount, collectionCardPairs.size)
                 }
-                sendState {
-                    copy(
-                        collectionCardPairs = collectionCardPairs,
-                    )
-                }
+                sendState { copy(collectionCardPairs = collectionCardPairs) }
             }
-            .launchIn(viewModelScope)
+        }.launchIn(viewModelScope)
     }
 
     private fun getCollectionCardPairs(
@@ -215,7 +173,6 @@ class CollectionViewModel @Inject constructor(
         isAdAvailable: Boolean
     ): List<CollectionCardPairModel> {
         return if (lockedCardPairsCount > LAST_LOCKED_CARD_PAIR) {
-            @Suppress("KotlinConstantConditions")
             if (RECORDING_MODE) return List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.Locked }
             if (unlockedCardPairsFromAdsCount < MAX_UNLOCKED_CARD_PAIRS_WITH_ADS && isAdAvailable) {
                 List(UNLOCK_WITH_ADS_COUNT) { CollectionCardPairModel.LockedToUnlockWithAd }
@@ -257,8 +214,7 @@ class CollectionViewModel @Inject constructor(
                 val unlockedCount = uiState.value.collectionCardPairs
                     .count { it is CollectionCardPairModel.Unlocked } + 1
                 analytics.logCardUnlockedWithCoins(unlockedCount)
-                delay(COINS_SOUND_DELAY)
-                coinsPlayer.play()
+                coinsPlayer.playDelayed()
                 loadData(animateCoins = true)
             }.onFailure {
                 val cardCost = uiState.value.collectionCardPairs
@@ -287,7 +243,6 @@ class CollectionViewModel @Inject constructor(
         const val NUMBER_OF_LOCKED_CARDS_POSSIBLE_TO_UNLOCK =
             UNLOCK_WITH_COINS_COUNT + UNLOCK_WITH_ADS_COUNT
 
-        private const val COINS_SOUND_DELAY = 300L
         private const val PLACEMENT = "collection"
     }
 }

@@ -9,6 +9,7 @@ import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 abstract class SoundPlayer(
@@ -37,6 +38,11 @@ abstract class SoundPlayer(
         }
     }
 
+    suspend fun playDelayed() {
+        delay(PLAY_DELAY)
+        play()
+    }
+
     fun play() {
         if (isSoundEnabled) {
             MediaPlayer.create(context, soundId).apply {
@@ -54,6 +60,7 @@ abstract class SoundPlayer(
     }
 
     companion object {
+        private const val PLAY_DELAY = 300L
         private const val VOLUME = 0.5f
     }
 }

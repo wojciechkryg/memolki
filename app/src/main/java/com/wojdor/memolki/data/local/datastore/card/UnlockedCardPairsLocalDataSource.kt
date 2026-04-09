@@ -16,7 +16,6 @@ class UnlockedCardPairsLocalDataSource @Inject constructor(
     suspend fun getUnlockedCardPairIds(): List<String> {
         val preferences = dataStore.data.first()
         return preferences[Key.UNLOCKED_CARD_PAIR_IDS]?.toList() ?: run {
-            @Suppress("KotlinConstantConditions")
             val count = if (RECORDING_MODE) {
                 RECORDING_MODE_UNLOCKED_CARD_PAIRS_COUNT
             } else {

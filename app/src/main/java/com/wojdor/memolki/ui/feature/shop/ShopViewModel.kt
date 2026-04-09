@@ -28,7 +28,6 @@ import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -72,6 +71,7 @@ class ShopViewModel @Inject constructor(
 
     init {
         checkDailyStreak()
+        loadAdCoins()
         loadData()
         billingHandler.startConnection(object : BillingStatusListener {
             override fun onProductsFetched(products: List<ProductDetails>) {
@@ -122,8 +122,7 @@ class ShopViewModel @Inject constructor(
                     analytics.logDailyStreakCollected(it.streakDay, it.coinsReward)
                 }
                 notificationScheduler.scheduleStreakNotification()
-                delay(COINS_SOUND_DELAY)
-                coinsPlayer.play()
+                coinsPlayer.playDelayed()
                 checkDailyStreak()
                 loadCoins(animateCoins = true)
                 checkShouldShowNotificationRequest()
@@ -199,8 +198,7 @@ class ShopViewModel @Inject constructor(
         rewardCoinsForShopPurchaseUseCase(coins).onEach { result ->
             result.onSuccess {
                 sendTotalCoinsScore()
-                delay(COINS_SOUND_DELAY)
-                coinsPlayer.play()
+                coinsPlayer.playDelayed()
                 loadData(animateCoins = true)
             }
         }.launchIn(viewModelScope)
@@ -209,8 +207,7 @@ class ShopViewModel @Inject constructor(
     private fun unlockAllCardPairs() {
         unlockAllCardPairsUseCase().onEach {
             it.onSuccess {
-                delay(COINS_SOUND_DELAY)
-                coinsPlayer.play()
+                coinsPlayer.playDelayed()
                 loadData()
             }
         }.launchIn(viewModelScope)
@@ -221,8 +218,7 @@ class ShopViewModel @Inject constructor(
             result.onSuccess {
                 analytics.logAdRewardFromShop()
                 sendTotalCoinsScore()
-                delay(COINS_SOUND_DELAY)
-                coinsPlayer.play()
+                coinsPlayer.playDelayed()
                 loadCoins(animateCoins = true)
             }
         }.launchIn(viewModelScope)
@@ -239,16 +235,12 @@ class ShopViewModel @Inject constructor(
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {
         isShopAdCooldownOverUseCase().onEach { result ->
             result.onSuccess { isAdCooldownOver ->
-                if (allRewardedAds.shopCoinsAd.isLoaded && !wasRewardGranted && isAdCooldownOver) {
-                    showMenu(isAdAvailable = true)
+                if (isAdCooldownOver) {
+                    allRewardedAds.shopCoinsAd.loadAndNotify(wasRewardGranted) { isAvailable ->
+                        showMenu(isAdAvailable = isAvailable)
+                    }
                 } else {
                     showMenu(isAdAvailable = false)
-                    if (isAdCooldownOver && !wasRewardGranted) {
-                        allRewardedAds.shopCoinsAd.load(
-                            onLoaded = { showMenu(isAdAvailable = true) },
-                            onFailed = { showMenu(isAdAvailable = false) }
-                        )
-                    }
                 }
             }.onFailure {
                 showMenu(isAdAvailable = false)
@@ -265,44 +257,55 @@ class ShopViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun showMenu(
-        isAdAvailable: Boolean = (uiState.value.menu
-            .find { it is ShopMenuModel.WatchAd } as? ShopMenuModel.WatchAd)?.isAvailable
-            ?: false
-    ) {
+    private fun loadAdCoins() {
         calculateCoinsForShopAdUseCase().onEach { result ->
             result.onSuccess { coins ->
-                val prices = priceByProductId
-                val menu = mutableListOf<ShopMenuModel>()
-                dailyStreakResult?.let { streak ->
-                    menu.add(
-                        ShopMenuModel.DailyReward(
-                            isAvailable = streak.isRewardAvailable,
-                            streakDay = streak.streakDay,
-                            coinsToGrant = streak.coinsReward
-                        )
-                    )
-                }
-                menu.addAll(
-                    listOf(
-                        ShopMenuModel.WatchAd(isAdAvailable, coins),
-                        ShopMenuModel.BuyCoinsSmallAmount(
-                            prices[BillingHandler.IAP_COINS_SMALL] ?: DEFAULT_PRICE,
-                            SMALL_PURCHASE_COINS_REWARD
-                        ),
-                        ShopMenuModel.BuyCoinsBigAmount(
-                            prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
-                            BIG_PURCHASE_COINS_REWARD
-                        ),
-                        ShopMenuModel.BuyAllCards(
-                            prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
-                        )
-                    )
-                )
-                sendState { copy(menu = menu) }
+                showMenu(adCoins = coins)
             }
         }.launchIn(viewModelScope)
     }
+
+    private fun showMenu(
+        isAdAvailable: Boolean = currentAdAvailability(),
+        adCoins: Long = currentCoinsToGrant()
+    ) {
+        val prices = priceByProductId
+        val menu = mutableListOf<ShopMenuModel>()
+        dailyStreakResult?.let { streak ->
+            menu.add(
+                ShopMenuModel.DailyReward(
+                    isAvailable = streak.isRewardAvailable,
+                    streakDay = streak.streakDay,
+                    coinsToGrant = streak.coinsReward
+                )
+            )
+        }
+        menu.addAll(
+            listOf(
+                ShopMenuModel.WatchAd(isAdAvailable, adCoins),
+                ShopMenuModel.BuyCoinsSmallAmount(
+                    prices[BillingHandler.IAP_COINS_SMALL] ?: DEFAULT_PRICE,
+                    SMALL_PURCHASE_COINS_REWARD
+                ),
+                ShopMenuModel.BuyCoinsBigAmount(
+                    prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
+                    BIG_PURCHASE_COINS_REWARD
+                ),
+                ShopMenuModel.BuyAllCards(
+                    prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
+                )
+            )
+        )
+        sendState { copy(menu = menu) }
+    }
+
+    private fun currentAdAvailability(): Boolean =
+        (uiState.value.menu.find { it is ShopMenuModel.WatchAd } as? ShopMenuModel.WatchAd)
+            ?.isAvailable ?: false
+
+    private fun currentCoinsToGrant(): Long =
+        (uiState.value.menu.find { it is ShopMenuModel.WatchAd } as? ShopMenuModel.WatchAd)
+            ?.coinsToGrant ?: 0L
 
     private fun onProductsFetched(products: List<ProductDetails>) {
         productDetails = products
@@ -338,12 +341,12 @@ class ShopViewModel @Inject constructor(
             sendEffect(ShopEffect.ShowConnectionError)
         }
     }
+
+    companion object {
+        const val DEFAULT_PRICE = "???"
+        const val SMALL_PURCHASE_COINS_REWARD = 500L
+        const val BIG_PURCHASE_COINS_REWARD = 3000L
+        private const val DEFAULT_COINS_AMOUNT = 0L
+        private const val PLACEMENT = "shop"
+    }
 }
-
-private const val DEFAULT_COINS_AMOUNT = 0L
-private const val COINS_SOUND_DELAY = 300L
-
-const val DEFAULT_PRICE = "???"
-const val SMALL_PURCHASE_COINS_REWARD = 500L
-const val BIG_PURCHASE_COINS_REWARD = 3000L
-private const val PLACEMENT = "shop"

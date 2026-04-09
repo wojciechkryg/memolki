@@ -141,4 +141,18 @@ class MoreAppsViewModelTest : AppTest() {
             assertEquals(OpenApp(app), awaitItem())
         }
     }
+
+    @Test
+    fun `when OnAppClick then haptic feedback is triggered`() = runTest {
+        // given
+        val app = AppModel.FruitHalf
+        fakeAppInstalledProvider.mockAppInstalled = false
+
+        // when
+        sut.sendIntent(OnAppClick(app))
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verifyOnce { hapticFeedback.vibrateLow() }
+    }
 }

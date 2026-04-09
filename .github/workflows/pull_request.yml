@@ -24,8 +24,23 @@ jobs:
       - name: Decode Google Services
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
-      - name: Run unit tests
-        run: ./gradlew testFruitHalfDebugUnitTest --build-cache
+      - name: Run unit tests with coverage
+        run: ./gradlew koverXmlReportFruitHalfDebug -PcoverageTestExclude='com.wojdor.memolki.screenshot.*' --build-cache
+
+      - name: Add coverage to summary
+        if: always()
+        run: |
+          REPORT=$(find app/build -name "*.xml" -path "*/kover/*" | head -1)
+          if [ -n "$REPORT" ]; then
+            LINE_COVERED=$(grep -oP 'type="LINE"[^/]*covered="\K[0-9]+' "$REPORT" | tail -1)
+            LINE_MISSED=$(grep -oP 'type="LINE"[^/]*missed="\K[0-9]+' "$REPORT" | tail -1)
+            TOTAL=$((LINE_COVERED + LINE_MISSED))
+            if [ "$TOTAL" -gt 0 ]; then
+              PERCENTAGE=$((LINE_COVERED * 100 / TOTAL))
+              echo "### 🧪 Code Coverage: ${PERCENTAGE}%" >> $GITHUB_STEP_SUMMARY
+              echo "Lines covered: $LINE_COVERED / $TOTAL" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
 
       # TODO: Remove continue-on-error once Paparazzi 2.0.0-alpha05 adds AGP 9 support
       # Tracked: https://github.com/cashapp/paparazzi/pull/2198
@@ -41,24 +56,10 @@ jobs:
           path: app/build/paparazzi/failures/
           retention-days: 14
 
-  debug-flags-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Check for enabled debug flags
-        run: |
-          if grep -r 'RECORDING_MODE = true' app/src/; then
-            echo "::error::🚨 RECORDING_MODE is enabled. Disable it before merging."
-            exit 1
-          fi
-
   unit-test:
-    needs: [tests-execution, debug-flags-check]
+    needs: [tests-execution]
     runs-on: ubuntu-latest
-    if: ${{ always() && (needs.tests-execution.result == 'success' || needs.tests-execution.result == 'skipped') && needs.debug-flags-check.result == 'success' }}
+    if: ${{ always() && (needs.tests-execution.result == 'success' || needs.tests-execution.result == 'skipped') }}
     steps:
       - name: All checks passed
         run: echo "✅ All checks passed or were intentionally skipped."

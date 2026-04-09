@@ -18,7 +18,6 @@ class CasualShareFormatter @Inject constructor(
             appendLine("🃏 $appName")
             appendLine("🧩 $boardSize • ${context.getString(R.string.level_count, level)}")
             appendLine(context.getString(R.string.share_casual))
-            appendLine()
             append(storeLink)
         }
     }

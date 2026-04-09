@@ -64,6 +64,7 @@ class EndGameViewModel @Inject constructor(
     private var shouldShowNotificationRequest = false
     private var isNotificationRequestDismissed = false
     private var isShareRewardAvailable = false
+    private var canUnlockNewCard = false
     private var pendingRewardedCoins = 0L
     private var pendingCurrentCoins = 0L
 
@@ -138,10 +139,18 @@ class EndGameViewModel @Inject constructor(
         incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
         checkShouldShowNotificationRequest()
         checkShareRewardAvailable()
+        loadCanUnlockNewCard()
         getCurrentCoinsAndReward(board)
         viewModelScope.launch {
             requestReview()
         }
+    }
+
+    private fun loadCanUnlockNewCard() {
+        canUnlockNewCardUseCase().onEach { result ->
+            canUnlockNewCard = result.getOrDefault(false)
+            showMenu()
+        }.launchIn(viewModelScope)
     }
 
     private fun checkShouldShowNotificationRequest() {
@@ -195,18 +204,8 @@ class EndGameViewModel @Inject constructor(
     }
 
     private fun loadAd(wasRewardGranted: Boolean = false) {
-        if (allRewardedAds.endGameCoinsAd.isLoaded && !wasRewardGranted) {
-            showMenu(true)
-        } else {
-            showMenu(false)
-            allRewardedAds.endGameCoinsAd.load(
-                onLoaded = {
-                    if (!wasRewardGranted) {
-                        showMenu(true)
-                    }
-                },
-                onFailed = { showMenu(false) }
-            )
+        allRewardedAds.endGameCoinsAd.loadAndNotify(wasRewardGranted) { isAvailable ->
+            showMenu(isAvailable)
         }
     }
 
@@ -244,7 +243,6 @@ class EndGameViewModel @Inject constructor(
         defaultEffect: EndGameEffect,
         boardModel: BoardModel? = null
     ) {
-        @Suppress("KotlinConstantConditions")
         if (!RECORDING_MODE && shouldShowNotificationRequest) {
             shouldShowNotificationRequest = false
             sendEffect(EndGameEffect.OpenEnableNotificationsScreen(destination, boardModel))
@@ -278,30 +276,25 @@ class EndGameViewModel @Inject constructor(
             sendState { copy(menu = menu) }
             return
         }
-        canUnlockNewCardUseCase().onEach { result ->
-            val canUnlockNewCard = result.getOrDefault(false)
-            val menu = mutableListOf<EndGameMenuModel>().apply {
-                @Suppress("KotlinConstantConditions")
-                if (isAdLoaded && !RECORDING_MODE) {
-                    add(EndGameMenuModel.WatchAd)
-                }
-                if (canUnlockNewCard) {
-                    add(EndGameMenuModel.UnlockNewCard)
-                }
-                add(EndGameMenuModel.Next)
-                add(EndGameMenuModel.Menu)
-                @Suppress("KotlinConstantConditions")
-                if (!RECORDING_MODE) {
-                    add(
-                        EndGameMenuModel.Share(
-                            showReward = isShareRewardAvailable,
-                            rewardCoins = if (isShareRewardAvailable) RewardCoinsForShareUseCase.SHARE_REWARD_COINS else 0L
-                        )
-                    )
-                }
+        val menu = mutableListOf<EndGameMenuModel>().apply {
+            if (isAdLoaded && !RECORDING_MODE) {
+                add(EndGameMenuModel.WatchAd)
             }
-            sendState { copy(menu = menu) }
-        }.launchIn(viewModelScope)
+            if (canUnlockNewCard) {
+                add(EndGameMenuModel.UnlockNewCard)
+            }
+            add(EndGameMenuModel.Next)
+            add(EndGameMenuModel.Menu)
+            if (!RECORDING_MODE) {
+                add(
+                    EndGameMenuModel.Share(
+                        showReward = isShareRewardAvailable,
+                        rewardCoins = if (isShareRewardAvailable) RewardCoinsForShareUseCase.SHARE_REWARD_COINS else 0L
+                    )
+                )
+            }
+        }
+        sendState { copy(menu = menu) }
     }
 
     private fun getCurrentCoinsAndReward(board: BoardModel, isRewardFromAd: Boolean = false) {

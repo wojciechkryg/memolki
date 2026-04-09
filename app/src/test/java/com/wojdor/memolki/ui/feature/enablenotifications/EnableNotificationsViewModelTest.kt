@@ -148,4 +148,76 @@ class EnableNotificationsViewModelTest : AppTest() {
         // then
         verify { analytics.logNotificationEnabled(false) }
     }
+
+    @Test
+    fun `when OnPermissionResult with shop destination then NavigateToShop effect is sent`() =
+        runTest {
+            // given
+            createSut(EnableNotificationDestination.SHOP.route)
+
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
+
+                // then
+                assertEquals(EnableNotificationsEffect.NavigateToShop, awaitItem())
+            }
+        }
+
+    @Test
+    fun `when OnLaterClick with menu destination then NavigateToMenu effect is sent`() = runTest {
+        // given
+        createSut(EnableNotificationDestination.MENU.route)
+
+        sut.uiEffect.test {
+            // when
+            sut.sendIntent(EnableNotificationsIntent.OnLaterClick)
+
+            // then
+            assertEquals(EnableNotificationsEffect.NavigateToMenu, awaitItem())
+        }
+    }
+
+    @Test
+    fun `when OnLaterClick with collection destination then NavigateToCollection effect is sent`() =
+        runTest {
+            // given
+            createSut(EnableNotificationDestination.COLLECTION.route)
+
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(EnableNotificationsIntent.OnLaterClick)
+
+                // then
+                assertEquals(EnableNotificationsEffect.NavigateToCollection, awaitItem())
+            }
+        }
+
+    @Test
+    fun `when OnLaterClick with shop destination then NavigateToShop effect is sent`() = runTest {
+        // given
+        createSut(EnableNotificationDestination.SHOP.route)
+
+        sut.uiEffect.test {
+            // when
+            sut.sendIntent(EnableNotificationsIntent.OnLaterClick)
+
+            // then
+            assertEquals(EnableNotificationsEffect.NavigateToShop, awaitItem())
+        }
+    }
+
+    @Test
+    fun `when unknown destination then defaults to menu`() = runTest {
+        // given
+        createSut("unknown_destination")
+
+        sut.uiEffect.test {
+            // when
+            sut.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
+
+            // then
+            assertEquals(EnableNotificationsEffect.NavigateToMenu, awaitItem())
+        }
+    }
 }

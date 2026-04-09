@@ -1,0 +1,130 @@
+package com.wojdor.memolki.domain.usecase
+
+import app.cash.turbine.test
+import com.wojdor.memolki.data.repository.UserRepository
+import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeTimeProvider
+import com.wojdor.memolki.util.provider.TimeProvider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Test
+import javax.inject.Inject
+
+@ExperimentalCoroutinesApi
+class CheckDailyLoginStreakUseCaseTest : AppTest() {
+
+    @Inject
+    lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var timeProvider: TimeProvider
+
+    private val fakeTimeProvider get() = timeProvider as FakeTimeProvider
+
+    private lateinit var sut: CheckDailyLoginStreakUseCase
+
+    @Before
+    override fun setup() {
+        super.setup()
+        sut = CheckDailyLoginStreakUseCase(testDispatcher, userRepository, timeProvider)
+    }
+
+    override fun inject(injector: TestInjector) {
+        injector.inject(this)
+    }
+
+    @Test
+    fun `when first time then reward is available with day 1`() = runTest {
+        sut().test {
+            val result = awaitItem().getOrThrow()
+            assertTrue(result.isRewardAvailable)
+            assertEquals(1, result.streakDay)
+            assertEquals(1L, result.coinsReward)
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `when collected today then reward is not available`() = runTest {
+        // given
+        userRepository.setDailyStreakData(1L, timeProvider.currentTimeMillis())
+
+        // when
+        sut().test {
+            val result = awaitItem().getOrThrow()
+
+            // then
+            assertFalse(result.isRewardAvailable)
+            assertEquals(0L, result.coinsReward)
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `when consecutive day then streak increments`() = runTest {
+        // given
+        val yesterday = fakeTimeProvider.mockCurrentDate.minusDays(1)
+        userRepository.setDailyStreakData(
+            2L,
+            yesterday.atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+        )
+
+        // when
+        sut().test {
+            val result = awaitItem().getOrThrow()
+
+            // then
+            assertTrue(result.isRewardAvailable)
+            assertEquals(3, result.streakDay)
+            assertEquals(3L, result.coinsReward)
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `when gap of two days then streak resets to 1`() = runTest {
+        // given
+        val twoDaysAgo = fakeTimeProvider.mockCurrentDate.minusDays(2)
+        userRepository.setDailyStreakData(
+            5L,
+            twoDaysAgo.atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+        )
+
+        // when
+        sut().test {
+            val result = awaitItem().getOrThrow()
+
+            // then
+            assertTrue(result.isRewardAvailable)
+            assertEquals(1, result.streakDay)
+            assertEquals(1L, result.coinsReward)
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `when streak reaches max reward day then coins are capped`() = runTest {
+        // given
+        val yesterday = fakeTimeProvider.mockCurrentDate.minusDays(1)
+        userRepository.setDailyStreakData(
+            4L,
+            yesterday.atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+        )
+
+        // when
+        sut().test {
+            val result = awaitItem().getOrThrow()
+
+            // then
+            assertTrue(result.isRewardAvailable)
+            assertEquals(5, result.streakDay)
+            assertEquals(CheckDailyLoginStreakUseCase.MAX_DAILY_REWARD, result.coinsReward)
+            awaitComplete()
+        }
+    }
+}

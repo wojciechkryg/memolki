@@ -5,6 +5,7 @@ import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -20,7 +21,7 @@ class GetDailyChallengeCardsUseCase @Inject constructor(
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun execute(board: BoardModel) = flow {
         val pairCount = (board.columns * board.rows) / 2
-        val seed = timeProvider.currentLocalDate().toEpochDay()
+        val seed = if (RECORDING_MODE) 0L else timeProvider.currentLocalDate().toEpochDay()
         val allCardPairs = cardRepository.getAllCardPairs()
         require(allCardPairs.size >= pairCount) {
             "Not enough card pairs for $board. Required=$pairCount, available=${allCardPairs.size}"

@@ -43,6 +43,23 @@ class RewardedAd(
             })
     }
 
+    fun loadAndNotify(
+        wasRewardGranted: Boolean = false,
+        onAvailabilityChanged: (isAvailable: Boolean) -> Unit
+    ) {
+        if (isLoaded && !wasRewardGranted) {
+            onAvailabilityChanged(true)
+        } else {
+            onAvailabilityChanged(false)
+            if (!wasRewardGranted) {
+                load(
+                    onLoaded = { onAvailabilityChanged(true) },
+                    onFailed = { onAvailabilityChanged(false) }
+                )
+            }
+        }
+    }
+
     fun show(
         activity: Activity,
         onGrantReward: () -> Unit,
