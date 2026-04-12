@@ -167,16 +167,11 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
             }
         }
     ) { backStackEntry ->
-        val gameViewModel = getGameViewModel(backStackEntry, navController)
-        val enterAnimationFinished = transition.currentState == EnterExitState.Visible
-        LaunchedEffect(enterAnimationFinished) {
-            if (enterAnimationFinished) {
-                gameViewModel.sendIntent(GameIntent.OnResetState)
-            }
-        }
         EndGameScreen(
             navController = navController,
-            viewModel = getEndGameViewModel(backStackEntry, navController)
+            viewModel = getEndGameViewModel(backStackEntry, navController),
+            gameViewModel = getGameViewModel(backStackEntry, navController),
+            isEnterAnimationFinished = transition.currentState == EnterExitState.Visible
         )
     }
 }

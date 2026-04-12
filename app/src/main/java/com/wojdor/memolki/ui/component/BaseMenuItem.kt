@@ -25,7 +25,7 @@ fun BaseMenuItem(
     onClick: () -> Unit = {}
 ) {
     Button(
-        modifier = if (isEnabled) Modifier.bounceClickEffect().alpha(alpha) else Modifier,
+        modifier = (if (isEnabled) Modifier.bounceClickEffect() else Modifier).alpha(alpha),
         onClick = throttleClick(onClick = onClick),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,

@@ -118,9 +118,9 @@
     <string name="level_count">niveau %d</string>
 
     <string name="leave_daily_challenge_title">Quitter le défi du jour ?</string>
-    <string name="leave_daily_challenge_body">Vous ne pourrez pas réessayer aujourd\'hui</string>
+    <string name="leave_daily_challenge_body">Tu ne pourras pas réessayer aujourd\'hui</string>
     <string name="leave_game_title">Quitter la partie ?</string>
-    <string name="leave_game_body">Votre progression sera perdue</string>
+    <string name="leave_game_body">Ta progression sera perdue</string>
     <string name="leave_game_stay">Rester</string>
     <string name="leave_game_leave">Quitter</string>
 

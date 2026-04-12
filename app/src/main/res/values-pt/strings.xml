@@ -118,9 +118,9 @@
     <string name="level_count">nível %d</string>
 
     <string name="leave_daily_challenge_title">Sair do desafio diário?</string>
-    <string name="leave_daily_challenge_body">Você não poderá tentar novamente hoje</string>
+    <string name="leave_daily_challenge_body">Não poderás tentar novamente hoje</string>
     <string name="leave_game_title">Sair do jogo?</string>
-    <string name="leave_game_body">Seu progresso será perdido</string>
+    <string name="leave_game_body">O teu progresso será perdido</string>
     <string name="leave_game_stay">Ficar</string>
     <string name="leave_game_leave">Sair</string>
 
