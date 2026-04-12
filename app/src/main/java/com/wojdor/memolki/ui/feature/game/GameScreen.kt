@@ -62,6 +62,7 @@ private fun HandleEffect(
             }
 
             is GameEffect.OnPairMatched -> viewModel.playMatchSound()
+            is GameEffect.NavigateBack -> navController.popBackStack()
         }
     }
 }
@@ -107,7 +108,10 @@ private fun HandleState(
             viewModel.sendIntent(GameIntent.OnFrontCardPress(isPressed, card))
         },
         onMatchAnimationComplete = { viewModel.sendIntent(GameIntent.OnMatchAnimationComplete) },
-        onMistakeShakeComplete = { viewModel.sendIntent(GameIntent.OnMistakeShakeComplete) }
+        onMistakeShakeComplete = { viewModel.sendIntent(GameIntent.OnMistakeShakeComplete) },
+        onDailyChallengeBackPress = { viewModel.sendIntent(GameIntent.OnLeaveConfirmationShow) },
+        onLeaveConfirmationDismiss = { viewModel.sendIntent(GameIntent.OnLeaveConfirmationDismiss) },
+        onLeaveConfirmationConfirm = { viewModel.sendIntent(GameIntent.OnLeaveConfirmationConfirm) }
     )
     GameScreen(state, callbacks)
 }
@@ -117,7 +121,14 @@ private fun GameScreen(
     state: GameState,
     callbacks: GameCallbacks = GameCallbacks()
 ) {
-    BackHandler(enabled = state.isGameFinished, onBack = {})
+    BackHandler(
+        enabled = state.isGameFinished || state.isDailyChallenge,
+        onBack = {
+            if (!state.isGameFinished) {
+                callbacks.onDailyChallengeBackPress()
+            }
+        }
+    )
     GameContent(
         state = state,
         callbacks = callbacks

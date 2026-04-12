@@ -119,6 +119,11 @@
     <string name="share_casual">Myslíš, že ma porazíš? 🧠🔥</string>
     <string name="level_count">úroveň %d</string>
 
+    <string name="leave_daily_challenge_title">Opustiť dennú výzvu?</string>
+    <string name="leave_daily_challenge_body">Dnes to už nebudeš môcť skúsiť znova</string>
+    <string name="leave_daily_challenge_stay">Zostať</string>
+    <string name="leave_daily_challenge_leave">Odísť</string>
+
     <string name="need_more_cards">Potrebuješ viac kariet</string>
     <string name="next">Ďalej</string>
     <string name="play">Hrať</string>

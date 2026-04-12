@@ -116,6 +116,11 @@
     <string name="share_casual">你觉得你能赢我吗？🧠🔥</string>
     <string name="level_count">等级 %d</string>
 
+    <string name="leave_daily_challenge_title">离开每日挑战？</string>
+    <string name="leave_daily_challenge_body">今天将无法重试</string>
+    <string name="leave_daily_challenge_stay">留下</string>
+    <string name="leave_daily_challenge_leave">离开</string>
+
     <string name="need_more_cards">需要更多卡片</string>
     <string name="next">下一个</string>
     <string name="play">开始</string>

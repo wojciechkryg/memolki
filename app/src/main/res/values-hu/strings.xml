@@ -117,6 +117,11 @@
     <string name="share_casual">Szerinted le tudsz győzni? 🧠🔥</string>
     <string name="level_count">szint %d</string>
 
+    <string name="leave_daily_challenge_title">Kilépsz a napi kihívásból?</string>
+    <string name="leave_daily_challenge_body">Ma nem tudod újra megpróbálni</string>
+    <string name="leave_daily_challenge_stay">Maradok</string>
+    <string name="leave_daily_challenge_leave">Kilépek</string>
+
     <string name="need_more_cards">Több kártya szükséges</string>
     <string name="next">Következő</string>
     <string name="play">Játék</string>

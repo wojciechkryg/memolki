@@ -117,6 +117,11 @@
     <string name="share_casual">Tu penses pouvoir me battre ? 🧠🔥</string>
     <string name="level_count">niveau %d</string>
 
+    <string name="leave_daily_challenge_title">Quitter le défi du jour ?</string>
+    <string name="leave_daily_challenge_body">Vous ne pourrez pas réessayer aujourd\'hui</string>
+    <string name="leave_daily_challenge_stay">Rester</string>
+    <string name="leave_daily_challenge_leave">Quitter</string>
+
     <string name="need_more_cards">Besoin de plus de cartes</string>
     <string name="next">Suivant</string>
     <string name="play">Jouer</string>

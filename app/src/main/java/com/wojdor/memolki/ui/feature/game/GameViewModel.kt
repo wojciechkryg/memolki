@@ -62,6 +62,9 @@ class GameViewModel @Inject constructor(
             GameIntent.OnMatchAnimationComplete -> onMatchAnimationComplete()
             GameIntent.OnMistakeShakeComplete -> onMistakeShakeComplete()
             GameIntent.OnGameLeave -> onGameLeave()
+            GameIntent.OnLeaveConfirmationShow -> onLeaveConfirmationShow()
+            GameIntent.OnLeaveConfirmationDismiss -> onLeaveConfirmationDismiss()
+            GameIntent.OnLeaveConfirmationConfirm -> onLeaveConfirmationConfirm()
         }
     }
 
@@ -455,6 +458,19 @@ class GameViewModel @Inject constructor(
                 analytics.logBoardAbandoned(state.board)
             }
         }
+    }
+
+    private fun onLeaveConfirmationShow() {
+        sendState { copy(shouldShowLeaveConfirmation = true) }
+    }
+
+    private fun onLeaveConfirmationDismiss() {
+        sendState { copy(shouldShowLeaveConfirmation = false) }
+    }
+
+    private fun onLeaveConfirmationConfirm() {
+        sendState { copy(shouldShowLeaveConfirmation = false) }
+        sendEffect(GameEffect.NavigateBack)
     }
 
     private fun emptyFlipCountsGrid(cards: List<CardModel>, columns: Int): List<List<Int>> =

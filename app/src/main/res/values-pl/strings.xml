@@ -119,6 +119,11 @@
     <string name="share_casual">Myślisz, że mnie pokonasz? 🧠🔥</string>
     <string name="level_count">poziom %d</string>
 
+    <string name="leave_daily_challenge_title">Opuścić wyzwanie dnia?</string>
+    <string name="leave_daily_challenge_body">Nie będziesz mógł spróbować ponownie dzisiaj</string>
+    <string name="leave_daily_challenge_stay">Zostań</string>
+    <string name="leave_daily_challenge_leave">Wyjdź</string>
+
     <string name="need_more_cards">Potrzeba więcej kart</string>
     <string name="next">Dalej</string>
     <string name="play">Graj</string>

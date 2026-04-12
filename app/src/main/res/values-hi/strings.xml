@@ -117,6 +117,11 @@
     <string name="share_casual">क्या तुम मुझे हरा सकते हो? 🧠🔥</string>
     <string name="level_count">स्तर %d</string>
 
+    <string name="leave_daily_challenge_title">दैनिक चुनौती छोड़ें?</string>
+    <string name="leave_daily_challenge_body">आज दोबारा कोशिश नहीं कर पाएंगे</string>
+    <string name="leave_daily_challenge_stay">रुकें</string>
+    <string name="leave_daily_challenge_leave">छोड़ें</string>
+
     <string name="need_more_cards">और कार्ड चाहिए</string>
     <string name="next">अगला</string>
     <string name="play">खेलें</string>

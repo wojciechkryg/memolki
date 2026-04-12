@@ -117,6 +117,11 @@
     <string name="share_casual">Glaubst du, du kannst mich schlagen? 🧠🔥</string>
     <string name="level_count">Level %d</string>
 
+    <string name="leave_daily_challenge_title">Tägliche Herausforderung verlassen?</string>
+    <string name="leave_daily_challenge_body">Du kannst es heute nicht erneut versuchen</string>
+    <string name="leave_daily_challenge_stay">Bleiben</string>
+    <string name="leave_daily_challenge_leave">Verlassen</string>
+
     <string name="need_more_cards">Mehr Karten nötig</string>
     <string name="next">Weiter</string>
     <string name="play">Spielen</string>

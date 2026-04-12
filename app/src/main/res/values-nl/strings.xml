@@ -117,6 +117,11 @@
     <string name="share_casual">Denk je dat je mij kunt verslaan? 🧠🔥</string>
     <string name="level_count">niveau %d</string>
 
+    <string name="leave_daily_challenge_title">Dagelijkse uitdaging verlaten?</string>
+    <string name="leave_daily_challenge_body">Je kunt het vandaag niet opnieuw proberen</string>
+    <string name="leave_daily_challenge_stay">Blijven</string>
+    <string name="leave_daily_challenge_leave">Verlaten</string>
+
     <string name="need_more_cards">Meer kaarten nodig</string>
     <string name="next">Volgende</string>
     <string name="play">Spelen</string>

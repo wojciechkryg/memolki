@@ -117,6 +117,11 @@
     <string name="share_casual">Tror du at du kan slå meg? 🧠🔥</string>
     <string name="level_count">nivå %d</string>
 
+    <string name="leave_daily_challenge_title">Forlat daglig utfordring?</string>
+    <string name="leave_daily_challenge_body">Du vil ikke kunne prøve igjen i dag</string>
+    <string name="leave_daily_challenge_stay">Bli</string>
+    <string name="leave_daily_challenge_leave">Forlat</string>
+
     <string name="need_more_cards">Trenger flere kort</string>
     <string name="next">Neste</string>
     <string name="play">Spill</string>

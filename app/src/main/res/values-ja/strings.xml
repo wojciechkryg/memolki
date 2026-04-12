@@ -116,6 +116,11 @@
     <string name="share_casual">私に勝てると思う？🧠🔥</string>
     <string name="level_count">レベル %d</string>
 
+    <string name="leave_daily_challenge_title">デイリーチャレンジを終了しますか？</string>
+    <string name="leave_daily_challenge_body">今日はやり直せません</string>
+    <string name="leave_daily_challenge_stay">続ける</string>
+    <string name="leave_daily_challenge_leave">終了</string>
+
     <string name="need_more_cards">もっとカードが必要</string>
     <string name="next">次へ</string>
     <string name="play">プレイ</string>
