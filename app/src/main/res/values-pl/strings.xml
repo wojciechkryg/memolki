@@ -121,8 +121,10 @@
 
     <string name="leave_daily_challenge_title">Opuścić wyzwanie dnia?</string>
     <string name="leave_daily_challenge_body">Nie będziesz mógł spróbować ponownie dzisiaj</string>
-    <string name="leave_daily_challenge_stay">Zostań</string>
-    <string name="leave_daily_challenge_leave">Wyjdź</string>
+    <string name="leave_game_title">Opuścić grę?</string>
+    <string name="leave_game_body">Twój postęp zostanie utracony</string>
+    <string name="leave_game_stay">Zostań</string>
+    <string name="leave_game_leave">Wyjdź</string>
 
     <string name="need_more_cards">Potrzeba więcej kart</string>
     <string name="next">Dalej</string>

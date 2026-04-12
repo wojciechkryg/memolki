@@ -23,10 +23,8 @@ import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.TimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,6 +63,7 @@ class GameViewModel @Inject constructor(
             GameIntent.OnLeaveConfirmationShow -> onLeaveConfirmationShow()
             GameIntent.OnLeaveConfirmationDismiss -> onLeaveConfirmationDismiss()
             GameIntent.OnLeaveConfirmationConfirm -> onLeaveConfirmationConfirm()
+            GameIntent.OnResetState -> sendState { GameState() }
         }
     }
 
@@ -255,24 +254,20 @@ class GameViewModel @Inject constructor(
     }
 
     private fun navigateToEndGame() {
-        viewModelScope.launch {
-            if (uiState.value.isDailyChallenge) {
-                saveDailyChallengeAndOpenEndScreen()
-            } else {
-                sendEffect(
-                    GameEffect.OpenEndGameScreen(
-                        boardModel = uiState.value.board,
-                        mistakeCount = uiState.value.mistakeCount,
-                        cardFlipCounts = uiState.value.cardFlipCounts,
-                        level = uiState.value.level
-                    )
+        if (uiState.value.isDailyChallenge) {
+            saveDailyChallengeAndOpenEndScreen()
+        } else {
+            sendEffect(
+                GameEffect.OpenEndGameScreen(
+                    boardModel = uiState.value.board,
+                    mistakeCount = uiState.value.mistakeCount,
+                    cardFlipCounts = uiState.value.cardFlipCounts,
+                    level = uiState.value.level
                 )
-            }
-            levelFlowJob?.cancel()
-            levelFlowJob = null
-            delay(RESET_STATE_DELAY)
-            sendState { GameState() }
+            )
         }
+        levelFlowJob?.cancel()
+        levelFlowJob = null
     }
 
     private fun checkForMatchedPair() {
@@ -478,7 +473,6 @@ class GameViewModel @Inject constructor(
 
     companion object {
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
-        private const val RESET_STATE_DELAY = 1000L
 
         const val MAX_STARS = 3
         const val TWO_STARS = 2

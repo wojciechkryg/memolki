@@ -15,4 +15,5 @@ sealed class GameIntent : UiIntent {
     object OnLeaveConfirmationShow : GameIntent()
     object OnLeaveConfirmationDismiss : GameIntent()
     object OnLeaveConfirmationConfirm : GameIntent()
+    object OnResetState : GameIntent()
 }

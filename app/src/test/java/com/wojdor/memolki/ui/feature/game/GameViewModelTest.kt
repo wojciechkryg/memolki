@@ -403,7 +403,7 @@ class GameViewModelTest : AppTest() {
                     assertEquals(0, endGameEffect.mistakeCount)
                     assertEquals(3, endGameEffect.cardFlipCounts.size)
                 }
-                skipItems(3)
+                skipItems(2)
             }
             userRepository.getTotalCardPairsMatched().test {
                 assertEquals(3, awaitItem())

@@ -119,8 +119,10 @@
 
     <string name="leave_daily_challenge_title">दैनिक चुनौती छोड़ें?</string>
     <string name="leave_daily_challenge_body">आज दोबारा कोशिश नहीं कर पाएंगे</string>
-    <string name="leave_daily_challenge_stay">रुकें</string>
-    <string name="leave_daily_challenge_leave">छोड़ें</string>
+    <string name="leave_game_title">खेल छोड़ें?</string>
+    <string name="leave_game_body">आपकी प्रगति खो जाएगी</string>
+    <string name="leave_game_stay">रुकें</string>
+    <string name="leave_game_leave">छोड़ें</string>
 
     <string name="need_more_cards">और कार्ड चाहिए</string>
     <string name="next">अगला</string>

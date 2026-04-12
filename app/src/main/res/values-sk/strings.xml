@@ -121,8 +121,10 @@
 
     <string name="leave_daily_challenge_title">Opustiť dennú výzvu?</string>
     <string name="leave_daily_challenge_body">Dnes to už nebudeš môcť skúsiť znova</string>
-    <string name="leave_daily_challenge_stay">Zostať</string>
-    <string name="leave_daily_challenge_leave">Odísť</string>
+    <string name="leave_game_title">Opustiť hru?</string>
+    <string name="leave_game_body">Tvoj postup bude stratený</string>
+    <string name="leave_game_stay">Zostať</string>
+    <string name="leave_game_leave">Odísť</string>
 
     <string name="need_more_cards">Potrebuješ viac kariet</string>
     <string name="next">Ďalej</string>

@@ -109,7 +109,7 @@ private fun HandleState(
         },
         onMatchAnimationComplete = { viewModel.sendIntent(GameIntent.OnMatchAnimationComplete) },
         onMistakeShakeComplete = { viewModel.sendIntent(GameIntent.OnMistakeShakeComplete) },
-        onDailyChallengeBackPress = { viewModel.sendIntent(GameIntent.OnLeaveConfirmationShow) },
+        onBackPress = { viewModel.sendIntent(GameIntent.OnLeaveConfirmationShow) },
         onLeaveConfirmationDismiss = { viewModel.sendIntent(GameIntent.OnLeaveConfirmationDismiss) },
         onLeaveConfirmationConfirm = { viewModel.sendIntent(GameIntent.OnLeaveConfirmationConfirm) }
     )
@@ -122,10 +122,10 @@ private fun GameScreen(
     callbacks: GameCallbacks = GameCallbacks()
 ) {
     BackHandler(
-        enabled = state.isGameFinished || state.isDailyChallenge,
+        enabled = true,
         onBack = {
             if (!state.isGameFinished) {
-                callbacks.onDailyChallengeBackPress()
+                callbacks.onBackPress()
             }
         }
     )

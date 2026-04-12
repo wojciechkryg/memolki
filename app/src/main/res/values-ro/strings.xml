@@ -120,8 +120,10 @@
 
     <string name="leave_daily_challenge_title">Părăsești provocarea zilnică?</string>
     <string name="leave_daily_challenge_body">Nu vei putea încerca din nou azi</string>
-    <string name="leave_daily_challenge_stay">Rămâi</string>
-    <string name="leave_daily_challenge_leave">Pleacă</string>
+    <string name="leave_game_title">Părăsești jocul?</string>
+    <string name="leave_game_body">Progresul tău va fi pierdut</string>
+    <string name="leave_game_stay">Rămâi</string>
+    <string name="leave_game_leave">Pleacă</string>
 
     <string name="need_more_cards">Ai nevoie de mai multe cărți</string>
     <string name="next">Următorul</string>

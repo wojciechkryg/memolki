@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.app
 
 import android.content.Intent
+import androidx.compose.animation.EnterExitState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -166,6 +167,13 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
             }
         }
     ) { backStackEntry ->
+        val gameViewModel = getGameViewModel(backStackEntry, navController)
+        val enterAnimationFinished = transition.currentState == EnterExitState.Visible
+        LaunchedEffect(enterAnimationFinished) {
+            if (enterAnimationFinished) {
+                gameViewModel.sendIntent(GameIntent.OnResetState)
+            }
+        }
         EndGameScreen(
             navController = navController,
             viewModel = getEndGameViewModel(backStackEntry, navController)

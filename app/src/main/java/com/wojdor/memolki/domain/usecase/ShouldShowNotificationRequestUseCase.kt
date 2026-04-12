@@ -6,7 +6,6 @@ import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -17,11 +16,9 @@ class ShouldShowNotificationRequestUseCase @Inject constructor(
 ) : BaseUseCase<Boolean>(coroutineDispatcher) {
 
     override fun execute(): Flow<Result<Boolean>> {
-        if (notificationScheduler.hasNotificationPermission()) {
-            return flowOf(Result.success(false))
-        }
         return userRepository.getTotalGamesPlayed().map { totalGamesPlayed ->
-            val shouldShow = totalGamesPlayed > 0 &&
+            val shouldShow = !notificationScheduler.hasNotificationPermission() &&
+                    totalGamesPlayed > 0 &&
                     totalGamesPlayed % NOTIFICATION_REQUEST_GAME_INTERVAL == 1L
             Result.success(shouldShow)
         }

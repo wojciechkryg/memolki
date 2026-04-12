@@ -119,8 +119,10 @@
 
     <string name="leave_daily_challenge_title">Poistu päivän haasteesta?</string>
     <string name="leave_daily_challenge_body">Et voi yrittää uudelleen tänään</string>
-    <string name="leave_daily_challenge_stay">Jää</string>
-    <string name="leave_daily_challenge_leave">Poistu</string>
+    <string name="leave_game_title">Poistu pelistä?</string>
+    <string name="leave_game_body">Edistymisesi menetetään</string>
+    <string name="leave_game_stay">Jää</string>
+    <string name="leave_game_leave">Poistu</string>
 
     <string name="need_more_cards">Tarvitset lisää kortteja</string>
     <string name="next">Seuraava</string>

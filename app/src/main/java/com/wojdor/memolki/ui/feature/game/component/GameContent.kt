@@ -52,7 +52,7 @@ fun GameContent(
         CardDetails(state)
     }
     if (state.shouldShowLeaveConfirmation) {
-        LeaveConfirmation(callbacks)
+        LeaveConfirmation(state.isDailyChallenge, callbacks)
     }
 }
 
@@ -170,7 +170,9 @@ private fun CardDetails(state: GameState) {
 }
 
 @Composable
-private fun LeaveConfirmation(callbacks: GameCallbacks) {
+private fun LeaveConfirmation(isDailyChallenge: Boolean, callbacks: GameCallbacks) {
+    val titleRes = if (isDailyChallenge) R.string.leave_daily_challenge_title else R.string.leave_game_title
+    val bodyRes = if (isDailyChallenge) R.string.leave_daily_challenge_body else R.string.leave_game_body
     Dialog(
         onDismissRequest = callbacks.onLeaveConfirmationDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -188,22 +190,22 @@ private fun LeaveConfirmation(callbacks: GameCallbacks) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AutoSizeText(
-                    text = stringResource(R.string.leave_daily_challenge_title),
+                    text = stringResource(titleRes),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(spacingM))
                 AutoSizeText(
-                    text = stringResource(R.string.leave_daily_challenge_body),
+                    text = stringResource(bodyRes),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.height(spacingXL))
                 BaseMenuItem(
-                    textId = R.string.leave_daily_challenge_stay,
+                    textId = R.string.leave_game_stay,
                     onClick = callbacks.onLeaveConfirmationDismiss
                 )
                 Spacer(modifier = Modifier.height(spacingL))
                 BaseMenuItem(
-                    textId = R.string.leave_daily_challenge_leave,
+                    textId = R.string.leave_game_leave,
                     textStyle = MaterialTheme.typography.bodyLarge,
                     alpha = 0.5f,
                     onClick = callbacks.onLeaveConfirmationConfirm
@@ -315,7 +317,7 @@ private fun CardsGridDailyChallengePreview() {
 
 @Preview
 @Composable
-private fun LeaveConfirmationPreview() {
+private fun LeaveConfirmationDailyChallengePreview() {
     AppTheme {
         GameContent(
             state = GameState(
@@ -324,6 +326,22 @@ private fun LeaveConfirmationPreview() {
                 shouldShowLeaveConfirmation = true,
                 progress = 0.33f,
                 cards = getPreviewCards(matchedCount = 2)
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun LeaveConfirmationCasualPreview() {
+    AppTheme {
+        GameContent(
+            state = GameState(
+                board = BoardModel.Grid2x3(),
+                shouldShowLeaveConfirmation = true,
+                level = 5L,
+                progress = 0.5f,
+                cards = getPreviewCards(matchedCount = 3)
             )
         )
     }

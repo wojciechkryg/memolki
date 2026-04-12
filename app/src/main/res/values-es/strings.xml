@@ -119,8 +119,10 @@
 
     <string name="leave_daily_challenge_title">¿Abandonar el desafío diario?</string>
     <string name="leave_daily_challenge_body">No podrás volver a intentarlo hoy</string>
-    <string name="leave_daily_challenge_stay">Quedarse</string>
-    <string name="leave_daily_challenge_leave">Salir</string>
+    <string name="leave_game_title">¿Abandonar el juego?</string>
+    <string name="leave_game_body">Tu progreso se perderá</string>
+    <string name="leave_game_stay">Quedarse</string>
+    <string name="leave_game_leave">Salir</string>
 
     <string name="need_more_cards">Necesitas más cartas</string>
     <string name="next">Siguiente</string>

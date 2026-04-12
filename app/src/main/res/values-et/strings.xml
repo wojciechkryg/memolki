@@ -119,8 +119,10 @@
 
     <string name="leave_daily_challenge_title">Lahku päevasest väljakutsest?</string>
     <string name="leave_daily_challenge_body">Sa ei saa täna uuesti proovida</string>
-    <string name="leave_daily_challenge_stay">Jää</string>
-    <string name="leave_daily_challenge_leave">Lahku</string>
+    <string name="leave_game_title">Lahku mängust?</string>
+    <string name="leave_game_body">Sinu edenemine läheb kaotsi</string>
+    <string name="leave_game_stay">Jää</string>
+    <string name="leave_game_leave">Lahku</string>
 
     <string name="need_more_cards">Vaja rohkem kaarte</string>
     <string name="next">Järgmine</string>

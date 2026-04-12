@@ -123,8 +123,10 @@
 
     <string name="leave_daily_challenge_title">مغادرة التحدي اليومي؟</string>
     <string name="leave_daily_challenge_body">لن تتمكن من إعادة المحاولة اليوم</string>
-    <string name="leave_daily_challenge_stay">البقاء</string>
-    <string name="leave_daily_challenge_leave">مغادرة</string>
+    <string name="leave_game_title">مغادرة اللعبة؟</string>
+    <string name="leave_game_body">سيتم فقدان تقدمك</string>
+    <string name="leave_game_stay">البقاء</string>
+    <string name="leave_game_leave">مغادرة</string>
 
     <string name="need_more_cards">تحتاج المزيد من البطاقات</string>
     <string name="next">التالي</string>

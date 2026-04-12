@@ -119,8 +119,10 @@
 
     <string name="leave_daily_challenge_title">Günlük meydan okumadan çık?</string>
     <string name="leave_daily_challenge_body">Bugün tekrar deneyemezsin</string>
-    <string name="leave_daily_challenge_stay">Kal</string>
-    <string name="leave_daily_challenge_leave">Çık</string>
+    <string name="leave_game_title">Oyundan çık?</string>
+    <string name="leave_game_body">İlerlemen kaybolacak</string>
+    <string name="leave_game_stay">Kal</string>
+    <string name="leave_game_leave">Çık</string>
 
     <string name="need_more_cards">Daha fazla kart gerekli</string>
     <string name="next">Sonraki</string>

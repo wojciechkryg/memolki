@@ -118,8 +118,10 @@
 
     <string name="leave_daily_challenge_title">Rời thử thách hàng ngày?</string>
     <string name="leave_daily_challenge_body">Bạn sẽ không thể thử lại hôm nay</string>
-    <string name="leave_daily_challenge_stay">Ở lại</string>
-    <string name="leave_daily_challenge_leave">Rời đi</string>
+    <string name="leave_game_title">Rời khỏi trò chơi?</string>
+    <string name="leave_game_body">Tiến trình của bạn sẽ bị mất</string>
+    <string name="leave_game_stay">Ở lại</string>
+    <string name="leave_game_leave">Rời đi</string>
 
     <string name="need_more_cards">Cần thêm thẻ</string>
     <string name="next">Tiếp</string>

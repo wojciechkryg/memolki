@@ -118,8 +118,10 @@
 
     <string name="leave_daily_challenge_title">デイリーチャレンジを終了しますか？</string>
     <string name="leave_daily_challenge_body">今日はやり直せません</string>
-    <string name="leave_daily_challenge_stay">続ける</string>
-    <string name="leave_daily_challenge_leave">終了</string>
+    <string name="leave_game_title">ゲームを終了しますか？</string>
+    <string name="leave_game_body">進行状況は失われます</string>
+    <string name="leave_game_stay">続ける</string>
+    <string name="leave_game_leave">終了</string>
 
     <string name="need_more_cards">もっとカードが必要</string>
     <string name="next">次へ</string>

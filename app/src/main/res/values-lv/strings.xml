@@ -120,8 +120,10 @@
 
     <string name="leave_daily_challenge_title">Pamest dienas izaicinājumu?</string>
     <string name="leave_daily_challenge_body">Šodien nevarēsi mēģināt vēlreiz</string>
-    <string name="leave_daily_challenge_stay">Palikt</string>
-    <string name="leave_daily_challenge_leave">Pamest</string>
+    <string name="leave_game_title">Pamest spēli?</string>
+    <string name="leave_game_body">Tavs progress tiks zaudēts</string>
+    <string name="leave_game_stay">Palikt</string>
+    <string name="leave_game_leave">Pamest</string>
 
     <string name="need_more_cards">Nepieciešams vairāk kāršu</string>
     <string name="next">Nākamais</string>

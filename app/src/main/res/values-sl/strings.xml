@@ -121,8 +121,10 @@
 
     <string name="leave_daily_challenge_title">Zapusti dnevni izziv?</string>
     <string name="leave_daily_challenge_body">Danes ne boš mogel poskusiti znova</string>
-    <string name="leave_daily_challenge_stay">Ostani</string>
-    <string name="leave_daily_challenge_leave">Zapusti</string>
+    <string name="leave_game_title">Zapusti igro?</string>
+    <string name="leave_game_body">Tvoj napredek bo izgubljen</string>
+    <string name="leave_game_stay">Ostani</string>
+    <string name="leave_game_leave">Zapusti</string>
 
     <string name="need_more_cards">Potrebuješ več kart</string>
     <string name="next">Naprej</string>

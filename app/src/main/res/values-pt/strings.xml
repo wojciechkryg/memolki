@@ -119,8 +119,10 @@
 
     <string name="leave_daily_challenge_title">Sair do desafio diário?</string>
     <string name="leave_daily_challenge_body">Você não poderá tentar novamente hoje</string>
-    <string name="leave_daily_challenge_stay">Ficar</string>
-    <string name="leave_daily_challenge_leave">Sair</string>
+    <string name="leave_game_title">Sair do jogo?</string>
+    <string name="leave_game_body">Seu progresso será perdido</string>
+    <string name="leave_game_stay">Ficar</string>
+    <string name="leave_game_leave">Sair</string>
 
     <string name="need_more_cards">Precisa de mais cartas</string>
     <string name="next">Próximo</string>
