@@ -122,6 +122,13 @@
         <item quantity="other">%d mistakes</item>
     </plurals>
 
+    <string name="leave_daily_challenge_title">Leave daily challenge?</string>
+    <string name="leave_daily_challenge_body">You won\'t be able to retry today</string>
+    <string name="leave_game_title">Leave game?</string>
+    <string name="leave_game_body">Your progress will be lost</string>
+    <string name="leave_game_stay">Stay</string>
+    <string name="leave_game_leave">Leave</string>
+
     <string name="need_more_cards">Need more cards</string>
     <string name="next">Next</string>
     <string name="play">Play</string>

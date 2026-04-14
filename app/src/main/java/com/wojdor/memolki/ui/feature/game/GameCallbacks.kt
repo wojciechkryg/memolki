@@ -6,5 +6,8 @@ data class GameCallbacks(
     val onBackCardClick: (CardModel) -> Unit = {},
     val onFrontCardPress: (Boolean, CardModel) -> Unit = { _, _ -> },
     val onMatchAnimationComplete: () -> Unit = {},
-    val onMistakeShakeComplete: () -> Unit = {}
+    val onMistakeShakeComplete: () -> Unit = {},
+    val onBackPress: () -> Unit = {},
+    val onLeaveConfirmationDismiss: () -> Unit = {},
+    val onLeaveConfirmationConfirm: () -> Unit = {}
 )

@@ -117,6 +117,13 @@
     <string name="share_casual">Νομίζεις ότι μπορείς να με νικήσεις; 🧠🔥</string>
     <string name="level_count">επίπεδο %d</string>
 
+    <string name="leave_daily_challenge_title">Αποχώρηση από την ημερήσια πρόκληση;</string>
+    <string name="leave_daily_challenge_body">Δεν θα μπορείς να ξαναπροσπαθήσεις σήμερα</string>
+    <string name="leave_game_title">Αποχώρηση από το παιχνίδι;</string>
+    <string name="leave_game_body">Η πρόοδός σου θα χαθεί</string>
+    <string name="leave_game_stay">Παραμονή</string>
+    <string name="leave_game_leave">Αποχώρηση</string>
+
     <string name="need_more_cards">Χρειάζεσαι περισσότερες κάρτες</string>
     <string name="next">Επόμενο</string>
     <string name="play">Παίξε</string>

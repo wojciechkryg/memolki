@@ -13,6 +13,7 @@ data class GameState(
     val lastCardPressed: CardModel = CardModel.Empty,
     val shouldShowCardText: Boolean = false,
     val shouldShowCardDetails: Boolean = false,
+    val shouldShowLeaveConfirmation: Boolean = false,
     val mistakeCount: Int = 0,
     val cardFlipCounts: List<List<Int>> = emptyList(),
     val isDailyChallenge: Boolean = false,

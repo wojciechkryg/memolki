@@ -131,28 +131,35 @@ def generate_feature_graphic(flavor, locale, output_dir):
 
     if logo_path.exists():
         logo = Image.open(str(logo_path)).convert("RGBA")
-        max_h = 360
+        max_h = 310
         scale = max_h / logo.height
         logo = logo.resize(
             (int(logo.width * scale), int(logo.height * scale)), Image.LANCZOS
         )
-        logo_x = 10
+        logo_w = logo.width
+    else:
+        logo = None
+        logo_w = 0
+
+    # Fixed positions — logo on left, chips on right, independent of locale
+    logo_x = 66
+    chips_right_margin = 50
+    chips_column_right = WIDTH - chips_right_margin
+
+    if logo is not None:
         logo_y = (HEIGHT - logo.height) // 2
         canvas.paste(logo, (logo_x, logo_y), logo)
-        chips_left = logo_x + logo.width + 15
-    else:
-        chips_left = 60
 
     # Chip labels
     chips = get_chips(locale)
-    available_w = WIDTH - chips_left - 30
+    chips_available_w = chips_column_right - (logo_x + logo_w + 15)
 
     # Auto-size font
     font_size = CHIP_FONT_SIZE
     while font_size >= CHIP_FONT_SIZE_MIN:
         font = load_font(locale, font_size)
         max_chip_w = max(font.getbbox(t)[2] - font.getbbox(t)[0] + 2 * CHIP_PADDING_H for t in chips)
-        if max_chip_w <= available_w:
+        if max_chip_w <= chips_available_w:
             break
         font_size -= 1
     else:
@@ -170,13 +177,11 @@ def generate_feature_graphic(flavor, locale, output_dir):
     total_h = len(chip_data) * ch + (len(chip_data) - 1) * CHIP_SPACING
     start_y = (HEIGHT - total_h) // 2
 
-    # Center the chip column in the available space, left-align chips within it
-    max_cw = max(cw for _, cw in chip_data)
-    available_w = WIDTH - chips_left - 30
-    column_x = chips_left + (available_w - max_cw) // 2
+    # Left-align chips at fixed position
+    chips_left_x = logo_x + logo_w + 30
 
     for idx, (text, cw) in enumerate(chip_data):
-        x = column_x
+        x = chips_left_x
         y = start_y + idx * (ch + CHIP_SPACING)
         radius = ch // 2
 

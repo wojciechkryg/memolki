@@ -119,6 +119,13 @@
     <string name="share_casual">Думаєш, зможеш мене обіграти? 🧠🔥</string>
     <string name="level_count">рівень %d</string>
 
+    <string name="leave_daily_challenge_title">Покинути щоденний виклик?</string>
+    <string name="leave_daily_challenge_body">Сьогодні повторити не вдасться</string>
+    <string name="leave_game_title">Покинути гру?</string>
+    <string name="leave_game_body">Ваш прогрес буде втрачено</string>
+    <string name="leave_game_stay">Залишитись</string>
+    <string name="leave_game_leave">Вийти</string>
+
     <string name="need_more_cards">Потрібно більше карток</string>
     <string name="next">Далі</string>
     <string name="play">Грати</string>

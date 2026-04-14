@@ -403,7 +403,7 @@ class GameViewModelTest : AppTest() {
                     assertEquals(0, endGameEffect.mistakeCount)
                     assertEquals(3, endGameEffect.cardFlipCounts.size)
                 }
-                skipItems(3)
+                skipItems(2)
             }
             userRepository.getTotalCardPairsMatched().test {
                 assertEquals(3, awaitItem())
@@ -999,6 +999,95 @@ class GameViewModelTest : AppTest() {
         // then
         verify { cardPairMatchedPlayer.play() }
     }
+
+    @Test
+    fun `when OnLeaveConfirmationShow intent is sent then shouldShowLeaveConfirmation is true`() =
+        runTest {
+            sut.uiState.test {
+                // when
+                sut.sendIntent(GameIntent.OnLeaveConfirmationShow)
+
+                // then
+                assertFalse(awaitItem().shouldShowLeaveConfirmation)
+                assertTrue(awaitItem().shouldShowLeaveConfirmation)
+            }
+        }
+
+    @Test
+    fun `when OnLeaveConfirmationDismiss intent is sent then shouldShowLeaveConfirmation is false`() =
+        runTest {
+            sut.uiState.test {
+                // given
+                sut.sendIntent(GameIntent.OnLeaveConfirmationShow)
+                skipItems(1)
+                assertTrue(awaitItem().shouldShowLeaveConfirmation)
+
+                // when
+                sut.sendIntent(GameIntent.OnLeaveConfirmationDismiss)
+
+                // then
+                assertFalse(awaitItem().shouldShowLeaveConfirmation)
+            }
+        }
+
+    @Test
+    fun `when OnLeaveConfirmationConfirm intent is sent then NavigateBack effect is emitted`() =
+        runTest {
+            // given
+            sut.sendIntent(GameIntent.OnLeaveConfirmationShow)
+            testScheduler.advanceUntilIdle()
+
+            // when
+            sut.sendIntent(GameIntent.OnLeaveConfirmationConfirm)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            sut.uiEffect.test {
+                assertTrue(awaitItem() is GameEffect.NavigateBack)
+            }
+        }
+
+    @Test
+    fun `when OnLeaveConfirmationConfirm intent is sent then shouldShowLeaveConfirmation is false`() =
+        runTest {
+            // given
+            sut.sendIntent(GameIntent.OnLeaveConfirmationShow)
+            testScheduler.advanceUntilIdle()
+            assertTrue(sut.uiState.value.shouldShowLeaveConfirmation)
+
+            // when
+            sut.sendIntent(GameIntent.OnLeaveConfirmationConfirm)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            assertFalse(sut.uiState.value.shouldShowLeaveConfirmation)
+        }
+
+    @Test
+    fun `when OnLeaveConfirmationShow is sent twice then shouldShowLeaveConfirmation remains true`() =
+        runTest {
+            // given
+            sut.sendIntent(GameIntent.OnLeaveConfirmationShow)
+            testScheduler.advanceUntilIdle()
+
+            // when
+            sut.sendIntent(GameIntent.OnLeaveConfirmationShow)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            assertTrue(sut.uiState.value.shouldShowLeaveConfirmation)
+        }
+
+    @Test
+    fun `when OnLeaveConfirmationDismiss is sent without prior show then shouldShowLeaveConfirmation remains false`() =
+        runTest {
+            // when
+            sut.sendIntent(GameIntent.OnLeaveConfirmationDismiss)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            assertFalse(sut.uiState.value.shouldShowLeaveConfirmation)
+        }
 
     private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {
         return listOf(

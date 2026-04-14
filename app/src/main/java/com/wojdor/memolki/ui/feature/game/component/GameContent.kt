@@ -30,9 +30,11 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
 import com.wojdor.memolki.ui.feature.game.GameState
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
@@ -48,6 +50,9 @@ fun GameContent(
     CardsGridWithText(state, callbacks)
     if (state.shouldShowCardDetails) {
         CardDetails(state)
+    }
+    if (state.shouldShowLeaveConfirmation) {
+        LeaveConfirmation(state.isDailyChallenge, callbacks)
     }
 }
 
@@ -164,6 +169,52 @@ private fun CardDetails(state: GameState) {
     }
 }
 
+@Composable
+private fun LeaveConfirmation(isDailyChallenge: Boolean, callbacks: GameCallbacks) {
+    val titleRes = if (isDailyChallenge) R.string.leave_daily_challenge_title else R.string.leave_game_title
+    val bodyRes = if (isDailyChallenge) R.string.leave_daily_challenge_body else R.string.leave_game_body
+    Dialog(
+        onDismissRequest = callbacks.onLeaveConfirmationDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = spacingXL)
+                    .clip(CardShape)
+                    .background(colorResource(R.color.primary))
+                    .padding(spacingXL),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                AutoSizeText(
+                    text = stringResource(titleRes),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+                Spacer(modifier = Modifier.height(spacingM))
+                AutoSizeText(
+                    text = stringResource(bodyRes),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Spacer(modifier = Modifier.height(spacingXL))
+                BaseMenuItem(
+                    textId = R.string.leave_game_stay,
+                    onClick = callbacks.onLeaveConfirmationDismiss
+                )
+                Spacer(modifier = Modifier.height(spacingL))
+                BaseMenuItem(
+                    textId = R.string.leave_game_leave,
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    alpha = 0.5f,
+                    onClick = callbacks.onLeaveConfirmationConfirm
+                )
+            }
+        }
+    }
+}
+
 private const val CARD_TEXT_ANIMATION_DURATION = 300
 private const val TOP_SPACE_RATIO = 0.1f
 private const val GRID_AREA_RATIO = 0.8f
@@ -259,6 +310,38 @@ private fun CardsGridDailyChallengePreview() {
                 isDailyChallenge = true,
                 progress = 0.33f,
                 cards = getPreviewCards(matchedCount = 2)
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun LeaveConfirmationDailyChallengePreview() {
+    AppTheme {
+        GameContent(
+            state = GameState(
+                board = BoardModel.Grid5x6(),
+                isDailyChallenge = true,
+                shouldShowLeaveConfirmation = true,
+                progress = 0.33f,
+                cards = getPreviewCards(matchedCount = 2)
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun LeaveConfirmationCasualPreview() {
+    AppTheme {
+        GameContent(
+            state = GameState(
+                board = BoardModel.Grid2x3(),
+                shouldShowLeaveConfirmation = true,
+                level = 5L,
+                progress = 0.5f,
+                cards = getPreviewCards(matchedCount = 3)
             )
         )
     }

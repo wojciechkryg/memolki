@@ -117,6 +117,13 @@
     <string name="share_casual">Tror du att du kan slå mig? 🧠🔥</string>
     <string name="level_count">nivå %d</string>
 
+    <string name="leave_daily_challenge_title">Lämna daglig utmaning?</string>
+    <string name="leave_daily_challenge_body">Du kan inte försöka igen idag</string>
+    <string name="leave_game_title">Lämna spelet?</string>
+    <string name="leave_game_body">Dina framsteg går förlorade</string>
+    <string name="leave_game_stay">Stanna</string>
+    <string name="leave_game_leave">Lämna</string>
+
     <string name="need_more_cards">Behöver fler kort</string>
     <string name="next">Nästa</string>
     <string name="play">Spela</string>

@@ -119,6 +119,13 @@
     <string name="share_casual">Manai, kad mane įveiksi? 🧠🔥</string>
     <string name="level_count">lygis %d</string>
 
+    <string name="leave_daily_challenge_title">Palikti dienos iššūkį?</string>
+    <string name="leave_daily_challenge_body">Šiandien nebegalėsite bandyti iš naujo</string>
+    <string name="leave_game_title">Palikti žaidimą?</string>
+    <string name="leave_game_body">Jūsų progresas bus prarastas</string>
+    <string name="leave_game_stay">Likti</string>
+    <string name="leave_game_leave">Palikti</string>
+
     <string name="need_more_cards">Reikia daugiau kortelių</string>
     <string name="next">Kitas</string>
     <string name="play">Žaisti</string>

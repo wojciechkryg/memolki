@@ -12,4 +12,8 @@ sealed class GameIntent : UiIntent {
     object OnMatchAnimationComplete : GameIntent()
     object OnMistakeShakeComplete : GameIntent()
     object OnGameLeave : GameIntent()
+    object OnLeaveConfirmationShow : GameIntent()
+    object OnLeaveConfirmationDismiss : GameIntent()
+    object OnLeaveConfirmationConfirm : GameIntent()
+    object OnResetState : GameIntent()
 }

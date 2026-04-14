@@ -20,4 +20,5 @@ sealed class GameEffect : UiEffect {
     ) : GameEffect()
 
     data object OnPairMatched : GameEffect()
+    data object NavigateBack : GameEffect()
 }

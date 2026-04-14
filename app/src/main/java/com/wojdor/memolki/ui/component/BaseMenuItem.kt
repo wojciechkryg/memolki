@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -20,10 +21,11 @@ fun BaseMenuItem(
     @StringRes textId: Int,
     isEnabled: Boolean = true,
     textStyle: TextStyle = MaterialTheme.typography.displaySmall,
+    alpha: Float = 1f,
     onClick: () -> Unit = {}
 ) {
     Button(
-        modifier = if (isEnabled) Modifier.bounceClickEffect() else Modifier,
+        modifier = (if (isEnabled) Modifier.bounceClickEffect() else Modifier).alpha(alpha),
         onClick = throttleClick(onClick = onClick),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,

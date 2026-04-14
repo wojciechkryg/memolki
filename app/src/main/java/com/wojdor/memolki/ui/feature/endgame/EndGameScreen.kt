@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -24,6 +25,8 @@ import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.component.CasualEndGameContent
 import com.wojdor.memolki.ui.feature.endgame.component.DailyChallengeEndGameContent
+import com.wojdor.memolki.ui.feature.game.GameIntent
+import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import kotlinx.coroutines.launch
@@ -31,9 +34,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun EndGameScreen(
     viewModel: EndGameViewModel = hiltViewModel(),
+    gameViewModel: GameViewModel,
+    isEnterAnimationFinished: Boolean,
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()
+    LaunchedEffect(isEnterAnimationFinished) {
+        if (isEnterAnimationFinished) {
+            gameViewModel.sendIntent(GameIntent.OnResetState)
+        }
+    }
     LifecycleResumeEffect(Unit) {
         viewModel.sendIntent(EndGameIntent.OnScreenResume)
         onPauseOrDispose {}
