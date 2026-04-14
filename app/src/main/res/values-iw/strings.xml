@@ -130,4 +130,5 @@
     <string name="next">הבא</string>
     <string name="play">שחק</string>
     <string name="daily_reward">פרס יומי</string>
+    <string name="daily_challenge_history">היסטוריה</string>
 </resources>

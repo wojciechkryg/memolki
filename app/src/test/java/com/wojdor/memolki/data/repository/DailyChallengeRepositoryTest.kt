@@ -151,4 +151,70 @@ class DailyChallengeRepositoryTest : AppTest() {
         // then
         assertNull(result)
     }
+
+    @Test
+    fun `when get all results with entries then return mapped models`() = runTest {
+        // given
+        val entities = listOf(
+            DailyChallengeEntity(
+                epochDay = 20001L,
+                mistakeCount = 0,
+                starCount = 3,
+                timeMillis = 45000L,
+                cardFlipCounts = "2,2;2,2"
+            ),
+            DailyChallengeEntity(
+                epochDay = 20000L,
+                mistakeCount = 3,
+                starCount = 2,
+                timeMillis = 60000L,
+                cardFlipCounts = "2,3;4,2"
+            )
+        )
+        coEvery { dailyChallengeDao.getAll() } returns entities
+
+        // when
+        val result = sut.getAll()
+
+        // then
+        assertEquals(2, result.size)
+        assertEquals(20001L, result[0].epochDay)
+        assertEquals(20000L, result[1].epochDay)
+    }
+
+    @Test
+    fun `when get all results without entries then return empty list`() = runTest {
+        // given
+        coEvery { dailyChallengeDao.getAll() } returns emptyList()
+
+        // when
+        val result = sut.getAll()
+
+        // then
+        assertTrue(result.isEmpty())
+    }
+
+    @Test
+    fun `when has any result with entries then return true`() = runTest {
+        // given
+        coEvery { dailyChallengeDao.hasAnyCompleted() } returns true
+
+        // when
+        val result = sut.hasAnyCompleted()
+
+        // then
+        assertTrue(result)
+    }
+
+    @Test
+    fun `when has any result without entries then return false`() = runTest {
+        // given
+        coEvery { dailyChallengeDao.hasAnyCompleted() } returns false
+
+        // when
+        val result = sut.hasAnyCompleted()
+
+        // then
+        assertFalse(result)
+    }
 }

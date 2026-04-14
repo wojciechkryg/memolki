@@ -243,6 +243,16 @@ class Analytics @Inject constructor(
         })
     }
 
+    fun logDailyChallengeHistoryOpened() {
+        firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_HISTORY_OPENED, null)
+    }
+
+    fun logDailyChallengeHistoryShareClicked(epochDay: Long) {
+        firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_HISTORY_SHARED, Bundle().apply {
+            putLong(Key.CHALLENGE_NUMBER, epochDay)
+        })
+    }
+
     companion object {
         private val ALLOWED_SHORTCUT_IDS = setOf("daily_reward", "play_game")
     }
@@ -276,6 +286,8 @@ private object Event {
     const val DAILY_CHALLENGE_SHARED = "daily_challenge_shared"
     const val DAILY_CHALLENGE_ALREADY_PLAYED = "daily_challenge_already_played"
     const val DAILY_CHALLENGE_ABANDONED = "daily_challenge_abandoned"
+    const val DAILY_CHALLENGE_HISTORY_OPENED = "daily_challenge_history_opened"
+    const val DAILY_CHALLENGE_HISTORY_SHARED = "daily_challenge_history_shared"
 }
 
 private object Key {

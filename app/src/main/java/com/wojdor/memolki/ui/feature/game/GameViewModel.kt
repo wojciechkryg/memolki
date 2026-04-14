@@ -2,9 +2,11 @@ package com.wojdor.memolki.ui.feature.game
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.StarCalculator
+import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCase
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetLevelUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
@@ -12,7 +14,6 @@ import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.IncrementLevelUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
-import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.analytics.Analytics
@@ -44,7 +45,8 @@ class GameViewModel @Inject constructor(
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
     private val saveDailyChallengeUseCase: SaveDailyChallengeUseCase,
     private val getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase,
-    private val timeProvider: TimeProvider
+    private val timeProvider: TimeProvider,
+    private val starCalculator: StarCalculator
 ) : MviViewModel<GameIntent, GameState>(
     savedStateHandle,
     GameState()
@@ -150,7 +152,10 @@ class GameViewModel @Inject constructor(
                     copy(
                         board = BoardModel.DAILY_CHALLENGE,
                         cards = cards,
-                        cardFlipCounts = emptyFlipCountsGrid(cards, BoardModel.DAILY_CHALLENGE.columns),
+                        cardFlipCounts = emptyFlipCountsGrid(
+                            cards,
+                            BoardModel.DAILY_CHALLENGE.columns
+                        ),
                         isDailyChallenge = true,
                         epochDay = epochDay
                     )
@@ -162,7 +167,7 @@ class GameViewModel @Inject constructor(
     private fun saveDailyChallengeAndOpenEndScreen() {
         val state = uiState.value
         val elapsedTimeMillis = timeProvider.currentTimeMillis() - state.startTimeMillis
-        val starCount = calculateStars(state.mistakeCount)
+        val starCount = starCalculator.calculate(state.mistakeCount)
         val result = DailyChallengeModel(
             mistakeCount = state.mistakeCount,
             starCount = starCount,
@@ -185,12 +190,6 @@ class GameViewModel @Inject constructor(
                 dailyChallenge = result
             )
         )
-    }
-
-    private fun calculateStars(mistakeCount: Int): Int = when {
-        mistakeCount == 0 -> MAX_STARS
-        mistakeCount in 1..4 -> TWO_STARS
-        else -> MIN_STARS
     }
 
     private fun onBackCardClick(card: CardModel) {
@@ -473,9 +472,6 @@ class GameViewModel @Inject constructor(
 
     companion object {
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
-
-        const val MAX_STARS = 3
-        const val TWO_STARS = 2
-        const val MIN_STARS = 1
+        private const val RESET_STATE_DELAY = 1000L
     }
 }

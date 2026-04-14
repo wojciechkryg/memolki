@@ -127,4 +127,5 @@
     <string name="next">Berikutnya</string>
     <string name="play">Main</string>
     <string name="daily_reward">Hadiah harian</string>
+    <string name="daily_challenge_history">Riwayat</string>
 </resources>

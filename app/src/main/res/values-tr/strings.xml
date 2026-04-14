@@ -128,4 +128,5 @@
     <string name="next">Sonraki</string>
     <string name="play">Oyna</string>
     <string name="daily_reward">Günlük ödül</string>
+    <string name="daily_challenge_history">Geçmiş</string>
 </resources>

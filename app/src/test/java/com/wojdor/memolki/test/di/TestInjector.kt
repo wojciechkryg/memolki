@@ -1,6 +1,7 @@
 package com.wojdor.memolki.test.di
 
 import com.wojdor.memolki.data.local.card.UnlockedCardPairsLocalDataSourceTest
+import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSourceTest
 import com.wojdor.memolki.data.local.settings.SettingsLocalDataSourceTest
 import com.wojdor.memolki.data.local.user.UserLocalDataSourceTest
 import com.wojdor.memolki.data.repository.CardRepositoryTest
@@ -16,13 +17,15 @@ import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCaseTest
 import com.wojdor.memolki.domain.usecase.CollectDailyStreakRewardUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetAllCardPairsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetAllDailyChallengesUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetBoardsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCollectionDataUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetCurrentLanguageTagUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCaseTest
-import com.wojdor.memolki.domain.usecase.GetLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCaseTest
-import com.wojdor.memolki.domain.usecase.GetBoardsUseCaseTest
+import com.wojdor.memolki.domain.usecase.GetLevelUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMenuUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCaseTest
@@ -35,6 +38,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCaseTest
+import com.wojdor.memolki.domain.usecase.HasAnyDailyChallengeUseCaseTest
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCaseTest
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementLevelUseCaseTest
@@ -44,7 +48,6 @@ import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountU
 import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCaseTest
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCaseTest
 import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCaseTest
-import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCaseTest
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCaseTest
@@ -58,13 +61,13 @@ import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCaseTest
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCaseTest
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCaseTest
-import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSourceTest
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.ui.app.AppViewModelTest
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModelTest
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageViewModelTest
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardViewModelTest
 import com.wojdor.memolki.ui.feature.collection.CollectionViewModelTest
+import com.wojdor.memolki.ui.feature.dailychallengehistory.DailyChallengeHistoryViewModelTest
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationsViewModelTest
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModelTest
 import com.wojdor.memolki.ui.feature.game.GameViewModelTest
@@ -148,4 +151,7 @@ interface TestInjector {
     fun inject(test: AppViewModelTest)
     fun inject(test: NotificationLocalDataSourceTest)
     fun inject(test: NotificationRepositoryTest)
+    fun inject(test: GetAllDailyChallengesUseCaseTest)
+    fun inject(test: HasAnyDailyChallengeUseCaseTest)
+    fun inject(test: DailyChallengeHistoryViewModelTest)
 }

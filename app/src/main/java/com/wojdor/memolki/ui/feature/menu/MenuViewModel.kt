@@ -2,7 +2,6 @@ package com.wojdor.memolki.ui.feature.menu
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
@@ -17,15 +16,15 @@ import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenMoreAppsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenSettingsScreen
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnCollectionClick
+import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnDailyRewardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
-import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnDailyRewardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnPlayClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -106,7 +105,7 @@ class MenuViewModel @Inject constructor(
             val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0)
             val streakResult = checkDailyLoginStreakUseCase().first()
             val isDailyRewardAvailable = !RECORDING_MODE && totalGamesPlayed > 0 &&
-                streakResult.getOrNull()?.isRewardAvailable == true
+                    streakResult.getOrNull()?.isRewardAvailable == true
             sendState {
                 val baseMenu = menu.filterNot { it is MenuModel.DailyReward }
                 val menuItems = baseMenu.toMutableList().apply {
@@ -138,7 +137,7 @@ class MenuViewModel @Inject constructor(
                 null
             }
             val isDailyRewardAvailable = !RECORDING_MODE && totalGamesPlayed > 0 &&
-                streakResult.getOrNull()?.isRewardAvailable == true
+                    streakResult.getOrNull()?.isRewardAvailable == true
             val baseMenu = menuResult.getOrNull() ?: uiState.value.menu
             val menuItems = baseMenu.toMutableList().apply {
                 if (isDailyRewardAvailable) {

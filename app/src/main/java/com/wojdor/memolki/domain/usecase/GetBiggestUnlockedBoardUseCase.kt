@@ -20,7 +20,10 @@ class GetBiggestUnlockedBoardUseCase @Inject constructor(
             }
         }
 
-    private fun getBiggestUnlockedBoard(boards: List<BoardModel>, biggestBoardId: String): BoardModel {
+    private fun getBiggestUnlockedBoard(
+        boards: List<BoardModel>,
+        biggestBoardId: String
+    ): BoardModel {
         val unlockedBoards = boards.filter { it.isUnlocked }
         val requestedBoard = boards.find { it.id == biggestBoardId }
         return when {

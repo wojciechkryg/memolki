@@ -20,6 +20,7 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToDailyChallenge
+import com.wojdor.memolki.ui.app.navigateToDailyChallengeHistory
 import com.wojdor.memolki.ui.app.navigateToGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.chooseboard.component.ChooseBoardItem
@@ -49,6 +50,7 @@ private fun HandleEffect(
             is ChooseBoardEffect.OpenGameScreen -> navController.navigateToGame(it.boardModel.id)
             ChooseBoardEffect.OpenDailyChallengeScreen -> navController.navigateToDailyChallenge()
             ChooseBoardEffect.OpenCollectionScreen -> navController.navigateToCollection()
+            ChooseBoardEffect.OpenDailyChallengeHistoryScreen -> navController.navigateToDailyChallengeHistory()
         }
     }
 }
@@ -61,7 +63,8 @@ private fun HandleState(
     val callbacks = ChooseBoardCallbacks(
         onBoardClick = { viewModel.sendIntent(ChooseBoardIntent.OnBoardClick(it)) },
         onDailyChallengeClick = { viewModel.sendIntent(ChooseBoardIntent.OnDailyChallengeClick) },
-        onLockedBoardClick = { viewModel.sendIntent(ChooseBoardIntent.OnLockedBoardClick) }
+        onLockedBoardClick = { viewModel.sendIntent(ChooseBoardIntent.OnLockedBoardClick) },
+        onDailyChallengeHistoryClick = { viewModel.sendIntent(ChooseBoardIntent.OnDailyChallengeHistoryClick) }
     )
     ChooseBoardScreen(state, callbacks)
 }
@@ -87,7 +90,9 @@ private fun ChooseBoardScreen(
         }
         DailyChallengeItem(
             isCompleted = state.isDailyChallengeCompleted,
-            onClick = { callbacks.onDailyChallengeClick() }
+            showHistoryIcon = state.hasDailyChallengeHistory,
+            onClick = { callbacks.onDailyChallengeClick() },
+            onHistoryClick = { callbacks.onDailyChallengeHistoryClick() }
         )
         if (lockedBoards.isNotEmpty()) {
             Spacer(modifier = Modifier.height(spacingXXXL))
@@ -145,7 +150,8 @@ private fun ChooseBoardScreenDailyChallengeCompletedPreview() {
                     BoardModel.Grid4x6(),
                     BoardModel.Grid5x6()
                 ),
-                isDailyChallengeCompleted = true
+                isDailyChallengeCompleted = true,
+                hasDailyChallengeHistory = true
             ),
             callbacks = ChooseBoardCallbacks()
         )

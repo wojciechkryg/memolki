@@ -2,6 +2,23 @@
 
 This file provides guidance to AI coding agents when working with code in this repository.
 
+## General Guidance
+
+- **When unsure, ask.** If a request is ambiguous, ask the user to clarify rather than guessing and doing extra work.
+- **Scripts exist — run them directly.** Don't read/analyze content for scripted operations — just execute the script. If the user wants content changes, they'll say so explicitly.
+
+### Common operations quick reference
+
+| User says | Run |
+|-----------|-----|
+| "update listings" | `./scripts/listing/update_listings.sh` |
+| "fetch listings" | `./scripts/listing/fetch_listings.sh` |
+| "generate screenshots" | `./scripts/screenshot/generate_all_screenshots.sh` |
+| "generate feature graphics" | `./scripts/screenshot/generate_feature_graphics.sh` |
+| "record video" | `./scripts/recording/record_video.sh {flavor} {locale}` |
+| "record all videos" | `./scripts/recording/record_all_videos.sh` |
+| "send notification" | `./scripts/notifications/send_push_notification.sh {file}` |
+
 ## Project Overview
 
 Memolki is an Android card-matching memory game built with Jetpack Compose. It ships as multiple app flavors (each with a unique theme, package name, and billing key). Check `app/build.gradle.kts` for the current list of flavors under `productFlavors`.
@@ -18,6 +35,7 @@ Detailed docs live in `docs/`. Consult the relevant doc before working in that a
 | [`docs/docs_new_app_flavor_setup.md`](docs/docs_new_app_flavor_setup.md) | Full checklist for adding a new WLA flavor |
 | [`docs/docs_click_indicator.md`](docs/docs_click_indicator.md) | Click indicator overlay for recording mode |
 | [`docs/docs_listing.md`](docs/docs_listing.md) | Play Store listing management (fetch/update scripts, character limits) |
+| [`docs/docs_recording.md`](docs/docs_recording.md) | Video recording for Play Store ads |
 | [`docs/docs_youtube.md`](docs/docs_youtube.md) | YouTube video upload and Play Store linking |
 
 ## Build & Test Commands

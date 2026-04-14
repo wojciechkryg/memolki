@@ -2,8 +2,8 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
-import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase.Companion.NO_MORE_CARDS
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
@@ -100,12 +100,34 @@ class CalculateNextCardPairCostUseCaseTest : AppTest() {
     }
 
     @Test
+    fun `when more cards unlocked than total then return no more cards`() = runTest {
+        // given
+        val result = createSut(unlockedCount = 70, totalPairs = 60)().first()
+
+        // then
+        assertTrue(result.isSuccess)
+        assertEquals(NO_MORE_CARDS, result.getOrThrow())
+    }
+
+    @Test
     fun `when cost is very low then coerce to minimum`() = runTest {
         // given: 1 unlocked, 2x3 (3 pairs) → 1 * 3 / 5 = 0 → coerced to 1
         val result = createSut(unlockedCount = 1, biggestLevel = BoardModel.Grid2x3())().first()
 
         // then
         assertEquals(Result.success(1), result)
+    }
+
+    @Test
+    fun `when all cards unlocked then return no more cards`() = runTest {
+        // given
+        val sut = createSut(unlockedCount = 70, totalPairs = 60)
+
+        // when
+        val result = sut().first()
+
+        // then
+        assertEquals(Result.success(NO_MORE_CARDS), result)
     }
 
     private fun createSut(

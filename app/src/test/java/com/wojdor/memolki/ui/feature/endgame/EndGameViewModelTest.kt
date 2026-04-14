@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.data.repository.UserRepository
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
@@ -21,6 +21,7 @@ import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
@@ -28,14 +29,12 @@ import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
 import com.wojdor.memolki.util.playgames.GooglePlayGames
-import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -553,7 +552,12 @@ class EndGameViewModelTest : AppTest() {
     fun `when next click is sent and notification request should show then OpenEnableNotificationsScreen is sent`() =
         runTest {
             // given
-            sut.sendIntent(EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true), 1L))
+            sut.sendIntent(
+                EndGameIntent.OnCasualEndGameShow(
+                    BoardModel.Grid2x3(isUnlocked = true),
+                    1L
+                )
+            )
             testScheduler.advanceUntilIdle()
 
             sut.uiEffect.test {
@@ -572,7 +576,12 @@ class EndGameViewModelTest : AppTest() {
     fun `when unlock new card click is sent and notification request should show then OpenEnableNotificationsScreen is sent`() =
         runTest {
             // given
-            sut.sendIntent(EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true), 1L))
+            sut.sendIntent(
+                EndGameIntent.OnCasualEndGameShow(
+                    BoardModel.Grid2x3(isUnlocked = true),
+                    1L
+                )
+            )
             testScheduler.advanceUntilIdle()
 
             sut.uiEffect.test {
@@ -608,7 +617,12 @@ class EndGameViewModelTest : AppTest() {
             userRepository.addCoins(1000)
 
             // when
-            sut.sendIntent(EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true), 1L))
+            sut.sendIntent(
+                EndGameIntent.OnCasualEndGameShow(
+                    BoardModel.Grid2x3(isUnlocked = true),
+                    1L
+                )
+            )
             testScheduler.advanceUntilIdle()
 
             // then

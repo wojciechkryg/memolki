@@ -128,4 +128,5 @@
     <string name="next">Neste</string>
     <string name="play">Spill</string>
     <string name="daily_reward">Daglig belønning</string>
+    <string name="daily_challenge_history">Historikk</string>
 </resources>

@@ -40,7 +40,7 @@ class DailyChallengeShareFormatterTest {
         )
 
         // when
-        val text = sut.format(result, listOf(listOf(true, true)))
+        val text = sut.format(result)
 
         // then
         assertTrue(text.contains("⭐⭐⭐"))
@@ -58,7 +58,7 @@ class DailyChallengeShareFormatterTest {
         )
 
         // when
-        val text = sut.format(result, listOf(listOf(true, false)))
+        val text = sut.format(result)
 
         // then
         assertTrue(text.contains("⭐⭐"))
@@ -77,7 +77,7 @@ class DailyChallengeShareFormatterTest {
         )
 
         // when
-        val text = sut.format(result, listOf(listOf(false, false)))
+        val text = sut.format(result)
 
         // then
         assertTrue(text.contains("⭐"))
@@ -94,10 +94,9 @@ class DailyChallengeShareFormatterTest {
             epochDay = 100L,
             cardFlipCounts = listOf(listOf(1, 3))
         )
-        val grid = listOf(listOf(true, false))
 
         // when
-        val text = sut.format(result, grid)
+        val text = sut.format(result)
 
         // then
         assertTrue(text.contains("🟩"))

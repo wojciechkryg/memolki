@@ -128,4 +128,5 @@
     <string name="next">Siguiente</string>
     <string name="play">Jugar</string>
     <string name="daily_reward">Recompensa diaria</string>
+    <string name="daily_challenge_history">Historial</string>
 </resources>

@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.shop
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
@@ -27,7 +28,6 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.PermissionProvider
-import com.android.billingclient.api.ProductDetails
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -296,14 +296,15 @@ class ShopViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnAdDismiss with reward granted then setLastShopAdShownTimestamp is called`() = runTest {
-        // when
-        sut.sendIntent(ShopIntent.OnAdDismiss(wasRewardGranted = true))
-        testScheduler.advanceUntilIdle()
+    fun `when OnAdDismiss with reward granted then setLastShopAdShownTimestamp is called`() =
+        runTest {
+            // when
+            sut.sendIntent(ShopIntent.OnAdDismiss(wasRewardGranted = true))
+            testScheduler.advanceUntilIdle()
 
-        // then
-        verify { analytics.logAdRewardFromShop() }
-    }
+            // then
+            verify { analytics.logAdRewardFromShop() }
+        }
 
     @Test
     fun `when OnAdDismiss with reward granted then coins are rewarded`() = runTest {
@@ -336,26 +337,28 @@ class ShopViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnBuyCoinsSmallAmountClick without product then ShowPurchaseFailedError is sent`() = runTest {
-        sut.uiEffect.test {
-            // when
-            sut.sendIntent(ShopIntent.OnBuyCoinsSmallAmountClick)
+    fun `when OnBuyCoinsSmallAmountClick without product then ShowPurchaseFailedError is sent`() =
+        runTest {
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(ShopIntent.OnBuyCoinsSmallAmountClick)
 
-            // then
-            assertEquals(ShopEffect.ShowPurchaseFailedError, awaitItem())
+                // then
+                assertEquals(ShopEffect.ShowPurchaseFailedError, awaitItem())
+            }
         }
-    }
 
     @Test
-    fun `when OnBuyCoinsBigAmountClick without product then ShowPurchaseFailedError is sent`() = runTest {
-        sut.uiEffect.test {
-            // when
-            sut.sendIntent(ShopIntent.OnBuyCoinsBigAmountClick)
+    fun `when OnBuyCoinsBigAmountClick without product then ShowPurchaseFailedError is sent`() =
+        runTest {
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(ShopIntent.OnBuyCoinsBigAmountClick)
 
-            // then
-            assertEquals(ShopEffect.ShowPurchaseFailedError, awaitItem())
+                // then
+                assertEquals(ShopEffect.ShowPurchaseFailedError, awaitItem())
+            }
         }
-    }
 
     @Test
     fun `when OnBuyAllCardsClick without product then ShowPurchaseFailedError is sent`() = runTest {
@@ -557,28 +560,29 @@ class ShopViewModelTest : AppTest() {
         }
 
     @Test
-    fun `when OnBuyCoinsSmallAmountClick with product then LaunchBilling effect is sent`() = runTest {
-        // given
-        val listener = createSutWithCapturedBillingListener()
-        testScheduler.advanceUntilIdle()
-        val mockProduct = mockk<ProductDetails> {
-            every { productId } returns BillingHandler.IAP_COINS_SMALL
-            every { oneTimePurchaseOfferDetails } returns mockk {
-                every { formattedPrice } returns "$0.99"
+    fun `when OnBuyCoinsSmallAmountClick with product then LaunchBilling effect is sent`() =
+        runTest {
+            // given
+            val listener = createSutWithCapturedBillingListener()
+            testScheduler.advanceUntilIdle()
+            val mockProduct = mockk<ProductDetails> {
+                every { productId } returns BillingHandler.IAP_COINS_SMALL
+                every { oneTimePurchaseOfferDetails } returns mockk {
+                    every { formattedPrice } returns "$0.99"
+                }
+            }
+            listener.onProductsFetched(listOf(mockProduct))
+            testScheduler.advanceUntilIdle()
+
+            sut.uiEffect.test {
+                // when
+                sut.sendIntent(ShopIntent.OnBuyCoinsSmallAmountClick)
+
+                // then
+                val effect = awaitItem()
+                assertTrue(effect is ShopEffect.LaunchBilling)
             }
         }
-        listener.onProductsFetched(listOf(mockProduct))
-        testScheduler.advanceUntilIdle()
-
-        sut.uiEffect.test {
-            // when
-            sut.sendIntent(ShopIntent.OnBuyCoinsSmallAmountClick)
-
-            // then
-            val effect = awaitItem()
-            assertTrue(effect is ShopEffect.LaunchBilling)
-        }
-    }
 
     @Test
     fun `when OnBuyCoinsBigAmountClick with product then LaunchBilling effect is sent`() = runTest {
@@ -643,6 +647,27 @@ class ShopViewModelTest : AppTest() {
                 assertTrue(awaitItem() is ShopEffect.OpenEnableNotificationsScreen)
                 cancelAndIgnoreRemainingEvents()
             }
+        }
+
+    @Test
+    fun `when onPurchaseSuccessful with unknown consumable then coins are not rewarded`() =
+        runTest {
+            // given
+            val listener = createSutWithCapturedBillingListener()
+            every { billingHandler.consumableProductIds } returns setOf(
+                BillingHandler.IAP_COINS_SMALL,
+                BillingHandler.IAP_COINS_BIG,
+                "unknown_consumable"
+            )
+            testScheduler.advanceUntilIdle()
+
+            // when
+            listener.onPurchaseSuccessful("unknown_consumable")
+            testScheduler.advanceUntilIdle()
+
+            // then
+            verify { analytics.logPurchaseCompleted("unknown_consumable") }
+            coVerify(exactly = 0) { coinsPlayer.playDelayed() }
         }
 
     @Test

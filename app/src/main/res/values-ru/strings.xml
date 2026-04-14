@@ -130,4 +130,5 @@
     <string name="next">Далее</string>
     <string name="play">Играть</string>
     <string name="daily_reward">Ежедневная награда</string>
+    <string name="daily_challenge_history">История</string>
 </resources>

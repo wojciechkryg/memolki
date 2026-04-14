@@ -21,6 +21,7 @@ import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageScreen
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardScreen
 import com.wojdor.memolki.ui.feature.collection.CollectionScreen
+import com.wojdor.memolki.ui.feature.dailychallengehistory.DailyChallengeHistoryScreen
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationsScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
@@ -91,6 +92,7 @@ private fun NavGraphBuilder.gameFlow(navController: NavController) {
         chooseBoardScreen(navController)
         gameScreen(navController)
         endGameScreen(navController)
+        dailyChallengeHistoryScreen(navController)
     }
 }
 
@@ -173,6 +175,16 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
             gameViewModel = getGameViewModel(backStackEntry, navController),
             isEnterAnimationFinished = transition.currentState == EnterExitState.Visible
         )
+    }
+}
+
+private fun NavGraphBuilder.dailyChallengeHistoryScreen(navController: NavController) {
+    composable(
+        route = Route.DAILY_CHALLENGE_HISTORY,
+        enterTransition = { slideInRight },
+        exitTransition = { slideOutRight }
+    ) {
+        DailyChallengeHistoryScreen(navController = navController)
     }
 }
 
@@ -350,6 +362,10 @@ fun NavController.navigateToDailyChallenge() {
     navigateToGame(DAILY_CHALLENGE_BOARD_ID)
 }
 
+fun NavController.navigateToDailyChallengeHistory() {
+    navigate(Route.DAILY_CHALLENGE_HISTORY)
+}
+
 fun NavController.navigateToShop() {
     navigate(Route.SHOP) {
         removeFromBackStack(Route.SHOP)
@@ -445,6 +461,7 @@ internal object Route {
     const val SETTINGS = "settings"
     const val CHANGE_LANGUAGE = "change_language"
     const val MORE_APPS = "more_apps"
+    const val DAILY_CHALLENGE_HISTORY = "daily_challenge_history"
     const val ENABLE_NOTIFICATIONS =
         "enable_notifications/{${AppNavigation.DESTINATION_ARG}}/{${AppNavigation.BOARD_ARG}}"
 }

@@ -6,13 +6,12 @@ import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.coVerifyOnce
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.util.provider.PermissionProvider
-import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -123,11 +122,12 @@ class AppViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when onAppOpen is called with null params then analytics logs app opened with nulls`() = runTest {
-        // when
-        sut.onAppOpen(null)
+    fun `when onAppOpen is called with null params then analytics logs app opened with nulls`() =
+        runTest {
+            // when
+            sut.onAppOpen(null)
 
-        // then
-        verifyOnce { analytics.logAppOpened(null, null) }
-    }
+            // then
+            verifyOnce { analytics.logAppOpened(null, null) }
+        }
 }

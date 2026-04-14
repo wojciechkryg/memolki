@@ -128,4 +128,5 @@
     <string name="next">Järgmine</string>
     <string name="play">Mängi</string>
     <string name="daily_reward">Päeva auhind</string>
+    <string name="daily_challenge_history">Ajalugu</string>
 </resources>

@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.collection
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
@@ -21,7 +22,6 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -66,6 +66,9 @@ class CollectionViewModelTest : AppTest() {
 
     @Inject
     lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
 
     @Inject
     lateinit var analytics: Analytics
@@ -488,6 +491,39 @@ class CollectionViewModelTest : AppTest() {
                 assertEquals(allRewardedAds.collectionCardPairAd, effect.rewardedAd)
             }
         }
+
+    @Test
+    fun `when all cards unlocked then no locked to unlock with coins cards`() = runTest {
+        // given
+        listOf("watermelon", "mango", "peach", "pineapple", "blueberry").forEach {
+            unlockedCardPairsLocalDataSource.addUnlockedCardPairId(it)
+        }
+        sut = CollectionViewModel(
+            savedStateHandle,
+            analytics,
+            coinsPlayer,
+            hapticFeedback,
+            allRewardedAds,
+            getCoinsUseCase,
+            getCollectionDataUseCase,
+            unlockRandomCardIfEnoughCoinsUseCase,
+            unlockRandomCardUseCase,
+            incrementUnlockedCardPairsFromAdsCountUseCase,
+            notificationScheduler
+        )
+
+        // when
+        sut.uiState.test {
+            skipItems(1)
+            val state = awaitItem()
+
+            // then
+            val lockedWithCoins = state.collectionCardPairs
+                .filterIsInstance<CollectionCardPairModel.LockedToUnlockWithCoins>()
+            assertEquals(0, lockedWithCoins.size)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 
     @Test
     fun `when OnAdReward then ad is not available`() = runTest {

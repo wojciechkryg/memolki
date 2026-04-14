@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.wojdor.memolki.R
-import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
@@ -171,8 +170,10 @@ private fun CardDetails(state: GameState) {
 
 @Composable
 private fun LeaveConfirmation(isDailyChallenge: Boolean, callbacks: GameCallbacks) {
-    val titleRes = if (isDailyChallenge) R.string.leave_daily_challenge_title else R.string.leave_game_title
-    val bodyRes = if (isDailyChallenge) R.string.leave_daily_challenge_body else R.string.leave_game_body
+    val titleRes =
+        if (isDailyChallenge) R.string.leave_daily_challenge_title else R.string.leave_game_title
+    val bodyRes =
+        if (isDailyChallenge) R.string.leave_daily_challenge_body else R.string.leave_game_body
     Dialog(
         onDismissRequest = callbacks.onLeaveConfirmationDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)

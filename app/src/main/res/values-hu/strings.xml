@@ -128,4 +128,5 @@
     <string name="next">Következő</string>
     <string name="play">Játék</string>
     <string name="daily_reward">Napi jutalom</string>
+    <string name="daily_challenge_history">Előzmények</string>
 </resources>
