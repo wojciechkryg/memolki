@@ -28,6 +28,7 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
+import com.wojdor.memolki.ui.theme.spacingXL
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -47,7 +48,7 @@ fun DailyChallengeHistoryItem(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(spacingL),
+                .padding(horizontal = spacingXL, vertical = spacingL),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
