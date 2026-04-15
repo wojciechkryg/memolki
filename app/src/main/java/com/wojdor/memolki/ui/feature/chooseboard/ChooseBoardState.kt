@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class ChooseBoardState(
     val boards: List<BoardModel> = emptyList(),
     val isDailyChallengeCompleted: Boolean = false,
-    val hasDailyChallengeHistory: Boolean = false
+    val hasDailyChallengeHistory: Boolean = false,
+    val hasPlayedAnyGame: Boolean = false
 ) : UiState

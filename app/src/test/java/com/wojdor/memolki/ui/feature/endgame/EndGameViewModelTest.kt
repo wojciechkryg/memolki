@@ -169,12 +169,9 @@ class EndGameViewModelTest : AppTest() {
                 rewardedCoins = rewardedCoins,
                 currentCoins = 0L,
                 menu = listOf(
+                    EndGameMenuModel.UnlockNewCard,
                     EndGameMenuModel.Next,
-                    EndGameMenuModel.Menu,
-                    EndGameMenuModel.Share(
-                        showReward = true,
-                        rewardCoins = RewardCoinsForShareUseCase.SHARE_REWARD_COINS
-                    )
+                    EndGameMenuModel.Menu
                 ),
                 animateCoins = false,
                 showSparkles = true
@@ -239,11 +236,7 @@ class EndGameViewModelTest : AppTest() {
                 animateCoins = false,
                 menu = listOf(
                     EndGameMenuModel.Next,
-                    EndGameMenuModel.Menu,
-                    EndGameMenuModel.Share(
-                        showReward = false,
-                        rewardCoins = 0L
-                    )
+                    EndGameMenuModel.Menu
                 )
             )
             assertEquals(expectedState, awaitItem())

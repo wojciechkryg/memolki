@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.feature.chooseboard
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetBoardsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasAnyDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
@@ -23,6 +24,7 @@ class ChooseBoardViewModel @Inject constructor(
     private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
     private val getBoardsUseCase: GetBoardsUseCase,
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
     private val hasAnyDailyChallengeUseCase: HasAnyDailyChallengeUseCase
 ) : MviViewModel<ChooseBoardIntent, ChooseBoardState>(
@@ -32,6 +34,7 @@ class ChooseBoardViewModel @Inject constructor(
 
     init {
         loadBoards()
+        loadTotalGamesPlayed()
         checkDailyChallengeStatus()
         checkDailyChallengeHistory()
     }
@@ -78,6 +81,14 @@ class ChooseBoardViewModel @Inject constructor(
         hasAnyDailyChallengeUseCase().onEach { result ->
             result.onSuccess { hasHistory ->
                 sendState { copy(hasDailyChallengeHistory = hasHistory) }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun loadTotalGamesPlayed() {
+        getTotalGamesPlayedUseCase().onEach { result ->
+            result.onSuccess { totalGamesPlayed ->
+                sendState { copy(hasPlayedAnyGame = totalGamesPlayed > 0) }
             }
         }.launchIn(viewModelScope)
     }

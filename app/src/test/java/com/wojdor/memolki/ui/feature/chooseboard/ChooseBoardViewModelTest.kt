@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.GetBoardsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasAnyDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
@@ -43,6 +44,9 @@ class ChooseBoardViewModelTest : AppTest() {
     lateinit var getBoardsUseCase: GetBoardsUseCase
 
     @Inject
+    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+
+    @Inject
     lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
 
     @Inject
@@ -58,6 +62,7 @@ class ChooseBoardViewModelTest : AppTest() {
             analytics,
             hapticFeedback,
             getBoardsUseCase,
+            getTotalGamesPlayedUseCase,
             hasPlayedTodayDailyChallengeUseCase,
             hasAnyDailyChallengeUseCase
         )

@@ -65,6 +65,7 @@ class EndGameViewModel @Inject constructor(
     private var isNotificationRequestDismissed = false
     private var isShareRewardAvailable = false
     private var canUnlockNewCard = false
+    private var isFirstGame = true
     private var pendingRewardedCoins = 0L
     private var pendingCurrentCoins = 0L
 
@@ -140,13 +141,22 @@ class EndGameViewModel @Inject constructor(
     private fun onCasualEndGameShow(board: BoardModel, level: Long) {
         sendState { EndGameState(board = board, showSparkles = true, level = level) }
         loadAd()
-        incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
+        checkIsFirstGameAndIncrement()
         checkShouldShowNotificationRequest()
         checkShareRewardAvailable()
         loadCanUnlockNewCard()
         getCurrentCoinsAndReward(board)
         viewModelScope.launch {
             requestReview()
+        }
+    }
+
+    private fun checkIsFirstGameAndIncrement() {
+        viewModelScope.launch {
+            val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
+            isFirstGame = totalGamesPlayed == 0L
+            incrementTotalGamesPlayedUseCase().first()
+            showMenu()
         }
     }
 
@@ -281,7 +291,7 @@ class EndGameViewModel @Inject constructor(
             return
         }
         val menu = mutableListOf<EndGameMenuModel>().apply {
-            if (isAdLoaded && !RECORDING_MODE) {
+            if (isAdLoaded && !RECORDING_MODE && !isFirstGame) {
                 add(EndGameMenuModel.WatchAd)
             }
             if (canUnlockNewCard) {
@@ -289,7 +299,7 @@ class EndGameViewModel @Inject constructor(
             }
             add(EndGameMenuModel.Next)
             add(EndGameMenuModel.Menu)
-            if (!RECORDING_MODE) {
+            if (!RECORDING_MODE && !isFirstGame) {
                 add(
                     EndGameMenuModel.Share(
                         showReward = isShareRewardAvailable,

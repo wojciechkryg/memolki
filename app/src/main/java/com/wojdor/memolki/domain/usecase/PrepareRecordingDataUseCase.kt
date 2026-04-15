@@ -25,6 +25,10 @@ class PrepareRecordingDataUseCase @Inject constructor(
         if (currentCoins == 0L) {
             userRepository.addCoins(473L)
         }
+        val totalGamesPlayed = userRepository.getTotalGamesPlayed().first()
+        if (totalGamesPlayed == 0L) {
+            userRepository.incrementTotalGamesPlayed()
+        }
         userRepository.setLevel(BoardModel.Grid3x4().id, 13L)
         userRepository.setLevel(BoardModel.Grid5x6().id, 78L)
         emit(Result.success(Unit))

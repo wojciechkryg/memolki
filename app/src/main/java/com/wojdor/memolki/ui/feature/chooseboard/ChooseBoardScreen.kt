@@ -88,12 +88,14 @@ private fun ChooseBoardScreen(
             )
             Spacer(modifier = Modifier.height(spacingXL))
         }
-        DailyChallengeItem(
-            isCompleted = state.isDailyChallengeCompleted,
-            showHistoryIcon = state.hasDailyChallengeHistory,
-            onClick = { callbacks.onDailyChallengeClick() },
-            onHistoryClick = { callbacks.onDailyChallengeHistoryClick() }
-        )
+        if (state.hasPlayedAnyGame) {
+            DailyChallengeItem(
+                isCompleted = state.isDailyChallengeCompleted,
+                showHistoryIcon = state.hasDailyChallengeHistory,
+                onClick = { callbacks.onDailyChallengeClick() },
+                onHistoryClick = { callbacks.onDailyChallengeHistoryClick() }
+            )
+        }
         if (lockedBoards.isNotEmpty()) {
             Spacer(modifier = Modifier.height(spacingXXXL))
             Text(
@@ -129,7 +131,8 @@ private fun ChooseBoardScreenPreview() {
                     BoardModel.Grid4x5(),
                     BoardModel.Grid4x6(),
                     BoardModel.Grid5x6()
-                )
+                ),
+                hasPlayedAnyGame = true
             ),
             callbacks = ChooseBoardCallbacks()
         )
@@ -151,7 +154,8 @@ private fun ChooseBoardScreenDailyChallengeCompletedPreview() {
                     BoardModel.Grid5x6()
                 ),
                 isDailyChallengeCompleted = true,
-                hasDailyChallengeHistory = true
+                hasDailyChallengeHistory = true,
+                hasPlayedAnyGame = true
             ),
             callbacks = ChooseBoardCallbacks()
         )

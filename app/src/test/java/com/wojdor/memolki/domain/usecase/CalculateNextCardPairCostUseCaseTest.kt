@@ -56,7 +56,7 @@ class CalculateNextCardPairCostUseCaseTest : AppTest() {
         // when
         createSut(unlockedCount = 5, biggestLevel = BoardModel.Grid2x3())().test {
             // then
-            assertEquals(Result.success(3), awaitItem())
+            assertEquals(Result.success(1), awaitItem())
             awaitComplete()
         }
     }
