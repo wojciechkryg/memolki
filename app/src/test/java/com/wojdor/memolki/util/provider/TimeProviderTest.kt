@@ -26,6 +26,19 @@ class TimeProviderTest {
     }
 
     @Test
+    fun `localDateFromEpochDay converts epoch day to local date`() {
+        // given
+        val expected = LocalDate.of(2026, 4, 15)
+        val epochDay = expected.toEpochDay()
+
+        // when
+        val result = sut.localDateFromEpochDay(epochDay)
+
+        // then
+        assertEquals(expected, result)
+    }
+
+    @Test
     fun `daysBetween returns correct number of days`() {
         // given
         val from = LocalDate.of(2024, 1, 1)

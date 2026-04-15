@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Converts vertical (1080x1920) recordings to landscape (1920x1080)
 # by centering the video on a solid background of the flavor's theme color.
 #
@@ -11,6 +11,12 @@
 
 set -euo pipefail
 
+if (( BASH_VERSINFO[0] < 4 )); then
+    echo "❌ This script requires Bash 4+ (associative arrays)."
+    echo "   Current: ${BASH_VERSION}"
+    exit 1
+fi
+
 INPUT_DIR="$HOME/Desktop/memolki_recordings"
 OUTPUT_DIR="$HOME/Desktop/memolki_recordings_landscape"
 
@@ -22,8 +28,16 @@ declare -A FLAVOR_COLORS=(
 )
 
 FILTER_FLAVOR="${1:-}"
+
+if [ -n "$FILTER_FLAVOR" ] && [ -z "${FLAVOR_COLORS[$FILTER_FLAVOR]+x}" ]; then
+    echo "❌ Unknown flavor: $FILTER_FLAVOR"
+    echo "Valid flavors: ${!FLAVOR_COLORS[*]}"
+    exit 2
+fi
+
 TOTAL=0
 CONVERTED=0
+SKIPPED=0
 FAILED=0
 
 for flavor in "${!FLAVOR_COLORS[@]}"; do
@@ -50,7 +64,7 @@ for flavor in "${!FLAVOR_COLORS[@]}"; do
 
         if [ -f "$output_file" ]; then
             echo "⏭️  $flavor/$filename — already exists, skipping"
-            CONVERTED=$((CONVERTED + 1))
+            SKIPPED=$((SKIPPED + 1))
             continue
         fi
 
@@ -78,5 +92,5 @@ done
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "📊 Results: $CONVERTED/$TOTAL converted, $FAILED failed"
+echo "📊 Results: $CONVERTED converted, $SKIPPED skipped, $FAILED failed (total: $TOTAL)"
 echo "📁 Output: $OUTPUT_DIR"

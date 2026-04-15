@@ -25,7 +25,7 @@ class DailyChallengeShareFormatter @Inject constructor(
         grid: List<List<Boolean>>
     ): String {
         val appName = context.getString(R.string.app_name)
-        val date = timeProvider.currentLocalDate().format(DATE_FORMAT)
+        val date = timeProvider.localDateFromEpochDay(result.epochDay).format(DATE_FORMAT)
             .replace("/", "\u200B/\u200B")
         val stars = starsEmoji(result.starCount)
         val mistakeText = context.resources.getQuantityString(
