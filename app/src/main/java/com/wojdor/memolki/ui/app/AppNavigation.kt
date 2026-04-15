@@ -21,6 +21,7 @@ import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageScreen
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardScreen
 import com.wojdor.memolki.ui.feature.collection.CollectionScreen
+import com.wojdor.memolki.ui.feature.dailychallengehistory.DailyChallengeHistoryScreen
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationsScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameScreen
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
@@ -36,12 +37,13 @@ import com.wojdor.memolki.util.notification.DeepLinkBuilder
 @Composable
 fun AppNavigation(
     onNewIntent: Intent? = null,
-    onIntentHandled: () -> Unit = {}
+    onIntentHandled: () -> Unit = {},
+    hasPlayedTodayDailyChallenge: suspend () -> Boolean = { true }
 ) {
     val navController = rememberNavController()
     LaunchedEffect(onNewIntent) {
         onNewIntent?.let {
-            navigateFromDeepLink(navController, it)
+            navigateFromDeepLink(navController, it, hasPlayedTodayDailyChallenge)
             onIntentHandled()
         }
     }
@@ -91,6 +93,7 @@ private fun NavGraphBuilder.gameFlow(navController: NavController) {
         chooseBoardScreen(navController)
         gameScreen(navController)
         endGameScreen(navController)
+        dailyChallengeHistoryScreen(navController)
     }
 }
 
@@ -173,6 +176,16 @@ private fun NavGraphBuilder.endGameScreen(navController: NavController) {
             gameViewModel = getGameViewModel(backStackEntry, navController),
             isEnterAnimationFinished = transition.currentState == EnterExitState.Visible
         )
+    }
+}
+
+private fun NavGraphBuilder.dailyChallengeHistoryScreen(navController: NavController) {
+    composable(
+        route = Route.DAILY_CHALLENGE_HISTORY,
+        enterTransition = { slideInRight },
+        exitTransition = { slideOutRight }
+    ) {
+        DailyChallengeHistoryScreen(navController = navController)
     }
 }
 
@@ -350,6 +363,10 @@ fun NavController.navigateToDailyChallenge() {
     navigateToGame(DAILY_CHALLENGE_BOARD_ID)
 }
 
+fun NavController.navigateToDailyChallengeHistory() {
+    navigate(Route.DAILY_CHALLENGE_HISTORY)
+}
+
 fun NavController.navigateToShop() {
     navigate(Route.SHOP) {
         removeFromBackStack(Route.SHOP)
@@ -374,7 +391,11 @@ private fun NavController.navigateToGameFromDeepLink(board: String) {
     }
 }
 
-private fun navigateFromDeepLink(navController: NavController, intent: Intent) {
+private suspend fun navigateFromDeepLink(
+    navController: NavController,
+    intent: Intent,
+    hasPlayedTodayDailyChallenge: suspend () -> Boolean
+) {
     val screen = intent.data?.host ?: return
     val pathSegments = intent.data?.pathSegments.orEmpty()
     when (screen) {
@@ -386,9 +407,11 @@ private fun navigateFromDeepLink(navController: NavController, intent: Intent) {
             navController.navigateToGameFromDeepLink(board)
         }
 
-        DeepLinkBuilder.SCREEN_DAILY_CHALLENGE -> navController.navigateToGameFromDeepLink(
-            DAILY_CHALLENGE_BOARD_ID
-        )
+        DeepLinkBuilder.SCREEN_DAILY_CHALLENGE -> {
+            if (!hasPlayedTodayDailyChallenge()) {
+                navController.navigateToGameFromDeepLink(DAILY_CHALLENGE_BOARD_ID)
+            }
+        }
     }
 }
 
@@ -445,6 +468,7 @@ internal object Route {
     const val SETTINGS = "settings"
     const val CHANGE_LANGUAGE = "change_language"
     const val MORE_APPS = "more_apps"
+    const val DAILY_CHALLENGE_HISTORY = "daily_challenge_history"
     const val ENABLE_NOTIFICATIONS =
         "enable_notifications/{${AppNavigation.DESTINATION_ARG}}/{${AppNavigation.BOARD_ARG}}"
 }

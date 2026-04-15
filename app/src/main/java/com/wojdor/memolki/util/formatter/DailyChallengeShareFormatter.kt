@@ -14,12 +14,19 @@ class DailyChallengeShareFormatter @Inject constructor(
     private val timeFormatter: TimeFormatter
 ) {
 
-    fun format(
+    fun format(result: DailyChallengeModel): String {
+        val grid = result.cardFlipCounts
+            .map { row -> row.map { it <= MAX_PERFECT_FLIPS } }
+        return formatWithGrid(result, grid)
+    }
+
+    private fun formatWithGrid(
         result: DailyChallengeModel,
         grid: List<List<Boolean>>
     ): String {
         val appName = context.getString(R.string.app_name)
-        val date = timeProvider.currentLocalDate().format(DATE_FORMAT)
+        val date = timeProvider.localDateFromEpochDay(result.epochDay).format(DATE_FORMAT)
+            .replace("/", "\u200B/\u200B")
         val stars = starsEmoji(result.starCount)
         val mistakeText = context.resources.getQuantityString(
             R.plurals.daily_challenge_mistakes,
@@ -27,7 +34,7 @@ class DailyChallengeShareFormatter @Inject constructor(
             result.mistakeCount
         )
         val time = timeFormatter.format(result.timeMillis)
-        val timeText = "${time.main}\u200B${time.millis}"
+        val timeText = "${time.main.replace(":", "\u200B:\u200B")}\u200B${time.millis}"
         val gridText = buildGrid(grid)
         val storeLink = "https://play.google.com/store/apps/details?id=${context.packageName}"
         return buildString {
@@ -54,6 +61,7 @@ class DailyChallengeShareFormatter @Inject constructor(
     }
 
     companion object {
+        private const val MAX_PERFECT_FLIPS = 2
         private val DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     }
 }

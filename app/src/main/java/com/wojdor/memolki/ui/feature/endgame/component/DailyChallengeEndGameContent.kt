@@ -8,14 +8,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,39 +24,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
+import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.component.CoinsAmount
-import com.wojdor.memolki.ui.component.EdgeSparklesEffect
+import com.wojdor.memolki.ui.component.CompareButton
 import com.wojdor.memolki.ui.component.SparklesOverlay
-import com.wojdor.memolki.ui.component.bounceClickEffect
-import com.wojdor.memolki.ui.component.pulseEffect
-import com.wojdor.memolki.ui.component.shimmerEffect
+import com.wojdor.memolki.ui.component.TimeDisplay
 import com.wojdor.memolki.ui.feature.endgame.EndGameCallbacks
 import com.wojdor.memolki.ui.feature.endgame.EndGameState
-import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.ui.theme.FullRoundedShape
-import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.isSmallScreen
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
-import com.wojdor.memolki.ui.theme.spacingXL
-import com.wojdor.memolki.util.throttleClick
+import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.delay
 
 @Composable
@@ -178,7 +163,11 @@ private fun DailyChallengeContent(
                 state.menu.forEach { menuItem ->
                     if (RECORDING_MODE && menuItem is EndGameMenuModel.WatchAd) return@forEach
                     when (menuItem) {
-                        EndGameMenuModel.WatchAd -> WatchAdForCoinsItem(rewardedCoins = state.rewardedCoins, onClick = callbacks.onWatchAdClick)
+                        EndGameMenuModel.WatchAd -> WatchAdForCoinsItem(
+                            rewardedCoins = state.rewardedCoins,
+                            onClick = callbacks.onWatchAdClick
+                        )
+
                         EndGameMenuModel.Compare -> CompareButton(onClick = callbacks.onDailyChallengeShareClick)
                         EndGameMenuModel.Menu -> BaseMenuItem(
                             textId = menuItem.textId,
@@ -250,55 +239,6 @@ private fun MistakeCount(modifier: Modifier = Modifier, mistakeCount: Int) {
         text = pluralStringResource(R.plurals.daily_challenge_mistakes, mistakeCount, mistakeCount),
         style = MaterialTheme.typography.headlineMedium
     )
-}
-
-@Composable
-private fun TimeDisplay(modifier: Modifier = Modifier, timeMillis: Long) {
-    val totalSeconds = timeMillis / 1000
-    val minutes = totalSeconds / 60
-    val seconds = totalSeconds % 60
-    val millis = timeMillis % 1000
-    val mainTime = "$minutes:${seconds.toString().padStart(2, '0')}"
-    val millisText = ".${millis.toString().padStart(3, '0')}"
-    Text(
-        modifier = modifier,
-        text = buildAnnotatedString {
-            append(mainTime)
-            withStyle(SpanStyle(fontSize = MaterialTheme.typography.bodyLarge.fontSize)) {
-                append(millisText)
-            }
-        },
-        style = MaterialTheme.typography.headlineMedium
-    )
-}
-
-@Composable
-private fun CompareButton(onClick: () -> Unit) {
-    EdgeSparklesEffect(
-        modifier = Modifier
-            .pulseEffect()
-            .bounceClickEffect()
-    ) {
-        Button(
-            onClick = throttleClick(onClick = onClick),
-            contentPadding = PaddingValues(
-                horizontal = spacingXL + spacingL,
-                vertical = spacingL
-            ),
-            shape = FullRoundedShape,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent
-            ),
-            modifier = Modifier
-                .clip(FullRoundedShape)
-                .shimmerEffect()
-        ) {
-            Text(
-                text = stringResource(R.string.daily_challenge_compare).uppercase(),
-                style = MaterialTheme.typography.displaySmall.animated()
-            )
-        }
-    }
 }
 
 @Preview

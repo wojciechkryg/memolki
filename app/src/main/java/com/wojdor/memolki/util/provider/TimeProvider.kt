@@ -17,6 +17,9 @@ open class TimeProvider @Inject constructor() {
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
 
+    fun localDateFromEpochDay(epochDay: Long): LocalDate =
+        LocalDate.ofEpochDay(epochDay)
+
     fun daysBetween(from: LocalDate, to: LocalDate): Long =
         ChronoUnit.DAYS.between(from, to)
 }

@@ -32,6 +32,7 @@ class CalculateNextCardPairCostUseCase @Inject constructor(
         val allPossibleCardPairsCount = cardRepository.getAllCardPairs().size
         if (unlockedCardPairsCount >= allPossibleCardPairsCount) return NO_MORE_CARDS
 
+        if (unlockedCardPairsCount <= INITIAL_UNLOCKED_PAIRS) return MINIMUM_CARD_PAIR_COST
         val biggestUnlockedBoard =
             levels.filter { it.isUnlocked }.maxByOrNull { it.columns * it.rows }
                 ?: return MINIMUM_CARD_PAIR_COST
@@ -45,5 +46,6 @@ class CalculateNextCardPairCostUseCase @Inject constructor(
         const val MINIMUM_CARD_PAIR_COST = 1
         private const val BASE_COST = 0
         private const val COST_DIVISOR = 5
+        private const val INITIAL_UNLOCKED_PAIRS = 5
     }
 }

@@ -130,4 +130,5 @@
     <string name="next">Далі</string>
     <string name="play">Грати</string>
     <string name="daily_reward">Щоденна нагорода</string>
+    <string name="daily_challenge_history">Історія</string>
 </resources>

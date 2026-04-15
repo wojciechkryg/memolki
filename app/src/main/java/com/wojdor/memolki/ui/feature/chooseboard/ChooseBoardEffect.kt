@@ -7,4 +7,5 @@ sealed class ChooseBoardEffect : UiEffect {
     data class OpenGameScreen(val boardModel: BoardModel) : ChooseBoardEffect()
     object OpenDailyChallengeScreen : ChooseBoardEffect()
     object OpenCollectionScreen : ChooseBoardEffect()
+    object OpenDailyChallengeHistoryScreen : ChooseBoardEffect()
 }

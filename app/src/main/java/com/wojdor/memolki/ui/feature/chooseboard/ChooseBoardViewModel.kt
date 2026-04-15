@@ -3,10 +3,13 @@ package com.wojdor.memolki.ui.feature.chooseboard
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.domain.usecase.GetBoardsUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
+import com.wojdor.memolki.domain.usecase.HasAnyDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
-import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnBoardClick
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeClick
+import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeHistoryClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnLockedBoardClick
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -21,7 +24,9 @@ class ChooseBoardViewModel @Inject constructor(
     private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
     private val getBoardsUseCase: GetBoardsUseCase,
-    private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
+    private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
+    private val hasAnyDailyChallengeUseCase: HasAnyDailyChallengeUseCase
 ) : MviViewModel<ChooseBoardIntent, ChooseBoardState>(
     savedStateHandle,
     ChooseBoardState()
@@ -29,7 +34,9 @@ class ChooseBoardViewModel @Inject constructor(
 
     init {
         loadBoards()
+        loadTotalGamesPlayed()
         checkDailyChallengeStatus()
+        checkDailyChallengeHistory()
     }
 
     override fun onIntent(intent: ChooseBoardIntent) {
@@ -37,6 +44,7 @@ class ChooseBoardViewModel @Inject constructor(
             is OnBoardClick -> onBoardClick(intent)
             is OnDailyChallengeClick -> onDailyChallengeClick()
             is OnLockedBoardClick -> onLockedBoardClick()
+            is OnDailyChallengeHistoryClick -> onDailyChallengeHistoryClick()
         }
     }
 
@@ -56,10 +64,31 @@ class ChooseBoardViewModel @Inject constructor(
         sendEffect(ChooseBoardEffect.OpenCollectionScreen)
     }
 
+    private fun onDailyChallengeHistoryClick() {
+        hapticFeedback.vibrateLow()
+        sendEffect(ChooseBoardEffect.OpenDailyChallengeHistoryScreen)
+    }
+
     private fun checkDailyChallengeStatus() {
         hasPlayedTodayDailyChallengeUseCase().onEach { result ->
             result.onSuccess { hasPlayed ->
                 sendState { copy(isDailyChallengeCompleted = hasPlayed) }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun checkDailyChallengeHistory() {
+        hasAnyDailyChallengeUseCase().onEach { result ->
+            result.onSuccess { hasHistory ->
+                sendState { copy(hasDailyChallengeHistory = hasHistory) }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun loadTotalGamesPlayed() {
+        getTotalGamesPlayedUseCase().onEach { result ->
+            result.onSuccess { totalGamesPlayed ->
+                sendState { copy(hasPlayedAnyGame = totalGamesPlayed > 0) }
             }
         }.launchIn(viewModelScope)
     }

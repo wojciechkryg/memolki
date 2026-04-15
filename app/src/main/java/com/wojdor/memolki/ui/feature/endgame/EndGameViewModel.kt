@@ -3,8 +3,8 @@ package com.wojdor.memolki.ui.feature.endgame
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.review.ReviewManager
-import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
 import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
@@ -65,12 +65,17 @@ class EndGameViewModel @Inject constructor(
     private var isNotificationRequestDismissed = false
     private var isShareRewardAvailable = false
     private var canUnlockNewCard = false
+    private var isFirstGame = true
     private var pendingRewardedCoins = 0L
     private var pendingCurrentCoins = 0L
 
     override fun onIntent(intent: EndGameIntent) {
         when (intent) {
-            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(intent.boardModel, intent.level)
+            is EndGameIntent.OnCasualEndGameShow -> onCasualEndGameShow(
+                intent.boardModel,
+                intent.level
+            )
+
             is EndGameIntent.OnDailyChallengeEndGameShow -> onDailyChallengeEndGameShow(intent)
             is EndGameIntent.OnNextClick -> onNextClick(intent)
             EndGameIntent.OnMenuClick -> onMenuClick()
@@ -136,13 +141,22 @@ class EndGameViewModel @Inject constructor(
     private fun onCasualEndGameShow(board: BoardModel, level: Long) {
         sendState { EndGameState(board = board, showSparkles = true, level = level) }
         loadAd()
-        incrementTotalGamesPlayedUseCase().launchIn(viewModelScope)
+        checkIsFirstGameAndIncrement()
         checkShouldShowNotificationRequest()
         checkShareRewardAvailable()
         loadCanUnlockNewCard()
         getCurrentCoinsAndReward(board)
         viewModelScope.launch {
             requestReview()
+        }
+    }
+
+    private fun checkIsFirstGameAndIncrement() {
+        viewModelScope.launch {
+            val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
+            isFirstGame = totalGamesPlayed == 0L
+            incrementTotalGamesPlayedUseCase().first()
+            showMenu()
         }
     }
 
@@ -277,7 +291,7 @@ class EndGameViewModel @Inject constructor(
             return
         }
         val menu = mutableListOf<EndGameMenuModel>().apply {
-            if (isAdLoaded && !RECORDING_MODE) {
+            if (isAdLoaded && !RECORDING_MODE && !isFirstGame) {
                 add(EndGameMenuModel.WatchAd)
             }
             if (canUnlockNewCard) {
@@ -285,7 +299,7 @@ class EndGameViewModel @Inject constructor(
             }
             add(EndGameMenuModel.Next)
             add(EndGameMenuModel.Menu)
-            if (!RECORDING_MODE) {
+            if (!RECORDING_MODE && !isFirstGame) {
                 add(
                     EndGameMenuModel.Share(
                         showReward = isShareRewardAvailable,
@@ -387,12 +401,7 @@ class EndGameViewModel @Inject constructor(
     private fun onDailyChallengeShareClick() {
         val state = uiState.value
         val result = state.dailyChallenge
-        val grid = result.cardFlipCounts
-            .map { row -> row.map { it <= MAX_PERFECT_FLIPS } }
-        val shareText = dailyChallengeShareFormatter.format(
-            result = result,
-            grid = grid
-        )
+        val shareText = dailyChallengeShareFormatter.format(result)
         sendEffect(EndGameEffect.ShareDailyChallenge(shareText))
         analytics.logDailyChallengeShare(result.epochDay, result.starCount)
     }
@@ -401,6 +410,5 @@ class EndGameViewModel @Inject constructor(
         const val MIN_GAMES_PLAYED_TO_ASK_REVIEW = 3
         private const val PLACEMENT = "end_game"
         private const val DAILY_CHALLENGE_PLACEMENT = "daily_challenge_end_game"
-        private const val MAX_PERFECT_FLIPS = 2
     }
 }

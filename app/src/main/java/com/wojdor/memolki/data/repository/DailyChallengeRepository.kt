@@ -21,4 +21,10 @@ class DailyChallengeRepository @Inject constructor(
 
     suspend fun getLastPlayedEpochDay(): Long? =
         dailyChallengeDao.getLastPlayedEpochDay()
+
+    suspend fun getAll(): List<DailyChallengeModel> =
+        dailyChallengeDao.getAll().map { it.toModel() }
+
+    suspend fun hasAnyCompleted(): Boolean =
+        dailyChallengeDao.hasAnyCompleted()
 }

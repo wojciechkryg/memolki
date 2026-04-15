@@ -103,7 +103,8 @@ class AppActivity : ComponentActivity() {
                                     Box(modifier = Modifier.padding(innerPadding)) {
                                         AppNavigation(
                                             onNewIntent = newIntentState.value,
-                                            onIntentHandled = { newIntentState.value = null }
+                                            onIntentHandled = { newIntentState.value = null },
+                                            hasPlayedTodayDailyChallenge = { viewModel.hasPlayedTodayDailyChallenge() }
                                         )
                                     }
                                 }

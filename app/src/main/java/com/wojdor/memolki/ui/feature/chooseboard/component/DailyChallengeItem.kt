@@ -45,54 +45,61 @@ import com.wojdor.memolki.util.throttleClick
 @Composable
 fun DailyChallengeItem(
     isCompleted: Boolean = false,
-    onClick: () -> Unit = {}
+    showHistoryIcon: Boolean = false,
+    onClick: () -> Unit = {},
+    onHistoryClick: () -> Unit = {}
 ) {
     var isShaking by remember { mutableStateOf(false) }
     val shakeOffset = rememberShakeOffset(isShaking) { isShaking = false }
-    Column(
-        modifier = Modifier
-            .graphicsLayer { translationX = shakeOffset }
-            .then(
-                if (isCompleted) {
-                    Modifier.pointerInput(Unit) {
-                        awaitEachGesture {
-                            awaitFirstDown(pass = PointerEventPass.Initial)
-                            isShaking = true
-                        }
-                    }
-                } else {
-                    Modifier
-                }
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ForceLtr {
-            Button(
-                modifier = if (!isCompleted) Modifier.bounceClickEffect() else Modifier,
-                onClick = throttleClick(onClick = onClick),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent
-                ),
-                enabled = !isCompleted
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        DailyChallengeCheckbox(isCompleted)
-                        Spacer(modifier = Modifier.width(spacingL))
-                        Text(
-                            text = stringResource(R.string.daily_challenge).lowercase(),
-                            style = MaterialTheme.typography.displaySmall
-                        )
-                    }
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .graphicsLayer { translationX = shakeOffset }
+                .then(
                     if (isCompleted) {
-                        Text(
-                            text = stringResource(R.string.daily_reward_back_tomorrow).lowercase(),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
+                        Modifier.pointerInput(Unit) {
+                            awaitEachGesture {
+                                awaitFirstDown(pass = PointerEventPass.Initial)
+                                isShaking = true
+                            }
+                        }
+                    } else {
+                        Modifier
+                    }
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ForceLtr {
+                Button(
+                    modifier = if (!isCompleted) Modifier.bounceClickEffect() else Modifier,
+                    onClick = throttleClick(onClick = onClick),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent
+                    ),
+                    enabled = !isCompleted
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            DailyChallengeCheckbox(isCompleted)
+                            Spacer(modifier = Modifier.width(spacingL))
+                            Text(
+                                text = stringResource(R.string.daily_challenge).lowercase(),
+                                style = MaterialTheme.typography.displaySmall
+                            )
+                        }
+                        if (isCompleted) {
+                            Text(
+                                text = stringResource(R.string.daily_reward_back_tomorrow).lowercase(),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
                     }
                 }
             }
+        }
+        if (showHistoryIcon) {
+            HistoryButton(onHistoryClick)
         }
     }
 }
@@ -125,6 +132,29 @@ private fun DailyChallengeCheckbox(isCompleted: Boolean) {
     }
 }
 
+@Composable
+private fun HistoryButton(onClick: () -> Unit) {
+    Button(
+        modifier = Modifier.bounceClickEffect(),
+        onClick = throttleClick(onClick = onClick),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Transparent
+        )
+    ) {
+        Icon(
+            modifier = Modifier.size(32.dp),
+            painter = painterResource(R.drawable.ic_history),
+            contentDescription = null,
+            tint = Color.Black
+        )
+        Spacer(modifier = Modifier.width(spacingL))
+        Text(
+            text = stringResource(R.string.daily_challenge_history).lowercase(),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
 private val CHECKBOX_SIZE = 24.dp
 
 @Preview(showBackground = true)
@@ -140,5 +170,21 @@ private fun DailyChallengeItemAvailablePreview() {
 private fun DailyChallengeItemCompletedPreview() {
     AppTheme {
         DailyChallengeItem(isCompleted = true)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DailyChallengeItemWithHistoryPreview() {
+    AppTheme {
+        DailyChallengeItem(isCompleted = false, showHistoryIcon = true)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DailyChallengeItemCompletedWithHistoryPreview() {
+    AppTheme {
+        DailyChallengeItem(isCompleted = true, showHistoryIcon = true)
     }
 }

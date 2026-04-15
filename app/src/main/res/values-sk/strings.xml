@@ -130,4 +130,5 @@
     <string name="next">Ďalej</string>
     <string name="play">Hrať</string>
     <string name="daily_reward">Denná odmena</string>
+    <string name="daily_challenge_history">História</string>
 </resources>

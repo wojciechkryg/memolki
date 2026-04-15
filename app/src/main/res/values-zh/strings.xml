@@ -127,4 +127,5 @@
     <string name="next">下一个</string>
     <string name="play">开始</string>
     <string name="daily_reward">每日奖励</string>
+    <string name="daily_challenge_history">历史</string>
 </resources>

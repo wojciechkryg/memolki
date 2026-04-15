@@ -40,7 +40,10 @@ class RewardCoinsForShareUseCaseTest : AppTest() {
             assertTrue(result.getOrThrow())
             awaitComplete()
         }
-        assertEquals(RewardCoinsForShareUseCase.SHARE_REWARD_COINS, userRepository.getCoins().first())
+        assertEquals(
+            RewardCoinsForShareUseCase.SHARE_REWARD_COINS,
+            userRepository.getCoins().first()
+        )
     }
 
     @Test
@@ -57,6 +60,9 @@ class RewardCoinsForShareUseCaseTest : AppTest() {
             assertFalse(result.getOrThrow())
             awaitComplete()
         }
-        assertEquals(RewardCoinsForShareUseCase.SHARE_REWARD_COINS, userRepository.getCoins().first())
+        assertEquals(
+            RewardCoinsForShareUseCase.SHARE_REWARD_COINS,
+            userRepository.getCoins().first()
+        )
     }
 }

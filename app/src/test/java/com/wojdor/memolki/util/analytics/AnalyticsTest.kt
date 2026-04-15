@@ -361,4 +361,22 @@ class AnalyticsTest {
         // then
         verify { firebaseAnalytics.logEvent("daily_challenge_abandoned", any()) }
     }
+
+    @Test
+    fun `logDailyChallengeHistoryOpened logs event`() {
+        // when
+        sut.logDailyChallengeHistoryOpened()
+
+        // then
+        verify { firebaseAnalytics.logEvent("daily_challenge_history_opened", null) }
+    }
+
+    @Test
+    fun `logDailyChallengeHistoryShareClicked logs event with epoch day`() {
+        // when
+        sut.logDailyChallengeHistoryShareClicked(20001L)
+
+        // then
+        verify { firebaseAnalytics.logEvent("daily_challenge_history_shared", any()) }
+    }
 }

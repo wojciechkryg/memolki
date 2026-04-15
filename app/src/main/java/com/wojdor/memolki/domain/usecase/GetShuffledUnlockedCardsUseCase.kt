@@ -2,8 +2,8 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.di.coroutine.IoDispatcher
-import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow

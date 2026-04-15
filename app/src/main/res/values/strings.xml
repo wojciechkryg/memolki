@@ -117,6 +117,7 @@
 
     <string name="daily_challenge">Daily Challenge</string>
     <string name="daily_challenge_compare">Compare</string>
+    <string name="daily_challenge_history">History</string>
     <plurals name="daily_challenge_mistakes">
         <item quantity="one">%d mistake</item>
         <item quantity="other">%d mistakes</item>

@@ -1,7 +1,6 @@
 package com.wojdor.memolki.ui.feature.endgame
 
 import android.app.Activity
-import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,9 +13,9 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
@@ -28,6 +27,7 @@ import com.wojdor.memolki.ui.feature.endgame.component.DailyChallengeEndGameCont
 import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.extension.shareText
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import kotlinx.coroutines.launch
 
@@ -80,20 +80,10 @@ private fun HandleEffect(
                 }
             }
 
-            is EndGameEffect.Share -> activity?.let { share(it, effect.text) }
-            is EndGameEffect.ShareDailyChallenge -> activity?.let {
-                share(it, effect.text)
-            }
+            is EndGameEffect.Share -> activity?.shareText(effect.text)
+            is EndGameEffect.ShareDailyChallenge -> activity?.shareText(effect.text)
         }
     }
-}
-
-private fun share(activity: Activity, text: String) {
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, text)
-    }
-    activity.startActivity(Intent.createChooser(intent, null))
 }
 
 private fun openGameScreen(

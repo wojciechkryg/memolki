@@ -128,4 +128,5 @@
     <string name="next">Επόμενο</string>
     <string name="play">Παίξε</string>
     <string name="daily_reward">Ημερήσια ανταμοιβή</string>
+    <string name="daily_challenge_history">Ιστορικό</string>
 </resources>

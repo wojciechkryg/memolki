@@ -12,9 +12,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.app.navigateToEndGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
@@ -89,7 +89,12 @@ private fun openEndGameScreen(
             )
         )
     } else {
-        endGameViewModel.sendIntent(EndGameIntent.OnCasualEndGameShow(effect.boardModel, effect.level))
+        endGameViewModel.sendIntent(
+            EndGameIntent.OnCasualEndGameShow(
+                effect.boardModel,
+                effect.level
+            )
+        )
     }
     navController.navigateToEndGame()
 }

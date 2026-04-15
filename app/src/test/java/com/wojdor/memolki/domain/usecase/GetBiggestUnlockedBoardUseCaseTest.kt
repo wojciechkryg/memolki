@@ -2,9 +2,13 @@ package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -74,6 +78,28 @@ class GetBiggestUnlockedBoardUseCaseTest : AppTest() {
             val result = awaitItem()
             assertTrue(result.isSuccess)
             assertEquals("4x4", result.getOrThrow().id)
+            awaitComplete()
+        }
+    }
+
+    @Test
+    fun `when no boards are unlocked then returns first board`() = runTest {
+        // given
+        val allLocked = listOf(
+            BoardModel.Grid2x3(isUnlocked = false),
+            BoardModel.Grid3x4(isUnlocked = false),
+            BoardModel.Grid4x4(isUnlocked = false)
+        )
+        val mockGetBoards = mockk<GetBoardsUseCase>()
+        every { mockGetBoards() } returns flowOf(Result.success(allLocked))
+        val sutWithMock = GetBiggestUnlockedBoardUseCase(testDispatcher, mockGetBoards)
+
+        // when
+        sutWithMock("auto").test {
+            // then
+            val result = awaitItem()
+            assertTrue(result.isSuccess)
+            assertEquals("2x3", result.getOrThrow().id)
             awaitComplete()
         }
     }

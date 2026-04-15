@@ -1,7 +1,7 @@
 package com.wojdor.memolki.ui.feature.game
 
-import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.base.UiState
 import kotlinx.parcelize.Parcelize
 

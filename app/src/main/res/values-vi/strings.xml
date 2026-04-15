@@ -127,4 +127,5 @@
     <string name="next">Tiếp</string>
     <string name="play">Chơi</string>
     <string name="daily_reward">Phần thưởng hàng ngày</string>
+    <string name="daily_challenge_history">Lịch sử</string>
 </resources>

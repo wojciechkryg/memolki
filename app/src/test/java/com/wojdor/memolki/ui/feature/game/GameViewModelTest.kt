@@ -3,9 +3,11 @@ package com.wojdor.memolki.ui.feature.game
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.UserRepository
+import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.domain.model.StarCalculator
+import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCase
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetLevelUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
@@ -13,7 +15,6 @@ import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.IncrementLevelUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
-import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
@@ -91,6 +92,9 @@ class GameViewModelTest : AppTest() {
     @Inject
     lateinit var analytics: Analytics
 
+    @Inject
+    lateinit var starCalculator: StarCalculator
+
     private lateinit var sut: GameViewModel
 
     @Before
@@ -112,7 +116,8 @@ class GameViewModelTest : AppTest() {
             hasPlayedTodayDailyChallengeUseCase,
             saveDailyChallengeUseCase,
             getTodayDailyChallengeUseCase,
-            timeProvider
+            timeProvider,
+            starCalculator
         )
         every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
             Result.success(mockShuffledCardsWithSamePairIds())
@@ -743,7 +748,7 @@ class GameViewModelTest : AppTest() {
                 val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
                 assertEquals(BoardModel.DAILY_CHALLENGE, endGameEffect.boardModel)
                 assertEquals(0, endGameEffect.mistakeCount)
-                assertEquals(GameViewModel.MAX_STARS, endGameEffect.dailyChallenge.starCount)
+                assertEquals(StarCalculator.MAX_STARS, endGameEffect.dailyChallenge.starCount)
             }
         }
 
@@ -805,7 +810,7 @@ class GameViewModelTest : AppTest() {
                 skipItems(3)
                 assertTrue(awaitItem() is GameEffect.OnPairMatched)
                 val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
-                assertEquals(GameViewModel.TWO_STARS, endGameEffect.dailyChallenge.starCount)
+                assertEquals(StarCalculator.TWO_STARS, endGameEffect.dailyChallenge.starCount)
             }
         }
 
@@ -871,7 +876,7 @@ class GameViewModelTest : AppTest() {
                 skipItems(3)
                 assertTrue(awaitItem() is GameEffect.OnPairMatched)
                 val endGameEffect = awaitItem() as GameEffect.OpenEndGameScreen
-                assertEquals(GameViewModel.MIN_STARS, endGameEffect.dailyChallenge.starCount)
+                assertEquals(StarCalculator.MIN_STARS, endGameEffect.dailyChallenge.starCount)
             }
         }
 
@@ -1087,6 +1092,45 @@ class GameViewModelTest : AppTest() {
 
             // then
             assertFalse(sut.uiState.value.shouldShowLeaveConfirmation)
+        }
+
+    @Test
+    fun `when OnResetState intent is sent then state is reset to default`() = runTest {
+        // given
+        sut.sendIntent(GameIntent.OnBoardStart("2x3", false))
+        testScheduler.advanceUntilIdle()
+
+        // when
+        sut.sendIntent(GameIntent.OnResetState)
+        testScheduler.advanceUntilIdle()
+
+        // then
+        assertTrue(sut.uiState.value.cards.isEmpty())
+        assertFalse(sut.uiState.value.isDailyChallenge)
+    }
+
+    @Test
+    fun `when OnMistakeShakeComplete intent is sent then shaking cards are flipped back`() =
+        runTest {
+            // given
+            sut.sendIntent(GameIntent.OnBoardStart("2x3", false))
+            testScheduler.advanceUntilIdle()
+            val cards = sut.uiState.value.cards
+            if (cards.size >= 3) {
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[0]))
+                testScheduler.advanceUntilIdle()
+                sut.sendIntent(GameIntent.OnBackCardClick(cards[2]))
+                testScheduler.advanceUntilIdle()
+            }
+
+            // when
+            sut.sendIntent(GameIntent.OnMistakeShakeComplete)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            val updatedCards = sut.uiState.value.cards
+            assertFalse(updatedCards.any { it.isMistakeShaking })
+            assertFalse(updatedCards.any { !it.isPairMatched && it.isFlippedFront })
         }
 
     private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {

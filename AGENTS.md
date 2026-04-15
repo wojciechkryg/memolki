@@ -2,6 +2,23 @@
 
 This file provides guidance to AI coding agents when working with code in this repository.
 
+## General Guidance
+
+- **When unsure, ask.** If a request is ambiguous, ask the user to clarify rather than guessing and doing extra work.
+- **Scripts exist — run them directly.** Don't read/analyze content for scripted operations — just execute the script. If the user wants content changes, they'll say so explicitly.
+
+### Common operations quick reference
+
+| User says | Run |
+|-----------|-----|
+| "update listings" | `./scripts/listing/update_listings.sh` |
+| "fetch listings" | `./scripts/listing/fetch_listings.sh` |
+| "generate screenshots" | `./scripts/screenshot/generate_all_screenshots.sh` |
+| "generate feature graphics" | `./scripts/screenshot/generate_feature_graphics.sh` |
+| "record video" | `./scripts/recording/record_video.sh {flavor} {locale}` |
+| "record all videos" | `./scripts/recording/record_all_videos.sh` |
+| "send notification" | `./scripts/notifications/send_push_notification.sh {file}` |
+
 ## Project Overview
 
 Memolki is an Android card-matching memory game built with Jetpack Compose. It ships as multiple app flavors (each with a unique theme, package name, and billing key). Check `app/build.gradle.kts` for the current list of flavors under `productFlavors`.
@@ -18,6 +35,7 @@ Detailed docs live in `docs/`. Consult the relevant doc before working in that a
 | [`docs/docs_new_app_flavor_setup.md`](docs/docs_new_app_flavor_setup.md) | Full checklist for adding a new WLA flavor |
 | [`docs/docs_click_indicator.md`](docs/docs_click_indicator.md) | Click indicator overlay for recording mode |
 | [`docs/docs_listing.md`](docs/docs_listing.md) | Play Store listing management (fetch/update scripts, character limits) |
+| [`docs/docs_recording.md`](docs/docs_recording.md) | Video recording for Play Store ads |
 | [`docs/docs_youtube.md`](docs/docs_youtube.md) | YouTube video upload and Play Store linking |
 
 ## Build & Test Commands
@@ -294,6 +312,16 @@ Conventions:
 - For static Android APIs (e.g. `AppCompatDelegate`), use `mockkStatic(...)` in `@Before`
 - Add `fun inject(test: YourTestClass)` to `TestInjector` for each new test class
 - **Fake singleton scoping:** `@Binds @Singleton` scopes the parent type (e.g. `LocaleProvider`), not the Fake itself. Injecting `FakeLocaleProvider` directly in a test creates a separate instance from the one Hilt gives to UseCases via `LocaleProvider`. When testing a UseCase that depends on other UseCases that use Fakes, construct the child UseCase manually with the injected Fake (see `GetLanguagesWithCurrentUseCaseTest`)
+
+### Common mistakes
+
+Before committing, re-read every changed file and watch for these:
+
+- **Refactoring leftovers:** When moving or extracting code, check the source for now-unused constants, imports, and functions
+- **Missing error paths:** If a ViewModel collects a `Result`, both success and failure must be handled
+- **Test quality over quantity:** Test names must match what is asserted, assertions must check actual values (not just types), and each test must cover a distinct scenario
+- **Follow existing patterns:** Before inventing a new approach, find how the same thing is already done elsewhere in the codebase and replicate it
+- **Update snapshots:** After changing any drawable or UI component, run `recordPaparazzi{Flavor}Debug` to regenerate affected snapshots
 
 ### Coverage expectations
 
