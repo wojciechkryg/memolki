@@ -37,12 +37,13 @@ import com.wojdor.memolki.util.notification.DeepLinkBuilder
 @Composable
 fun AppNavigation(
     onNewIntent: Intent? = null,
-    onIntentHandled: () -> Unit = {}
+    onIntentHandled: () -> Unit = {},
+    hasPlayedTodayDailyChallenge: suspend () -> Boolean = { true }
 ) {
     val navController = rememberNavController()
     LaunchedEffect(onNewIntent) {
         onNewIntent?.let {
-            navigateFromDeepLink(navController, it)
+            navigateFromDeepLink(navController, it, hasPlayedTodayDailyChallenge)
             onIntentHandled()
         }
     }
@@ -390,7 +391,11 @@ private fun NavController.navigateToGameFromDeepLink(board: String) {
     }
 }
 
-private fun navigateFromDeepLink(navController: NavController, intent: Intent) {
+private suspend fun navigateFromDeepLink(
+    navController: NavController,
+    intent: Intent,
+    hasPlayedTodayDailyChallenge: suspend () -> Boolean
+) {
     val screen = intent.data?.host ?: return
     val pathSegments = intent.data?.pathSegments.orEmpty()
     when (screen) {
@@ -402,9 +407,11 @@ private fun navigateFromDeepLink(navController: NavController, intent: Intent) {
             navController.navigateToGameFromDeepLink(board)
         }
 
-        DeepLinkBuilder.SCREEN_DAILY_CHALLENGE -> navController.navigateToGameFromDeepLink(
-            DAILY_CHALLENGE_BOARD_ID
-        )
+        DeepLinkBuilder.SCREEN_DAILY_CHALLENGE -> {
+            if (!hasPlayedTodayDailyChallenge()) {
+                navController.navigateToGameFromDeepLink(DAILY_CHALLENGE_BOARD_ID)
+            }
+        }
     }
 }
 

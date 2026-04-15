@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
+import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.util.analytics.Analytics
@@ -24,6 +25,7 @@ class AppViewModel @Inject constructor(
     private val prepareRecordingDataUseCase: PrepareRecordingDataUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase,
+    private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
     private val localeProvider: LocaleProvider,
     private val permissionProvider: PermissionProvider,
     private val pushNotificationProvider: PushNotificationProvider
@@ -45,5 +47,9 @@ class AppViewModel @Inject constructor(
 
     fun onAppOpen(notificationType: String?, shortcutId: String? = null) {
         analytics.logAppOpened(notificationType, shortcutId)
+    }
+
+    suspend fun hasPlayedTodayDailyChallenge(): Boolean {
+        return hasPlayedTodayDailyChallengeUseCase().first().getOrDefault(true)
     }
 }

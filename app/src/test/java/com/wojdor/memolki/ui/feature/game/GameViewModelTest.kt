@@ -1116,7 +1116,7 @@ class GameViewModelTest : AppTest() {
             sut.sendIntent(GameIntent.OnBoardStart("2x3", false))
             testScheduler.advanceUntilIdle()
             val cards = sut.uiState.value.cards
-            if (cards.size >= 2) {
+            if (cards.size >= 3) {
                 sut.sendIntent(GameIntent.OnBackCardClick(cards[0]))
                 testScheduler.advanceUntilIdle()
                 sut.sendIntent(GameIntent.OnBackCardClick(cards[2]))
@@ -1130,6 +1130,7 @@ class GameViewModelTest : AppTest() {
             // then
             val updatedCards = sut.uiState.value.cards
             assertFalse(updatedCards.any { it.isMistakeShaking })
+            assertFalse(updatedCards.any { !it.isPairMatched && it.isFlippedFront })
         }
 
     private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {

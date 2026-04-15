@@ -120,7 +120,7 @@
     <string name="level_count">poziom %d</string>
 
     <string name="leave_daily_challenge_title">Opuścić wyzwanie dnia?</string>
-    <string name="leave_daily_challenge_body">Nie będziesz mógł spróbować ponownie dzisiaj</string>
+    <string name="leave_daily_challenge_body">Nie będzie można dzisiaj spróbować ponownie</string>
     <string name="leave_game_title">Opuścić grę?</string>
     <string name="leave_game_body">Twój postęp zostanie utracony</string>
     <string name="leave_game_stay">Zostań</string>

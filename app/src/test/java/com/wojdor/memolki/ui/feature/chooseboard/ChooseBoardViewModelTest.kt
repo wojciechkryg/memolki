@@ -182,4 +182,14 @@ class ChooseBoardViewModelTest : AppTest() {
         val state = sut.uiState.value
         assertFalse(state.isDailyChallengeCompleted)
     }
+
+    @Test
+    fun `when created then daily challenge history is checked`() = runTest {
+        // when
+        testScheduler.advanceUntilIdle()
+
+        // then
+        val state = sut.uiState.value
+        assertFalse(state.hasDailyChallengeHistory)
+    }
 }

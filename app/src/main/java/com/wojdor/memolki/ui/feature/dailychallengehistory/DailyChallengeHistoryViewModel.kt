@@ -6,6 +6,7 @@ import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.usecase.GetAllDailyChallengesUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.provider.TimeProvider
@@ -44,6 +45,8 @@ class DailyChallengeHistoryViewModel @Inject constructor(
         getAllDailyChallengesUseCase().onEach { result ->
             result.onSuccess { challenges ->
                 sendState { copy(challenges = challenges) }
+            }.onFailure {
+                logE("Failed to load daily challenge history", it)
             }
         }.launchIn(viewModelScope)
     }

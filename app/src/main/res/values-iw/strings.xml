@@ -120,7 +120,7 @@
     <string name="level_count">שלב %d</string>
 
     <string name="leave_daily_challenge_title">לעזוב את האתגר היומי?</string>
-    <string name="leave_daily_challenge_body">לא תוכל לנסות שוב היום</string>
+    <string name="leave_daily_challenge_body">לא ניתן יהיה לנסות שוב היום</string>
     <string name="leave_game_title">לעזוב את המשחק?</string>
     <string name="leave_game_body">ההתקדמות שלך תאבד</string>
     <string name="leave_game_stay">להישאר</string>

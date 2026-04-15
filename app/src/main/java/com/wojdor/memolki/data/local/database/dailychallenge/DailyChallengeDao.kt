@@ -23,6 +23,6 @@ interface DailyChallengeDao {
     @Query("SELECT * FROM daily_challenges WHERE starCount > 0 ORDER BY epochDay DESC")
     suspend fun getAll(): List<DailyChallengeEntity>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM daily_challenges WHERE starCount > 0 LIMIT 1)")
+    @Query("SELECT EXISTS(SELECT 1 FROM daily_challenges WHERE starCount > 0)")
     suspend fun hasAnyCompleted(): Boolean
 }

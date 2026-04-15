@@ -296,7 +296,7 @@ class ShopViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnAdDismiss with reward granted then setLastShopAdShownTimestamp is called`() =
+    fun `when OnAdDismiss with reward granted then logAdRewardFromShop is called`() =
         runTest {
             // when
             sut.sendIntent(ShopIntent.OnAdDismiss(wasRewardGranted = true))

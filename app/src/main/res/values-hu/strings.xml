@@ -118,7 +118,7 @@
     <string name="level_count">szint %d</string>
 
     <string name="leave_daily_challenge_title">Kilépsz a napi kihívásból?</string>
-    <string name="leave_daily_challenge_body">Ma nem tudod újra megpróbálni</string>
+    <string name="leave_daily_challenge_body">Ma nem tudsz újra megpróbálni</string>
     <string name="leave_game_title">Kilépsz a játékból?</string>
     <string name="leave_game_body">A haladásod elveszik</string>
     <string name="leave_game_stay">Maradok</string>

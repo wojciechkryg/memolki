@@ -23,6 +23,7 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
@@ -126,7 +127,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     }
 
     @Test
-    fun `when OnShareClick then share effect is sent`() = runTest {
+    fun `when OnShareClick then share effect is sent with formatted text`() = runTest {
         // given
         sut = createSut()
         testScheduler.advanceUntilIdle()
@@ -137,14 +138,15 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
             timeMillis = 45000L,
             cardFlipCounts = listOf(listOf(2, 2), listOf(2, 2))
         )
+        val expectedText = dailyChallengeShareFormatter.format(challenge)
 
         // when
         sut.uiEffect.test {
             sut.sendIntent(DailyChallengeHistoryIntent.OnShareClick(challenge))
 
             // then
-            val effect = awaitItem()
-            assertTrue(effect is DailyChallengeHistoryEffect.ShareDailyChallenge)
+            val effect = awaitItem() as DailyChallengeHistoryEffect.ShareDailyChallenge
+            assertEquals(expectedText, effect.text)
         }
     }
 
@@ -190,7 +192,16 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         verify { analytics.logDailyChallengeHistoryShareClicked(20001L) }
     }
 
-    private fun assertTrue(condition: Boolean) {
-        org.junit.Assert.assertTrue(condition)
+    @Test
+    fun `when loadHistory fails then challenges remain empty`() = runTest {
+        // given
+        coEvery { dailyChallengeDao.getAll() } throws RuntimeException("DB error")
+
+        // when
+        sut = createSut()
+        testScheduler.advanceUntilIdle()
+
+        // then
+        assertTrue(sut.uiState.value.challenges.isEmpty())
     }
 }

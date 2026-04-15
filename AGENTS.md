@@ -313,6 +313,16 @@ Conventions:
 - Add `fun inject(test: YourTestClass)` to `TestInjector` for each new test class
 - **Fake singleton scoping:** `@Binds @Singleton` scopes the parent type (e.g. `LocaleProvider`), not the Fake itself. Injecting `FakeLocaleProvider` directly in a test creates a separate instance from the one Hilt gives to UseCases via `LocaleProvider`. When testing a UseCase that depends on other UseCases that use Fakes, construct the child UseCase manually with the injected Fake (see `GetLanguagesWithCurrentUseCaseTest`)
 
+### Common mistakes
+
+Before committing, re-read every changed file and watch for these:
+
+- **Refactoring leftovers:** When moving or extracting code, check the source for now-unused constants, imports, and functions
+- **Missing error paths:** If a ViewModel collects a `Result`, both success and failure must be handled
+- **Test quality over quantity:** Test names must match what is asserted, assertions must check actual values (not just types), and each test must cover a distinct scenario
+- **Follow existing patterns:** Before inventing a new approach, find how the same thing is already done elsewhere in the codebase and replicate it
+- **Update snapshots:** After changing any drawable or UI component, run `recordPaparazzi{Flavor}Debug` to regenerate affected snapshots
+
 ### Coverage expectations
 
 Every testable class must have a corresponding test class with **full branch coverage** — all code paths, conditions, and edge cases. When adding or modifying code, always add or update tests to cover every new/changed path.

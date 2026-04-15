@@ -472,6 +472,5 @@ class GameViewModel @Inject constructor(
 
     companion object {
         const val MAX_FLIPPED_TO_FRONT_UNMATCHED_CARDS = 2
-        private const val RESET_STATE_DELAY = 1000L
     }
 }
