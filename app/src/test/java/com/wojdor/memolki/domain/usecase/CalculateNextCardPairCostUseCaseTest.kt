@@ -130,6 +130,38 @@ class CalculateNextCardPairCostUseCaseTest : AppTest() {
         }
     }
 
+    @Test
+    fun `when no boards are unlocked but unlocked count is above initial then cost is minimum`() = runTest {
+        // given
+        val allLocked = listOf(
+            BoardModel.Grid2x3(isUnlocked = false),
+            BoardModel.Grid3x4(isUnlocked = false),
+            BoardModel.Grid4x4(isUnlocked = false),
+            BoardModel.Grid4x5(isUnlocked = false),
+            BoardModel.Grid4x6(isUnlocked = false),
+            BoardModel.Grid5x6(isUnlocked = false)
+        )
+        val mockGetLevels = mockk<GetBoardsUseCase>()
+        every { mockGetLevels() } returns flowOf(Result.success(allLocked))
+        val mockGetUnlockedCount = mockk<GetUnlockedCardPairsCountUseCase>()
+        every { mockGetUnlockedCount() } returns flowOf(Result.success(6))
+        val mockCardRepository = mockk<CardRepository>()
+        every { mockCardRepository.getAllCardPairs() } returns List(60) { mockk<CardPairModel>() }
+        val sut = CalculateNextCardPairCostUseCase(
+            testDispatcher,
+            mockGetUnlockedCount,
+            mockGetLevels,
+            mockCardRepository
+        )
+
+        // when
+        sut().test {
+            // then
+            assertEquals(Result.success(1), awaitItem())
+            awaitComplete()
+        }
+    }
+
     private fun createSut(
         unlockedCount: Int,
         totalPairs: Int = 60,

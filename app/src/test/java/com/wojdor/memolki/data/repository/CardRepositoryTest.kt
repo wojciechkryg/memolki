@@ -139,4 +139,25 @@ class CardRepositoryTest : AppTest() {
         )
         assertEquals(expected, result)
     }
+
+    @Test
+    fun `when getCardPairById with unknown id then return null`() {
+        // when
+        val result = sut.getCardPairById("does-not-exist")
+
+        // then
+        assertEquals(null, result)
+    }
+
+    @Test
+    fun `when unlocked id is not in all pairs then it is skipped`() = runTest {
+        // given
+        unlockedCardPairsLocalDataSource.addUnlockedCardPairId("does-not-exist")
+
+        // when
+        val result = sut.getUnlockedCardPairs()
+
+        // then
+        assertTrue(result.none { it.first.pairId == "does-not-exist" })
+    }
 }

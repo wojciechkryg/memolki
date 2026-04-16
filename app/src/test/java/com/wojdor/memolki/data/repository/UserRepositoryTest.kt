@@ -315,4 +315,25 @@ class UserRepositoryTest : AppTest() {
         val result = sut.getLastShopAdShownTimestamp().first()
         assertEquals(5000L, result)
     }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `when addCoins with negative value then throws`() = runTest {
+        sut.addCoins(-1L)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `when removeCoins with negative value then throws`() = runTest {
+        sut.removeCoins(-1L)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `when setDailyStreakData with negative count then throws`() = runTest {
+        sut.setDailyStreakData(-1L, 1000L)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `when setDailyStreakData with negative timestamp then throws`() = runTest {
+        sut.setDailyStreakData(5L, -1L)
+    }
+
 }

@@ -113,7 +113,7 @@ All coordinates mapped via `adb shell uiautomator dump`.
 | Menu → New Game | 540, 945 |
 | Choose Board → 3x4 | 540, 572 |
 | Choose Board → 5x6 | 540, 1380 |
-| End game → Unlock New Card | 541, 1297 |
+| End game → Unlock New Card | 540, 928 |
 | Collection → coin-unlock card | 283, 938 |
 
 ## Timing variables

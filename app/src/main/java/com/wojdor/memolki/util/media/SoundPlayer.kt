@@ -4,8 +4,7 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.annotation.RawRes
-import com.wojdor.memolki.domain.model.SettingModel
-import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
+import com.wojdor.memolki.domain.usecase.ObserveSoundEnabledUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 abstract class SoundPlayer(
     private val context: Context,
     coroutineDispatcher: CoroutineDispatcher,
-    private val getSettingsUseCase: GetSettingsUseCase
+    private val observeSoundEnabledUseCase: ObserveSoundEnabledUseCase
 ) {
     @get:RawRes
     abstract val soundId: Int
@@ -29,10 +28,9 @@ abstract class SoundPlayer(
 
     private fun observeSoundSettings() {
         scope.launch {
-            getSettingsUseCase().collect { result ->
-                result.onSuccess { settings ->
-                    isSoundEnabled =
-                        settings.filterIsInstance<SettingModel.Sound>().first().isEnabled
+            observeSoundEnabledUseCase().collect { result ->
+                result.onSuccess { enabled ->
+                    isSoundEnabled = enabled
                 }
             }
         }

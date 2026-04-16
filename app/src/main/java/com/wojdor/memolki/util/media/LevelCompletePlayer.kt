@@ -3,7 +3,7 @@ package com.wojdor.memolki.util.media
 import android.content.Context
 import com.wojdor.memolki.R
 import com.wojdor.memolki.di.coroutine.MainDispatcher
-import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
+import com.wojdor.memolki.domain.usecase.ObserveSoundEnabledUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
@@ -13,8 +13,8 @@ import javax.inject.Singleton
 class LevelCompletePlayer @Inject constructor(
     @ApplicationContext context: Context,
     @MainDispatcher coroutineDispatcher: CoroutineDispatcher,
-    getSettingsUseCase: GetSettingsUseCase
-) : SoundPlayer(context, coroutineDispatcher, getSettingsUseCase) {
+    observeSoundEnabledUseCase: ObserveSoundEnabledUseCase
+) : SoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase) {
 
     override val soundId: Int = R.raw.sound_level_complete
 }
