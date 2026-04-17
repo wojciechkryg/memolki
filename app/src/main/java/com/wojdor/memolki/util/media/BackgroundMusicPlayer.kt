@@ -7,8 +7,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.wojdor.memolki.R
 import com.wojdor.memolki.di.coroutine.MainDispatcher
-import com.wojdor.memolki.domain.model.SettingModel
-import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
+import com.wojdor.memolki.domain.usecase.ObserveMusicEnabledUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +22,7 @@ import javax.inject.Singleton
 class BackgroundMusicPlayer @Inject constructor(
     @param:ApplicationContext private val context: Context,
     @param:MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
-    private val getSettingsUseCase: GetSettingsUseCase
+    private val observeMusicEnabledUseCase: ObserveMusicEnabledUseCase
 ) : DefaultLifecycleObserver {
 
     // Fix for the default looping mechanism of MediaPlayer that causes a small gap between loops
@@ -34,6 +33,7 @@ class BackgroundMusicPlayer @Inject constructor(
     private val scope = CoroutineScope(coroutineDispatcher + SupervisorJob())
     private var volumeJob: Job? = null
     private var isMusicEnabled = false
+    private var isResumed = false
     private var currentVolume = NO_VOLUME
     private var isFadingOut = false
 
@@ -43,21 +43,26 @@ class BackgroundMusicPlayer @Inject constructor(
 
     private fun observeMusicSettings() {
         scope.launch {
-            getSettingsUseCase().collect { result ->
-                result.onSuccess { settings ->
-                    isMusicEnabled =
-                        settings.filterIsInstance<SettingModel.Music>().first().isEnabled
-                    playIfMusicEnabled()
+            observeMusicEnabledUseCase().collect { result ->
+                result.onSuccess { enabled ->
+                    isMusicEnabled = enabled
+                    if (enabled) {
+                        if (isResumed) start()
+                    } else {
+                        stop()
+                    }
                 }
             }
         }
     }
 
     override fun onResume(owner: LifecycleOwner) {
-        playIfMusicEnabled()
+        isResumed = true
+        if (isMusicEnabled) start()
     }
 
     override fun onPause(owner: LifecycleOwner) {
+        isResumed = false
         pause()
     }
 
@@ -99,14 +104,6 @@ class BackgroundMusicPlayer @Inject constructor(
         }
     }
 
-    private fun playIfMusicEnabled() {
-        if (isMusicEnabled) {
-            start()
-        } else {
-            stop()
-        }
-    }
-
     private fun stop() {
         if (currentPlayer?.isPlaying == true) {
             volumeJob?.cancel()
@@ -143,7 +140,7 @@ class BackgroundMusicPlayer @Inject constructor(
         setAudioAttributes(
             AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build()
         )
     }

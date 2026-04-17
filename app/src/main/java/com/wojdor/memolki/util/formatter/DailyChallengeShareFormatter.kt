@@ -26,7 +26,7 @@ class DailyChallengeShareFormatter @Inject constructor(
     ): String {
         val appName = context.getString(R.string.app_name)
         val date = timeProvider.localDateFromEpochDay(result.epochDay).format(DATE_FORMAT)
-            .replace("/", "\u200B/\u200B")
+            .replace("/", DIVISION_SLASH)
         val stars = starsEmoji(result.starCount)
         val mistakeText = context.resources.getQuantityString(
             R.plurals.daily_challenge_mistakes,
@@ -34,7 +34,7 @@ class DailyChallengeShareFormatter @Inject constructor(
             result.mistakeCount
         )
         val time = timeFormatter.format(result.timeMillis)
-        val timeText = "${time.main.replace(":", "\u200B:\u200B")}\u200B${time.millis}"
+        val timeText = "${time.main.replace(":", RATIO)}${time.millis.replace(".", ONE_DOT_LEADER)}"
         val gridText = buildGrid(grid)
         val storeLink = "https://play.google.com/store/apps/details?id=${context.packageName}"
         return buildString {
@@ -63,5 +63,9 @@ class DailyChallengeShareFormatter @Inject constructor(
     companion object {
         private const val MAX_PERFECT_FLIPS = 2
         private val DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        // Unicode look-alikes to prevent auto-linking in messaging apps
+        private const val DIVISION_SLASH = "\u2215"
+        private const val RATIO = "\u2236"
+        private const val ONE_DOT_LEADER = "\u2024"
     }
 }

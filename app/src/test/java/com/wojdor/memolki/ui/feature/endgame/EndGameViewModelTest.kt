@@ -706,4 +706,61 @@ class EndGameViewModelTest : AppTest() {
             verify { analytics.logAdDismissed("end_game", true) }
         }
 
+    @Test
+    fun `when not first game and ad loaded then casual menu contains WatchAd and Share`() =
+        runTest {
+            // given
+            userRepository.incrementTotalGamesPlayed()
+            every { allRewardedAds.endGameCoinsAd.loadAndNotify(any(), any()) } answers {
+                secondArg<(Boolean) -> Unit>().invoke(true)
+            }
+
+            // when
+            sut.sendIntent(
+                EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true), 1L)
+            )
+            testScheduler.advanceUntilIdle()
+
+            // then
+            val menu = sut.uiState.value.menu
+            assertTrue(menu.any { it is EndGameMenuModel.WatchAd })
+            assertTrue(menu.any { it is EndGameMenuModel.Share })
+        }
+
+    @Test
+    fun `when share is clicked and reward is granted then coins are animated and menu is updated`() =
+        runTest {
+            // given
+            sut.sendIntent(
+                EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true), 1L)
+            )
+            testScheduler.advanceUntilIdle()
+
+            // when
+            sut.sendIntent(EndGameIntent.OnShareClick)
+            testScheduler.advanceUntilIdle()
+
+            // then
+            val state = sut.uiState.value
+            assertTrue(state.animateCoins)
+        }
+
+    @Test
+    fun `when share reward not available then Share menu item shows no reward`() = runTest {
+        // given
+        userRepository.incrementTotalGamesPlayed()
+        userRepository.setHasReceivedShareReward()
+
+        // when
+        sut.sendIntent(
+            EndGameIntent.OnCasualEndGameShow(BoardModel.Grid2x3(isUnlocked = true), 1L)
+        )
+        testScheduler.advanceUntilIdle()
+
+        // then
+        val shareItem = sut.uiState.value.menu.filterIsInstance<EndGameMenuModel.Share>().first()
+        assertEquals(false, shareItem.showReward)
+        assertEquals(0L, shareItem.rewardCoins)
+    }
+
 }

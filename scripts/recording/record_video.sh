@@ -165,7 +165,7 @@ BOARD_5X6="540 1380"
 #   └────────────┴────────────┴────────────┘
 
 # End game
-EG_UNLOCK="541 1297"
+EG_UNLOCK="540 928"
 
 # Collection coin-unlock card
 COLL_UNLOCK="283 938"
