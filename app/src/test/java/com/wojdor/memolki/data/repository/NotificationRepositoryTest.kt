@@ -1,9 +1,14 @@
 package com.wojdor.memolki.data.repository
 
+import android.util.Log
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.relaxedMockk
+import io.mockk.every
+import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -25,6 +30,10 @@ class NotificationRepositoryTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
+        mockkStatic(Log::class)
+        every { Log.e(any(), any(), any()) } returns 0
+        mockkStatic(FirebaseCrashlytics::class)
+        every { FirebaseCrashlytics.getInstance() } returns relaxedMockk()
         sut = NotificationRepository(encryptor, notificationLocalDataSource)
     }
 
@@ -65,5 +74,17 @@ class NotificationRepositoryTest : AppTest() {
         // then
         val result = sut.getLastShownTimestamp()
         assertEquals(timestamp, result)
+    }
+
+    @Test
+    fun `when stored value is corrupted then returns default zero`() = runTest {
+        // given
+        notificationLocalDataSource.setEncryptedLastShownTimestamp("corrupted_data")
+
+        // when
+        val result = sut.getLastShownTimestamp()
+
+        // then
+        assertEquals(0L, result)
     }
 }

@@ -6,6 +6,7 @@ import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import io.mockk.every
 import io.mockk.mockk
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -31,13 +32,7 @@ class DailyChallengeShareFormatterTest {
     @Test
     fun `when star count is 3 then three stars emoji is used`() {
         // given
-        val result = DailyChallengeModel(
-            starCount = 3,
-            mistakeCount = 0,
-            timeMillis = 5000L,
-            epochDay = 100L,
-            cardFlipCounts = listOf(listOf(1, 2))
-        )
+        val result = createModel(starCount = 3)
 
         // when
         val text = sut.format(result)
@@ -49,13 +44,7 @@ class DailyChallengeShareFormatterTest {
     @Test
     fun `when star count is 2 then two stars emoji is used`() {
         // given
-        val result = DailyChallengeModel(
-            starCount = 2,
-            mistakeCount = 2,
-            timeMillis = 5000L,
-            epochDay = 100L,
-            cardFlipCounts = listOf(listOf(1, 3))
-        )
+        val result = createModel(starCount = 2)
 
         // when
         val text = sut.format(result)
@@ -68,13 +57,7 @@ class DailyChallengeShareFormatterTest {
     @Test
     fun `when star count is 1 then one star emoji is used`() {
         // given
-        val result = DailyChallengeModel(
-            starCount = 1,
-            mistakeCount = 5,
-            timeMillis = 5000L,
-            epochDay = 100L,
-            cardFlipCounts = listOf(listOf(3, 4))
-        )
+        val result = createModel(starCount = 1)
 
         // when
         val text = sut.format(result)
@@ -87,13 +70,7 @@ class DailyChallengeShareFormatterTest {
     @Test
     fun `when grid has perfect and non-perfect flips then output has green and red squares`() {
         // given
-        val result = DailyChallengeModel(
-            starCount = 2,
-            mistakeCount = 2,
-            timeMillis = 5000L,
-            epochDay = 100L,
-            cardFlipCounts = listOf(listOf(1, 3))
-        )
+        val result = createModel(cardFlipCounts = listOf(listOf(1, 3)))
 
         // when
         val text = sut.format(result)
@@ -102,4 +79,152 @@ class DailyChallengeShareFormatterTest {
         assertTrue(text.contains("🟩"))
         assertTrue(text.contains("🟥"))
     }
+
+    @Test
+    fun `when all flips are perfect then grid has only green squares`() {
+        // given
+        val result = createModel(cardFlipCounts = listOf(listOf(1, 2), listOf(2, 1)))
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        assertTrue(text.contains("🟩"))
+        assertFalse(text.contains("🟥"))
+    }
+
+    @Test
+    fun `when no flips are perfect then grid has only red squares`() {
+        // given
+        val result = createModel(cardFlipCounts = listOf(listOf(3, 4), listOf(5, 3)))
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        assertTrue(text.contains("🟥"))
+        assertFalse(text.contains("🟩"))
+    }
+
+    @Test
+    fun `when multi-row grid then rows are separated by newlines`() {
+        // given
+        val result = createModel(
+            cardFlipCounts = listOf(listOf(1, 1), listOf(3, 3))
+        )
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        assertTrue(text.contains("🟩🟩\n🟥🟥"))
+    }
+
+    @Test
+    fun `when date formatted then slashes are replaced with unicode division slash`() {
+        // given
+        val result = createModel(epochDay = 100L)
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        assertTrue(text.contains("\u2215"))
+        val dateLine = text.lines().first()
+        assertFalse(dateLine.contains("/"))
+    }
+
+    @Test
+    fun `when time formatted then colons are replaced with unicode ratio`() {
+        // given
+        val result = createModel(timeMillis = 65_000L)
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        val timeLine = text.lines()[1]
+        assertTrue(timeLine.contains("\u2236"))
+        assertFalse(timeLine.contains(":"))
+    }
+
+    @Test
+    fun `when time formatted then dot is replaced with unicode one dot leader`() {
+        // given
+        val result = createModel(timeMillis = 5_123L)
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        val timeLine = text.lines()[1]
+        assertTrue(timeLine.contains("\u2024"))
+        assertFalse(timeLine.contains("."))
+    }
+
+    @Test
+    fun `when formatted then output contains all expected sections`() {
+        // given
+        val result = createModel(
+            starCount = 2,
+            mistakeCount = 2,
+            timeMillis = 65_123L,
+            epochDay = 100L,
+            cardFlipCounts = listOf(listOf(1, 3))
+        )
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        val lines = text.lines()
+        assertTrue(lines[0].startsWith("🃏 TestApp"))
+        assertTrue(lines[1].startsWith("⏱️"))
+        assertTrue(lines[2].contains("⭐"))
+        assertTrue(lines[2].contains("2 mistakes"))
+        assertTrue(lines[3].contains("🟩") || lines[3].contains("🟥"))
+        assertTrue(lines.last().contains("play.google.com"))
+    }
+
+    @Test
+    fun `when formatted then store link contains package name`() {
+        // given
+        val result = createModel()
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        assertTrue(text.contains("https://play.google.com/store/apps/details?id=com.test"))
+    }
+
+    @Test
+    fun `when formatted then date line contains app name and date`() {
+        // given
+        val result = createModel(epochDay = 20088L)
+
+        // when
+        val text = sut.format(result)
+
+        // then
+        val dateLine = text.lines().first()
+        assertTrue(dateLine.contains("TestApp"))
+        assertTrue(dateLine.contains("31"))
+        assertTrue(dateLine.contains("12"))
+        assertTrue(dateLine.contains("2024"))
+    }
+
+    private fun createModel(
+        starCount: Int = 2,
+        mistakeCount: Int = 2,
+        timeMillis: Long = 5000L,
+        epochDay: Long = 100L,
+        cardFlipCounts: List<List<Int>> = listOf(listOf(1, 3))
+    ) = DailyChallengeModel(
+        starCount = starCount,
+        mistakeCount = mistakeCount,
+        timeMillis = timeMillis,
+        epochDay = epochDay,
+        cardFlipCounts = cardFlipCounts
+    )
 }
