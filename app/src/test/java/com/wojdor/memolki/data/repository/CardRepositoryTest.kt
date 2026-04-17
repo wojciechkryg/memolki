@@ -152,12 +152,13 @@ class CardRepositoryTest : AppTest() {
     @Test
     fun `when unlocked id is not in all pairs then it is skipped`() = runTest {
         // given
+        val baseline = sut.getUnlockedCardPairs()
         unlockedCardPairsLocalDataSource.addUnlockedCardPairId("does-not-exist")
 
         // when
         val result = sut.getUnlockedCardPairs()
 
         // then
-        assertTrue(result.none { it.first.pairId == "does-not-exist" })
+        assertEquals(baseline, result)
     }
 }
