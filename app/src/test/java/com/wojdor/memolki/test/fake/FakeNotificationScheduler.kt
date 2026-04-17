@@ -17,7 +17,10 @@ class FakeNotificationScheduler @Inject constructor(
     var adRewardNotificationScheduled = false
         private set
 
-    var dailyChallengeNotificationScheduled = false
+    var dailyChallengeNotificationTimestamp: Long? = null
+        private set
+
+    var nextDailyChallengeNotificationTimestamp: Long = FAKE_NEXT_DAILY_CHALLENGE_NOTIFICATION_TIMESTAMP
         private set
 
     var streakNotificationScheduled = false
@@ -40,9 +43,12 @@ class FakeNotificationScheduler @Inject constructor(
         adRewardNotificationScheduled = true
     }
 
-    override fun scheduleDailyChallengeNotification() {
-        dailyChallengeNotificationScheduled = true
+    override fun scheduleDailyChallengeNotification(nextNotificationTimestamp: Long) {
+        dailyChallengeNotificationTimestamp = nextNotificationTimestamp
     }
+
+    override fun calculateNextDailyChallengeNotificationTimestamp(): Long =
+        nextDailyChallengeNotificationTimestamp
 
     override fun scheduleStreakNotification() {
         streakNotificationScheduled = true
@@ -60,4 +66,7 @@ class FakeNotificationScheduler @Inject constructor(
         channelCreated = true
     }
 
+    companion object {
+        private const val FAKE_NEXT_DAILY_CHALLENGE_NOTIFICATION_TIMESTAMP = 1_000_000L
+    }
 }

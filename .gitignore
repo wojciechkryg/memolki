@@ -40,7 +40,9 @@ google-services.json
 # Android Profiling
 *.hprof
 
-# YouTube OAuth
+# YouTube OAuth & uploads
 client_secret*.json
 token.json
-upload_progress.json
+video_urls.json
+ads_assets_progress.json
+google-ads.yaml

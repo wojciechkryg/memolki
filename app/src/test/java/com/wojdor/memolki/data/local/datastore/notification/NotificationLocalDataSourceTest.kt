@@ -57,4 +57,23 @@ class NotificationLocalDataSourceTest : AppTest() {
         val result = sut.encryptedLastShownTimestamp.first()
         assertEquals("new_value", result)
     }
+
+    @Test
+    fun `initially encrypted next daily challenge notification timestamp is null`() = runTest {
+        // when
+        val result = sut.encryptedNextDailyChallengeNotificationTimestamp.first()
+
+        // then
+        assertNull(result)
+    }
+
+    @Test
+    fun `when next daily challenge notification timestamp is set then it can be read`() = runTest {
+        // when
+        sut.setEncryptedNextDailyChallengeNotificationTimestamp("encrypted_456")
+
+        // then
+        val result = sut.encryptedNextDailyChallengeNotificationTimestamp.first()
+        assertEquals("encrypted_456", result)
+    }
 }

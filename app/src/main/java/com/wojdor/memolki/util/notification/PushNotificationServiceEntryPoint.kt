@@ -1,6 +1,7 @@
 package com.wojdor.memolki.util.notification
 
 import com.wojdor.memolki.data.repository.NotificationRepository
+import com.wojdor.memolki.util.provider.AppForegroundProvider
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -10,4 +11,5 @@ import dagger.hilt.components.SingletonComponent
 interface PushNotificationServiceEntryPoint {
     fun notificationCreator(): NotificationCreator
     fun notificationRepository(): NotificationRepository
+    fun appForegroundProvider(): AppForegroundProvider
 }

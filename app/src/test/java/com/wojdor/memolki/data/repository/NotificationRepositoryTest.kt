@@ -87,4 +87,27 @@ class NotificationRepositoryTest : AppTest() {
         // then
         assertEquals(0L, result)
     }
+
+    @Test
+    fun `when getNextDailyChallengeNotificationTimestamp with no data then returns default zero`() =
+        runTest {
+            // when
+            val result = sut.getNextDailyChallengeNotificationTimestamp()
+
+            // then
+            assertEquals(0L, result)
+        }
+
+    @Test
+    fun `when setNextDailyChallengeNotificationTimestamp then value can be retrieved`() = runTest {
+        // given
+        val timestamp = 1_700_000_000_000L
+
+        // when
+        sut.setNextDailyChallengeNotificationTimestamp(timestamp)
+
+        // then
+        val result = sut.getNextDailyChallengeNotificationTimestamp()
+        assertEquals(timestamp, result)
+    }
 }

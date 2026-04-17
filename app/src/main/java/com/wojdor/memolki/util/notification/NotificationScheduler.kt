@@ -23,7 +23,6 @@ open class NotificationScheduler @Inject constructor(
     override fun onCreate(owner: LifecycleOwner) {
         createNotificationChannel()
         scheduleReminderNotification()
-        scheduleDailyChallengeNotification()
     }
 
     override fun onResume(owner: LifecycleOwner) {
@@ -69,17 +68,27 @@ open class NotificationScheduler @Inject constructor(
         )
     }
 
-    open fun scheduleDailyChallengeNotification() {
+    open fun scheduleDailyChallengeNotification(nextNotificationTimestamp: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
-        val triggerAt = calculateNextDailyChallengeTriggerTime()
         val pendingIntent = createPendingIntent(TYPE_DAILY_CHALLENGE, DAILY_CHALLENGE_REQUEST_CODE)
         alarmManager.setWindow(
             AlarmManager.RTC_WAKEUP,
-            triggerAt,
+            nextNotificationTimestamp,
             DAILY_CHALLENGE_WINDOW_MS,
             pendingIntent
         )
+    }
+
+    open fun calculateNextDailyChallengeNotificationTimestamp(): Long {
+        val calendar = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, 1)
+            set(Calendar.HOUR_OF_DAY, DAILY_CHALLENGE_HOUR)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.timeInMillis
     }
 
     open fun cancelAdRewardNotification() {
@@ -129,19 +138,6 @@ open class NotificationScheduler @Inject constructor(
             set(Calendar.MINUTE, randomMinute)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
-        }
-        return calendar.timeInMillis
-    }
-
-    private fun calculateNextDailyChallengeTriggerTime(): Long {
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, DAILY_CHALLENGE_HOUR)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
-        if (System.currentTimeMillis() >= calendar.timeInMillis) {
-            calendar.add(Calendar.DAY_OF_YEAR, 1)
         }
         return calendar.timeInMillis
     }

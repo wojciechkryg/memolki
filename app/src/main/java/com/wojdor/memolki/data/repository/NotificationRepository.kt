@@ -20,6 +20,18 @@ class NotificationRepository @Inject constructor(
         notificationLocalDataSource.setEncryptedLastShownTimestamp(encryptor.encrypt(timestamp))
     }
 
+    suspend fun getNextDailyChallengeNotificationTimestamp(): Long {
+        val encryptedValue =
+            notificationLocalDataSource.encryptedNextDailyChallengeNotificationTimestamp.first()
+        return decryptLong(encryptedValue)
+    }
+
+    suspend fun setNextDailyChallengeNotificationTimestamp(timestamp: Long) {
+        notificationLocalDataSource.setEncryptedNextDailyChallengeNotificationTimestamp(
+            encryptor.encrypt(timestamp)
+        )
+    }
+
     private suspend fun decryptLong(encryptedValue: String?): Long {
         return if (encryptedValue.isNullOrEmpty()) {
             DEFAULT_LONG_VALUE
