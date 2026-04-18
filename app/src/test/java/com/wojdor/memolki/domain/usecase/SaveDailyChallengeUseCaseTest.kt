@@ -54,12 +54,15 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
         every { Log.e(any(), any(), any()) } returns 0
         mockkStatic(FirebaseCrashlytics::class)
         every { FirebaseCrashlytics.getInstance() } returns relaxedMockk()
-        notificationRepository = NotificationRepository(encryptor, notificationLocalDataSource)
+        notificationRepository = NotificationRepository(
+            encryptor,
+            notificationLocalDataSource,
+            fakeNotificationScheduler
+        )
         sut = SaveDailyChallengeUseCase(
             testDispatcher,
             DailyChallengeRepository(dailyChallengeDao),
             notificationRepository,
-            fakeNotificationScheduler,
             fakeTimeProvider
         )
     }

@@ -91,6 +91,7 @@ for key in sorted(data.keys()):
 ")
 
 while IFS=' ' read -r key url; do
+    [ -z "$key" ] && continue
     flavor="${key%%/*}"
     locale="${key##*/}"
 

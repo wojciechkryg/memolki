@@ -78,21 +78,32 @@ GOOGLE_ADS_YAML="$SCRIPT_DIR/google-ads.yaml"
 if [ -f "$GOOGLE_ADS_YAML" ]; then
     pass "google-ads.yaml found"
 
-    if grep -q "developer_token:" "$GOOGLE_ADS_YAML" && ! grep -q "INSERT_TOKEN_HERE" "$GOOGLE_ADS_YAML"; then
+    check_yaml_field() {
+        local field="$1"
+        local placeholder="$2"
+        local line
+        line=$(grep "^${field}:" "$GOOGLE_ADS_YAML" || true)
+        if [ -n "$line" ] && ! echo "$line" | grep -q "$placeholder"; then
+            return 0
+        fi
+        return 1
+    }
+
+    if check_yaml_field "developer_token" "INSERT_TOKEN_HERE"; then
         pass "developer_token configured"
     else
         fail "developer_token not set in google-ads.yaml"
         info "Get it from Google Ads → Tools → API Center"
     fi
 
-    if grep -q "client_customer_id:" "$GOOGLE_ADS_YAML" && ! grep -q "INSERT_ID_HERE" "$GOOGLE_ADS_YAML"; then
+    if check_yaml_field "client_customer_id" "INSERT_ID_HERE"; then
         pass "client_customer_id configured"
     else
         fail "client_customer_id not set in google-ads.yaml"
         info "Your Google Ads account ID (format: 123-456-7890)"
     fi
 
-    if grep -q "refresh_token:" "$GOOGLE_ADS_YAML" && ! grep -q "INSERT_TOKEN_HERE" "$GOOGLE_ADS_YAML"; then
+    if check_yaml_field "refresh_token" "INSERT_TOKEN_HERE"; then
         pass "refresh_token configured"
     else
         fail "refresh_token not set in google-ads.yaml"
@@ -135,7 +146,12 @@ echo "🏪 Play Store listing setup"
 
 SECRETS="$PROJECT_ROOT/secrets.properties"
 if [ -f "$SECRETS" ] && grep -q "PLAY_SERVICE_ACCOUNT_PATH" "$SECRETS"; then
-    SA_PATH=$(grep "PLAY_SERVICE_ACCOUNT_PATH" "$SECRETS" | cut -d'=' -f2)
+    SA_PATH=$(grep "^PLAY_SERVICE_ACCOUNT_PATH" "$SECRETS" | cut -d'=' -f2-)
+    SA_PATH="${SA_PATH%\"}"
+    SA_PATH="${SA_PATH#\"}"
+    SA_PATH="${SA_PATH%\'}"
+    SA_PATH="${SA_PATH#\'}"
+    SA_PATH="${SA_PATH/#\~/$HOME}"
     if [ -f "$SA_PATH" ]; then
         pass "Play Store service account configured"
     else

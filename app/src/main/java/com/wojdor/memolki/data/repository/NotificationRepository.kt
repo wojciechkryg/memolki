@@ -3,12 +3,14 @@ package com.wojdor.memolki.data.repository
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSource
 import com.wojdor.memolki.util.extension.logE
+import com.wojdor.memolki.util.notification.NotificationScheduler
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class NotificationRepository @Inject constructor(
     private val encryptor: Encryptor,
-    private val notificationLocalDataSource: NotificationLocalDataSource
+    private val notificationLocalDataSource: NotificationLocalDataSource,
+    private val notificationScheduler: NotificationScheduler
 ) {
 
     suspend fun getLastShownTimestamp(): Long {
@@ -30,6 +32,13 @@ class NotificationRepository @Inject constructor(
         notificationLocalDataSource.setEncryptedNextDailyChallengeNotificationTimestamp(
             encryptor.encrypt(timestamp)
         )
+    }
+
+    suspend fun scheduleNextDailyChallengeNotification() {
+        val nextNotificationTimestamp =
+            notificationScheduler.calculateNextDailyChallengeNotificationTimestamp()
+        setNextDailyChallengeNotificationTimestamp(nextNotificationTimestamp)
+        notificationScheduler.scheduleDailyChallengeNotification(nextNotificationTimestamp)
     }
 
     private suspend fun decryptLong(encryptedValue: String?): Long {

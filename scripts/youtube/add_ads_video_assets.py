@@ -304,16 +304,19 @@ def main():
                         print(f"   ❌ {locale} — could not find existing asset")
                         failed += 1
                         continue
+                    newly_created = False
                 else:
                     asset_rn = create_video_asset(client, customer_id, video_id, asset_name)
                     existing_video_ids.add(video_id)
-                    created += 1
+                    newly_created = True
                     print(f"   ✅ {locale} — asset created")
 
                 # Link to campaign
                 link_asset_to_campaign(
                     client, customer_id, campaign["resource_name"], asset_rn
                 )
+                if newly_created:
+                    created += 1
                 linked += 1
                 print(f"   🔗 {locale} — linked to campaign")
 

@@ -438,6 +438,7 @@ Managed via [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publ
 | `title.txt` | 30 characters |
 | `short-description.txt` | 80 characters |
 | `full-description.txt` | 4000 characters |
+| `video-url.txt` | YouTube URL (no character limit) |
 
 **Always respect these limits when generating or editing listing text.** Titles over 30 chars will be rejected by Play Store.
 
@@ -460,6 +461,7 @@ app/src/{flavor}/play/
     ├── title.txt
     ├── short-description.txt
     ├── full-description.txt
+    ├── video-url.txt
     └── graphics/phone-screenshots/*.jpg
 ```
 

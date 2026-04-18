@@ -21,6 +21,7 @@ from pathlib import Path
 
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
@@ -61,10 +62,17 @@ def authenticate():
         creds = Credentials.from_authorized_user_file(str(TOKEN_FILE), SCOPES)
 
     if not creds or not creds.valid:
+        refreshed = False
         if creds and creds.expired and creds.refresh_token:
             print("🔄 Refreshing access token...")
-            creds.refresh(Request())
-        else:
+            try:
+                creds.refresh(Request())
+                refreshed = True
+            except RefreshError as e:
+                print(f"⚠️  Refresh failed ({e}). Falling back to interactive OAuth.")
+                creds = None
+
+        if not refreshed:
             if not CLIENT_SECRET_FILE.exists():
                 print(f"❌ Missing {CLIENT_SECRET_FILE}")
                 print("   Download OAuth client credentials from Google Cloud Console.")

@@ -10,6 +10,7 @@ Usage:
     python3 scripts/youtube/generate_refresh_token.py
 """
 
+import sys
 from pathlib import Path
 
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -23,13 +24,18 @@ SCOPES = ["https://www.googleapis.com/auth/adwords"]
 def main():
     if not CLIENT_SECRET_FILE.exists():
         print(f"❌ Missing {CLIENT_SECRET_FILE}")
-        return
+        sys.exit(1)
 
     print("🔑 Opening browser for Google Ads OAuth consent...")
     print("   Grant access to your Google Ads account.\n")
 
     flow = InstalledAppFlow.from_client_secrets_file(str(CLIENT_SECRET_FILE), SCOPES)
-    creds = flow.run_local_server(port=0)
+    creds = flow.run_local_server(port=0, prompt="consent")
+
+    if not creds.refresh_token:
+        print("❌ No refresh_token returned by Google.")
+        print("   Revoke the app at https://myaccount.google.com/permissions and retry.")
+        sys.exit(1)
 
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print("✅ Refresh token generated!\n")

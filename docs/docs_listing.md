@@ -45,11 +45,13 @@ app/src/fruitHalf/play/listings/
 ├── en-US/
 │   ├── title.txt
 │   ├── short-description.txt
-│   └── full-description.txt
+│   ├── full-description.txt
+│   └── video-url.txt
 ├── pl-PL/
 │   ├── title.txt
 │   ├── short-description.txt
-│   └── full-description.txt
+│   ├── full-description.txt
+│   └── video-url.txt
 └── ...
 ```
 
@@ -78,3 +80,4 @@ Edit the text files locally, then push to Play Store:
 | `title.txt` | 30 characters |
 | `short-description.txt` | 80 characters |
 | `full-description.txt` | 4000 characters |
+| `video-url.txt` | YouTube URL (no character limit) |

@@ -6,6 +6,7 @@ import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.relaxedMockk
 import io.mockk.every
 import io.mockk.mockkStatic
@@ -25,6 +26,9 @@ class NotificationRepositoryTest : AppTest() {
     @Inject
     lateinit var encryptor: Encryptor
 
+    @Inject
+    lateinit var fakeNotificationScheduler: FakeNotificationScheduler
+
     private lateinit var sut: NotificationRepository
 
     @Before
@@ -34,7 +38,11 @@ class NotificationRepositoryTest : AppTest() {
         every { Log.e(any(), any(), any()) } returns 0
         mockkStatic(FirebaseCrashlytics::class)
         every { FirebaseCrashlytics.getInstance() } returns relaxedMockk()
-        sut = NotificationRepository(encryptor, notificationLocalDataSource)
+        sut = NotificationRepository(
+            encryptor,
+            notificationLocalDataSource,
+            fakeNotificationScheduler
+        )
     }
 
     override fun inject(injector: TestInjector) {
@@ -110,4 +118,33 @@ class NotificationRepositoryTest : AppTest() {
         val result = sut.getNextDailyChallengeNotificationTimestamp()
         assertEquals(timestamp, result)
     }
+
+    @Test
+    fun `when stored next daily challenge timestamp is corrupted then returns default zero`() =
+        runTest {
+            // given
+            notificationLocalDataSource
+                .setEncryptedNextDailyChallengeNotificationTimestamp("corrupted_data")
+
+            // when
+            val result = sut.getNextDailyChallengeNotificationTimestamp()
+
+            // then
+            assertEquals(0L, result)
+        }
+
+    @Test
+    fun `when scheduleNextDailyChallengeNotification then persists and schedules next timestamp`() =
+        runTest {
+            // when
+            sut.scheduleNextDailyChallengeNotification()
+
+            // then
+            val expectedTimestamp = fakeNotificationScheduler.nextDailyChallengeNotificationTimestamp
+            assertEquals(
+                expectedTimestamp,
+                fakeNotificationScheduler.dailyChallengeNotificationTimestamp
+            )
+            assertEquals(expectedTimestamp, sut.getNextDailyChallengeNotificationTimestamp())
+        }
 }
