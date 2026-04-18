@@ -11,6 +11,7 @@ import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetLevelUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.IncrementLevelUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
@@ -24,8 +25,10 @@ import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.TimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,6 +48,7 @@ class GameViewModel @Inject constructor(
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
     private val saveDailyChallengeUseCase: SaveDailyChallengeUseCase,
     private val getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase,
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val timeProvider: TimeProvider,
     private val starCalculator: StarCalculator
 ) : MviViewModel<GameIntent, GameState>(
@@ -175,12 +179,16 @@ class GameViewModel @Inject constructor(
             epochDay = state.epochDay,
             cardFlipCounts = state.cardFlipCounts
         )
-        analytics.logDailyChallengeComplete(
-            state.epochDay,
-            state.mistakeCount,
-            starCount,
-            elapsedTimeMillis
-        )
+        viewModelScope.launch {
+            val totalGames = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
+            analytics.logDailyChallengeComplete(
+                epochDay = state.epochDay,
+                mistakeCount = state.mistakeCount,
+                starCount = starCount,
+                timeMillis = elapsedTimeMillis,
+                totalGamesCount = totalGames + 1
+            )
+        }
         saveDailyChallengeUseCase(result).launchIn(viewModelScope)
         sendEffect(
             GameEffect.OpenEndGameScreen(
@@ -245,7 +253,16 @@ class GameViewModel @Inject constructor(
         val cards = uiState.value.cards
         if (cards.isNotEmpty() && cards.all { it.isPairMatched }) {
             if (!uiState.value.isDailyChallenge) {
-                analytics.logBoardComplete(uiState.value.board, uiState.value.mistakeCount)
+                val state = uiState.value
+                viewModelScope.launch {
+                    val totalGames = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
+                    analytics.logBoardComplete(
+                        board = state.board,
+                        mistakeCount = state.mistakeCount,
+                        level = state.level,
+                        totalGamesCount = totalGames + 1
+                    )
+                }
                 incrementLevelUseCase(uiState.value.board.id).launchIn(viewModelScope)
             }
             sendState { copy(isGameFinished = true) }

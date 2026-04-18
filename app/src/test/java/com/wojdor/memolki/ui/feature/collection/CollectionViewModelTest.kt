@@ -186,7 +186,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logCardUnlockedWithCoins(any()) }
+        verify { analytics.logCardUnlockedWithCoins(any(), any()) }
     }
 
     @Test
@@ -452,7 +452,7 @@ class CollectionViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify(exactly = 0) { analytics.logCardUnlockedWithAd(any()) }
+            verify(exactly = 0) { analytics.logCardUnlockedWithAd(any(), any()) }
         }
 
     @Test
@@ -559,7 +559,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logCardUnlockedWithAd(any()) }
+        verify { analytics.logCardUnlockedWithAd(any(), any()) }
     }
 
     @Test

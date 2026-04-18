@@ -83,7 +83,8 @@ class CollectionViewModel @Inject constructor(
             result.onSuccess {
                 val unlockedCount = uiState.value.collectionCardPairs
                     .count { it is CollectionCardPairModel.Unlocked } + 1
-                analytics.logCardUnlockedWithAd(unlockedCount)
+                val totalCount = uiState.value.collectionCardPairs.size
+                analytics.logCardUnlockedWithAd(unlockedCount, totalCount)
                 analytics.logAdRewardFromCollection()
                 loadData()
             }
@@ -213,7 +214,8 @@ class CollectionViewModel @Inject constructor(
             result.onSuccess {
                 val unlockedCount = uiState.value.collectionCardPairs
                     .count { it is CollectionCardPairModel.Unlocked } + 1
-                analytics.logCardUnlockedWithCoins(unlockedCount)
+                val totalCount = uiState.value.collectionCardPairs.size
+                analytics.logCardUnlockedWithCoins(unlockedCount, totalCount)
                 coinsPlayer.playDelayed()
                 loadData(animateCoins = true)
             }.onFailure {

@@ -12,6 +12,7 @@ import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetLevelUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
+import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.IncrementLevelUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
@@ -84,6 +85,9 @@ class GameViewModelTest : AppTest() {
     lateinit var getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase
 
     @Inject
+    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+
+    @Inject
     lateinit var timeProvider: TimeProvider
 
     @Inject
@@ -116,6 +120,7 @@ class GameViewModelTest : AppTest() {
             hasPlayedTodayDailyChallengeUseCase,
             saveDailyChallengeUseCase,
             getTodayDailyChallengeUseCase,
+            getTotalGamesPlayedUseCase,
             timeProvider,
             starCalculator
         )
@@ -445,7 +450,14 @@ class GameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logBoardComplete(BoardModel.Grid2x3(isUnlocked = true), 0) }
+        verify {
+            analytics.logBoardComplete(
+                board = BoardModel.Grid2x3(isUnlocked = true),
+                mistakeCount = 0,
+                level = any(),
+                totalGamesCount = any()
+            )
+        }
     }
 
     @Test

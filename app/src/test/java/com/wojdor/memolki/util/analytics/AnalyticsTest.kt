@@ -23,7 +23,12 @@ class AnalyticsTest {
     @Test
     fun `logBoardComplete logs event with board size and mistake count`() {
         // when
-        sut.logBoardComplete(BoardModel.Grid2x3(isUnlocked = true), 5)
+        sut.logBoardComplete(
+            board = BoardModel.Grid2x3(isUnlocked = true),
+            mistakeCount = 5,
+            level = 12L,
+            totalGamesCount = 7L
+        )
 
         // then
         verify { firebaseAnalytics.logEvent("board_completed", any()) }
@@ -68,7 +73,7 @@ class AnalyticsTest {
     @Test
     fun `logCardUnlockedWithCoins logs event`() {
         // when
-        sut.logCardUnlockedWithCoins(10)
+        sut.logCardUnlockedWithCoins(totalUnlocked = 10, totalCount = 60)
 
         // then
         verify { firebaseAnalytics.logEvent("card_unlocked", any()) }
@@ -77,7 +82,7 @@ class AnalyticsTest {
     @Test
     fun `logCardUnlockedWithAd logs event`() {
         // when
-        sut.logCardUnlockedWithAd(5)
+        sut.logCardUnlockedWithAd(totalUnlocked = 5, totalCount = 60)
 
         // then
         verify { firebaseAnalytics.logEvent("card_unlocked", any()) }
@@ -329,10 +334,30 @@ class AnalyticsTest {
     @Test
     fun `logDailyChallengeComplete logs event`() {
         // when
-        sut.logDailyChallengeComplete(100L, 2, 3, 5000L)
+        sut.logDailyChallengeComplete(
+            epochDay = 100L,
+            mistakeCount = 2,
+            starCount = 3,
+            timeMillis = 5000L,
+            totalGamesCount = 9L
+        )
 
         // then
         verify { firebaseAnalytics.logEvent("daily_challenge_completed", any()) }
+    }
+
+    @Test
+    fun `logAdImpression logs firebase ad_impression event`() {
+        // when
+        sut.logAdImpression(
+            valueMicros = 10_000L,
+            currencyCode = "USD",
+            adFormat = "Rewarded",
+            adUnitName = "ca-app-pub-123/456"
+        )
+
+        // then
+        verify { firebaseAnalytics.logEvent("ad_impression", any()) }
     }
 
     @Test
