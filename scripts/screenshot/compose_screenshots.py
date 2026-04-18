@@ -26,13 +26,14 @@ from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 CANVAS_W, CANVAS_H = 1080, 1920
 NUM_SCREENSHOTS = 5
-BORDER = 40
-CORNER_OUTER = 200
+BORDER = 30
+CORNER_OUTER = 190
 CORNER_INNER = 165
 ROTATION_DEG = 7
 TEXT_SIZE = 100
 TEXT_LINE_SPACING = 14
-DEVICE_WIDTH_RATIO = 0.65
+DEVICE_WIDTH_RATIO = 0.78
+BOTTOM_BLEED_RATIO = 0.15
 
 FLAVOR_COLORS = {
     "fruit_half": (0xFF, 0xEA, 0xA1),
@@ -58,14 +59,15 @@ LOCALE_DIR_MAP = {
     "vi": "vi", "zh": "zh-CN",
 }
 
-# Wave layout: alternating top/bottom device positions.
-# "upper" = device at top, text below.  "lower" = device at bottom, text above.
+# Wave + dual-bleed layout: devices alternate top/bottom, each bleeding off the
+# nearest canvas edge. "upper" = device at bottom, bleeds bottom, text at top.
+# "lower" = device at top, bleeds top, text at bottom.
 SCREENSHOT_LAYOUT = [
-    ("upper", False),  # 1: 3×4 Gameplay — text top, device bottom
-    ("lower", True),   # 2: Collection (top) — device top, text bottom
-    ("upper", False),  # 3: 5×6 Gameplay — text top, device bottom
-    ("lower", True),   # 4: Daily Challenge End — device top, text bottom
-    ("upper", False),  # 5: Collection (locked) — text top, device bottom
+    ("upper", False),  # 1: 3×4 Gameplay — device bottom, bleeds bottom
+    ("lower", True),   # 2: Collection (top) — device top, bleeds top
+    ("upper", False),  # 3: 5×6 Gameplay — device bottom, bleeds bottom
+    ("lower", True),   # 4: Daily Challenge End — device top, bleeds top
+    ("upper", False),  # 5: Collection (locked) — device bottom, bleeds bottom
 ]
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -181,12 +183,14 @@ def _make_device(raw_path):
 
 
 def _device_dy(position, device_height):
-    """Vertical offset: 'lower' = device at top, 'upper' = device at bottom."""
-    margin = int(CANVAS_H * 0.02)
+    """Vertical offset: each position bleeds off the nearest canvas edge.
+    'upper' = device at bottom, bleeding past bottom edge.
+    'lower' = device at top, bleeding past top edge."""
+    bleed = int(device_height * BOTTOM_BLEED_RATIO)
     if position == "lower":
-        return margin
+        return -bleed
     else:
-        return CANVAS_H - margin - device_height
+        return CANVAS_H - device_height + bleed
 
 
 def _device_h_offset(position, device_height):
