@@ -5,8 +5,10 @@ Automated generation of Play Store listing assets using ADB screen capture and P
 ## Prerequisites
 
 - **Emulator**: Pixel 9 Pro (1280×2856) running and connected via `adb`
-- **RECORDING_MODE**: `true` in `util/provider/RecordingModeProvider.kt`
+- **RECORDING_MODE**: `true` in `util/provider/RecordingModeProvider.kt` **before** running the orchestrator. The script rebuilds and installs the APK — if `RECORDING_MODE = false`, the installed app won't seed boards, and taps will miss cards on shots 1, 3, 4. The orchestrator now has a preflight check that fails fast if the flag is not `true`.
 - **Python 3 + Pillow**: `pip install Pillow`
+
+> ⚠️ After flipping `RECORDING_MODE`, always re-run `generate_all_screenshots.sh` (which reinstalls the APK) — a stale install ignores the flag change.
 
 ## Quick Start
 
@@ -35,15 +37,15 @@ python3 scripts/screenshot/compose_screenshots.py fruit_half en ~/Desktop/memolk
 
 ## Screenshots (5 per locale)
 
-| # | Screen | Text (EN) | Layout |
-|---|--------|-----------|--------|
-| 1 | 3×4 Gameplay (2 matched + 1 revealed) | "not your usual memory game!" | text top, device bottom |
-| 2 | Collection (unlocked, scrolled to top) | "how many can you unlock?" | device top, text bottom |
-| 3 | 5×6 Gameplay (12 of 15 pairs matched) | "think you can handle this?" | text top, device bottom |
-| 4 | Daily Challenge End (3 stars) | "ready for today's puzzle?" | device top, text bottom |
-| 5 | Collection (locked, scrolled to bottom) | "collect them all!" | text top, device bottom |
+| # | Screen | Text (EN) |
+|---|--------|-----------|
+| 1 | 3×4 Gameplay (2 matched + 1 revealed) | "not your usual memory game!" |
+| 2 | Collection (unlocked, scrolled to top) | "how many can you unlock?" |
+| 3 | 5×6 Gameplay (12 of 15 pairs matched) | "think you can handle this?" |
+| 4 | Daily Challenge End (3 stars) | "ready for today's puzzle?" |
+| 5 | Collection (locked, scrolled to bottom) | "collect them all!" |
 
-Wave layout: devices alternate top/bottom with text in the opposite area. 7° rotation, anti-aliased frames, per-screenshot layering with computed equal gaps. All overlay texts are lowercase to match brand identity.
+Bottom-bleed layout: device anchored at bottom with ~15% bleeding off the canvas edge (Niagara-style hero shot). Text sits in the top ~20% of the card. 7° rotation, anti-aliased frames, per-screenshot layering with neighbors peeking from left/right. All overlay texts are lowercase to match brand identity.
 
 ## Feature Graphics (1024×500)
 

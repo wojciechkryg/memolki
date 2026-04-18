@@ -70,6 +70,7 @@ MENU_COLLECTION="640 1752"
 BOARD_3X4="640 970"
 BOARD_5X6="640 2042"
 BOARD_DAILY="640 2310"
+DIALOG_LEAVE="640 1770"
 
 # ═══════════════════════════════════════════════════════════════════
 # SETUP
@@ -99,7 +100,8 @@ tap 1043 1708; wait_overlay; tap 237 2111; wait_match    # Cherry (rows 3-4)
 tap 640 1305; sleep 1.0                                  # Reveal raspberry (row 2)
 screencap "raw_1.png"
 
-adb shell input keyevent KEYCODE_BACK; sleep 1.0
+adb shell input keyevent KEYCODE_BACK; sleep 0.7         # Open leave-game dialog
+tap $DIALOG_LEAVE; sleep 1.0                             # Confirm leave
 
 # ═══════════════════════════════════════════════════════════════════
 # 2: Collection — scrolled to top (unlocked cards)
