@@ -146,12 +146,13 @@ class MenuViewModel @Inject constructor(
                     add(insertIndex, MenuModel.DailyReward)
                 }
             }
-            menuItems to randomApp
-        }.onEach { (menuItems, randomApp) ->
+            Triple(menuItems, randomApp, totalGamesPlayed > 0)
+        }.onEach { (menuItems, randomApp, hasPlayedAnyGame) ->
             sendState {
                 copy(
                     menu = menuItems,
-                    otherAppModel = randomApp ?: otherAppModel
+                    otherAppModel = randomApp ?: otherAppModel,
+                    hasPlayedAnyGame = hasPlayedAnyGame
                 )
             }
         }.launchIn(viewModelScope)

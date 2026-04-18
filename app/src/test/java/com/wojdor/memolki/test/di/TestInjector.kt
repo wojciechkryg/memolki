@@ -39,6 +39,7 @@ import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsFromAdsCountUseCaseTest
 import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsUseCaseTest
 import com.wojdor.memolki.domain.usecase.HasAnyDailyChallengeUseCaseTest
+import com.wojdor.memolki.domain.usecase.HasNotPlayedAnyGameUseCaseTest
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCaseTest
 import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCaseTest
 import com.wojdor.memolki.domain.usecase.IncrementLevelUseCaseTest
@@ -155,6 +156,7 @@ interface TestInjector {
     fun inject(test: NotificationRepositoryTest)
     fun inject(test: GetAllDailyChallengesUseCaseTest)
     fun inject(test: HasAnyDailyChallengeUseCaseTest)
+    fun inject(test: HasNotPlayedAnyGameUseCaseTest)
     fun inject(test: DailyChallengeHistoryViewModelTest)
     fun inject(test: ObserveMusicEnabledUseCaseTest)
     fun inject(test: ObserveSoundEnabledUseCaseTest)

@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.feature.chooseboard
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,8 @@ import com.wojdor.memolki.ui.app.navigateToDailyChallenge
 import com.wojdor.memolki.ui.app.navigateToDailyChallengeHistory
 import com.wojdor.memolki.ui.app.navigateToGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
+import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.chooseboard.component.ChooseBoardItem
 import com.wojdor.memolki.ui.feature.chooseboard.component.DailyChallengeItem
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -81,11 +84,18 @@ private fun ChooseBoardScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         unlockedBoards.forEach { board ->
-            ChooseBoardItem(
-                textId = board.textId,
-                isEnabled = true,
-                onClick = { callbacks.onBoardClick(board) }
-            )
+            val highlight = !state.hasPlayedAnyGame && board is BoardModel.Grid2x3
+            EdgeSparklesEffectWhen(highlight) {
+                Box(
+                    modifier = if (highlight) Modifier.pulseEffect() else Modifier
+                ) {
+                    ChooseBoardItem(
+                        textId = board.textId,
+                        isEnabled = true,
+                        onClick = { callbacks.onBoardClick(board) }
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(spacingXL))
         }
         if (state.hasPlayedAnyGame) {
