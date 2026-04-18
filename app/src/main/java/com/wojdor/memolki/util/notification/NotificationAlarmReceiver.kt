@@ -8,7 +8,7 @@ import android.content.res.Configuration
 import androidx.core.net.toUri
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.app.AppActivity
-import com.wojdor.memolki.util.extension.logE
+import com.wojdor.memolki.util.extension.goAsyncIo
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.AD_REWARD_NOTIFICATION_ID
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.DAILY_CHALLENGE_NOTIFICATION_ID
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
@@ -19,10 +19,7 @@ import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE_REMINDER
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.TYPE_STREAK
 import dagger.hilt.android.EntryPointAccessors
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import java.util.Locale
 
 class NotificationAlarmReceiver : BroadcastReceiver() {
@@ -34,38 +31,31 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         )
         val localizedContext = createLocalizedContext(context, entryPoint)
         val type = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE) ?: return
-        val pendingResult = goAsync()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                when (type) {
-                    TYPE_REMINDER -> handleReminderNotification(
-                        context,
-                        localizedContext,
-                        entryPoint
-                    )
+        goAsyncIo("Failed to handle notification") {
+            when (type) {
+                TYPE_REMINDER -> handleReminderNotification(
+                    context,
+                    localizedContext,
+                    entryPoint
+                )
 
-                    TYPE_AD_REWARD -> handleAdRewardNotification(
-                        context,
-                        localizedContext,
-                        entryPoint
-                    )
+                TYPE_AD_REWARD -> handleAdRewardNotification(
+                    context,
+                    localizedContext,
+                    entryPoint
+                )
 
-                    TYPE_STREAK -> handleStreakNotification(
-                        context,
-                        localizedContext,
-                        entryPoint
-                    )
+                TYPE_STREAK -> handleStreakNotification(
+                    context,
+                    localizedContext,
+                    entryPoint
+                )
 
-                    TYPE_DAILY_CHALLENGE -> handleDailyChallengeNotification(
-                        context,
-                        localizedContext,
-                        entryPoint
-                    )
-                }
-            } catch (e: Exception) {
-                logE("Failed to handle notification", e)
-            } finally {
-                pendingResult.finish()
+                TYPE_DAILY_CHALLENGE -> handleDailyChallengeNotification(
+                    context,
+                    localizedContext,
+                    entryPoint
+                )
             }
         }
     }
@@ -136,7 +126,6 @@ class NotificationAlarmReceiver : BroadcastReceiver() {
         localizedContext: Context,
         entryPoint: NotificationAlarmReceiverEntryPoint
     ) {
-        entryPoint.notificationScheduler().scheduleDailyChallengeNotification()
         val epochDay = entryPoint.timeProvider().currentLocalDate().toEpochDay()
         val hasPlayed = entryPoint.dailyChallengeRepository().hasPlayed(epochDay)
         if (hasPlayed) return

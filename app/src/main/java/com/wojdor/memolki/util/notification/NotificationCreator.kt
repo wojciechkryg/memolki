@@ -37,13 +37,22 @@ class NotificationCreator @Inject constructor(
         contentIntent: PendingIntent
     ) {
         if (!permissionProvider.hasNotificationPermission()) return
+        val hasExisting = cancelOtherActiveNotifications(notificationId)
         val notification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)
             .setContentIntent(contentIntent)
+            .setSilent(hasExisting)
             .build()
         NotificationManagerCompat.from(context).notify(notificationId, notification)
+    }
+
+    private fun cancelOtherActiveNotifications(notificationId: Int): Boolean {
+        val manager = context.getSystemService(NotificationManager::class.java) ?: return false
+        val active = manager.activeNotifications
+        active.filter { it.id != notificationId }.forEach { manager.cancel(it.id) }
+        return active.isNotEmpty()
     }
 }

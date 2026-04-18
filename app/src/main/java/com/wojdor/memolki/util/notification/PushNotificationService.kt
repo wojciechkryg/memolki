@@ -24,6 +24,7 @@ class PushNotificationService : FirebaseMessagingService() {
             applicationContext,
             PushNotificationServiceEntryPoint::class.java
         )
+        if (entryPoint.appForegroundProvider().isAppInForeground()) return
         entryPoint.notificationCreator().createNotificationChannel()
         entryPoint.notificationCreator().showNotification(
             notificationId = PUSH_NOTIFICATION_ID,

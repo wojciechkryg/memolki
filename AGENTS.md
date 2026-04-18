@@ -17,6 +17,11 @@ This file provides guidance to AI coding agents when working with code in this r
 | "generate feature graphics" | `./scripts/screenshot/generate_feature_graphics.sh` |
 | "record video" | `./scripts/recording/record_video.sh {flavor} {locale}` |
 | "record all videos" | `./scripts/recording/record_all_videos.sh` |
+| "upload videos" | `./scripts/youtube/upload_videos.sh` |
+| "write video urls" | `./scripts/youtube/write_video_urls.sh` |
+| "add ads video assets" | `./scripts/youtube/add_ads_video_assets.sh` |
+| "run video pipeline" | `./scripts/youtube/run_pipeline.sh` |
+| "video setup" | `./scripts/youtube/setup.sh` |
 | "send notification" | `./scripts/notifications/send_push_notification.sh {file}` |
 
 ## Project Overview
@@ -433,6 +438,7 @@ Managed via [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publ
 | `title.txt` | 30 characters |
 | `short-description.txt` | 80 characters |
 | `full-description.txt` | 4000 characters |
+| `video-url.txt` | YouTube URL (no character limit) |
 
 **Always respect these limits when generating or editing listing text.** Titles over 30 chars will be rejected by Play Store.
 
@@ -455,6 +461,7 @@ app/src/{flavor}/play/
     ├── title.txt
     ├── short-description.txt
     ├── full-description.txt
+    ├── video-url.txt
     └── graphics/phone-screenshots/*.jpg
 ```
 

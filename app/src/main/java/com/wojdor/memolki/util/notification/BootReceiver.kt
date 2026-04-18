@@ -3,6 +3,7 @@ package com.wojdor.memolki.util.notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.wojdor.memolki.util.extension.goAsyncIo
 import dagger.hilt.android.EntryPointAccessors
 
 class BootReceiver : BroadcastReceiver() {
@@ -15,6 +16,13 @@ class BootReceiver : BroadcastReceiver() {
         )
         entryPoint.notificationScheduler().scheduleReminderNotification()
         entryPoint.notificationScheduler().scheduleStreakNotification()
-        entryPoint.notificationScheduler().scheduleDailyChallengeNotification()
+        goAsyncIo("Failed to restore daily challenge notification") {
+            val nextNotificationTimestamp = entryPoint.notificationRepository()
+                .getNextDailyChallengeNotificationTimestamp()
+            if (nextNotificationTimestamp > System.currentTimeMillis()) {
+                entryPoint.notificationScheduler()
+                    .scheduleDailyChallengeNotification(nextNotificationTimestamp)
+            }
+        }
     }
 }

@@ -138,21 +138,6 @@ Card grid positions are identical across all flavors — fresh `Random(0)` per i
 ./gradlew installFruitHalfDebug installVegetableHalfDebug installMammalSideDebug installBirdSideDebug
 ```
 
-## Landscape conversion (Play Store listings)
-
-Play Store listing videos require landscape (16:9). The vertical recordings are converted using:
-
-```bash
-./scripts/recording/convert_to_landscape.sh              # All flavors
-./scripts/recording/convert_to_landscape.sh bird_side    # Single flavor
-```
-
-This centers the vertical video on a solid background using the flavor's primary color. Overlay compositing is done in RGB space to minimize color shift.
-
-- **Input**: `~/Desktop/memolki_recordings/{flavor}/{locale}.mp4` (vertical, 1080x1920)
-- **Output**: `~/Desktop/memolki_recordings_landscape/{flavor}/{locale}.mp4` (landscape, 1920x1080)
-- Skips already-converted files — delete output to re-convert
-
 ## Troubleshooting
 
 - **Taps landing in wrong places**: Verify you're on the Pixel 2 emulator (1080x1920). Run `adb shell wm size` to check. Use `adb shell uiautomator dump` to remap coordinates.
