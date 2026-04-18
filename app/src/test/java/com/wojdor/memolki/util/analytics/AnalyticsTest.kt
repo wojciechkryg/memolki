@@ -357,7 +357,8 @@ class AnalyticsTest {
             valueMicros = 10_000L,
             currencyCode = "USD",
             adFormat = "Rewarded",
-            adUnitName = "ca-app-pub-123/456"
+            adUnitName = "ca-app-pub-123/456",
+            adSource = "AdMob Network"
         )
 
         // then

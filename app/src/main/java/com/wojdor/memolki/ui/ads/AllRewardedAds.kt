@@ -34,12 +34,18 @@ class AllRewardedAds @Inject constructor(
         shopCoinsAd.load()
     }
 
-    private fun logAdImpression(valueMicros: Long, currencyCode: String, adUnitId: String) {
+    private fun logAdImpression(
+        valueMicros: Long,
+        currencyCode: String,
+        adUnitId: String,
+        adSource: String?
+    ) {
         analytics.logAdImpression(
             valueMicros = valueMicros,
             currencyCode = currencyCode,
             adFormat = AD_FORMAT_REWARDED,
-            adUnitName = adUnitId
+            adUnitName = adUnitId,
+            adSource = adSource
         )
     }
 

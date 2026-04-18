@@ -276,7 +276,8 @@ class Analytics @Inject constructor(
         valueMicros: Long,
         currencyCode: String,
         adFormat: String,
-        adUnitName: String
+        adUnitName: String,
+        adSource: String?
     ) {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.AD_IMPRESSION, Bundle().apply {
             putString(FirebaseAnalytics.Param.AD_PLATFORM, Value.AD_PLATFORM_ADMOB)
@@ -284,6 +285,7 @@ class Analytics @Inject constructor(
             putString(FirebaseAnalytics.Param.AD_UNIT_NAME, adUnitName)
             putString(FirebaseAnalytics.Param.CURRENCY, currencyCode)
             putDouble(FirebaseAnalytics.Param.VALUE, valueMicros / MICROS_PER_UNIT)
+            adSource?.let { putString(FirebaseAnalytics.Param.AD_SOURCE, it) }
         })
     }
 
