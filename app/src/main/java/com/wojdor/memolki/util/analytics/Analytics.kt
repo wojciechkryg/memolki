@@ -20,14 +20,14 @@ class Analytics @Inject constructor(
         board: BoardModel,
         mistakeCount: Int,
         level: Long,
-        totalGamesCount: Long
+        totalGamesCount: Long?
     ) {
         firebaseAnalytics.logEvent(Event.BOARD_COMPLETED, Bundle().apply {
             putString(Key.LEVEL_SIZE, "${board.columns}x${board.rows}")
             putInt(Key.CARD_COUNT, board.columns * board.rows)
             putInt(Key.MISMATCH_COUNT, mistakeCount)
             putLong(Key.LEVEL, level)
-            putLong(Key.TOTAL_GAMES_COUNT, totalGamesCount)
+            totalGamesCount?.let { putLong(Key.TOTAL_GAMES_COUNT, it) }
         })
     }
 
@@ -74,7 +74,7 @@ class Analytics @Inject constructor(
     }
 
     private fun collectionPct(unlocked: Int, total: Int): Int =
-        if (total <= 0) 0 else (unlocked * 100) / total
+        if (total <= 0) 0 else ((unlocked * 100) / total).coerceIn(0, 100)
 
     fun logShopOpenedFromCollection() {
         firebaseAnalytics.logEvent(Event.SHOP_OPENED, Bundle().apply {
@@ -232,14 +232,14 @@ class Analytics @Inject constructor(
         mistakeCount: Int,
         starCount: Int,
         timeMillis: Long,
-        totalGamesCount: Long
+        totalGamesCount: Long?
     ) {
         firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_COMPLETED, Bundle().apply {
             putLong(Key.CHALLENGE_NUMBER, epochDay)
             putInt(Key.MISMATCH_COUNT, mistakeCount)
             putInt(Key.STAR_COUNT, starCount)
             putLong(Key.TIME_MILLIS, timeMillis)
-            putLong(Key.TOTAL_GAMES_COUNT, totalGamesCount)
+            totalGamesCount?.let { putLong(Key.TOTAL_GAMES_COUNT, it) }
         })
     }
 

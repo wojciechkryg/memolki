@@ -180,13 +180,13 @@ class GameViewModel @Inject constructor(
             cardFlipCounts = state.cardFlipCounts
         )
         viewModelScope.launch {
-            val totalGames = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
+            val totalGames = getTotalGamesPlayedUseCase().first().getOrNull()
             analytics.logDailyChallengeComplete(
                 epochDay = state.epochDay,
                 mistakeCount = state.mistakeCount,
                 starCount = starCount,
                 timeMillis = elapsedTimeMillis,
-                totalGamesCount = totalGames + 1
+                totalGamesCount = totalGames?.plus(1)
             )
         }
         saveDailyChallengeUseCase(result).launchIn(viewModelScope)
@@ -255,12 +255,12 @@ class GameViewModel @Inject constructor(
             if (!uiState.value.isDailyChallenge) {
                 val state = uiState.value
                 viewModelScope.launch {
-                    val totalGames = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
+                    val totalGames = getTotalGamesPlayedUseCase().first().getOrNull()
                     analytics.logBoardComplete(
                         board = state.board,
                         mistakeCount = state.mistakeCount,
                         level = state.level,
-                        totalGamesCount = totalGames + 1
+                        totalGamesCount = totalGames?.plus(1)
                     )
                 }
                 incrementLevelUseCase(uiState.value.board.id).launchIn(viewModelScope)
