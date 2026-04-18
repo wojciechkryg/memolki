@@ -313,7 +313,12 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun onPurchaseSuccessful(productId: String) {
-        analytics.logPurchaseCompleted(productId)
+        val offer = productDetails.firstOrNull { it.productId == productId }?.oneTimePurchaseOfferDetails
+        analytics.logPurchaseCompleted(
+            product = productId,
+            priceMicros = offer?.priceAmountMicros ?: 0L,
+            currencyCode = offer?.priceCurrencyCode.orEmpty()
+        )
         when (productId) {
             in billingHandler.consumableProductIds -> {
                 val coins = when (productId) {

@@ -106,9 +106,12 @@ class Analytics @Inject constructor(
         })
     }
 
-    fun logPurchaseCompleted(product: String) {
-        firebaseAnalytics.logEvent(Event.PURCHASE_COMPLETED, Bundle().apply {
+    fun logPurchaseCompleted(product: String, priceMicros: Long, currencyCode: String) {
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE, Bundle().apply {
             putString(Key.PRODUCT, product)
+            putString(FirebaseAnalytics.Param.ITEM_ID, product)
+            putDouble(FirebaseAnalytics.Param.VALUE, priceMicros / MICROS_PER_UNIT)
+            putString(FirebaseAnalytics.Param.CURRENCY, currencyCode)
         })
     }
 
@@ -297,7 +300,6 @@ private object Event {
     const val AD_REWARD_EARNED = "ad_reward_earned"
     const val CARD_UNLOCKED = "card_unlocked"
     const val SHOP_OPENED = "shop_opened"
-    const val PURCHASE_COMPLETED = "purchase_completed"
     const val PURCHASE_FAILED = "purchase_failed"
     const val DAILY_STREAK_COLLECTED = "daily_streak_collected"
     const val COLLECTION_VIEWED = "collection_viewed"

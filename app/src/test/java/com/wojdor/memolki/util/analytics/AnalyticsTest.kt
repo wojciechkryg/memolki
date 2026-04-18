@@ -134,12 +134,16 @@ class AnalyticsTest {
     }
 
     @Test
-    fun `logPurchaseCompleted logs event with product`() {
+    fun `logPurchaseCompleted logs firebase purchase event with product and value`() {
         // when
-        sut.logPurchaseCompleted("coins_small")
+        sut.logPurchaseCompleted(
+            product = "coins_small",
+            priceMicros = 4_990_000L,
+            currencyCode = "USD"
+        )
 
         // then
-        verify { firebaseAnalytics.logEvent("purchase_completed", any()) }
+        verify { firebaseAnalytics.logEvent("purchase", any()) }
     }
 
     @Test

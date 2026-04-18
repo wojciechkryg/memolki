@@ -193,7 +193,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logPurchaseCompleted("coins_small") }
+        verify { analytics.logPurchaseCompleted(product = "coins_small", priceMicros = any(), currencyCode = any()) }
     }
 
     @Test
@@ -447,7 +447,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(BillingHandler.IAP_COINS_SMALL) }
+            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_COINS_SMALL, priceMicros = any(), currencyCode = any()) }
         }
 
     @Test
@@ -477,7 +477,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(BillingHandler.IAP_COINS_BIG) }
+            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_COINS_BIG, priceMicros = any(), currencyCode = any()) }
         }
 
     @Test
@@ -492,7 +492,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(BillingHandler.IAP_UNLOCK_ALL_CARDS) }
+            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_UNLOCK_ALL_CARDS, priceMicros = any(), currencyCode = any()) }
         }
 
     @Test
@@ -666,7 +666,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted("unknown_consumable") }
+            verify { analytics.logPurchaseCompleted(product = "unknown_consumable", priceMicros = any(), currencyCode = any()) }
             coVerify(exactly = 0) { coinsPlayer.playDelayed() }
         }
 
