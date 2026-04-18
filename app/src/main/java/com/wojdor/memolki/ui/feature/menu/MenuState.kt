@@ -8,5 +8,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MenuState(
     val menu: List<MenuModel> = emptyList(),
-    val otherAppModel: AppModel? = null
+    val otherAppModel: AppModel? = null,
+    val hasPlayedAnyGame: Boolean = false
 ) : UiState

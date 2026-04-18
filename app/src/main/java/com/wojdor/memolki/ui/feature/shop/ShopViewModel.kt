@@ -62,6 +62,7 @@ class ShopViewModel @Inject constructor(
 
     private var loadCoinsJob: Job? = null
     private var checkStreakJob: Job? = null
+    private var loadMenuItemsAndAdJob: Job? = null
     private var productDetails: List<ProductDetails> = emptyList()
     private var dailyStreakResult: CheckDailyLoginStreakUseCase.DailyStreakResult? = null
     private val priceByProductId: Map<String, String>
@@ -147,18 +148,20 @@ class ShopViewModel @Inject constructor(
 
     private fun onAdDismiss(wasRewardGranted: Boolean) {
         analytics.logAdDismissed(PLACEMENT, wasRewardGranted)
-        if (wasRewardGranted) {
-            setLastShopAdShownTimestampUseCase().onEach { result ->
-                result.onSuccess {
+        if (!wasRewardGranted) {
+            loadMenuItemsAndAd(wasRewardGranted = false)
+            return
+        }
+        viewModelScope.launch {
+            setLastShopAdShownTimestampUseCase().first()
+                .onSuccess {
                     scheduleAdRewardNotificationUseCase().launchIn(viewModelScope)
                     checkShouldShowNotificationRequest()
-                }.onFailure {
-                    logE("Failed to save ad timestamp", it)
                 }
-            }.launchIn(viewModelScope)
+                .onFailure { logE("Failed to save ad timestamp", it) }
             rewardCoinsForAd()
+            loadMenuItemsAndAd(wasRewardGranted = true)
         }
-        loadMenuItemsAndAd(wasRewardGranted)
     }
 
     private fun checkShouldShowNotificationRequest() {
@@ -233,7 +236,8 @@ class ShopViewModel @Inject constructor(
     }
 
     private fun loadMenuItemsAndAd(wasRewardGranted: Boolean = false) {
-        isShopAdCooldownOverUseCase().onEach { result ->
+        loadMenuItemsAndAdJob?.cancel()
+        loadMenuItemsAndAdJob = isShopAdCooldownOverUseCase().onEach { result ->
             result.onSuccess { isAdCooldownOver ->
                 if (isAdCooldownOver) {
                     allRewardedAds.shopCoinsAd.loadAndNotify(wasRewardGranted) { isAvailable ->

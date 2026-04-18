@@ -9,6 +9,7 @@ import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
+import com.wojdor.memolki.domain.usecase.HasNotPlayedAnyGameUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseBoardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
@@ -44,6 +45,7 @@ class MenuViewModel @Inject constructor(
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val getTotalCardPairsMatchedUseCase: GetTotalCardPairsMatchedUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
+    private val hasNotPlayedAnyGameUseCase: HasNotPlayedAnyGameUseCase,
     private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
@@ -52,6 +54,7 @@ class MenuViewModel @Inject constructor(
 
     init {
         loadMenu()
+        loadHasPlayedAnyGame()
     }
 
     override fun onIntent(intent: MenuIntent) {
@@ -153,6 +156,14 @@ class MenuViewModel @Inject constructor(
                     menu = menuItems,
                     otherAppModel = randomApp ?: otherAppModel
                 )
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun loadHasPlayedAnyGame() {
+        hasNotPlayedAnyGameUseCase().onEach { result ->
+            result.onSuccess { hasNotPlayed ->
+                sendState { copy(hasPlayedAnyGame = !hasNotPlayed) }
             }
         }.launchIn(viewModelScope)
     }

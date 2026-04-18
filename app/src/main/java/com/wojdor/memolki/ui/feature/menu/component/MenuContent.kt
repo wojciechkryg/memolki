@@ -21,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
+import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
 import com.wojdor.memolki.ui.component.XmlDrawable
+import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.menu.MenuCallbacks
 import com.wojdor.memolki.ui.feature.menu.MenuState
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -66,10 +68,16 @@ fun MenuContent(
                     ) {
                         it.forEach { menuItem ->
                             when (menuItem) {
-                                is MenuModel.Play -> MenuItem(
-                                    textId = menuItem.textId,
-                                    onClick = callbacks.onPlayClick
-                                )
+                                is MenuModel.Play -> EdgeSparklesEffectWhen(!state.hasPlayedAnyGame) {
+                                    Box(
+                                        modifier = if (!state.hasPlayedAnyGame) Modifier.pulseEffect() else Modifier
+                                    ) {
+                                        MenuItem(
+                                            textId = menuItem.textId,
+                                            onClick = callbacks.onPlayClick
+                                        )
+                                    }
+                                }
 
                                 is MenuModel.Collection -> MenuItem(
                                     textId = menuItem.textId,
