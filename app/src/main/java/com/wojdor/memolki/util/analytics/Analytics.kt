@@ -16,11 +16,18 @@ class Analytics @Inject constructor(
         })
     }
 
-    fun logBoardComplete(board: BoardModel, mistakeCount: Int) {
+    fun logBoardComplete(
+        board: BoardModel,
+        mistakeCount: Int,
+        level: Long,
+        totalGamesCount: Long?
+    ) {
         firebaseAnalytics.logEvent(Event.BOARD_COMPLETED, Bundle().apply {
             putString(Key.LEVEL_SIZE, "${board.columns}x${board.rows}")
             putInt(Key.CARD_COUNT, board.columns * board.rows)
             putInt(Key.MISMATCH_COUNT, mistakeCount)
+            putLong(Key.LEVEL, level)
+            totalGamesCount?.let { putLong(Key.TOTAL_GAMES_COUNT, it) }
         })
     }
 
@@ -48,19 +55,26 @@ class Analytics @Inject constructor(
         })
     }
 
-    fun logCardUnlockedWithCoins(totalUnlocked: Int) {
+    fun logCardUnlockedWithCoins(totalUnlocked: Int, totalCount: Int) {
         firebaseAnalytics.logEvent(Event.CARD_UNLOCKED, Bundle().apply {
             putString(Key.METHOD, Value.COINS)
             putInt(Key.TOTAL_UNLOCKED, totalUnlocked)
+            putInt(Key.TOTAL_COUNT, totalCount)
+            putInt(Key.COLLECTION_PCT, collectionPct(totalUnlocked, totalCount))
         })
     }
 
-    fun logCardUnlockedWithAd(totalUnlocked: Int) {
+    fun logCardUnlockedWithAd(totalUnlocked: Int, totalCount: Int) {
         firebaseAnalytics.logEvent(Event.CARD_UNLOCKED, Bundle().apply {
             putString(Key.METHOD, Value.AD)
             putInt(Key.TOTAL_UNLOCKED, totalUnlocked)
+            putInt(Key.TOTAL_COUNT, totalCount)
+            putInt(Key.COLLECTION_PCT, collectionPct(totalUnlocked, totalCount))
         })
     }
+
+    private fun collectionPct(unlocked: Int, total: Int): Int =
+        if (total <= 0) 0 else ((unlocked * 100) / total).coerceIn(0, 100)
 
     fun logShopOpenedFromCollection() {
         firebaseAnalytics.logEvent(Event.SHOP_OPENED, Bundle().apply {
@@ -92,9 +106,12 @@ class Analytics @Inject constructor(
         })
     }
 
-    fun logPurchaseCompleted(product: String) {
-        firebaseAnalytics.logEvent(Event.PURCHASE_COMPLETED, Bundle().apply {
+    fun logPurchaseCompleted(product: String, priceMicros: Long, currencyCode: String) {
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE, Bundle().apply {
             putString(Key.PRODUCT, product)
+            putString(FirebaseAnalytics.Param.ITEM_ID, product)
+            putDouble(FirebaseAnalytics.Param.VALUE, priceMicros / MICROS_PER_UNIT)
+            putString(FirebaseAnalytics.Param.CURRENCY, currencyCode)
         })
     }
 
@@ -214,13 +231,15 @@ class Analytics @Inject constructor(
         epochDay: Long,
         mistakeCount: Int,
         starCount: Int,
-        timeMillis: Long
+        timeMillis: Long,
+        totalGamesCount: Long?
     ) {
         firebaseAnalytics.logEvent(Event.DAILY_CHALLENGE_COMPLETED, Bundle().apply {
             putLong(Key.CHALLENGE_NUMBER, epochDay)
             putInt(Key.MISMATCH_COUNT, mistakeCount)
             putInt(Key.STAR_COUNT, starCount)
             putLong(Key.TIME_MILLIS, timeMillis)
+            totalGamesCount?.let { putLong(Key.TOTAL_GAMES_COUNT, it) }
         })
     }
 
@@ -253,8 +272,26 @@ class Analytics @Inject constructor(
         })
     }
 
+    fun logAdImpression(
+        valueMicros: Long,
+        currencyCode: String,
+        adFormat: String,
+        adUnitName: String,
+        adSource: String?
+    ) {
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.AD_IMPRESSION, Bundle().apply {
+            putString(FirebaseAnalytics.Param.AD_PLATFORM, Value.AD_PLATFORM_ADMOB)
+            putString(FirebaseAnalytics.Param.AD_FORMAT, adFormat)
+            putString(FirebaseAnalytics.Param.AD_UNIT_NAME, adUnitName)
+            putString(FirebaseAnalytics.Param.CURRENCY, currencyCode)
+            putDouble(FirebaseAnalytics.Param.VALUE, valueMicros / MICROS_PER_UNIT)
+            adSource?.let { putString(FirebaseAnalytics.Param.AD_SOURCE, it) }
+        })
+    }
+
     companion object {
         private val ALLOWED_SHORTCUT_IDS = setOf("daily_reward", "play_game")
+        private const val MICROS_PER_UNIT = 1_000_000.0
     }
 }
 
@@ -265,7 +302,6 @@ private object Event {
     const val AD_REWARD_EARNED = "ad_reward_earned"
     const val CARD_UNLOCKED = "card_unlocked"
     const val SHOP_OPENED = "shop_opened"
-    const val PURCHASE_COMPLETED = "purchase_completed"
     const val PURCHASE_FAILED = "purchase_failed"
     const val DAILY_STREAK_COLLECTED = "daily_streak_collected"
     const val COLLECTION_VIEWED = "collection_viewed"
@@ -320,6 +356,9 @@ private object Key {
     const val CHALLENGE_NUMBER = "challenge_number"
     const val STAR_COUNT = "star_count"
     const val TIME_MILLIS = "time_millis"
+    const val LEVEL = "level"
+    const val TOTAL_GAMES_COUNT = "total_games_count"
+    const val COLLECTION_PCT = "collection_pct"
 }
 
 private object Value {
@@ -333,4 +372,5 @@ private object Value {
     const val INSUFFICIENT_COINS = "insufficient_coins"
     const val OPEN = "open"
     const val STORE = "store"
+    const val AD_PLATFORM_ADMOB = "admob"
 }

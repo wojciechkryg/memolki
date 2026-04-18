@@ -187,13 +187,15 @@ class ShopViewModelTest : AppTest() {
             collectDailyStreakRewardUseCase
         )
         testScheduler.advanceUntilIdle()
+        listenerSlot.captured.onProductsFetched(listOf(mockProductDetails("coins_small", priceMicros = 990_000L, currency = "USD")))
+        testScheduler.advanceUntilIdle()
 
         // when
         listenerSlot.captured.onPurchaseSuccessful("coins_small")
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logPurchaseCompleted("coins_small") }
+        verify { analytics.logPurchaseCompleted(product = "coins_small", priceMicros = 990_000L, currencyCode = "USD") }
     }
 
     @Test
@@ -401,6 +403,20 @@ class ShopViewModelTest : AppTest() {
         assertTrue((notificationScheduler as FakeNotificationScheduler).streakNotificationScheduled)
     }
 
+    private fun mockProductDetails(
+        id: String,
+        priceMicros: Long = 990_000L,
+        currency: String = "USD",
+        formattedPriceText: String = "$0.99"
+    ): ProductDetails = mockk {
+        every { productId } returns id
+        every { oneTimePurchaseOfferDetails } returns mockk {
+            every { priceAmountMicros } returns priceMicros
+            every { priceCurrencyCode } returns currency
+            every { formattedPrice } returns formattedPriceText
+        }
+    }
+
     private fun createSutWithCapturedBillingListener(): BillingStatusListener {
         val listenerSlot = slot<BillingStatusListener>()
         every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
@@ -441,13 +457,15 @@ class ShopViewModelTest : AppTest() {
             // given
             val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
+            listener.onProductsFetched(listOf(mockProductDetails(BillingHandler.IAP_COINS_SMALL, priceMicros = 990_000L, currency = "USD")))
+            testScheduler.advanceUntilIdle()
 
             // when
             listener.onPurchaseSuccessful(BillingHandler.IAP_COINS_SMALL)
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(BillingHandler.IAP_COINS_SMALL) }
+            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_COINS_SMALL, priceMicros = 990_000L, currencyCode = "USD") }
         }
 
     @Test
@@ -471,13 +489,15 @@ class ShopViewModelTest : AppTest() {
             // given
             val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
+            listener.onProductsFetched(listOf(mockProductDetails(BillingHandler.IAP_COINS_BIG, priceMicros = 4_990_000L, currency = "USD")))
+            testScheduler.advanceUntilIdle()
 
             // when
             listener.onPurchaseSuccessful(BillingHandler.IAP_COINS_BIG)
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(BillingHandler.IAP_COINS_BIG) }
+            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_COINS_BIG, priceMicros = 4_990_000L, currencyCode = "USD") }
         }
 
     @Test
@@ -486,13 +506,15 @@ class ShopViewModelTest : AppTest() {
             // given
             val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
+            listener.onProductsFetched(listOf(mockProductDetails(BillingHandler.IAP_UNLOCK_ALL_CARDS, priceMicros = 14_990_000L, currency = "USD")))
+            testScheduler.advanceUntilIdle()
 
             // when
             listener.onPurchaseSuccessful(BillingHandler.IAP_UNLOCK_ALL_CARDS)
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(BillingHandler.IAP_UNLOCK_ALL_CARDS) }
+            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_UNLOCK_ALL_CARDS, priceMicros = 14_990_000L, currencyCode = "USD") }
         }
 
     @Test
@@ -666,7 +688,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted("unknown_consumable") }
+            verify(exactly = 0) { analytics.logPurchaseCompleted(any(), any(), any()) }
             coVerify(exactly = 0) { coinsPlayer.playDelayed() }
         }
 

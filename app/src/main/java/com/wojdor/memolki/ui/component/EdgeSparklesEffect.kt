@@ -59,6 +59,15 @@ fun EdgeSparklesEffect(
     }
 }
 
+@Composable
+fun EdgeSparklesEffectWhen(isActive: Boolean, content: @Composable () -> Unit) {
+    if (isActive) {
+        EdgeSparklesEffect { content() }
+    } else {
+        content()
+    }
+}
+
 private fun randomEdgePosition(): Pair<Float, Float> {
     val edge = Random.nextInt(4)
     val along = Random.nextFloat()

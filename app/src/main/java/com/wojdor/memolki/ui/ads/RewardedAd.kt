@@ -12,7 +12,8 @@ import com.google.android.gms.ads.rewarded.RewardedAd as GoogleRewardedAd
 
 class RewardedAd(
     private val context: Context,
-    @param:StringRes private val adUnitRes: Int
+    @param:StringRes private val adUnitRes: Int,
+    private val onPaidEvent: (valueMicros: Long, currencyCode: String, adUnitId: String, adSource: String?) -> Unit = { _, _, _, _ -> }
 ) {
 
     private var rewardedAd: GoogleRewardedAd? = null
@@ -37,6 +38,14 @@ class RewardedAd(
                 }
 
                 override fun onAdLoaded(ad: GoogleRewardedAd) {
+                    ad.setOnPaidEventListener { adValue ->
+                        onPaidEvent(
+                            adValue.valueMicros,
+                            adValue.currencyCode,
+                            adUnitId,
+                            ad.responseInfo.loadedAdapterResponseInfo?.adSourceName
+                        )
+                    }
                     rewardedAd = ad
                     onLoaded()
                 }
