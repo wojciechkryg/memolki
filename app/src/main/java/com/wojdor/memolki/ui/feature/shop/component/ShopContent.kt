@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.ui.component.CoinsAmount
-import com.wojdor.memolki.ui.component.EdgeSparklesEffect
+import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
 import com.wojdor.memolki.ui.feature.shop.ShopCallbacks
 import com.wojdor.memolki.ui.feature.shop.ShopState
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -56,7 +56,7 @@ fun ShopContent(
                 it.forEach { menuItem ->
                     Spacer(modifier = Modifier.height(spacingL))
                     when (menuItem) {
-                        is ShopMenuModel.DailyReward -> EdgeSparklesEffect {
+                        is ShopMenuModel.DailyReward -> EdgeSparklesEffectWhen(menuItem.isAvailable) {
                             ShopMenuItem(
                                 priceText = stringResource(
                                     R.string.daily_reward_day,
@@ -77,7 +77,7 @@ fun ShopContent(
                             )
                         }
 
-                        is ShopMenuModel.WatchAd -> EdgeSparklesEffect {
+                        is ShopMenuModel.WatchAd -> EdgeSparklesEffectWhen(menuItem.isAvailable) {
                             ShopMenuItem(
                                 priceText = stringResource(R.string.watch_ad),
                                 descriptionText = if (menuItem.isAvailable) {
