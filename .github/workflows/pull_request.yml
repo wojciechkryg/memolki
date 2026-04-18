@@ -59,7 +59,14 @@ jobs:
   unit-test:
     needs: [tests-execution]
     runs-on: ubuntu-latest
-    if: ${{ always() && (needs.tests-execution.result == 'success' || needs.tests-execution.result == 'skipped') }}
+    if: ${{ always() }}
     steps:
-      - name: All checks passed
-        run: echo "✅ All checks passed or were intentionally skipped."
+      - name: Verify tests-execution outcome
+        run: |
+          result="${{ needs.tests-execution.result }}"
+          if [[ "$result" == "success" || "$result" == "skipped" ]]; then
+            echo "✅ All checks passed or were intentionally skipped."
+          else
+            echo "❌ tests-execution finished with result: $result"
+            exit 1
+          fi
