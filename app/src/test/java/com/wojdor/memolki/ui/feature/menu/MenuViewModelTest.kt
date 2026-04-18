@@ -10,7 +10,6 @@ import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.HasNotPlayedAnyGameUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseBoardScreen
@@ -71,9 +70,6 @@ class MenuViewModelTest : AppTest() {
     lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
 
     @Inject
-    lateinit var hasNotPlayedAnyGameUseCase: HasNotPlayedAnyGameUseCase
-
-    @Inject
     lateinit var userRepository: UserRepository
 
     private lateinit var sut: MenuViewModel
@@ -91,7 +87,6 @@ class MenuViewModelTest : AppTest() {
             getTotalCoinsUseCase,
             getTotalCardPairsMatchedUseCase,
             getTotalGamesPlayedUseCase,
-            hasNotPlayedAnyGameUseCase,
             checkDailyLoginStreakUseCase
         )
     }
@@ -294,7 +289,6 @@ class MenuViewModelTest : AppTest() {
             getTotalCoinsUseCase,
             getTotalCardPairsMatchedUseCase,
             getTotalGamesPlayedUseCase,
-            hasNotPlayedAnyGameUseCase,
             checkDailyLoginStreakUseCase
         )
         testScheduler.advanceUntilIdle()

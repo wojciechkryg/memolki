@@ -69,7 +69,7 @@ class HasNotPlayedAnyGameUseCaseTest : AppTest() {
     @Test
     fun `when games count transitions from zero to one then emit once per distinct value`() = runTest {
         sut().test {
-            // initial emission: no games played
+            // then
             assertEquals(Result.success(true), awaitItem())
 
             // given
@@ -78,7 +78,7 @@ class HasNotPlayedAnyGameUseCaseTest : AppTest() {
             // then
             assertEquals(Result.success(false), awaitItem())
 
-            // given — further increments should not re-emit (distinctUntilChanged)
+            // given
             userRepository.incrementTotalGamesPlayed()
             userRepository.incrementTotalGamesPlayed()
 
