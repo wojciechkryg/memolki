@@ -1,8 +1,5 @@
 package com.wojdor.memolki.domain.model
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import com.wojdor.memolki.R
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -43,7 +40,7 @@ sealed class CardModel {
     object Empty : CardModel() {
         override val id: String = ""
         override val pairId: String = ""
-        override val textRes: Int = R.string.empty
+        override val textRes: Int = 0
         override val isFlippedFront: Boolean = false
         override val isPairMatched: Boolean = false
         override val isMatchAnimating: Boolean = false
@@ -54,7 +51,7 @@ sealed class CardModel {
     data class Text(
         override val id: String,
         override val pairId: String,
-        @field:StringRes override val textRes: Int,
+        override val textRes: Int,
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false,
         override val isMatchAnimating: Boolean = false,
@@ -65,8 +62,8 @@ sealed class CardModel {
     data class Image(
         override val id: String,
         override val pairId: String,
-        @field:StringRes override val textRes: Int,
-        @field:DrawableRes val imageRes: Int,
+        override val textRes: Int,
+        val imageRes: Int,
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false,
         override val isMatchAnimating: Boolean = false,
