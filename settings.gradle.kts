@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "memolki"
-include(":app")
+include(":androidApp", ":shared")

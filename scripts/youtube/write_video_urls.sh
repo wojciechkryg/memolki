@@ -7,7 +7,7 @@
 #   ./scripts/youtube/write_video_urls.sh --dry-run          # Preview without writing
 #
 # Reads from: scripts/youtube/video_urls.json
-# Writes to:  app/src/{gradleFlavor}/play/listings/{playLocale}/video-url.txt
+# Writes to:  androidApp/src/{gradleFlavor}/play/listings/{playLocale}/video-url.txt
 #
 # After running, push to Play Store with:
 #   ./scripts/listing/update_listings.sh
@@ -115,7 +115,7 @@ while IFS=' ' read -r key url; do
         continue
     fi
 
-    listing_dir="$PROJECT_ROOT/app/src/$gradle_flavor/play/listings/$play_locale"
+    listing_dir="$PROJECT_ROOT/androidApp/src/$gradle_flavor/play/listings/$play_locale"
     video_url_file="$listing_dir/video-url.txt"
 
     if [ ! -d "$listing_dir" ]; then

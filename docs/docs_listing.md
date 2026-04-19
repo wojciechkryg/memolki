@@ -38,10 +38,10 @@ Downloads all existing titles and descriptions from Play Store:
 ./scripts/listing/fetch_listings.sh
 ```
 
-Creates files at `app/src/{flavor}/play/listings/{locale}/`:
+Creates files at `androidApp/src/{flavor}/play/listings/{locale}/`:
 
 ```
-app/src/fruitHalf/play/listings/
+androidApp/src/fruitHalf/play/listings/
 ├── en-US/
 │   ├── title.txt
 │   ├── short-description.txt

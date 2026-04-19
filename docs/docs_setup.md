@@ -20,4 +20,4 @@ PLAY_SERVICE_ACCOUNT_PATH=/path/to/play-service-account.json
 
 ## `google-services.json`
 
-Add the `google-services.json` file in the `app/` directory (download from Firebase console).
+Add the `google-services.json` file in the `androidApp/` directory (download from Firebase console).

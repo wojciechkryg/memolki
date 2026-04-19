@@ -72,7 +72,7 @@ SCREENSHOT_LAYOUT = [
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent.parent
-FONT_PRIMARY = PROJECT_ROOT / "app/src/main/res/font/patrickhand_regular.ttf"
+FONT_PRIMARY = PROJECT_ROOT / "androidApp/src/main/res/font/patrickhand_regular.ttf"
 FONT_FALLBACK = Path("/System/Library/Fonts/Supplemental/Arial Unicode.ttf")
 FALLBACK_LOCALES = {"ar", "el", "hi", "iw", "ja", "ko", "ru", "uk", "zh"}
 
@@ -295,7 +295,7 @@ def main():
         locale_dir = LOCALE_DIR_MAP.get(args.locale, args.locale)
         flavor_dir = FLAVOR_DIR_MAP[args.flavor]
         output_dir = str(
-            PROJECT_ROOT / "app/src" / flavor_dir
+            PROJECT_ROOT / "androidApp/src" / flavor_dir
             / "play/listings" / locale_dir / "graphics/phone-screenshots"
         )
 

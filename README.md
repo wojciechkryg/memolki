@@ -12,22 +12,22 @@
 
 <table>
   <tr>
-    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.fruithalf"><img src="app/src/fruitHalf/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • fruits" width="64"></a></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.fruithalf"><img src="androidApp/src/fruitHalf/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • fruits" width="64"></a></td>
     <td valign="middle"><b>memolki • fruits</b></td>
     <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.fruithalf"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
   </tr>
   <tr>
-    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.vegetablehalf"><img src="app/src/vegetableHalf/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • vegetables" width="64"></a></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.vegetablehalf"><img src="androidApp/src/vegetableHalf/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • vegetables" width="64"></a></td>
     <td valign="middle"><b>memolki • vegetables</b></td>
     <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.vegetablehalf"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
   </tr>
   <tr>
-    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.mammalside"><img src="app/src/mammalSide/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • mammals" width="64"></a></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.mammalside"><img src="androidApp/src/mammalSide/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • mammals" width="64"></a></td>
     <td valign="middle"><b>memolki • mammals</b></td>
     <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.mammalside"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
   </tr>
   <tr>
-    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.birdside"><img src="app/src/birdSide/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • birds" width="64"></a></td>
+    <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.birdside"><img src="androidApp/src/birdSide/res/mipmap-xxxhdpi/ic_launcher_round.png" alt="memolki • birds" width="64"></a></td>
     <td valign="middle"><b>memolki • birds</b></td>
     <td valign="middle"><a href="https://play.google.com/store/apps/details?id=com.wojdor.memolki.birdside"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="56"></a></td>
   </tr>

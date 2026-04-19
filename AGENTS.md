@@ -26,7 +26,7 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Project Overview
 
-Memolki is an Android card-matching memory game built with Jetpack Compose. It ships as multiple app flavors (each with a unique theme, package name, and billing key). Check `app/build.gradle.kts` for the current list of flavors under `productFlavors`.
+Memolki is an Android card-matching memory game built with Jetpack Compose. It ships as multiple app flavors (each with a unique theme, package name, and billing key). Check `androidApp/build.gradle.kts` for the current list of flavors under `productFlavors`.
 
 ## Documentation
 
@@ -49,33 +49,35 @@ The **default flavor** is `fruitHalf` — use it for builds, tests, and installs
 
 After making changes, always install and launch the app on the connected device/emulator to verify the build works at runtime (not just compilation).
 
+The app lives in the `:androidApp` Gradle module (shared KMP-ready code will live in `:shared`). Task names below work unqualified (no other module exposes `assembleFruitHalfDebug` etc.), but can be prefixed with `:androidApp:` for clarity.
+
 ```bash
 # Build debug APK
-./gradlew assembleFruitHalfDebug
+./gradlew :androidApp:assembleFruitHalfDebug
 
 # Install debug APK on connected device/emulator and launch it
-./gradlew installFruitHalfDebug && adb shell am start -n com.wojdor.memolki.fruithalf/com.wojdor.memolki.ui.app.AppActivity
+./gradlew :androidApp:installFruitHalfDebug && adb shell am start -n com.wojdor.memolki.fruithalf/com.wojdor.memolki.ui.app.AppActivity
 
 # Run all unit tests — you MUST specify a flavor, the unqualified task name is ambiguous
-./gradlew testFruitHalfDebugUnitTest
+./gradlew :androidApp:testFruitHalfDebugUnitTest
 
 # Run a single test class
-./gradlew testFruitHalfDebugUnitTest --tests "com.wojdor.memolki.ui.feature.menu.MenuViewModelTest"
+./gradlew :androidApp:testFruitHalfDebugUnitTest --tests "com.wojdor.memolki.ui.feature.menu.MenuViewModelTest"
 
 # Run a single test method
-./gradlew testFruitHalfDebugUnitTest --tests "com.wojdor.memolki.ui.feature.menu.MenuViewModelTest.when initial load is done then the state is updated with menu"
+./gradlew :androidApp:testFruitHalfDebugUnitTest --tests "com.wojdor.memolki.ui.feature.menu.MenuViewModelTest.when initial load is done then the state is updated with menu"
 
 # Verify screenshot tests — run after building/installing to catch visual regressions
-./gradlew verifyPaparazziFruitHalfDebug
+./gradlew :androidApp:verifyPaparazziFruitHalfDebug
 
 # Record new screenshot references — run after intentional UI changes
-./gradlew recordPaparazziFruitHalfDebug
+./gradlew :androidApp:recordPaparazziFruitHalfDebug
 
 # Generate unit test coverage report (excludes screenshot tests)
-./gradlew koverXmlReportFruitHalfDebug -PcoverageTestExclude='com.wojdor.memolki.screenshot.*'
+./gradlew :androidApp:koverXmlReportFruitHalfDebug -PcoverageTestExclude='com.wojdor.memolki.screenshot.*'
 
 # Generate screenshot test coverage report
-./gradlew clean koverXmlReportFruitHalfDebug -PcoverageTestFilter='com.wojdor.memolki.screenshot.*'
+./gradlew clean :androidApp:koverXmlReportFruitHalfDebug -PcoverageTestFilter='com.wojdor.memolki.screenshot.*'
 ```
 
 After making UI changes, always run `verifyPaparazziFruitHalfDebug` alongside the build/install step. If screenshots differ intentionally, run `recordPaparazziFruitHalfDebug` to update the references and commit the updated PNGs.
@@ -83,7 +85,7 @@ After making UI changes, always run `verifyPaparazziFruitHalfDebug` alongside th
 ## Setup
 
 A `secrets.properties` file is needed in the root directory with:
-- `<FLAVOR_UPPER_SNAKE>_BILLING_KEY` entry for each flavor (see `app/build.gradle.kts`)
+- `<FLAVOR_UPPER_SNAKE>_BILLING_KEY` entry for each flavor (see `androidApp/build.gradle.kts`)
 - `FIREBASE_PROJECT_ID` — required by `scripts/notifications/send_push_notification.sh`
 
 Adding a new flavor has a checklist in `docs/docs_new_app_flavor_setup.md`.
@@ -342,10 +344,10 @@ Reference examples:
 
 ## Flavor Structure
 
-Each flavor lives under `app/src/{flavorName}/` and contains:
+Each flavor lives under `androidApp/src/{flavorName}/` and contains:
 
 ```
-app/src/{flavorName}/
+androidApp/src/{flavorName}/
 ├── java/com/wojdor/memolki/data/local/card/
 │   └── AllCardPairsLocalDataSource.kt      # Card pair definitions for this flavor
 ├── res/
@@ -371,13 +373,13 @@ app/src/{flavorName}/
 Full checklist (including Google Play, AdMob, CI): `docs/docs_new_app_flavor_setup.md`
 
 Code changes needed:
-1. Add flavor to `flavorConfigs` in `app/build.gradle.kts`
+1. Add flavor to `flavorConfigs` in `androidApp/build.gradle.kts`
 2. Add package name to `<queries>` in `AndroidManifest.xml`
 3. Add `object` entry in `domain/model/AppModel.kt` and include it in `all()`
 4. Add `app_name_{flavor}` and `suffix_{flavor}` strings in `main/res/values/strings.xml`
 5. Add `primary_{flavor}` color in `main/res/values/colors.xml`
 6. Create the flavor source set directory with the structure above
-7. Create `AllCardPairsLocalDataSource.kt` with card pair definitions (reference: `app/src/fruitHalf/`)
+7. Create `AllCardPairsLocalDataSource.kt` with card pair definitions (reference: `androidApp/src/fruitHalf/`)
 8. Create `res/xml/shortcuts.xml` with the flavor's `applicationId` in `targetPackage` (copy from existing flavor)
 9. Add flavor to CI matrix in `.github/workflows/merge.yml`
 
@@ -395,13 +397,13 @@ Translations exist at two independent levels:
 
 ### 1. Shared UI strings (all flavors)
 
-Located in `app/src/main/res/values/strings.xml` (English default) and `app/src/main/res/values-{locale}/strings.xml` per language. Contains app-wide UI text: menu labels, settings, shop, etc.
+Located in `androidApp/src/main/res/values/strings.xml` (English default) and `androidApp/src/main/res/values-{locale}/strings.xml` per language. Contains app-wide UI text: menu labels, settings, shop, etc.
 
 Each locale file must translate every key from the default `strings.xml` (including per-flavor `app_name_{flavor}` and `suffix_{flavor}`).
 
 ### 2. Flavor-specific card names
 
-Located in `app/src/{flavorName}/res/values/strings.xml` (English default) and `app/src/{flavorName}/res/values-{locale}/strings.xml` per language. Contains only card names for that flavor (e.g. `banana`, `apple`).
+Located in `androidApp/src/{flavorName}/res/values/strings.xml` (English default) and `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` per language. Contains only card names for that flavor (e.g. `banana`, `apple`).
 
 Each flavor has its own set of translated card names across all supported locales.
 
@@ -417,19 +419,19 @@ Native language names (e.g. "Polski", "Deutsch") are in `main/res/values/strings
 
 ### Adding a new language
 
-1. Create `app/src/main/res/values-{locale}/strings.xml` — translate all shared UI strings
-2. Create `app/src/{flavorName}/res/values-{locale}/strings.xml` for **each flavor** — translate card names
+1. Create `androidApp/src/main/res/values-{locale}/strings.xml` — translate all shared UI strings
+2. Create `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` for **each flavor** — translate card names
 3. Add `language_{name}` entry (native name, `translatable="false"`) in `main/res/values/strings_non_translatable.xml`
 4. Add `LanguageModel(R.string.language_{name}, "{locale}")` to the list in `domain/usecase/GetSupportedLanguagesUseCase.kt`
 5. Add the locale to the `SUPPORTED_LANGUAGES` array in `scripts/notifications/send_push_notification.sh`
 
 ### Adding translations for a new flavor
 
-For each existing locale, create `app/src/{flavorName}/res/values-{locale}/strings.xml` containing translations of all card names from that flavor's default `values/strings.xml`. Copy the structure from an existing flavor (e.g. `app/src/fruitHalf/res/values-pl/strings.xml`).
+For each existing locale, create `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` containing translations of all card names from that flavor's default `values/strings.xml`. Copy the structure from an existing flavor (e.g. `androidApp/src/fruitHalf/res/values-pl/strings.xml`).
 
 ## Play Store Listings
 
-Managed via [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publisher). Listings live at `app/src/{flavor}/play/listings/{locale}/`. Full docs: `docs/docs_listing.md`.
+Managed via [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publisher). Listings live at `androidApp/src/{flavor}/play/listings/{locale}/`. Full docs: `docs/docs_listing.md`.
 
 ### Character limits
 
@@ -453,7 +455,7 @@ Managed via [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publ
 ### Listing structure per locale
 
 ```
-app/src/{flavor}/play/
+androidApp/src/{flavor}/play/
 ├── contact-email.txt
 ├── contact-website.txt
 ├── default-language.txt
@@ -511,8 +513,8 @@ Layout: flavor background color, `ic_logo_{flavor}.png` on left, localized label
 ### Output paths
 
 ```
-app/src/{flavor}/play/listings/{locale}/graphics/phone-screenshots/{1..5}.jpg
-app/src/{flavor}/play/listings/{locale}/graphics/feature-graphic/1.png
+androidApp/src/{flavor}/play/listings/{locale}/graphics/phone-screenshots/{1..5}.jpg
+androidApp/src/{flavor}/play/listings/{locale}/graphics/feature-graphic/1.png
 ```
 
 ### Prerequisites
@@ -556,10 +558,10 @@ When `RECORDING_MODE = true`, the app changes:
 ### Post-processing
 The script uses `ffmpeg-full` (with freetype) to:
 - Speed up video 1.5x
-- Add background music (`app/src/main/res/raw/music_background.ogg`) with fade-out at the end
+- Add background music (`androidApp/src/main/res/raw/music_background.ogg`) with fade-out at the end
 - Add blur overlay fading in at the end
-- Add flavor logo (`app/src/main/res/drawable/ic_logo_{flavor}.png`) fading in above the text with circular background
-- Add localized "Think you can solve it?" text in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`), with Arial Unicode fallback for CJK/RTL locales
+- Add flavor logo (`androidApp/src/main/res/drawable/ic_logo_{flavor}.png`) fading in above the text with circular background
+- Add localized "Think you can solve it?" text in Patrick Hand font (`androidApp/src/main/res/font/patrickhand_regular.ttf`), with Arial Unicode fallback for CJK/RTL locales
 
 ### RECORDING_MODE guard
 Unit tests fail when `RECORDING_MODE = true` — must be set to `false` before merging.
@@ -629,7 +631,7 @@ Deep link URIs use `DeepLinkBuilder` (`util/notification/DeepLinkBuilder.kt`) as
 
 ## Analytics & Crashlytics
 
-Firebase Analytics and Crashlytics are integrated via `google-services.json` (in `app/`, gitignored). Both are **disabled in debug builds** via `App.kt` (`disableFirebaseInDebug()`) — only release builds send data.
+Firebase Analytics and Crashlytics are integrated via `google-services.json` (in `androidApp/`, gitignored). Both are **disabled in debug builds** via `App.kt` (`disableFirebaseInDebug()`) — only release builds send data.
 
 ### Analytics
 All custom events are logged through `util/analytics/Analytics.kt`. Injected into ViewModels as the **second constructor parameter** (after `savedStateHandle`). In tests, provided as `relaxedMockk()` from `TestModule` — verify calls with `verify { analytics.logX() }`.

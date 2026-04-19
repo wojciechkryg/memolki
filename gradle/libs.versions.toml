@@ -94,6 +94,7 @@ test-parameter-injector = { module = "com.google.testparameterinjector:test-para
 [plugins]
 paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazzi" }
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 firebase-crashlytics-plugin = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

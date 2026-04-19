@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Updates Play Store listings (title, short description, full description)
-# for all flavors from local files at app/src/{flavor}/play/listings/{locale}/
+# for all flavors from local files at androidApp/src/{flavor}/play/listings/{locale}/
 #
 # Usage:
 #   ./scripts/listing/update_listings.sh              # Update all flavors
@@ -10,7 +10,7 @@
 # Prerequisites:
 # - Set PLAY_SERVICE_ACCOUNT_PATH in secrets.properties
 # - First run fetch_listings.sh to get the current structure
-# - Edit the files in app/src/{flavor}/play/listings/{locale}/
+# - Edit the files in androidApp/src/{flavor}/play/listings/{locale}/
 # - Then run this script to push changes
 
 set -euo pipefail
@@ -30,7 +30,7 @@ echo "Updating Play Store listings..."
 
 for flavor in "${FLAVORS[@]}"; do
     capitalized="$(echo "${flavor:0:1}" | tr '[:lower:]' '[:upper:]')${flavor:1}"
-    listing_dir="$PROJECT_ROOT/app/src/$flavor/play/listings"
+    listing_dir="$PROJECT_ROOT/androidApp/src/$flavor/play/listings"
 
     if [ ! -d "$listing_dir" ]; then
         echo "Warning: No listings found for $flavor at $listing_dir"

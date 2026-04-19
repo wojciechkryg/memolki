@@ -1,7 +1,7 @@
 # 🎴 new app flavor setup
 
 1. Setup new flavor in the app:
-    - add the new flavor to the `flavorConfigs` list in `app/build.gradle.kts`
+    - add the new flavor to the `flavorConfigs` list in `androidApp/build.gradle.kts`
     - add the new flavor package name to the `queries` in `AndroidManifest.xml`
 
 1. Prepare images:
@@ -76,10 +76,10 @@
 1. Update Firebase:
     - go to [Firebase Console](https://console.firebase.google.com) → project → Project settings → Add app
     - add the new flavor's Android package name (e.g. `com.wojdor.memolki.newflavor`)
-    - download the updated `google-services.json` and replace `app/google-services.json`
+    - download the updated `google-services.json` and replace `androidApp/google-services.json`
     - re-encode and update the `GOOGLE_SERVICES_JSON` GitHub secret:
       ```bash
-      base64 -i app/google-services.json | pbcopy
+      base64 -i androidApp/google-services.json | pbcopy
       ```
     - go to GitHub → Settings → Secrets and variables → Actions → update `GOOGLE_SERVICES_JSON`
 

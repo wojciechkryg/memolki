@@ -200,6 +200,7 @@ kover {
 }
 
 dependencies {
+    implementation(project(":shared"))
     coreLibraryDesugaring(libs.android.desugar)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.core.ktx)

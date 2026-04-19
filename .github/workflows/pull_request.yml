@@ -22,7 +22,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Decode Google Services
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > androidApp/google-services.json
 
       - name: Run unit tests with coverage
         run: ./gradlew koverXmlReportFruitHalfDebug -PcoverageTestExclude='com.wojdor.memolki.screenshot.*' --build-cache
@@ -30,7 +30,7 @@ jobs:
       - name: Add coverage to summary
         if: always()
         run: |
-          REPORT=$(find app/build -name "*.xml" -path "*/kover/*" | head -1)
+          REPORT=$(find androidApp/build -name "*.xml" -path "*/kover/*" | head -1)
           if [ -n "$REPORT" ]; then
             LINE_COVERED=$(grep -oP 'type="LINE"[^/]*covered="\K[0-9]+' "$REPORT" | tail -1)
             LINE_MISSED=$(grep -oP 'type="LINE"[^/]*missed="\K[0-9]+' "$REPORT" | tail -1)
@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: screenshot-failures
-          path: app/build/paparazzi/failures/
+          path: androidApp/build/paparazzi/failures/
           retention-days: 14
 
   unit-test:

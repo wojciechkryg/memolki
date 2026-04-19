@@ -101,7 +101,7 @@ The pipeline runs these steps in order:
 ./scripts/youtube/write_video_urls.sh --dry-run          # Preview
 ```
 
-Creates `video-url.txt` in each `app/src/{flavor}/play/listings/{locale}/` directory.
+Creates `video-url.txt` in each `androidApp/src/{flavor}/play/listings/{locale}/` directory.
 
 #### Add videos to Google Ads campaigns
 

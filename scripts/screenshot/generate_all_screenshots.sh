@@ -18,7 +18,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 # ─── Preflight: RECORDING_MODE must be true ────────────────────────
-RECORDING_MODE_FILE="$PROJECT_ROOT/app/src/main/java/com/wojdor/memolki/util/provider/RecordingModeProvider.kt"
+RECORDING_MODE_FILE="$PROJECT_ROOT/androidApp/src/main/java/com/wojdor/memolki/util/provider/RecordingModeProvider.kt"
 if ! grep -q "RECORDING_MODE = true" "$RECORDING_MODE_FILE"; then
     echo "✗ RECORDING_MODE is not true in $RECORDING_MODE_FILE"
     echo "  Boards won't be seeded and tap coordinates will miss cards."

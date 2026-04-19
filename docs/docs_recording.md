@@ -79,10 +79,10 @@ The script navigates to the game board before recording starts, so the video ope
 The script uses `ffmpeg-full` (`/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg`) to:
 
 1. **Speed up 1.5x** — `setpts=PTS/1.5` for video
-2. **Add background music** — `app/src/main/res/raw/music_background.ogg` at normal speed, fades out at the end
+2. **Add background music** — `androidApp/src/main/res/raw/music_background.ogg` at normal speed, fades out at the end
 3. **Blur ending** — `boxblur=8:8` fades in over 0.4s during the last 3 seconds
-4. **Localized text** — "Can you do better?" in Patrick Hand font (`app/src/main/res/font/patrickhand_regular.ttf`), fades in 0.5s after blur starts, translated for each of the 32 locales
-5. **Flavor logo** — per-flavor logo (`app/src/main/res/drawable/ic_logo_{flavor}.png`) fades in above the text, scaled to 450px wide, with a circular background in the flavor's primary color
+4. **Localized text** — "Can you do better?" in Patrick Hand font (`androidApp/src/main/res/font/patrickhand_regular.ttf`), fades in 0.5s after blur starts, translated for each of the 32 locales
+5. **Flavor logo** — per-flavor logo (`androidApp/src/main/res/drawable/ic_logo_{flavor}.png`) fades in above the text, scaled to 450px wide, with a circular background in the flavor's primary color
 
 ## Tap coordinates (Pixel 2, 1080x1920)
 

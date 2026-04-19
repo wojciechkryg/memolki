@@ -31,7 +31,7 @@ The script:
     - drawable-hdpi: 384x384
     - drawable-mdpi: 256x256
 - Naming: `img_{snake_case_name}_{variant}.jpg`
-- Location: `app/src/{flavor}/res/drawable-{density}/`
+- Location: `androidApp/src/{flavor}/res/drawable-{density}/`
 
 ## Card lists
 

@@ -60,8 +60,8 @@ Layout: flavor background, `ic_logo_{flavor}.png` on left, localized chip labels
 ## Output Paths
 
 ```
-app/src/{flavor}/play/listings/{locale}/graphics/phone-screenshots/{1..5}.jpg
-app/src/{flavor}/play/listings/{locale}/graphics/feature-graphic/1.png
+androidApp/src/{flavor}/play/listings/{locale}/graphics/phone-screenshots/{1..5}.jpg
+androidApp/src/{flavor}/play/listings/{locale}/graphics/feature-graphic/1.png
 ```
 
 ## Scripts

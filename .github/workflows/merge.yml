@@ -32,7 +32,7 @@ jobs:
       - name: Get version name
         id: version
         run: |
-          version_name=$(grep "versionName" app/build.gradle.kts | sed -E 's/.*versionName = "([^"]+)".*/\1/')
+          version_name=$(grep "versionName" androidApp/build.gradle.kts | sed -E 's/.*versionName = "([^"]+)".*/\1/')
           echo "version_name=$version_name" >> $GITHUB_OUTPUT
 
       - name: Prepare flavor strings
@@ -42,7 +42,7 @@ jobs:
           echo "lowercase_flavor=$(echo ${{ matrix.flavor }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Decode Google Services
-        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > androidApp/google-services.json
 
       - name: Decode Keystore
         env:
@@ -51,7 +51,7 @@ jobs:
           echo $KEYSTORE_BASE64 | base64 --decode > key.jks
 
       - name: Build with Gradle
-        run: ./gradlew app:bundle${{ env.capitalized_flavor }}Release --stacktrace --build-cache
+        run: ./gradlew androidApp:bundle${{ env.capitalized_flavor }}Release --stacktrace --build-cache
         env:
           FRUIT_HALF_BILLING_KEY: ${{ secrets.FRUIT_HALF_BILLING_KEY }}
           VEGETABLE_HALF_BILLING_KEY: ${{ secrets.VEGETABLE_HALF_BILLING_KEY }}
@@ -69,8 +69,8 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
-          releaseFiles: "app/build/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab"
-          mappingFile: "app/build/outputs/mapping/${{ matrix.flavor }}Release/mapping.txt"
+          releaseFiles: "androidApp/build/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab"
+          mappingFile: "androidApp/build/outputs/mapping/${{ matrix.flavor }}Release/mapping.txt"
           track: production
 
       - name: Upload to Internal App Sharing
@@ -80,7 +80,7 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
-          releaseFiles: "app/build/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab"
+          releaseFiles: "androidApp/build/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab"
           track: internalsharing
 
       - name: Add Internal App Sharing link to summary
@@ -107,7 +107,7 @@ jobs:
       - name: Bump version
         id: bumper
         run: |
-          current_version_name=$(grep "versionName" app/build.gradle.kts | sed -E 's/.*versionName = "([^"]+)".*/\1/')
+          current_version_name=$(grep "versionName" androidApp/build.gradle.kts | sed -E 's/.*versionName = "([^"]+)".*/\1/')
           last_tag_name=$(git tag --sort=-v:refname | grep -E '^v/' | head -n 1 | sed 's/v\///')
 
           if [ -z "$last_tag_name" ]; then
@@ -133,12 +133,12 @@ jobs:
             echo "🔄 Detected manual version increase (Major or Minor). Patch version will be reset to 0."
           fi
 
-          current_version_code=$(grep "versionCode" app/build.gradle.kts | sed -E 's/.*versionCode = ([0-9]+).*/\1/')
+          current_version_code=$(grep "versionCode" androidApp/build.gradle.kts | sed -E 's/.*versionCode = ([0-9]+).*/\1/')
           new_version_code=$((current_version_code + 1))
           new_version_name="$new_major.$new_minor.$new_patch"
 
-          sed -i "s/versionCode = $current_version_code/versionCode = $new_version_code/" app/build.gradle.kts
-          sed -i "s/versionName = \"$current_version_name\"/versionName = \"$new_version_name\"/" app/build.gradle.kts
+          sed -i "s/versionCode = $current_version_code/versionCode = $new_version_code/" androidApp/build.gradle.kts
+          sed -i "s/versionName = \"$current_version_name\"/versionName = \"$new_version_name\"/" androidApp/build.gradle.kts
 
           echo "new_version=$new_version_name" >> $GITHUB_OUTPUT
 

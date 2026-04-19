@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Fetches current Play Store listings (title, short description, full description)
-# for all flavors and saves them to app/src/{flavor}/play/listings/{locale}/
+# for all flavors and saves them to androidApp/src/{flavor}/play/listings/{locale}/
 #
 # Prerequisites:
 # - Set PLAY_SERVICE_ACCOUNT_PATH in secrets.properties
@@ -24,7 +24,7 @@ for flavor in "${FLAVORS[@]}"; do
 done
 
 echo ""
-echo "Done! Listings saved to app/src/{flavor}/play/listings/{locale}/"
+echo "Done! Listings saved to androidApp/src/{flavor}/play/listings/{locale}/"
 echo ""
 echo "Directory structure per flavor:"
 echo "  title.txt             - App title"

@@ -40,10 +40,10 @@ RAW_FILE="${OUTPUT_DIR}/${LOCALE}_raw.mp4"
 OUTPUT_FILE="${OUTPUT_DIR}/${LOCALE}.mp4"
 DEVICE_FILE="/sdcard/memolki_recording.mp4"
 FFMPEG="/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg"
-FONT_PRIMARY="${SCRIPT_DIR}/../../app/src/main/res/font/patrickhand_regular.ttf"
+FONT_PRIMARY="${SCRIPT_DIR}/../../androidApp/src/main/res/font/patrickhand_regular.ttf"
 FONT_FALLBACK="/System/Library/Fonts/Supplemental/Arial Unicode.ttf"
-MUSIC_FILE="${SCRIPT_DIR}/../../app/src/main/res/raw/music_background.ogg"
-LOGO_FILE="${SCRIPT_DIR}/../../app/src/main/res/drawable/ic_logo_${FLAVOR}.png"
+MUSIC_FILE="${SCRIPT_DIR}/../../androidApp/src/main/res/raw/music_background.ogg"
+LOGO_FILE="${SCRIPT_DIR}/../../androidApp/src/main/res/drawable/ic_logo_${FLAVOR}.png"
 
 mkdir -p "$OUTPUT_DIR"
 

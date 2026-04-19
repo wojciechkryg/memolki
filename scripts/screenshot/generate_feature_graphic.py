@@ -58,7 +58,7 @@ ALL_LOCALES = list(LOCALE_DIR_MAP.keys())
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent.parent
-FONT_PRIMARY = PROJECT_ROOT / "app/src/main/res/font/patrickhand_regular.ttf"
+FONT_PRIMARY = PROJECT_ROOT / "androidApp/src/main/res/font/patrickhand_regular.ttf"
 FONT_FALLBACK = Path("/System/Library/Fonts/Supplemental/Arial Unicode.ttf")
 FALLBACK_LOCALES = {"ar", "el", "hi", "iw", "ja", "ko", "ru", "uk", "zh"}
 
@@ -114,7 +114,7 @@ def output_dir_for(flavor, locale):
     locale_dir = LOCALE_DIR_MAP.get(locale, locale)
     flavor_dir = FLAVOR_DIR_MAP[flavor]
     return str(
-        PROJECT_ROOT / "app/src" / flavor_dir
+        PROJECT_ROOT / "androidApp/src" / flavor_dir
         / "play/listings" / locale_dir / "graphics/feature-graphic"
     )
 
@@ -127,7 +127,7 @@ def generate_feature_graphic(flavor, locale, output_dir):
 
     # Logo (clean PNG with transparent background)
     logo_name = f"ic_logo_{flavor}.png"
-    logo_path = PROJECT_ROOT / "app/src/main/res/drawable" / logo_name
+    logo_path = PROJECT_ROOT / "androidApp/src/main/res/drawable" / logo_name
 
     if logo_path.exists():
         logo = Image.open(str(logo_path)).convert("RGBA")
