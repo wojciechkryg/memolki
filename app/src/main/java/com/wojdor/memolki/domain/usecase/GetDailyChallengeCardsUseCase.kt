@@ -5,6 +5,7 @@ import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
+import com.wojdor.memolki.util.provider.PackageNameProvider
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,20 +16,23 @@ import kotlin.random.Random
 class GetDailyChallengeCardsUseCase @Inject constructor(
     @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository,
-    private val timeProvider: TimeProvider
+    private val timeProvider: TimeProvider,
+    private val packageNameProvider: PackageNameProvider
 ) : BaseParameterUseCase<BoardModel, List<CardModel>>(coroutineDispatcher) {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun execute(board: BoardModel) = flow {
         val pairCount = (board.columns * board.rows) / 2
-        val seed = if (RECORDING_MODE) 0L else timeProvider.currentLocalDate().toEpochDay()
+        val epochDay = timeProvider.currentLocalDate().toEpochDay()
+        val flavorSalt = packageNameProvider.providePackageName().hashCode().toLong()
+        val seed = if (RECORDING_MODE) 0L else epochDay xor flavorSalt
         val allCardPairs = cardRepository.getAllCardPairs()
         require(allCardPairs.size >= pairCount) {
             "Not enough card pairs for $board. Required=$pairCount, available=${allCardPairs.size}"
         }
         val selectedPairs = allCardPairs
             .map { cardPair ->
-                val daysSinceAdded = seed - cardPair.addedEpochDay
+                val daysSinceAdded = epochDay - cardPair.addedEpochDay
                 val score = if (daysSinceAdded < NEW_CARD_GRACE_PERIOD_DAYS) {
                     0.0
                 } else {

@@ -14,6 +14,7 @@ import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.verifyOnce
 import io.mockk.coEvery
 import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.util.provider.PermissionProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
@@ -64,6 +65,9 @@ class AppViewModelTest : AppTest() {
     @Inject
     lateinit var pushNotificationProvider: PushNotificationProvider
 
+    @Inject
+    lateinit var billingHandler: BillingHandler
+
     private lateinit var sut: AppViewModel
 
     @Before
@@ -79,7 +83,8 @@ class AppViewModelTest : AppTest() {
             hasPlayedTodayDailyChallengeUseCase,
             localeProvider,
             permissionProvider,
-            pushNotificationProvider
+            pushNotificationProvider,
+            billingHandler
         )
     }
 
@@ -125,6 +130,16 @@ class AppViewModelTest : AppTest() {
 
         // then
         assertTrue((pushNotificationProvider as FakePushNotificationProvider).topicsSubscribed)
+    }
+
+    @Test
+    fun `when onAppCreate is called then billing connection is ensured`() = runTest {
+        // when
+        sut.onAppCreate()
+        testScheduler.advanceUntilIdle()
+
+        // then
+        verifyOnce { billingHandler.ensureConnected() }
     }
 
     @Test
