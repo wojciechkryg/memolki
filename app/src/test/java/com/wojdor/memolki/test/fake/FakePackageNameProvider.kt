@@ -6,7 +6,9 @@ import javax.inject.Inject
 
 class FakePackageNameProvider @Inject constructor() : PackageNameProvider(mockk()) {
 
+    var mockPackageName: String = "com.wojdor.memolki.fruithalf"
+
     override fun providePackageName(): String {
-        return "com.wojdor.memolki.fruithalf"
+        return mockPackageName
     }
 }

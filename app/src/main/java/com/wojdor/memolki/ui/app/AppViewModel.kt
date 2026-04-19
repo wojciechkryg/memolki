@@ -9,6 +9,7 @@ import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.util.provider.PermissionProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
@@ -28,11 +29,13 @@ class AppViewModel @Inject constructor(
     private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase,
     private val localeProvider: LocaleProvider,
     private val permissionProvider: PermissionProvider,
-    private val pushNotificationProvider: PushNotificationProvider
+    private val pushNotificationProvider: PushNotificationProvider,
+    private val billingHandler: BillingHandler
 ) : ViewModel() {
 
     fun onAppCreate() {
         viewModelScope.launch {
+            billingHandler.ensureConnected()
             pushNotificationProvider.subscribeToTopics()
             analytics.setUserLanguage(localeProvider.getLanguageTag())
             analytics.setNotificationPermission(permissionProvider.hasNotificationPermission())

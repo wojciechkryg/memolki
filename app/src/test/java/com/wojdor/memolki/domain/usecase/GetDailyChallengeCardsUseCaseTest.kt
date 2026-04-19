@@ -7,6 +7,7 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
+import com.wojdor.memolki.test.fake.FakePackageNameProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -30,6 +31,9 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     @Inject
     lateinit var fakeTimeProvider: FakeTimeProvider
 
+    @Inject
+    lateinit var fakePackageNameProvider: FakePackageNameProvider
+
     private lateinit var sut: GetDailyChallengeCardsUseCase
 
     @Before
@@ -38,7 +42,8 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
         sut = GetDailyChallengeCardsUseCase(
             testDispatcher,
             cardRepository,
-            fakeTimeProvider
+            fakeTimeProvider,
+            fakePackageNameProvider
         )
     }
 
@@ -120,6 +125,30 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     }
 
     @Test
+    fun `when different flavor on same date then return different card order`() = runTest {
+        // given
+        val board = BoardModel.Grid2x3()
+        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
+
+        // when
+        fakePackageNameProvider.mockPackageName = "com.wojdor.memolki.fruithalf"
+        var result1: List<*>? = null
+        sut(board).test {
+            result1 = awaitItem().getOrThrow()
+            awaitComplete()
+        }
+        fakePackageNameProvider.mockPackageName = "com.wojdor.memolki.mammalside"
+        var result2: List<*>? = null
+        sut(board).test {
+            result2 = awaitItem().getOrThrow()
+            awaitComplete()
+        }
+
+        // then
+        assertNotEquals(result1, result2)
+    }
+
+    @Test
     fun `when cards are within grace period then they are deprioritized`() = runTest {
         // given
         val board = BoardModel.Grid2x3()
@@ -135,7 +164,8 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
         sut = GetDailyChallengeCardsUseCase(
             testDispatcher,
             CardRepository(fakeDataSource, unlockedCardPairsLocalDataSource, Random(0)),
-            fakeTimeProvider
+            fakeTimeProvider,
+            fakePackageNameProvider
         )
         val pairCount = (board.columns * board.rows) / 2
 

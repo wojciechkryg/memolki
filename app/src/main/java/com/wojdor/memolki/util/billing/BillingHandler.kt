@@ -21,19 +21,23 @@ import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.util.extension.logE
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withTimeoutOrNull
 import java.nio.charset.StandardCharsets
 import java.security.KeyFactory
 import java.security.PublicKey
 import java.security.Signature
 import java.security.spec.X509EncodedKeySpec
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.coroutines.resume
 
+@Singleton
 class BillingHandler @Inject constructor(
     @param:ApplicationContext private val context: Context,
     @param:IoDispatcher private val dispatcher: CoroutineDispatcher
@@ -42,32 +46,52 @@ class BillingHandler @Inject constructor(
     private lateinit var billingClient: BillingClient
     private val scope = CoroutineScope(dispatcher)
     private var listener: BillingStatusListener? = null
+    private var cachedProducts: List<ProductDetails> = emptyList()
+    private var connectionReady = CompletableDeferred<Boolean>()
 
     val consumableProductIds = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
     val nonConsumableProductIds = setOf(IAP_UNLOCK_ALL_CARDS)
 
     fun startConnection(listener: BillingStatusListener) {
         this.listener = listener
+        if (::billingClient.isInitialized && billingClient.isReady) {
+            listener.onConnectionStatusChanged(true)
+            if (cachedProducts.isNotEmpty()) {
+                listener.onProductsFetched(cachedProducts)
+            } else {
+                scope.launch { queryProductDetails() }
+            }
+            return
+        }
+        ensureConnected()
+    }
+
+    fun ensureConnected() {
+        if (::billingClient.isInitialized && billingClient.isReady) return
         startConnection()
     }
 
     private fun startConnection() {
-        billingClient = BillingClient.newBuilder(context)
-            .setListener(this)
-            .enablePendingPurchases(
-                PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
-            )
-            .build()
-
+        connectionReady = CompletableDeferred()
+        if (!::billingClient.isInitialized) {
+            billingClient = BillingClient.newBuilder(context)
+                .setListener(this)
+                .enablePendingPurchases(
+                    PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
+                )
+                .build()
+        }
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    connectionReady.complete(true)
                     listener?.onConnectionStatusChanged(true)
                     scope.launch {
                         queryProductDetails()
                         queryExistingPurchases()
                     }
                 } else {
+                    connectionReady.complete(false)
                     listener?.onConnectionStatusChanged(false)
                     logE("Billing connection error.", Exception(billingResult.debugMessage))
                 }
@@ -95,7 +119,9 @@ class BillingHandler @Inject constructor(
         val params = QueryProductDetailsParams.newBuilder().setProductList(productList).build()
         val result = billingClient.queryProductDetails(params)
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            result.productDetailsList?.let { listener?.onProductsFetched(it) }
+            val products = result.productDetailsList.orEmpty()
+            cachedProducts = products
+            listener?.onProductsFetched(products)
         } else {
             logE("Error fetching products.", Exception(result.billingResult.debugMessage))
         }
@@ -236,12 +262,11 @@ class BillingHandler @Inject constructor(
         false
     }
 
-    suspend fun isPurchased(productId: String): Boolean =
-        suspendCancellableCoroutine { continuation ->
-            if (!billingClient.isReady) {
-                continuation.resume(false)
-                return@suspendCancellableCoroutine
-            }
+    suspend fun isPurchased(productId: String): Boolean {
+        if (!::billingClient.isInitialized) return false
+        withTimeoutOrNull(READY_TIMEOUT_MS) { connectionReady.await() }
+        if (!billingClient.isReady) return false
+        return suspendCancellableCoroutine { continuation ->
             billingClient.queryPurchasesAsync(
                 QueryPurchasesParams.newBuilder()
                     .setProductType(BillingClient.ProductType.INAPP)
@@ -256,6 +281,7 @@ class BillingHandler @Inject constructor(
                 }
             }
         }
+    }
 
     companion object {
         const val IAP_COINS_SMALL = "coins_small"
@@ -266,5 +292,6 @@ class BillingHandler @Inject constructor(
         private const val FAKE_SIGNATURE = "YmFkX3NpZ25hdHVyZ_ZmFrZQ=="
         private const val FAKE_PUBLIC_KEY = "FAKE_PUBLIC_KEY"
         private const val RETRY_CONNECTION_DELAY = 5000L
+        private const val READY_TIMEOUT_MS = 5000L
     }
 }
