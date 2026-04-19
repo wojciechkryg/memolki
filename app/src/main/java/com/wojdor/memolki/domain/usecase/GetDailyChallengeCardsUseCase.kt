@@ -25,7 +25,7 @@ class GetDailyChallengeCardsUseCase @Inject constructor(
         val pairCount = (board.columns * board.rows) / 2
         val epochDay = timeProvider.currentLocalDate().toEpochDay()
         val flavorSalt = packageNameProvider.providePackageName().hashCode().toLong()
-        val seed = (if (RECORDING_MODE) 0L else epochDay) xor flavorSalt
+        val seed = if (RECORDING_MODE) 0L else epochDay xor flavorSalt
         val allCardPairs = cardRepository.getAllCardPairs()
         require(allCardPairs.size >= pairCount) {
             "Not enough card pairs for $board. Required=$pairCount, available=${allCardPairs.size}"

@@ -13,7 +13,6 @@ import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.verifyOnce
 import io.mockk.coEvery
-import io.mockk.verify
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.provider.LocaleProvider
@@ -140,7 +139,7 @@ class AppViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { billingHandler.ensureConnected() }
+        verifyOnce { billingHandler.ensureConnected() }
     }
 
     @Test

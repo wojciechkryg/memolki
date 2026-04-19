@@ -45,8 +45,10 @@ class BillingHandler @Inject constructor(
 
     private lateinit var billingClient: BillingClient
     private val scope = CoroutineScope(dispatcher)
+    private val connectionLock = Any()
     private var listener: BillingStatusListener? = null
     private var cachedProducts: List<ProductDetails> = emptyList()
+    @Volatile
     private var connectionReady = CompletableDeferred<Boolean>()
 
     val consumableProductIds = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
@@ -63,48 +65,52 @@ class BillingHandler @Inject constructor(
             }
             return
         }
-        ensureConnected()
+        connectInternal()
     }
 
     fun ensureConnected() {
         if (::billingClient.isInitialized && billingClient.isReady) return
-        startConnection()
+        connectInternal()
     }
 
-    private fun startConnection() {
-        connectionReady = CompletableDeferred()
-        if (!::billingClient.isInitialized) {
-            billingClient = BillingClient.newBuilder(context)
-                .setListener(this)
-                .enablePendingPurchases(
-                    PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
-                )
-                .build()
-        }
-        billingClient.startConnection(object : BillingClientStateListener {
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    connectionReady.complete(true)
-                    listener?.onConnectionStatusChanged(true)
-                    scope.launch {
-                        queryProductDetails()
-                        queryExistingPurchases()
+    private fun connectInternal() {
+        synchronized(connectionLock) {
+            if (::billingClient.isInitialized && billingClient.isReady) return
+            if (::billingClient.isInitialized && !connectionReady.isCompleted) return
+            connectionReady = CompletableDeferred()
+            if (!::billingClient.isInitialized) {
+                billingClient = BillingClient.newBuilder(context)
+                    .setListener(this)
+                    .enablePendingPurchases(
+                        PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
+                    )
+                    .build()
+            }
+            billingClient.startConnection(object : BillingClientStateListener {
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                        if (!connectionReady.isCompleted) connectionReady.complete(true)
+                        listener?.onConnectionStatusChanged(true)
+                        scope.launch {
+                            queryProductDetails()
+                            queryExistingPurchases()
+                        }
+                    } else {
+                        if (!connectionReady.isCompleted) connectionReady.complete(false)
+                        listener?.onConnectionStatusChanged(false)
+                        logE("Billing connection error.", Exception(billingResult.debugMessage))
                     }
-                } else {
-                    connectionReady.complete(false)
-                    listener?.onConnectionStatusChanged(false)
-                    logE("Billing connection error.", Exception(billingResult.debugMessage))
                 }
-            }
 
-            override fun onBillingServiceDisconnected() {
-                listener?.onConnectionStatusChanged(false)
-                scope.launch {
-                    delay(RETRY_CONNECTION_DELAY)
-                    startConnection()
+                override fun onBillingServiceDisconnected() {
+                    listener?.onConnectionStatusChanged(false)
+                    scope.launch {
+                        delay(RETRY_CONNECTION_DELAY)
+                        connectInternal()
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     private suspend fun queryProductDetails() {
@@ -264,7 +270,8 @@ class BillingHandler @Inject constructor(
 
     suspend fun isPurchased(productId: String): Boolean {
         if (!::billingClient.isInitialized) return false
-        withTimeoutOrNull(READY_TIMEOUT_MS) { connectionReady.await() }
+        val ready = connectionReady
+        withTimeoutOrNull(READY_TIMEOUT_MS) { ready.await() }
         if (!billingClient.isReady) return false
         return suspendCancellableCoroutine { continuation ->
             billingClient.queryPurchasesAsync(

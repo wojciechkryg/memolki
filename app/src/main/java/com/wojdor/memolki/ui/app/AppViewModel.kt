@@ -44,6 +44,8 @@ class AppViewModel @Inject constructor(
             analytics.logAppSessionStart(totalGamesPlayed, unlockedCardsCount)
             localEncryptorKeyStore.initialize()
             if (RECORDING_MODE) prepareRecordingDataUseCase().collect()
+        }
+        viewModelScope.launch {
             unlockAllNewCardPairsIfPurchasedUseCase().collect()
         }
     }
