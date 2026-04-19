@@ -3,11 +3,11 @@ package com.wojdor.memolki.util.extension
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
-fun Any.logD(message: String) {
+actual fun Any.logD(message: String) {
     Log.d(this::class.simpleName, message)
 }
 
-fun Any.logE(message: String, throwable: Throwable) {
+actual fun Any.logE(message: String, throwable: Throwable) {
     val tag = this::class.simpleName ?: "Unknown"
     Log.e(tag, message, throwable)
     FirebaseCrashlytics.getInstance().apply {

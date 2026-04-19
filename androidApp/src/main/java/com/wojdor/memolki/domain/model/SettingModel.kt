@@ -5,6 +5,7 @@ import androidx.annotation.StringRes
 import com.wojdor.memolki.R
 import kotlinx.serialization.Serializable
 
+// TODO(compose-resources): move to commonMain once Phase 13 lets us replace R.string.*/R.drawable.* in subclass super-constructors with Res.*
 @Serializable
 sealed class SettingModel(
     @field:StringRes val textId: Int,

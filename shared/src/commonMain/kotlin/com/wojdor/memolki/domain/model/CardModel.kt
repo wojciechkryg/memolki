@@ -40,6 +40,7 @@ sealed class CardModel {
     object Empty : CardModel() {
         override val id: String = ""
         override val pairId: String = ""
+        // TODO(compose-resources): replace 0 sentinel with Res.string.empty once Phase 13 lands.
         override val textRes: Int = 0
         override val isFlippedFront: Boolean = false
         override val isPairMatched: Boolean = false

@@ -3,6 +3,7 @@ package com.wojdor.memolki.domain.model
 import com.wojdor.memolki.R
 import kotlinx.serialization.Serializable
 
+// TODO(compose-resources): move to commonMain once Phase 13 lets us replace R.drawable/R.string/R.color with Res.*
 @Serializable
 sealed class AppModel {
 
