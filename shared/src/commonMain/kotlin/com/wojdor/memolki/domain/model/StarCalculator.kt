@@ -1,6 +1,5 @@
 package com.wojdor.memolki.domain.model
 
-// TODO(kmp): move to commonMain after Phase 6 Koin swap drops the @Inject annotation.
 class StarCalculator {
 
     fun calculate(mistakeCount: Int): Int = when {
