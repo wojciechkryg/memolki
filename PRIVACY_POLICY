@@ -1,10 +1,10 @@
 Privacy Policy
 
-Last updated: October 14, 2025
+Last updated: April 19, 2026
 
 Wojciech Kryg ("Us", "We", or "Our") created the application memolki (the "Application").
 
-IMPORTANT NOTICE: The Application is intended for a general audience, including children of all ages. This privacy policy has been created with the aim of full compliance with the U.S. Children’s Online Privacy Protection Act (COPPA) and other child privacy regulations.
+IMPORTANT NOTICE: The Application is intended for a general audience, including children of all ages. This privacy policy has been created with the aim of full compliance with the U.S. Children's Online Privacy Protection Act (COPPA) and other child privacy regulations.
 
 1. Data Collection
 
@@ -14,17 +14,48 @@ The Application does not require logging in or account creation.
 
 1.A. Data Processed by Third Parties
 
-The Application uses third-party services that process a minimal amount of data to provide advertising and transaction services. These companies may collect the following types of data:
+The Application uses third-party services that process a minimal amount of data to provide advertising, analytics, crash reporting, and transaction services. Because the Application is directed at children, all third-party services are configured to comply with child-directed treatment requirements (COPPA). Ad requests are tagged as child-directed (TAFC), meaning no personalized advertising is served.
+
+These companies may collect the following types of data:
 
 * Device Identifiers: Advertising identifiers or installation identifiers used to recognize the device.
 * Transaction Data: Information about in-app purchases (IAP).
+* Usage Data: Anonymous app usage events (e.g., screens visited, features used).
+* Crash Data: Anonymous technical data about application errors (e.g., stack traces, device model, OS version).
 
 Third parties used in the Application:
 
-1. Google AdMob (Advertising): AdMob, owned by Google, is used to display Rewarded Ads. Because the Application is intended for children, all ad requests are treated as child-directed (TAFC - Tagged for Child Directed Treatment), meaning AdMob will not use identifiers for ad personalization.
+1. Google AdMob (Advertising): AdMob, owned by Google, is used to display Rewarded Ads. All ad requests are treated as child-directed (TAFC - Tagged for Child Directed Treatment), meaning AdMob will not use identifiers for ad personalization.
    * Link to Google's Privacy Policy: https://policies.google.com/privacy
 
-2. Google Play Billing: Google’s payment service processes all data necessary for the verification and finalization of In-App Purchases (IAP), such as transaction data and account/device identifiers. This data is processed by Google in accordance with their policy.
+2. AdMob Mediation Partners (Advertising): The Application uses AdMob mediation, which allows additional advertising networks to compete to serve non-personalized ads. All mediation partners are configured with child-directed treatment. The following mediation partners may serve ads within the Application:
+
+   a) Unity Ads
+      * Link to Privacy Policy: https://unity.com/legal/privacy-policy
+
+   b) ironSource (Unity)
+      * Link to Privacy Policy: https://developers.is.com/ironsource-mobile/air/ironsource-mobile-privacy-policy/
+
+   c) Liftoff Monetize (Vungle)
+      * Link to Privacy Policy: https://liftoff.io/privacy-policy/
+
+   d) InMobi
+      * Link to Privacy Policy: https://www.inmobi.com/privacy-policy
+
+   e) Mintegral
+      * Link to Privacy Policy: https://www.mintegral.com/en/privacy/
+
+   Additional server-side bidding partners may participate in ad auctions through AdMob without requiring a separate SDK in the Application. These partners operate under Google AdMob's data processing terms.
+
+3. Firebase Analytics (Usage Analytics): Firebase Analytics, owned by Google, is used to collect anonymous usage data to understand how the Application is used and to improve functionality. No personally identifiable information is collected. Analytics data collection respects child-directed settings.
+   * Link to Google's Privacy Policy: https://policies.google.com/privacy
+   * Link to Firebase Privacy: https://firebase.google.com/support/privacy
+
+4. Firebase Crashlytics (Crash Reporting): Firebase Crashlytics, owned by Google, is used to collect anonymous crash reports to identify and fix technical issues. Crash reports contain technical data such as device model, OS version, and stack traces. No personally identifiable information is collected.
+   * Link to Google's Privacy Policy: https://policies.google.com/privacy
+   * Link to Firebase Privacy: https://firebase.google.com/support/privacy
+
+5. Google Play Billing: Google's payment service processes all data necessary for the verification and finalization of In-App Purchases (IAP), such as transaction data and account/device identifiers. This data is processed by Google in accordance with their policy.
    * Link to Google's Privacy Policy: https://policies.google.com/privacy
 
 2. Use of Data
@@ -33,11 +64,15 @@ The collected data is used exclusively for the following purposes:
 
 * Core Functionality: To enable the proper functioning of the Application on the user's device.
 * In-App Purchase (IAP) Functionality: To verify successful purchases and unlock paid features.
-* Displaying Non-Personalized Ads: To deliver contextual Rewarded Ads and manage them via the AdMob platform.
+* Displaying Non-Personalized Ads: To deliver contextual Rewarded Ads via AdMob and its mediation partners.
+* Analytics: To understand how the Application is used and to improve user experience.
+* Crash Reporting: To identify and resolve technical issues in the Application.
 
 3. Children's Privacy (COPPA)
 
-As the Application is designed for children, we do not knowingly collect any PII that would require verifiable parental consent. Any data collected by third parties is treated in compliance with regulations regarding child-directed content.
+As the Application is designed for children, we do not knowingly collect any PII that would require verifiable parental consent. All advertising is non-personalized and tagged as child-directed. All third-party services are configured to comply with child-directed treatment requirements.
+
+Any data collected by third parties is treated in compliance with regulations regarding child-directed content.
 
 If you are a parent or guardian and believe we have collected Personal Data from your child despite our precautions, please contact us immediately. We will take steps to remove this information from our systems.
 
