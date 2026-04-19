@@ -7,13 +7,10 @@ import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.provider.LocaleProvider
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
-@HiltViewModel
-class ChangeLanguageViewModel @Inject constructor(
+class ChangeLanguageViewModel(
     savedStateHandle: SavedStateHandle,
     private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,

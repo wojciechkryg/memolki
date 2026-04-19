@@ -1,9 +1,8 @@
 package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.data.crypto.Encryptor
-import javax.inject.Inject
 
-class FakeEncryptor @Inject constructor() : Encryptor {
+class FakeEncryptor : Encryptor {
 
     override suspend fun encrypt(value: Long) = value.toString()
 

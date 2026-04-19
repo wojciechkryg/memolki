@@ -3,23 +3,20 @@ package com.wojdor.memolki.data.repository
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class UserRepositoryTest : AppTest() {
 
-    @Inject
-    lateinit var userLocalDataSource: UserLocalDataSource
+    private val userLocalDataSource: UserLocalDataSource by inject()
 
-    @Inject
-    lateinit var encryptor: Encryptor
+    private val encryptor: Encryptor by inject()
 
     private lateinit var sut: UserRepository
 
@@ -30,10 +27,6 @@ class UserRepositoryTest : AppTest() {
             encryptor,
             userLocalDataSource
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

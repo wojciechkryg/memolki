@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
@@ -16,7 +16,7 @@ import com.wojdor.memolki.ui.feature.cardpairdetails.component.CardPairDetailsCo
 import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
-fun CardPairDetailsScreen(viewModel: CardPairDetailsViewModel = hiltViewModel()) {
+fun CardPairDetailsScreen(viewModel: CardPairDetailsViewModel = koinViewModel()) {
     val state by viewModel.uiState.collectAsState()
     HandleState(state)
 }

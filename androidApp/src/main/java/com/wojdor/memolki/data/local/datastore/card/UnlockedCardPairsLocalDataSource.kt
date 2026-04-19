@@ -6,9 +6,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
-class UnlockedCardPairsLocalDataSource @Inject constructor(
+class UnlockedCardPairsLocalDataSource(
     private val dataStore: DataStore<Preferences>,
     private val allCardPairsDataSource: AllCardPairsDataSource
 ) {

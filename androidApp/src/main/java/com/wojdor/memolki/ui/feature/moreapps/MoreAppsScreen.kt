@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.moreapps.component.MoreAppsContent
@@ -17,7 +17,7 @@ import com.wojdor.memolki.ui.theme.AppTheme
 
 @Composable
 fun MoreAppsScreen(
-    viewModel: MoreAppsViewModel = hiltViewModel()
+    viewModel: MoreAppsViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
     HandleEffect(viewModel)
@@ -73,7 +73,6 @@ private fun openApp(
         activity.startActivity(it)
     }
 }
-
 
 @Composable
 private fun HandleState(

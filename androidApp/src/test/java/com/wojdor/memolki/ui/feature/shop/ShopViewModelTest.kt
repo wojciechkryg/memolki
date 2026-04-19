@@ -16,7 +16,6 @@ import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -41,70 +40,50 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class ShopViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var coinsPlayer: CoinsPlayer
+    private val coinsPlayer: CoinsPlayer by inject()
 
-    @Inject
-    lateinit var allRewardedAds: AllRewardedAds
+    private val allRewardedAds: AllRewardedAds by inject()
 
-    @Inject
-    lateinit var billingHandler: BillingHandler
+    private val billingHandler: BillingHandler by inject()
 
-    @Inject
-    lateinit var googlePlayGames: GooglePlayGames
+    private val googlePlayGames: GooglePlayGames by inject()
 
-    @Inject
-    lateinit var isShopAdCooldownOverUseCase: IsShopAdCooldownOverUseCase
+    private val isShopAdCooldownOverUseCase: IsShopAdCooldownOverUseCase by inject()
 
-    @Inject
-    lateinit var setLastShopAdShownTimestampUseCase: SetLastShopAdShownTimestampUseCase
+    private val setLastShopAdShownTimestampUseCase: SetLastShopAdShownTimestampUseCase by inject()
 
-    @Inject
-    lateinit var getCoinsUseCase: GetCoinsUseCase
+    private val getCoinsUseCase: GetCoinsUseCase by inject()
 
-    @Inject
-    lateinit var calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase
+    private val calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase by inject()
 
-    @Inject
-    lateinit var rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase
+    private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase by inject()
 
-    @Inject
-    lateinit var rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase
+    private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase by inject()
 
-    @Inject
-    lateinit var unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase
+    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase by inject()
 
-    @Inject
-    lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase by inject()
 
-    @Inject
-    lateinit var scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase
+    private val scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase by inject()
 
-    @Inject
-    lateinit var notificationScheduler: NotificationScheduler
+    private val notificationScheduler: NotificationScheduler by inject()
 
-    @Inject
-    lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase by inject()
 
-    @Inject
-    lateinit var collectDailyStreakRewardUseCase: CollectDailyStreakRewardUseCase
+    private val collectDailyStreakRewardUseCase: CollectDailyStreakRewardUseCase by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var permissionProvider: PermissionProvider
+    private val permissionProvider: PermissionProvider by inject()
 
     private lateinit var sut: ShopViewModel
 
@@ -132,11 +111,6 @@ class ShopViewModelTest : AppTest() {
             checkDailyLoginStreakUseCase,
             collectDailyStreakRewardUseCase
         )
-    }
-
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

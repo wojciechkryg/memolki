@@ -4,12 +4,10 @@ import android.content.Context
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.util.provider.TimeProvider
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
 
-class DailyChallengeShareFormatter @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+class DailyChallengeShareFormatter(
+    private val context: Context,
     private val timeProvider: TimeProvider,
     private val timeFormatter: TimeFormatter
 ) {

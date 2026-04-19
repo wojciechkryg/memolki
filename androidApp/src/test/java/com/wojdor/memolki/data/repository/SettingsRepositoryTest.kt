@@ -2,7 +2,6 @@ package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.data.local.datastore.settings.SettingsLocalDataSource
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -10,13 +9,12 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class SettingsRepositoryTest : AppTest() {
 
-    @Inject
-    lateinit var settingsLocalDataSource: SettingsLocalDataSource
+    private val settingsLocalDataSource: SettingsLocalDataSource by inject()
 
     private lateinit var sut: SettingsRepository
 
@@ -24,10 +22,6 @@ class SettingsRepositoryTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = SettingsRepository(settingsLocalDataSource)
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

@@ -4,9 +4,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
-open class PushNotificationProvider @Inject constructor(
+open class PushNotificationProvider(
     private val firebaseMessaging: FirebaseMessaging,
     private val localeProvider: LocaleProvider,
     private val userLocalDataSource: UserLocalDataSource

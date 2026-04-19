@@ -3,10 +3,9 @@ package com.wojdor.memolki.test.fake
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.mockk
-import javax.inject.Inject
 import kotlin.random.Random
 
-class FakeNotificationScheduler @Inject constructor(
+class FakeNotificationScheduler(
     random: Random,
     permissionProvider: PermissionProvider
 ) : NotificationScheduler(mockk(), random, mockk(), permissionProvider) {

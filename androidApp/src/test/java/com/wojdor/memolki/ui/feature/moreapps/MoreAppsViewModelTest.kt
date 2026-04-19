@@ -6,7 +6,6 @@ import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
 import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
 import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.OpenApp
@@ -19,25 +18,20 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class MoreAppsViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var getMoreAppsUseCase: GetMoreAppsUseCase
+    private val getMoreAppsUseCase: GetMoreAppsUseCase by inject()
 
-    @Inject
-    lateinit var fakeAppInstalledProvider: FakeAppInstalledProvider
+    private val fakeAppInstalledProvider: FakeAppInstalledProvider by inject()
 
     private lateinit var isAppInstalledUseCase: IsAppInstalledUseCase
 
@@ -57,10 +51,6 @@ class MoreAppsViewModelTest : AppTest() {
             getMoreAppsUseCase,
             isAppInstalledUseCase
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

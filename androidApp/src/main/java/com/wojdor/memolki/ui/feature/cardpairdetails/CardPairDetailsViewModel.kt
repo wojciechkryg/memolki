@@ -2,11 +2,8 @@ package com.wojdor.memolki.ui.feature.cardpairdetails
 
 import androidx.lifecycle.SavedStateHandle
 import com.wojdor.memolki.ui.base.MviViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class CardPairDetailsViewModel @Inject constructor(
+class CardPairDetailsViewModel(
     savedStateHandle: SavedStateHandle
 ) : MviViewModel<CardPairDetailsIntent, CardPairDetailsState>(
     savedStateHandle,

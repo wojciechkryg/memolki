@@ -4,24 +4,21 @@ import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSo
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
 import kotlin.random.Random
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class GetShuffledUnlockedCardsUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var cardRepository: CardRepository
+    private val cardRepository: CardRepository by inject()
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
     private lateinit var sut: GetShuffledUnlockedCardsUseCase
 
@@ -33,10 +30,6 @@ class GetShuffledUnlockedCardsUseCaseTest : AppTest() {
             cardRepository,
             Random(0)
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

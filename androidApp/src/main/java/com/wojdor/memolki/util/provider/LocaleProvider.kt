@@ -6,12 +6,10 @@ import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Locale
-import javax.inject.Inject
 
-open class LocaleProvider @Inject constructor(
-    @param:ApplicationContext private val context: Context
+open class LocaleProvider(
+    private val context: Context
 ) {
 
     open fun getLanguageTag(): String {

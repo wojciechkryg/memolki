@@ -11,7 +11,6 @@ import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseBoardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
@@ -34,43 +33,32 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class MenuViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var googlePlayGames: GooglePlayGames
+    private val googlePlayGames: GooglePlayGames by inject()
 
-    @Inject
-    lateinit var getMenuUseCase: GetMenuUseCase
+    private val getMenuUseCase: GetMenuUseCase by inject()
 
-    @Inject
-    lateinit var getMoreAppsUseCase: GetMoreAppsUseCase
+    private val getMoreAppsUseCase: GetMoreAppsUseCase by inject()
 
-    @Inject
-    lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase by inject()
 
-    @Inject
-    lateinit var getTotalCardPairsMatchedUseCase: GetTotalCardPairsMatchedUseCase
+    private val getTotalCardPairsMatchedUseCase: GetTotalCardPairsMatchedUseCase by inject()
 
-    @Inject
-    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase by inject()
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
     private lateinit var sut: MenuViewModel
 
@@ -89,10 +77,6 @@ class MenuViewModelTest : AppTest() {
             getTotalGamesPlayedUseCase,
             checkDailyLoginStreakUseCase
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

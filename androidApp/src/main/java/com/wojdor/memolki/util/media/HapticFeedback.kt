@@ -5,21 +5,16 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-open class HapticFeedback @Inject constructor(
-    @param:ApplicationContext private val context: Context,
-    @param:IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+open class HapticFeedback(
+    private val context: Context,
+    private val coroutineDispatcher: CoroutineDispatcher,
     private val getSettingsUseCase: GetSettingsUseCase
 ) {
     private val scope = CoroutineScope(coroutineDispatcher + SupervisorJob())

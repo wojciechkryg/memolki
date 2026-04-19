@@ -6,22 +6,19 @@ import androidx.datastore.preferences.core.edit
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class UnlockedCardPairsLocalDataSourceTest : AppTest() {
 
-    @Inject
-    lateinit var dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences> by inject()
 
-    @Inject
-    lateinit var allCardPairsDataSource: AllCardPairsDataSource
+    private val allCardPairsDataSource: AllCardPairsDataSource by inject()
 
     private lateinit var sut: UnlockedCardPairsLocalDataSource
 
@@ -32,10 +29,6 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
             dataStore,
             allCardPairsDataSource
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

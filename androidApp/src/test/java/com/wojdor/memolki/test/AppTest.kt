@@ -1,7 +1,6 @@
 package com.wojdor.memolki.test
 
-import com.wojdor.memolki.test.di.DaggerTestComponent
-import com.wojdor.memolki.test.di.TestInjector
+import com.wojdor.memolki.test.di.testKoinModule
 import io.mockk.MockKAnnotations
 import io.mockk.unmockkAll
 import kotlinx.coroutines.CoroutineDispatcher
@@ -11,28 +10,26 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
-import javax.inject.Inject
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
-abstract class AppTest {
+abstract class AppTest : KoinTest {
 
-    @Inject
-    lateinit var testDispatcher: CoroutineDispatcher
-
-    private val injector: TestInjector = DaggerTestComponent.create()
-
-    abstract fun inject(injector: TestInjector)
+    protected val testDispatcher: CoroutineDispatcher by inject()
 
     @Before
     open fun setup() {
-        injector.inject(this)
-        inject(injector)
+        startKoin { modules(testKoinModule) }
         Dispatchers.setMain(testDispatcher)
         MockKAnnotations.init(this)
     }
 
     @After
     open fun tearDown() {
+        stopKoin()
         unmockkAll()
         Dispatchers.resetMain()
     }

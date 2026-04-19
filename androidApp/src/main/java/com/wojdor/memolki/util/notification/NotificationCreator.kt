@@ -10,11 +10,9 @@ import androidx.core.app.NotificationManagerCompat
 import com.wojdor.memolki.R
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.NOTIFICATION_CHANNEL_ID
 import com.wojdor.memolki.util.provider.PermissionProvider
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class NotificationCreator @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+class NotificationCreator(
+    private val context: Context,
     private val permissionProvider: PermissionProvider
 ) {
 

@@ -4,10 +4,9 @@ import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.CardPairModel
-import javax.inject.Inject
 import kotlin.random.Random
 
-class CardRepository @Inject constructor(
+class CardRepository(
     private val allCardPairsDataSource: AllCardPairsDataSource,
     private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource,
     private val random: Random

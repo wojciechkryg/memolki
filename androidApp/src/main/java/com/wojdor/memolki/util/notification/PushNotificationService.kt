@@ -5,14 +5,21 @@ import android.content.Intent
 import androidx.core.net.toUri
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.wojdor.memolki.data.repository.NotificationRepository
 import com.wojdor.memolki.ui.app.AppActivity
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
-import dagger.hilt.android.EntryPointAccessors
+import com.wojdor.memolki.util.provider.AppForegroundProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class PushNotificationService : FirebaseMessagingService() {
+class PushNotificationService : FirebaseMessagingService(), KoinComponent {
+
+    private val notificationCreator: NotificationCreator by inject()
+    private val notificationRepository: NotificationRepository by inject()
+    private val appForegroundProvider: AppForegroundProvider by inject()
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val data = remoteMessage.data
@@ -20,21 +27,16 @@ class PushNotificationService : FirebaseMessagingService() {
         val body = remoteMessage.notification?.body ?: data["body"]
         val screen = data[DeepLinkBuilder.EXTRA_SCREEN]
         val board = data[DeepLinkBuilder.EXTRA_BOARD]
-        val entryPoint = EntryPointAccessors.fromApplication(
-            applicationContext,
-            PushNotificationServiceEntryPoint::class.java
-        )
-        if (entryPoint.appForegroundProvider().isAppInForeground()) return
-        entryPoint.notificationCreator().createNotificationChannel()
-        entryPoint.notificationCreator().showNotification(
+        if (appForegroundProvider.isAppInForeground()) return
+        notificationCreator.createNotificationChannel()
+        notificationCreator.showNotification(
             notificationId = PUSH_NOTIFICATION_ID,
             title = title,
             body = body,
             contentIntent = createPendingIntent(screen, board)
         )
         CoroutineScope(Dispatchers.IO).launch {
-            entryPoint.notificationRepository()
-                .setLastShownTimestamp(System.currentTimeMillis())
+            notificationRepository.setLastShownTimestamp(System.currentTimeMillis())
         }
     }
 

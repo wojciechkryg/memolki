@@ -6,7 +6,6 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.usecase.CalculateNextCardPairCostUseCase.Companion.NO_MORE_CARDS
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import app.cash.turbine.test
 import io.mockk.every
 import io.mockk.mockk
@@ -17,22 +16,18 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class CalculateNextCardPairCostUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
-    @Inject
-    lateinit var cardRepository: CardRepository
+    private val cardRepository: CardRepository by inject()
 
-    @Inject
-    lateinit var getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
+    private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase by inject()
 
-    @Inject
-    lateinit var getBoardsUseCase: GetBoardsUseCase
+    private val getBoardsUseCase: GetBoardsUseCase by inject()
 
     private lateinit var sut: CalculateNextCardPairCostUseCase
 
@@ -45,10 +40,6 @@ class CalculateNextCardPairCostUseCaseTest : AppTest() {
             getBoardsUseCase,
             cardRepository
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

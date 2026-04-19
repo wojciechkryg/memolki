@@ -4,9 +4,8 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
-import javax.inject.Inject
 
-open class TimeProvider @Inject constructor() {
+open class TimeProvider {
 
     open fun currentTimeMillis(): Long = System.currentTimeMillis()
 

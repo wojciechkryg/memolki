@@ -11,7 +11,6 @@ import com.wojdor.memolki.data.repository.NotificationRepository
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.coVerifyOnce
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.relaxedMockk
@@ -24,25 +23,20 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class SaveDailyChallengeUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var dailyChallengeDao: DailyChallengeDao
+    private val dailyChallengeDao: DailyChallengeDao by inject()
 
-    @Inject
-    lateinit var fakeTimeProvider: FakeTimeProvider
+    private val fakeTimeProvider: FakeTimeProvider by inject()
 
-    @Inject
-    lateinit var fakeNotificationScheduler: FakeNotificationScheduler
+    private val fakeNotificationScheduler: FakeNotificationScheduler by inject()
 
-    @Inject
-    lateinit var notificationLocalDataSource: NotificationLocalDataSource
+    private val notificationLocalDataSource: NotificationLocalDataSource by inject()
 
-    @Inject
-    lateinit var encryptor: Encryptor
+    private val encryptor: Encryptor by inject()
 
     private lateinit var notificationRepository: NotificationRepository
     private lateinit var sut: SaveDailyChallengeUseCase
@@ -65,10 +59,6 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
             notificationRepository,
             fakeTimeProvider
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

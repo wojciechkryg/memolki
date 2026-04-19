@@ -10,7 +10,6 @@ import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.usecase.GetAllDailyChallengesUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.util.analytics.Analytics
@@ -27,28 +26,22 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class DailyChallengeHistoryViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var dailyChallengeDao: DailyChallengeDao
+    private val dailyChallengeDao: DailyChallengeDao by inject()
 
-    @Inject
-    lateinit var dailyChallengeShareFormatter: DailyChallengeShareFormatter
+    private val dailyChallengeShareFormatter: DailyChallengeShareFormatter by inject()
 
-    @Inject
-    lateinit var fakeTimeProvider: FakeTimeProvider
+    private val fakeTimeProvider: FakeTimeProvider by inject()
 
     private lateinit var sut: DailyChallengeHistoryViewModel
 
@@ -61,10 +54,6 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         every { FirebaseCrashlytics.getInstance() } returns relaxedMockk()
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 4, 11)
         coEvery { dailyChallengeDao.getAll() } returns emptyList()
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     private fun createSut(): DailyChallengeHistoryViewModel {

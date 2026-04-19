@@ -11,9 +11,8 @@ import kotlinx.coroutines.sync.withLock
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
-import javax.inject.Inject
 
-class LocalEncryptorKeyStore @Inject constructor(
+class LocalEncryptorKeyStore(
     private val dataStore: DataStore<Preferences>
 ) {
 

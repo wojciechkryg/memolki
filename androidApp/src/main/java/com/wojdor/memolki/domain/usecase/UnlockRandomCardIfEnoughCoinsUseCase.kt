@@ -1,16 +1,14 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.UserRepository
-import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class UnlockRandomCardIfEnoughCoinsUseCase @Inject constructor(
-    @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
+class UnlockRandomCardIfEnoughCoinsUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase,
     private val unlockRandomCardUseCase: UnlockRandomCardUseCase,
     private val userRepository: UserRepository

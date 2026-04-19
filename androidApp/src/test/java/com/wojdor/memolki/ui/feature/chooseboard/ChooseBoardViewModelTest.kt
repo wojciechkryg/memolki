@@ -8,7 +8,6 @@ import com.wojdor.memolki.domain.usecase.HasAnyDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasNotPlayedAnyGameUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardEffect.OpenDailyChallengeScreen
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardEffect.OpenGameScreen
@@ -26,31 +25,24 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class ChooseBoardViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var getBoardsUseCase: GetBoardsUseCase
+    private val getBoardsUseCase: GetBoardsUseCase by inject()
 
-    @Inject
-    lateinit var hasNotPlayedAnyGameUseCase: HasNotPlayedAnyGameUseCase
+    private val hasNotPlayedAnyGameUseCase: HasNotPlayedAnyGameUseCase by inject()
 
-    @Inject
-    lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
+    private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase by inject()
 
-    @Inject
-    lateinit var hasAnyDailyChallengeUseCase: HasAnyDailyChallengeUseCase
+    private val hasAnyDailyChallengeUseCase: HasAnyDailyChallengeUseCase by inject()
 
     private lateinit var sut: ChooseBoardViewModel
 
@@ -66,10 +58,6 @@ class ChooseBoardViewModelTest : AppTest() {
             hasPlayedTodayDailyChallengeUseCase,
             hasAnyDailyChallengeUseCase
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

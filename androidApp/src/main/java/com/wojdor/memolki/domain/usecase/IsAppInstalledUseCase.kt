@@ -1,14 +1,12 @@
 package com.wojdor.memolki.domain.usecase
 
-import com.wojdor.memolki.di.coroutine.DefaultDispatcher
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
 import com.wojdor.memolki.util.provider.AppInstalledProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class IsAppInstalledUseCase @Inject constructor(
-    @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher,
+class IsAppInstalledUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val appInstalledProvider: AppInstalledProvider
 ) : BaseParameterUseCase<String, Boolean>(coroutineDispatcher) {
 

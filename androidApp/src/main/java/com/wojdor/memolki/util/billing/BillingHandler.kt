@@ -18,9 +18,7 @@ import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.wojdor.memolki.BuildConfig
-import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.util.extension.logE
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -33,14 +31,11 @@ import java.security.KeyFactory
 import java.security.PublicKey
 import java.security.Signature
 import java.security.spec.X509EncodedKeySpec
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.coroutines.resume
 
-@Singleton
-class BillingHandler @Inject constructor(
-    @param:ApplicationContext private val context: Context,
-    @param:IoDispatcher private val dispatcher: CoroutineDispatcher
+class BillingHandler(
+    private val context: Context,
+    private val dispatcher: CoroutineDispatcher
 ) : PurchasesUpdatedListener {
 
     private lateinit var billingClient: BillingClient

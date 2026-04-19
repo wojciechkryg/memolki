@@ -35,23 +35,15 @@ import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.update.InAppUpdate
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@AndroidEntryPoint
 class AppActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var viewModel: AppViewModel
-
-    @Inject
-    lateinit var backgroundMusicPlayer: BackgroundMusicPlayer
-
-    @Inject
-    lateinit var notificationScheduler: NotificationScheduler
-
-    @Inject
-    lateinit var inAppUpdate: InAppUpdate
+    private val viewModel: AppViewModel by viewModel()
+    private val backgroundMusicPlayer: BackgroundMusicPlayer by inject()
+    private val inAppUpdate: InAppUpdate by inject()
+    private val notificationScheduler: NotificationScheduler by inject()
 
     private val newIntentState = mutableStateOf<Intent?>(null)
 

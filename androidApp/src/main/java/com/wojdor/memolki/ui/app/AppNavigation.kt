@@ -5,7 +5,7 @@ import androidx.compose.animation.EnterExitState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -429,7 +429,7 @@ private fun getGameViewModel(
     val flowBackStackEntry = remember(navBackStackEntry) {
         navController.getBackStackEntry(RouteFlow.GAME)
     }
-    return hiltViewModel(flowBackStackEntry)
+    return koinViewModel(viewModelStoreOwner = flowBackStackEntry)
 }
 
 @Composable
@@ -440,7 +440,7 @@ private fun getEndGameViewModel(
     val flowBackStackEntry = remember(navBackStackEntry) {
         navController.getBackStackEntry(RouteFlow.GAME)
     }
-    return hiltViewModel(flowBackStackEntry)
+    return koinViewModel(viewModelStoreOwner = flowBackStackEntry)
 }
 
 @Composable
@@ -451,7 +451,7 @@ private fun getCardPairDetailsViewModel(
     val flowBackStackEntry = remember(navBackStackEntry) {
         navController.getBackStackEntry(RouteFlow.COLLECTION)
     }
-    return hiltViewModel(flowBackStackEntry)
+    return koinViewModel(viewModelStoreOwner = flowBackStackEntry)
 }
 
 private const val DAILY_CHALLENGE_BOARD_ID = "daily_challenge"

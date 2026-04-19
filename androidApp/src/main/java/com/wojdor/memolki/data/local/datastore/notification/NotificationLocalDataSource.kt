@@ -8,9 +8,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-open class NotificationLocalDataSource @Inject constructor(
+open class NotificationLocalDataSource(
     private val dataWrite: DataStore<Preferences>
 ) {
     private val dataRead: Flow<Preferences> = dataWrite.data.catch { _ ->

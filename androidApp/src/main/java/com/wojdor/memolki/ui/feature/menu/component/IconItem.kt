@@ -52,7 +52,6 @@ fun IconItem(
     }
 }
 
-
 @Preview
 @Composable
 private fun IconItemPreview() {

@@ -6,9 +6,8 @@ import java.nio.ByteBuffer
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
-import javax.inject.Inject
 
-class BaseEncryptor @Inject constructor(
+class BaseEncryptor(
     private val localKeyStore: LocalEncryptorKeyStore
 ) : Encryptor {
 

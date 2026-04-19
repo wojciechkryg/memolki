@@ -5,7 +5,6 @@ import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntit
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.coVerifyOnce
-import com.wojdor.memolki.test.di.TestInjector
 import io.mockk.coEvery
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -15,13 +14,12 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class DailyChallengeRepositoryTest : AppTest() {
 
-    @Inject
-    lateinit var dailyChallengeDao: DailyChallengeDao
+    private val dailyChallengeDao: DailyChallengeDao by inject()
 
     private lateinit var sut: DailyChallengeRepository
 
@@ -29,10 +27,6 @@ class DailyChallengeRepositoryTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = DailyChallengeRepository(dailyChallengeDao)
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

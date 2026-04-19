@@ -6,7 +6,6 @@ import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
 import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import io.mockk.verify
@@ -17,25 +16,20 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class SettingsViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var backgroundMusicPlayer: BackgroundMusicPlayer
+    private val backgroundMusicPlayer: BackgroundMusicPlayer by inject()
 
-    @Inject
-    lateinit var getSettingsUseCase: GetSettingsUseCase
+    private val getSettingsUseCase: GetSettingsUseCase by inject()
 
-    @Inject
-    lateinit var toggleSettingsUseCase: ToggleSettingsUseCase
+    private val toggleSettingsUseCase: ToggleSettingsUseCase by inject()
     private lateinit var viewModel: SettingsViewModel
 
     @Before
@@ -48,10 +42,6 @@ class SettingsViewModelTest : AppTest() {
             getSettingsUseCase,
             toggleSettingsUseCase
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

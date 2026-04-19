@@ -3,7 +3,6 @@ package com.wojdor.memolki.domain.usecase
 import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,16 +12,14 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class CheckDailyLoginStreakUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
-    @Inject
-    lateinit var timeProvider: TimeProvider
+    private val timeProvider: TimeProvider by inject()
 
     private val fakeTimeProvider get() = timeProvider as FakeTimeProvider
 
@@ -32,10 +29,6 @@ class CheckDailyLoginStreakUseCaseTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = CheckDailyLoginStreakUseCase(testDispatcher, userRepository, timeProvider)
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

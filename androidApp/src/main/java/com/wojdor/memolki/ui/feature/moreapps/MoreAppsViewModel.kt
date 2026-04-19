@@ -11,13 +11,10 @@ import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.ShowAppInstall
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsIntent.OnAppClick
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
-@HiltViewModel
-class MoreAppsViewModel @Inject constructor(
+class MoreAppsViewModel(
     savedStateHandle: SavedStateHandle,
     private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,

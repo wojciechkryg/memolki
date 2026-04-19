@@ -6,9 +6,8 @@ import androidx.datastore.preferences.core.emptyPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.concurrent.atomic.AtomicReference
-import javax.inject.Inject
 
-class FakeDataStore @Inject constructor() : DataStore<Preferences> {
+class FakeDataStore : DataStore<Preferences> {
 
     private val preferences = AtomicReference(emptyPreferences())
     private val flow = MutableStateFlow(preferences.get())

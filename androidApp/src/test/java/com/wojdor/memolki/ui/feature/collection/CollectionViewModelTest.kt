@@ -12,7 +12,6 @@ import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountU
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.ui.ads.AllRewardedAds
@@ -29,52 +28,38 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class CollectionViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var coinsPlayer: CoinsPlayer
+    private val coinsPlayer: CoinsPlayer by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var allRewardedAds: AllRewardedAds
+    private val allRewardedAds: AllRewardedAds by inject()
 
-    @Inject
-    lateinit var getCoinsUseCase: GetCoinsUseCase
+    private val getCoinsUseCase: GetCoinsUseCase by inject()
 
-    @Inject
-    lateinit var getCollectionDataUseCase: GetCollectionDataUseCase
+    private val getCollectionDataUseCase: GetCollectionDataUseCase by inject()
 
-    @Inject
-    lateinit var unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase
+    private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase by inject()
 
-    @Inject
-    lateinit var unlockRandomCardUseCase: UnlockRandomCardUseCase
+    private val unlockRandomCardUseCase: UnlockRandomCardUseCase by inject()
 
-    @Inject
-    lateinit var incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase
+    private val incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase by inject()
 
-    @Inject
-    lateinit var notificationScheduler: NotificationScheduler
+    private val notificationScheduler: NotificationScheduler by inject()
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var permissionProvider: PermissionProvider
+    private val permissionProvider: PermissionProvider by inject()
 
     private lateinit var sut: CollectionViewModel
 
@@ -94,10 +79,6 @@ class CollectionViewModelTest : AppTest() {
             incrementUnlockedCardPairsFromAdsCountUseCase,
             notificationScheduler
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

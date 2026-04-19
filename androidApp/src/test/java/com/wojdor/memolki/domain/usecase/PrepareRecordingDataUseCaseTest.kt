@@ -2,7 +2,6 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -12,13 +11,12 @@ import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class PrepareRecordingDataUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
     private lateinit var sut: PrepareRecordingDataUseCase
 
@@ -29,10 +27,6 @@ class PrepareRecordingDataUseCaseTest : AppTest() {
             testDispatcher,
             userRepository
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

@@ -13,13 +13,10 @@ import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChalle
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnLockedBoardClick
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
-@HiltViewModel
-class ChooseBoardViewModel @Inject constructor(
+class ChooseBoardViewModel(
     savedStateHandle: SavedStateHandle,
     private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,

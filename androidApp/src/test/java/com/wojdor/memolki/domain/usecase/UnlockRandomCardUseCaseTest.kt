@@ -3,7 +3,6 @@ package com.wojdor.memolki.domain.usecase
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -11,20 +10,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
 import kotlin.random.Random
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class UnlockRandomCardUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
-    @Inject
-    lateinit var cardRepository: CardRepository
+    private val cardRepository: CardRepository by inject()
 
-    @Inject
-    lateinit var random: Random
+    private val random: Random by inject()
 
     private lateinit var sut: UnlockRandomCardUseCase
 
@@ -32,10 +28,6 @@ class UnlockRandomCardUseCaseTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = UnlockRandomCardUseCase(testDispatcher, cardRepository, random)
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

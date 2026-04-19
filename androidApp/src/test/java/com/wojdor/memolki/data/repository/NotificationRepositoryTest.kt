@@ -5,7 +5,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSource
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.relaxedMockk
 import io.mockk.every
@@ -15,19 +14,16 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class NotificationRepositoryTest : AppTest() {
 
-    @Inject
-    lateinit var notificationLocalDataSource: NotificationLocalDataSource
+    private val notificationLocalDataSource: NotificationLocalDataSource by inject()
 
-    @Inject
-    lateinit var encryptor: Encryptor
+    private val encryptor: Encryptor by inject()
 
-    @Inject
-    lateinit var fakeNotificationScheduler: FakeNotificationScheduler
+    private val fakeNotificationScheduler: FakeNotificationScheduler by inject()
 
     private lateinit var sut: NotificationRepository
 
@@ -43,10 +39,6 @@ class NotificationRepositoryTest : AppTest() {
             notificationLocalDataSource,
             fakeNotificationScheduler
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

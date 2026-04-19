@@ -4,29 +4,24 @@ import app.cash.turbine.test
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase
+    private val calculateNextCardPairCostUseCase: CalculateNextCardPairCostUseCase by inject()
 
-    @Inject
-    lateinit var unlockRandomCardUseCase: UnlockRandomCardUseCase
+    private val unlockRandomCardUseCase: UnlockRandomCardUseCase by inject()
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
     private lateinit var sut: UnlockRandomCardIfEnoughCoinsUseCase
 
@@ -38,10 +33,6 @@ class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
             unlockRandomCardUseCase,
             userRepository
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.util.analytics.Analytics
@@ -17,25 +16,20 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class ChangeLanguageViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var getLanguagesWithCurrentUseCase: GetLanguagesWithCurrentUseCase
+    private val getLanguagesWithCurrentUseCase: GetLanguagesWithCurrentUseCase by inject()
 
-    @Inject
-    lateinit var localeProvider: LocaleProvider
+    private val localeProvider: LocaleProvider by inject()
 
     private lateinit var sut: ChangeLanguageViewModel
 
@@ -49,10 +43,6 @@ class ChangeLanguageViewModelTest : AppTest() {
             getLanguagesWithCurrentUseCase,
             localeProvider
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

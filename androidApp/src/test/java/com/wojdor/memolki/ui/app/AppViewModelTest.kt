@@ -8,7 +8,6 @@ import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.verifyOnce
@@ -24,49 +23,36 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class AppViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var unlockAllNewCardPairsIfPurchasedUseCase: UnlockAllNewCardPairsIfPurchasedUseCase
+    private val unlockAllNewCardPairsIfPurchasedUseCase: UnlockAllNewCardPairsIfPurchasedUseCase by inject()
 
-    @Inject
-    lateinit var localEncryptorKeyStore: LocalEncryptorKeyStore
+    private val localEncryptorKeyStore: LocalEncryptorKeyStore by inject()
 
-    @Inject
-    lateinit var prepareRecordingDataUseCase: PrepareRecordingDataUseCase
+    private val prepareRecordingDataUseCase: PrepareRecordingDataUseCase by inject()
 
-    @Inject
-    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
 
-    @Inject
-    lateinit var getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
+    private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase by inject()
 
-    @Inject
-    lateinit var localeProvider: LocaleProvider
+    private val localeProvider: LocaleProvider by inject()
 
-    @Inject
-    lateinit var permissionProvider: PermissionProvider
+    private val permissionProvider: PermissionProvider by inject()
 
-    @Inject
-    lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
+    private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase by inject()
 
-    @Inject
-    lateinit var dailyChallengeDao: DailyChallengeDao
+    private val dailyChallengeDao: DailyChallengeDao by inject()
 
-    @Inject
-    lateinit var fakeTimeProvider: FakeTimeProvider
+    private val fakeTimeProvider: FakeTimeProvider by inject()
 
-    @Inject
-    lateinit var pushNotificationProvider: PushNotificationProvider
+    private val pushNotificationProvider: PushNotificationProvider by inject()
 
-    @Inject
-    lateinit var billingHandler: BillingHandler
+    private val billingHandler: BillingHandler by inject()
 
     private lateinit var sut: AppViewModel
 
@@ -86,10 +72,6 @@ class AppViewModelTest : AppTest() {
             pushNotificationProvider,
             billingHandler
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

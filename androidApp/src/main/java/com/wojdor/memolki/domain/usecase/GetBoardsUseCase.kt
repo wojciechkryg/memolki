@@ -1,14 +1,12 @@
 package com.wojdor.memolki.domain.usecase
 
-import com.wojdor.memolki.di.coroutine.DefaultDispatcher
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class GetBoardsUseCase @Inject constructor(
-    @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher,
+class GetBoardsUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
 ) : BaseUseCase<List<BoardModel>>(coroutineDispatcher) {
 

@@ -4,7 +4,6 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.wojdor.memolki.data.local.datastore.settings.SettingsLocalDataSource
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -12,13 +11,12 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class SettingsLocalDataSourceTest : AppTest() {
 
-    @Inject
-    lateinit var dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences> by inject()
 
     private lateinit var sut: SettingsLocalDataSource
 
@@ -26,10 +24,6 @@ class SettingsLocalDataSourceTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = SettingsLocalDataSource(dataStore)
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

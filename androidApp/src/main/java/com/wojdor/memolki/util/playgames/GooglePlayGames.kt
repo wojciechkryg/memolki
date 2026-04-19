@@ -8,11 +8,8 @@ import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.R
 import com.wojdor.memolki.util.extension.logE
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class GooglePlayGames @Inject constructor() {
+class GooglePlayGames {
 
     suspend fun signIn(activity: Activity) {
         val gamesSignInClient = PlayGames.getGamesSignInClient(activity)

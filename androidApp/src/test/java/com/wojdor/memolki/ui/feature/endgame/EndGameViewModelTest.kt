@@ -17,7 +17,6 @@ import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.RewardedAd
@@ -38,70 +37,50 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class EndGameViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var levelCompletePlayer: LevelCompletePlayer
+    private val levelCompletePlayer: LevelCompletePlayer by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var coinsPlayer: CoinsPlayer
+    private val coinsPlayer: CoinsPlayer by inject()
 
-    @Inject
-    lateinit var allRewardedAds: AllRewardedAds
+    private val allRewardedAds: AllRewardedAds by inject()
 
-    @Inject
-    lateinit var reviewManager: ReviewManager
+    private val reviewManager: ReviewManager by inject()
 
-    @Inject
-    lateinit var googlePlayGames: GooglePlayGames
+    private val googlePlayGames: GooglePlayGames by inject()
 
-    @Inject
-    lateinit var incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase
+    private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase by inject()
 
-    @Inject
-    lateinit var getCoinsUseCase: GetCoinsUseCase
+    private val getCoinsUseCase: GetCoinsUseCase by inject()
 
-    @Inject
-    lateinit var rewardCoinsForBoardUseCase: RewardCoinsForBoardUseCase
+    private val rewardCoinsForBoardUseCase: RewardCoinsForBoardUseCase by inject()
 
-    @Inject
-    lateinit var getTotalCoinsUseCase: GetTotalCoinsUseCase
+    private val getTotalCoinsUseCase: GetTotalCoinsUseCase by inject()
 
-    @Inject
-    lateinit var canUnlockNewCardUseCase: CanUnlockNewCardUseCase
+    private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase by inject()
 
-    @Inject
-    lateinit var shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase
+    private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase by inject()
 
-    @Inject
-    lateinit var rewardCoinsForShareUseCase: RewardCoinsForShareUseCase
+    private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase by inject()
 
-    @Inject
-    lateinit var hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase
+    private val hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase by inject()
 
-    @Inject
-    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var casualShareFormatter: CasualShareFormatter
+    private val casualShareFormatter: CasualShareFormatter by inject()
 
-    @Inject
-    lateinit var dailyChallengeShareFormatter: DailyChallengeShareFormatter
+    private val dailyChallengeShareFormatter: DailyChallengeShareFormatter by inject()
 
     private lateinit var sut: EndGameViewModel
 
@@ -129,10 +108,6 @@ class EndGameViewModelTest : AppTest() {
             casualShareFormatter,
             dailyChallengeShareFormatter
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

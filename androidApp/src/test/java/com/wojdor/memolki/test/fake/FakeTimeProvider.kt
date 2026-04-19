@@ -3,9 +3,8 @@ package com.wojdor.memolki.test.fake
 import com.wojdor.memolki.util.provider.TimeProvider
 import java.time.LocalDate
 import java.time.ZoneOffset
-import javax.inject.Inject
 
-class FakeTimeProvider @Inject constructor() : TimeProvider() {
+class FakeTimeProvider : TimeProvider() {
 
     var mockCurrentDate: LocalDate = LocalDate.of(2026, 3, 26)
 

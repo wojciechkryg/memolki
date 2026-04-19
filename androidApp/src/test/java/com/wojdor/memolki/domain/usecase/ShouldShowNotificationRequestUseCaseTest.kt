@@ -2,7 +2,6 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePermissionProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,19 +10,16 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class ShouldShowNotificationRequestUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
-    @Inject
-    lateinit var fakeNotificationScheduler: FakeNotificationScheduler
+    private val fakeNotificationScheduler: FakeNotificationScheduler by inject()
 
-    @Inject
-    lateinit var fakePermissionProvider: FakePermissionProvider
+    private val fakePermissionProvider: FakePermissionProvider by inject()
 
     private lateinit var sut: ShouldShowNotificationRequestUseCase
 
@@ -35,10 +31,6 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
             userRepository,
             fakeNotificationScheduler
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

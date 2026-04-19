@@ -8,13 +8,11 @@ import android.content.Intent
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.wojdor.memolki.util.provider.PermissionProvider
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Calendar
-import javax.inject.Inject
 import kotlin.random.Random
 
-open class NotificationScheduler @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+open class NotificationScheduler(
+    private val context: Context,
     private val random: Random,
     private val notificationCreator: NotificationCreator,
     private val permissionProvider: PermissionProvider

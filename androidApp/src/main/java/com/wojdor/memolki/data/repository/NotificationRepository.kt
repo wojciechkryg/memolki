@@ -5,9 +5,8 @@ import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDat
 import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import kotlinx.coroutines.flow.first
-import javax.inject.Inject
 
-class NotificationRepository @Inject constructor(
+class NotificationRepository(
     private val encryptor: Encryptor,
     private val notificationLocalDataSource: NotificationLocalDataSource,
     private val notificationScheduler: NotificationScheduler

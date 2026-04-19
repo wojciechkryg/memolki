@@ -2,7 +2,6 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.util.billing.BillingHandler
 import io.mockk.coEvery
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -11,19 +10,16 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var billingHandler: BillingHandler
+    private val billingHandler: BillingHandler by inject()
 
-    @Inject
-    lateinit var cardRepository: CardRepository
+    private val cardRepository: CardRepository by inject()
 
-    @Inject
-    lateinit var unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase
+    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase by inject()
 
     private lateinit var sut: UnlockAllNewCardPairsIfPurchasedUseCase
 
@@ -36,10 +32,6 @@ class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
             cardRepository,
             unlockAllCardPairsUseCase
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

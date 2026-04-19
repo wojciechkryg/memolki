@@ -3,9 +3,8 @@ package com.wojdor.memolki.test.fake
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
-import javax.inject.Inject
 
-class FakeAllCardPairsDataSource @Inject constructor() : AllCardPairsDataSource {
+class FakeAllCardPairsDataSource : AllCardPairsDataSource {
 
     var addedEpochDayOverrides: Map<String, Long> = emptyMap()
 

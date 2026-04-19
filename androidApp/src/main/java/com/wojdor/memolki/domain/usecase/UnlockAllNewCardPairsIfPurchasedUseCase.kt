@@ -1,16 +1,14 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.CardRepository
-import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import com.wojdor.memolki.util.billing.BillingHandler
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class UnlockAllNewCardPairsIfPurchasedUseCase @Inject constructor(
-    @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
+class UnlockAllNewCardPairsIfPurchasedUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val billingHandler: BillingHandler,
     private val cardRepository: CardRepository,
     private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase

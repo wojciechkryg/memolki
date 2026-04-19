@@ -1,15 +1,13 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.CardRepository
-import com.wojdor.memolki.di.coroutine.DefaultDispatcher
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.combine
-import javax.inject.Inject
 
-class CalculateNextCardPairCostUseCase @Inject constructor(
-    @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher,
+class CalculateNextCardPairCostUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase,
     private val getBoardsUseCase: GetBoardsUseCase,
     private val cardRepository: CardRepository

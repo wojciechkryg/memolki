@@ -1,15 +1,12 @@
 package com.wojdor.memolki.data.mapper
 
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class CardFlipCountsMapperTest : AppTest() {
-
-    override fun inject(injector: TestInjector) {}
 
     @Test
     fun `when serialize grid then return semicolon and comma separated string`() {

@@ -18,7 +18,6 @@ import com.wojdor.memolki.domain.usecase.IncrementLevelUseCase
 import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
@@ -37,40 +36,31 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class GameViewModelTest : AppTest() {
 
-    @Inject
-    lateinit var savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle by inject()
 
-    @Inject
-    lateinit var cardFlipPlayer: CardFlipPlayer
+    private val cardFlipPlayer: CardFlipPlayer by inject()
 
-    @Inject
-    lateinit var cardPairMatchedPlayer: CardPairMatchedPlayer
+    private val cardPairMatchedPlayer: CardPairMatchedPlayer by inject()
 
-    @Inject
-    lateinit var hapticFeedback: HapticFeedback
+    private val hapticFeedback: HapticFeedback by inject()
 
-    @Inject
-    lateinit var googlePlayGames: GooglePlayGames
+    private val googlePlayGames: GooglePlayGames by inject()
 
     @RelaxedMockK
     lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
 
-    @Inject
-    lateinit var incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase
+    private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase by inject()
 
-    @Inject
-    lateinit var getLevelUseCase: GetLevelUseCase
+    private val getLevelUseCase: GetLevelUseCase by inject()
 
-    @Inject
-    lateinit var incrementLevelUseCase: IncrementLevelUseCase
+    private val incrementLevelUseCase: IncrementLevelUseCase by inject()
 
-    @Inject
-    lateinit var getBiggestUnlockedBoardUseCase: GetBiggestUnlockedBoardUseCase
+    private val getBiggestUnlockedBoardUseCase: GetBiggestUnlockedBoardUseCase by inject()
 
     @RelaxedMockK
     lateinit var getDailyChallengeCardsUseCase: GetDailyChallengeCardsUseCase
@@ -84,20 +74,15 @@ class GameViewModelTest : AppTest() {
     @RelaxedMockK
     lateinit var getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase
 
-    @Inject
-    lateinit var getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase
+    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
 
-    @Inject
-    lateinit var timeProvider: TimeProvider
+    private val timeProvider: TimeProvider by inject()
 
-    @Inject
-    lateinit var userRepository: UserRepository
+    private val userRepository: UserRepository by inject()
 
-    @Inject
-    lateinit var analytics: Analytics
+    private val analytics: Analytics by inject()
 
-    @Inject
-    lateinit var starCalculator: StarCalculator
+    private val starCalculator: StarCalculator by inject()
 
     private lateinit var sut: GameViewModel
 
@@ -127,10 +112,6 @@ class GameViewModelTest : AppTest() {
         every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
             Result.success(mockShuffledCardsWithSamePairIds())
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test
@@ -276,7 +257,6 @@ class GameViewModelTest : AppTest() {
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
 
-
                 // when
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))
@@ -315,7 +295,6 @@ class GameViewModelTest : AppTest() {
                 )
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
-
 
                 // when
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
@@ -358,7 +337,6 @@ class GameViewModelTest : AppTest() {
                 )
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
-
 
                 // when
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[1]))

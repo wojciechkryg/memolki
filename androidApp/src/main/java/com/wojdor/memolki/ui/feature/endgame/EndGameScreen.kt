@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun EndGameScreen(
-    viewModel: EndGameViewModel = hiltViewModel(),
+    viewModel: EndGameViewModel = koinViewModel(),
     gameViewModel: GameViewModel,
     isEnterAnimationFinished: Boolean,
     navController: NavController

@@ -2,9 +2,8 @@ package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.mockk
-import javax.inject.Inject
 
-class FakePermissionProvider @Inject constructor() : PermissionProvider(mockk()) {
+class FakePermissionProvider : PermissionProvider(mockk()) {
 
     var hasPermission = false
 

@@ -10,13 +10,10 @@ import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.provider.TimeProvider
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
-@HiltViewModel
-class DailyChallengeHistoryViewModel @Inject constructor(
+class DailyChallengeHistoryViewModel(
     savedStateHandle: SavedStateHandle,
     private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,

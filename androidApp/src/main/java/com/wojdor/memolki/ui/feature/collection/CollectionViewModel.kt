@@ -16,14 +16,11 @@ import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
-@HiltViewModel
-class CollectionViewModel @Inject constructor(
+class CollectionViewModel(
     savedStateHandle: SavedStateHandle,
     private val analytics: Analytics,
     private val coinsPlayer: CoinsPlayer,

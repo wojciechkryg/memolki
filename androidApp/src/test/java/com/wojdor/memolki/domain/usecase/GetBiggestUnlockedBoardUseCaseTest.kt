@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,16 +13,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class GetBiggestUnlockedBoardUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var getBoardsUseCase: GetBoardsUseCase
+    private val getBoardsUseCase: GetBoardsUseCase by inject()
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
     private lateinit var sut: GetBiggestUnlockedBoardUseCase
 
@@ -31,10 +28,6 @@ class GetBiggestUnlockedBoardUseCaseTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = GetBiggestUnlockedBoardUseCase(testDispatcher, getBoardsUseCase)
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

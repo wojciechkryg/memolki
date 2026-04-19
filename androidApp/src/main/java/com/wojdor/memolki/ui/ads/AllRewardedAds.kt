@@ -3,13 +3,9 @@ package com.wojdor.memolki.ui.ads
 import android.content.Context
 import com.wojdor.memolki.R
 import com.wojdor.memolki.util.analytics.Analytics
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class AllRewardedAds @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+class AllRewardedAds(
+    private val context: Context,
     private val analytics: Analytics
 ) {
     val endGameCoinsAd = RewardedAd(

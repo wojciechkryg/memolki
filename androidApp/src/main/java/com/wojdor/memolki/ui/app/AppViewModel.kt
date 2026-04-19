@@ -17,9 +17,8 @@ import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class AppViewModel @Inject constructor(
+class AppViewModel(
     private val analytics: Analytics,
     private val unlockAllNewCardPairsIfPurchasedUseCase: UnlockAllNewCardPairsIfPurchasedUseCase,
     private val localEncryptorKeyStore: LocalEncryptorKeyStore,

@@ -4,9 +4,8 @@ import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.mapper.toEntity
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import javax.inject.Inject
 
-class DailyChallengeRepository @Inject constructor(
+class DailyChallengeRepository(
     private val dailyChallengeDao: DailyChallengeDao
 ) {
 

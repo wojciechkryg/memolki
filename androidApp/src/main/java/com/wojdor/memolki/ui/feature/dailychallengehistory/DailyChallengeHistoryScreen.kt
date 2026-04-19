@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
@@ -34,7 +34,7 @@ import java.time.LocalDate
 
 @Composable
 fun DailyChallengeHistoryScreen(
-    viewModel: DailyChallengeHistoryViewModel = hiltViewModel(),
+    viewModel: DailyChallengeHistoryViewModel = koinViewModel(),
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()

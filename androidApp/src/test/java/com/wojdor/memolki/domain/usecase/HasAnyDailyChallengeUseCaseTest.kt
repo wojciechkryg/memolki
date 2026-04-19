@@ -6,7 +6,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.relaxedMockk
 import io.mockk.coEvery
 import io.mockk.every
@@ -17,13 +16,12 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class HasAnyDailyChallengeUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var dailyChallengeDao: DailyChallengeDao
+    private val dailyChallengeDao: DailyChallengeDao by inject()
 
     private lateinit var sut: HasAnyDailyChallengeUseCase
 
@@ -38,10 +36,6 @@ class HasAnyDailyChallengeUseCaseTest : AppTest() {
             testDispatcher,
             DailyChallengeRepository(dailyChallengeDao)
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

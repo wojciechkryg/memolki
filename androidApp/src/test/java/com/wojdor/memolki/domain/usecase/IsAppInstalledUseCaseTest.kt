@@ -2,7 +2,6 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.util.provider.AppInstalledProvider
 import io.mockk.every
 import io.mockk.mockk
@@ -23,10 +22,6 @@ class IsAppInstalledUseCaseTest : AppTest() {
     override fun setup() {
         super.setup()
         sut = IsAppInstalledUseCase(testDispatcher, appInstalledProvider)
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

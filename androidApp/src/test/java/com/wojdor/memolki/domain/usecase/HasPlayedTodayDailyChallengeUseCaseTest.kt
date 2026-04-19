@@ -3,7 +3,6 @@ package com.wojdor.memolki.domain.usecase
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import io.mockk.coEvery
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,16 +12,14 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var dailyChallengeDao: DailyChallengeDao
+    private val dailyChallengeDao: DailyChallengeDao by inject()
 
-    @Inject
-    lateinit var fakeTimeProvider: FakeTimeProvider
+    private val fakeTimeProvider: FakeTimeProvider by inject()
 
     private lateinit var sut: HasPlayedTodayDailyChallengeUseCase
 
@@ -34,10 +31,6 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
             DailyChallengeRepository(dailyChallengeDao),
             fakeTimeProvider
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

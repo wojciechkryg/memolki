@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.BoardModel
@@ -26,8 +26,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun GameScreen(
-    viewModel: GameViewModel = hiltViewModel(),
-    endGameViewModel: EndGameViewModel = hiltViewModel(),
+    viewModel: GameViewModel = koinViewModel(),
+    endGameViewModel: EndGameViewModel = koinViewModel(),
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()

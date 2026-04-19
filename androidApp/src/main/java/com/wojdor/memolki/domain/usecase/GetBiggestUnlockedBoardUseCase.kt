@@ -1,14 +1,12 @@
 package com.wojdor.memolki.domain.usecase
 
-import com.wojdor.memolki.di.coroutine.DefaultDispatcher
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.usecase.base.BaseParameterUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class GetBiggestUnlockedBoardUseCase @Inject constructor(
-    @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher,
+class GetBiggestUnlockedBoardUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val getBoardsUseCase: GetBoardsUseCase
 ) : BaseParameterUseCase<String, BoardModel>(coroutineDispatcher) {
 

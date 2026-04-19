@@ -4,11 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.wojdor.memolki.ui.app.AppNavigation
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.analytics.Analytics
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class EnableNotificationsViewModel @Inject constructor(
+class EnableNotificationsViewModel(
     savedStateHandle: SavedStateHandle,
     private val analytics: Analytics
 ) : MviViewModel<EnableNotificationsIntent, EnableNotificationsState>(

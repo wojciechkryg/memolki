@@ -1,15 +1,13 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.DailyChallengeRepository
-import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class GetAllDailyChallengesUseCase @Inject constructor(
-    @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
+class GetAllDailyChallengesUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val dailyChallengeRepository: DailyChallengeRepository
 ) : BaseUseCase<List<DailyChallengeModel>>(coroutineDispatcher) {
 

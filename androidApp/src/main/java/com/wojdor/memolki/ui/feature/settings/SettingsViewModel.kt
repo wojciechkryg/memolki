@@ -8,13 +8,10 @@ import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
-@HiltViewModel
-class SettingsViewModel @Inject constructor(
+class SettingsViewModel(
     savedStateHandle: SavedStateHandle,
     private val hapticFeedback: HapticFeedback,
     private val backgroundMusicPlayer: BackgroundMusicPlayer,

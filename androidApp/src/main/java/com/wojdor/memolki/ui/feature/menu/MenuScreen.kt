@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MenuScreen(
-    viewModel: MenuViewModel = hiltViewModel(),
+    viewModel: MenuViewModel = koinViewModel(),
     navController: NavController
 ) {
     val state by viewModel.uiState.collectAsState()

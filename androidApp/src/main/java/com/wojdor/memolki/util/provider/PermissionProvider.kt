@@ -5,11 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-open class PermissionProvider @Inject constructor(
-    @param:ApplicationContext private val context: Context
+open class PermissionProvider(
+    private val context: Context
 ) {
 
     open fun hasNotificationPermission(): Boolean {

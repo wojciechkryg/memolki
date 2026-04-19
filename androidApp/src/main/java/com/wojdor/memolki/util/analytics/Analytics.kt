@@ -3,9 +3,8 @@ package com.wojdor.memolki.util.analytics
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.wojdor.memolki.domain.model.BoardModel
-import javax.inject.Inject
 
-class Analytics @Inject constructor(
+class Analytics(
     private val firebaseAnalytics: FirebaseAnalytics
 ) {
 

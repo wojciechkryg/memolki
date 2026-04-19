@@ -1,9 +1,8 @@
 package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.data.local.datastore.settings.SettingsLocalDataSource
-import javax.inject.Inject
 
-open class SettingsRepository @Inject constructor(
+open class SettingsRepository(
     private val settingsLocalDataSource: SettingsLocalDataSource
 ) {
 

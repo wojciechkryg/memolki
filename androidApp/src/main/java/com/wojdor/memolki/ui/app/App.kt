@@ -4,18 +4,22 @@ import android.app.Application
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.wojdor.memolki.BuildConfig
+import com.wojdor.memolki.di.appKoinModule
 import com.wojdor.memolki.ui.ads.AdsInitializer
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
-@HiltAndroidApp
 class App : Application() {
 
-    @Inject
-    lateinit var adsInitializer: AdsInitializer
+    private val adsInitializer: AdsInitializer by inject()
 
     override fun onCreate() {
         super.onCreate()
+        startKoin {
+            androidContext(this@App)
+            modules(appKoinModule)
+        }
         disableFirebaseInDebug()
         initializeAds()
     }

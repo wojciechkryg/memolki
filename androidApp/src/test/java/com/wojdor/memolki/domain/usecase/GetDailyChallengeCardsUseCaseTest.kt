@@ -5,7 +5,6 @@ import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSo
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
@@ -16,23 +15,19 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
-import javax.inject.Inject
 import kotlin.random.Random
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class GetDailyChallengeCardsUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var cardRepository: CardRepository
+    private val cardRepository: CardRepository by inject()
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
-    @Inject
-    lateinit var fakeTimeProvider: FakeTimeProvider
+    private val fakeTimeProvider: FakeTimeProvider by inject()
 
-    @Inject
-    lateinit var fakePackageNameProvider: FakePackageNameProvider
+    private val fakePackageNameProvider: FakePackageNameProvider by inject()
 
     private lateinit var sut: GetDailyChallengeCardsUseCase
 
@@ -45,10 +40,6 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
             fakeTimeProvider,
             fakePackageNameProvider
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

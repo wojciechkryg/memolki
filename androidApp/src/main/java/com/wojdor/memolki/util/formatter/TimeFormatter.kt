@@ -1,8 +1,6 @@
 package com.wojdor.memolki.util.formatter
 
-import javax.inject.Inject
-
-class TimeFormatter @Inject constructor() {
+class TimeFormatter {
 
     fun format(timeMillis: Long): FormattedTime {
         val safeTimeMillis = timeMillis.coerceAtLeast(0)

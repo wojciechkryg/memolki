@@ -4,7 +4,6 @@ import app.cash.turbine.test
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.di.TestInjector
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -12,16 +11,14 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
+import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class GetBoardsUseCaseTest : AppTest() {
 
-    @Inject
-    lateinit var getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
+    private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase by inject()
 
-    @Inject
-    lateinit var unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource
+    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
     private lateinit var sut: GetBoardsUseCase
 
@@ -32,10 +29,6 @@ class GetBoardsUseCaseTest : AppTest() {
             testDispatcher,
             getUnlockedCardPairsCountUseCase
         )
-    }
-
-    override fun inject(injector: TestInjector) {
-        injector.inject(this)
     }
 
     @Test

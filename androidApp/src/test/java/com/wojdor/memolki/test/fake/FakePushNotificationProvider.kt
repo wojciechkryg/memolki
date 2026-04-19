@@ -2,9 +2,8 @@ package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import io.mockk.mockk
-import javax.inject.Inject
 
-class FakePushNotificationProvider @Inject constructor() : PushNotificationProvider(
+class FakePushNotificationProvider : PushNotificationProvider(
     mockk(),
     FakeLocaleProvider(),
     mockk()

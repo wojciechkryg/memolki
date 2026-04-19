@@ -8,9 +8,8 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class UserLocalDataSource @Inject constructor(
+class UserLocalDataSource(
     private val dataWrite: DataStore<Preferences>
 ) {
     private val dataRead: Flow<Preferences> = dataWrite.data.catch { _ ->

@@ -1,15 +1,13 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.R
-import com.wojdor.memolki.di.coroutine.DefaultDispatcher
 import com.wojdor.memolki.domain.model.LanguageModel
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class GetSupportedLanguagesUseCase @Inject constructor(
-    @DefaultDispatcher coroutineDispatcher: CoroutineDispatcher
+class GetSupportedLanguagesUseCase(
+    coroutineDispatcher: CoroutineDispatcher
 ) : BaseUseCase<List<LanguageModel>>(coroutineDispatcher) {
 
     override fun execute() = flow {

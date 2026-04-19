@@ -6,22 +6,17 @@ import android.media.MediaPlayer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.wojdor.memolki.R
-import com.wojdor.memolki.di.coroutine.MainDispatcher
 import com.wojdor.memolki.domain.usecase.ObserveMusicEnabledUseCase
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class BackgroundMusicPlayer @Inject constructor(
-    @param:ApplicationContext private val context: Context,
-    @param:MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
+class BackgroundMusicPlayer(
+    private val context: Context,
+    private val coroutineDispatcher: CoroutineDispatcher,
     private val observeMusicEnabledUseCase: ObserveMusicEnabledUseCase
 ) : DefaultLifecycleObserver {
 

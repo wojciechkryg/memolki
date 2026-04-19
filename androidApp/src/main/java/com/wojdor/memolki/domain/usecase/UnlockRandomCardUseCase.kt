@@ -1,15 +1,13 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.CardRepository
-import com.wojdor.memolki.di.coroutine.IoDispatcher
 import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 import kotlin.random.Random
 
-class UnlockRandomCardUseCase @Inject constructor(
-    @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
+class UnlockRandomCardUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository,
     private val random: Random
 ) : BaseUseCase<Unit>(coroutineDispatcher) {
