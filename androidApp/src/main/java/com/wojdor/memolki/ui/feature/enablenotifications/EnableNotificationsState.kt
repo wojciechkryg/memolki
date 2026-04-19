@@ -1,7 +1,7 @@
 package com.wojdor.memolki.ui.feature.enablenotifications
 
 import com.wojdor.memolki.ui.base.UiState
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 class EnableNotificationsState : UiState

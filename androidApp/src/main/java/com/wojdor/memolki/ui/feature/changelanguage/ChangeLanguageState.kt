@@ -2,9 +2,9 @@ package com.wojdor.memolki.ui.feature.changelanguage
 
 import com.wojdor.memolki.domain.model.LanguageModel
 import com.wojdor.memolki.ui.base.UiState
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class ChangeLanguageState(
     val languages: List<LanguageModel> = emptyList(),
     val currentLanguage: LanguageModel = LanguageModel(),

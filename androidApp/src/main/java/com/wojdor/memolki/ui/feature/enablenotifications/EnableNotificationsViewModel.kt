@@ -13,6 +13,7 @@ class EnableNotificationsViewModel @Inject constructor(
     private val analytics: Analytics
 ) : MviViewModel<EnableNotificationsIntent, EnableNotificationsState>(
     savedStateHandle,
+    EnableNotificationsState.serializer(),
     EnableNotificationsState()
 ) {
 

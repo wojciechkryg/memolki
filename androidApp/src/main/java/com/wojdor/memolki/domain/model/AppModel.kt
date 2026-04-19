@@ -1,12 +1,10 @@
 package com.wojdor.memolki.domain.model
 
-import android.os.Parcelable
 import com.wojdor.memolki.R
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
-sealed class AppModel : Parcelable {
+@Serializable
+sealed class AppModel {
 
     abstract val imageRes: Int
     abstract val textRes: Int
@@ -23,59 +21,35 @@ sealed class AppModel : Parcelable {
         )
     }
 
+    @Serializable
     object FruitHalf : AppModel() {
-        @IgnoredOnParcel
         override val imageRes: Int = R.drawable.ic_logo_fruit_half
-
-        @IgnoredOnParcel
         override val textRes: Int = R.string.suffix_fruit_half
-
-        @IgnoredOnParcel
         override val colorRes: Int = R.color.primary_fruit_half
-
-        @IgnoredOnParcel
         override val appId: String = "com.wojdor.memolki.fruithalf"
     }
 
+    @Serializable
     object VegetableHalf : AppModel() {
-        @IgnoredOnParcel
         override val imageRes: Int = R.drawable.ic_logo_vegetable_half
-
-        @IgnoredOnParcel
         override val textRes: Int = R.string.suffix_vegetable_half
-
-        @IgnoredOnParcel
         override val colorRes: Int = R.color.primary_vegetable_half
-
-        @IgnoredOnParcel
         override val appId: String = "com.wojdor.memolki.vegetablehalf"
     }
 
+    @Serializable
     object MammalSide : AppModel() {
-        @IgnoredOnParcel
         override val imageRes: Int = R.drawable.ic_logo_mammal_side
-
-        @IgnoredOnParcel
         override val textRes: Int = R.string.suffix_mammal_side
-
-        @IgnoredOnParcel
         override val colorRes: Int = R.color.primary_mammal_side
-
-        @IgnoredOnParcel
         override val appId: String = "com.wojdor.memolki.mammalside"
     }
 
+    @Serializable
     object BirdSide : AppModel() {
-        @IgnoredOnParcel
         override val imageRes: Int = R.drawable.ic_logo_bird_side
-
-        @IgnoredOnParcel
         override val textRes: Int = R.string.suffix_bird_side
-
-        @IgnoredOnParcel
         override val colorRes: Int = R.color.primary_bird_side
-
-        @IgnoredOnParcel
         override val appId: String = "com.wojdor.memolki.birdside"
     }
 }

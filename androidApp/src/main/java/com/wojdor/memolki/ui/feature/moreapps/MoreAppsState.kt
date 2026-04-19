@@ -2,9 +2,9 @@ package com.wojdor.memolki.ui.feature.moreapps
 
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.ui.base.UiState
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class MoreAppsState(
     val apps: List<AppModel> = emptyList(),
 ) : UiState

@@ -3,9 +3,9 @@ package com.wojdor.memolki.ui.feature.menu
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.ui.base.UiState
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class MenuState(
     val menu: List<MenuModel> = emptyList(),
     val otherAppModel: AppModel? = null,

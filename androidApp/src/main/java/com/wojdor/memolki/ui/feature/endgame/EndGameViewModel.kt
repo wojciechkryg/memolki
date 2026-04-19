@@ -57,6 +57,7 @@ class EndGameViewModel @Inject constructor(
     private val dailyChallengeShareFormatter: DailyChallengeShareFormatter
 ) : MviViewModel<EndGameIntent, EndGameState>(
     savedStateHandle,
+    EndGameState.serializer(),
     EndGameState()
 ) {
 

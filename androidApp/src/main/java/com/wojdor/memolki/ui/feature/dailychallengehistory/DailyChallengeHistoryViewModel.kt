@@ -25,6 +25,7 @@ class DailyChallengeHistoryViewModel @Inject constructor(
     private val timeProvider: TimeProvider
 ) : MviViewModel<DailyChallengeHistoryIntent, DailyChallengeHistoryState>(
     savedStateHandle,
+    DailyChallengeHistoryState.serializer(),
     DailyChallengeHistoryState()
 ) {
 

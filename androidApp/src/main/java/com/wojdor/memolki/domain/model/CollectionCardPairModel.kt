@@ -1,12 +1,18 @@
 package com.wojdor.memolki.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
-sealed class CollectionCardPairModel : Parcelable {
+@Serializable
+sealed class CollectionCardPairModel {
+    @Serializable
     data class Unlocked(val cardPair: CardPairModel) : CollectionCardPairModel()
+
+    @Serializable
     data class LockedToUnlockWithCoins(val coins: Int) : CollectionCardPairModel()
+
+    @Serializable
     object LockedToUnlockWithAd : CollectionCardPairModel()
+
+    @Serializable
     object Locked : CollectionCardPairModel()
 }

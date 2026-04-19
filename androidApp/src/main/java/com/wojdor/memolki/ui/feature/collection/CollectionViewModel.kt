@@ -37,6 +37,7 @@ class CollectionViewModel @Inject constructor(
     private val notificationScheduler: NotificationScheduler
 ) : MviViewModel<CollectionIntent, CollectionState>(
     savedStateHandle,
+    CollectionState.serializer(),
     CollectionState()
 ) {
 

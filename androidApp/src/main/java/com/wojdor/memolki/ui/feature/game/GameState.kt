@@ -3,9 +3,9 @@ package com.wojdor.memolki.ui.feature.game
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.base.UiState
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class GameState(
     val board: BoardModel = BoardModel.Empty,
     val cards: List<CardModel> = emptyList(),

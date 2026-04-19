@@ -29,6 +29,7 @@ class ChooseBoardViewModel @Inject constructor(
     private val hasAnyDailyChallengeUseCase: HasAnyDailyChallengeUseCase
 ) : MviViewModel<ChooseBoardIntent, ChooseBoardState>(
     savedStateHandle,
+    ChooseBoardState.serializer(),
     ChooseBoardState()
 ) {
 

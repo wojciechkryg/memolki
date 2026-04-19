@@ -53,6 +53,7 @@ class GameViewModel @Inject constructor(
     private val starCalculator: StarCalculator
 ) : MviViewModel<GameIntent, GameState>(
     savedStateHandle,
+    GameState.serializer(),
     GameState()
 ) {
 

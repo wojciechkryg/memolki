@@ -21,6 +21,7 @@ class ChangeLanguageViewModel @Inject constructor(
     private val localeProvider: LocaleProvider
 ) : MviViewModel<ChangeLanguageIntent, ChangeLanguageState>(
     savedStateHandle,
+    ChangeLanguageState.serializer(),
     ChangeLanguageState()
 ) {
 

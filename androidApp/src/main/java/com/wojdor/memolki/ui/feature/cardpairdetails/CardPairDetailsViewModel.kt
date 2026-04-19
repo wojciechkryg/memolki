@@ -10,6 +10,7 @@ class CardPairDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : MviViewModel<CardPairDetailsIntent, CardPairDetailsState>(
     savedStateHandle,
+    CardPairDetailsState.serializer(),
     CardPairDetailsState()
 ) {
 

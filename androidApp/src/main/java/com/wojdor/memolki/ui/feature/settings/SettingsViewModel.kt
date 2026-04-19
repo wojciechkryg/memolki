@@ -22,6 +22,7 @@ class SettingsViewModel @Inject constructor(
     private val toggleSettingsUseCase: ToggleSettingsUseCase
 ) : MviViewModel<SettingsIntent, SettingsState>(
     savedStateHandle,
+    SettingsState.serializer(),
     SettingsState()
 ) {
 

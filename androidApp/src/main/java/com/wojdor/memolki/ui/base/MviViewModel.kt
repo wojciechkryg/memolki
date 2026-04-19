@@ -10,9 +10,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 
 abstract class MviViewModel<I : UiIntent, S : UiState>(
     private val savedStateHandle: SavedStateHandle,
+    private val stateSerializer: KSerializer<S>,
     initialState: S
 ) : ViewModel() {
 
@@ -24,7 +27,7 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(
     val uiEffect: Flow<UiEffect>
         get() = _uiEffect.receiveAsFlow()
 
-    private val _uiState = MutableStateFlow(savedStateHandle[stateKey] ?: initialState)
+    private val _uiState = MutableStateFlow(restoreState() ?: initialState)
     val uiState: StateFlow<S>
         get() = _uiState
 
@@ -44,10 +47,19 @@ abstract class MviViewModel<I : UiIntent, S : UiState>(
 
     protected fun sendState(update: S.() -> S) {
         _uiState.update(update)
-        savedStateHandle[stateKey] = _uiState.value
+        savedStateHandle[stateKey] = JsonFormat.encodeToString(stateSerializer, _uiState.value)
+    }
+
+    private fun restoreState(): S? {
+        val saved: String = savedStateHandle[stateKey] ?: return null
+        return runCatching { JsonFormat.decodeFromString(stateSerializer, saved) }.getOrNull()
     }
 
     private fun startCollectingIntents() {
         viewModelScope.launch { _uiIntent.receiveAsFlow().collect { onIntent(it) } }
+    }
+
+    private companion object {
+        val JsonFormat = Json { ignoreUnknownKeys = true }
     }
 }

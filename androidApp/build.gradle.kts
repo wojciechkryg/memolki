@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics.plugin)
     alias(libs.plugins.paparazzi)
@@ -201,6 +201,7 @@ kover {
 
 dependencies {
     implementation(project(":shared"))
+    implementation(libs.kotlinx.serialization.json)
     coreLibraryDesugaring(libs.android.desugar)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.core.ktx)

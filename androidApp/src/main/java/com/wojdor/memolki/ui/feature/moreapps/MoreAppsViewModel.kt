@@ -25,6 +25,7 @@ class MoreAppsViewModel @Inject constructor(
     private val isAppInstalledUseCase: IsAppInstalledUseCase,
 ) : MviViewModel<MoreAppsIntent, MoreAppsState>(
     savedStateHandle,
+    MoreAppsState.serializer(),
     MoreAppsState()
 ) {
 

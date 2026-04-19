@@ -47,6 +47,7 @@ class MenuViewModel @Inject constructor(
     private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
+    MenuState.serializer(),
     MenuState()
 ) {
 

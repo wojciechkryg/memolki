@@ -4,9 +4,9 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.ui.base.UiState
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class EndGameState(
     val board: BoardModel = BoardModel.Empty,
     val currentCoins: Long = 0L,

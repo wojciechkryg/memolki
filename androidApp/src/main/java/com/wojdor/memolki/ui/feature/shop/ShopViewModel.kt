@@ -57,6 +57,7 @@ class ShopViewModel @Inject constructor(
     private val collectDailyStreakRewardUseCase: CollectDailyStreakRewardUseCase
 ) : MviViewModel<ShopIntent, ShopState>(
     savedStateHandle,
+    ShopState.serializer(),
     ShopState()
 ) {
 
