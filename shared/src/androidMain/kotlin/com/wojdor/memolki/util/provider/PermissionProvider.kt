@@ -6,11 +6,11 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 
-open class PermissionProvider(
+actual open class PermissionProvider(
     private val context: Context
 ) {
 
-    open fun hasNotificationPermission(): Boolean {
+    actual open fun hasNotificationPermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ContextCompat.checkSelfPermission(
                 context,

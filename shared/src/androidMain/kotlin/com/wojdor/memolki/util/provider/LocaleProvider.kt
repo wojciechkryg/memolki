@@ -8,11 +8,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import java.util.Locale
 
-open class LocaleProvider(
+actual open class LocaleProvider(
     private val context: Context
 ) {
 
-    open fun getLanguageTag(): String {
+    actual open fun getLanguageTag(): String {
         val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val locales = context.getSystemService(LocaleManager::class.java).applicationLocales
             if (locales.isEmpty) null else locales[0]
@@ -23,7 +23,7 @@ open class LocaleProvider(
         return locale?.language ?: Locale.getDefault().language
     }
 
-    open fun setLanguageTag(tag: String) {
+    actual open fun setLanguageTag(tag: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val localeManager = context.getSystemService(LocaleManager::class.java)
             localeManager.applicationLocales = LocaleList.forLanguageTags(tag)
@@ -32,5 +32,4 @@ open class LocaleProvider(
             AppCompatDelegate.setApplicationLocales(localeList)
         }
     }
-
 }

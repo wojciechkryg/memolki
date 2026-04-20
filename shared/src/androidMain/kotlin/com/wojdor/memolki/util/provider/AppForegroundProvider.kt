@@ -3,8 +3,8 @@ package com.wojdor.memolki.util.provider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ProcessLifecycleOwner
 
-open class AppForegroundProvider {
+actual open class AppForegroundProvider actual constructor() {
 
-    open fun isAppInForeground(): Boolean =
+    actual open fun isAppInForeground(): Boolean =
         ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
 }

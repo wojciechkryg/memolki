@@ -92,17 +92,21 @@ Adding a new flavor has a checklist in `docs/docs_new_app_flavor_setup.md`.
 
 ## Architecture
 
-**MVI + Clean Architecture** with three layers:
+**MVI + Clean Architecture** with three layers, across two Gradle modules:
 
 ```
 UI (Compose) → Domain (Use Cases) → Data (Repositories → DataSources)
 ```
 
+- `:androidApp` hosts the Android app (Activity, manifest, services, receivers, flavor source sets, Paparazzi).
+- `:shared` is a Kotlin Multiplatform library (`commonMain` / `androidMain` / `iosMain`) that holds portable code. An iOS app target is scaffolded separately in phase 14.
+- Code lives in `:shared/commonMain` when it can be authored once and consumed on both platforms; in `:shared/androidMain` (or `:shared/iosMain`) when a platform-specific `actual` is needed for an `expect` declaration; in `:androidApp` when it's genuinely Android-only (UI composables, manifest-bound receivers, flavor data).
+
 **Layer boundaries are strict:** Use cases depend only on repositories (and other use cases) — never import data-layer internals (`data/local/database/` entities, `data/mapper/`). Repositories are responsible for mapping between data entities and domain models.
 
 ### UseCase Layer
 
-Two base classes in `domain/usecase/base/`:
+Two base classes in `domain/usecase/base/` (located in `:shared/commonMain`):
 - `BaseUseCase<R>` — no-parameter use case, invoked as `useCase()`
 - `BaseParameterUseCase<P, R>` — parameterized, invoked as `useCase(param)`
 
@@ -110,30 +114,32 @@ Both return `Flow<Result<R>>` via `operator fun invoke()`. Override `execute()` 
 
 Conventions:
 - Named `[Verb][Noun]UseCase` (e.g. `GetSettingsUseCase`, `ToggleSettingsUseCase`)
-- Constructor-injected with `@Inject`
-- **Dispatcher is always the 1st constructor parameter**
-- Dispatcher choice: `@IoDispatcher` for anything touching system services, repositories, or I/O; `@DefaultDispatcher` for pure in-memory computation; `@MainDispatcher` only when the Android API requires the main thread
+- Plain constructor — no `@Inject` (Koin wires dependencies by type from `AppKoinModule`)
+- **Dispatcher is always the 1st constructor parameter** — type `CoroutineDispatcher`
+- Dispatcher choice: unqualified (defaults to `Dispatchers.IO`) for anything touching system services, repositories, or I/O; inject `get(DefaultDispatcher)` for pure in-memory computation; `get(MainDispatcher)` only when the API requires the main thread. The `DefaultDispatcher` and `MainDispatcher` named qualifiers are defined in `di/AppKoinModule.kt` alongside the module.
 - **Do NOT use `runCatching`** — the base class `.catch` block handles exceptions and reports to Crashlytics (see Analytics & Crashlytics section)
 
 Reference examples:
-- Simple: `domain/usecase/GetSettingsUseCase.kt`
-- With parameter: `domain/usecase/ToggleSettingsUseCase.kt`
+- Simple: `shared/src/commonMain/.../domain/usecase/GetCoinsUseCase.kt`
+- With parameter: `androidApp/src/main/.../domain/usecase/ToggleSettingsUseCase.kt` (use cases referencing androidMain-only repos/providers still live in `:androidApp` pending later phases)
 
 ### Domain Models
 
-Sealed classes with `@Parcelize`, often including:
-- Abstract properties in the sealed parent
-- Data class subclasses for concrete types
-- `object Empty` sentinel for default/initial values
-- Resource annotations (`@field:StringRes`, `@field:DrawableRes`) for UI resources
+Located in `:shared/commonMain/.../domain/model/`. Five domain models already moved: `CardModel`, `CardPairModel`, `CollectionCardPairModel`, `DailyChallengeModel`, `LanguageModel`, plus `StarCalculator`. Six others (`AppModel`, `BoardModel`, `EndGameMenuModel`, `MenuModel`, `SettingModel`, `ShopMenuModel`) still live in `:androidApp` until phase 13 moves their `R.string.*` / `R.drawable.*` references to `compose-resources` — they carry a `TODO(compose-resources):` marker.
 
-Reference: `domain/model/CardModel.kt`, `domain/model/SettingModel.kt`
+Sealed classes with `@Serializable`, often including:
+- Abstract properties in the sealed parent
+- Data class subclasses for concrete types (each also annotated `@Serializable`)
+- `object Empty` sentinel for default/initial values (also `@Serializable`)
+- Resource IDs are plain `Int` fields; the old `@field:StringRes`/`@field:DrawableRes` lint annotations were removed when models moved to `commonMain` (they are androidx-only). A `0` sentinel is used for empty/placeholder defaults; phase 13 replaces these with `Res.string.empty`.
+
+Reference: `shared/src/commonMain/.../domain/model/CardModel.kt`
 
 ### Data Layer
 
-- **Persistence:** Two storage mechanisms:
-  - **Encrypted DataStore Preferences** (`data/local/datastore/`) — for key-value settings and user data (coins, streaks, unlocked cards). Uses `data/crypto/Encryptor` for sensitive values. Never use SharedPreferences.
-  - **Room Database** (`data/local/database/`) — for structured, growing data (e.g. daily challenge results). `AppDatabase` in `data/local/database/`, entities and DAOs in subdirectories. Provided via Hilt in `DataModule`. Database version tracked as `private const val DATABASE_VERSION` in `AppDatabase.kt`. When bumping `DATABASE_VERSION`, add a proper migration to preserve user data.
+- **Persistence:** Two storage mechanisms (both currently live in `:androidApp` — phase 8 migrates them to `:shared`):
+  - **Encrypted DataStore Preferences** (`data/local/datastore/`) — for key-value settings and user data (coins, streaks, unlocked cards). Uses `data/crypto/Encryptor` (interface now in `:shared/commonMain`, Android impl `BaseEncryptor` in `:androidApp`) for sensitive values. Never use SharedPreferences.
+  - **Room Database** (`data/local/database/`) — for structured, growing data (e.g. daily challenge results). `AppDatabase` in `data/local/database/`, entities and DAOs in subdirectories. Registered in `AppKoinModule`. Database version tracked as `private const val DATABASE_VERSION` in `AppDatabase.kt`. When bumping `DATABASE_VERSION`, add a proper migration to preserve user data.
 - **Entities:** DataStore entities in `data/entity/`, mapped via `data/mapper/`. Room entities live next to their DAOs in `data/local/database/`.
 - **Repositories:** in `data/repository/`, orchestrate data sources from `data/local/`. Repositories map between data entities and domain models — never expose Room entities or DataStore keys in the public API
 - **Backup & Restore:** `res/xml/backup_rules.xml` (API < 31) and `res/xml/data_extraction_rules.xml` (API 31+) include the `sharedpref` and `database` domains, plus the `file` domain with `path="datastore/"`. When adding a new persistence mechanism, update both files
@@ -144,14 +150,14 @@ Each feature screen follows this structure under `ui/feature/{name}/`:
 
 | File | Purpose |
 |---|---|
-| `{Name}State.kt` | `@Parcelize` data class implementing `UiState`, all properties have defaults |
+| `{Name}State.kt` | `@Serializable` data class implementing `UiState`, all properties have defaults |
 | `{Name}Intent.kt` | Sealed class implementing `UiIntent`, entries named `On[Action]` |
 | `{Name}Effect.kt` | Sealed class implementing `UiEffect` for one-shot side effects (navigation, toasts, showing overlays) |
-| `{Name}ViewModel.kt` | `@HiltViewModel` extending `MviViewModel<Intent, State>` |
+| `{Name}ViewModel.kt` | Plain class extending `MviViewModel<Intent, State>` — bound in `AppKoinModule` via `viewModelOf(::{Name}ViewModel)` |
 | `{Name}Screen.kt` | `@Composable` with three-level hierarchy (see below) |
 | `{Name}Callbacks.kt` | (optional) Data class grouping lambdas for the screen, defaults to `= {}` |
 
-**Base class:** `MviViewModel` (`ui/base/MviViewModel.kt`) manages intent→state flow via `sendIntent()`, `onIntent()`, `sendState { copy(...) }`, `sendEffect()`. State is persisted through `SavedStateHandle`.
+**Base class:** `MviViewModel` (`ui/base/MviViewModel.kt`) manages intent→state flow via `sendIntent()`, `onIntent()`, `sendState { copy(...) }`, `sendEffect()`. State is persisted through `SavedStateHandle` as a JSON string via `kotlinx.serialization` — each ViewModel passes `FooState.serializer()` into its `super(...)` call. Malformed saved JSON (e.g. after a state-schema change) falls back to the initial state.
 
 ViewModel conventions:
 - Load initial data in `init {}` block
@@ -175,7 +181,7 @@ Screens follow a strict composable layering — **always follow this exact struc
 // 1. Public entry point — ONLY collects state and delegates
 @Composable
 fun {Name}Screen(
-    viewModel: {Name}ViewModel = hiltViewModel(),
+    viewModel: {Name}ViewModel = koinViewModel(),
     navController: NavController,
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -256,25 +262,44 @@ Navigation animations are centralized in `ui/app/NavAnimation.kt` (directional s
 
 Android framework calls (e.g. `Context`, `LocaleManager`, `PackageManager`) are abstracted into provider classes under `util/provider/`. This keeps UseCases and ViewModels free of Android dependencies and makes them testable.
 
-Conventions:
-- `open class` with `@Inject constructor` and `open` methods
-- Context injected via `@param:ApplicationContext private val context: Context`
+Structure — most providers are multiplatform via `expect/actual`:
+- **`expect open class`** in `shared/src/commonMain/.../util/provider/` declares the API shape
+- **`actual open class`** in `shared/src/androidMain/...` with the real Android implementation (takes `Context` in constructor where needed, wired via `get()` in Koin)
+- **`actual open class`** in `shared/src/iosMain/...` — stub implementation. Each stub carries a `TODO(ios):` marker pointing at the real iOS API to use later (e.g. `UNUserNotificationCenter`, `NSLocale`, `UIApplication.canOpenURL`).
+
+Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`. `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` and `PushNotificationProvider` still live in `:androidApp` — they move with later phases (`TimeProvider` after the `java.time → kotlinx.datetime` swap; `PushNotificationProvider` with the GitLive Firebase migration in phase 9).
 
 Testing:
-- Each provider has a corresponding `Fake{Name}` class in `test/fake/` that extends it, passing `mockk()` as the context
+- Each provider has a corresponding `Fake{Name}` class in `shared/src/androidMain` OR `androidApp/src/test/fake/` (currently still all in `androidApp/test/fake/`) that extends the Android `actual` class, passing `mockk()` as the context where needed
 - Fakes are **fully functional** — they hold state via private vars and override all methods with real behavior (no mocks, no no-ops)
-- Fakes are bound in `TestModule` via `@Binds` (not `relaxedMockk()`)
-- Tests `@Inject` the fake by its concrete type (e.g. `@Inject lateinit var fakeLocaleProvider: FakeLocaleProvider`) and use it to control state directly
+- Fakes are bound in `TestKoinModule` via `singleOf(::FakeFoo) { bind<FooProvider>() }`
+- Tests read the fake via `val fakeLocaleProvider: FakeLocaleProvider by inject()` and use it to control state directly. `FooProvider by inject()` is also valid when the test only needs the public contract.
 
-Examples: `LocaleProvider` / `FakeLocaleProvider`, `AppInstalledProvider` / `FakeAppInstalledProvider`
+Examples: `LocaleProvider` (commonMain expect + androidMain/iosMain actuals) / `FakeLocaleProvider` (androidApp/test/fake, extends Android actual)
 
 ### Dependency Injection
 
-Hilt with KSP. Modules in `di/module/`:
-- `AppModule.kt` — app-wide bindings (DataStore, encryption, providers)
-- `DataModule.kt` — data sources, Room database (`AppDatabase`, DAOs), DataStore
+**Koin** — no annotations, wired by constructor types. All bindings declared in `androidApp/src/main/.../di/AppKoinModule.kt`:
+- 41 `factoryOf(::FooUseCase)` for IO-dispatcher use cases (auto-wires because the unqualified `CoroutineDispatcher` binding is `Dispatchers.IO`)
+- Explicit `factory { FooUseCase(get(DefaultDispatcher), get(), …) }` for the ~15 use cases that need `@DefaultDispatcher` / `@MainDispatcher`
+- `viewModelOf(::FooViewModel)` for the 13 ViewModels
+- `singleOf(::FooProvider)` / `singleOf(::FooRepository)` for providers, repositories, data sources, util classes, framework singletons
 
-Coroutine dispatchers are injected via qualifiers defined in `di/coroutine/`: `@DefaultDispatcher`, `@IoDispatcher`, `@MainDispatcher`. Never hardcode `Dispatchers.*` directly.
+`App.kt` starts Koin:
+```kotlin
+startKoin {
+    androidContext(this@App)
+    modules(appKoinModule)
+}
+```
+
+`AppActivity`, `PushNotificationService`, `NotificationAlarmReceiver`, `BootReceiver` implement `KoinComponent` and use `by inject()` / `by viewModel()` for field-style access.
+
+Coroutine dispatchers:
+- **Unqualified** `CoroutineDispatcher` → `Dispatchers.IO` (default)
+- `DefaultDispatcher` named qualifier → `Dispatchers.Default`
+- `MainDispatcher` named qualifier → `Dispatchers.Main`
+- Never hardcode `Dispatchers.*` directly in use cases / ViewModels — always inject.
 
 ### UI Utilities
 
@@ -301,24 +326,23 @@ Shared composables live in `ui/component/`. Before creating a new composable, ch
 
 ## Testing
 
-- **Framework:** JUnit 4 + Turbine (Flow testing) + MockK
-- **Base class:** `AppTest` (`test/AppTest.kt`) — sets up Dagger test component, `testDispatcher`, and MockK annotations
-- **Test DI:** `TestModule` provides fakes and relaxed mocks for Android dependencies. `Random(0)` for deterministic randomness.
+- **Framework:** JUnit 4 + Turbine (Flow testing) + MockK + Koin Test (`KoinTest`)
+- **Base class:** `AppTest` (`test/AppTest.kt`) — implements `KoinTest`; starts Koin with `testKoinModule` in `@Before` and `stopKoin()` in `@After`; sets `Dispatchers.setMain(testDispatcher)` with the injected `StandardTestDispatcher`; initializes MockK annotations.
+- **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) mirrors `AppKoinModule` with fakes (`FakeEncryptor`, `FakeLocaleProvider`, `FakeTimeProvider`, etc. bound to their interfaces/superclasses) + `relaxedMockk()` for platform dependencies tests rarely exercise directly (`HapticFeedback`, `BillingHandler`, `Analytics`, `GooglePlayGames`, Firebase, media players). `Random(0)` for deterministic randomness. One `StandardTestDispatcher` shared across IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned.
 - **Test utilities:** `test/TestUtils.kt` — `relaxedMockk<T>()`, `verifyOnce()`, `coVerifyOnce()`
 - **Test naming:** backtick-quoted descriptive names: `` `when X then Y` ``
 
 Conventions:
 - Extend `AppTest`, annotate with `@ExperimentalCoroutinesApi`
-- `@Inject` real dependencies, `@RelaxedMockK` for mocked ones
-- Override `inject(injector)` and construct SUT in `@Before setup()`
+- Read Koin-managed dependencies with `private val foo: Foo by inject()`; use `@MockK` / `@RelaxedMockK` only for mocks local to the test
+- Construct SUT in `@Before setup()` (after `super.setup()` so Koin is started first)
 - Wrap tests in `runTest {}`, assert flows with Turbine's `.test { awaitItem() }`
 - For one-shot flows (e.g. `flow { emit(...) }`), call `awaitComplete()` after consuming items to avoid "Unconsumed events" errors
 - For long-lived flows (e.g. DataStore, StateFlow), no `awaitComplete()` needed
 - Comments in tests are **only** `// given`, `// when`, `// then` — no other comments (no inline explanations, no `// region`/`// endregion`, no trailing descriptions)
 - Use `assertTrue()`/`assertFalse()` — never `assertEquals(true, ...)` or `assertEquals(false, ...)`
 - For static Android APIs (e.g. `AppCompatDelegate`), use `mockkStatic(...)` in `@Before`
-- Add `fun inject(test: YourTestClass)` to `TestInjector` for each new test class
-- **Fake singleton scoping:** `@Binds @Singleton` scopes the parent type (e.g. `LocaleProvider`), not the Fake itself. Injecting `FakeLocaleProvider` directly in a test creates a separate instance from the one Hilt gives to UseCases via `LocaleProvider`. When testing a UseCase that depends on other UseCases that use Fakes, construct the child UseCase manually with the injected Fake (see `GetLanguagesWithCurrentUseCaseTest`)
+- **Fake scoping:** Koin `singleOf(::FakeFoo) { bind<Foo>() }` binds the fake as a singleton behind both the concrete Fake class AND the interface/parent class. `by inject()` returns the same instance each time, so injecting `FakeLocaleProvider` and `LocaleProvider` in the same test yields the same object — no risk of divergent instances. When testing a UseCase that depends on other UseCases that use Fakes, use the Koin-provided instance instead of constructing child UseCases manually.
 
 ### Common mistakes
 
@@ -679,7 +703,7 @@ Recurring errors to avoid — check this list before submitting changes.
 - **`first()` is fine for one-shot BaseUseCase flows:** `BaseUseCase.execute()` emits exactly once; `.first()` is idiomatic for these. Only avoid `first()` on continuous flows (DataStore, combine, etc.)
 - **No `getOrNull()` / `getOrThrow()`:** Handle results with `.onSuccess { }` / `.onFailure { }`
 - **Compose use cases with sequential `first()`, not `combine()`:** Nesting `combine()` inside `BaseUseCase.execute()` creates layered `flowOn` chains that break `StandardTestDispatcher` in tests. Use `flow { val x = otherUseCase().first().getOrThrow(); ... }` instead (see `UnlockRandomCardIfEnoughCoinsUseCase`)
-- **Don't hack production code to fix test issues:** If `relaxedMockk` swallows a call, stub it properly in `TestModule` — don't convert member functions to extensions or restructure production code as a workaround
+- **Don't hack production code to fix test issues:** If `relaxedMockk` swallows a call, stub it properly in `TestKoinModule` — don't convert member functions to extensions or restructure production code as a workaround
 - **Fix root causes, don't scatter suppressions:** If a warning appears in many files, fix the source (e.g. `const val` → `val`) instead of adding `@Suppress` everywhere
 
 ### Testing
