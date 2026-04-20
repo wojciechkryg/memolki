@@ -1,8 +1,5 @@
 package com.wojdor.memolki.data.entity
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-
 sealed class CardEntity {
 
     abstract val id: String
@@ -10,12 +7,12 @@ sealed class CardEntity {
 
     data class Text(
         override val id: String,
-        @field:StringRes override val textRes: Int
+        override val textRes: Int
     ) : CardEntity()
 
     data class Image(
         override val id: String,
-        @field:StringRes override val textRes: Int,
-        @field:DrawableRes val imageRes: Int
+        override val textRes: Int,
+        val imageRes: Int
     ) : CardEntity()
 }
