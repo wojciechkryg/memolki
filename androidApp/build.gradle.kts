@@ -5,7 +5,6 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
@@ -209,8 +208,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.lifecycle.process)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.navigation.compose)
@@ -237,7 +234,6 @@ dependencies {
     implementation(libs.androidx.compose.material3.window.size)
 
     debugImplementation(libs.androidx.ui.tooling)
-    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

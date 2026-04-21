@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.room.Room
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import com.wojdor.memolki.data.local.database.databaseBuilder
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -132,9 +133,8 @@ import kotlin.random.Random
 val DefaultDispatcher = named("default")
 val MainDispatcher = named("main")
 
-private const val DATA_STORE_NAME = "data_store"
+const val DATA_STORE_NAME = "memolki_preferences"
 private val Context.dataStore by preferencesDataStore(name = DATA_STORE_NAME)
-private const val DATABASE_NAME = "memolki_database"
 
 val appKoinModule = module {
     single<CoroutineDispatcher> { Dispatchers.IO }
@@ -146,7 +146,9 @@ val appKoinModule = module {
     single<ReviewManager> { ReviewManagerFactory.create(get()) }
     single<DataStore<Preferences>> { get<Context>().dataStore }
     single {
-        Room.databaseBuilder(get<Context>(), AppDatabase::class.java, DATABASE_NAME).build()
+        databaseBuilder(get<Context>())
+            .setDriver(BundledSQLiteDriver())
+            .build()
     }
     single { get<AppDatabase>().dailyChallengeDao() }
 
