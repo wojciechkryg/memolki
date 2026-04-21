@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+// TODO(kmp-push): Android-only by design. Extends Google's FirebaseMessagingService (registered in
+// the manifest). iOS push flow is deferred; this service stays here until iOS push ships.
 class PushNotificationService : FirebaseMessagingService(), KoinComponent {
 
     private val notificationCreator: NotificationCreator by inject()

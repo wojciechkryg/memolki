@@ -15,6 +15,7 @@ datastore = "1.2.1"
 lifecycleProcess = "2.10.0"
 firebaseBom = "34.12.0"
 firebaseCrashlyticsPlugin = "3.0.7"
+gitliveFirebase = "2.4.0"
 googleServices = "4.4.4"
 junit = "4.13.2"
 koin = "4.2.1"
@@ -72,6 +73,8 @@ firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+gitlive-firebase-analytics = { group = "dev.gitlive", name = "firebase-analytics", version.ref = "gitliveFirebase" }
+gitlive-firebase-crashlytics = { group = "dev.gitlive", name = "firebase-crashlytics", version.ref = "gitliveFirebase" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }

@@ -1,7 +1,6 @@
 package com.wojdor.memolki.util.analytics
 
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.wojdor.memolki.domain.model.BoardModel
+import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
@@ -14,7 +13,7 @@ class AnalyticsTest {
     @Test
     fun `logBoardStart logs event with board size`() {
         // when
-        sut.logBoardStart(BoardModel.Grid2x3(isUnlocked = true))
+        sut.logBoardStart(columns = 2, rows = 3)
 
         // then
         verify { firebaseAnalytics.logEvent("board_started", any()) }
@@ -24,7 +23,8 @@ class AnalyticsTest {
     fun `logBoardComplete logs event with board size and mistake count`() {
         // when
         sut.logBoardComplete(
-            board = BoardModel.Grid2x3(isUnlocked = true),
+            columns = 2,
+            rows = 3,
             mistakeCount = 5,
             level = 12L,
             totalGamesCount = 7L
@@ -37,7 +37,7 @@ class AnalyticsTest {
     @Test
     fun `logBoardAbandoned logs event with board size`() {
         // when
-        sut.logBoardAbandoned(BoardModel.Grid2x3(isUnlocked = true))
+        sut.logBoardAbandoned(columns = 2, rows = 3)
 
         // then
         verify { firebaseAnalytics.logEvent("board_abandoned", any()) }

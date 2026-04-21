@@ -267,7 +267,7 @@ Structure — most providers are multiplatform via `expect/actual`:
 - **`actual open class`** in `shared/src/androidMain/...` with the real Android implementation (takes `Context` in constructor where needed, wired via `get()` in Koin)
 - **`actual open class`** in `shared/src/iosMain/...` — stub implementation. Each stub carries a `TODO(ios):` marker pointing at the real iOS API to use later (e.g. `UNUserNotificationCenter`, `NSLocale`, `UIApplication.canOpenURL`).
 
-Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`. `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` and `PushNotificationProvider` still live in `:androidApp` — they move with later phases (`TimeProvider` after the `java.time → kotlinx.datetime` swap; `PushNotificationProvider` with the GitLive Firebase migration in phase 9).
+Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`. `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` and `PushNotificationProvider` still live in `:androidApp` — `TimeProvider` moves after the `java.time → kotlinx.datetime` swap; `PushNotificationProvider` is staying Android-only since it wraps `FirebaseMessaging` topic subscription and Android-specific language-tag handling.
 
 Testing:
 - Each provider has a corresponding `Fake{Name}` class in `shared/src/androidMain` OR `androidApp/src/test/fake/` (currently still all in `androidApp/test/fake/`) that extends the Android `actual` class, passing `mockk()` as the context where needed
@@ -305,7 +305,7 @@ Coroutine dispatchers:
 
 - **Responsive spacing:** `ui/theme/Dimensions.kt` — `spacingXS`/`S`/`M`/`L`/`XL` are composable properties that adapt based on `isTablet` (WindowSizeClass)
 - **Click throttling:** `util/ClickUtils.kt` — `throttleClick()` composable wrapper prevents duplicate clicks (1s default)
-- **Logging:** `util/extension/` — `Any.logD()` / `Any.logE()` use the class name as tag. `logE()` also reports to Firebase Crashlytics as a non-fatal exception
+- **Logging:** `shared/src/commonMain/.../util/extension/Logger.kt` — `Any.logD()` / `Any.logE()` use the class name as tag. `logE()` also reports to Firebase Crashlytics (via GitLive) as a non-fatal exception
 
 ### Compose Style Conventions
 
@@ -655,17 +655,19 @@ Deep link URIs use `DeepLinkBuilder` (`util/notification/DeepLinkBuilder.kt`) as
 
 ## Analytics & Crashlytics
 
-Firebase Analytics and Crashlytics are integrated via `google-services.json` (in `androidApp/`, gitignored). Both are **disabled in debug builds** via `App.kt` (`disableFirebaseInDebug()`) — only release builds send data.
+Firebase Analytics and Crashlytics are integrated via `google-services.json` (in `androidApp/`, gitignored). The common Kotlin SDK is **GitLive Firebase** (`dev.gitlive:firebase-analytics`, `dev.gitlive:firebase-crashlytics`) declared in `:shared`'s `commonMain` so both layers are KMP-ready; GitLive delegates to the Google Android SDKs under the hood. Both are **disabled in debug builds** via `App.kt` (`disableFirebaseInDebug()`) — only release builds send data.
 
 ### Analytics
-All custom events are logged through `util/analytics/Analytics.kt`. Injected into ViewModels as the **second constructor parameter** (after `savedStateHandle`). In tests, provided as `relaxedMockk()` from `TestModule` — verify calls with `verify { analytics.logX() }`.
+All custom events are logged through `shared/src/commonMain/.../util/analytics/Analytics.kt`. Injected into ViewModels as the **second constructor parameter** (after `savedStateHandle`). In tests, provided as `relaxedMockk()` from `TestKoinModule` — verify calls with `verify { analytics.logX() }`.
 
-Event names, parameter keys, and values are organized in `private object Event`, `private object Key`, and `private object Value` inside `Analytics.kt`. Callers use typed helper methods (e.g. `logAdRewardFromShop()`, `logCardUnlockedWithCoins()`) — no raw string literals at call sites.
+Event names, parameter keys, and values are organized in `private object Event`, `private object Key`, and `private object Value` inside `Analytics.kt`. Callers use typed helper methods (e.g. `logAdRewardFromShop()`, `logCardUnlockedWithCoins()`) — no raw string literals at call sites. Parameters are passed as `Map<String, Any>` to GitLive's `logEvent` (no Android `Bundle`).
+
+Board-scoped helpers (`logBoardStart`, `logBoardComplete`, `logBoardAbandoned`) take `columns: Int, rows: Int` rather than a `BoardModel`, so the whole file stays in `commonMain` until `BoardModel` itself moves (Phase 13).
 
 User properties: `setUserLanguage()` sets a Firebase user property (not an event).
 
 ### Crashlytics
-Non-fatal errors are reported via `logE()` in `util/extension/AnyExtensions.kt` — every `logE` call records to both Logcat and `FirebaseCrashlytics.recordException()`. This covers all base use case errors (via `BaseUseCase.catch`) and ViewModel failure handlers.
+Non-fatal errors are reported via `logE()` in `shared/src/commonMain/.../util/extension/Logger.kt`. The Android `actual` records to both Logcat and GitLive's `Firebase.crashlytics.recordException()`. The Crashlytics call is wrapped in `runCatching` so JVM unit tests (where Firebase isn't initialized) don't crash. This covers all base use case errors (via `BaseUseCase.catch`) and ViewModel failure handlers.
 
 ### Use case error handling
 Use cases must **NOT** use `runCatching` to wrap their logic. The base class (`BaseUseCase` / `BaseParameterUseCase`) already has a `.catch` block that wraps exceptions in `Result.failure()` and logs them via `logE` (which reports to Crashlytics). Using `runCatching` silently swallows errors and prevents Crashlytics from seeing them.

@@ -35,11 +35,14 @@ kotlin {
             api(libs.androidx.room.runtime)
             api(libs.androidx.sqlite.bundled)
             api(libs.koin.core)
+            api(libs.gitlive.firebase.analytics)
+            api(libs.gitlive.firebase.crashlytics)
         }
         commonTest.dependencies {
         }
         androidMain.dependencies {
             implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.analytics)
             implementation(libs.firebase.crashlytics)
             implementation(libs.androidx.appcompat)
             implementation(libs.androidx.core.ktx)

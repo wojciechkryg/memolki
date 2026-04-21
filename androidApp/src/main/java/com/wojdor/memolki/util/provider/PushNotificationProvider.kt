@@ -5,6 +5,8 @@ import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
 import kotlinx.coroutines.flow.first
 
+// TODO(kmp-push): Android-only by design. FirebaseMessaging is Google's SDK (not GitLive —
+// GitLive's firebase-messaging has no iOS topic API yet). Rewrite for commonMain when iOS push ships.
 open class PushNotificationProvider(
     private val firebaseMessaging: FirebaseMessaging,
     private val localeProvider: LocaleProvider,

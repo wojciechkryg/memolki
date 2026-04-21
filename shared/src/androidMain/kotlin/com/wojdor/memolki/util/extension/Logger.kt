@@ -1,7 +1,8 @@
 package com.wojdor.memolki.util.extension
 
 import android.util.Log
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.crashlytics.crashlytics
 
 actual fun Any.logD(message: String) {
     Log.d(this::class.simpleName, message)
@@ -9,10 +10,12 @@ actual fun Any.logD(message: String) {
 
 actual fun Any.logE(message: String, throwable: Throwable) {
     val tag = this::class.simpleName ?: "Unknown"
-    Log.e(tag, message, throwable)
-    FirebaseCrashlytics.getInstance().apply {
-        setCustomKey("source", tag)
-        log("[$tag] $message")
-        recordException(throwable)
+    runCatching { Log.e(tag, message, throwable) }
+    runCatching {
+        Firebase.crashlytics.apply {
+            setCustomKey("source", tag)
+            log("[$tag] $message")
+            recordException(throwable)
+        }
     }
 }

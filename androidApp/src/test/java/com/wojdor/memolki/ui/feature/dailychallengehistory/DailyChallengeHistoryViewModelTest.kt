@@ -1,9 +1,7 @@
 package com.wojdor.memolki.ui.feature.dailychallengehistory
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
 import com.wojdor.memolki.data.repository.DailyChallengeRepository
@@ -16,8 +14,6 @@ import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.HapticFeedback
 import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -48,10 +44,6 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        mockkStatic(Log::class)
-        every { Log.e(any(), any(), any()) } returns 0
-        mockkStatic(FirebaseCrashlytics::class)
-        every { FirebaseCrashlytics.getInstance() } returns relaxedMockk()
         fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 4, 11)
         coEvery { dailyChallengeDao.getAll() } returns emptyList()
     }

@@ -1,9 +1,10 @@
 package com.wojdor.memolki.ui.app
 
 import android.app.Application
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.wojdor.memolki.BuildConfig
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.analytics.analytics
+import dev.gitlive.firebase.crashlytics.crashlytics
 import com.wojdor.memolki.di.DATA_STORE_NAME
 import com.wojdor.memolki.di.appKoinModule
 import com.wojdor.memolki.ui.ads.AdsInitializer
@@ -42,8 +43,8 @@ class App : Application() {
     }
 
     private fun disableFirebaseInDebug() {
-        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
+        Firebase.analytics.setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
+        Firebase.crashlytics.setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
     }
 
     private fun initializeAds() {

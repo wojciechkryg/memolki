@@ -8,8 +8,9 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.wojdor.memolki.data.local.database.databaseBuilder
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.analytics.analytics
 import com.wojdor.memolki.data.crypto.BaseEncryptor
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
@@ -141,7 +142,7 @@ val appKoinModule = module {
     single<CoroutineDispatcher>(DefaultDispatcher) { Dispatchers.Default }
     single<CoroutineDispatcher>(MainDispatcher) { Dispatchers.Main }
     single { if (RECORDING_MODE) Random(0) else Random.Default }
-    single { FirebaseAnalytics.getInstance(get()) }
+    single { Firebase.analytics }
     single { FirebaseMessaging.getInstance() }
     single<ReviewManager> { ReviewManagerFactory.create(get()) }
     single<DataStore<Preferences>> { get<Context>().dataStore }
