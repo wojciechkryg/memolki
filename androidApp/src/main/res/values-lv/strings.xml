@@ -7,9 +7,9 @@
 
     <string name="new_game">Jauna spēle</string>
     <string name="menu">Izvēlne</string>
-    <string name="shop_obtain">Iegūt %d</string>
+    <string name="shop_obtain">Iegūt %1$d</string>
     <string name="shop_back_later">Atgriezties vēlāk</string>
-    <string name="shop_buy">Pirkt %d</string>
+    <string name="shop_buy">Pirkt %1$d</string>
     <string name="shop_unlock_all_cards">Atbloķēt visas kārtis</string>
     <string name="shop_purchase_failed_error">Pirkums neizdevās</string>
     <string name="shop_connection_error">Savienojuma kļūda</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Dienas balva</string>
     <string name="shortcut_play">Spēlēt</string>
 
-    <string name="daily_reward_day">%d. diena</string>
-    <string name="daily_reward_collect">Savākt %d</string>
+    <string name="daily_reward_day">%1$d. diena</string>
+    <string name="daily_reward_collect">Savākt %1$d</string>
     <string name="daily_reward_back_tomorrow">Atgriezies rīt</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,10 +82,10 @@
         <item>Visi saņem to pašu laukumu — kā tev veiksies?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="zero">%d kļūdu</item>
-        <item quantity="one">%d kļūda</item>
-        <item quantity="other">%d kļūdas</item>
+        <item quantity="zero">%1$d kļūdu</item>
+        <item quantity="one">%1$d kļūda</item>
+        <item quantity="other">%1$d kļūdas</item>
     </plurals>
     <string name="share_casual">Domā, ka mani pārspēsi? 🧠🔥</string>
-    <string name="level_count">līmenis %d</string>
+    <string name="level_count">līmenis %1$d</string>
 </resources>

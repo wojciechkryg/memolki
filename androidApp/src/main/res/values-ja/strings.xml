@@ -7,9 +7,9 @@
 
     <string name="new_game">新しいゲーム</string>
     <string name="menu">メニュー</string>
-    <string name="shop_obtain">獲得 %d</string>
+    <string name="shop_obtain">獲得 %1$d</string>
     <string name="shop_back_later">後で戻って</string>
-    <string name="shop_buy">購入 %d</string>
+    <string name="shop_buy">購入 %1$d</string>
     <string name="shop_unlock_all_cards">すべてのカードを解放</string>
     <string name="shop_purchase_failed_error">購入に失敗しました</string>
     <string name="shop_connection_error">接続エラー</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">デイリー報酬</string>
     <string name="shortcut_play">プレイ</string>
 
-    <string name="daily_reward_day">%d日目</string>
-    <string name="daily_reward_collect">%d枚を集める</string>
+    <string name="daily_reward_day">%1$d日目</string>
+    <string name="daily_reward_collect">%1$d枚を集める</string>
     <string name="daily_reward_back_tomorrow">明日また来てね</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,8 +82,8 @@
         <item>みんな同じボード — あなたはどう？</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="other">%d ミス</item>
+        <item quantity="other">%1$d ミス</item>
     </plurals>
     <string name="share_casual">私に勝てると思う？🧠🔥</string>
-    <string name="level_count">レベル %d</string>
+    <string name="level_count">レベル %1$d</string>
 </resources>

@@ -7,9 +7,9 @@
 
     <string name="new_game">Νέο παιχνίδι</string>
     <string name="menu">Μενού</string>
-    <string name="shop_obtain">Πάρε %d</string>
+    <string name="shop_obtain">Πάρε %1$d</string>
     <string name="shop_back_later">Επίστρεψε αργότερα</string>
-    <string name="shop_buy">Αγόρασε %d</string>
+    <string name="shop_buy">Αγόρασε %1$d</string>
     <string name="shop_unlock_all_cards">Ξεκλείδωσε όλες τις κάρτες</string>
     <string name="shop_purchase_failed_error">Πρόβλημα αγοράς</string>
     <string name="shop_connection_error">Σφάλμα σύνδεσης</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Ημερήσιο δώρο</string>
     <string name="shortcut_play">Παιχνίδι</string>
 
-    <string name="daily_reward_day">Ημέρα %d</string>
-    <string name="daily_reward_collect">Σύλλεξε %d</string>
+    <string name="daily_reward_day">Ημέρα %1$d</string>
+    <string name="daily_reward_collect">Σύλλεξε %1$d</string>
     <string name="daily_reward_back_tomorrow">Έλα αύριο</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,9 +82,9 @@
         <item>Όλοι παίρνουν το ίδιο ταμπλό — πώς θα τα πας;</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d λάθος</item>
-        <item quantity="other">%d λάθη</item>
+        <item quantity="one">%1$d λάθος</item>
+        <item quantity="other">%1$d λάθη</item>
     </plurals>
     <string name="share_casual">Νομίζεις ότι μπορείς να με νικήσεις; 🧠🔥</string>
-    <string name="level_count">επίπεδο %d</string>
+    <string name="level_count">επίπεδο %1$d</string>
 </resources>

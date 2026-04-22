@@ -16,9 +16,9 @@
     <string name="more">Більше?</string>
     <string name="menu">Меню</string>
     <string name="shop">Магазин</string>
-    <string name="shop_obtain">Отримати %d</string>
+    <string name="shop_obtain">Отримати %1$d</string>
     <string name="shop_back_later">Поверніться пізніше</string>
-    <string name="shop_buy">Купити %d</string>
+    <string name="shop_buy">Купити %1$d</string>
     <string name="shop_unlock_all_cards">Розблокувати всі карти</string>
     <string name="shop_purchase_failed_error">Покупка не вдалася</string>
     <string name="shop_connection_error">Помилка з'єднання</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Грати</string>
 
     <string name="free_coins">Безкоштовні монети</string>
-    <string name="daily_reward_day">День %d</string>
-    <string name="daily_reward_collect">Зібрати %d</string>
+    <string name="daily_reward_day">День %1$d</string>
+    <string name="daily_reward_collect">Зібрати %1$d</string>
     <string name="daily_reward_back_tomorrow">Повертайся завтра</string>
 
     <string name="daily_challenge">Щоденний виклик</string>
@@ -111,13 +111,13 @@
         <item>У всіх однакова дошка — як справишся ти?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d помилка</item>
-        <item quantity="few">%d помилки</item>
-        <item quantity="many">%d помилок</item>
-        <item quantity="other">%d помилок</item>
+        <item quantity="one">%1$d помилка</item>
+        <item quantity="few">%1$d помилки</item>
+        <item quantity="many">%1$d помилок</item>
+        <item quantity="other">%1$d помилок</item>
     </plurals>
     <string name="share_casual">Думаєш, зможеш мене обіграти? 🧠🔥</string>
-    <string name="level_count">рівень %d</string>
+    <string name="level_count">рівень %1$d</string>
 
     <string name="leave_daily_challenge_title">Покинути щоденний виклик?</string>
     <string name="leave_daily_challenge_body">Сьогодні повторити не вдасться</string>

@@ -16,9 +16,9 @@
     <string name="more">Daugiau?</string>
     <string name="menu">Meniu</string>
     <string name="shop">Parduotuvė</string>
-    <string name="shop_obtain">Gauti %d</string>
+    <string name="shop_obtain">Gauti %1$d</string>
     <string name="shop_back_later">Grįžk vėliau</string>
-    <string name="shop_buy">Pirkti %d</string>
+    <string name="shop_buy">Pirkti %1$d</string>
     <string name="shop_unlock_all_cards">Atrakinti visas korteles</string>
     <string name="shop_purchase_failed_error">Pirkimas nepavyko</string>
     <string name="shop_connection_error">Ryšio klaida</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Žaisti</string>
 
     <string name="free_coins">Nemokamos monetos</string>
-    <string name="daily_reward_day">%d diena</string>
-    <string name="daily_reward_collect">Surinkti %d</string>
+    <string name="daily_reward_day">%1$d diena</string>
+    <string name="daily_reward_collect">Surinkti %1$d</string>
     <string name="daily_reward_back_tomorrow">Grįžk rytoj</string>
 
     <string name="daily_challenge">Dienos iššūkis</string>
@@ -111,13 +111,13 @@
         <item>Visi gauna tą pačią lentą — kaip tu pasirodysi?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d klaida</item>
-        <item quantity="few">%d klaidos</item>
-        <item quantity="many">%d klaidų</item>
-        <item quantity="other">%d klaidų</item>
+        <item quantity="one">%1$d klaida</item>
+        <item quantity="few">%1$d klaidos</item>
+        <item quantity="many">%1$d klaidų</item>
+        <item quantity="other">%1$d klaidų</item>
     </plurals>
     <string name="share_casual">Manai, kad mane įveiksi? 🧠🔥</string>
-    <string name="level_count">lygis %d</string>
+    <string name="level_count">lygis %1$d</string>
 
     <string name="leave_daily_challenge_title">Palikti dienos iššūkį?</string>
     <string name="leave_daily_challenge_body">Šiandien nebegalėsite bandyti iš naujo</string>

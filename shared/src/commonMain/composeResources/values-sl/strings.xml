@@ -16,9 +16,9 @@
     <string name="more">Več?</string>
     <string name="menu">Meni</string>
     <string name="shop">Trgovina</string>
-    <string name="shop_obtain">Pridobi %d</string>
+    <string name="shop_obtain">Pridobi %1$d</string>
     <string name="shop_back_later">Vrni se kasneje</string>
-    <string name="shop_buy">Kupi %d</string>
+    <string name="shop_buy">Kupi %1$d</string>
     <string name="shop_purchase_failed_error">Nakup ni uspel</string>
     <string name="shop_connection_error">Napaka v povezavi</string>
     <string name="shop_unlock_all_cards">Odkleni vse karte</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Igraj</string>
 
     <string name="free_coins">Brezplačni kovanci</string>
-    <string name="daily_reward_day">Dan %d</string>
-    <string name="daily_reward_collect">Zberi %d</string>
+    <string name="daily_reward_day">Dan %1$d</string>
+    <string name="daily_reward_collect">Zberi %1$d</string>
     <string name="daily_reward_back_tomorrow">Vrni se jutri</string>
 
     <string name="daily_challenge">Dnevni izziv</string>
@@ -111,13 +111,13 @@
         <item>Vsi dobijo isto ploščo — kako boš ti?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d napaka</item>
-        <item quantity="two">%d napaki</item>
-        <item quantity="few">%d napake</item>
-        <item quantity="other">%d napak</item>
+        <item quantity="one">%1$d napaka</item>
+        <item quantity="two">%1$d napaki</item>
+        <item quantity="few">%1$d napake</item>
+        <item quantity="other">%1$d napak</item>
     </plurals>
     <string name="share_casual">Misliš, da me lahko premaganš? 🧠🔥</string>
-    <string name="level_count">raven %d</string>
+    <string name="level_count">raven %1$d</string>
 
     <string name="leave_daily_challenge_title">Zapusti dnevni izziv?</string>
     <string name="leave_daily_challenge_body">Danes ne bo mogoče poskusiti znova</string>

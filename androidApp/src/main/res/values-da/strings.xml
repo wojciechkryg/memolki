@@ -7,9 +7,9 @@
 
     <string name="new_game">Nyt spil</string>
     <string name="menu">Menu</string>
-    <string name="shop_obtain">Modtag %d</string>
+    <string name="shop_obtain">Modtag %1$d</string>
     <string name="shop_back_later">Kom tilbage senere</string>
-    <string name="shop_buy">Køb %d</string>
+    <string name="shop_buy">Køb %1$d</string>
     <string name="shop_unlock_all_cards">Lås alle kort op</string>
     <string name="shop_purchase_failed_error">Køb mislykkedes</string>
     <string name="shop_connection_error">Netværksfejl</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Daglig belønning</string>
     <string name="shortcut_play">Spil</string>
 
-    <string name="daily_reward_day">Dag %d</string>
-    <string name="daily_reward_collect">Saml %d</string>
+    <string name="daily_reward_day">Dag %1$d</string>
+    <string name="daily_reward_collect">Saml %1$d</string>
     <string name="daily_reward_back_tomorrow">Kom igen i morgen</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,9 +82,9 @@
         <item>Alle får det samme bræt — hvordan klarer du dig?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d fejl</item>
-        <item quantity="other">%d fejl</item>
+        <item quantity="one">%1$d fejl</item>
+        <item quantity="other">%1$d fejl</item>
     </plurals>
     <string name="share_casual">Tror du, du kan slå mig? 🧠🔥</string>
-    <string name="level_count">niveau %d</string>
+    <string name="level_count">niveau %1$d</string>
 </resources>

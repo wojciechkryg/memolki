@@ -7,9 +7,9 @@
 
     <string name="new_game">Nová hra</string>
     <string name="menu">Menu</string>
-    <string name="shop_obtain">Získat %d</string>
+    <string name="shop_obtain">Získat %1$d</string>
     <string name="shop_back_later">Vrátit se později</string>
-    <string name="shop_buy">Koupit %d</string>
+    <string name="shop_buy">Koupit %1$d</string>
     <string name="shop_unlock_all_cards">Odemknout všechny karty</string>
     <string name="shop_purchase_failed_error">Nákup se nezdařil</string>
     <string name="shop_connection_error">Chyba připojení</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Denní odměna</string>
     <string name="shortcut_play">Hrát</string>
 
-    <string name="daily_reward_day">Den %d</string>
-    <string name="daily_reward_collect">Sebrat %d</string>
+    <string name="daily_reward_day">Den %1$d</string>
+    <string name="daily_reward_collect">Sebrat %1$d</string>
     <string name="daily_reward_back_tomorrow">Přijď zítra</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,11 +82,11 @@
         <item>Všichni mají stejnou desku — jak si povedeš?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d chyba</item>
-        <item quantity="few">%d chyby</item>
-        <item quantity="many">%d chyb</item>
-        <item quantity="other">%d chyb</item>
+        <item quantity="one">%1$d chyba</item>
+        <item quantity="few">%1$d chyby</item>
+        <item quantity="many">%1$d chyb</item>
+        <item quantity="other">%1$d chyb</item>
     </plurals>
     <string name="share_casual">Myslíš, že mě porazíš? 🧠🔥</string>
-    <string name="level_count">úroveň %d</string>
+    <string name="level_count">úroveň %1$d</string>
 </resources>

@@ -5,13 +5,16 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.shop_connection_error
+import com.wojdor.memolki.shared.resources.shop_purchase_failed_error
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.ads.show
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
@@ -42,6 +45,8 @@ private fun HandleEffect(
     val activity = LocalActivity.current
     val billingHandler = koinInject<BillingHandler>()
     val googlePlayGames = koinInject<GooglePlayGames>()
+    val purchaseFailedText = stringResource(Res.string.shop_purchase_failed_error)
+    val connectionErrorText = stringResource(Res.string.shop_connection_error)
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is ShopEffect.OpenEnableNotificationsScreen ->
@@ -57,8 +62,8 @@ private fun HandleEffect(
 
             is ShopEffect.LaunchBilling -> billingHandler.launchBillingFlow(effect.product)
 
-            is ShopEffect.ShowPurchaseFailedError -> activity?.showToast(R.string.shop_purchase_failed_error)
-            is ShopEffect.ShowConnectionError -> activity?.showToast(R.string.shop_connection_error)
+            is ShopEffect.ShowPurchaseFailedError -> activity?.showToast(purchaseFailedText)
+            is ShopEffect.ShowConnectionError -> activity?.showToast(connectionErrorText)
             is ShopEffect.SendTotalCoinsScore -> viewModel.viewModelScope.launch {
                 googlePlayGames.submitTotalCoins(effect.totalCoins)
             }

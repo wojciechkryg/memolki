@@ -16,9 +16,9 @@
     <string name="more">Mer?</string>
     <string name="menu">Meny</string>
     <string name="shop">Butikk</string>
-    <string name="shop_obtain">Hent %d</string>
+    <string name="shop_obtain">Hent %1$d</string>
     <string name="shop_back_later">Kom tilbake senere</string>
-    <string name="shop_buy">Kjøp %d</string>
+    <string name="shop_buy">Kjøp %1$d</string>
     <string name="shop_unlock_all_cards">Lås opp alle kort</string>
     <string name="shop_purchase_failed_error">Kjøp mislyktes</string>
     <string name="shop_connection_error">Tilkoblingsfeil</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Spill</string>
 
     <string name="free_coins">Gratis mynter</string>
-    <string name="daily_reward_day">Dag %d</string>
-    <string name="daily_reward_collect">Samle %d</string>
+    <string name="daily_reward_day">Dag %1$d</string>
+    <string name="daily_reward_collect">Samle %1$d</string>
     <string name="daily_reward_back_tomorrow">Kom tilbake i morgen</string>
 
     <string name="daily_challenge">Daglig utfordring</string>
@@ -111,11 +111,11 @@
         <item>Alle får det samme brettet — hvordan gjør du det?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d feil</item>
-        <item quantity="other">%d feil</item>
+        <item quantity="one">%1$d feil</item>
+        <item quantity="other">%1$d feil</item>
     </plurals>
     <string name="share_casual">Tror du at du kan slå meg? 🧠🔥</string>
-    <string name="level_count">nivå %d</string>
+    <string name="level_count">nivå %1$d</string>
 
     <string name="leave_daily_challenge_title">Forlat daglig utfordring?</string>
     <string name="leave_daily_challenge_body">Du vil ikke kunne prøve igjen i dag</string>

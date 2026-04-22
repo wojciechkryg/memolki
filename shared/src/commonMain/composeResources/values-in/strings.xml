@@ -16,9 +16,9 @@
     <string name="more">Lagi?</string>
     <string name="menu">Menu</string>
     <string name="shop">Toko</string>
-    <string name="shop_obtain">Dapatkan %d</string>
+    <string name="shop_obtain">Dapatkan %1$d</string>
     <string name="shop_back_later">Kembali nanti</string>
-    <string name="shop_buy">Beli %d</string>
+    <string name="shop_buy">Beli %1$d</string>
     <string name="shop_unlock_all_cards">Buka semua kartu</string>
     <string name="shop_purchase_failed_error">Pembelian gagal</string>
     <string name="shop_connection_error">Kesalahan koneksi</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Main</string>
 
     <string name="free_coins">Koin gratis</string>
-    <string name="daily_reward_day">Hari %d</string>
-    <string name="daily_reward_collect">Kumpulkan %d</string>
+    <string name="daily_reward_day">Hari %1$d</string>
+    <string name="daily_reward_collect">Kumpulkan %1$d</string>
     <string name="daily_reward_back_tomorrow">Kembali besok</string>
 
     <string name="daily_challenge">Tantangan harian</string>
@@ -111,10 +111,10 @@
         <item>Semua mendapat papan yang sama — bagaimana hasilmu?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="other">%d kesalahan</item>
+        <item quantity="other">%1$d kesalahan</item>
     </plurals>
     <string name="share_casual">Menurutmu bisa mengalahkanku? 🧠🔥</string>
-    <string name="level_count">level %d</string>
+    <string name="level_count">level %1$d</string>
 
     <string name="leave_daily_challenge_title">Tinggalkan tantangan harian?</string>
     <string name="leave_daily_challenge_body">Kamu tidak bisa mencoba lagi hari ini</string>

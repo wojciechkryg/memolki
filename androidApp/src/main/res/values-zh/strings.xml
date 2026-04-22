@@ -7,9 +7,9 @@
 
     <string name="new_game">新游戏</string>
     <string name="menu">菜单</string>
-    <string name="shop_obtain">获得 %d</string>
+    <string name="shop_obtain">获得 %1$d</string>
     <string name="shop_back_later">稍后再回来</string>
-    <string name="shop_buy">购买 %d</string>
+    <string name="shop_buy">购买 %1$d</string>
     <string name="shop_unlock_all_cards">解锁所有卡片</string>
     <string name="shop_purchase_failed_error">购买失败</string>
     <string name="shop_connection_error">连接错误</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">每日奖励</string>
     <string name="shortcut_play">开始游戏</string>
 
-    <string name="daily_reward_day">第%d天</string>
-    <string name="daily_reward_collect">收集 %d</string>
+    <string name="daily_reward_day">第%1$d天</string>
+    <string name="daily_reward_collect">收集 %1$d</string>
     <string name="daily_reward_back_tomorrow">明天再来</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,8 +82,8 @@
         <item>每个人都是同一块棋盘——你能做到多好？</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="other">%d 个错误</item>
+        <item quantity="other">%1$d 个错误</item>
     </plurals>
     <string name="share_casual">你觉得你能赢我吗？🧠🔥</string>
-    <string name="level_count">等级 %d</string>
+    <string name="level_count">等级 %1$d</string>
 </resources>

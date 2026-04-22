@@ -4,8 +4,6 @@ import android.content.Context
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.BoardModel
 
-// TODO(kmp-phase13): move to commonMain once Context/R.string refs are replaced by compose-resources
-// and BoardModel lives in commonMain.
 class CasualShareFormatter(
     private val context: Context
 ) {

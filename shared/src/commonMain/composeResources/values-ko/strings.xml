@@ -16,9 +16,9 @@
     <string name="more">더?</string>
     <string name="menu">메뉴</string>
     <string name="shop">상점</string>
-    <string name="shop_obtain">획득 %d</string>
+    <string name="shop_obtain">획득 %1$d</string>
     <string name="shop_back_later">나중에 다시 오세요</string>
-    <string name="shop_buy">구매 %d</string>
+    <string name="shop_buy">구매 %1$d</string>
     <string name="shop_unlock_all_cards">모든 카드 잠금 해제</string>
     <string name="shop_purchase_failed_error">구매 실패</string>
     <string name="shop_connection_error">연결 오류</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">플레이</string>
 
     <string name="free_coins">무료 코인</string>
-    <string name="daily_reward_day">%d일차</string>
-    <string name="daily_reward_collect">%d개 수집</string>
+    <string name="daily_reward_day">%1$d일차</string>
+    <string name="daily_reward_collect">%1$d개 수집</string>
     <string name="daily_reward_back_tomorrow">내일 다시 오세요</string>
 
     <string name="daily_challenge">일일 도전</string>
@@ -111,10 +111,10 @@
         <item>모두 같은 보드를 받아요 — 당신은 어떨까요?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="other">%d 실수</item>
+        <item quantity="other">%1$d 실수</item>
     </plurals>
     <string name="share_casual">나를 이길 수 있다고 생각해? 🧠🔥</string>
-    <string name="level_count">레벨 %d</string>
+    <string name="level_count">레벨 %1$d</string>
 
     <string name="leave_daily_challenge_title">일일 도전을 떠나시겠습니까?</string>
     <string name="leave_daily_challenge_body">오늘은 다시 도전할 수 없습니다</string>

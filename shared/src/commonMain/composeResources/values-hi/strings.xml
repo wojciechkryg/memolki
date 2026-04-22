@@ -16,9 +16,9 @@
     <string name="more">और?</string>
     <string name="menu">मेनू</string>
     <string name="shop">दुकान</string>
-    <string name="shop_obtain">प्राप्त करें %d</string>
+    <string name="shop_obtain">प्राप्त करें %1$d</string>
     <string name="shop_back_later">बाद में वापस आएं</string>
-    <string name="shop_buy">खरीदें %d</string>
+    <string name="shop_buy">खरीदें %1$d</string>
     <string name="shop_unlock_all_cards">सभी कार्ड अनलॉक करें</string>
     <string name="shop_purchase_failed_error">खरीदी विफल</string>
     <string name="shop_connection_error">कनेक्शन त्रुटि</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">खेलें</string>
 
     <string name="free_coins">मुफ्त सिक्के</string>
-    <string name="daily_reward_day">दिन %d</string>
-    <string name="daily_reward_collect">इकट्ठा करें %d</string>
+    <string name="daily_reward_day">दिन %1$d</string>
+    <string name="daily_reward_collect">इकट्ठा करें %1$d</string>
     <string name="daily_reward_back_tomorrow">कल वापस आएं</string>
 
     <string name="daily_challenge">दैनिक चुनौती</string>
@@ -111,11 +111,11 @@
         <item>सबको एक ही बोर्ड मिलता है — आप कैसा करेंगे?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d गलती</item>
-        <item quantity="other">%d गलतियाँ</item>
+        <item quantity="one">%1$d गलती</item>
+        <item quantity="other">%1$d गलतियाँ</item>
     </plurals>
     <string name="share_casual">क्या तुम मुझे हरा सकते हो? 🧠🔥</string>
-    <string name="level_count">स्तर %d</string>
+    <string name="level_count">स्तर %1$d</string>
 
     <string name="leave_daily_challenge_title">दैनिक चुनौती छोड़ें?</string>
     <string name="leave_daily_challenge_body">आज दोबारा कोशिश नहीं कर पाएंगे</string>

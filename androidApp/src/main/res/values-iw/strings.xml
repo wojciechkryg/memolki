@@ -7,9 +7,9 @@
 
     <string name="new_game">משחק חדש</string>
     <string name="menu">תפריט</string>
-    <string name="shop_obtain">השג %d</string>
+    <string name="shop_obtain">השג %1$d</string>
     <string name="shop_back_later">חזור מאוחר יותר</string>
-    <string name="shop_buy">קנה %d</string>
+    <string name="shop_buy">קנה %1$d</string>
     <string name="shop_unlock_all_cards">פתח את כל הקלפים</string>
     <string name="shop_purchase_failed_error">הרכישה נכשלה</string>
     <string name="shop_connection_error">שגיאת חיבור</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">פרס יומי</string>
     <string name="shortcut_play">שחק</string>
 
-    <string name="daily_reward_day">יום %d</string>
-    <string name="daily_reward_collect">אסוף %d</string>
+    <string name="daily_reward_day">יום %1$d</string>
+    <string name="daily_reward_collect">אסוף %1$d</string>
     <string name="daily_reward_back_tomorrow">חזור מחר</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,11 +82,11 @@
         <item>כולם מקבלים את אותו הלוח — איך תשתווה?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d שגיאה</item>
-        <item quantity="two">%d שגיאות</item>
-        <item quantity="many">%d שגיאות</item>
-        <item quantity="other">%d שגיאות</item>
+        <item quantity="one">%1$d שגיאה</item>
+        <item quantity="two">%1$d שגיאות</item>
+        <item quantity="many">%1$d שגיאות</item>
+        <item quantity="other">%1$d שגיאות</item>
     </plurals>
     <string name="share_casual">חושב שתצליח לנצח אותי? 🧠🔥</string>
-    <string name="level_count">שלב %d</string>
+    <string name="level_count">שלב %1$d</string>
 </resources>

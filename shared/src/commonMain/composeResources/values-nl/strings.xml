@@ -16,9 +16,9 @@
     <string name="more">Meer?</string>
     <string name="menu">Menu</string>
     <string name="shop">Winkel</string>
-    <string name="shop_obtain">Halen %d</string>
+    <string name="shop_obtain">Halen %1$d</string>
     <string name="shop_back_later">Kom later terug</string>
-    <string name="shop_buy">Kopen %d</string>
+    <string name="shop_buy">Kopen %1$d</string>
     <string name="shop_unlock_all_cards">Alle kaarten ontgrendelen</string>
     <string name="shop_purchase_failed_error">Aankoop mislukt</string>
     <string name="shop_connection_error">Verbindingsfout</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Spelen</string>
 
     <string name="free_coins">Gratis munten</string>
-    <string name="daily_reward_day">Dag %d</string>
-    <string name="daily_reward_collect">Verzamel %d</string>
+    <string name="daily_reward_day">Dag %1$d</string>
+    <string name="daily_reward_collect">Verzamel %1$d</string>
     <string name="daily_reward_back_tomorrow">Kom morgen terug</string>
 
     <string name="daily_challenge">Dagelijkse uitdaging</string>
@@ -111,11 +111,11 @@
         <item>Iedereen krijgt hetzelfde bord — hoe doe jij het?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d fout</item>
-        <item quantity="other">%d fouten</item>
+        <item quantity="one">%1$d fout</item>
+        <item quantity="other">%1$d fouten</item>
     </plurals>
     <string name="share_casual">Denk je dat je mij kunt verslaan? 🧠🔥</string>
-    <string name="level_count">niveau %d</string>
+    <string name="level_count">niveau %1$d</string>
 
     <string name="leave_daily_challenge_title">Dagelijkse uitdaging verlaten?</string>
     <string name="leave_daily_challenge_body">Je kunt het vandaag niet opnieuw proberen</string>

@@ -6,8 +6,6 @@ import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.util.provider.TimeProvider
 import java.time.format.DateTimeFormatter
 
-// TODO(kmp-phase13): move to commonMain once Context/R.string refs are replaced by compose-resources
-// and java.time.DateTimeFormatter is swapped for kotlinx.datetime formatting.
 class DailyChallengeShareFormatter(
     private val context: Context,
     private val timeProvider: TimeProvider,

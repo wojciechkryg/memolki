@@ -16,9 +16,9 @@
     <string name="more">هل تريد المزيد؟</string>
     <string name="menu">القائمة</string>
     <string name="shop">المتجر</string>
-    <string name="shop_obtain">الحصول على %d</string>
+    <string name="shop_obtain">الحصول على %1$d</string>
     <string name="shop_back_later">عد لاحقًا</string>
-    <string name="shop_buy">شراء %d</string>
+    <string name="shop_buy">شراء %1$d</string>
     <string name="shop_purchase_failed_error">فشل الشراء</string>
     <string name="shop_connection_error">خطأ في الاتصال</string>
     <string name="shop_unlock_all_cards">افتح جميع البطاقات</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">العب</string>
 
     <string name="free_coins">عملات مجانية</string>
-    <string name="daily_reward_day">يوم %d</string>
-    <string name="daily_reward_collect">اجمع %d</string>
+    <string name="daily_reward_day">يوم %1$d</string>
+    <string name="daily_reward_collect">اجمع %1$d</string>
     <string name="daily_reward_back_tomorrow">عد غداً</string>
 
     <string name="daily_challenge">التحدي اليومي</string>
@@ -111,15 +111,15 @@
         <item>الجميع يحصل على نفس اللوحة — كيف ستقارن؟</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="zero">%d أخطاء</item>
+        <item quantity="zero">%1$d أخطاء</item>
         <item quantity="one">خطأ واحد</item>
         <item quantity="two">خطآن</item>
-        <item quantity="few">%d أخطاء</item>
-        <item quantity="many">%d خطأ</item>
-        <item quantity="other">%d خطأ</item>
+        <item quantity="few">%1$d أخطاء</item>
+        <item quantity="many">%1$d خطأ</item>
+        <item quantity="other">%1$d خطأ</item>
     </plurals>
     <string name="share_casual">هل تعتقد أنك تستطيع التغلب عليّ؟ 🧠🔥</string>
-    <string name="level_count">المستوى %d</string>
+    <string name="level_count">المستوى %1$d</string>
 
     <string name="leave_daily_challenge_title">مغادرة التحدي اليومي؟</string>
     <string name="leave_daily_challenge_body">لن تتمكن من إعادة المحاولة اليوم</string>

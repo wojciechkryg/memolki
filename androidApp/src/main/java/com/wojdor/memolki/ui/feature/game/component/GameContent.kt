@@ -29,6 +29,7 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.empty
+import com.wojdor.memolki.shared.resources.level_count
 import com.wojdor.memolki.shared.resources.leave_daily_challenge_body
 import com.wojdor.memolki.shared.resources.leave_daily_challenge_title
 import com.wojdor.memolki.shared.resources.leave_game_body
@@ -103,7 +104,7 @@ private fun CardsGridWithText(
                 ) {
                     if (!state.isDailyChallenge) {
                         AutoSizeText(
-                            text = stringResource(R.string.level_count, state.level),
+                            text = composeStringResource(Res.string.level_count, state.level),
                             style = MaterialTheme.typography.headlineSmall
                         )
                     }

@@ -14,10 +14,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.daily_reward_back_tomorrow
+import com.wojdor.memolki.shared.resources.daily_reward_collect
+import com.wojdor.memolki.shared.resources.daily_reward_day
+import com.wojdor.memolki.shared.resources.shop_back_later
+import com.wojdor.memolki.shared.resources.shop_buy
+import com.wojdor.memolki.shared.resources.shop_obtain
+import com.wojdor.memolki.shared.resources.shop_unlock_all_cards
+import com.wojdor.memolki.shared.resources.watch_ad
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
 import com.wojdor.memolki.ui.feature.shop.ShopCallbacks
@@ -59,16 +68,16 @@ fun ShopContent(
                         is ShopMenuModel.DailyReward -> EdgeSparklesEffectWhen(menuItem.isAvailable) {
                             ShopMenuItem(
                                 priceText = stringResource(
-                                    R.string.daily_reward_day,
+                                    Res.string.daily_reward_day,
                                     menuItem.streakDay
                                 ),
                                 descriptionText = if (menuItem.isAvailable) {
                                     stringResource(
-                                        R.string.daily_reward_collect,
+                                        Res.string.daily_reward_collect,
                                         menuItem.coinsToGrant
                                     )
                                 } else {
-                                    stringResource(R.string.daily_reward_back_tomorrow)
+                                    stringResource(Res.string.daily_reward_back_tomorrow)
                                 },
                                 leftDrawableRes = R.drawable.ic_daily_reward,
                                 rightDrawableRes = R.drawable.ic_coins_pile_small,
@@ -79,11 +88,11 @@ fun ShopContent(
 
                         is ShopMenuModel.WatchAd -> EdgeSparklesEffectWhen(menuItem.isAvailable) {
                             ShopMenuItem(
-                                priceText = stringResource(R.string.watch_ad),
+                                priceText = stringResource(Res.string.watch_ad),
                                 descriptionText = if (menuItem.isAvailable) {
-                                    stringResource(R.string.shop_obtain, menuItem.coinsToGrant)
+                                    stringResource(Res.string.shop_obtain, menuItem.coinsToGrant)
                                 } else {
-                                    stringResource(R.string.shop_back_later)
+                                    stringResource(Res.string.shop_back_later)
                                 },
                                 leftDrawableRes = R.drawable.ic_ads,
                                 rightDrawableRes = R.drawable.ic_coins_pile_small,
@@ -95,7 +104,7 @@ fun ShopContent(
                         is ShopMenuModel.BuyCoinsSmallAmount -> ShopMenuItem(
                             priceText = menuItem.formattedPrice,
                             descriptionText = stringResource(
-                                R.string.shop_buy,
+                                Res.string.shop_buy,
                                 menuItem.coinsToGrant
                             ),
                             rightDrawableRes = R.drawable.ic_coins_pile_big,
@@ -106,7 +115,7 @@ fun ShopContent(
                         is ShopMenuModel.BuyCoinsBigAmount -> ShopMenuItem(
                             priceText = menuItem.formattedPrice,
                             descriptionText = stringResource(
-                                R.string.shop_buy,
+                                Res.string.shop_buy,
                                 menuItem.coinsToGrant
                             ),
                             rightDrawableRes = R.drawable.ic_coins_sack,
@@ -116,7 +125,7 @@ fun ShopContent(
 
                         is ShopMenuModel.BuyAllCards -> ShopMenuItem(
                             priceText = menuItem.formattedPrice,
-                            descriptionText = stringResource(R.string.shop_unlock_all_cards),
+                            descriptionText = stringResource(Res.string.shop_unlock_all_cards),
                             rightDrawableRes = R.drawable.ic_cards_stack,
                             onClick = callbacks.onBuyAllCardsClick,
 

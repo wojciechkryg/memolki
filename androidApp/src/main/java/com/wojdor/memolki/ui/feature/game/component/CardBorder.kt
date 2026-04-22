@@ -9,10 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.app_logo
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.AppColors
@@ -42,8 +43,7 @@ val CARD_BORDER_SIZE = 2.dp
 private fun CardBorderPreview() {
     AppTheme {
         CardBorder(Modifier.size(128.dp)) {
-            // TODO(compose-resources): switch to Res.string.app_name once Phase 13c moves flavor-specific strings to composeResources.
-            Text(text = stringResource(R.string.app_name))
+            Text(text = stringResource(Res.string.app_logo))
         }
     }
 }

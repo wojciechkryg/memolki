@@ -16,9 +16,9 @@
     <string name="more">Mehr?</string>
     <string name="menu">Menü</string>
     <string name="shop">Shop</string>
-    <string name="shop_obtain">%d erhalten</string>
+    <string name="shop_obtain">%1$d erhalten</string>
     <string name="shop_back_later">Später wiederkommen</string>
-    <string name="shop_buy">%d kaufen</string>
+    <string name="shop_buy">%1$d kaufen</string>
     <string name="shop_unlock_all_cards">Alle Karten entsperren</string>
     <string name="shop_purchase_failed_error">Kauf fehlgeschlagen</string>
     <string name="shop_connection_error">Verbindungsfehler</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Spielen</string>
 
     <string name="free_coins">Gratis Münzen</string>
-    <string name="daily_reward_day">Tag %d</string>
-    <string name="daily_reward_collect">Sammle %d</string>
+    <string name="daily_reward_day">Tag %1$d</string>
+    <string name="daily_reward_collect">Sammle %1$d</string>
     <string name="daily_reward_back_tomorrow">Komm morgen wieder</string>
 
     <string name="daily_challenge">Tägliche Herausforderung</string>
@@ -111,11 +111,11 @@
         <item>Alle bekommen dasselbe Brett — wie schneidest du ab?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d Fehler</item>
-        <item quantity="other">%d Fehler</item>
+        <item quantity="one">%1$d Fehler</item>
+        <item quantity="other">%1$d Fehler</item>
     </plurals>
     <string name="share_casual">Glaubst du, du kannst mich schlagen? 🧠🔥</string>
-    <string name="level_count">Level %d</string>
+    <string name="level_count">Level %1$d</string>
 
     <string name="leave_daily_challenge_title">Tägliche Herausforderung verlassen?</string>
     <string name="leave_daily_challenge_body">Du kannst es heute nicht erneut versuchen</string>

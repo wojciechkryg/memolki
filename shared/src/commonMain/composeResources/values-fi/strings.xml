@@ -16,9 +16,9 @@
     <string name="more">Lisää?</string>
     <string name="menu">Valikko</string>
     <string name="shop">Kauppa</string>
-    <string name="shop_obtain">Hanki %d</string>
+    <string name="shop_obtain">Hanki %1$d</string>
     <string name="shop_back_later">Tule takaisin myöhemmin</string>
-    <string name="shop_buy">Osta %d</string>
+    <string name="shop_buy">Osta %1$d</string>
     <string name="shop_unlock_all_cards">Avaa kaikki kortit</string>
     <string name="shop_purchase_failed_error">Ostos epäonnistui</string>
     <string name="shop_connection_error">Yhteysvirhe</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Pelaa</string>
 
     <string name="free_coins">Ilmaiset kolikot</string>
-    <string name="daily_reward_day">Päivä %d</string>
-    <string name="daily_reward_collect">Kerää %d</string>
+    <string name="daily_reward_day">Päivä %1$d</string>
+    <string name="daily_reward_collect">Kerää %1$d</string>
     <string name="daily_reward_back_tomorrow">Tule takaisin huomenna</string>
 
     <string name="daily_challenge">Päivän haaste</string>
@@ -111,11 +111,11 @@
         <item>Kaikki saavat saman laudan — miten sinä pärjäät?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d virhe</item>
-        <item quantity="other">%d virhettä</item>
+        <item quantity="one">%1$d virhe</item>
+        <item quantity="other">%1$d virhettä</item>
     </plurals>
     <string name="share_casual">Luuletko voittavasi minut? 🧠🔥</string>
-    <string name="level_count">taso %d</string>
+    <string name="level_count">taso %1$d</string>
 
     <string name="leave_daily_challenge_title">Poistu päivän haasteesta?</string>
     <string name="leave_daily_challenge_body">Et voi yrittää uudelleen tänään</string>

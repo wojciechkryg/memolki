@@ -7,9 +7,9 @@
 
     <string name="new_game">Nouvelle partie</string>
     <string name="menu">Menu</string>
-    <string name="shop_obtain">Obtenir %d</string>
+    <string name="shop_obtain">Obtenir %1$d</string>
     <string name="shop_back_later">Revenir plus tard</string>
-    <string name="shop_buy">Acheter %d</string>
+    <string name="shop_buy">Acheter %1$d</string>
     <string name="shop_unlock_all_cards">Déverrouiller toutes les cartes</string>
     <string name="shop_purchase_failed_error">Erreur de paiement</string>
     <string name="shop_connection_error">Erreur de connexion</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Récompense du jour</string>
     <string name="shortcut_play">Jouer</string>
 
-    <string name="daily_reward_day">Jour %d</string>
-    <string name="daily_reward_collect">Collecter %d</string>
+    <string name="daily_reward_day">Jour %1$d</string>
+    <string name="daily_reward_collect">Collecter %1$d</string>
     <string name="daily_reward_back_tomorrow">Reviens demain</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,9 +82,9 @@
         <item>Tout le monde a le même plateau — comment vas-tu te comparer ?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d erreur</item>
-        <item quantity="other">%d erreurs</item>
+        <item quantity="one">%1$d erreur</item>
+        <item quantity="other">%1$d erreurs</item>
     </plurals>
     <string name="share_casual">Tu penses pouvoir me battre ? 🧠🔥</string>
-    <string name="level_count">niveau %d</string>
+    <string name="level_count">niveau %1$d</string>
 </resources>

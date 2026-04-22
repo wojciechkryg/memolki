@@ -16,9 +16,9 @@
     <string name="more">Viac?</string>
     <string name="menu">Menu</string>
     <string name="shop">Obchod</string>
-    <string name="shop_obtain">Získať %d</string>
+    <string name="shop_obtain">Získať %1$d</string>
     <string name="shop_back_later">Vráť sa neskôr</string>
-    <string name="shop_buy">Kúpiť %d</string>
+    <string name="shop_buy">Kúpiť %1$d</string>
     <string name="shop_unlock_all_cards">Odomknúť všetky karty</string>
     <string name="shop_purchase_failed_error">Nákup zlyhal</string>
     <string name="shop_connection_error">Chyba pripojenia</string>
@@ -90,8 +90,8 @@
     <string name="shortcut_play">Hrať</string>
 
     <string name="free_coins">Mince zadarmo</string>
-    <string name="daily_reward_day">Deň %d</string>
-    <string name="daily_reward_collect">Zozbieraj %d</string>
+    <string name="daily_reward_day">Deň %1$d</string>
+    <string name="daily_reward_collect">Zozbieraj %1$d</string>
     <string name="daily_reward_back_tomorrow">Príď zajtra</string>
 
     <string name="daily_challenge">Denná výzva</string>
@@ -111,13 +111,13 @@
         <item>Všetci majú rovnakú dosku — ako sa ti podarí?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d chyba</item>
-        <item quantity="few">%d chyby</item>
-        <item quantity="many">%d chýb</item>
-        <item quantity="other">%d chýb</item>
+        <item quantity="one">%1$d chyba</item>
+        <item quantity="few">%1$d chyby</item>
+        <item quantity="many">%1$d chýb</item>
+        <item quantity="other">%1$d chýb</item>
     </plurals>
     <string name="share_casual">Myslíš, že ma porazíš? 🧠🔥</string>
-    <string name="level_count">úroveň %d</string>
+    <string name="level_count">úroveň %1$d</string>
 
     <string name="leave_daily_challenge_title">Opustiť dennú výzvu?</string>
     <string name="leave_daily_challenge_body">Dnes to už nebudeš môcť skúsiť znova</string>

@@ -7,9 +7,9 @@
 
     <string name="new_game">Yeni oyun</string>
     <string name="menu">Menü</string>
-    <string name="shop_obtain">Al %d</string>
+    <string name="shop_obtain">Al %1$d</string>
     <string name="shop_back_later">Daha sonra geri dön</string>
-    <string name="shop_buy">Satın al %d</string>
+    <string name="shop_buy">Satın al %1$d</string>
     <string name="shop_unlock_all_cards">Tüm kartları aç</string>
     <string name="shop_purchase_failed_error">Satın alma başarısız oldu</string>
     <string name="shop_connection_error">Bağlantı hatası</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Günlük ödül</string>
     <string name="shortcut_play">Oyna</string>
 
-    <string name="daily_reward_day">Gün %d</string>
-    <string name="daily_reward_collect">Topla %d</string>
+    <string name="daily_reward_day">Gün %1$d</string>
+    <string name="daily_reward_collect">Topla %1$d</string>
     <string name="daily_reward_back_tomorrow">Yarın tekrar gel</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,9 +82,9 @@
         <item>Herkes aynı tahtayı alıyor — sen nasıl yapacaksın?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d hata</item>
-        <item quantity="other">%d hata</item>
+        <item quantity="one">%1$d hata</item>
+        <item quantity="other">%1$d hata</item>
     </plurals>
     <string name="share_casual">Beni yenebileceğini mi düşünüyorsun? 🧠🔥</string>
-    <string name="level_count">seviye %d</string>
+    <string name="level_count">seviye %1$d</string>
 </resources>

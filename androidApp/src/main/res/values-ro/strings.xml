@@ -7,9 +7,9 @@
 
     <string name="new_game">Joc nou</string>
     <string name="menu">Meniu</string>
-    <string name="shop_obtain">Obține %d</string>
+    <string name="shop_obtain">Obține %1$d</string>
     <string name="shop_back_later">Revino mai târziu</string>
-    <string name="shop_buy">Cumpără %d</string>
+    <string name="shop_buy">Cumpără %1$d</string>
     <string name="shop_unlock_all_cards">Deblochează toate cărțile</string>
     <string name="shop_purchase_failed_error">Achiziție eșuată</string>
     <string name="shop_connection_error">Eroare de conectare</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Recompensă zilnică</string>
     <string name="shortcut_play">Joacă</string>
 
-    <string name="daily_reward_day">Ziua %d</string>
-    <string name="daily_reward_collect">Colectează %d</string>
+    <string name="daily_reward_day">Ziua %1$d</string>
+    <string name="daily_reward_collect">Colectează %1$d</string>
     <string name="daily_reward_back_tomorrow">Revino mâine</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,10 +82,10 @@
         <item>Toți primesc aceeași tablă — tu cum te descurci?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d greșeală</item>
-        <item quantity="few">%d greșeli</item>
-        <item quantity="other">%d greșeli</item>
+        <item quantity="one">%1$d greșeală</item>
+        <item quantity="few">%1$d greșeli</item>
+        <item quantity="other">%1$d greșeli</item>
     </plurals>
     <string name="share_casual">Crezi că mă poți bate? 🧠🔥</string>
-    <string name="level_count">nivel %d</string>
+    <string name="level_count">nivel %1$d</string>
 </resources>

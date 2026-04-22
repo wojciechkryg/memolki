@@ -19,7 +19,7 @@ class ContextExtensionsTest {
     @Before
     fun setup() {
         mockkStatic(Toast::class)
-        every { Toast.makeText(any(), any<Int>(), any()) } returns toast
+        every { Toast.makeText(any(), any<CharSequence>(), any()) } returns toast
     }
 
     @After
@@ -30,10 +30,10 @@ class ContextExtensionsTest {
     @Test
     fun `showToast creates and shows toast`() {
         // when
-        context.showToast(android.R.string.ok)
+        context.showToast("hello")
 
         // then
-        verify { Toast.makeText(context, android.R.string.ok, Toast.LENGTH_SHORT) }
+        verify { Toast.makeText(context, "hello", Toast.LENGTH_SHORT) }
         verify { toast.show() }
     }
 }

@@ -7,9 +7,9 @@
 
     <string name="new_game">Uus mäng</string>
     <string name="menu">Menüü</string>
-    <string name="shop_obtain">Hangi %d</string>
+    <string name="shop_obtain">Hangi %1$d</string>
     <string name="shop_back_later">Tule hiljem tagasi</string>
-    <string name="shop_buy">Osta %d</string>
+    <string name="shop_buy">Osta %1$d</string>
     <string name="shop_unlock_all_cards">Ava kõik kaardid</string>
     <string name="shop_purchase_failed_error">Ost ebaõnnestus</string>
     <string name="shop_connection_error">Ühenduse viga</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Päeva auhind</string>
     <string name="shortcut_play">Mängi</string>
 
-    <string name="daily_reward_day">Päev %d</string>
-    <string name="daily_reward_collect">Kogu %d</string>
+    <string name="daily_reward_day">Päev %1$d</string>
+    <string name="daily_reward_collect">Kogu %1$d</string>
     <string name="daily_reward_back_tomorrow">Tule homme tagasi</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,9 +82,9 @@
         <item>Kõik saavad sama laua — kuidas sina hakkama saad?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d viga</item>
-        <item quantity="other">%d viga</item>
+        <item quantity="one">%1$d viga</item>
+        <item quantity="other">%1$d viga</item>
     </plurals>
     <string name="share_casual">Arvad, et saad minust üle? 🧠🔥</string>
-    <string name="level_count">tase %d</string>
+    <string name="level_count">tase %1$d</string>
 </resources>

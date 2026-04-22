@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="level_count">level %d</string>
+    <string name="level_count">level %1$d</string>
     <string name="app_name_fruit_half">memolki • fruits</string>
     <string name="app_name_vegetable_half">memolki • vegetables</string>
     <string name="app_name_mammal_side">memolki • mammals</string>
@@ -8,9 +8,9 @@
 
     <string name="new_game">New Game</string>
     <string name="menu">Menu</string>
-    <string name="shop_obtain">Obtain %d</string>
+    <string name="shop_obtain">Obtain %1$d</string>
     <string name="shop_back_later">Back later</string>
-    <string name="shop_buy">Buy %d</string>
+    <string name="shop_buy">Buy %1$d</string>
     <string name="shop_unlock_all_cards">Unlock all cards</string>
     <string name="shop_purchase_failed_error">Purchase failed</string>
     <string name="shop_connection_error">Connection error</string>
@@ -82,12 +82,12 @@
     <string name="shortcut_daily_reward">Daily Reward</string>
     <string name="shortcut_play">Play</string>
 
-    <string name="daily_reward_day">Day %d</string>
-    <string name="daily_reward_collect">Collect %d</string>
+    <string name="daily_reward_day">Day %1$d</string>
+    <string name="daily_reward_collect">Collect %1$d</string>
     <string name="daily_reward_back_tomorrow">Back tomorrow</string>
 
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d mistake</item>
-        <item quantity="other">%d mistakes</item>
+        <item quantity="one">%1$d mistake</item>
+        <item quantity="other">%1$d mistakes</item>
     </plurals>
 </resources>

@@ -7,9 +7,9 @@
 
     <string name="new_game">Novo jogo</string>
     <string name="menu">Menu</string>
-    <string name="shop_obtain">Obter %d</string>
+    <string name="shop_obtain">Obter %1$d</string>
     <string name="shop_back_later">Voltar mais tarde</string>
-    <string name="shop_buy">Comprar %d</string>
+    <string name="shop_buy">Comprar %1$d</string>
     <string name="shop_unlock_all_cards">Desbloquear todas as cartas</string>
     <string name="shop_purchase_failed_error">Falha na compra</string>
     <string name="shop_connection_error">Erro de conexão</string>
@@ -63,8 +63,8 @@
     <string name="shortcut_daily_reward">Recompensa diária</string>
     <string name="shortcut_play">Jogar</string>
 
-    <string name="daily_reward_day">Dia %d</string>
-    <string name="daily_reward_collect">Recolher %d</string>
+    <string name="daily_reward_day">Dia %1$d</string>
+    <string name="daily_reward_collect">Recolher %1$d</string>
     <string name="daily_reward_back_tomorrow">Volta amanhã</string>
 
     <string-array name="notification_daily_challenge_titles">
@@ -82,9 +82,9 @@
         <item>Todos recebem o mesmo tabuleiro — como te vais sair?</item>
     </string-array>
     <plurals name="daily_challenge_mistakes">
-        <item quantity="one">%d erro</item>
-        <item quantity="other">%d erros</item>
+        <item quantity="one">%1$d erro</item>
+        <item quantity="other">%1$d erros</item>
     </plurals>
     <string name="share_casual">Achas que me consegues vencer? 🧠🔥</string>
-    <string name="level_count">nível %d</string>
+    <string name="level_count">nível %1$d</string>
 </resources>
