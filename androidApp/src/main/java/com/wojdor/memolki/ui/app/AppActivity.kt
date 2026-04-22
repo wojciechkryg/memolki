@@ -10,8 +10,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +26,7 @@ import com.wojdor.memolki.ui.component.ClickIndicatorOverlay
 import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.LocalScreenHeight
-import com.wojdor.memolki.ui.theme.LocalWindowSize
+import com.wojdor.memolki.ui.theme.LocalScreenWidth
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.notification.DeepLinkBuilder
 import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
@@ -51,7 +49,6 @@ class AppActivity : ComponentActivity() {
         private const val EXTRA_SHORTCUT_ID = "shortcut_id"
     }
 
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.onAppCreate()
@@ -79,12 +76,10 @@ class AppActivity : ComponentActivity() {
         }
         inAppUpdate.checkUpdate(this)
         setContent {
-            val windowSizeClass = calculateWindowSizeClass(this)
             val configuration = LocalConfiguration.current
-            val screenHeight = configuration.screenHeightDp.dp
             CompositionLocalProvider(
-                LocalWindowSize provides windowSizeClass,
-                LocalScreenHeight provides screenHeight
+                LocalScreenWidth provides configuration.screenWidthDp.dp,
+                LocalScreenHeight provides configuration.screenHeightDp.dp
             ) {
                 AppTheme {
                     val appContent = @Composable {

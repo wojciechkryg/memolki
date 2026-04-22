@@ -157,7 +157,7 @@ Each feature screen follows this structure under `ui/feature/{name}/`:
 | `{Name}Screen.kt` | `@Composable` with three-level hierarchy (see below) |
 | `{Name}Callbacks.kt` | (optional) Data class grouping lambdas for the screen, defaults to `= {}` |
 
-**Base class:** `MviViewModel` (`ui/base/MviViewModel.kt`) manages intent→state flow via `sendIntent()`, `onIntent()`, `sendState { copy(...) }`, `sendEffect()`. State is persisted through `SavedStateHandle` as a JSON string via `kotlinx.serialization` — each ViewModel passes `FooState.serializer()` into its `super(...)` call. Malformed saved JSON (e.g. after a state-schema change) falls back to the initial state.
+**Base class:** `MviViewModel` (`shared/src/commonMain/.../ui/base/MviViewModel.kt`) manages intent→state flow via `sendIntent()`, `onIntent()`, `sendState { copy(...) }`, `sendEffect()`. State is persisted through `SavedStateHandle` as a JSON string via `kotlinx.serialization` — each ViewModel passes `FooState.serializer()` into its `super(...)` call. Malformed saved JSON (e.g. after a state-schema change) falls back to the initial state. Lives in commonMain thanks to multiplatform `androidx.lifecycle` artifacts.
 
 ViewModel conventions:
 - Load initial data in `init {}` block
@@ -318,7 +318,7 @@ Coroutine dispatchers:
 
 ### UI Utilities
 
-- **Responsive spacing:** `ui/theme/Dimensions.kt` — `spacingXS`/`S`/`M`/`L`/`XL` are composable properties that adapt based on `isTablet` (WindowSizeClass)
+- **Responsive spacing:** `shared/src/commonMain/.../ui/theme/Dimensions.kt` — `spacingXS`/`S`/`M`/`L`/`XL` are composable properties that adapt based on `isLargeScreen` (LocalScreenWidth >= 600.dp) and `isSmallScreen` (LocalScreenHeight < 750.dp). `AppActivity` provides both via `CompositionLocalProvider` from `LocalConfiguration`. No Jetpack `WindowSizeClass` dependency — keeps Dimensions in commonMain.
 - **Click throttling:** `util/ClickUtils.kt` — `throttleClick()` composable wrapper prevents duplicate clicks (1s default)
 - **Logging:** `shared/src/commonMain/.../util/extension/Logger.kt` — `Any.logD()` / `Any.logE()` use the class name as tag. `logE()` also reports to Firebase Crashlytics (via GitLive) as a non-fatal exception
 

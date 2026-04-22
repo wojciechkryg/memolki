@@ -1,12 +1,8 @@
 package com.wojdor.memolki.ui.theme
 
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 
 val spacingXS: Dp
@@ -59,16 +55,13 @@ val spacingXXXL: Dp
     }
 
 val isLargeScreen: Boolean
-    @Composable get() = LocalWindowSize.current.widthSizeClass >= WindowWidthSizeClass.Medium
+    @Composable get() = LocalScreenWidth.current >= LARGE_SCREEN_WIDTH_THRESHOLD
 
 val isSmallScreen: Boolean
     @Composable get() = LocalScreenHeight.current < SMALL_SCREEN_HEIGHT_THRESHOLD
 
+private val LARGE_SCREEN_WIDTH_THRESHOLD = 600.dp
 private val SMALL_SCREEN_HEIGHT_THRESHOLD = 750.dp
 
+val LocalScreenWidth = compositionLocalOf { 0.dp }
 val LocalScreenHeight = compositionLocalOf { SMALL_SCREEN_HEIGHT_THRESHOLD }
-
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-val LocalWindowSize = compositionLocalOf {
-    WindowSizeClass.calculateFromSize(DpSize(0.dp, 0.dp))
-}
