@@ -125,13 +125,13 @@ Reference examples:
 
 ### Domain Models
 
-Located in `:shared/commonMain/.../domain/model/`. Five domain models already moved: `CardModel`, `CardPairModel`, `CollectionCardPairModel`, `DailyChallengeModel`, `LanguageModel`, plus `StarCalculator`. Six others (`AppModel`, `BoardModel`, `EndGameMenuModel`, `MenuModel`, `SettingModel`, `ShopMenuModel`) still live in `:androidApp` until phase 13 moves their `R.string.*` / `R.drawable.*` references to `compose-resources` — they carry a `TODO(compose-resources):` marker.
+Located in `:shared/commonMain/.../domain/model/`. Already moved: `CardModel`, `CardPairModel`, `CollectionCardPairModel`, `DailyChallengeModel`, `LanguageModel`, plus `StarCalculator`. Six others (`AppModel`, `BoardModel`, `EndGameMenuModel`, `MenuModel`, `SettingModel`, `ShopMenuModel`) still live in `:androidApp` until a follow-up phase moves their `R.string.*` / `R.drawable.*` references to `compose-resources` — they carry a `TODO(compose-resources):` marker.
 
 Sealed classes with `@Serializable`, often including:
 - Abstract properties in the sealed parent
 - Data class subclasses for concrete types (each also annotated `@Serializable`)
 - `object Empty` sentinel for default/initial values (also `@Serializable`)
-- Resource IDs are plain `Int` fields; the old `@field:StringRes`/`@field:DrawableRes` lint annotations were removed when models moved to `commonMain` (they are androidx-only). A `0` sentinel is used for empty/placeholder defaults; phase 13 replaces these with `Res.string.empty`.
+- Resource IDs: `LanguageModel.textId` is already `StringResource` (serialized via `StringResourceSerializer` using `StringResource.key`). Other models still hold `Int` fields (the old `@field:StringRes`/`@field:DrawableRes` lint annotations were removed when models moved to `commonMain` — they are androidx-only). `CardModel.Empty.textRes = 0` is a sentinel; follow-up phase will replace with `Res.string.empty`.
 
 Reference: `shared/src/commonMain/.../domain/model/CardModel.kt`
 
@@ -438,7 +438,7 @@ Translations exist at two independent levels:
 
 Canonical location is `:shared/src/commonMain/composeResources/values/strings.xml` (English default) and `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` per language. Use `stringResource(Res.string.foo)` from `org.jetbrains.compose.resources` (import `com.wojdor.memolki.shared.resources.*`). The Res class lives at `com.wojdor.memolki.shared.resources.Res`.
 
-The same files are still duplicated in `androidApp/src/main/res/values*/strings.xml` until phase 13c deletes them — while they exist, **update both copies in lockstep** so Android-only consumers (manifest, PlayGames intents, notification formatters, flavor `strings.xml` overrides of `app_name`) keep resolving. Models still holding `@StringRes Int` (LanguageModel, CardModel, BoardModel, SettingModel, MenuModel, EndGameMenuModel, ShopMenuModel, AppModel) also still need the `R.string.*` entries.
+The same files are still duplicated in `androidApp/src/main/res/values*/strings.xml` until the final cleanup phase deletes them — while they exist, **update both copies in lockstep** so Android-only consumers (manifest, PlayGames intents, notification formatters, flavor `strings.xml` overrides of `app_name`) keep resolving. Models still holding `@StringRes Int` (CardModel, BoardModel, SettingModel, MenuModel, EndGameMenuModel, ShopMenuModel, AppModel) also still need the `R.string.*` entries. `LanguageModel` has moved to `StringResource` via `StringResourceSerializer`.
 
 Each locale file must translate every key from the default `strings.xml` (including per-flavor `app_name_{flavor}` and `suffix_{flavor}`).
 

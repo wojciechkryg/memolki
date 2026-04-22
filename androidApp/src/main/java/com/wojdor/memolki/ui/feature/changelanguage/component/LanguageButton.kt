@@ -20,14 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import org.jetbrains.compose.resources.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.LanguageModel
 import com.wojdor.memolki.ui.component.bounceClickEffect
@@ -80,7 +79,7 @@ fun LanguageButton(
                 )
             }
             Text(
-                text = stringResource(id = language.textId).lowercase(),
+                text = stringResource(language.textId).lowercase(),
                 style = MaterialTheme.typography.displaySmall
             )
         }
@@ -92,7 +91,7 @@ fun LanguageButton(
 private fun LanguageButtonSelectedPreview() {
     AppTheme {
         LanguageButton(
-            language = LanguageModel(R.string.language_english, "en"),
+            language = LanguageModel(Res.string.language_english, "en"),
             isSelected = true
         )
     }
@@ -103,7 +102,7 @@ private fun LanguageButtonSelectedPreview() {
 private fun LanguageButtonPreview() {
     AppTheme {
         LanguageButton(
-            language = LanguageModel(R.string.language_english, "en"),
+            language = LanguageModel(Res.string.language_english, "en"),
             isSelected = false
         )
     }

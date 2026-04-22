@@ -15,8 +15,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.LanguageModel
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.language_arabic
+import com.wojdor.memolki.shared.resources.language_czech
+import com.wojdor.memolki.shared.resources.language_danish
+import com.wojdor.memolki.shared.resources.language_english
+import com.wojdor.memolki.shared.resources.language_estonian
+import com.wojdor.memolki.shared.resources.language_german
+import com.wojdor.memolki.shared.resources.language_greek
+import com.wojdor.memolki.shared.resources.language_spanish
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.FadeEffectBottom
 import com.wojdor.memolki.ui.component.FadeEffectTop
@@ -101,18 +109,18 @@ private fun ChangeLanguageScreen(
 @Composable
 private fun ChangeLanguageScreenPreview() {
     AppTheme {
-        val currentLanguage = LanguageModel(R.string.language_english, "en")
+        val currentLanguage = LanguageModel(Res.string.language_english, "en")
         ChangeLanguageScreen(
             state = ChangeLanguageState(
                 languages = listOf(
-                    LanguageModel(R.string.language_arabic, "ar"),
-                    LanguageModel(R.string.language_czech, "cs"),
-                    LanguageModel(R.string.language_danish, "da"),
-                    LanguageModel(R.string.language_german, "de"),
-                    LanguageModel(R.string.language_greek, "el"),
+                    LanguageModel(Res.string.language_arabic, "ar"),
+                    LanguageModel(Res.string.language_czech, "cs"),
+                    LanguageModel(Res.string.language_danish, "da"),
+                    LanguageModel(Res.string.language_german, "de"),
+                    LanguageModel(Res.string.language_greek, "el"),
                     currentLanguage,
-                    LanguageModel(R.string.language_spanish, "es"),
-                    LanguageModel(R.string.language_estonian, "et")
+                    LanguageModel(Res.string.language_spanish, "es"),
+                    LanguageModel(Res.string.language_estonian, "et")
                 ),
                 currentLanguage = currentLanguage
             )
