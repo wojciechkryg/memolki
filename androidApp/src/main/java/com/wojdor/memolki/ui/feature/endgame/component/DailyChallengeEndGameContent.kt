@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -219,7 +219,7 @@ private fun Stars(starCount: Int) {
                         scaleY = scale
                         rotationZ = rotation
                     },
-                painter = painterResource(R.drawable.ic_star),
+                painter = painterResource(Res.drawable.ic_star),
                 contentDescription = null
             )
         }

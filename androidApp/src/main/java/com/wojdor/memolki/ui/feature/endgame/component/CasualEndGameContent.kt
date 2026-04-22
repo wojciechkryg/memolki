@@ -27,7 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -155,7 +155,7 @@ private fun ShareButton(
         ) {
             Icon(
                 modifier = Modifier.size(36.dp),
-                painter = painterResource(R.drawable.ic_share),
+                painter = painterResource(Res.drawable.ic_share),
                 contentDescription = stringResource(Res.string.share)
             )
         }
@@ -190,7 +190,7 @@ private fun ShareRewardLabel(
         )
         Image(
             modifier = Modifier.size(32.dp),
-            painter = painterResource(R.drawable.ic_coin),
+            painter = painterResource(Res.drawable.ic_coin),
             contentDescription = stringResource(Res.string.coins)
         )
     }

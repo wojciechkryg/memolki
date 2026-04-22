@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -121,7 +121,7 @@ private fun DailyChallengeCheckbox(isCompleted: Boolean) {
         )
         if (isCompleted) {
             Icon(
-                painter = painterResource(R.drawable.ic_check),
+                painter = painterResource(Res.drawable.ic_check),
                 contentDescription = null,
                 tint = Color.Black,
                 modifier = Modifier
@@ -144,7 +144,7 @@ private fun HistoryButton(onClick: () -> Unit) {
     ) {
         Icon(
             modifier = Modifier.size(32.dp),
-            painter = painterResource(R.drawable.ic_history),
+            painter = painterResource(Res.drawable.ic_history),
             contentDescription = null,
             tint = Color.Black
         )

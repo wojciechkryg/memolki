@@ -15,11 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.ui.component.CompareButton
 import com.wojdor.memolki.ui.component.TimeDisplay
@@ -64,7 +65,7 @@ fun DailyChallengeHistoryItem(
                     repeat(challenge.starCount) {
                         Image(
                             modifier = Modifier.size(40.dp),
-                            painter = painterResource(R.drawable.ic_star),
+                            painter = painterResource(Res.drawable.ic_star),
                             contentDescription = null
                         )
                     }

@@ -17,11 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.component.rememberShakeOffset
@@ -59,7 +60,7 @@ fun ChooseBoardItem(
         if (!isEnabled) {
             Icon(
                 modifier = Modifier.size(LOCKED_ICON_SIZE),
-                painter = painterResource(R.drawable.ic_lock),
+                painter = painterResource(Res.drawable.ic_lock),
                 contentDescription = stringResource(R.string.content_description_locked)
             )
         }

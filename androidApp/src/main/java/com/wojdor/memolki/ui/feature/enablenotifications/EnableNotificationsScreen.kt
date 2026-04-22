@@ -32,7 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -132,7 +132,7 @@ private fun EnableNotificationsScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_coins_sack),
+            painter = painterResource(Res.drawable.ic_coins_sack),
             contentDescription = stringResource(Res.string.coins),
             modifier = Modifier.size(128.dp)
         )

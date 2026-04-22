@@ -242,7 +242,7 @@ Every screen and reusable component has `@Preview` functions. Conventions:
 - Screen previews call the **stateless** composable (bottom of the three-level hierarchy), passing a hand-crafted state and default `Callbacks()`
 - Component previews pass sample data directly
 - Use `showBackground = true` on screen-level previews; optional on small components
-- Use test drawables (`R.drawable.img_test_whole`, `R.drawable.img_test_half`) for image previews
+- Use test drawables (`Res.drawable.img_test_whole`, `Res.drawable.img_test_half`) for image previews
 - When preview state is reused across files, extract a `get{Name}StateForPreview()` function (see `CollectionScreen.kt`)
 
 ### Navigation
@@ -447,6 +447,10 @@ Each locale file must translate every key from the default `strings.xml` (includ
 Located in `androidApp/src/{flavorName}/res/values/strings.xml` (English default) and `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` per language. Contains only card names for that flavor (e.g. `banana`, `apple`).
 
 Each flavor has its own set of translated card names across all supported locales.
+
+### 3. Shared drawables
+
+Canonical location is `:shared/src/commonMain/composeResources/drawable/` and `…/drawable-{mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi}/`. Use `painterResource(Res.drawable.foo)` from `org.jetbrains.compose.resources`. The same files remain duplicated in `androidApp/src/main/res/drawable*/` until phase 13c removes them — update both copies when adding or changing a shared drawable. Kept Android-only in `androidApp/src/main/res/drawable*/`: `ic_notification` (manifest), `ic_launcher_monochrome`, `ic_shortcut_daily_reward*`, `ic_logo_splashscreen` (splash theme), and flavor logos `ic_logo_{flavor}` referenced from `AppModel`.
 
 ### Supported locales
 

@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,7 +51,7 @@ fun ShopButton(onClick: () -> Unit = {}) {
         ) {
             Image(
                 modifier = Modifier.size(56.dp),
-                painter = painterResource(id = R.drawable.ic_coins_sack),
+                painter = painterResource(Res.drawable.ic_coins_sack),
                 contentDescription = stringResource(Res.string.shop),
             )
             Spacer(modifier = Modifier.size(spacingXS))

@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,7 +55,7 @@ fun CoinsReward(
         Spacer(modifier = Modifier.size(spacingL))
         Image(
             modifier = Modifier.size(64.dp),
-            painter = painterResource(id = R.drawable.ic_coin),
+            painter = painterResource(Res.drawable.ic_coin),
             contentDescription = stringResource(Res.string.coins),
         )
     }

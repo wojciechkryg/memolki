@@ -15,10 +15,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.launch
 
@@ -102,7 +103,7 @@ private fun ClickIndicatorImage(
     val offsetX = (indicator.x - FINGERTIP_X_FRACTION * sizePx).toInt()
     val offsetY = (indicator.y - FINGERTIP_Y_FRACTION * sizePx).toInt()
     Image(
-        painter = painterResource(R.drawable.ic_cursor),
+        painter = painterResource(Res.drawable.ic_cursor),
         contentDescription = null,
         modifier = Modifier
             .offset { IntOffset(offsetX, offsetY) }
