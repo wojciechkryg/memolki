@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • फल</string>
     <string name="app_name_vegetable_half">memolki • सब्जियां</string>
     <string name="app_name_mammal_side">memolki • स्तनधारी</string>
     <string name="app_name_bird_side">memolki • पक्षी</string>
 
-    <string name="suffix_fruit_half">• फल</string>
-    <string name="suffix_vegetable_half">• सब्जियां</string>
-    <string name="suffix_mammal_side">• स्तनधारी</string>
-    <string name="suffix_bird_side">• पक्षी</string>
-
     <string name="new_game">नया खेल</string>
-    <string name="collection">संग्रह</string>
-    <string name="settings">सेटिंग्स</string>
-    <string name="more">और?</string>
     <string name="menu">मेनू</string>
-    <string name="shop">दुकान</string>
     <string name="shop_obtain">प्राप्त करें %d</string>
     <string name="shop_back_later">बाद में वापस आएं</string>
     <string name="shop_buy">खरीदें %d</string>
     <string name="shop_unlock_all_cards">सभी कार्ड अनलॉक करें</string>
     <string name="shop_purchase_failed_error">खरीदी विफल</string>
     <string name="shop_connection_error">कनेक्शन त्रुटि</string>
-    <string name="setting_music">संगीत</string>
-    <string name="setting_sound">ध्वनि</string>
-    <string name="setting_vibration">कंपन</string>
-    <string name="setting_language">भाषा</string>
     <string name="watch_ad">विज्ञापन देखें</string>
-    <string name="share">साझा करें</string>
-    <string name="content_description_locked">लॉक</string>
-    <string name="accessibility_flip_card">कार्ड पलटें</string>
-    <string name="accessibility_view_card_pair">कार्ड जोड़ी देखें</string>
-    <string name="accessibility_unlock_with_coins">सिक्कों से अनलॉक करें</string>
-    <string name="accessibility_unlock_with_ad">विज्ञापन देखकर अनलॉक करें</string>
-    <string name="leaderboard">लीडरबोर्ड</string>
-    <string name="coins">सिक्के</string>
-
     <string name="notification_channel_reminders">रिमाइंडर</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>दुकान में अपने सिक्के लें!</item>
     </string-array>
 
-    <string name="enable_notifications_title">और इनाम अनलॉक करें!</string>
-    <string name="enable_notifications_body">जब सिक्के जमा करने के लिए तैयार हों और नए कार्ड अनलॉक होने का इंतज़ार कर रहे हों तो सूचना पाएं!</string>
-    <string name="enable_notifications_enable">चालू करें</string>
-    <string name="enable_notifications_later">बाद में</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 अपनी स्ट्रीक बनाए रखें!</item>
         <item>🎁 आपका दैनिक इनाम तैयार है!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">दैनिक पुरस्कार</string>
     <string name="shortcut_play">खेलें</string>
 
-    <string name="free_coins">मुफ्त सिक्के</string>
     <string name="daily_reward_day">दिन %d</string>
     <string name="daily_reward_collect">इकट्ठा करें %d</string>
     <string name="daily_reward_back_tomorrow">कल वापस आएं</string>
 
-    <string name="daily_challenge">दैनिक चुनौती</string>
-    <string name="daily_challenge_compare">तुलना करें</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 अपनी दैनिक चुनौती मत भूलो!</item>
         <item>⭐ दैनिक चुनौती इंतज़ार कर रही है!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">क्या तुम मुझे हरा सकते हो? 🧠🔥</string>
     <string name="level_count">स्तर %d</string>
 
-    <string name="leave_daily_challenge_title">दैनिक चुनौती छोड़ें?</string>
-    <string name="leave_daily_challenge_body">आज दोबारा कोशिश नहीं कर पाएंगे</string>
-    <string name="leave_game_title">खेल छोड़ें?</string>
-    <string name="leave_game_body">आपकी प्रगति खो जाएगी</string>
-    <string name="leave_game_stay">रुकें</string>
-    <string name="leave_game_leave">छोड़ें</string>
-
-    <string name="need_more_cards">और कार्ड चाहिए</string>
-    <string name="next">अगला</string>
-    <string name="play">खेलें</string>
-    <string name="daily_reward">दैनिक पुरस्कार</string>
-    <string name="daily_challenge_history">इतिहास</string>
-</resources>
+    </resources>

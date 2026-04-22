@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • meyveler</string>
     <string name="app_name_vegetable_half">memolki • sebzeler</string>
     <string name="app_name_mammal_side">memolki • memeliler</string>
     <string name="app_name_bird_side">memolki • kuşlar</string>
 
-    <string name="suffix_fruit_half">• meyveler</string>
-    <string name="suffix_vegetable_half">• sebzeler</string>
-    <string name="suffix_mammal_side">• memeliler</string>
-    <string name="suffix_bird_side">• kuşlar</string>
-
     <string name="new_game">Yeni oyun</string>
-    <string name="collection">Koleksiyon</string>
-    <string name="settings">Ayarlar</string>
-    <string name="more">Daha?</string>
     <string name="menu">Menü</string>
-    <string name="shop">Mağaza</string>
     <string name="shop_obtain">Al %d</string>
     <string name="shop_back_later">Daha sonra geri dön</string>
     <string name="shop_buy">Satın al %d</string>
     <string name="shop_unlock_all_cards">Tüm kartları aç</string>
     <string name="shop_purchase_failed_error">Satın alma başarısız oldu</string>
     <string name="shop_connection_error">Bağlantı hatası</string>
-    <string name="setting_music">Müzik</string>
-    <string name="setting_sound">Ses</string>
-    <string name="setting_vibration">Titreşim</string>
-    <string name="setting_language">Dil</string>
     <string name="watch_ad">Reklamı izle</string>
-    <string name="share">Paylaş</string>
-    <string name="content_description_locked">Kilitli</string>
-    <string name="accessibility_flip_card">Kartı çevir</string>
-    <string name="accessibility_view_card_pair">Kart çiftini görüntüle</string>
-    <string name="accessibility_unlock_with_coins">Jetonlarla aç</string>
-    <string name="accessibility_unlock_with_ad">Reklam izleyerek aç</string>
-    <string name="leaderboard">Sıralama</string>
-    <string name="coins">Paralar</string>
-
     <string name="notification_channel_reminders">Hatırlatmalar</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Mağazada paralarını al!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Daha fazla ödül aç!</string>
-    <string name="enable_notifications_body">Paralar hazır olduğunda ve yeni kartlar açılmayı beklediğinde bildirim al!</string>
-    <string name="enable_notifications_enable">Etkinleştir</string>
-    <string name="enable_notifications_later">Sonra</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Serini devam ettir!</item>
         <item>🎁 Günlük ödülün hazır!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Günlük ödül</string>
     <string name="shortcut_play">Oyna</string>
 
-    <string name="free_coins">Ücretsiz paralar</string>
     <string name="daily_reward_day">Gün %d</string>
     <string name="daily_reward_collect">Topla %d</string>
     <string name="daily_reward_back_tomorrow">Yarın tekrar gel</string>
 
-    <string name="daily_challenge">Günlük meydan okuma</string>
-    <string name="daily_challenge_compare">Karşılaştır</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Günlük meydan okumayı unutma!</item>
         <item>⭐ Günlük meydan okuma bekliyor!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">Beni yenebileceğini mi düşünüyorsun? 🧠🔥</string>
     <string name="level_count">seviye %d</string>
 
-    <string name="leave_daily_challenge_title">Günlük meydan okumadan çık?</string>
-    <string name="leave_daily_challenge_body">Bugün tekrar deneyemezsin</string>
-    <string name="leave_game_title">Oyundan çık?</string>
-    <string name="leave_game_body">İlerlemen kaybolacak</string>
-    <string name="leave_game_stay">Kal</string>
-    <string name="leave_game_leave">Çık</string>
-
-    <string name="need_more_cards">Daha fazla kart gerekli</string>
-    <string name="next">Sonraki</string>
-    <string name="play">Oyna</string>
-    <string name="daily_reward">Günlük ödül</string>
-    <string name="daily_challenge_history">Geçmiş</string>
-</resources>
+    </resources>

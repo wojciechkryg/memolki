@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • puuviljad</string>
     <string name="app_name_vegetable_half">memolki • köögiviljad</string>
     <string name="app_name_mammal_side">memolki • imetajad</string>
     <string name="app_name_bird_side">memolki • linnud</string>
 
-    <string name="suffix_fruit_half">• puuviljad</string>
-    <string name="suffix_vegetable_half">• köögiviljad</string>
-    <string name="suffix_mammal_side">• imetajad</string>
-    <string name="suffix_bird_side">• linnud</string>
-
     <string name="new_game">Uus mäng</string>
-    <string name="collection">Kollektsioon</string>
-    <string name="settings">Seaded</string>
-    <string name="more">Rohkem?</string>
     <string name="menu">Menüü</string>
-    <string name="shop">Pood</string>
     <string name="shop_obtain">Hangi %d</string>
     <string name="shop_back_later">Tule hiljem tagasi</string>
     <string name="shop_buy">Osta %d</string>
     <string name="shop_unlock_all_cards">Ava kõik kaardid</string>
     <string name="shop_purchase_failed_error">Ost ebaõnnestus</string>
     <string name="shop_connection_error">Ühenduse viga</string>
-    <string name="setting_music">Muusika</string>
-    <string name="setting_sound">Heli</string>
-    <string name="setting_vibration">Vibratsioon</string>
-    <string name="setting_language">Keel</string>
     <string name="watch_ad">Vaata reklaami</string>
-    <string name="share">Jaga</string>
-    <string name="content_description_locked">Lukustatud</string>
-    <string name="accessibility_flip_card">Keera kaart</string>
-    <string name="accessibility_view_card_pair">Vaata kaardipaar</string>
-    <string name="accessibility_unlock_with_coins">Ava müntidega</string>
-    <string name="accessibility_unlock_with_ad">Ava reklaami vaadates</string>
-    <string name="leaderboard">Edetabel</string>
-    <string name="coins">Mündid</string>
-
     <string name="notification_channel_reminders">Meeldetuletused</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Võta oma mündid poest!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Ava rohkem auhindu!</string>
-    <string name="enable_notifications_body">Saa teavitusi, kui mündid on kogumiseks valmis ja uued kaardid ootavad avamist!</string>
-    <string name="enable_notifications_enable">Luba</string>
-    <string name="enable_notifications_later">Hiljem</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Hoia oma seeria elus!</item>
         <item>🎁 Sinu päevane auhind on valmis!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Päeva auhind</string>
     <string name="shortcut_play">Mängi</string>
 
-    <string name="free_coins">Tasuta mündid</string>
     <string name="daily_reward_day">Päev %d</string>
     <string name="daily_reward_collect">Kogu %d</string>
     <string name="daily_reward_back_tomorrow">Tule homme tagasi</string>
 
-    <string name="daily_challenge">Päeva väljakutse</string>
-    <string name="daily_challenge_compare">Võrdle</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Ära unusta oma päeva väljakutset!</item>
         <item>⭐ Päeva väljakutse ootab!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">Arvad, et saad minust üle? 🧠🔥</string>
     <string name="level_count">tase %d</string>
 
-    <string name="leave_daily_challenge_title">Lahku päevasest väljakutsest?</string>
-    <string name="leave_daily_challenge_body">Sa ei saa täna uuesti proovida</string>
-    <string name="leave_game_title">Lahku mängust?</string>
-    <string name="leave_game_body">Sinu edenemine läheb kaotsi</string>
-    <string name="leave_game_stay">Jää</string>
-    <string name="leave_game_leave">Lahku</string>
-
-    <string name="need_more_cards">Vaja rohkem kaarte</string>
-    <string name="next">Järgmine</string>
-    <string name="play">Mängi</string>
-    <string name="daily_reward">Päeva auhind</string>
-    <string name="daily_challenge_history">Ajalugu</string>
-</resources>
+    </resources>

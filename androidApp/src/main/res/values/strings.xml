@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="level_count">level %d</string>
     <string name="app_name_fruit_half">memolki • fruits</string>
@@ -6,37 +6,15 @@
     <string name="app_name_mammal_side">memolki • mammals</string>
     <string name="app_name_bird_side">memolki • birds</string>
 
-    <string name="suffix_fruit_half">• fruits</string>
-    <string name="suffix_vegetable_half">• vegetables</string>
-    <string name="suffix_mammal_side">• mammals</string>
-    <string name="suffix_bird_side">• birds</string>
-
     <string name="new_game">New Game</string>
-    <string name="collection">Collection</string>
-    <string name="settings">Settings</string>
-    <string name="more">More?</string>
     <string name="menu">Menu</string>
-    <string name="shop">Shop</string>
     <string name="shop_obtain">Obtain %d</string>
     <string name="shop_back_later">Back later</string>
     <string name="shop_buy">Buy %d</string>
     <string name="shop_unlock_all_cards">Unlock all cards</string>
     <string name="shop_purchase_failed_error">Purchase failed</string>
     <string name="shop_connection_error">Connection error</string>
-    <string name="setting_music">Music</string>
-    <string name="setting_sound">Sound</string>
-    <string name="setting_vibration">Vibration</string>
-    <string name="setting_language">Language</string>
     <string name="watch_ad">Watch Ad</string>
-    <string name="share">Share</string>
-    <string name="content_description_locked">Locked</string>
-    <string name="accessibility_flip_card">Flip card</string>
-    <string name="accessibility_view_card_pair">View card pair</string>
-    <string name="accessibility_unlock_with_coins">Unlock with coins</string>
-    <string name="accessibility_unlock_with_ad">Unlock by watching ad</string>
-    <string name="leaderboard">Leaderboard</string>
-    <string name="coins">Coins</string>
-
     <string name="notification_channel_reminders">Reminders</string>
 
     <string-array name="notification_reminder_titles">
@@ -104,34 +82,13 @@
     <string name="shortcut_daily_reward">Daily Reward</string>
     <string name="shortcut_play">Play</string>
 
-    <string name="free_coins">Free Coins</string>
-
     <string name="daily_reward_day">Day %d</string>
     <string name="daily_reward_collect">Collect %d</string>
     <string name="daily_reward_back_tomorrow">Back tomorrow</string>
 
-    <string name="enable_notifications_title">Unlock more rewards!</string>
-    <string name="enable_notifications_body">Get notified when coins are ready to collect and new cards are waiting to be unlocked!</string>
-    <string name="enable_notifications_enable">Enable</string>
-    <string name="enable_notifications_later">Later</string>
-
-    <string name="daily_challenge">Daily Challenge</string>
-    <string name="daily_challenge_compare">Compare</string>
-    <string name="daily_challenge_history">History</string>
     <plurals name="daily_challenge_mistakes">
         <item quantity="one">%d mistake</item>
         <item quantity="other">%d mistakes</item>
     </plurals>
 
-    <string name="leave_daily_challenge_title">Leave daily challenge?</string>
-    <string name="leave_daily_challenge_body">You won\'t be able to retry today</string>
-    <string name="leave_game_title">Leave game?</string>
-    <string name="leave_game_body">Your progress will be lost</string>
-    <string name="leave_game_stay">Stay</string>
-    <string name="leave_game_leave">Leave</string>
-
-    <string name="need_more_cards">Need more cards</string>
-    <string name="next">Next</string>
-    <string name="play">Play</string>
-    <string name="daily_reward">Daily Reward</string>
-</resources>
+    </resources>

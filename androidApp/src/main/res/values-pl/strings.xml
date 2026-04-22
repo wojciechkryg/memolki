@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • owoce</string>
     <string name="app_name_vegetable_half">memolki • warzywa</string>
     <string name="app_name_mammal_side">memolki • ssaki</string>
     <string name="app_name_bird_side">memolki • ptaki</string>
 
-    <string name="suffix_fruit_half">• owoce</string>
-    <string name="suffix_vegetable_half">• warzywa</string>
-    <string name="suffix_mammal_side">• ssaki</string>
-    <string name="suffix_bird_side">• ptaki</string>
-
     <string name="new_game">Nowa gra</string>
-    <string name="collection">Kolekcja</string>
-    <string name="settings">Ustawienia</string>
-    <string name="more">Więcej?</string>
     <string name="menu">Menu</string>
-    <string name="shop">Sklep</string>
     <string name="shop_obtain">Zdobądź %d</string>
     <string name="shop_back_later">Wróć później</string>
     <string name="shop_buy">Kup %d</string>
     <string name="shop_unlock_all_cards">Odblokuj wszystkie karty</string>
     <string name="shop_purchase_failed_error">Zakup nieudany</string>
     <string name="shop_connection_error">Błąd połączenia</string>
-    <string name="setting_music">Muzyka</string>
-    <string name="setting_sound">Dźwięk</string>
-    <string name="setting_vibration">Wibracje</string>
-    <string name="setting_language">Język</string>
     <string name="watch_ad">Obejrzyj reklamę</string>
-    <string name="share">Udostępnij</string>
-    <string name="content_description_locked">Zablokowane</string>
-    <string name="accessibility_flip_card">Odwróć kartę</string>
-    <string name="accessibility_view_card_pair">Zobacz parę kart</string>
-    <string name="accessibility_unlock_with_coins">Odblokuj za monety</string>
-    <string name="accessibility_unlock_with_ad">Odblokuj oglądając reklamę</string>
-    <string name="leaderboard">Ranking</string>
-    <string name="coins">Monety</string>
-
     <string name="notification_channel_reminders">Przypomnienia</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Weź monety w sklepie!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Odblokuj więcej nagród!</string>
-    <string name="enable_notifications_body">Otrzymuj powiadomienia, gdy monety są gotowe do zebrania i nowe karty czekają na odblokowanie!</string>
-    <string name="enable_notifications_enable">Włącz</string>
-    <string name="enable_notifications_later">Później</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Utrzymaj swoją serię!</item>
         <item>🎁 Twoja dzienna nagroda jest gotowa!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Dzienna nagroda</string>
     <string name="shortcut_play">Graj</string>
 
-    <string name="free_coins">Darmowe monety</string>
     <string name="daily_reward_day">Dzień %d</string>
     <string name="daily_reward_collect">Odbierz %d</string>
     <string name="daily_reward_back_tomorrow">Wróć jutro</string>
 
-    <string name="daily_challenge">Wyzwanie dnia</string>
-    <string name="daily_challenge_compare">Porównaj</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Nie zapomnij o wyzwaniu dnia!</item>
         <item>⭐ Wyzwanie dnia czeka!</item>
@@ -119,16 +90,4 @@
     <string name="share_casual">Myślisz, że mnie pokonasz? 🧠🔥</string>
     <string name="level_count">poziom %d</string>
 
-    <string name="leave_daily_challenge_title">Opuścić wyzwanie dnia?</string>
-    <string name="leave_daily_challenge_body">Nie będzie można dzisiaj spróbować ponownie</string>
-    <string name="leave_game_title">Opuścić grę?</string>
-    <string name="leave_game_body">Twój postęp zostanie utracony</string>
-    <string name="leave_game_stay">Zostań</string>
-    <string name="leave_game_leave">Wyjdź</string>
-
-    <string name="need_more_cards">Potrzeba więcej kart</string>
-    <string name="next">Dalej</string>
-    <string name="play">Graj</string>
-    <string name="daily_reward">Dzienna nagroda</string>
-    <string name="daily_challenge_history">Historia</string>
-</resources>
+    </resources>

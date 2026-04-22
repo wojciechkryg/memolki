@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • frukter</string>
     <string name="app_name_vegetable_half">memolki • grønnsaker</string>
     <string name="app_name_mammal_side">memolki • pattedyr</string>
     <string name="app_name_bird_side">memolki • fugler</string>
 
-    <string name="suffix_fruit_half">• frukter</string>
-    <string name="suffix_vegetable_half">• grønnsaker</string>
-    <string name="suffix_mammal_side">• pattedyr</string>
-    <string name="suffix_bird_side">• fugler</string>
-
     <string name="new_game">Nytt spill</string>
-    <string name="collection">Samling</string>
-    <string name="settings">Innstillinger</string>
-    <string name="more">Mer?</string>
     <string name="menu">Meny</string>
-    <string name="shop">Butikk</string>
     <string name="shop_obtain">Hent %d</string>
     <string name="shop_back_later">Kom tilbake senere</string>
     <string name="shop_buy">Kjøp %d</string>
     <string name="shop_unlock_all_cards">Lås opp alle kort</string>
     <string name="shop_purchase_failed_error">Kjøp mislyktes</string>
     <string name="shop_connection_error">Tilkoblingsfeil</string>
-    <string name="setting_music">Musikk</string>
-    <string name="setting_sound">Lyd</string>
-    <string name="setting_vibration">Vibrasjon</string>
-    <string name="setting_language">Språk</string>
     <string name="watch_ad">Se annonse</string>
-    <string name="share">Del</string>
-    <string name="content_description_locked">Låst</string>
-    <string name="accessibility_flip_card">Snu kort</string>
-    <string name="accessibility_view_card_pair">Se kortpar</string>
-    <string name="accessibility_unlock_with_coins">Lås opp med mynter</string>
-    <string name="accessibility_unlock_with_ad">Lås opp ved å se en annonse</string>
-    <string name="leaderboard">Resultatliste</string>
-    <string name="coins">Mynter</string>
-
     <string name="notification_channel_reminders">Påminnelser</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Ta myntene dine i butikken!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Lås opp flere belønninger!</string>
-    <string name="enable_notifications_body">Få varsler når mynter er klare til å hentes og nye kort venter på å bli låst opp!</string>
-    <string name="enable_notifications_enable">Aktiver</string>
-    <string name="enable_notifications_later">Senere</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Hold streaken din i live!</item>
         <item>🎁 Din daglige belønning er klar!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Daglig belønning</string>
     <string name="shortcut_play">Spill</string>
 
-    <string name="free_coins">Gratis mynter</string>
     <string name="daily_reward_day">Dag %d</string>
     <string name="daily_reward_collect">Samle %d</string>
     <string name="daily_reward_back_tomorrow">Kom tilbake i morgen</string>
 
-    <string name="daily_challenge">Daglig utfordring</string>
-    <string name="daily_challenge_compare">Sammenlign</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Ikke glem den daglige utfordringen!</item>
         <item>⭐ Den daglige utfordringen venter!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">Tror du at du kan slå meg? 🧠🔥</string>
     <string name="level_count">nivå %d</string>
 
-    <string name="leave_daily_challenge_title">Forlat daglig utfordring?</string>
-    <string name="leave_daily_challenge_body">Du vil ikke kunne prøve igjen i dag</string>
-    <string name="leave_game_title">Forlat spillet?</string>
-    <string name="leave_game_body">Fremgangen din vil gå tapt</string>
-    <string name="leave_game_stay">Bli</string>
-    <string name="leave_game_leave">Forlat</string>
-
-    <string name="need_more_cards">Trenger flere kort</string>
-    <string name="next">Neste</string>
-    <string name="play">Spill</string>
-    <string name="daily_reward">Daglig belønning</string>
-    <string name="daily_challenge_history">Historikk</string>
-</resources>
+    </resources>

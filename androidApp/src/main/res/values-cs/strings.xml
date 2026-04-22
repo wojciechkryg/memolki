@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • ovoce</string>
     <string name="app_name_vegetable_half">memolki • zelenina</string>
     <string name="app_name_mammal_side">memolki • savci</string>
     <string name="app_name_bird_side">memolki • ptáci</string>
 
-    <string name="suffix_fruit_half">• ovoce</string>
-    <string name="suffix_vegetable_half">• zelenina</string>
-    <string name="suffix_mammal_side">• savci</string>
-    <string name="suffix_bird_side">• ptáci</string>
-
     <string name="new_game">Nová hra</string>
-    <string name="collection">Kolekce</string>
-    <string name="settings">Nastavení</string>
-    <string name="more">Více?</string>
     <string name="menu">Menu</string>
-    <string name="shop">Obchod</string>
     <string name="shop_obtain">Získat %d</string>
     <string name="shop_back_later">Vrátit se později</string>
     <string name="shop_buy">Koupit %d</string>
     <string name="shop_unlock_all_cards">Odemknout všechny karty</string>
     <string name="shop_purchase_failed_error">Nákup se nezdařil</string>
     <string name="shop_connection_error">Chyba připojení</string>
-    <string name="setting_music">Hudba</string>
-    <string name="setting_sound">Zvuk</string>
-    <string name="setting_vibration">Vibrace</string>
-    <string name="setting_language">Jazyk</string>
     <string name="watch_ad">Sledovat reklamu</string>
-    <string name="share">Sdílet</string>
-    <string name="content_description_locked">Zamčeno</string>
-    <string name="accessibility_flip_card">Otočit kartu</string>
-    <string name="accessibility_view_card_pair">Zobrazit pár karet</string>
-    <string name="accessibility_unlock_with_coins">Odemknout za mince</string>
-    <string name="accessibility_unlock_with_ad">Odemknout sledováním reklamy</string>
-    <string name="leaderboard">Žebříček</string>
-    <string name="coins">Mince</string>
-
     <string name="notification_channel_reminders">Připomínky</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Vezmi si mince v obchodě!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Odemkni více odměn!</string>
-    <string name="enable_notifications_body">Dostávej upozornění, když jsou mince připraveny ke sběru a nové karty čekají na odemknutí!</string>
-    <string name="enable_notifications_enable">Povolit</string>
-    <string name="enable_notifications_later">Později</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Udržuj svou sérii!</item>
         <item>🎁 Tvá denní odměna je připravena!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Denní odměna</string>
     <string name="shortcut_play">Hrát</string>
 
-    <string name="free_coins">Mince zdarma</string>
     <string name="daily_reward_day">Den %d</string>
     <string name="daily_reward_collect">Sebrat %d</string>
     <string name="daily_reward_back_tomorrow">Přijď zítra</string>
 
-    <string name="daily_challenge">Denní výzva</string>
-    <string name="daily_challenge_compare">Porovnat</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Nezapomeň na denní výzvu!</item>
         <item>⭐ Denní výzva čeká!</item>
@@ -119,16 +90,4 @@
     <string name="share_casual">Myslíš, že mě porazíš? 🧠🔥</string>
     <string name="level_count">úroveň %d</string>
 
-    <string name="leave_daily_challenge_title">Opustit denní výzvu?</string>
-    <string name="leave_daily_challenge_body">Dnes to už nebudeš moct zkusit znovu</string>
-    <string name="leave_game_title">Opustit hru?</string>
-    <string name="leave_game_body">Tvůj postup bude ztracen</string>
-    <string name="leave_game_stay">Zůstat</string>
-    <string name="leave_game_leave">Odejít</string>
-
-    <string name="need_more_cards">Potřebuješ více karet</string>
-    <string name="next">Další</string>
-    <string name="play">Hrát</string>
-    <string name="daily_reward">Denní odměna</string>
-    <string name="daily_challenge_history">Historie</string>
-</resources>
+    </resources>

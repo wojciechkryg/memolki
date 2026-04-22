@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • fructe</string>
     <string name="app_name_vegetable_half">memolki • legume</string>
     <string name="app_name_mammal_side">memolki • mamifere</string>
     <string name="app_name_bird_side">memolki • păsări</string>
 
-    <string name="suffix_fruit_half">• fructe</string>
-    <string name="suffix_vegetable_half">• legume</string>
-    <string name="suffix_mammal_side">• mamifere</string>
-    <string name="suffix_bird_side">• păsări</string>
-
     <string name="new_game">Joc nou</string>
-    <string name="collection">Colecție</string>
-    <string name="settings">Setări</string>
-    <string name="more">Mai mult?</string>
     <string name="menu">Meniu</string>
-    <string name="shop">Magazin</string>
     <string name="shop_obtain">Obține %d</string>
     <string name="shop_back_later">Revino mai târziu</string>
     <string name="shop_buy">Cumpără %d</string>
     <string name="shop_unlock_all_cards">Deblochează toate cărțile</string>
     <string name="shop_purchase_failed_error">Achiziție eșuată</string>
     <string name="shop_connection_error">Eroare de conectare</string>
-    <string name="setting_music">Muzică</string>
-    <string name="setting_sound">Sunet</string>
-    <string name="setting_vibration">Vibrație</string>
-    <string name="setting_language">Limbă</string>
     <string name="watch_ad">Urmărește reclama</string>
-    <string name="share">Distribuie</string>
-    <string name="content_description_locked">Blocat</string>
-    <string name="accessibility_flip_card">Întoarce cartea</string>
-    <string name="accessibility_view_card_pair">Vezi perechea de cărți</string>
-    <string name="accessibility_unlock_with_coins">Deblochează cu monede</string>
-    <string name="accessibility_unlock_with_ad">Deblochează urmărind o reclamă</string>
-    <string name="leaderboard">Clasament</string>
-    <string name="coins">Monede</string>
-
     <string name="notification_channel_reminders">Memento-uri</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Ia-ți monedele din magazin!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Deblochează mai multe recompense!</string>
-    <string name="enable_notifications_body">Primește notificări când monedele sunt gata de colectat și cărți noi așteaptă să fie deblocate!</string>
-    <string name="enable_notifications_enable">Activează</string>
-    <string name="enable_notifications_later">Mai târziu</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Menține-ți seria!</item>
         <item>🎁 Recompensa ta zilnică este gata!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Recompensă zilnică</string>
     <string name="shortcut_play">Joacă</string>
 
-    <string name="free_coins">Monede gratuite</string>
     <string name="daily_reward_day">Ziua %d</string>
     <string name="daily_reward_collect">Colectează %d</string>
     <string name="daily_reward_back_tomorrow">Revino mâine</string>
 
-    <string name="daily_challenge">Provocarea zilei</string>
-    <string name="daily_challenge_compare">Compară</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Nu uita de provocarea zilei!</item>
         <item>⭐ Provocarea zilei te așteaptă!</item>
@@ -118,16 +89,4 @@
     <string name="share_casual">Crezi că mă poți bate? 🧠🔥</string>
     <string name="level_count">nivel %d</string>
 
-    <string name="leave_daily_challenge_title">Părăsești provocarea zilnică?</string>
-    <string name="leave_daily_challenge_body">Nu vei putea încerca din nou azi</string>
-    <string name="leave_game_title">Părăsești jocul?</string>
-    <string name="leave_game_body">Progresul tău va fi pierdut</string>
-    <string name="leave_game_stay">Rămâi</string>
-    <string name="leave_game_leave">Pleacă</string>
-
-    <string name="need_more_cards">Ai nevoie de mai multe cărți</string>
-    <string name="next">Următorul</string>
-    <string name="play">Joacă</string>
-    <string name="daily_reward">Recompensă zilnică</string>
-    <string name="daily_challenge_history">Istoric</string>
-</resources>
+    </resources>

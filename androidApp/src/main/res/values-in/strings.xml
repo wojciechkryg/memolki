@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • buah</string>
     <string name="app_name_vegetable_half">memolki • sayuran</string>
     <string name="app_name_mammal_side">memolki • mamalia</string>
     <string name="app_name_bird_side">memolki • burung</string>
 
-    <string name="suffix_fruit_half">• buah</string>
-    <string name="suffix_vegetable_half">• sayuran</string>
-    <string name="suffix_mammal_side">• mamalia</string>
-    <string name="suffix_bird_side">• burung</string>
-
     <string name="new_game">Permainan baru</string>
-    <string name="collection">Koleksi</string>
-    <string name="settings">Pengaturan</string>
-    <string name="more">Lagi?</string>
     <string name="menu">Menu</string>
-    <string name="shop">Toko</string>
     <string name="shop_obtain">Dapatkan %d</string>
     <string name="shop_back_later">Kembali nanti</string>
     <string name="shop_buy">Beli %d</string>
     <string name="shop_unlock_all_cards">Buka semua kartu</string>
     <string name="shop_purchase_failed_error">Pembelian gagal</string>
     <string name="shop_connection_error">Kesalahan koneksi</string>
-    <string name="setting_music">Musik</string>
-    <string name="setting_sound">Suara</string>
-    <string name="setting_vibration">Getaran</string>
-    <string name="setting_language">Bahasa</string>
     <string name="watch_ad">Tonton Iklan</string>
-    <string name="share">Bagikan</string>
-    <string name="content_description_locked">Terkunci</string>
-    <string name="accessibility_flip_card">Balik kartu</string>
-    <string name="accessibility_view_card_pair">Lihat pasangan kartu</string>
-    <string name="accessibility_unlock_with_coins">Buka dengan koin</string>
-    <string name="accessibility_unlock_with_ad">Buka dengan menonton iklan</string>
-    <string name="leaderboard">Papan peringkat</string>
-    <string name="coins">Koin</string>
-
     <string name="notification_channel_reminders">Pengingat</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Ambil koinmu di toko!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Buka lebih banyak hadiah!</string>
-    <string name="enable_notifications_body">Dapatkan notifikasi saat koin siap dikumpulkan dan kartu baru menunggu untuk dibuka!</string>
-    <string name="enable_notifications_enable">Aktifkan</string>
-    <string name="enable_notifications_later">Nanti</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Jaga streak-mu tetap hidup!</item>
         <item>🎁 Hadiah harianmu sudah siap!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Hadiah harian</string>
     <string name="shortcut_play">Main</string>
 
-    <string name="free_coins">Koin gratis</string>
     <string name="daily_reward_day">Hari %d</string>
     <string name="daily_reward_collect">Kumpulkan %d</string>
     <string name="daily_reward_back_tomorrow">Kembali besok</string>
 
-    <string name="daily_challenge">Tantangan harian</string>
-    <string name="daily_challenge_compare">Bandingkan</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Jangan lupa tantangan harianmu!</item>
         <item>⭐ Tantangan harian menunggu!</item>
@@ -116,16 +87,4 @@
     <string name="share_casual">Menurutmu bisa mengalahkanku? 🧠🔥</string>
     <string name="level_count">level %d</string>
 
-    <string name="leave_daily_challenge_title">Tinggalkan tantangan harian?</string>
-    <string name="leave_daily_challenge_body">Kamu tidak bisa mencoba lagi hari ini</string>
-    <string name="leave_game_title">Tinggalkan permainan?</string>
-    <string name="leave_game_body">Progresmu akan hilang</string>
-    <string name="leave_game_stay">Tetap</string>
-    <string name="leave_game_leave">Tinggalkan</string>
-
-    <string name="need_more_cards">Perlu lebih banyak kartu</string>
-    <string name="next">Berikutnya</string>
-    <string name="play">Main</string>
-    <string name="daily_reward">Hadiah harian</string>
-    <string name="daily_challenge_history">Riwayat</string>
-</resources>
+    </resources>

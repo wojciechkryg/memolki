@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • sadje</string>
     <string name="app_name_vegetable_half">memolki • zelenjava</string>
     <string name="app_name_mammal_side">memolki • sesalci</string>
     <string name="app_name_bird_side">memolki • ptice</string>
 
-    <string name="suffix_fruit_half">• sadje</string>
-    <string name="suffix_vegetable_half">• zelenjava</string>
-    <string name="suffix_mammal_side">• sesalci</string>
-    <string name="suffix_bird_side">• ptice</string>
-
     <string name="new_game">Nova igra</string>
-    <string name="collection">Zbirka</string>
-    <string name="settings">Nastavitve</string>
-    <string name="more">Več?</string>
     <string name="menu">Meni</string>
-    <string name="shop">Trgovina</string>
     <string name="shop_obtain">Pridobi %d</string>
     <string name="shop_back_later">Vrni se kasneje</string>
     <string name="shop_buy">Kupi %d</string>
     <string name="shop_purchase_failed_error">Nakup ni uspel</string>
     <string name="shop_connection_error">Napaka v povezavi</string>
     <string name="shop_unlock_all_cards">Odkleni vse karte</string>
-    <string name="setting_music">Glasba</string>
-    <string name="setting_sound">Zvok</string>
-    <string name="setting_vibration">Vibracija</string>
-    <string name="setting_language">Jezik</string>
     <string name="watch_ad">Oglej si oglas</string>
-    <string name="share">Deli</string>
-    <string name="content_description_locked">Zaklenjeno</string>
-    <string name="accessibility_flip_card">Obrni karto</string>
-    <string name="accessibility_view_card_pair">Oglej par kart</string>
-    <string name="accessibility_unlock_with_coins">Odkleni z kovanci</string>
-    <string name="accessibility_unlock_with_ad">Odkleni z ogledom oglasa</string>
-    <string name="leaderboard">Lestvica</string>
-    <string name="coins">Kovanci</string>
-
     <string name="notification_channel_reminders">Opomniki</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Vzemi kovance v trgovini!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Odkleni več nagrad!</string>
-    <string name="enable_notifications_body">Prejmi obvestila, ko so kovanci pripravljeni za pobiranje in nove karte čakajo na odklenitev!</string>
-    <string name="enable_notifications_enable">Omogoči</string>
-    <string name="enable_notifications_later">Pozneje</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Ohrani svojo serijo!</item>
         <item>🎁 Tvoja dnevna nagrada je pripravljena!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Dnevna nagrada</string>
     <string name="shortcut_play">Igraj</string>
 
-    <string name="free_coins">Brezplačni kovanci</string>
     <string name="daily_reward_day">Dan %d</string>
     <string name="daily_reward_collect">Zberi %d</string>
     <string name="daily_reward_back_tomorrow">Vrni se jutri</string>
 
-    <string name="daily_challenge">Dnevni izziv</string>
-    <string name="daily_challenge_compare">Primerjaj</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Ne pozabi na dnevni izziv!</item>
         <item>⭐ Dnevni izziv čaka!</item>
@@ -119,16 +90,4 @@
     <string name="share_casual">Misliš, da me lahko premaganš? 🧠🔥</string>
     <string name="level_count">raven %d</string>
 
-    <string name="leave_daily_challenge_title">Zapusti dnevni izziv?</string>
-    <string name="leave_daily_challenge_body">Danes ne bo mogoče poskusiti znova</string>
-    <string name="leave_game_title">Zapusti igro?</string>
-    <string name="leave_game_body">Tvoj napredek bo izgubljen</string>
-    <string name="leave_game_stay">Ostani</string>
-    <string name="leave_game_leave">Zapusti</string>
-
-    <string name="need_more_cards">Potrebuješ več kart</string>
-    <string name="next">Naprej</string>
-    <string name="play">Igraj</string>
-    <string name="daily_reward">Dnevna nagrada</string>
-    <string name="daily_challenge_history">Zgodovina</string>
-</resources>
+    </resources>

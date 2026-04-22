@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • fruit</string>
     <string name="app_name_vegetable_half">memolki • groenten</string>
     <string name="app_name_mammal_side">memolki • zoogdieren</string>
     <string name="app_name_bird_side">memolki • vogels</string>
 
-    <string name="suffix_fruit_half">• fruit</string>
-    <string name="suffix_vegetable_half">• groenten</string>
-    <string name="suffix_mammal_side">• zoogdieren</string>
-    <string name="suffix_bird_side">• vogels</string>
-
     <string name="new_game">Nieuw spel</string>
-    <string name="collection">Collectie</string>
-    <string name="settings">Instellingen</string>
-    <string name="more">Meer?</string>
     <string name="menu">Menu</string>
-    <string name="shop">Winkel</string>
     <string name="shop_obtain">Halen %d</string>
     <string name="shop_back_later">Kom later terug</string>
     <string name="shop_buy">Kopen %d</string>
     <string name="shop_unlock_all_cards">Alle kaarten ontgrendelen</string>
     <string name="shop_purchase_failed_error">Aankoop mislukt</string>
     <string name="shop_connection_error">Verbindingsfout</string>
-    <string name="setting_music">Muziek</string>
-    <string name="setting_sound">Geluid</string>
-    <string name="setting_vibration">Trilling</string>
-    <string name="setting_language">Taal</string>
     <string name="watch_ad">Bekijk advertentie</string>
-    <string name="share">Delen</string>
-    <string name="content_description_locked">Vergrendeld</string>
-    <string name="accessibility_flip_card">Kaart omdraaien</string>
-    <string name="accessibility_view_card_pair">Kaartenpaar bekijken</string>
-    <string name="accessibility_unlock_with_coins">Ontgrendelen met munten</string>
-    <string name="accessibility_unlock_with_ad">Ontgrendelen door advertentie te bekijken</string>
-    <string name="leaderboard">Scorebord</string>
-    <string name="coins">Munten</string>
-
     <string name="notification_channel_reminders">Herinneringen</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Pak je munten in de winkel!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Ontgrendel meer beloningen!</string>
-    <string name="enable_notifications_body">Ontvang meldingen wanneer munten klaar zijn om verzameld te worden en nieuwe kaarten wachten om ontgrendeld te worden!</string>
-    <string name="enable_notifications_enable">Inschakelen</string>
-    <string name="enable_notifications_later">Later</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Houd je reeks in leven!</item>
         <item>🎁 Je dagelijkse beloning is klaar!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Dagelijkse beloning</string>
     <string name="shortcut_play">Spelen</string>
 
-    <string name="free_coins">Gratis munten</string>
     <string name="daily_reward_day">Dag %d</string>
     <string name="daily_reward_collect">Verzamel %d</string>
     <string name="daily_reward_back_tomorrow">Kom morgen terug</string>
 
-    <string name="daily_challenge">Dagelijkse uitdaging</string>
-    <string name="daily_challenge_compare">Vergelijk</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Vergeet je dagelijkse uitdaging niet!</item>
         <item>⭐ De dagelijkse uitdaging wacht!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">Denk je dat je mij kunt verslaan? 🧠🔥</string>
     <string name="level_count">niveau %d</string>
 
-    <string name="leave_daily_challenge_title">Dagelijkse uitdaging verlaten?</string>
-    <string name="leave_daily_challenge_body">Je kunt het vandaag niet opnieuw proberen</string>
-    <string name="leave_game_title">Spel verlaten?</string>
-    <string name="leave_game_body">Je voortgang gaat verloren</string>
-    <string name="leave_game_stay">Blijven</string>
-    <string name="leave_game_leave">Verlaten</string>
-
-    <string name="need_more_cards">Meer kaarten nodig</string>
-    <string name="next">Volgende</string>
-    <string name="play">Spelen</string>
-    <string name="daily_reward">Dagelijkse beloning</string>
-    <string name="daily_challenge_history">Geschiedenis</string>
-</resources>
+    </resources>

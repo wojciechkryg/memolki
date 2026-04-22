@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • hedelmät</string>
     <string name="app_name_vegetable_half">memolki • vihannekset</string>
     <string name="app_name_mammal_side">memolki • nisäkkäät</string>
     <string name="app_name_bird_side">memolki • linnut</string>
 
-    <string name="suffix_fruit_half">• hedelmät</string>
-    <string name="suffix_vegetable_half">• vihannekset</string>
-    <string name="suffix_mammal_side">• nisäkkäät</string>
-    <string name="suffix_bird_side">• linnut</string>
-
     <string name="new_game">Uusi peli</string>
-    <string name="collection">Kokoelma</string>
-    <string name="settings">Asetukset</string>
-    <string name="more">Lisää?</string>
     <string name="menu">Valikko</string>
-    <string name="shop">Kauppa</string>
     <string name="shop_obtain">Hanki %d</string>
     <string name="shop_back_later">Tule takaisin myöhemmin</string>
     <string name="shop_buy">Osta %d</string>
     <string name="shop_unlock_all_cards">Avaa kaikki kortit</string>
     <string name="shop_purchase_failed_error">Ostos epäonnistui</string>
     <string name="shop_connection_error">Yhteysvirhe</string>
-    <string name="setting_music">Musiikki</string>
-    <string name="setting_sound">Ääni</string>
-    <string name="setting_vibration">Tärinä</string>
-    <string name="setting_language">Kieli</string>
     <string name="watch_ad">Katso mainos</string>
-    <string name="share">Jaa</string>
-    <string name="content_description_locked">Lukittu</string>
-    <string name="accessibility_flip_card">Käännä kortti</string>
-    <string name="accessibility_view_card_pair">Näytä korttipari</string>
-    <string name="accessibility_unlock_with_coins">Avaa kolikoilla</string>
-    <string name="accessibility_unlock_with_ad">Avaa katsomalla mainos</string>
-    <string name="leaderboard">Tulostaulukko</string>
-    <string name="coins">Kolikot</string>
-
     <string name="notification_channel_reminders">Muistutukset</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Nappaa kolikkosi kaupasta!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Avaa lisää palkintoja!</string>
-    <string name="enable_notifications_body">Saa ilmoituksia, kun kolikot ovat valmiina kerättäväksi ja uudet kortit odottavat avaamista!</string>
-    <string name="enable_notifications_enable">Ota käyttöön</string>
-    <string name="enable_notifications_later">Myöhemmin</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Pidä putkesi käynnissä!</item>
         <item>🎁 Päivittäinen palkkiosi on valmis!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Päivän palkinto</string>
     <string name="shortcut_play">Pelaa</string>
 
-    <string name="free_coins">Ilmaiset kolikot</string>
     <string name="daily_reward_day">Päivä %d</string>
     <string name="daily_reward_collect">Kerää %d</string>
     <string name="daily_reward_back_tomorrow">Tule takaisin huomenna</string>
 
-    <string name="daily_challenge">Päivän haaste</string>
-    <string name="daily_challenge_compare">Vertaa</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Älä unohda päivän haastetta!</item>
         <item>⭐ Päivän haaste odottaa!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">Luuletko voittavasi minut? 🧠🔥</string>
     <string name="level_count">taso %d</string>
 
-    <string name="leave_daily_challenge_title">Poistu päivän haasteesta?</string>
-    <string name="leave_daily_challenge_body">Et voi yrittää uudelleen tänään</string>
-    <string name="leave_game_title">Poistu pelistä?</string>
-    <string name="leave_game_body">Edistymisesi menetetään</string>
-    <string name="leave_game_stay">Jää</string>
-    <string name="leave_game_leave">Poistu</string>
-
-    <string name="need_more_cards">Tarvitset lisää kortteja</string>
-    <string name="next">Seuraava</string>
-    <string name="play">Pelaa</string>
-    <string name="daily_reward">Päivittäinen palkinto</string>
-    <string name="daily_challenge_history">Historia</string>
-</resources>
+    </resources>

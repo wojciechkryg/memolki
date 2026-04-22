@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • Obst</string>
     <string name="app_name_vegetable_half">memolki • Gemüse</string>
     <string name="app_name_mammal_side">memolki • Säugetiere</string>
     <string name="app_name_bird_side">memolki • Vögel</string>
 
-    <string name="suffix_fruit_half">• Obst</string>
-    <string name="suffix_vegetable_half">• Gemüse</string>
-    <string name="suffix_mammal_side">• Säugetiere</string>
-    <string name="suffix_bird_side">• Vögel</string>
-
     <string name="new_game">Neues Spiel</string>
-    <string name="collection">Sammlung</string>
-    <string name="settings">Einstellungen</string>
-    <string name="more">Mehr?</string>
     <string name="menu">Menü</string>
-    <string name="shop">Shop</string>
     <string name="shop_obtain">%d erhalten</string>
     <string name="shop_back_later">Später wiederkommen</string>
     <string name="shop_buy">%d kaufen</string>
     <string name="shop_unlock_all_cards">Alle Karten entsperren</string>
     <string name="shop_purchase_failed_error">Kauf fehlgeschlagen</string>
     <string name="shop_connection_error">Verbindungsfehler</string>
-    <string name="setting_music">Musik</string>
-    <string name="setting_sound">Sound</string>
-    <string name="setting_vibration">Vibration</string>
-    <string name="setting_language">Sprache</string>
     <string name="watch_ad">Werbung ansehen</string>
-    <string name="share">Teilen</string>
-    <string name="content_description_locked">Gesperrt</string>
-    <string name="accessibility_flip_card">Karte umdrehen</string>
-    <string name="accessibility_view_card_pair">Kartenpaar ansehen</string>
-    <string name="accessibility_unlock_with_coins">Mit Münzen freischalten</string>
-    <string name="accessibility_unlock_with_ad">Durch Werbung freischalten</string>
-    <string name="leaderboard">Bestenliste</string>
-    <string name="coins">Münzen</string>
-
     <string name="notification_channel_reminders">Erinnerungen</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Hol dir deine Münzen im Shop!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Schalte mehr Belohnungen frei!</string>
-    <string name="enable_notifications_body">Lass dich benachrichtigen, wenn Münzen bereit sind und neue Karten darauf warten, freigeschaltet zu werden!</string>
-    <string name="enable_notifications_enable">Aktivieren</string>
-    <string name="enable_notifications_later">Später</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Halte deine Serie aufrecht!</item>
         <item>🎁 Deine tägliche Belohnung ist bereit!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Tägliche Belohnung</string>
     <string name="shortcut_play">Spielen</string>
 
-    <string name="free_coins">Gratis Münzen</string>
     <string name="daily_reward_day">Tag %d</string>
     <string name="daily_reward_collect">Sammle %d</string>
     <string name="daily_reward_back_tomorrow">Komm morgen wieder</string>
 
-    <string name="daily_challenge">Tägliche Herausforderung</string>
-    <string name="daily_challenge_compare">Vergleichen</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Vergiss deine tägliche Herausforderung nicht!</item>
         <item>⭐ Die tägliche Herausforderung wartet!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">Glaubst du, du kannst mich schlagen? 🧠🔥</string>
     <string name="level_count">Level %d</string>
 
-    <string name="leave_daily_challenge_title">Tägliche Herausforderung verlassen?</string>
-    <string name="leave_daily_challenge_body">Du kannst es heute nicht erneut versuchen</string>
-    <string name="leave_game_title">Spiel verlassen?</string>
-    <string name="leave_game_body">Dein Fortschritt geht verloren</string>
-    <string name="leave_game_stay">Bleiben</string>
-    <string name="leave_game_leave">Verlassen</string>
-
-    <string name="need_more_cards">Mehr Karten nötig</string>
-    <string name="next">Weiter</string>
-    <string name="play">Spielen</string>
-    <string name="daily_reward">Tägliche Belohnung</string>
-    <string name="daily_challenge_history">Verlauf</string>
-</resources>
+    </resources>

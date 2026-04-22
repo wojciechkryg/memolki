@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • פירות</string>
     <string name="app_name_vegetable_half">memolki • ירקות</string>
     <string name="app_name_mammal_side">memolki • יונקים</string>
     <string name="app_name_bird_side">memolki • ציפורים</string>
 
-    <string name="suffix_fruit_half">• פירות</string>
-    <string name="suffix_vegetable_half">• ירקות</string>
-    <string name="suffix_mammal_side">• יונקים</string>
-    <string name="suffix_bird_side">• ציפורים</string>
-
     <string name="new_game">משחק חדש</string>
-    <string name="collection">אוסף</string>
-    <string name="settings">הגדרות</string>
-    <string name="more">עוד?</string>
     <string name="menu">תפריט</string>
-    <string name="shop">חנות</string>
     <string name="shop_obtain">השג %d</string>
     <string name="shop_back_later">חזור מאוחר יותר</string>
     <string name="shop_buy">קנה %d</string>
     <string name="shop_unlock_all_cards">פתח את כל הקלפים</string>
     <string name="shop_purchase_failed_error">הרכישה נכשלה</string>
     <string name="shop_connection_error">שגיאת חיבור</string>
-    <string name="setting_music">מוזיקה</string>
-    <string name="setting_sound">צליל</string>
-    <string name="setting_vibration">רטט</string>
-    <string name="setting_language">שפה</string>
     <string name="watch_ad">צפה במודעה</string>
-    <string name="share">שיתוף</string>
-    <string name="content_description_locked">נעול</string>
-    <string name="accessibility_flip_card">הפוך קלף</string>
-    <string name="accessibility_view_card_pair">הצג זוג קלפים</string>
-    <string name="accessibility_unlock_with_coins">פתח עם מטבעות</string>
-    <string name="accessibility_unlock_with_ad">פתח על ידי צפייה בפרסומת</string>
-    <string name="leaderboard">טבלת מובילים</string>
-    <string name="coins">מטבעות</string>
-
     <string name="notification_channel_reminders">תזכורות</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>קח את המטבעות שלך בחנות!</item>
     </string-array>
 
-    <string name="enable_notifications_title">פתח עוד פרסים!</string>
-    <string name="enable_notifications_body">קבל התראות כשמטבעות מוכנים לאיסוף וקלפים חדשים מחכים לפתיחה!</string>
-    <string name="enable_notifications_enable">הפעל</string>
-    <string name="enable_notifications_later">מאוחר יותר</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 שמור על הרצף שלך!</item>
         <item>🎁 הפרס היומי שלך מוכן!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">פרס יומי</string>
     <string name="shortcut_play">שחק</string>
 
-    <string name="free_coins">מטבעות חינם</string>
     <string name="daily_reward_day">יום %d</string>
     <string name="daily_reward_collect">אסוף %d</string>
     <string name="daily_reward_back_tomorrow">חזור מחר</string>
 
-    <string name="daily_challenge">אתגר יומי</string>
-    <string name="daily_challenge_compare">השווה</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 אל תשכח את האתגר היומי!</item>
         <item>⭐ האתגר היומי מחכה!</item>
@@ -119,16 +90,4 @@
     <string name="share_casual">חושב שתצליח לנצח אותי? 🧠🔥</string>
     <string name="level_count">שלב %d</string>
 
-    <string name="leave_daily_challenge_title">לעזוב את האתגר היומי?</string>
-    <string name="leave_daily_challenge_body">לא ניתן יהיה לנסות שוב היום</string>
-    <string name="leave_game_title">לעזוב את המשחק?</string>
-    <string name="leave_game_body">ההתקדמות שלך תאבד</string>
-    <string name="leave_game_stay">להישאר</string>
-    <string name="leave_game_leave">לעזוב</string>
-
-    <string name="need_more_cards">צריך עוד קלפים</string>
-    <string name="next">הבא</string>
-    <string name="play">שחק</string>
-    <string name="daily_reward">פרס יומי</string>
-    <string name="daily_challenge_history">היסטוריה</string>
-</resources>
+    </resources>

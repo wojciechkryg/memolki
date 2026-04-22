@@ -436,11 +436,11 @@ Translations exist at two independent levels:
 
 ### 1. Shared UI strings (all flavors)
 
-Canonical location is `:shared/src/commonMain/composeResources/values/strings.xml` (English default) and `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` per language. Use `stringResource(Res.string.foo)` from `org.jetbrains.compose.resources` (import `com.wojdor.memolki.shared.resources.*`). The Res class lives at `com.wojdor.memolki.shared.resources.Res`.
+Canonical (and only) location is `:shared/src/commonMain/composeResources/values/strings.xml` (English default) and `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` per language. Use `stringResource(Res.string.foo)` from `org.jetbrains.compose.resources` (import `com.wojdor.memolki.shared.resources.*`). The Res class lives at `com.wojdor.memolki.shared.resources.Res`. Non-translatable UI entries (language names, board size labels, `empty`, `app_logo`, `new_card_to_unlock`) live in `:shared/src/commonMain/composeResources/values/strings_non_translatable.xml`.
 
-The same files are still duplicated in `androidApp/src/main/res/values*/strings.xml` until the final cleanup phase deletes them — while they exist, **update both copies in lockstep** so Android-only consumers (manifest, PlayGames intents, notification formatters, flavor `strings.xml` overrides of `app_name`) keep resolving. `CardModel` still holds `@StringRes Int` fields (pending flavor-specific card strings migration) and so still needs the `R.string.*` entries. All other domain models use `StringResource` / `DrawableResource`.
+`androidApp/src/main/res/values*/strings.xml` now keeps only strings still consumed by Android-only code: manifest refs (`app_name`, `app_name_{flavor}`, `ad_mob_app_id`, `game_id`), PlayGames IDs (`leaderboard_*_id`), launcher shortcuts (`shortcut_daily_reward`, `shortcut_play`), notification arrays/plurals/channel, `CardModel` sentinels / Android-side toast+share strings (`empty`, `level_count`, `menu`, `new_game`, `share_casual`, `daily_reward_*`, `shop_*`, `watch_ad`, `notification_channel_reminders`), and the `ad_mob_*` unit IDs. Everything else has been deleted to eliminate drift.
 
-Each locale file must translate every key from the default `strings.xml` (including per-flavor `app_name_{flavor}` and `suffix_{flavor}`).
+Each locale file must translate every key from the default `strings.xml`.
 
 ### 2. Flavor-specific card names
 
@@ -464,9 +464,9 @@ Native language names (e.g. "Polski", "Deutsch") are in `main/res/values/strings
 
 ### Adding a new language
 
-1. Create `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` AND `androidApp/src/main/res/values-{locale}/strings.xml` (keep both in sync until phase 13c) — translate all shared UI strings
+1. Create `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` — translate all shared UI strings. Only mirror into `androidApp/src/main/res/values-{locale}/strings.xml` for the small set of keys still used from Android-side code (see the shared UI strings section above).
 2. Create `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` for **each flavor** — translate card names
-3. Add `language_{name}` entry (native name, `translatable="false"`) in both `:shared/src/commonMain/composeResources/values/strings_non_translatable.xml` and `main/res/values/strings_non_translatable.xml`
+3. Add `language_{name}` entry (native name, `translatable="false"`) in `:shared/src/commonMain/composeResources/values/strings_non_translatable.xml`
 4. Add `LanguageModel(R.string.language_{name}, "{locale}")` to the list in `domain/usecase/GetSupportedLanguagesUseCase.kt`
 5. Add the locale to the `SUPPORTED_LANGUAGES` array in `scripts/notifications/send_push_notification.sh`
 

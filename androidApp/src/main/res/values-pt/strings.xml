@@ -1,41 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name_fruit_half">memolki • frutas</string>
     <string name="app_name_vegetable_half">memolki • vegetais</string>
     <string name="app_name_mammal_side">memolki • mamíferos</string>
     <string name="app_name_bird_side">memolki • aves</string>
 
-    <string name="suffix_fruit_half">• frutas</string>
-    <string name="suffix_vegetable_half">• vegetais</string>
-    <string name="suffix_mammal_side">• mamíferos</string>
-    <string name="suffix_bird_side">• aves</string>
-
     <string name="new_game">Novo jogo</string>
-    <string name="collection">Coleção</string>
-    <string name="settings">Configurações</string>
-    <string name="more">Mais?</string>
     <string name="menu">Menu</string>
-    <string name="shop">Loja</string>
     <string name="shop_obtain">Obter %d</string>
     <string name="shop_back_later">Voltar mais tarde</string>
     <string name="shop_buy">Comprar %d</string>
     <string name="shop_unlock_all_cards">Desbloquear todas as cartas</string>
     <string name="shop_purchase_failed_error">Falha na compra</string>
     <string name="shop_connection_error">Erro de conexão</string>
-    <string name="setting_music">Música</string>
-    <string name="setting_sound">Som</string>
-    <string name="setting_vibration">Vibração</string>
-    <string name="setting_language">Idioma</string>
     <string name="watch_ad">Assistir ao anúncio</string>
-    <string name="share">Partilhar</string>
-    <string name="content_description_locked">Bloqueado</string>
-    <string name="accessibility_flip_card">Virar carta</string>
-    <string name="accessibility_view_card_pair">Ver par de cartas</string>
-    <string name="accessibility_unlock_with_coins">Desbloquear com moedas</string>
-    <string name="accessibility_unlock_with_ad">Desbloquear assistindo a um anúncio</string>
-    <string name="leaderboard">Classificação</string>
-    <string name="coins">Moedas</string>
-
     <string name="notification_channel_reminders">Lembretes</string>
 
     <string-array name="notification_reminder_titles">
@@ -68,10 +46,6 @@
         <item>Pega as moedas na loja!</item>
     </string-array>
 
-    <string name="enable_notifications_title">Desbloqueia mais recompensas!</string>
-    <string name="enable_notifications_body">Recebe notificações quando moedas estiverem prontas e novas cartas à espera de serem desbloqueadas!</string>
-    <string name="enable_notifications_enable">Ativar</string>
-    <string name="enable_notifications_later">Depois</string>
     <string-array name="notification_daily_streak_titles">
         <item>🔥 Mantém a tua série!</item>
         <item>🎁 A tua recompensa diária está pronta!</item>
@@ -89,13 +63,10 @@
     <string name="shortcut_daily_reward">Recompensa diária</string>
     <string name="shortcut_play">Jogar</string>
 
-    <string name="free_coins">Moedas grátis</string>
     <string name="daily_reward_day">Dia %d</string>
     <string name="daily_reward_collect">Recolher %d</string>
     <string name="daily_reward_back_tomorrow">Volta amanhã</string>
 
-    <string name="daily_challenge">Desafio diário</string>
-    <string name="daily_challenge_compare">Comparar</string>
     <string-array name="notification_daily_challenge_titles">
         <item>🃏 Não te esqueças do teu desafio diário!</item>
         <item>⭐ O desafio diário espera por ti!</item>
@@ -117,16 +88,4 @@
     <string name="share_casual">Achas que me consegues vencer? 🧠🔥</string>
     <string name="level_count">nível %d</string>
 
-    <string name="leave_daily_challenge_title">Sair do desafio diário?</string>
-    <string name="leave_daily_challenge_body">Não poderás tentar novamente hoje</string>
-    <string name="leave_game_title">Sair do jogo?</string>
-    <string name="leave_game_body">O teu progresso será perdido</string>
-    <string name="leave_game_stay">Ficar</string>
-    <string name="leave_game_leave">Sair</string>
-
-    <string name="need_more_cards">Precisa de mais cartas</string>
-    <string name="next">Próximo</string>
-    <string name="play">Jogar</string>
-    <string name="daily_reward">Recompensa diária</string>
-    <string name="daily_challenge_history">Histórico</string>
-</resources>
+    </resources>
