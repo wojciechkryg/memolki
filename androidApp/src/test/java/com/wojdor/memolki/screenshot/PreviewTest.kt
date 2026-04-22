@@ -1,3 +1,5 @@
+@file:OptIn(org.jetbrains.compose.resources.ExperimentalResourceApi::class)
+
 package com.wojdor.memolki.screenshot
 
 import androidx.compose.foundation.background
@@ -10,6 +12,8 @@ import com.android.ide.common.rendering.api.SessionParams.RenderingMode
 import com.android.resources.NightMode
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
+import org.jetbrains.compose.resources.setResourceReaderAndroidContext
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,6 +33,11 @@ class PreviewTest(
         renderingMode = RenderingMode.SHRINK,
         maxPercentDifference = 0.001
     )
+
+    @Before
+    fun configureComposeResources() {
+        setResourceReaderAndroidContext(paparazzi.context)
+    }
 
     @Test
     fun snap() {

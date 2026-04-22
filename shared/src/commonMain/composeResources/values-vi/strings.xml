@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • trái cây</string>
+    <string name="app_name_vegetable_half">memolki • rau</string>
+    <string name="app_name_mammal_side">memolki • động vật có vú</string>
+    <string name="app_name_bird_side">memolki • chim</string>
+
+    <string name="suffix_fruit_half">• trái cây</string>
+    <string name="suffix_vegetable_half">• rau</string>
+    <string name="suffix_mammal_side">• động vật có vú</string>
+    <string name="suffix_bird_side">• chim</string>
+
+    <string name="new_game">Trò chơi mới</string>
+    <string name="collection">Bộ sưu tập</string>
+    <string name="settings">Cài đặt</string>
+    <string name="more">Thêm?</string>
+    <string name="menu">Menu</string>
+    <string name="shop">Cửa hàng</string>
+    <string name="shop_obtain">Lấy %d</string>
+    <string name="shop_back_later">Quay lại sau</string>
+    <string name="shop_buy">Mua %d</string>
+    <string name="shop_unlock_all_cards">Mở khóa tất cả các thẻ</string>
+    <string name="shop_purchase_failed_error">Mua hàng thất bại</string>
+    <string name="shop_connection_error">Lỗi kết nối</string>
+    <string name="setting_music">Âm nhạc</string>
+    <string name="setting_sound">Âm thanh</string>
+    <string name="setting_vibration">Rung</string>
+    <string name="setting_language">Ngôn ngữ</string>
+    <string name="watch_ad">Xem quảng cáo</string>
+    <string name="share">Chia sẻ</string>
+    <string name="content_description_locked">Đã khóa</string>
+    <string name="accessibility_flip_card">Lật thẻ</string>
+    <string name="accessibility_view_card_pair">Xem cặp thẻ</string>
+    <string name="accessibility_unlock_with_coins">Mở khóa bằng xu</string>
+    <string name="accessibility_unlock_with_ad">Mở khóa bằng cách xem quảng cáo</string>
+    <string name="leaderboard">Bảng xếp hạng</string>
+    <string name="coins">Xu</string>
+
+    <string name="notification_channel_reminders">Nhắc nhở</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Trí nhớ bạn hôm nay thế nào?</item>
+        <item>🃏 Thẻ bài đang nhớ bạn!</item>
+        <item>🎴 Bộ sưu tập chưa hoàn thành!</item>
+        <item>✨ Đến lúc thử thách!</item>
+        <item>🃏 Sẵn sàng lật thẻ chưa?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>Một ván nhanh rất có ích</item>
+        <item>Quay lại và ghép đôi!</item>
+        <item>Kiểm tra trí nhớ trong vòng nhanh</item>
+        <item>Xáo, lật và ghép!</item>
+        <item>Giữ đầu óc minh mẫn!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Phần thưởng xu đã sẵn sàng!</item>
+        <item>✨ Xu đang chờ bạn!</item>
+        <item>🏆 Đến lúc nhận phần thưởng!</item>
+        <item>💰 Xu của bạn đã đến!</item>
+        <item>✨ Phần thưởng mở khóa!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Xu miễn phí đang chờ bạn!</item>
+        <item>Nhận phần thưởng xu ngay!</item>
+        <item>Xu của bạn đã sẵn sàng!</item>
+        <item>Xem thêm quảng cáo để nhận xu</item>
+        <item>Lấy xu trong cửa hàng!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">Mở khóa thêm phần thưởng!</string>
+    <string name="enable_notifications_body">Nhận thông báo khi xu sẵn sàng để thu thập và thẻ mới đang chờ mở khóa!</string>
+    <string name="enable_notifications_enable">Bật</string>
+    <string name="enable_notifications_later">Để sau</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Giữ chuỗi của bạn!</item>
+        <item>🎁 Phần thưởng hàng ngày đã sẵn sàng!</item>
+        <item>💰 Xu miễn phí trong cửa hàng!</item>
+        <item>🔥 Đừng mất chuỗi!</item>
+        <item>🎁 Phần thưởng hôm nay đang chờ!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Thu thập xu trước khi hết ngày!</item>
+        <item>Ghé cửa hàng nhận thưởng</item>
+        <item>Chuỗi của bạn đang gặp nguy!</item>
+        <item>Đừng phá vỡ chuỗi!</item>
+        <item>Mở cửa hàng và lấy xu</item>
+    </string-array>
+    <string name="shortcut_daily_reward">Phần thưởng hàng ngày</string>
+    <string name="shortcut_play">Chơi</string>
+
+    <string name="free_coins">Xu miễn phí</string>
+    <string name="daily_reward_day">Ngày %d</string>
+    <string name="daily_reward_collect">Thu thập %d</string>
+    <string name="daily_reward_back_tomorrow">Quay lại ngày mai</string>
+
+    <string name="daily_challenge">Thử thách hàng ngày</string>
+    <string name="daily_challenge_compare">So sánh</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Đừng quên thử thách hàng ngày!</item>
+        <item>⭐ Thử thách hàng ngày đang chờ!</item>
+        <item>🧠 Sẵn sàng cho thử thách hôm nay?</item>
+        <item>💪 Bài tập não hàng ngày!</item>
+        <item>🏆 Thử thách bản thân hôm nay!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Kiểm tra trí nhớ với bàn chơi độc đáo hôm nay</item>
+        <item>Bạn có thể vượt qua điểm hôm qua?</item>
+        <item>Một câu đố mới đang chờ bạn</item>
+        <item>Ghép tất cả các cặp và chia sẻ kết quả</item>
+        <item>Mọi người đều có cùng bàn chơi — bạn sẽ thế nào?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d lỗi</item>
+    </plurals>
+    <string name="share_casual">Bạn nghĩ có thể thắng tôi không? 🧠🔥</string>
+    <string name="level_count">cấp %d</string>
+
+    <string name="leave_daily_challenge_title">Rời thử thách hàng ngày?</string>
+    <string name="leave_daily_challenge_body">Bạn sẽ không thể thử lại hôm nay</string>
+    <string name="leave_game_title">Rời khỏi trò chơi?</string>
+    <string name="leave_game_body">Tiến trình của bạn sẽ bị mất</string>
+    <string name="leave_game_stay">Ở lại</string>
+    <string name="leave_game_leave">Rời đi</string>
+
+    <string name="need_more_cards">Cần thêm thẻ</string>
+    <string name="next">Tiếp</string>
+    <string name="play">Chơi</string>
+    <string name="daily_reward">Phần thưởng hàng ngày</string>
+    <string name="daily_challenge_history">Lịch sử</string>
+</resources>

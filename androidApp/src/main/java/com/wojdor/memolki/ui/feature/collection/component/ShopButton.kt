@@ -13,10 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
@@ -51,11 +52,11 @@ fun ShopButton(onClick: () -> Unit = {}) {
             Image(
                 modifier = Modifier.size(56.dp),
                 painter = painterResource(id = R.drawable.ic_coins_sack),
-                contentDescription = stringResource(R.string.shop),
+                contentDescription = stringResource(Res.string.shop),
             )
             Spacer(modifier = Modifier.size(spacingXS))
             Text(
-                text = stringResource(id = R.string.shop).uppercase(),
+                text = stringResource(Res.string.shop).uppercase(),
                 style = MaterialTheme.typography.titleLarge.animated()
             )
         }

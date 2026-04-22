@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • ovocie</string>
+    <string name="app_name_vegetable_half">memolki • zelenina</string>
+    <string name="app_name_mammal_side">memolki • cicavce</string>
+    <string name="app_name_bird_side">memolki • vtáky</string>
+
+    <string name="suffix_fruit_half">• ovocie</string>
+    <string name="suffix_vegetable_half">• zelenina</string>
+    <string name="suffix_mammal_side">• cicavce</string>
+    <string name="suffix_bird_side">• vtáky</string>
+
+    <string name="new_game">Nová hra</string>
+    <string name="collection">Zbierka</string>
+    <string name="settings">Nastavenia</string>
+    <string name="more">Viac?</string>
+    <string name="menu">Menu</string>
+    <string name="shop">Obchod</string>
+    <string name="shop_obtain">Získať %d</string>
+    <string name="shop_back_later">Vráť sa neskôr</string>
+    <string name="shop_buy">Kúpiť %d</string>
+    <string name="shop_unlock_all_cards">Odomknúť všetky karty</string>
+    <string name="shop_purchase_failed_error">Nákup zlyhal</string>
+    <string name="shop_connection_error">Chyba pripojenia</string>
+    <string name="setting_music">Hudba</string>
+    <string name="setting_sound">Zvuk</string>
+    <string name="setting_vibration">Vibrácie</string>
+    <string name="setting_language">Jazyk</string>
+    <string name="watch_ad">Sledovať reklamu</string>
+    <string name="share">Zdieľať</string>
+    <string name="content_description_locked">Zamknuté</string>
+    <string name="accessibility_flip_card">Otočiť kartu</string>
+    <string name="accessibility_view_card_pair">Zobraziť pár kariet</string>
+    <string name="accessibility_unlock_with_coins">Odomknúť za mince</string>
+    <string name="accessibility_unlock_with_ad">Odomknúť sledovaním reklamy</string>
+    <string name="leaderboard">Rebríček</string>
+    <string name="coins">Mince</string>
+
+    <string name="notification_channel_reminders">Pripomienky</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Aká je dnes tvoja pamäť?</item>
+        <item>🃏 Tvoje karty sa po tebe stýskajú!</item>
+        <item>🎴 Tvoja zbierka nie je kompletná!</item>
+        <item>✨ Čas na výzvu!</item>
+        <item>🃏 Pripravený otočiť karty?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>Rýchla hra veľa pomôže</item>
+        <item>Vráť sa a spoj páry!</item>
+        <item>Otestuj pamäť v rýchlom kole</item>
+        <item>Zamiešaj, otoč a spoj!</item>
+        <item>Udržuj mozog v kondícii!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Tvoja odmena v minciach je pripravená!</item>
+        <item>✨ Mince na teba čakajú!</item>
+        <item>🏆 Čas vyzdvihnúť si odmenu!</item>
+        <item>💰 Tvoje mince dorazily!</item>
+        <item>✨ Odmena odomknutá!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Mince zadarmo čakajú na teba!</item>
+        <item>Vyzdvihni si svoju odmenu teraz!</item>
+        <item>Tvoje mince sú pripravené!</item>
+        <item>Pozri si ďalšiu reklamu pre viac mincí</item>
+        <item>Vezmi si mince v obchode!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">Odomkni viac odmien!</string>
+    <string name="enable_notifications_body">Dostávaj upozornenia, keď sú mince pripravené na zber a nové karty čakajú na odomknutie!</string>
+    <string name="enable_notifications_enable">Povoliť</string>
+    <string name="enable_notifications_later">Neskôr</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Udržuj svoju sériu!</item>
+        <item>🎁 Tvoja denná odmena je pripravená!</item>
+        <item>💰 Mince zadarmo v obchode!</item>
+        <item>🔥 Nestráť svoju sériu!</item>
+        <item>🎁 Dnešná odmena čaká!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Zozbieraj mince kým sa deň skončí!</item>
+        <item>Navštív obchod pre odmenu</item>
+        <item>Tvoja séria je v ohrožení!</item>
+        <item>Neprerušuj sériu!</item>
+        <item>Otvor obchod a vezmi si mince</item>
+    </string-array>
+    <string name="shortcut_daily_reward">Denná odmena</string>
+    <string name="shortcut_play">Hrať</string>
+
+    <string name="free_coins">Mince zadarmo</string>
+    <string name="daily_reward_day">Deň %d</string>
+    <string name="daily_reward_collect">Zozbieraj %d</string>
+    <string name="daily_reward_back_tomorrow">Príď zajtra</string>
+
+    <string name="daily_challenge">Denná výzva</string>
+    <string name="daily_challenge_compare">Porovnať</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Nezabudni na dennú výzvu!</item>
+        <item>⭐ Denná výzva čaká!</item>
+        <item>🧠 Si pripravený na dnešnú výzvu?</item>
+        <item>💪 Tvoj denný tréning mozgu!</item>
+        <item>🏆 Vyzvi sa dnes!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Otestuj svoju pamäť s dnešnou unikátnou doskou</item>
+        <item>Dokážeš prekonať včerajšie skóre?</item>
+        <item>Nový hlavolam na teba čaká</item>
+        <item>Nájdi všetky páry a zdieľaj výsledky</item>
+        <item>Všetci majú rovnakú dosku — ako sa ti podarí?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d chyba</item>
+        <item quantity="few">%d chyby</item>
+        <item quantity="many">%d chýb</item>
+        <item quantity="other">%d chýb</item>
+    </plurals>
+    <string name="share_casual">Myslíš, že ma porazíš? 🧠🔥</string>
+    <string name="level_count">úroveň %d</string>
+
+    <string name="leave_daily_challenge_title">Opustiť dennú výzvu?</string>
+    <string name="leave_daily_challenge_body">Dnes to už nebudeš môcť skúsiť znova</string>
+    <string name="leave_game_title">Opustiť hru?</string>
+    <string name="leave_game_body">Tvoj postup bude stratený</string>
+    <string name="leave_game_stay">Zostať</string>
+    <string name="leave_game_leave">Odísť</string>
+
+    <string name="need_more_cards">Potrebuješ viac kariet</string>
+    <string name="next">Ďalej</string>
+    <string name="play">Hrať</string>
+    <string name="daily_reward">Denná odmena</string>
+    <string name="daily_challenge_history">História</string>
+</resources>

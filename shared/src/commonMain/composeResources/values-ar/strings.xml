@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • فواكه</string>
+    <string name="app_name_vegetable_half">memolki • الخضروات</string>
+    <string name="app_name_mammal_side">memolki • الثدييات</string>
+    <string name="app_name_bird_side">memolki • طيور</string>
+
+    <string name="suffix_fruit_half">فواكه •</string>
+    <string name="suffix_vegetable_half">الخضروات •</string>
+    <string name="suffix_mammal_side">الثدييات •</string>
+    <string name="suffix_bird_side">طيور •</string>
+
+    <string name="new_game">لعبة جديدة</string>
+    <string name="collection">مجموعة</string>
+    <string name="settings">الإعدادات</string>
+    <string name="more">هل تريد المزيد؟</string>
+    <string name="menu">القائمة</string>
+    <string name="shop">المتجر</string>
+    <string name="shop_obtain">الحصول على %d</string>
+    <string name="shop_back_later">عد لاحقًا</string>
+    <string name="shop_buy">شراء %d</string>
+    <string name="shop_purchase_failed_error">فشل الشراء</string>
+    <string name="shop_connection_error">خطأ في الاتصال</string>
+    <string name="shop_unlock_all_cards">افتح جميع البطاقات</string>
+    <string name="setting_music">الموسيقى</string>
+    <string name="setting_sound">الصوت</string>
+    <string name="setting_vibration">الاهتزاز</string>
+    <string name="setting_language">اللغة</string>
+    <string name="watch_ad">شاهد الإعلان</string>
+    <string name="share">مشاركة</string>
+    <string name="content_description_locked">مقفل</string>
+    <string name="accessibility_flip_card">اقلب البطاقة</string>
+    <string name="accessibility_view_card_pair">عرض زوج البطاقات</string>
+    <string name="accessibility_unlock_with_coins">فتح بالعملات</string>
+    <string name="accessibility_unlock_with_ad">فتح بمشاهدة إعلان</string>
+    <string name="leaderboard">المتصدرين</string>
+    <string name="coins">عملات</string>
+
+    <string name="notification_channel_reminders">تذكيرات</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 كيف ذاكرتك اليوم؟</item>
+        <item>🃏 بطاقاتك تفتقدك!</item>
+        <item>🎴 مجموعتك غير مكتملة!</item>
+        <item>✨ حان وقت التحدي!</item>
+        <item>🃏 مستعد لقلب بعض البطاقات؟</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>لعبة سريعة تفيد كثيراً</item>
+        <item>عد وطابق بعض الأزواج!</item>
+        <item>اختبر ذاكرتك في جولة سريعة</item>
+        <item>اخلط واقلب وطابق!</item>
+        <item>حافظ على ذهنك حاداً!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 مكافأة العملات جاهزة!</item>
+        <item>✨ العملات بانتظارك!</item>
+        <item>🏆 حان وقت جمع مكافأتك!</item>
+        <item>💰 عملاتك وصلت!</item>
+        <item>✨ المكافأة مفتوحة!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>عملات مجانية بانتظارك!</item>
+        <item>اجمع مكافأة عملاتك الآن!</item>
+        <item>عملاتك جاهزة للاستلام!</item>
+        <item>شاهد إعلاناً آخر لمزيد من العملات</item>
+        <item>احصل على عملاتك في المتجر!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">افتح المزيد من المكافآت!</string>
+    <string name="enable_notifications_body">احصل على إشعارات عندما تكون العملات جاهزة للجمع وبطاقات جديدة بانتظار الفتح!</string>
+    <string name="enable_notifications_enable">تفعيل</string>
+    <string name="enable_notifications_later">لاحقًا</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 حافظ على سلسلتك!</item>
+        <item>🎁 مكافأتك اليومية جاهزة!</item>
+        <item>💰 عملات مجانية في المتجر!</item>
+        <item>🔥 لا تفقد سلسلتك!</item>
+        <item>🎁 مكافأة اليوم بانتظارك!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>اجمع عملاتك قبل نهاية اليوم!</item>
+        <item>زر المتجر للحصول على مكافأتك</item>
+        <item>سلسلتك على المحك!</item>
+        <item>لا تكسر سلسلتك!</item>
+        <item>افتح المتجر واحصل على عملاتك</item>
+    </string-array>
+    <string name="shortcut_daily_reward">المكافأة اليومية</string>
+    <string name="shortcut_play">العب</string>
+
+    <string name="free_coins">عملات مجانية</string>
+    <string name="daily_reward_day">يوم %d</string>
+    <string name="daily_reward_collect">اجمع %d</string>
+    <string name="daily_reward_back_tomorrow">عد غداً</string>
+
+    <string name="daily_challenge">التحدي اليومي</string>
+    <string name="daily_challenge_compare">قارن</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 لا تنسَ تحديك اليومي!</item>
+        <item>⭐ التحدي اليومي بانتظارك!</item>
+        <item>🧠 هل أنت مستعد لتحدي اليوم؟</item>
+        <item>💪 تمرين الدماغ اليومي!</item>
+        <item>🏆 تحدَّ نفسك اليوم!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>اختبر ذاكرتك بلوحة اليوم الفريدة</item>
+        <item>هل يمكنك التغلب على نتيجة الأمس؟</item>
+        <item>لغز جديد ينتظرك</item>
+        <item>طابق كل الأزواج وشارك نتائجك</item>
+        <item>الجميع يحصل على نفس اللوحة — كيف ستقارن؟</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="zero">%d أخطاء</item>
+        <item quantity="one">خطأ واحد</item>
+        <item quantity="two">خطآن</item>
+        <item quantity="few">%d أخطاء</item>
+        <item quantity="many">%d خطأ</item>
+        <item quantity="other">%d خطأ</item>
+    </plurals>
+    <string name="share_casual">هل تعتقد أنك تستطيع التغلب عليّ؟ 🧠🔥</string>
+    <string name="level_count">المستوى %d</string>
+
+    <string name="leave_daily_challenge_title">مغادرة التحدي اليومي؟</string>
+    <string name="leave_daily_challenge_body">لن تتمكن من إعادة المحاولة اليوم</string>
+    <string name="leave_game_title">مغادرة اللعبة؟</string>
+    <string name="leave_game_body">سيتم فقدان تقدمك</string>
+    <string name="leave_game_stay">البقاء</string>
+    <string name="leave_game_leave">مغادرة</string>
+
+    <string name="need_more_cards">تحتاج المزيد من البطاقات</string>
+    <string name="next">التالي</string>
+    <string name="play">العب</string>
+    <string name="daily_reward">المكافأة اليومية</string>
+    <string name="daily_challenge_history">السجل</string>
+</resources>

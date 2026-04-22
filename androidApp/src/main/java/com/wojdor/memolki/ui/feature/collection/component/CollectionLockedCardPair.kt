@@ -18,10 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.isLargeScreen
@@ -53,7 +54,7 @@ fun CollectionLockedCardPair(modifier: Modifier = Modifier) {
             Icon(
                 modifier = Modifier.size(LOCKED_ICON_SIZE),
                 painter = painterResource(R.drawable.ic_lock),
-                contentDescription = stringResource(R.string.content_description_locked)
+                contentDescription = stringResource(Res.string.content_description_locked)
             )
         }
     }

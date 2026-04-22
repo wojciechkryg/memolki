@@ -14,10 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
@@ -68,7 +69,7 @@ fun UnlockNewCardItem(
                 ) {
                     AutoSizeText(
                         modifier = Modifier.padding(start = spacingXS),
-                        text = stringResource(R.string.new_card_to_unlock).uppercase(),
+                        text = stringResource(Res.string.new_card_to_unlock).uppercase(),
                         style = MaterialTheme.typography.displaySmall.animated(),
                     )
                 }

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • фрукти</string>
+    <string name="app_name_vegetable_half">memolki • овочі</string>
+    <string name="app_name_mammal_side">memolki • ссавці</string>
+    <string name="app_name_bird_side">memolki • птахи</string>
+
+    <string name="suffix_fruit_half">• фрукти</string>
+    <string name="suffix_vegetable_half">• овочі</string>
+    <string name="suffix_mammal_side">• ссавці</string>
+    <string name="suffix_bird_side">• птахи</string>
+
+    <string name="new_game">Нова гра</string>
+    <string name="collection">Колекція</string>
+    <string name="settings">Налаштування</string>
+    <string name="more">Більше?</string>
+    <string name="menu">Меню</string>
+    <string name="shop">Магазин</string>
+    <string name="shop_obtain">Отримати %d</string>
+    <string name="shop_back_later">Поверніться пізніше</string>
+    <string name="shop_buy">Купити %d</string>
+    <string name="shop_unlock_all_cards">Розблокувати всі карти</string>
+    <string name="shop_purchase_failed_error">Покупка не вдалася</string>
+    <string name="shop_connection_error">Помилка з\'єднання</string>
+    <string name="setting_music">Музика</string>
+    <string name="setting_sound">Звук</string>
+    <string name="setting_vibration">Вібрація</string>
+    <string name="setting_language">Мова</string>
+    <string name="watch_ad">Переглянути рекламу</string>
+    <string name="share">Поділитися</string>
+    <string name="content_description_locked">Заблоковано</string>
+    <string name="accessibility_flip_card">Перевернути картку</string>
+    <string name="accessibility_view_card_pair">Переглянути пару карток</string>
+    <string name="accessibility_unlock_with_coins">Розблокувати за монети</string>
+    <string name="accessibility_unlock_with_ad">Розблокувати переглядом реклами</string>
+    <string name="leaderboard">Таблиця лідерів</string>
+    <string name="coins">Монети</string>
+
+    <string name="notification_channel_reminders">Нагадування</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Як твоя пам\'ять сьогодні?</item>
+        <item>🃏 Твої картки сумують!</item>
+        <item>🎴 Твоя колекція не завершена!</item>
+        <item>✨ Час для випробування!</item>
+        <item>🃏 Готовий перевернути картки?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>Швидка гра дуже допомагає</item>
+        <item>Повертайся і знайди пари!</item>
+        <item>Перевір пам\'ять у швидкому раунді</item>
+        <item>Перемішай, переверни і знайди!</item>
+        <item>Тримай мозок у тонусі!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Твоя нагорода в монетах готова!</item>
+        <item>✨ Монети чекають на тебе!</item>
+        <item>🏆 Час забрати свою нагороду!</item>
+        <item>💰 Твої монети прибули!</item>
+        <item>✨ Нагорода розблокована!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Безкоштовні монети чекають на тебе!</item>
+        <item>Забери свою нагороду зараз!</item>
+        <item>Твої монети готові!</item>
+        <item>Подивись ще рекламу за більше монет</item>
+        <item>Забери монети в магазині!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">Відкрий більше нагород!</string>
+    <string name="enable_notifications_body">Отримуй сповіщення, коли монети готові до збору і нові картки чекають на відкриття!</string>
+    <string name="enable_notifications_enable">Увімкнути</string>
+    <string name="enable_notifications_later">Пізніше</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Не перервай серію!</item>
+        <item>🎁 Твоя щоденна нагорода готова!</item>
+        <item>💰 Безкоштовні монети в магазині!</item>
+        <item>🔥 Не втрать свою серію!</item>
+        <item>🎁 Сьогоднішня нагорода чекає!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Збери монети до кінця дня!</item>
+        <item>Відвідай магазин за нагородою</item>
+        <item>Твоя серія під загрозою!</item>
+        <item>Не перервай серію!</item>
+        <item>Відкрий магазин і забери монети</item>
+    </string-array>
+    <string name="shortcut_daily_reward">Щоденна нагорода</string>
+    <string name="shortcut_play">Грати</string>
+
+    <string name="free_coins">Безкоштовні монети</string>
+    <string name="daily_reward_day">День %d</string>
+    <string name="daily_reward_collect">Зібрати %d</string>
+    <string name="daily_reward_back_tomorrow">Повертайся завтра</string>
+
+    <string name="daily_challenge">Щоденний виклик</string>
+    <string name="daily_challenge_compare">Порівняти</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Не забудь про щоденний виклик!</item>
+        <item>⭐ Щоденний виклик чекає!</item>
+        <item>🧠 Готовий до сьогоднішнього виклику?</item>
+        <item>💪 Твоє щоденне тренування мозку!</item>
+        <item>🏆 Кинь собі виклик сьогодні!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Перевір свою пам\'ять на сьогоднішній унікальній дошці</item>
+        <item>Зможеш побити вчорашній результат?</item>
+        <item>Нова головоломка чекає на тебе</item>
+        <item>Знайди всі пари та поділись результатами</item>
+        <item>У всіх однакова дошка — як справишся ти?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d помилка</item>
+        <item quantity="few">%d помилки</item>
+        <item quantity="many">%d помилок</item>
+        <item quantity="other">%d помилок</item>
+    </plurals>
+    <string name="share_casual">Думаєш, зможеш мене обіграти? 🧠🔥</string>
+    <string name="level_count">рівень %d</string>
+
+    <string name="leave_daily_challenge_title">Покинути щоденний виклик?</string>
+    <string name="leave_daily_challenge_body">Сьогодні повторити не вдасться</string>
+    <string name="leave_game_title">Покинути гру?</string>
+    <string name="leave_game_body">Ваш прогрес буде втрачено</string>
+    <string name="leave_game_stay">Залишитись</string>
+    <string name="leave_game_leave">Вийти</string>
+
+    <string name="need_more_cards">Потрібно більше карток</string>
+    <string name="next">Далі</string>
+    <string name="play">Грати</string>
+    <string name="daily_reward">Щоденна нагорода</string>
+    <string name="daily_challenge_history">Історія</string>
+</resources>

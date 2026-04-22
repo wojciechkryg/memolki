@@ -27,10 +27,11 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
+import org.jetbrains.compose.resources.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.ui.component.BaseMenuItem
@@ -236,7 +237,7 @@ private const val REWARD_COINS_DELAY = 500L
 private fun MistakeCount(modifier: Modifier = Modifier, mistakeCount: Int) {
     Text(
         modifier = modifier,
-        text = pluralStringResource(R.plurals.daily_challenge_mistakes, mistakeCount, mistakeCount),
+        text = pluralStringResource(Res.plurals.daily_challenge_mistakes, mistakeCount, mistakeCount),
         style = MaterialTheme.typography.headlineMedium
     )
 }

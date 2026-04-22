@@ -9,10 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
 import com.wojdor.memolki.ui.theme.animated
@@ -45,7 +46,7 @@ fun CompareButton(
                 .shimmerEffect()
         ) {
             Text(
-                text = stringResource(R.string.daily_challenge_compare).uppercase(),
+                text = stringResource(Res.string.daily_challenge_compare).uppercase(),
                 style = textStyle.animated()
             )
         }

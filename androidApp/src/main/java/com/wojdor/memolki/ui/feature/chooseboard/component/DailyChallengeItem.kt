@@ -30,10 +30,11 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.rememberShakeOffset
@@ -84,13 +85,13 @@ fun DailyChallengeItem(
                             DailyChallengeCheckbox(isCompleted)
                             Spacer(modifier = Modifier.width(spacingL))
                             Text(
-                                text = stringResource(R.string.daily_challenge).lowercase(),
+                                text = stringResource(Res.string.daily_challenge).lowercase(),
                                 style = MaterialTheme.typography.displaySmall
                             )
                         }
                         if (isCompleted) {
                             Text(
-                                text = stringResource(R.string.daily_reward_back_tomorrow).lowercase(),
+                                text = stringResource(Res.string.daily_reward_back_tomorrow).lowercase(),
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         }
@@ -149,7 +150,7 @@ private fun HistoryButton(onClick: () -> Unit) {
         )
         Spacer(modifier = Modifier.width(spacingL))
         Text(
-            text = stringResource(R.string.daily_challenge_history).lowercase(),
+            text = stringResource(Res.string.daily_challenge_history).lowercase(),
             style = MaterialTheme.typography.bodyLarge
         )
     }

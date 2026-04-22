@@ -33,13 +33,14 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
@@ -132,18 +133,18 @@ private fun EnableNotificationsScreen(
     ) {
         Image(
             painter = painterResource(R.drawable.ic_coins_sack),
-            contentDescription = stringResource(R.string.coins),
+            contentDescription = stringResource(Res.string.coins),
             modifier = Modifier.size(128.dp)
         )
         Spacer(modifier = Modifier.height(spacingXL))
         Text(
-            text = stringResource(R.string.enable_notifications_title),
+            text = stringResource(Res.string.enable_notifications_title),
             style = MaterialTheme.typography.displaySmall,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(spacingM))
         Text(
-            text = stringResource(R.string.enable_notifications_body),
+            text = stringResource(Res.string.enable_notifications_body),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center
         )
@@ -162,7 +163,7 @@ private fun EnableNotificationsScreen(
                 )
             ) {
                 Text(
-                    text = stringResource(R.string.enable_notifications_enable).uppercase(),
+                    text = stringResource(Res.string.enable_notifications_enable).uppercase(),
                     style = MaterialTheme.typography.displaySmall.animated()
                 )
             }
@@ -184,7 +185,7 @@ private fun EnableNotificationsScreen(
                 .alpha(laterAlpha)
         ) {
             Text(
-                text = stringResource(R.string.enable_notifications_later).lowercase(),
+                text = stringResource(Res.string.enable_notifications_later).lowercase(),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
             )

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • 과일</string>
+    <string name="app_name_vegetable_half">memolki • 야채</string>
+    <string name="app_name_mammal_side">memolki • 포유류</string>
+    <string name="app_name_bird_side">memolki • 새</string>
+
+    <string name="suffix_fruit_half">• 과일</string>
+    <string name="suffix_vegetable_half">• 야채</string>
+    <string name="suffix_mammal_side">• 포유류</string>
+    <string name="suffix_bird_side">• 새</string>
+
+    <string name="new_game">새 게임</string>
+    <string name="collection">컬렉션</string>
+    <string name="settings">설정</string>
+    <string name="more">더?</string>
+    <string name="menu">메뉴</string>
+    <string name="shop">상점</string>
+    <string name="shop_obtain">획득 %d</string>
+    <string name="shop_back_later">나중에 다시 오세요</string>
+    <string name="shop_buy">구매 %d</string>
+    <string name="shop_unlock_all_cards">모든 카드 잠금 해제</string>
+    <string name="shop_purchase_failed_error">구매 실패</string>
+    <string name="shop_connection_error">연결 오류</string>
+    <string name="setting_music">음악</string>
+    <string name="setting_sound">사운드</string>
+    <string name="setting_vibration">진동</string>
+    <string name="setting_language">언어</string>
+    <string name="watch_ad">광고 보기</string>
+    <string name="share">공유</string>
+    <string name="content_description_locked">잠김</string>
+    <string name="accessibility_flip_card">카드 뒤집기</string>
+    <string name="accessibility_view_card_pair">카드 쌍 보기</string>
+    <string name="accessibility_unlock_with_coins">코인으로 잠금 해제</string>
+    <string name="accessibility_unlock_with_ad">광고를 보고 잠금 해제</string>
+    <string name="leaderboard">리더보드</string>
+    <string name="coins">코인</string>
+
+    <string name="notification_channel_reminders">알림</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 오늘 기억력은 어때요?</item>
+        <item>🃏 카드가 당신을 기다려요!</item>
+        <item>🎴 컬렉션이 미완성이에요!</item>
+        <item>✨ 도전할 시간!</item>
+        <item>🃏 카드를 뒤집을 준비 됐나요?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>짧은 게임이 큰 도움이 돼요</item>
+        <item>돌아와서 짝을 맞춰보세요!</item>
+        <item>빠른 라운드로 기억력 테스트</item>
+        <item>섞고, 뒤집고, 맞추세요!</item>
+        <item>두뇌를 날카롭게!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 코인 보상이 준비됐어요!</item>
+        <item>✨ 코인이 기다리고 있어요!</item>
+        <item>🏆 보상을 받을 시간이에요!</item>
+        <item>💰 코인이 도착했어요!</item>
+        <item>✨ 보상 잠금 해제!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>무료 코인이 기다리고 있어요!</item>
+        <item>지금 코인 보상을 받으세요!</item>
+        <item>코인이 준비되었어요!</item>
+        <item>광고를 더 보고 코인을 받으세요</item>
+        <item>상점에서 코인을 받으세요!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">더 많은 보상을 잠금 해제하세요!</string>
+    <string name="enable_notifications_body">코인이 준비되고 새 카드가 잠금 해제를 기다릴 때 알림을 받으세요!</string>
+    <string name="enable_notifications_enable">활성화</string>
+    <string name="enable_notifications_later">나중에</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 연속 기록을 유지하세요!</item>
+        <item>🎁 일일 보상이 준비되었어요!</item>
+        <item>💰 상점에서 무료 코인!</item>
+        <item>🔥 연속 기록을 놓치지 마세요!</item>
+        <item>🎁 오늘의 보상이 기다려요!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>하루가 끝나기 전에 코인을 모으세요!</item>
+        <item>상점에서 보상을 받으세요</item>
+        <item>연속 기록이 위험해요!</item>
+        <item>연속 기록을 끊지 마세요!</item>
+        <item>상점을 열고 코인을 받으세요</item>
+    </string-array>
+    <string name="shortcut_daily_reward">일일 보상</string>
+    <string name="shortcut_play">플레이</string>
+
+    <string name="free_coins">무료 코인</string>
+    <string name="daily_reward_day">%d일차</string>
+    <string name="daily_reward_collect">%d개 수집</string>
+    <string name="daily_reward_back_tomorrow">내일 다시 오세요</string>
+
+    <string name="daily_challenge">일일 도전</string>
+    <string name="daily_challenge_compare">비교하기</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 일일 도전을 잊지 마세요!</item>
+        <item>⭐ 일일 도전이 기다리고 있어요!</item>
+        <item>🧠 오늘의 도전 준비됐나요?</item>
+        <item>💪 매일 두뇌 운동!</item>
+        <item>🏆 오늘 자신에게 도전하세요!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>오늘의 특별한 보드로 기억력을 테스트하세요</item>
+        <item>어제 점수를 넘을 수 있나요?</item>
+        <item>새로운 퍼즐이 기다리고 있어요</item>
+        <item>모든 짝을 맞추고 결과를 공유하세요</item>
+        <item>모두 같은 보드를 받아요 — 당신은 어떨까요?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d 실수</item>
+    </plurals>
+    <string name="share_casual">나를 이길 수 있다고 생각해? 🧠🔥</string>
+    <string name="level_count">레벨 %d</string>
+
+    <string name="leave_daily_challenge_title">일일 도전을 떠나시겠습니까?</string>
+    <string name="leave_daily_challenge_body">오늘은 다시 도전할 수 없습니다</string>
+    <string name="leave_game_title">게임을 떠나시겠습니까?</string>
+    <string name="leave_game_body">진행 상황이 사라집니다</string>
+    <string name="leave_game_stay">계속하기</string>
+    <string name="leave_game_leave">나가기</string>
+
+    <string name="need_more_cards">더 많은 카드 필요</string>
+    <string name="next">다음</string>
+    <string name="play">플레이</string>
+    <string name="daily_reward">일일 보상</string>
+    <string name="daily_challenge_history">기록</string>
+</resources>

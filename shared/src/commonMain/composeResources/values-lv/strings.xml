@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • augļi</string>
+    <string name="app_name_vegetable_half">memolki • dārzeņi</string>
+    <string name="app_name_mammal_side">memolki • zīdītāji</string>
+    <string name="app_name_bird_side">memolki • putni</string>
+
+    <string name="suffix_fruit_half">• augļi</string>
+    <string name="suffix_vegetable_half">• dārzeņi</string>
+    <string name="suffix_mammal_side">• zīdītāji</string>
+    <string name="suffix_bird_side">• putni</string>
+
+    <string name="new_game">Jauna spēle</string>
+    <string name="collection">Kolekcija</string>
+    <string name="settings">Iestatījumi</string>
+    <string name="more">Vairāk?</string>
+    <string name="menu">Izvēlne</string>
+    <string name="shop">Veikals</string>
+    <string name="shop_obtain">Iegūt %d</string>
+    <string name="shop_back_later">Atgriezties vēlāk</string>
+    <string name="shop_buy">Pirkt %d</string>
+    <string name="shop_unlock_all_cards">Atbloķēt visas kārtis</string>
+    <string name="shop_purchase_failed_error">Pirkums neizdevās</string>
+    <string name="shop_connection_error">Savienojuma kļūda</string>
+    <string name="setting_music">Mūzika</string>
+    <string name="setting_sound">Skaņa</string>
+    <string name="setting_vibration">Vibrācija</string>
+    <string name="setting_language">Valoda</string>
+    <string name="watch_ad">Skatīties reklāmu</string>
+    <string name="share">Dalīties</string>
+    <string name="content_description_locked">Bloķēts</string>
+    <string name="accessibility_flip_card">Apgriezt kārti</string>
+    <string name="accessibility_view_card_pair">Skatīt kāršu pāri</string>
+    <string name="accessibility_unlock_with_coins">Atbloķēt ar monētām</string>
+    <string name="accessibility_unlock_with_ad">Atbloķēt skatoties reklāmu</string>
+    <string name="leaderboard">Līderu tabula</string>
+    <string name="coins">Monētas</string>
+
+    <string name="notification_channel_reminders">Atgādinājumi</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Kā tava atmiņa šodien?</item>
+        <item>🃏 Tavas kārtis tevi sagaida!</item>
+        <item>🎴 Tava kolekcija nav pilnīga!</item>
+        <item>✨ Laiks izaicinājumam!</item>
+        <item>🃏 Gatavs apgriezt kārtis?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>Ātra spēle daudz palīdz</item>
+        <item>Atgriezies un atrodi pārus!</item>
+        <item>Pārbaudi atmiņu ātrā raundā</item>
+        <item>Sajauc, apgriez un saskaņo!</item>
+        <item>Uzturi smadzenes asas!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Tava monētu balva ir gatava!</item>
+        <item>✨ Monētas gaida tevi!</item>
+        <item>🏆 Laiks saņemt savu balvu!</item>
+        <item>💰 Tavas monētas ir klāt!</item>
+        <item>✨ Balva atbloķēta!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Bezmaksas monētas gaida tevi!</item>
+        <item>Saņem savu monētu balvu tagad!</item>
+        <item>Tavas monētas ir gatavas!</item>
+        <item>Skaties vēl vienu reklāmu, lai iegūtu vairāk monētu</item>
+        <item>Paņem monētas veikalā!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">Atbloķē vairāk balvu!</string>
+    <string name="enable_notifications_body">Saņem paziņojumus, kad monētas ir gatavas savākšanai un jaunas kārtis gaida atbloķēšanu!</string>
+    <string name="enable_notifications_enable">Iespējot</string>
+    <string name="enable_notifications_later">Vēlāk</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Uzturi savu sēriju!</item>
+        <item>🎁 Tava ikdienas balva ir gatava!</item>
+        <item>💰 Bezmaksas monētas veikalā!</item>
+        <item>🔥 Nezaudē savu sēriju!</item>
+        <item>🎁 Šodienas balva gaida!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Savāc monētas pirms diena beidzas!</item>
+        <item>Apmeklē veikalu balvai</item>
+        <item>Tava sērija ir apdraudēta!</item>
+        <item>Nepārtrauc sēriju!</item>
+        <item>Atver veikalu un paņem monētas</item>
+    </string-array>
+    <string name="shortcut_daily_reward">Dienas balva</string>
+    <string name="shortcut_play">Spēlēt</string>
+
+    <string name="free_coins">Bezmaksas monētas</string>
+    <string name="daily_reward_day">%d. diena</string>
+    <string name="daily_reward_collect">Savākt %d</string>
+    <string name="daily_reward_back_tomorrow">Atgriezies rīt</string>
+
+    <string name="daily_challenge">Dienas izaicinājums</string>
+    <string name="daily_challenge_compare">Salīdzināt</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Neaizmirsti savu dienas izaicinājumu!</item>
+        <item>⭐ Dienas izaicinājums gaida!</item>
+        <item>🧠 Gatavs šodienas izaicinājumam?</item>
+        <item>💪 Tava ikdienas smadzeņu treniņš!</item>
+        <item>🏆 Izaicini sevi šodien!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Pārbaudi savu atmiņu ar šodienas unikālo laukumu</item>
+        <item>Vai vari pārspēt vakardienas rezultātu?</item>
+        <item>Jauna mīkla tevi gaida</item>
+        <item>Atrodi visus pārus un dalies ar rezultātiem</item>
+        <item>Visi saņem to pašu laukumu — kā tev veiksies?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="zero">%d kļūdu</item>
+        <item quantity="one">%d kļūda</item>
+        <item quantity="other">%d kļūdas</item>
+    </plurals>
+    <string name="share_casual">Domā, ka mani pārspēsi? 🧠🔥</string>
+    <string name="level_count">līmenis %d</string>
+
+    <string name="leave_daily_challenge_title">Pamest dienas izaicinājumu?</string>
+    <string name="leave_daily_challenge_body">Šodien nevarēsi mēģināt vēlreiz</string>
+    <string name="leave_game_title">Pamest spēli?</string>
+    <string name="leave_game_body">Tavs progress tiks zaudēts</string>
+    <string name="leave_game_stay">Palikt</string>
+    <string name="leave_game_leave">Pamest</string>
+
+    <string name="need_more_cards">Nepieciešams vairāk kāršu</string>
+    <string name="next">Nākamais</string>
+    <string name="play">Spēlēt</string>
+    <string name="daily_reward">Dienas balva</string>
+    <string name="daily_challenge_history">Vēsture</string>
+</resources>

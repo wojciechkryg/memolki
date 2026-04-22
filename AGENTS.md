@@ -436,7 +436,9 @@ Translations exist at two independent levels:
 
 ### 1. Shared UI strings (all flavors)
 
-Located in `androidApp/src/main/res/values/strings.xml` (English default) and `androidApp/src/main/res/values-{locale}/strings.xml` per language. Contains app-wide UI text: menu labels, settings, shop, etc.
+Canonical location is `:shared/src/commonMain/composeResources/values/strings.xml` (English default) and `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` per language. Use `stringResource(Res.string.foo)` from `org.jetbrains.compose.resources` (import `com.wojdor.memolki.shared.resources.*`). The Res class lives at `com.wojdor.memolki.shared.resources.Res`.
+
+The same files are still duplicated in `androidApp/src/main/res/values*/strings.xml` until phase 13c deletes them — while they exist, **update both copies in lockstep** so Android-only consumers (manifest, PlayGames intents, notification formatters, flavor `strings.xml` overrides of `app_name`) keep resolving. Models still holding `@StringRes Int` (LanguageModel, CardModel, BoardModel, SettingModel, MenuModel, EndGameMenuModel, ShopMenuModel, AppModel) also still need the `R.string.*` entries.
 
 Each locale file must translate every key from the default `strings.xml` (including per-flavor `app_name_{flavor}` and `suffix_{flavor}`).
 
@@ -458,9 +460,9 @@ Native language names (e.g. "Polski", "Deutsch") are in `main/res/values/strings
 
 ### Adding a new language
 
-1. Create `androidApp/src/main/res/values-{locale}/strings.xml` — translate all shared UI strings
+1. Create `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` AND `androidApp/src/main/res/values-{locale}/strings.xml` (keep both in sync until phase 13c) — translate all shared UI strings
 2. Create `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` for **each flavor** — translate card names
-3. Add `language_{name}` entry (native name, `translatable="false"`) in `main/res/values/strings_non_translatable.xml`
+3. Add `language_{name}` entry (native name, `translatable="false"`) in both `:shared/src/commonMain/composeResources/values/strings_non_translatable.xml` and `main/res/values/strings_non_translatable.xml`
 4. Add `LanguageModel(R.string.language_{name}, "{locale}")` to the list in `domain/usecase/GetSupportedLanguagesUseCase.kt`
 5. Add the locale to the `SUPPORTED_LANGUAGES` array in `scripts/notifications/send_push_notification.sh`
 

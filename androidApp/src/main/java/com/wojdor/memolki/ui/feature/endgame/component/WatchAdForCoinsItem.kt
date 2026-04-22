@@ -15,10 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
@@ -57,10 +58,10 @@ fun WatchAdForCoinsItem(
                         .size(adIconSize),
                     alignment = Alignment.Center,
                     painter = painterResource(R.drawable.ic_ads),
-                    contentDescription = stringResource(R.string.watch_ad)
+                    contentDescription = stringResource(Res.string.watch_ad)
                 )
                 AutoSizeText(
-                    text = stringResource(R.string.watch_ad).lowercase(),
+                    text = stringResource(Res.string.watch_ad).lowercase(),
                     style = MaterialTheme.typography.bodyLarge.animated()
                 )
             }
@@ -75,7 +76,7 @@ fun WatchAdForCoinsItem(
                     Image(
                         modifier = Modifier.size(coinIconSize),
                         painter = painterResource(id = R.drawable.ic_coin),
-                        contentDescription = stringResource(R.string.coins)
+                        contentDescription = stringResource(Res.string.coins)
                     )
                 }
             }

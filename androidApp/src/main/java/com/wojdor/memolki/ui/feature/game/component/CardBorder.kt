@@ -42,6 +42,7 @@ val CARD_BORDER_SIZE = 2.dp
 private fun CardBorderPreview() {
     AppTheme {
         CardBorder(Modifier.size(128.dp)) {
+            // TODO(compose-resources): switch to Res.string.app_name once Phase 13c moves flavor-specific strings to composeResources.
             Text(text = stringResource(R.string.app_name))
         }
     }

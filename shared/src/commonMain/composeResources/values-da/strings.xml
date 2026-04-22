@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • frugter</string>
+    <string name="app_name_vegetable_half">memolki • grøntsager</string>
+    <string name="app_name_mammal_side">memolki • pattedyr</string>
+    <string name="app_name_bird_side">memolki • fugle</string>
+
+    <string name="suffix_fruit_half">• frugter</string>
+    <string name="suffix_vegetable_half">• grøntsager</string>
+    <string name="suffix_mammal_side">• pattedyr</string>
+    <string name="suffix_bird_side">• fugle</string>
+
+    <string name="new_game">Nyt spil</string>
+    <string name="collection">Samling</string>
+    <string name="settings">Indstillinger</string>
+    <string name="more">Mere?</string>
+    <string name="menu">Menu</string>
+    <string name="shop">Butik</string>
+    <string name="shop_obtain">Modtag %d</string>
+    <string name="shop_back_later">Kom tilbage senere</string>
+    <string name="shop_buy">Køb %d</string>
+    <string name="shop_unlock_all_cards">Lås alle kort op</string>
+    <string name="shop_purchase_failed_error">Køb mislykkedes</string>
+    <string name="shop_connection_error">Netværksfejl</string>
+    <string name="setting_music">Musik</string>
+    <string name="setting_sound">Lyd</string>
+    <string name="setting_vibration">Vibration</string>
+    <string name="setting_language">Sprog</string>
+    <string name="watch_ad">Se annonce</string>
+    <string name="share">Del</string>
+    <string name="content_description_locked">Låst</string>
+    <string name="accessibility_flip_card">Vend kort</string>
+    <string name="accessibility_view_card_pair">Vis kortpar</string>
+    <string name="accessibility_unlock_with_coins">Lås op med mønter</string>
+    <string name="accessibility_unlock_with_ad">Lås op ved at se en reklame</string>
+    <string name="leaderboard">Rangliste</string>
+    <string name="coins">Mønter</string>
+
+    <string name="notification_channel_reminders">Påmindelser</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Hvordan er din hukommelse i dag?</item>
+        <item>🃏 Dine kort savner dig!</item>
+        <item>🎴 Din samling er ufuldstændig!</item>
+        <item>✨ Tid til en udfordring!</item>
+        <item>🃏 Klar til at vende nogle kort?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>Et hurtigt spil gør en forskel</item>
+        <item>Kom tilbage og match par!</item>
+        <item>Test din hukommelse i en hurtig runde</item>
+        <item>Bland, vend og match!</item>
+        <item>Hold hjernen skarp!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 Din møntbelønning er klar!</item>
+        <item>✨ Mønter venter på dig!</item>
+        <item>🏆 Tid til at hente din belønning!</item>
+        <item>💰 Dine mønter er ankommet!</item>
+        <item>✨ Belønning låst op!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Gratis mønter venter på dig!</item>
+        <item>Hent din møntbelønning nu!</item>
+        <item>Dine mønter er klar!</item>
+        <item>Se en reklame mere for flere mønter</item>
+        <item>Tag dine mønter i butikken!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">Lås flere belønninger op!</string>
+    <string name="enable_notifications_body">Få besked, når mønter er klar til at blive hentet, og nye kort venter på at blive låst op!</string>
+    <string name="enable_notifications_enable">Aktivér</string>
+    <string name="enable_notifications_later">Senere</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Hold din streak i live!</item>
+        <item>🎁 Din daglige belønning er klar!</item>
+        <item>💰 Gratis mønter i butikken!</item>
+        <item>🔥 Mist ikke din streak!</item>
+        <item>🎁 Dagens belønning venter!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Saml dine mønter inden dagen slutter!</item>
+        <item>Besøg butikken for din belønning</item>
+        <item>Din streak er på spil!</item>
+        <item>Bryd ikke din streak!</item>
+        <item>Åbn butikken og tag dine mønter</item>
+    </string-array>
+    <string name="shortcut_daily_reward">Daglig belønning</string>
+    <string name="shortcut_play">Spil</string>
+
+    <string name="free_coins">Gratis mønter</string>
+    <string name="daily_reward_day">Dag %d</string>
+    <string name="daily_reward_collect">Saml %d</string>
+    <string name="daily_reward_back_tomorrow">Kom igen i morgen</string>
+
+    <string name="daily_challenge">Daglig udfordring</string>
+    <string name="daily_challenge_compare">Sammenlign</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Glem ikke din daglige udfordring!</item>
+        <item>⭐ Daglig udfordring venter!</item>
+        <item>🧠 Klar til dagens udfordring?</item>
+        <item>💪 Din daglige hjernetræning!</item>
+        <item>🏆 Udfordr dig selv i dag!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Test din hukommelse med dagens unikke bræt</item>
+        <item>Kan du slå gårsdagens score?</item>
+        <item>Et nyt puslespil venter på dig</item>
+        <item>Match alle par og del dine resultater</item>
+        <item>Alle får det samme bræt — hvordan klarer du dig?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d fejl</item>
+        <item quantity="other">%d fejl</item>
+    </plurals>
+    <string name="share_casual">Tror du, du kan slå mig? 🧠🔥</string>
+    <string name="level_count">niveau %d</string>
+
+    <string name="leave_daily_challenge_title">Forlad daglig udfordring?</string>
+    <string name="leave_daily_challenge_body">Du vil ikke kunne prøve igen i dag</string>
+    <string name="leave_game_title">Forlad spillet?</string>
+    <string name="leave_game_body">Din fremgang vil gå tabt</string>
+    <string name="leave_game_stay">Bliv</string>
+    <string name="leave_game_leave">Forlad</string>
+
+    <string name="need_more_cards">Brug for flere kort</string>
+    <string name="next">Næste</string>
+    <string name="play">Spil</string>
+    <string name="daily_reward">Daglig belønning</string>
+    <string name="daily_challenge_history">Historik</string>
+</resources>

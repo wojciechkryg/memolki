@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • フルーツ</string>
+    <string name="app_name_vegetable_half">memolki • 野菜</string>
+    <string name="app_name_mammal_side">memolki • 哺乳類</string>
+    <string name="app_name_bird_side">memolki • 鳥</string>
+
+    <string name="suffix_fruit_half">• フルーツ</string>
+    <string name="suffix_vegetable_half">• 野菜</string>
+    <string name="suffix_mammal_side">• 哺乳類</string>
+    <string name="suffix_bird_side">• 鳥</string>
+
+    <string name="new_game">新しいゲーム</string>
+    <string name="collection">コレクション</string>
+    <string name="settings">設定</string>
+    <string name="more">もっと？</string>
+    <string name="menu">メニュー</string>
+    <string name="shop">ショップ</string>
+    <string name="shop_obtain">獲得 %d</string>
+    <string name="shop_back_later">後で戻って</string>
+    <string name="shop_buy">購入 %d</string>
+    <string name="shop_unlock_all_cards">すべてのカードを解放</string>
+    <string name="shop_purchase_failed_error">購入に失敗しました</string>
+    <string name="shop_connection_error">接続エラー</string>
+    <string name="setting_music">音楽</string>
+    <string name="setting_sound">サウンド</string>
+    <string name="setting_vibration">バイブレーション</string>
+    <string name="setting_language">言語</string>
+    <string name="watch_ad">広告を見る</string>
+    <string name="share">共有</string>
+    <string name="content_description_locked">ロック中</string>
+    <string name="accessibility_flip_card">カードをめくる</string>
+    <string name="accessibility_view_card_pair">カードペアを見る</string>
+    <string name="accessibility_unlock_with_coins">コインで解除</string>
+    <string name="accessibility_unlock_with_ad">広告を見て解除</string>
+    <string name="leaderboard">リーダーボード</string>
+    <string name="coins">コイン</string>
+
+    <string name="notification_channel_reminders">リマインダー</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 今日の記憶力はどう？</item>
+        <item>🃏 カードが待ってるよ！</item>
+        <item>🎴 コレクションが未完成！</item>
+        <item>✨ チャレンジの時間！</item>
+        <item>🃏 カードをめくる準備はできた？</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>ちょっとしたゲームが効果的</item>
+        <item>戻ってペアを見つけよう！</item>
+        <item>クイックラウンドで記憶力テスト</item>
+        <item>シャッフルしてめくってマッチ！</item>
+        <item>脳を鍛えよう！</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 コイン報酬の準備ができました！</item>
+        <item>✨ コインが待っています！</item>
+        <item>🏆 報酬を受け取る時間です！</item>
+        <item>💰 コインが届きました！</item>
+        <item>✨ 報酬アンロック！</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>無料コインが待っています！</item>
+        <item>今すぐコイン報酬を受け取ろう！</item>
+        <item>コインの準備ができました！</item>
+        <item>もう一つ広告を見てコインを増やそう</item>
+        <item>ショップでコインを受け取ろう！</item>
+    </string-array>
+
+    <string name="enable_notifications_title">もっと報酬をアンロック！</string>
+    <string name="enable_notifications_body">コインの準備ができたときや新しいカードがアンロックを待っているときに通知を受け取ろう！</string>
+    <string name="enable_notifications_enable">有効にする</string>
+    <string name="enable_notifications_later">あとで</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 連続記録を維持しよう！</item>
+        <item>🎁 デイリー報酬の準備ができました！</item>
+        <item>💰 ショップで無料コイン！</item>
+        <item>🔥 連続記録を失わないで！</item>
+        <item>🎁 今日の報酬が待ってるよ！</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>日が終わる前にコインを集めよう！</item>
+        <item>ショップで報酬を受け取ろう</item>
+        <item>連続記録がピンチ！</item>
+        <item>連続記録を途切れさせないで！</item>
+        <item>ショップを開いてコインをゲット</item>
+    </string-array>
+    <string name="shortcut_daily_reward">デイリー報酬</string>
+    <string name="shortcut_play">プレイ</string>
+
+    <string name="free_coins">無料コイン</string>
+    <string name="daily_reward_day">%d日目</string>
+    <string name="daily_reward_collect">%d枚を集める</string>
+    <string name="daily_reward_back_tomorrow">明日また来てね</string>
+
+    <string name="daily_challenge">デイリーチャレンジ</string>
+    <string name="daily_challenge_compare">比較する</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 デイリーチャレンジを忘れずに！</item>
+        <item>⭐ デイリーチャレンジが待ってるよ！</item>
+        <item>🧠 今日のチャレンジの準備はできた？</item>
+        <item>💪 毎日の脳トレ！</item>
+        <item>🏆 今日の自分に挑戦！</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>今日のユニークなボードで記憶力を試そう</item>
+        <item>昨日のスコアを超えられる？</item>
+        <item>新しいパズルが待ってるよ</item>
+        <item>全てのペアを見つけて結果をシェアしよう</item>
+        <item>みんな同じボード — あなたはどう？</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d ミス</item>
+    </plurals>
+    <string name="share_casual">私に勝てると思う？🧠🔥</string>
+    <string name="level_count">レベル %d</string>
+
+    <string name="leave_daily_challenge_title">デイリーチャレンジを終了しますか？</string>
+    <string name="leave_daily_challenge_body">今日はやり直せません</string>
+    <string name="leave_game_title">ゲームを終了しますか？</string>
+    <string name="leave_game_body">進行状況は失われます</string>
+    <string name="leave_game_stay">続ける</string>
+    <string name="leave_game_leave">終了</string>
+
+    <string name="need_more_cards">もっとカードが必要</string>
+    <string name="next">次へ</string>
+    <string name="play">プレイ</string>
+    <string name="daily_reward">デイリー報酬</string>
+    <string name="daily_challenge_history">履歴</string>
+</resources>

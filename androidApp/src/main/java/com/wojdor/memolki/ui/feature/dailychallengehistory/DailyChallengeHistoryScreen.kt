@@ -16,11 +16,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.FadeEffectBottom
@@ -77,7 +78,7 @@ private fun DailyChallengeHistoryScreen(
     ) {
         Text(
             modifier = Modifier.padding(horizontal = spacingL, vertical = spacingL),
-            text = stringResource(R.string.daily_challenge_history).lowercase(),
+            text = stringResource(Res.string.daily_challenge_history).lowercase(),
             style = MaterialTheme.typography.displaySmall
         )
         HistoryList(state, callbacks)

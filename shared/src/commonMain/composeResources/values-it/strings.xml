@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • frutta</string>
+    <string name="app_name_vegetable_half">memolki • verdure</string>
+    <string name="app_name_mammal_side">memolki • mammiferi</string>
+    <string name="app_name_bird_side">memolki • uccelli</string>
+
+    <string name="suffix_fruit_half">• frutta</string>
+    <string name="suffix_vegetable_half">• verdure</string>
+    <string name="suffix_mammal_side">• mammiferi</string>
+    <string name="suffix_bird_side">• uccelli</string>
+
+    <string name="new_game">Nuova partita</string>
+    <string name="collection">Collezione</string>
+    <string name="settings">Impostazioni</string>
+    <string name="more">Più?</string>
+    <string name="menu">Menu</string>
+    <string name="shop">Negozio</string>
+    <string name="shop_obtain">Ottieni %d</string>
+    <string name="shop_back_later">Torna più tardi</string>
+    <string name="shop_buy">Acquista %d</string>
+    <string name="shop_unlock_all_cards">Sblocca tutte le carte</string>
+    <string name="shop_purchase_failed_error">Acquisto non riuscito</string>
+    <string name="shop_connection_error">Errore di connessione</string>
+    <string name="setting_music">Musica</string>
+    <string name="setting_sound">Suono</string>
+    <string name="setting_vibration">Vibrazione</string>
+    <string name="setting_language">Lingua</string>
+    <string name="watch_ad">Guarda la pubblicità</string>
+    <string name="share">Condividi</string>
+    <string name="content_description_locked">Bloccato</string>
+    <string name="accessibility_flip_card">Gira la carta</string>
+    <string name="accessibility_view_card_pair">Visualizza coppia di carte</string>
+    <string name="accessibility_unlock_with_coins">Sblocca con monete</string>
+    <string name="accessibility_unlock_with_ad">Sblocca guardando una pubblicità</string>
+    <string name="leaderboard">Classifica</string>
+    <string name="coins">Monete</string>
+
+    <string name="notification_channel_reminders">Promemoria</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 Come va la tua memoria oggi?</item>
+        <item>🃏 Le tue carte sentono la tua mancanza!</item>
+        <item>🎴 La tua collezione è incompleta!</item>
+        <item>✨ È ora di una sfida!</item>
+        <item>🃏 Pronto a girare le carte?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>Una partita veloce aiuta molto</item>
+        <item>Torna e trova le coppie!</item>
+        <item>Metti alla prova la memoria in un giro veloce</item>
+        <item>Mescola, gira e abbina!</item>
+        <item>Tieni il cervello allenato!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 La tua ricompensa in monete è pronta!</item>
+        <item>✨ Le monete ti aspettano!</item>
+        <item>🏆 È ora di riscuotere la tua ricompensa!</item>
+        <item>💰 Le tue monete sono arrivate!</item>
+        <item>✨ Ricompensa sbloccata!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>Monete gratis ti aspettano!</item>
+        <item>Ritira la tua ricompensa adesso!</item>
+        <item>Le tue monete sono pronte!</item>
+        <item>Guarda un altro annuncio per più monete</item>
+        <item>Prendi le tue monete nel negozio!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">Sblocca più ricompense!</string>
+    <string name="enable_notifications_body">Ricevi notifiche quando le monete sono pronte e nuove carte aspettano di essere sbloccate!</string>
+    <string name="enable_notifications_enable">Attiva</string>
+    <string name="enable_notifications_later">Dopo</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 Mantieni la tua serie!</item>
+        <item>🎁 La tua ricompensa giornaliera è pronta!</item>
+        <item>💰 Monete gratis nel negozio!</item>
+        <item>🔥 Non perdere la tua serie!</item>
+        <item>🎁 La ricompensa di oggi ti aspetta!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>Raccogli le monete prima che finisca il giorno!</item>
+        <item>Visita il negozio per la ricompensa</item>
+        <item>La tua serie è in gioco!</item>
+        <item>Non interrompere la serie!</item>
+        <item>Apri il negozio e prendi le monete</item>
+    </string-array>
+    <string name="shortcut_daily_reward">Premio giornaliero</string>
+    <string name="shortcut_play">Gioca</string>
+
+    <string name="free_coins">Monete gratis</string>
+    <string name="daily_reward_day">Giorno %d</string>
+    <string name="daily_reward_collect">Raccogli %d</string>
+    <string name="daily_reward_back_tomorrow">Torna domani</string>
+
+    <string name="daily_challenge">Sfida giornaliera</string>
+    <string name="daily_challenge_compare">Confronta</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 Non dimenticare la sfida giornaliera!</item>
+        <item>⭐ La sfida giornaliera ti aspetta!</item>
+        <item>🧠 Pronto per la sfida di oggi?</item>
+        <item>💪 Il tuo allenamento cerebrale quotidiano!</item>
+        <item>🏆 Sfida te stesso oggi!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>Metti alla prova la tua memoria con il tabellone unico di oggi</item>
+        <item>Riesci a battere il punteggio di ieri?</item>
+        <item>Un nuovo puzzle ti aspetta</item>
+        <item>Trova tutte le coppie e condividi i risultati</item>
+        <item>Tutti ricevono lo stesso tabellone — come te la caverai?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d errore</item>
+        <item quantity="other">%d errori</item>
+    </plurals>
+    <string name="share_casual">Pensi di potermi battere? 🧠🔥</string>
+    <string name="level_count">livello %d</string>
+
+    <string name="leave_daily_challenge_title">Abbandonare la sfida giornaliera?</string>
+    <string name="leave_daily_challenge_body">Non potrai riprovare oggi</string>
+    <string name="leave_game_title">Abbandonare la partita?</string>
+    <string name="leave_game_body">I tuoi progressi andranno persi</string>
+    <string name="leave_game_stay">Resta</string>
+    <string name="leave_game_leave">Esci</string>
+
+    <string name="need_more_cards">Servono più carte</string>
+    <string name="next">Avanti</string>
+    <string name="play">Gioca</string>
+    <string name="daily_reward">Premio giornaliero</string>
+    <string name="daily_challenge_history">Cronologia</string>
+</resources>

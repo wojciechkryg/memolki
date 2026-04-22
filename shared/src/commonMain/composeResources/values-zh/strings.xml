@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • 水果</string>
+    <string name="app_name_vegetable_half">memolki • 蔬菜</string>
+    <string name="app_name_mammal_side">memolki • 哺乳动物</string>
+    <string name="app_name_bird_side">memolki • 鸟类</string>
+
+    <string name="suffix_fruit_half">• 水果</string>
+    <string name="suffix_vegetable_half">• 蔬菜</string>
+    <string name="suffix_mammal_side">• 哺乳动物</string>
+    <string name="suffix_bird_side">• 鸟类</string>
+
+    <string name="new_game">新游戏</string>
+    <string name="collection">收藏</string>
+    <string name="settings">设置</string>
+    <string name="more">更多？</string>
+    <string name="menu">菜单</string>
+    <string name="shop">商店</string>
+    <string name="shop_obtain">获得 %d</string>
+    <string name="shop_back_later">稍后再回来</string>
+    <string name="shop_buy">购买 %d</string>
+    <string name="shop_unlock_all_cards">解锁所有卡片</string>
+    <string name="shop_purchase_failed_error">购买失败</string>
+    <string name="shop_connection_error">连接错误</string>
+    <string name="setting_music">音乐</string>
+    <string name="setting_sound">声音</string>
+    <string name="setting_vibration">振动</string>
+    <string name="setting_language">语言</string>
+    <string name="watch_ad">观看广告</string>
+    <string name="share">分享</string>
+    <string name="content_description_locked">已锁定</string>
+    <string name="accessibility_flip_card">翻转卡片</string>
+    <string name="accessibility_view_card_pair">查看卡片对</string>
+    <string name="accessibility_unlock_with_coins">用金币解锁</string>
+    <string name="accessibility_unlock_with_ad">观看广告解锁</string>
+    <string name="leaderboard">排行榜</string>
+    <string name="coins">金币</string>
+
+    <string name="notification_channel_reminders">提醒</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 今天你的记忆力怎么样？</item>
+        <item>🃏 你的卡片想你了！</item>
+        <item>🎴 你的收藏还不完整！</item>
+        <item>✨ 挑战时间到！</item>
+        <item>🃏 准备好翻牌了吗？</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>一局快速游戏大有帮助</item>
+        <item>回来配对吧！</item>
+        <item>在快速一轮中测试记忆力</item>
+        <item>洗牌、翻牌、配对！</item>
+        <item>保持大脑敏锐！</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 你的金币奖励准备好了！</item>
+        <item>✨ 金币在等你！</item>
+        <item>🏆 该领取奖励了！</item>
+        <item>💰 你的金币到了！</item>
+        <item>✨ 奖励已解锁！</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>免费金币等着你！</item>
+        <item>快来领取金币奖励！</item>
+        <item>你的金币已准备好！</item>
+        <item>再看一个广告获得更多金币</item>
+        <item>在商店领取你的金币！</item>
+    </string-array>
+
+    <string name="enable_notifications_title">解锁更多奖励！</string>
+    <string name="enable_notifications_body">在金币准备好领取和新卡牌等待解锁时收到通知！</string>
+    <string name="enable_notifications_enable">开启</string>
+    <string name="enable_notifications_later">稍后</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 保持你的连续登录！</item>
+        <item>🎁 你的每日奖励已准备好！</item>
+        <item>💰 商店里有免费金币！</item>
+        <item>🔥 别丢了你的连续记录！</item>
+        <item>🎁 今天的奖励在等你！</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>在一天结束前收集金币！</item>
+        <item>去商店领取奖励</item>
+        <item>你的连续记录岌岌可危！</item>
+        <item>别中断你的连续！</item>
+        <item>打开商店拿金币</item>
+    </string-array>
+    <string name="shortcut_daily_reward">每日奖励</string>
+    <string name="shortcut_play">开始游戏</string>
+
+    <string name="free_coins">免费金币</string>
+    <string name="daily_reward_day">第%d天</string>
+    <string name="daily_reward_collect">收集 %d</string>
+    <string name="daily_reward_back_tomorrow">明天再来</string>
+
+    <string name="daily_challenge">每日挑战</string>
+    <string name="daily_challenge_compare">比较</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 别忘了每日挑战！</item>
+        <item>⭐ 每日挑战等你来！</item>
+        <item>🧠 准备好迎接今天的挑战了吗？</item>
+        <item>💪 每日大脑锻炼！</item>
+        <item>🏆 今天挑战自己！</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>用今天独特的棋盘测试你的记忆</item>
+        <item>你能超越昨天的分数吗？</item>
+        <item>新的谜题在等你</item>
+        <item>找到所有配对并分享你的结果</item>
+        <item>每个人都是同一块棋盘——你能做到多好？</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="other">%d 个错误</item>
+    </plurals>
+    <string name="share_casual">你觉得你能赢我吗？🧠🔥</string>
+    <string name="level_count">等级 %d</string>
+
+    <string name="leave_daily_challenge_title">离开每日挑战？</string>
+    <string name="leave_daily_challenge_body">今天将无法重试</string>
+    <string name="leave_game_title">离开游戏？</string>
+    <string name="leave_game_body">你的进度将会丢失</string>
+    <string name="leave_game_stay">留下</string>
+    <string name="leave_game_leave">离开</string>
+
+    <string name="need_more_cards">需要更多卡片</string>
+    <string name="next">下一个</string>
+    <string name="play">开始</string>
+    <string name="daily_reward">每日奖励</string>
+    <string name="daily_challenge_history">历史</string>
+</resources>

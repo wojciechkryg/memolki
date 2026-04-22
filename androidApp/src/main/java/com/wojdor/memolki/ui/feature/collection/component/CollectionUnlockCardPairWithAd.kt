@@ -18,10 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
@@ -44,7 +45,7 @@ fun CollectionUnlockCardPairWithAd(
             .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
-                onClickLabel = stringResource(R.string.accessibility_unlock_with_ad),
+                onClickLabel = stringResource(Res.string.accessibility_unlock_with_ad),
                 onClick = throttleClick(onClick = onClick)
             )
             .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
@@ -72,10 +73,10 @@ fun CollectionUnlockCardPairWithAd(
                     Image(
                         modifier = Modifier.size(64.dp),
                         painter = painterResource(R.drawable.ic_ads),
-                        contentDescription = stringResource(R.string.watch_ad),
+                        contentDescription = stringResource(Res.string.watch_ad),
                     )
                     AutoSizeText(
-                        text = stringResource(R.string.watch_ad).lowercase(),
+                        text = stringResource(Res.string.watch_ad).lowercase(),
                         style = MaterialTheme.typography.bodySmall
                     )
                 }

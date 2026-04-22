@@ -15,10 +15,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
@@ -48,7 +49,7 @@ fun MenuContent(
                     .weight(2f),
                 drawableRes = R.drawable.ic_logo,
                 alignment = Alignment.BottomCenter,
-                contentDescription = stringResource(R.string.app_logo)
+                contentDescription = stringResource(Res.string.app_logo)
             )
             Spacer(modifier = Modifier.weight(0.4f))
             Column(
@@ -90,7 +91,7 @@ fun MenuContent(
 
                                 is MenuModel.Leaderboard -> IconItem(
                                     iconRes = R.drawable.ic_leaderboard,
-                                    contentDescription = stringResource(R.string.leaderboard),
+                                    contentDescription = stringResource(Res.string.leaderboard),
                                     onClick = callbacks.onLeaderboardClick
                                 )
 
@@ -122,7 +123,7 @@ fun MenuContent(
                 .padding(end = spacingL, bottom = settingsBottomPadding),
             iconRes = R.drawable.ic_settings,
             size = 32.dp,
-            contentDescription = stringResource(R.string.settings),
+            contentDescription = stringResource(Res.string.settings),
             onClick = callbacks.onSettingsClick
         )
     }

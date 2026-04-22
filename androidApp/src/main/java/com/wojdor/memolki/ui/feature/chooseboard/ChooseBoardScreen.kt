@@ -13,11 +13,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToDailyChallenge
@@ -109,7 +110,7 @@ private fun ChooseBoardScreen(
         if (lockedBoards.isNotEmpty()) {
             Spacer(modifier = Modifier.height(spacingXXXL))
             Text(
-                text = stringResource(R.string.need_more_cards).lowercase(),
+                text = stringResource(Res.string.need_more_cards).lowercase(),
                 style = MaterialTheme.typography.headlineMedium
             )
             Spacer(modifier = Modifier.height(spacingS))

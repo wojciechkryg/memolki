@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_fruit_half">memolki • פירות</string>
+    <string name="app_name_vegetable_half">memolki • ירקות</string>
+    <string name="app_name_mammal_side">memolki • יונקים</string>
+    <string name="app_name_bird_side">memolki • ציפורים</string>
+
+    <string name="suffix_fruit_half">• פירות</string>
+    <string name="suffix_vegetable_half">• ירקות</string>
+    <string name="suffix_mammal_side">• יונקים</string>
+    <string name="suffix_bird_side">• ציפורים</string>
+
+    <string name="new_game">משחק חדש</string>
+    <string name="collection">אוסף</string>
+    <string name="settings">הגדרות</string>
+    <string name="more">עוד?</string>
+    <string name="menu">תפריט</string>
+    <string name="shop">חנות</string>
+    <string name="shop_obtain">השג %d</string>
+    <string name="shop_back_later">חזור מאוחר יותר</string>
+    <string name="shop_buy">קנה %d</string>
+    <string name="shop_unlock_all_cards">פתח את כל הקלפים</string>
+    <string name="shop_purchase_failed_error">הרכישה נכשלה</string>
+    <string name="shop_connection_error">שגיאת חיבור</string>
+    <string name="setting_music">מוזיקה</string>
+    <string name="setting_sound">צליל</string>
+    <string name="setting_vibration">רטט</string>
+    <string name="setting_language">שפה</string>
+    <string name="watch_ad">צפה במודעה</string>
+    <string name="share">שיתוף</string>
+    <string name="content_description_locked">נעול</string>
+    <string name="accessibility_flip_card">הפוך קלף</string>
+    <string name="accessibility_view_card_pair">הצג זוג קלפים</string>
+    <string name="accessibility_unlock_with_coins">פתח עם מטבעות</string>
+    <string name="accessibility_unlock_with_ad">פתח על ידי צפייה בפרסומת</string>
+    <string name="leaderboard">טבלת מובילים</string>
+    <string name="coins">מטבעות</string>
+
+    <string name="notification_channel_reminders">תזכורות</string>
+
+    <string-array name="notification_reminder_titles">
+        <item>🧠 איך הזיכרון שלך היום?</item>
+        <item>🃏 הקלפים שלך מתגעגעים אליך!</item>
+        <item>🎴 האוסף שלך לא שלם!</item>
+        <item>✨ הגיע זמן לאתגר!</item>
+        <item>🃏 מוכן להפוך קלפים?</item>
+    </string-array>
+    <string-array name="notification_reminder_bodies">
+        <item>משחק מהיר עושה הרבה</item>
+        <item>חזור והתאם זוגות!</item>
+        <item>בדוק את הזיכרון שלך בסיבוב מהיר</item>
+        <item>ערבב, הפוך והתאם!</item>
+        <item>שמור על המוח חד!</item>
+    </string-array>
+
+    <string-array name="notification_ad_reward_titles">
+        <item>💰 פרס המטבעות שלך מוכן!</item>
+        <item>✨ מטבעות מחכים לך!</item>
+        <item>🏆 הגיע הזמן לאסוף את הפרס שלך!</item>
+        <item>💰 המטבעות שלך הגיעו!</item>
+        <item>✨ פרס נפתח!</item>
+    </string-array>
+    <string-array name="notification_ad_reward_bodies">
+        <item>מטבעות חינם מחכים לך!</item>
+        <item>אסוף את פרס המטבעות שלך עכשיו!</item>
+        <item>המטבעות שלך מוכנים!</item>
+        <item>צפה בפרסומת נוספת לעוד מטבעות</item>
+        <item>קח את המטבעות שלך בחנות!</item>
+    </string-array>
+
+    <string name="enable_notifications_title">פתח עוד פרסים!</string>
+    <string name="enable_notifications_body">קבל התראות כשמטבעות מוכנים לאיסוף וקלפים חדשים מחכים לפתיחה!</string>
+    <string name="enable_notifications_enable">הפעל</string>
+    <string name="enable_notifications_later">מאוחר יותר</string>
+    <string-array name="notification_daily_streak_titles">
+        <item>🔥 שמור על הרצף שלך!</item>
+        <item>🎁 הפרס היומי שלך מוכן!</item>
+        <item>💰 מטבעות חינם בחנות!</item>
+        <item>🔥 אל תאבד את הרצף!</item>
+        <item>🎁 פרס היום מחכה!</item>
+    </string-array>
+    <string-array name="notification_daily_streak_bodies">
+        <item>אסוף מטבעות לפני שהיום נגמר!</item>
+        <item>בקר בחנות לפרס שלך</item>
+        <item>הרצף שלך בסכנה!</item>
+        <item>אל תשבור את הרצף!</item>
+        <item>פתח את החנות וקח את המטבעות</item>
+    </string-array>
+    <string name="shortcut_daily_reward">פרס יומי</string>
+    <string name="shortcut_play">שחק</string>
+
+    <string name="free_coins">מטבעות חינם</string>
+    <string name="daily_reward_day">יום %d</string>
+    <string name="daily_reward_collect">אסוף %d</string>
+    <string name="daily_reward_back_tomorrow">חזור מחר</string>
+
+    <string name="daily_challenge">אתגר יומי</string>
+    <string name="daily_challenge_compare">השווה</string>
+    <string-array name="notification_daily_challenge_titles">
+        <item>🃏 אל תשכח את האתגר היומי!</item>
+        <item>⭐ האתגר היומי מחכה!</item>
+        <item>🧠 מוכן לאתגר של היום?</item>
+        <item>💪 אימון המוח היומי שלך!</item>
+        <item>🏆 תאתגר את עצמך היום!</item>
+    </string-array>
+    <string-array name="notification_daily_challenge_bodies">
+        <item>בדוק את הזיכרון שלך עם הלוח הייחודי של היום</item>
+        <item>אתה יכול לנצח את התוצאה של אתמול?</item>
+        <item>פאזל חדש מחכה לך</item>
+        <item>מצא את כל הזוגות ושתף את התוצאות</item>
+        <item>כולם מקבלים את אותו הלוח — איך תשתווה?</item>
+    </string-array>
+    <plurals name="daily_challenge_mistakes">
+        <item quantity="one">%d שגיאה</item>
+        <item quantity="two">%d שגיאות</item>
+        <item quantity="many">%d שגיאות</item>
+        <item quantity="other">%d שגיאות</item>
+    </plurals>
+    <string name="share_casual">חושב שתצליח לנצח אותי? 🧠🔥</string>
+    <string name="level_count">שלב %d</string>
+
+    <string name="leave_daily_challenge_title">לעזוב את האתגר היומי?</string>
+    <string name="leave_daily_challenge_body">לא ניתן יהיה לנסות שוב היום</string>
+    <string name="leave_game_title">לעזוב את המשחק?</string>
+    <string name="leave_game_body">ההתקדמות שלך תאבד</string>
+    <string name="leave_game_stay">להישאר</string>
+    <string name="leave_game_leave">לעזוב</string>
+
+    <string name="need_more_cards">צריך עוד קלפים</string>
+    <string name="next">הבא</string>
+    <string name="play">שחק</string>
+    <string name="daily_reward">פרס יומי</string>
+    <string name="daily_challenge_history">היסטוריה</string>
+</resources>
