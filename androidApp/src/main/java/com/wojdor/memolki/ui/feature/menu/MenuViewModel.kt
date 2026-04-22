@@ -23,7 +23,6 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnPlayClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
@@ -35,7 +34,6 @@ class MenuViewModel(
     savedStateHandle: SavedStateHandle,
     private val analytics: Analytics,
     private val hapticFeedback: HapticFeedback,
-    private val googlePlayGames: GooglePlayGames,
     private val getMenuUseCase: GetMenuUseCase,
     private val getMoreAppsUseCase: GetMoreAppsUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
@@ -83,7 +81,7 @@ class MenuViewModel(
     private fun onLeaderboardClick() {
         hapticFeedback.vibrateLow()
         analytics.logLeaderboardOpened()
-        sendEffect(OpenLeaderboardScreen(googlePlayGames))
+        sendEffect(OpenLeaderboardScreen)
         sendLeaderboardScores()
     }
 
@@ -159,15 +157,10 @@ class MenuViewModel(
     private fun sendLeaderboardScores() {
         viewModelScope.launch {
             getTotalCoinsUseCase().first().onSuccess { totalCoins ->
-                sendEffect(MenuEffect.SendTotalCoinsScore(googlePlayGames, totalCoins))
+                sendEffect(MenuEffect.SendTotalCoinsScore(totalCoins))
             }
             getTotalCardPairsMatchedUseCase().first().onSuccess { totalCardPairsMatched ->
-                sendEffect(
-                    MenuEffect.SendTotalCardPairsMatchedScore(
-                        googlePlayGames,
-                        totalCardPairsMatched
-                    )
-                )
+                sendEffect(MenuEffect.SendTotalCardPairsMatchedScore(totalCardPairsMatched))
             }
         }
     }

@@ -25,7 +25,6 @@ import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -40,7 +39,6 @@ class EndGameViewModel(
     private val hapticFeedback: HapticFeedback,
     private val allRewardedAds: AllRewardedAds,
     private val reviewManager: ReviewManager,
-    private val googlePlayGames: GooglePlayGames,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
@@ -342,7 +340,7 @@ class EndGameViewModel(
     private fun sendTotalCoinsScore() {
         viewModelScope.launch {
             getTotalCoinsUseCase().first().onSuccess { totalCoins ->
-                sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
+                sendEffect(SendTotalCoinsScore(totalCoins))
             }
         }
     }

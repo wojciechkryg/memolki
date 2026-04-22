@@ -85,6 +85,7 @@ import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.ui.ads.AdsInitializer
 import com.wojdor.memolki.ui.ads.AllRewardedAds
+import com.wojdor.memolki.ui.ads.AndroidAllRewardedAds
 import com.wojdor.memolki.ui.app.AppViewModel
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageViewModel
@@ -99,6 +100,7 @@ import com.wojdor.memolki.ui.feature.moreapps.MoreAppsViewModel
 import com.wojdor.memolki.ui.feature.settings.SettingsViewModel
 import com.wojdor.memolki.ui.feature.shop.ShopViewModel
 import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.util.billing.AndroidBillingHandler
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
@@ -109,8 +111,10 @@ import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
+import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationCreator
 import com.wojdor.memolki.util.notification.NotificationScheduler
+import com.wojdor.memolki.util.playgames.AndroidGooglePlayGames
 import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.AppForegroundProvider
 import com.wojdor.memolki.util.provider.AppInstalledProvider
@@ -177,15 +181,15 @@ val appKoinModule = module {
     singleOf(::TimeProvider)
 
     singleOf(::Analytics)
-    singleOf(::BillingHandler)
-    singleOf(::GooglePlayGames)
+    singleOf(::AndroidBillingHandler) { bind<BillingHandler>() }
+    singleOf(::AndroidGooglePlayGames) { bind<GooglePlayGames>() }
     singleOf(::InAppUpdate)
     singleOf(::NotificationCreator)
-    singleOf(::NotificationScheduler)
+    singleOf(::AndroidNotificationScheduler) { bind<NotificationScheduler>() }
     singleOf(::HapticFeedback)
     singleOf(::BackgroundMusicPlayer)
     singleOf(::AdsInitializer)
-    singleOf(::AllRewardedAds)
+    singleOf(::AndroidAllRewardedAds) { bind<AllRewardedAds>() }
     single { CardFlipPlayer(get(), get(MainDispatcher), get()) }
     single { CardPairMatchedPlayer(get(), get(MainDispatcher), get()) }
     single { CoinsPlayer(get(), get(MainDispatcher), get()) }

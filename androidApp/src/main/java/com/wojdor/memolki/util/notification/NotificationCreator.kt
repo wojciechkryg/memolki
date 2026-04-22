@@ -8,7 +8,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.wojdor.memolki.R
-import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.NOTIFICATION_CHANNEL_ID
+import com.wojdor.memolki.util.notification.AndroidNotificationScheduler.Companion.NOTIFICATION_CHANNEL_ID
 import com.wojdor.memolki.util.provider.PermissionProvider
 
 class NotificationCreator(

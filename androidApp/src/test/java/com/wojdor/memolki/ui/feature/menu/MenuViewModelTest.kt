@@ -24,7 +24,6 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnPlayClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.HapticFeedback
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -41,9 +40,6 @@ class MenuViewModelTest : AppTest() {
     private val savedStateHandle: SavedStateHandle by inject()
 
     private val hapticFeedback: HapticFeedback by inject()
-
-    private val googlePlayGames: GooglePlayGames by inject()
-
     private val getMenuUseCase: GetMenuUseCase by inject()
 
     private val getMoreAppsUseCase: GetMoreAppsUseCase by inject()
@@ -69,7 +65,6 @@ class MenuViewModelTest : AppTest() {
             savedStateHandle,
             analytics,
             hapticFeedback,
-            googlePlayGames,
             getMenuUseCase,
             getMoreAppsUseCase,
             getTotalCoinsUseCase,
@@ -267,7 +262,6 @@ class MenuViewModelTest : AppTest() {
             savedStateHandle,
             analytics,
             hapticFeedback,
-            googlePlayGames,
             getMenuUseCase,
             getMoreAppsUseCase,
             getTotalCoinsUseCase,

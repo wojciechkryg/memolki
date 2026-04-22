@@ -2,7 +2,6 @@ package com.wojdor.memolki.ui.feature.shop
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
@@ -21,11 +20,11 @@ import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
+import com.wojdor.memolki.util.billing.BillingProduct
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.coVerify
 import io.mockk.every
@@ -54,9 +53,6 @@ class ShopViewModelTest : AppTest() {
     private val allRewardedAds: AllRewardedAds by inject()
 
     private val billingHandler: BillingHandler by inject()
-
-    private val googlePlayGames: GooglePlayGames by inject()
-
     private val isShopAdCooldownOverUseCase: IsShopAdCooldownOverUseCase by inject()
 
     private val setLastShopAdShownTimestampUseCase: SetLastShopAdShownTimestampUseCase by inject()
@@ -97,7 +93,6 @@ class ShopViewModelTest : AppTest() {
             coinsPlayer,
             allRewardedAds,
             billingHandler,
-            googlePlayGames,
             isShopAdCooldownOverUseCase,
             setLastShopAdShownTimestampUseCase,
             getCoinsUseCase,
@@ -146,7 +141,6 @@ class ShopViewModelTest : AppTest() {
             coinsPlayer,
             allRewardedAds,
             billingHandler,
-            googlePlayGames,
             isShopAdCooldownOverUseCase,
             setLastShopAdShownTimestampUseCase,
             getCoinsUseCase,
@@ -161,7 +155,7 @@ class ShopViewModelTest : AppTest() {
             collectDailyStreakRewardUseCase
         )
         testScheduler.advanceUntilIdle()
-        listenerSlot.captured.onProductsFetched(listOf(mockProductDetails("coins_small", priceMicros = 990_000L, currency = "USD")))
+        listenerSlot.captured.onProductsFetched(listOf(billingProduct("coins_small", priceMicros = 990_000L, currency = "USD")))
         testScheduler.advanceUntilIdle()
 
         // when
@@ -184,7 +178,6 @@ class ShopViewModelTest : AppTest() {
             coinsPlayer,
             allRewardedAds,
             billingHandler,
-            googlePlayGames,
             isShopAdCooldownOverUseCase,
             setLastShopAdShownTimestampUseCase,
             getCoinsUseCase,
@@ -377,19 +370,17 @@ class ShopViewModelTest : AppTest() {
         assertTrue((notificationScheduler as FakeNotificationScheduler).streakNotificationScheduled)
     }
 
-    private fun mockProductDetails(
+    private fun billingProduct(
         id: String,
         priceMicros: Long = 990_000L,
         currency: String = "USD",
         formattedPriceText: String = "$0.99"
-    ): ProductDetails = mockk {
-        every { productId } returns id
-        every { oneTimePurchaseOfferDetails } returns mockk {
-            every { priceAmountMicros } returns priceMicros
-            every { priceCurrencyCode } returns currency
-            every { formattedPrice } returns formattedPriceText
-        }
-    }
+    ) = BillingProduct(
+        id = id,
+        formattedPrice = formattedPriceText,
+        priceMicros = priceMicros,
+        currencyCode = currency
+    )
 
     private fun createSutWithCapturedBillingListener(): BillingStatusListener {
         val listenerSlot = slot<BillingStatusListener>()
@@ -408,7 +399,6 @@ class ShopViewModelTest : AppTest() {
             coinsPlayer,
             allRewardedAds,
             billingHandler,
-            googlePlayGames,
             isShopAdCooldownOverUseCase,
             setLastShopAdShownTimestampUseCase,
             getCoinsUseCase,
@@ -431,7 +421,7 @@ class ShopViewModelTest : AppTest() {
             // given
             val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
-            listener.onProductsFetched(listOf(mockProductDetails(BillingHandler.IAP_COINS_SMALL, priceMicros = 990_000L, currency = "USD")))
+            listener.onProductsFetched(listOf(billingProduct(BillingHandler.IAP_COINS_SMALL, priceMicros = 990_000L, currency = "USD")))
             testScheduler.advanceUntilIdle()
 
             // when
@@ -463,7 +453,7 @@ class ShopViewModelTest : AppTest() {
             // given
             val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
-            listener.onProductsFetched(listOf(mockProductDetails(BillingHandler.IAP_COINS_BIG, priceMicros = 4_990_000L, currency = "USD")))
+            listener.onProductsFetched(listOf(billingProduct(BillingHandler.IAP_COINS_BIG, priceMicros = 4_990_000L, currency = "USD")))
             testScheduler.advanceUntilIdle()
 
             // when
@@ -480,7 +470,7 @@ class ShopViewModelTest : AppTest() {
             // given
             val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
-            listener.onProductsFetched(listOf(mockProductDetails(BillingHandler.IAP_UNLOCK_ALL_CARDS, priceMicros = 14_990_000L, currency = "USD")))
+            listener.onProductsFetched(listOf(billingProduct(BillingHandler.IAP_UNLOCK_ALL_CARDS, priceMicros = 14_990_000L, currency = "USD")))
             testScheduler.advanceUntilIdle()
 
             // when
@@ -561,12 +551,7 @@ class ShopViewModelTest : AppTest() {
             // given
             val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
-            val mockProduct = mockk<ProductDetails> {
-                every { productId } returns BillingHandler.IAP_COINS_SMALL
-                every { oneTimePurchaseOfferDetails } returns mockk {
-                    every { formattedPrice } returns "$0.99"
-                }
-            }
+            val mockProduct = billingProduct(BillingHandler.IAP_COINS_SMALL, formattedPriceText = "$0.99")
             listener.onProductsFetched(listOf(mockProduct))
             testScheduler.advanceUntilIdle()
 
@@ -585,12 +570,7 @@ class ShopViewModelTest : AppTest() {
         // given
         val listener = createSutWithCapturedBillingListener()
         testScheduler.advanceUntilIdle()
-        val mockProduct = mockk<ProductDetails> {
-            every { productId } returns BillingHandler.IAP_COINS_BIG
-            every { oneTimePurchaseOfferDetails } returns mockk {
-                every { formattedPrice } returns "$4.99"
-            }
-        }
+        val mockProduct = billingProduct(BillingHandler.IAP_COINS_BIG, formattedPriceText = "$4.99")
         listener.onProductsFetched(listOf(mockProduct))
         testScheduler.advanceUntilIdle()
 
@@ -609,12 +589,7 @@ class ShopViewModelTest : AppTest() {
         // given
         val listener = createSutWithCapturedBillingListener()
         testScheduler.advanceUntilIdle()
-        val mockProduct = mockk<ProductDetails> {
-            every { productId } returns BillingHandler.IAP_UNLOCK_ALL_CARDS
-            every { oneTimePurchaseOfferDetails } returns mockk {
-                every { formattedPrice } returns "$9.99"
-            }
-        }
+        val mockProduct = billingProduct(BillingHandler.IAP_UNLOCK_ALL_CARDS, formattedPriceText = "$9.99")
         listener.onProductsFetched(listOf(mockProduct))
         testScheduler.advanceUntilIdle()
 
@@ -672,24 +647,9 @@ class ShopViewModelTest : AppTest() {
         val listener = createSutWithCapturedBillingListener()
         testScheduler.advanceUntilIdle()
 
-        val mockProductSmall = mockk<ProductDetails> {
-            every { productId } returns BillingHandler.IAP_COINS_SMALL
-            every { oneTimePurchaseOfferDetails } returns mockk {
-                every { formattedPrice } returns "$0.99"
-            }
-        }
-        val mockProductBig = mockk<ProductDetails> {
-            every { productId } returns BillingHandler.IAP_COINS_BIG
-            every { oneTimePurchaseOfferDetails } returns mockk {
-                every { formattedPrice } returns "$4.99"
-            }
-        }
-        val mockProductUnlockAll = mockk<ProductDetails> {
-            every { productId } returns BillingHandler.IAP_UNLOCK_ALL_CARDS
-            every { oneTimePurchaseOfferDetails } returns mockk {
-                every { formattedPrice } returns "$9.99"
-            }
-        }
+        val mockProductSmall = billingProduct(BillingHandler.IAP_COINS_SMALL, formattedPriceText = "$0.99")
+        val mockProductBig = billingProduct(BillingHandler.IAP_COINS_BIG, formattedPriceText = "$4.99")
+        val mockProductUnlockAll = billingProduct(BillingHandler.IAP_UNLOCK_ALL_CARDS, formattedPriceText = "$9.99")
 
         // when
         listener.onProductsFetched(listOf(mockProductSmall, mockProductBig, mockProductUnlockAll))

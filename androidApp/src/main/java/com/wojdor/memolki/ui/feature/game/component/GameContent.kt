@@ -120,7 +120,7 @@ private fun CardsGridWithText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .alpha(animatedTextAlpha),
-                        text = stringResource(state.lastCardPressed.textRes),
+                        text = stringResource(state.lastCardPressed.textRes.takeIf { it != 0 } ?: R.string.empty),
                         style = MaterialTheme.typography.displayMedium,
                     )
                 }
@@ -159,7 +159,7 @@ private fun CardDetails(state: GameState) {
                             .clip(FullRoundedShape)
                             .background(colorResource(R.color.primary))
                             .padding(vertical = spacingL, horizontal = spacingXL),
-                        text = stringResource(state.lastCardPressed.textRes),
+                        text = stringResource(state.lastCardPressed.textRes.takeIf { it != 0 } ?: R.string.empty),
                         style = MaterialTheme.typography.displayMedium,
                     )
                 }

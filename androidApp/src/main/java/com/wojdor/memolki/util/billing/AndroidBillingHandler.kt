@@ -1,7 +1,9 @@
 package com.wojdor.memolki.util.billing
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
+import android.os.Bundle
 import android.util.Base64
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -18,6 +20,9 @@ import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.wojdor.memolki.BuildConfig
+import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_COINS_BIG
+import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_COINS_SMALL
+import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_UNLOCK_ALL_CARDS
 import com.wojdor.memolki.util.extension.logE
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
@@ -26,6 +31,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
+import java.lang.ref.WeakReference
 import java.nio.charset.StandardCharsets
 import java.security.KeyFactory
 import java.security.PublicKey
@@ -33,28 +39,49 @@ import java.security.Signature
 import java.security.spec.X509EncodedKeySpec
 import kotlin.coroutines.resume
 
-class BillingHandler(
+open class AndroidBillingHandler(
     private val context: Context,
     private val dispatcher: CoroutineDispatcher
-) : PurchasesUpdatedListener {
+) : BillingHandler, PurchasesUpdatedListener {
 
     private lateinit var billingClient: BillingClient
     private val scope = CoroutineScope(dispatcher)
     private val connectionLock = Any()
     private var listener: BillingStatusListener? = null
     private var cachedProducts: List<ProductDetails> = emptyList()
+    private var currentActivityRef: WeakReference<Activity>? = null
     @Volatile
     private var connectionReady = CompletableDeferred<Boolean>()
 
-    val consumableProductIds = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
-    val nonConsumableProductIds = setOf(IAP_UNLOCK_ALL_CARDS)
+    override val consumableProductIds = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
+    override val nonConsumableProductIds = setOf(IAP_UNLOCK_ALL_CARDS)
 
-    fun startConnection(listener: BillingStatusListener) {
+    init {
+        (context.applicationContext as? Application)?.registerActivityLifecycleCallbacks(
+            object : Application.ActivityLifecycleCallbacks {
+                override fun onActivityResumed(activity: Activity) {
+                    currentActivityRef = WeakReference(activity)
+                }
+
+                override fun onActivityPaused(activity: Activity) {
+                    if (currentActivityRef?.get() === activity) currentActivityRef = null
+                }
+
+                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
+                override fun onActivityStarted(activity: Activity) = Unit
+                override fun onActivityStopped(activity: Activity) = Unit
+                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
+                override fun onActivityDestroyed(activity: Activity) = Unit
+            }
+        )
+    }
+
+    override fun startConnection(listener: BillingStatusListener) {
         this.listener = listener
         if (::billingClient.isInitialized && billingClient.isReady) {
             listener.onConnectionStatusChanged(true)
             if (cachedProducts.isNotEmpty()) {
-                listener.onProductsFetched(cachedProducts)
+                listener.onProductsFetched(cachedProducts.map(ProductDetails::toBillingProduct))
             } else {
                 scope.launch { queryProductDetails() }
             }
@@ -63,7 +90,7 @@ class BillingHandler(
         connectInternal()
     }
 
-    fun ensureConnected() {
+    override fun ensureConnected() {
         if (::billingClient.isInitialized && billingClient.isReady) return
         connectInternal()
     }
@@ -122,17 +149,22 @@ class BillingHandler(
         if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             val products = result.productDetailsList.orEmpty()
             cachedProducts = products
-            listener?.onProductsFetched(products)
+            listener?.onProductsFetched(products.map(ProductDetails::toBillingProduct))
         } else {
             logE("Error fetching products.", Exception(result.billingResult.debugMessage))
         }
     }
 
-    fun launchBillingFlow(
-        activity: Activity,
-        productDetails: ProductDetails
-    ) {
-        if (!billingClient.isReady) {
+    override fun launchBillingFlow(product: BillingProduct) {
+        val activity = currentActivityRef?.get() ?: run {
+            listener?.onPurchaseFailed()
+            return
+        }
+        if (!::billingClient.isInitialized || !billingClient.isReady) {
+            listener?.onPurchaseFailed()
+            return
+        }
+        val productDetails = cachedProducts.firstOrNull { it.productId == product.id } ?: run {
             listener?.onPurchaseFailed()
             return
         }
@@ -263,7 +295,7 @@ class BillingHandler(
         false
     }
 
-    suspend fun isPurchased(productId: String): Boolean {
+    override suspend fun isPurchased(productId: String): Boolean {
         if (!::billingClient.isInitialized) return false
         val ready = connectionReady
         withTimeoutOrNull(READY_TIMEOUT_MS) { ready.await() }
@@ -285,15 +317,21 @@ class BillingHandler(
         }
     }
 
-    companion object {
-        const val IAP_COINS_SMALL = "coins_small"
-        const val IAP_COINS_BIG = "coins_big"
-        const val IAP_UNLOCK_ALL_CARDS = "unlock_all_cards"
-
+    private companion object {
         private const val FAKE_DATA = "intentionally_wrong_transaction_token"
         private const val FAKE_SIGNATURE = "YmFkX3NpZ25hdHVyZ_ZmFrZQ=="
         private const val FAKE_PUBLIC_KEY = "FAKE_PUBLIC_KEY"
         private const val RETRY_CONNECTION_DELAY = 5000L
         private const val READY_TIMEOUT_MS = 5000L
     }
+}
+
+private fun ProductDetails.toBillingProduct(): BillingProduct {
+    val offer = oneTimePurchaseOfferDetails
+    return BillingProduct(
+        id = productId,
+        formattedPrice = offer?.formattedPrice.orEmpty(),
+        priceMicros = offer?.priceAmountMicros ?: 0L,
+        currencyCode = offer?.priceCurrencyCode.orEmpty()
+    )
 }

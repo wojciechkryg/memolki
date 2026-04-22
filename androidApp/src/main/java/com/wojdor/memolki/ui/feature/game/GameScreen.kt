@@ -1,14 +1,13 @@
 package com.wojdor.memolki.ui.feature.game
 
-import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
@@ -41,8 +40,8 @@ private fun HandleEffect(
     endGameViewModel: EndGameViewModel,
     navController: NavController
 ) {
-    val activity = LocalActivity.current
     val coroutineScope = rememberCoroutineScope()
+    val googlePlayGames = koinInject<GooglePlayGames>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is GameEffect.OpenEndGameScreen -> openEndGameScreen(
@@ -51,28 +50,14 @@ private fun HandleEffect(
                 effect
             )
 
-            is GameEffect.SendTotalCardPairsMatchedScore -> activity?.let {
-                coroutineScope.launch {
-                    submitTotalCardPairsMatched(
-                        it,
-                        effect.googlePlayGames,
-                        effect.totalCardPairsMatched
-                    )
-                }
+            is GameEffect.SendTotalCardPairsMatchedScore -> coroutineScope.launch {
+                googlePlayGames.submitTotalCardPairsMatched(effect.totalCardPairsMatched)
             }
 
             is GameEffect.OnPairMatched -> viewModel.playMatchSound()
             is GameEffect.NavigateBack -> navController.popBackStack()
         }
     }
-}
-
-private suspend fun submitTotalCardPairsMatched(
-    activity: Activity,
-    googlePlayGames: GooglePlayGames,
-    totalCardPairsMatched: Long
-) {
-    googlePlayGames.submitTotalCardPairsMatched(activity, totalCardPairsMatched)
 }
 
 private fun openEndGameScreen(

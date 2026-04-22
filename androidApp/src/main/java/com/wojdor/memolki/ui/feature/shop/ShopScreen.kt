@@ -6,13 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.ui.ads.show
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
@@ -39,6 +40,8 @@ private fun HandleEffect(
     navController: NavController
 ) {
     val activity = LocalActivity.current
+    val billingHandler = koinInject<BillingHandler>()
+    val googlePlayGames = koinInject<GooglePlayGames>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is ShopEffect.OpenEnableNotificationsScreen ->
@@ -52,23 +55,12 @@ private fun HandleEffect(
                 )
             }
 
-            is ShopEffect.LaunchBilling -> activity?.let {
-                launchBillingFlow(
-                    it,
-                    effect.billingHandler,
-                    effect.productDetails
-                )
-            }
+            is ShopEffect.LaunchBilling -> billingHandler.launchBillingFlow(effect.product)
 
             is ShopEffect.ShowPurchaseFailedError -> activity?.showToast(R.string.shop_purchase_failed_error)
             is ShopEffect.ShowConnectionError -> activity?.showToast(R.string.shop_connection_error)
-            is ShopEffect.SendTotalCoinsScore -> activity?.let {
-                sendTotalCoinsScore(
-                    it,
-                    viewModel,
-                    effect.googlePlayGames,
-                    effect.totalCoins
-                )
+            is ShopEffect.SendTotalCoinsScore -> viewModel.viewModelScope.launch {
+                googlePlayGames.submitTotalCoins(effect.totalCoins)
             }
         }
     }
@@ -84,25 +76,6 @@ private fun onWatchAdClick(
         onGrantReward = { viewModel.sendIntent(ShopIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(ShopIntent.OnAdDismiss(it)) }
     )
-}
-
-private fun launchBillingFlow(
-    activity: Activity,
-    billingHandler: BillingHandler,
-    productDetails: ProductDetails
-) {
-    billingHandler.launchBillingFlow(activity, productDetails)
-}
-
-private fun sendTotalCoinsScore(
-    activity: Activity,
-    viewModel: ShopViewModel,
-    googlePlayGames: GooglePlayGames,
-    totalCoins: Long
-) {
-    viewModel.viewModelScope.launch {
-        googlePlayGames.submitTotalCoins(activity, totalCoins)
-    }
 }
 
 @Composable

@@ -10,15 +10,15 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardedAd as GoogleRewardedAd
 
-class RewardedAd(
+open class AndroidRewardedAd(
     private val context: Context,
     @param:StringRes private val adUnitRes: Int,
     private val onPaidEvent: (valueMicros: Long, currencyCode: String, adUnitId: String, adSource: String?) -> Unit = { _, _, _, _ -> }
-) {
+) : RewardedAd {
 
     private var rewardedAd: GoogleRewardedAd? = null
 
-    val isLoaded: Boolean
+    override val isLoaded: Boolean
         get() = rewardedAd != null
 
     fun load(
@@ -52,8 +52,8 @@ class RewardedAd(
             })
     }
 
-    fun loadAndNotify(
-        wasRewardGranted: Boolean = false,
+    override fun loadAndNotify(
+        wasRewardGranted: Boolean,
         onAvailabilityChanged: (isAvailable: Boolean) -> Unit
     ) {
         if (isLoaded && !wasRewardGranted) {

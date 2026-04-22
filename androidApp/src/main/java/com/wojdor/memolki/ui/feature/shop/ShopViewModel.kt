@@ -2,7 +2,6 @@ package com.wojdor.memolki.ui.feature.shop
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.android.billingclient.api.ProductDetails
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
@@ -20,12 +19,12 @@ import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
+import com.wojdor.memolki.util.billing.BillingProduct
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.util.extension.logE
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -39,7 +38,6 @@ class ShopViewModel(
     private val coinsPlayer: CoinsPlayer,
     private val allRewardedAds: AllRewardedAds,
     private val billingHandler: BillingHandler,
-    private val googlePlayGames: GooglePlayGames,
     private val isShopAdCooldownOverUseCase: IsShopAdCooldownOverUseCase,
     private val setLastShopAdShownTimestampUseCase: SetLastShopAdShownTimestampUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
@@ -61,19 +59,17 @@ class ShopViewModel(
     private var loadCoinsJob: Job? = null
     private var checkStreakJob: Job? = null
     private var loadMenuItemsAndAdJob: Job? = null
-    private var productDetails: List<ProductDetails> = emptyList()
+    private var products: List<BillingProduct> = emptyList()
     private var dailyStreakResult: CheckDailyLoginStreakUseCase.DailyStreakResult? = null
     private val priceByProductId: Map<String, String>
-        get() = productDetails.associateBy({ it.productId }) { product ->
-            product.oneTimePurchaseOfferDetails?.formattedPrice.orEmpty()
-        }
+        get() = products.associateBy(BillingProduct::id, BillingProduct::formattedPrice)
 
     init {
         checkDailyStreak()
         loadAdCoins()
         loadData()
         billingHandler.startConnection(object : BillingStatusListener {
-            override fun onProductsFetched(products: List<ProductDetails>) {
+            override fun onProductsFetched(products: List<BillingProduct>) {
                 this@ShopViewModel.onProductsFetched(products)
             }
 
@@ -168,29 +164,15 @@ class ShopViewModel(
         }
     }
 
-    private fun onBuyCoinsSmallAmountClick() {
-        val product = productDetails.find { it.productId == BillingHandler.IAP_COINS_SMALL }
-        product?.let {
-            sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
-        } ?: run {
-            sendEffect(ShopEffect.ShowPurchaseFailedError)
-        }
-    }
+    private fun onBuyCoinsSmallAmountClick() = launchBillingForProductId(BillingHandler.IAP_COINS_SMALL)
+    private fun onBuyCoinsBigAmount() = launchBillingForProductId(BillingHandler.IAP_COINS_BIG)
+    private fun onBuyAllCardsClick() = launchBillingForProductId(BillingHandler.IAP_UNLOCK_ALL_CARDS)
 
-    private fun onBuyCoinsBigAmount() {
-        val product = productDetails.find { it.productId == BillingHandler.IAP_COINS_BIG }
-        product?.let {
-            sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
-        } ?: run {
-            sendEffect(ShopEffect.ShowPurchaseFailedError)
-        }
-    }
-
-    private fun onBuyAllCardsClick() {
-        val product = productDetails.find { it.productId == BillingHandler.IAP_UNLOCK_ALL_CARDS }
-        product?.let {
-            sendEffect(ShopEffect.LaunchBilling(billingHandler, it))
-        } ?: run {
+    private fun launchBillingForProductId(productId: String) {
+        val product = products.find { it.id == productId }
+        if (product != null) {
+            sendEffect(ShopEffect.LaunchBilling(product))
+        } else {
             sendEffect(ShopEffect.ShowPurchaseFailedError)
         }
     }
@@ -228,7 +210,7 @@ class ShopViewModel(
     private fun sendTotalCoinsScore() {
         viewModelScope.launch {
             getTotalCoinsUseCase().first().onSuccess { totalCoins ->
-                sendEffect(SendTotalCoinsScore(googlePlayGames, totalCoins))
+                sendEffect(SendTotalCoinsScore(totalCoins))
             }
         }
     }
@@ -309,18 +291,18 @@ class ShopViewModel(
         (uiState.value.menu.find { it is ShopMenuModel.WatchAd } as? ShopMenuModel.WatchAd)
             ?.coinsToGrant ?: 0L
 
-    private fun onProductsFetched(products: List<ProductDetails>) {
-        productDetails = products
+    private fun onProductsFetched(products: List<BillingProduct>) {
+        this.products = products
         showMenu()
     }
 
     private fun onPurchaseSuccessful(productId: String) {
-        val offer = productDetails.firstOrNull { it.productId == productId }?.oneTimePurchaseOfferDetails
-        if (offer != null) {
+        val product = products.firstOrNull { it.id == productId }
+        if (product != null) {
             analytics.logPurchaseCompleted(
                 product = productId,
-                priceMicros = offer.priceAmountMicros,
-                currencyCode = offer.priceCurrencyCode
+                priceMicros = product.priceMicros,
+                currencyCode = product.currencyCode
             )
         }
         when (productId) {

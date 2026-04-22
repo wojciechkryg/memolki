@@ -1,11 +1,10 @@
 package com.wojdor.memolki.ui.feature.menu
 
-import android.app.Activity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.viewModelScope
@@ -42,30 +41,18 @@ private fun HandleEffect(
     viewModel: MenuViewModel,
     navController: NavController
 ) {
-    val activity = LocalActivity.current
+    val googlePlayGames = koinInject<GooglePlayGames>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             MenuEffect.OpenChooseBoardScreen -> navController.navigateToChooseBoard()
             MenuEffect.OpenCollectionScreen -> navController.navigateToCollection()
-            is MenuEffect.OpenLeaderboardScreen -> activity?.let {
-                openLeaderboardScreen(
-                    it,
-                    viewModel,
-                    effect.googlePlayGames
-                )
+            MenuEffect.OpenLeaderboardScreen -> openLeaderboardScreen(viewModel, googlePlayGames)
+            is MenuEffect.SendTotalCoinsScore -> viewModel.viewModelScope.launch {
+                googlePlayGames.submitTotalCoins(effect.totalCoins)
             }
 
-            is MenuEffect.SendTotalCoinsScore -> activity?.let {
-                sendTotalCoinsScore(it, viewModel, effect.googlePlayGames, effect.totalCoins)
-            }
-
-            is MenuEffect.SendTotalCardPairsMatchedScore -> activity?.let {
-                sendTotalCardPairsMatchedScore(
-                    it,
-                    viewModel,
-                    effect.googlePlayGames,
-                    effect.totalCardPairsMatched
-                )
+            is MenuEffect.SendTotalCardPairsMatchedScore -> viewModel.viewModelScope.launch {
+                googlePlayGames.submitTotalCardPairsMatched(effect.totalCardPairsMatched)
             }
 
             MenuEffect.OpenSettingsScreen -> navController.navigateToSettings()
@@ -76,40 +63,16 @@ private fun HandleEffect(
 }
 
 private fun openLeaderboardScreen(
-    activity: Activity,
     viewModel: MenuViewModel,
     googlePlayGames: GooglePlayGames
 ) {
     viewModel.viewModelScope.launch {
-        if (!googlePlayGames.isAuthenticated(activity)) {
-            googlePlayGames.signIn(activity)
+        if (!googlePlayGames.isAuthenticated()) {
+            googlePlayGames.signIn()
         }
-        if (googlePlayGames.isAuthenticated(activity)) {
-            val intent = googlePlayGames.getLeaderboardIntent(activity)
-            activity.startActivityForResult(intent, REQUEST_CODE_LEADERBOARD)
+        if (googlePlayGames.isAuthenticated()) {
+            googlePlayGames.openLeaderboard()
         }
-    }
-}
-
-private fun sendTotalCoinsScore(
-    activity: Activity,
-    viewModel: MenuViewModel,
-    googlePlayGames: GooglePlayGames,
-    totalCoins: Long
-) {
-    viewModel.viewModelScope.launch {
-        googlePlayGames.submitTotalCoins(activity, totalCoins)
-    }
-}
-
-private fun sendTotalCardPairsMatchedScore(
-    activity: Activity,
-    viewModel: MenuViewModel,
-    googlePlayGames: GooglePlayGames,
-    totalCardPairsMatched: Long
-) {
-    viewModel.viewModelScope.launch {
-        googlePlayGames.submitTotalCardPairsMatched(activity, totalCardPairsMatched)
     }
 }
 
@@ -137,8 +100,6 @@ private fun MenuScreen(
     MenuContent(state, callbacks)
 }
 
-private const val REQUEST_CODE_LEADERBOARD = 1
-
 @Preview(showBackground = true)
 @Composable
 private fun MenuScreenPreview() {
@@ -158,8 +119,8 @@ private fun MenuScreenPreview() {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showBackground = true)
 private fun MenuScreenWithoutMoreAppsPreview() {
     AppTheme {
         MenuScreen(

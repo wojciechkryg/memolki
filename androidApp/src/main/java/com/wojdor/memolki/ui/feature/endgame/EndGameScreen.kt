@@ -13,10 +13,12 @@ import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
+import org.koin.compose.koinInject
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.ui.ads.show
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
@@ -59,6 +61,7 @@ private fun HandleEffect(
 ) {
     val activity = LocalActivity.current
     val coroutineScope = rememberCoroutineScope()
+    val googlePlayGames = koinInject<GooglePlayGames>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.boardModel)
@@ -74,10 +77,8 @@ private fun HandleEffect(
                 launchReviewFlow(it, effect.reviewManager, effect.reviewInfo)
             }
 
-            is EndGameEffect.SendTotalCoinsScore -> activity?.let {
-                coroutineScope.launch {
-                    submitTotalCoinsScore(it, effect.googlePlayGames, effect.totalCoins)
-                }
+            is EndGameEffect.SendTotalCoinsScore -> coroutineScope.launch {
+                googlePlayGames.submitTotalCoins(effect.totalCoins)
             }
 
             is EndGameEffect.Share -> activity?.shareText(effect.text)
@@ -113,14 +114,6 @@ private fun showAd(
         onGrantReward = { viewModel.sendIntent(EndGameIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(EndGameIntent.OnAdDismiss(it)) }
     )
-}
-
-private suspend fun submitTotalCoinsScore(
-    activity: Activity,
-    googlePlayGames: GooglePlayGames,
-    totalCoins: Long
-) {
-    googlePlayGames.submitTotalCoins(activity, totalCoins)
 }
 
 private fun launchReviewFlow(

@@ -22,7 +22,6 @@ import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.TimeProvider
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
@@ -48,9 +47,6 @@ class GameViewModelTest : AppTest() {
     private val cardPairMatchedPlayer: CardPairMatchedPlayer by inject()
 
     private val hapticFeedback: HapticFeedback by inject()
-
-    private val googlePlayGames: GooglePlayGames by inject()
-
     @RelaxedMockK
     lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
 
@@ -95,7 +91,6 @@ class GameViewModelTest : AppTest() {
             cardFlipPlayer,
             cardPairMatchedPlayer,
             hapticFeedback,
-            googlePlayGames,
             getShuffledUnlockedCardsUseCase,
             incrementTotalCardPairsMatchedUseCase,
             getLevelUseCase,

@@ -7,7 +7,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.wojdor.memolki.data.repository.NotificationRepository
 import com.wojdor.memolki.ui.app.AppActivity
-import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
+import com.wojdor.memolki.util.notification.AndroidNotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
 import com.wojdor.memolki.util.provider.AppForegroundProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +52,7 @@ class PushNotificationService : FirebaseMessagingService(), KoinComponent {
             Intent(this, AppActivity::class.java)
         }.apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            putExtra(EXTRA_NOTIFICATION_TYPE, NotificationScheduler.TYPE_PUSH)
+            putExtra(EXTRA_NOTIFICATION_TYPE, AndroidNotificationScheduler.TYPE_PUSH)
         }
         return PendingIntent.getActivity(
             this,

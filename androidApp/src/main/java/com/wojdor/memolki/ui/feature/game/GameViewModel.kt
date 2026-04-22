@@ -21,7 +21,6 @@ import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
@@ -35,7 +34,6 @@ class GameViewModel(
     private val cardFlipPlayer: CardFlipPlayer,
     private val cardPairMatchedPlayer: CardPairMatchedPlayer,
     private val hapticFeedback: HapticFeedback,
-    private val googlePlayGames: GooglePlayGames,
     private val getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase,
     private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase,
     private val getLevelUseCase: GetLevelUseCase,
@@ -304,7 +302,7 @@ class GameViewModel(
         showCardText(matchedCards)
         incrementTotalCardPairsMatchedUseCase().onEach { result ->
             result.onSuccess {
-                sendEffect(GameEffect.SendTotalCardPairsMatchedScore(googlePlayGames, it))
+                sendEffect(GameEffect.SendTotalCardPairsMatchedScore(it))
             }
         }.launchIn(viewModelScope)
     }

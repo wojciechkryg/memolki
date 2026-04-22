@@ -31,8 +31,8 @@ import com.wojdor.memolki.ui.theme.LocalScreenHeight
 import com.wojdor.memolki.ui.theme.LocalWindowSize
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.notification.DeepLinkBuilder
-import com.wojdor.memolki.util.notification.NotificationScheduler
-import com.wojdor.memolki.util.notification.NotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
+import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
+import com.wojdor.memolki.util.notification.AndroidNotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.update.InAppUpdate
 import org.koin.android.ext.android.inject
@@ -43,7 +43,7 @@ class AppActivity : ComponentActivity() {
     private val viewModel: AppViewModel by viewModel()
     private val backgroundMusicPlayer: BackgroundMusicPlayer by inject()
     private val inAppUpdate: InAppUpdate by inject()
-    private val notificationScheduler: NotificationScheduler by inject()
+    private val notificationScheduler: AndroidNotificationScheduler by inject()
 
     private val newIntentState = mutableStateOf<Intent?>(null)
 

@@ -4,27 +4,27 @@ import android.content.Context
 import com.wojdor.memolki.R
 import com.wojdor.memolki.util.analytics.Analytics
 
-class AllRewardedAds(
+open class AndroidAllRewardedAds(
     private val context: Context,
     private val analytics: Analytics
-) {
-    val endGameCoinsAd = RewardedAd(
+) : AllRewardedAds {
+    override val endGameCoinsAd: AndroidRewardedAd = AndroidRewardedAd(
         context,
         R.string.ad_mob_end_game_coins,
         onPaidEvent = ::logAdImpression
     )
-    val collectionCardPairAd = RewardedAd(
+    override val collectionCardPairAd: AndroidRewardedAd = AndroidRewardedAd(
         context,
         R.string.ad_mob_collection_card_pair,
         onPaidEvent = ::logAdImpression
     )
-    val shopCoinsAd = RewardedAd(
+    override val shopCoinsAd: AndroidRewardedAd = AndroidRewardedAd(
         context,
         R.string.ad_mob_shop_coins,
         onPaidEvent = ::logAdImpression
     )
 
-    fun loadAllAds() {
+    override fun loadAllAds() {
         endGameCoinsAd.load()
         collectionCardPairAd.load()
         shopCoinsAd.load()
@@ -45,7 +45,7 @@ class AllRewardedAds(
         )
     }
 
-    companion object {
+    private companion object {
         private const val AD_FORMAT_REWARDED = "Rewarded"
     }
 }

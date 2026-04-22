@@ -269,6 +269,21 @@ Structure — most providers are multiplatform via `expect/actual`:
 
 Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`. `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` and `PushNotificationProvider` still live in `:androidApp` — `TimeProvider` moves after the `java.time → kotlinx.datetime` swap; `PushNotificationProvider` is staying Android-only since it wraps `FirebaseMessaging` topic subscription and Android-specific language-tag handling.
 
+### Platform services (Billing / Ads / Notifications / PlayGames)
+
+Bigger Android-only subsystems are exposed to ViewModels as **commonMain interfaces** with Android impls in `:androidApp` and iOS no-op impls in `shared/iosMain`. ViewModels and use cases never touch `Activity`, `ProductDetails`, `PendingIntent`, etc. directly — the Android impl tracks the current `Activity` internally via `ActivityLifecycleCallbacks` where needed.
+
+| Interface (commonMain) | Android impl (`:androidApp`) | iOS stub (`shared/iosMain`) |
+|---|---|---|
+| `util/billing/BillingHandler` + `BillingProduct` + `BillingStatusListener` | `AndroidBillingHandler` (Play Billing, tracks Activity) | `NoopBillingHandler` |
+| `ui/ads/RewardedAd` + `ui/ads/AllRewardedAds` | `AndroidRewardedAd`/`AndroidAllRewardedAds` (AdMob). `show(activity, …)` is an Android-only extension in `ui/ads/RewardedAdExtensions.kt` | `NoopAllRewardedAds` |
+| `util/notification/NotificationScheduler` | `AndroidNotificationScheduler` (`AlarmManager` + lifecycle observer) | `NoopNotificationScheduler` |
+| `util/playgames/GooglePlayGames` | `AndroidGooglePlayGames` (Play Games SDK, tracks Activity) | `NoopGooglePlayGames` |
+
+`InAppUpdate` stays Android-only — only `AppActivity` calls it, and iOS relies on App Store, so no common interface.
+
+MVI effects only carry common types (`BillingProduct`, `Long`, `RewardedAd` interface) — they no longer ship concrete Android objects to screens. Screens inject `BillingHandler`/`GooglePlayGames` via `koinInject<>()` when handling effects.
+
 Testing:
 - Each provider has a corresponding `Fake{Name}` class in `shared/src/androidMain` OR `androidApp/src/test/fake/` (currently still all in `androidApp/test/fake/`) that extends the Android `actual` class, passing `mockk()` as the context where needed
 - Fakes are **fully functional** — they hold state via private vars and override all methods with real behavior (no mocks, no no-ops)
@@ -328,7 +343,7 @@ Shared composables live in `ui/component/`. Before creating a new composable, ch
 
 - **Framework:** JUnit 4 + Turbine (Flow testing) + MockK + Koin Test (`KoinTest`)
 - **Base class:** `AppTest` (`test/AppTest.kt`) — implements `KoinTest`; starts Koin with `testKoinModule` in `@Before` and `stopKoin()` in `@After`; sets `Dispatchers.setMain(testDispatcher)` with the injected `StandardTestDispatcher`; initializes MockK annotations.
-- **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) mirrors `AppKoinModule` with fakes (`FakeEncryptor`, `FakeLocaleProvider`, `FakeTimeProvider`, etc. bound to their interfaces/superclasses) + `relaxedMockk()` for platform dependencies tests rarely exercise directly (`HapticFeedback`, `BillingHandler`, `Analytics`, `GooglePlayGames`, Firebase, media players). `Random(0)` for deterministic randomness. One `StandardTestDispatcher` shared across IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned.
+- **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) mirrors `AppKoinModule` with fakes (`FakeEncryptor`, `FakeLocaleProvider`, `FakeTimeProvider`, `FakeNotificationScheduler`, etc. bound to their interfaces) + `relaxedMockk()` for platform dependencies tests rarely exercise directly (`HapticFeedback`, `BillingHandler` (interface), `Analytics`, `GooglePlayGames` (interface), Firebase, media players, `AllRewardedAds` (interface)). `Random(0)` for deterministic randomness. One `StandardTestDispatcher` shared across IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned.
 - **Test utilities:** `test/TestUtils.kt` — `relaxedMockk<T>()`, `verifyOnce()`, `coVerifyOnce()`
 - **Test naming:** backtick-quoted descriptive names: `` `when X then Y` ``
 
@@ -626,20 +641,25 @@ Screens: `shop`, `collection`, `more_apps`, `game`, `daily_challenge`. Boards (g
 
 Deep link flow: script sends data-only FCM payload → `PushNotificationService.onMessageReceived` creates notification with `ACTION_VIEW` intent → `AppActivity.resolveDeepLinkIntent` converts FCM extras to deep link URI → `AppNavigation.navigateFromDeepLink` routes to the correct screen. Data-only payloads (no `notification` field) are used so `onMessageReceived` is always called regardless of foreground/background state.
 
-Deep link URIs use `DeepLinkBuilder` (`util/notification/DeepLinkBuilder.kt`) as the single source of truth for URI construction and screen constants.
+Deep link URIs use `DeepLinkBuilder` (`shared/.../util/notification/DeepLinkBuilder.kt`, commonMain object) as the single source of truth for URI construction and screen constants.
 
 ### Local notifications
-`NotificationScheduler` (`util/notification/NotificationScheduler.kt`) schedules local alarms via `AlarmManager`:
+`NotificationScheduler` is a **commonMain interface** (`shared/.../util/notification/NotificationScheduler.kt`). Callers (use cases, ViewModels) only see this interface; the Android impl `AndroidNotificationScheduler` (in `:androidApp`) schedules alarms via `AlarmManager`. On iOS a `NoopNotificationScheduler` in `shared/iosMain` keeps commonMain callers compiling. AndroidNotificationScheduler additionally implements `DefaultLifecycleObserver` so `AppActivity` can register it against the lifecycle — AppActivity injects the Android type directly.
+
+Scheduled work:
 - Daily challenge reminder at 20:00 local time (re-scheduled after each trigger and on device boot via `BootReceiver`)
 - Daily streak reminders and other scheduled notifications
 
-`NotificationAlarmReceiver` (`util/notification/NotificationAlarmReceiver.kt`) handles alarm triggers. For daily challenge, it checks `DailyChallengeRepository.hasPlayed()` before showing the notification — suppresses it if already played today.
+`NotificationAlarmReceiver` (`androidApp/.../util/notification/NotificationAlarmReceiver.kt`) handles alarm triggers. For daily challenge, it checks `DailyChallengeRepository.hasPlayed()` before showing the notification — suppresses it if already played today.
 
 ### Key files
-- `util/notification/PushNotificationService.kt` — receives FCM messages, shows notification with deep link intent
-- `util/notification/DeepLinkBuilder.kt` — builds deep link URIs, defines screen/board constants
-- `util/notification/NotificationScheduler.kt` — schedules local alarms (daily challenge, streak reminders)
-- `util/notification/NotificationAlarmReceiver.kt` — handles alarm triggers, builds and shows notifications
+- `shared/src/commonMain/.../util/notification/NotificationScheduler.kt` — common interface (+ `SHOP_AD_COOLDOWN_MS`)
+- `shared/src/commonMain/.../util/notification/DeepLinkBuilder.kt` — pure-Kotlin URI builder, screen/board constants
+- `shared/src/iosMain/.../util/notification/NoopNotificationScheduler.kt` — iOS stub
+- `androidApp/.../util/notification/AndroidNotificationScheduler.kt` — Android impl (`AlarmManager` + `DefaultLifecycleObserver`; holds `TYPE_*` / `*_NOTIFICATION_ID` constants)
+- `androidApp/.../util/notification/NotificationCreator.kt` — Android-only `NotificationManager` wrapper (receivers call directly, no interface)
+- `androidApp/.../util/notification/PushNotificationService.kt` — receives FCM messages, shows notification with deep link intent
+- `androidApp/.../util/notification/NotificationAlarmReceiver.kt` — handles alarm triggers, builds and shows notifications
 - `util/provider/PushNotificationProvider.kt` — subscribes/unsubscribes FCM topics, tracks previous language via DataStore
 - `scripts/notifications/send_push_notification.sh` — sends via FCM v1 API, supports `--scheduled`, `--screen`, `--board`, `--flavor`
 - `scripts/notifications/example.txt` — template with all 32 languages

@@ -9,6 +9,9 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 
+// TODO(kmp-ios): Android-only by design. Only AppActivity consumes this (Play Store's immediate-update
+// flow). iOS uses the App Store for updates — no equivalent API — so no common abstraction needed
+// until that changes.
 class InAppUpdate {
 
     private lateinit var appUpdateManager: AppUpdateManager

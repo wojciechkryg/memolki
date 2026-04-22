@@ -2,13 +2,10 @@ package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
-import io.mockk.mockk
-import kotlin.random.Random
 
 class FakeNotificationScheduler(
-    random: Random,
-    permissionProvider: PermissionProvider
-) : NotificationScheduler(mockk(), random, mockk(), permissionProvider) {
+    private val permissionProvider: PermissionProvider
+) : NotificationScheduler {
 
     var reminderNotificationScheduled = false
         private set
@@ -20,7 +17,6 @@ class FakeNotificationScheduler(
         private set
 
     var nextDailyChallengeNotificationTimestamp: Long = FAKE_NEXT_DAILY_CHALLENGE_NOTIFICATION_TIMESTAMP
-        private set
 
     var streakNotificationScheduled = false
         private set
@@ -64,6 +60,9 @@ class FakeNotificationScheduler(
     override fun createNotificationChannel() {
         channelCreated = true
     }
+
+    override fun hasNotificationPermission(): Boolean =
+        permissionProvider.hasNotificationPermission()
 
     companion object {
         private const val FAKE_NEXT_DAILY_CHALLENGE_NOTIFICATION_TIMESTAMP = 1_000_000L

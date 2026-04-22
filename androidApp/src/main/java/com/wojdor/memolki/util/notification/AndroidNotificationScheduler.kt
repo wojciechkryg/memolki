@@ -11,12 +11,12 @@ import com.wojdor.memolki.util.provider.PermissionProvider
 import java.util.Calendar
 import kotlin.random.Random
 
-open class NotificationScheduler(
+open class AndroidNotificationScheduler(
     private val context: Context,
     private val random: Random,
     private val notificationCreator: NotificationCreator,
     private val permissionProvider: PermissionProvider
-) : DefaultLifecycleObserver {
+) : NotificationScheduler, DefaultLifecycleObserver {
 
     override fun onCreate(owner: LifecycleOwner) {
         createNotificationChannel()
@@ -27,7 +27,7 @@ open class NotificationScheduler(
         dismissVisibleNotifications()
     }
 
-    open fun scheduleReminderNotification() {
+    override fun scheduleReminderNotification() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
         val triggerAt = calculateNextReminderTriggerTime()
@@ -40,10 +40,10 @@ open class NotificationScheduler(
         )
     }
 
-    open fun scheduleAdRewardNotification() {
+    override fun scheduleAdRewardNotification() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
-        val triggerAt = System.currentTimeMillis() + SHOP_AD_COOLDOWN_MS
+        val triggerAt = System.currentTimeMillis() + NotificationScheduler.SHOP_AD_COOLDOWN_MS
         val pendingIntent = createPendingIntent(TYPE_AD_REWARD, AD_REWARD_ALARM_REQUEST_CODE)
         alarmManager.setWindow(
             AlarmManager.RTC_WAKEUP,
@@ -53,7 +53,7 @@ open class NotificationScheduler(
         )
     }
 
-    open fun scheduleStreakNotification() {
+    override fun scheduleStreakNotification() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
         val triggerAt = calculateNextStreakTriggerTime()
@@ -66,7 +66,7 @@ open class NotificationScheduler(
         )
     }
 
-    open fun scheduleDailyChallengeNotification(nextNotificationTimestamp: Long) {
+    override fun scheduleDailyChallengeNotification(nextNotificationTimestamp: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
         val pendingIntent = createPendingIntent(TYPE_DAILY_CHALLENGE, DAILY_CHALLENGE_REQUEST_CODE)
@@ -78,7 +78,7 @@ open class NotificationScheduler(
         )
     }
 
-    open fun calculateNextDailyChallengeNotificationTimestamp(): Long {
+    override fun calculateNextDailyChallengeNotificationTimestamp(): Long {
         val calendar = Calendar.getInstance().apply {
             add(Calendar.DAY_OF_YEAR, 1)
             set(Calendar.HOUR_OF_DAY, DAILY_CHALLENGE_HOUR)
@@ -89,14 +89,14 @@ open class NotificationScheduler(
         return calendar.timeInMillis
     }
 
-    open fun cancelAdRewardNotification() {
+    override fun cancelAdRewardNotification() {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             ?: return
         val pendingIntent = createPendingIntent(TYPE_AD_REWARD, AD_REWARD_ALARM_REQUEST_CODE)
         alarmManager.cancel(pendingIntent)
     }
 
-    open fun dismissVisibleNotifications() {
+    override fun dismissVisibleNotifications() {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
                 ?: return
@@ -106,11 +106,11 @@ open class NotificationScheduler(
         notificationManager.cancel(DAILY_CHALLENGE_NOTIFICATION_ID)
     }
 
-    open fun createNotificationChannel() {
+    override fun createNotificationChannel() {
         notificationCreator.createNotificationChannel()
     }
 
-    open fun hasNotificationPermission(): Boolean {
+    override fun hasNotificationPermission(): Boolean {
         return permissionProvider.hasNotificationPermission()
     }
 
@@ -164,7 +164,6 @@ open class NotificationScheduler(
         internal const val TYPE_STREAK = "streak"
         internal const val TYPE_DAILY_CHALLENGE = "daily_challenge"
         internal const val TYPE_PUSH = "push"
-        internal const val SHOP_AD_COOLDOWN_MS = 30 * 60 * 1000L
         private const val AD_REWARD_WINDOW_MS = 30 * 60 * 1000L
         private const val REMINDER_INTERVAL_DAYS = 3
         private const val DAILY_WINDOW_START_HOUR = 14

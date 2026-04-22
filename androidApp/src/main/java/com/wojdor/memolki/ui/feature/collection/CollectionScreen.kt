@@ -13,6 +13,7 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.ui.ads.show
 import com.wojdor.memolki.ui.app.navigateToCardPairDetailsScreen
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToShop

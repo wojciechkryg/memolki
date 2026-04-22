@@ -27,7 +27,6 @@ import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
-import com.wojdor.memolki.util.playgames.GooglePlayGames
 import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,9 +52,6 @@ class EndGameViewModelTest : AppTest() {
     private val allRewardedAds: AllRewardedAds by inject()
 
     private val reviewManager: ReviewManager by inject()
-
-    private val googlePlayGames: GooglePlayGames by inject()
-
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase by inject()
 
     private val getCoinsUseCase: GetCoinsUseCase by inject()
@@ -95,7 +91,6 @@ class EndGameViewModelTest : AppTest() {
             hapticFeedback,
             allRewardedAds,
             reviewManager,
-            googlePlayGames,
             incrementTotalGamesPlayedUseCase,
             getTotalGamesPlayedUseCase,
             getCoinsUseCase,
