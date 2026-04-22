@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
@@ -48,6 +47,7 @@ import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXL
+import com.wojdor.memolki.ui.theme.AppColors
 import kotlin.math.ceil
 
 @Composable
@@ -166,7 +166,7 @@ private fun CardDetails(state: GameState) {
                     AutoSizeText(
                         modifier = Modifier
                             .clip(FullRoundedShape)
-                            .background(colorResource(R.color.primary))
+                            .background(AppColors.Primary)
                             .padding(vertical = spacingL, horizontal = spacingXL),
                         text = composeStringResource(state.lastCardPressed.textRes),
                         style = MaterialTheme.typography.displayMedium,
@@ -195,7 +195,7 @@ private fun LeaveConfirmation(isDailyChallenge: Boolean, callbacks: GameCallback
                 modifier = Modifier
                     .padding(horizontal = spacingXL)
                     .clip(CardShape)
-                    .background(colorResource(R.color.primary))
+                    .background(AppColors.Primary)
                     .padding(spacingXL),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

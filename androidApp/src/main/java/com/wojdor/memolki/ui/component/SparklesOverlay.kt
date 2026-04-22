@@ -11,10 +11,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.ui.theme.AppColors
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
@@ -22,7 +22,7 @@ import kotlin.random.Random
 fun SparklesOverlay(isActive: Boolean) {
     if (!isActive) return
     val density = LocalDensity.current.density
-    val fontColor = colorResource(R.color.font)
+    val fontColor = AppColors.Font
     val sparkles = remember {
         val cellWidth = (1f - 2 * MARGIN) / GRID_COLUMNS
         val cellHeight = (1f - 2 * MARGIN) / GRID_ROWS
@@ -79,7 +79,7 @@ private const val MARGIN = 0.05f
 private fun SparklesOverlayPreview() {
     AppTheme {
         val density = LocalDensity.current.density
-        val fontColor = colorResource(R.color.font)
+        val fontColor = AppColors.Font
         Canvas(modifier = Modifier.fillMaxSize()) {
             val positions = listOf(
                 Triple(0.12f, 0.15f, 7f),

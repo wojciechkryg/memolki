@@ -5,12 +5,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.res.colorResource
 import com.wojdor.memolki.R
 
 @Composable
 fun AppTheme(content: @Composable () -> Unit) {
-    val fontColor = colorResource(R.color.font)
+    val fontColor = AppColors.Font
     MaterialTheme(
         colorScheme = lightColorScheme(
             onPrimary = fontColor,

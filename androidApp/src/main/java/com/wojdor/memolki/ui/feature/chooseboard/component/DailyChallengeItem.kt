@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.colorResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +40,7 @@ import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CheckboxShape
 import com.wojdor.memolki.ui.theme.spacingL
+import com.wojdor.memolki.ui.theme.AppColors
 import com.wojdor.memolki.util.throttleClick
 
 @Composable
@@ -115,7 +115,7 @@ private fun DailyChallengeCheckbox(isCompleted: Boolean) {
             modifier = Modifier
                 .size(CHECKBOX_SIZE)
                 .border(
-                    border = BorderStroke(2.dp, colorResource(R.color.border)),
+                    border = BorderStroke(2.dp, AppColors.Border),
                     shape = CheckboxShape
                 )
         )

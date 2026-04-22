@@ -15,7 +15,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -27,6 +26,7 @@ import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.LocalScreenHeight
 import com.wojdor.memolki.ui.theme.LocalScreenWidth
+import com.wojdor.memolki.ui.theme.AppColors
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.notification.DeepLinkBuilder
 import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
@@ -85,7 +85,7 @@ class AppActivity : ComponentActivity() {
                     val appContent = @Composable {
                         ClickIndicatorOverlay {
                             Scaffold(
-                                containerColor = colorResource(R.color.primary),
+                                containerColor = AppColors.Primary,
                                 content = { innerPadding ->
                                     Box(modifier = Modifier.padding(innerPadding)) {
                                         AppNavigation(

@@ -9,13 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
+import com.wojdor.memolki.ui.theme.AppColors
 
 @Composable
 fun CardBorder(
@@ -25,7 +25,7 @@ fun CardBorder(
     Box(
         modifier = modifier
             .border(
-                border = BorderStroke(CARD_BORDER_SIZE, colorResource(R.color.border)),
+                border = BorderStroke(CARD_BORDER_SIZE, AppColors.Border),
                 shape = CardShape
             )
             .clip(CardShape),

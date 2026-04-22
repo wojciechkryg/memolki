@@ -1,5 +1,7 @@
 package com.wojdor.memolki.ui.component
 
+import com.wojdor.memolki.ui.theme.AppColors
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 
@@ -21,7 +22,7 @@ fun FadeEffectTop(modifier: Modifier) {
             .background(
                 brush = Brush.verticalGradient(
                     listOf(
-                        colorResource(R.color.primary),
+                        AppColors.Primary,
                         Color.Transparent
                     )
                 )

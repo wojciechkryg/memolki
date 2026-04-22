@@ -2,7 +2,6 @@ package com.wojdor.memolki.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -36,7 +35,7 @@ private fun TextStyle.withAppFont(): TextStyle {
 
 @Composable
 private fun TextStyle.withAppColor(): TextStyle {
-    return this.copy(color = colorResource(R.color.font))
+    return this.copy(color = AppColors.Font)
 }
 
 private val PatrickHandFont = FontFamily(

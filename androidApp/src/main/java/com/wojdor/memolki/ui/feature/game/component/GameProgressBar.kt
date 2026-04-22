@@ -13,12 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
+import com.wojdor.memolki.ui.theme.AppColors
 
 @Composable
 fun GameProgressBar(
@@ -38,7 +38,7 @@ fun GameProgressBar(
             .height(PROGRESS_BAR_HEIGHT)
             .fillMaxWidth()
             .clip(FullRoundedShape)
-            .border(CARD_BORDER_SIZE, colorResource(R.color.border), FullRoundedShape)
+            .border(CARD_BORDER_SIZE, AppColors.Border, FullRoundedShape)
     ) {
         if (animatedProgress > 0f) {
             Box(
@@ -46,7 +46,7 @@ fun GameProgressBar(
                     .fillMaxHeight()
                     .fillMaxWidth(animatedProgress.coerceIn(MIN_VISIBLE_FRACTION, 1f))
                     .clip(FullRoundedShape)
-                    .background(colorResource(R.color.font))
+                    .background(AppColors.Font)
             )
         }
     }

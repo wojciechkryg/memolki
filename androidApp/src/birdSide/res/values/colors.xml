@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">@color/primary_bird_side</color>
+    <color name="primary">#B1DBE7</color>
 </resources>

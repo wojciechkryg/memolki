@@ -1,5 +1,7 @@
 package com.wojdor.memolki.ui.component
 
+import com.wojdor.memolki.ui.theme.AppColors
+
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
@@ -9,7 +11,6 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import com.wojdor.memolki.R
 import kotlinx.coroutines.delay
 import kotlin.random.Random
@@ -19,7 +20,7 @@ fun EdgeSparklesEffect(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val fontColor = colorResource(R.color.font)
+    val fontColor = AppColors.Font
     val density = LocalDensity.current.density
     val sparkles = remember {
         List(SPARKLE_COUNT) {

@@ -1,5 +1,7 @@
 package com.wojdor.memolki.ui.component
 
+import com.wojdor.memolki.ui.theme.AppColors
+
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -14,11 +16,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import com.wojdor.memolki.R
 
 fun Modifier.shimmerEffect(): Modifier = composed {
-    val fontColor = colorResource(R.color.font)
+    val fontColor = AppColors.Font
     val infiniteTransition = rememberInfiniteTransition(label = "shimmer")
     val shimmerOffset by infiniteTransition.animateFloat(
         initialValue = -SHIMMER_WIDTH_FRACTION,
