@@ -17,13 +17,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.AppModel
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.more
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.game.component.CardBorder
@@ -35,6 +33,8 @@ import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.util.throttleClick
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun MoreAppsItem(
@@ -43,7 +43,7 @@ fun MoreAppsItem(
     Column(modifier = modifier.padding(horizontal = spacingXL, vertical = spacingL)) {
         Text(
             modifier = Modifier.padding(start = spacingS),
-            text = stringResource(R.string.more).lowercase(),
+            text = stringResource(Res.string.more).lowercase(),
             style = MaterialTheme.typography.headlineLarge
         )
         CardBorder(
@@ -57,7 +57,7 @@ fun MoreAppsItem(
                 shape = CardShape,
                 contentPadding = PaddingValues(spacingM),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = colorResource(appModel.colorRes),
+                    containerColor = appModel.color,
                     disabledContainerColor = Color.Transparent
                 )
             ) {

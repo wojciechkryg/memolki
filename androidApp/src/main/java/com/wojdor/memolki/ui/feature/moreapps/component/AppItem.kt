@@ -15,9 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.domain.model.AppModel
@@ -28,6 +25,8 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.util.throttleClick
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AppItem(
@@ -42,7 +41,7 @@ fun AppItem(
             shape = CardShape,
             contentPadding = PaddingValues(spacingM),
             colors = ButtonDefaults.buttonColors(
-                containerColor = colorResource(appModel.colorRes),
+                containerColor = appModel.color,
                 disabledContainerColor = Color.Transparent
             )
         ) {

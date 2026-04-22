@@ -125,13 +125,13 @@ Reference examples:
 
 ### Domain Models
 
-Located in `:shared/commonMain/.../domain/model/`. Already moved: `BoardModel`, `CardModel`, `CardPairModel`, `CollectionCardPairModel`, `DailyChallengeModel`, `EndGameMenuModel`, `LanguageModel`, `MenuModel`, `SettingModel`, `ShopMenuModel`, plus `StarCalculator`. `AppModel` still lives in `:androidApp` — it references flavor logos (`R.drawable.ic_logo_{flavor}`) and `R.color.primary_{flavor}` which the migration has not yet covered.
+Located in `:shared/commonMain/.../domain/model/`. All domain models have moved: `AppModel`, `BoardModel`, `CardModel`, `CardPairModel`, `CollectionCardPairModel`, `DailyChallengeModel`, `EndGameMenuModel`, `LanguageModel`, `MenuModel`, `SettingModel`, `ShopMenuModel`, plus `StarCalculator`.
 
 Sealed classes with `@Serializable`, often including:
 - Abstract properties in the sealed parent
 - Data class subclasses for concrete types (each also annotated `@Serializable`)
 - `object Empty` sentinel for default/initial values (also `@Serializable`)
-- Resource IDs: `StringResource` / `DrawableResource` typed fields serialize via `StringResourceSerializer` / `DrawableResourceSerializer` in `:shared/commonMain/util/serializer/` (encode via stable key, decode via `Res.allStringResources` / `Res.allDrawableResources` lookup). `CardModel` still holds `Int` resource IDs pending flavor-specific card strings/drawables moving to `composeResources`. `CardModel.Empty.textRes = 0` remains as a sentinel until then.
+- Resource IDs: `StringResource` / `DrawableResource` / `Color` typed fields serialize via `StringResourceSerializer` / `DrawableResourceSerializer` / `ColorSerializer` in `:shared/commonMain/util/serializer/` (strings encode via `StringResource.key`, drawables via reverse-lookup in `Res.allDrawableResources`, colors via underlying `ULong` value). Apply via `@file:UseSerializers(...)` at the top of each model file — no per-field annotation. `CardModel` still holds `Int` resource IDs pending flavor-specific card strings/drawables moving to `composeResources`. `CardModel.Empty.textRes = 0` remains as a sentinel until then.
 
 Reference: `shared/src/commonMain/.../domain/model/CardModel.kt`
 
@@ -438,7 +438,7 @@ Translations exist at two independent levels:
 
 Canonical location is `:shared/src/commonMain/composeResources/values/strings.xml` (English default) and `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` per language. Use `stringResource(Res.string.foo)` from `org.jetbrains.compose.resources` (import `com.wojdor.memolki.shared.resources.*`). The Res class lives at `com.wojdor.memolki.shared.resources.Res`.
 
-The same files are still duplicated in `androidApp/src/main/res/values*/strings.xml` until the final cleanup phase deletes them — while they exist, **update both copies in lockstep** so Android-only consumers (manifest, PlayGames intents, notification formatters, flavor `strings.xml` overrides of `app_name`) keep resolving. `CardModel` and `AppModel` still hold `@StringRes Int` fields and need the `R.string.*` entries; the other domain models (`LanguageModel`, `BoardModel`, `MenuModel`, `EndGameMenuModel`, `SettingModel`, `ShopMenuModel`) have moved to `StringResource` via `StringResourceSerializer` / `DrawableResourceSerializer`.
+The same files are still duplicated in `androidApp/src/main/res/values*/strings.xml` until the final cleanup phase deletes them — while they exist, **update both copies in lockstep** so Android-only consumers (manifest, PlayGames intents, notification formatters, flavor `strings.xml` overrides of `app_name`) keep resolving. `CardModel` still holds `@StringRes Int` fields (pending flavor-specific card strings migration) and so still needs the `R.string.*` entries. All other domain models use `StringResource` / `DrawableResource`.
 
 Each locale file must translate every key from the default `strings.xml` (including per-flavor `app_name_{flavor}` and `suffix_{flavor}`).
 
