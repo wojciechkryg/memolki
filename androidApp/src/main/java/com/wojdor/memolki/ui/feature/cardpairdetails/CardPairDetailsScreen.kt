@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.ui.feature.cardpairdetails.component.CardPairDetailsContent
@@ -52,13 +53,13 @@ private fun CardPairDetailsScreenPreview() {
                         first = CardModel.Image(
                             "banana_whole",
                             "banana",
-                            R.string.app_name,
+                            Res.string.banana,
                             R.drawable.img_test_whole
                         ),
                         second = CardModel.Image(
                             "banana_half",
                             "banana",
-                            R.string.app_name,
+                            Res.string.banana,
                             R.drawable.img_test_half
                         )
                     )
@@ -79,13 +80,13 @@ private fun CardPairDetailsScreenDifferentTextsPreview() {
                         first = CardModel.Image(
                             "banana_whole",
                             "banana",
-                            R.string.menu,
+                            Res.string.banana,
                             R.drawable.img_test_whole
                         ),
                         second = CardModel.Image(
                             "banana_half",
                             "banana",
-                            R.string.new_game,
+                            Res.string.apple,
                             R.drawable.img_test_half
                         )
                     )

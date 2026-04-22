@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
@@ -144,27 +145,27 @@ private fun getCollectionCardPairsForPreview() = listOf(
             CardModel.Image(
                 "banana_whole",
                 "banana",
-                R.string.empty,
+                Res.string.banana,
                 R.drawable.img_test_whole
             ),
             CardModel.Image(
                 "banana_half",
                 "banana",
-                R.string.empty,
+                Res.string.banana,
                 R.drawable.img_test_half
             )
         )
     ),
     CollectionCardPairModel.Unlocked(
         CardPairModel(
-            CardModel.Image("apple_whole", "apple", R.string.empty, R.drawable.img_test_whole),
-            CardModel.Text("apple_half", "apple", R.string.empty)
+            CardModel.Image("apple_whole", "apple", Res.string.apple, R.drawable.img_test_whole),
+            CardModel.Text("apple_half", "apple", Res.string.apple)
         )
     ),
     CollectionCardPairModel.Unlocked(
         CardPairModel(
-            CardModel.Text("strawberry_whole", "strawberry", R.string.empty),
-            CardModel.Text("strawberry_half", "strawberry", R.string.empty)
+            CardModel.Text("strawberry_whole", "strawberry", Res.string.strawberry),
+            CardModel.Text("strawberry_half", "strawberry", Res.string.strawberry)
         )
     ),
     CollectionCardPairModel.LockedToUnlockWithCoins(100),

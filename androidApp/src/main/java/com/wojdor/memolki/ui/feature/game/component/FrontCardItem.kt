@@ -16,10 +16,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -104,7 +105,7 @@ private fun FrontCardItemTextPreview() {
             CardModel.Text(
                 id = "banana",
                 pairId = "banana",
-                textRes = R.string.empty
+                textRes = Res.string.banana
             ),
             onPress = {}
         )
@@ -120,7 +121,7 @@ private fun FrontCardItemImagePreview() {
             CardModel.Image(
                 id = "banana",
                 pairId = "banana",
-                textRes = R.string.empty,
+                textRes = Res.string.banana,
                 imageRes = R.drawable.img_test_whole
             ),
             onPress = {}

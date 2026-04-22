@@ -1,13 +1,20 @@
+@file:UseSerializers(StringResourceSerializer::class)
+
 package com.wojdor.memolki.domain.model
 
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.empty
+import com.wojdor.memolki.util.serializer.StringResourceSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
+import org.jetbrains.compose.resources.StringResource
 
 @Serializable
 sealed class CardModel {
 
     abstract val id: String
     abstract val pairId: String
-    abstract val textRes: Int
+    abstract val textRes: StringResource
     abstract val isFlippedFront: Boolean
     abstract val isPairMatched: Boolean
     abstract val isMatchAnimating: Boolean
@@ -40,8 +47,7 @@ sealed class CardModel {
     object Empty : CardModel() {
         override val id: String = ""
         override val pairId: String = ""
-        // TODO(compose-resources): replace 0 sentinel with Res.string.empty once Phase 13 lands.
-        override val textRes: Int = 0
+        override val textRes: StringResource = Res.string.empty
         override val isFlippedFront: Boolean = false
         override val isPairMatched: Boolean = false
         override val isMatchAnimating: Boolean = false
@@ -52,7 +58,7 @@ sealed class CardModel {
     data class Text(
         override val id: String,
         override val pairId: String,
-        override val textRes: Int,
+        override val textRes: StringResource,
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false,
         override val isMatchAnimating: Boolean = false,
@@ -63,7 +69,7 @@ sealed class CardModel {
     data class Image(
         override val id: String,
         override val pairId: String,
-        override val textRes: Int,
+        override val textRes: StringResource,
         val imageRes: Int,
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false,

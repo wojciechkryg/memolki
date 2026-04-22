@@ -1,5 +1,18 @@
 package com.wojdor.memolki.data.repository
 
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.watermelon
+import com.wojdor.memolki.shared.resources.strawberry
+import com.wojdor.memolki.shared.resources.pineapple
+import com.wojdor.memolki.shared.resources.peach
+import com.wojdor.memolki.shared.resources.orange
+import com.wojdor.memolki.shared.resources.mango
+import com.wojdor.memolki.shared.resources.grape
+import com.wojdor.memolki.shared.resources.blueberry
+import com.wojdor.memolki.shared.resources.banana
+import com.wojdor.memolki.shared.resources.apple
+import com.wojdor.memolki.shared.resources.empty
+
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
@@ -45,44 +58,44 @@ class CardRepositoryTest : AppTest() {
         // then
         val expected = listOf(
             CardPairModel(
-                CardModel.Image("banana_whole", "banana", 1, 1),
-                CardModel.Image("banana_half", "banana", 1, 1)
+                CardModel.Image("banana_whole", "banana", Res.string.banana, 1),
+                CardModel.Image("banana_half", "banana", Res.string.banana, 1)
             ),
             CardPairModel(
-                CardModel.Image("apple_whole", "apple", 2, 2),
-                CardModel.Text("apple_half", "apple", 2)
+                CardModel.Image("apple_whole", "apple", Res.string.apple, 2),
+                CardModel.Text("apple_half", "apple", Res.string.apple)
             ),
             CardPairModel(
-                CardModel.Text("strawberry_whole", "strawberry", 3),
-                CardModel.Text("strawberry_half", "strawberry", 3)
+                CardModel.Text("strawberry_whole", "strawberry", Res.string.strawberry),
+                CardModel.Text("strawberry_half", "strawberry", Res.string.strawberry)
             ),
             CardPairModel(
-                CardModel.Text("orange_whole", "orange", 4),
-                CardModel.Text("orange_half", "orange", 4)
+                CardModel.Text("orange_whole", "orange", Res.string.orange),
+                CardModel.Text("orange_half", "orange", Res.string.orange)
             ),
             CardPairModel(
-                CardModel.Text("grape_whole", "grape", 5),
-                CardModel.Text("grape_half", "grape", 5)
+                CardModel.Text("grape_whole", "grape", Res.string.grape),
+                CardModel.Text("grape_half", "grape", Res.string.grape)
             ),
             CardPairModel(
-                CardModel.Text("watermelon_whole", "watermelon", 6),
-                CardModel.Text("watermelon_half", "watermelon", 6)
+                CardModel.Text("watermelon_whole", "watermelon", Res.string.watermelon),
+                CardModel.Text("watermelon_half", "watermelon", Res.string.watermelon)
             ),
             CardPairModel(
-                CardModel.Text("mango_whole", "mango", 7),
-                CardModel.Text("mango_half", "mango", 7)
+                CardModel.Text("mango_whole", "mango", Res.string.mango),
+                CardModel.Text("mango_half", "mango", Res.string.mango)
             ),
             CardPairModel(
-                CardModel.Text("peach_whole", "peach", 8),
-                CardModel.Text("peach_half", "peach", 8)
+                CardModel.Text("peach_whole", "peach", Res.string.peach),
+                CardModel.Text("peach_half", "peach", Res.string.peach)
             ),
             CardPairModel(
-                CardModel.Text("pineapple_whole", "pineapple", 9),
-                CardModel.Text("pineapple_half", "pineapple", 9)
+                CardModel.Text("pineapple_whole", "pineapple", Res.string.pineapple),
+                CardModel.Text("pineapple_half", "pineapple", Res.string.pineapple)
             ),
             CardPairModel(
-                CardModel.Text("blueberry_whole", "blueberry", 10),
-                CardModel.Text("blueberry_half", "blueberry", 10)
+                CardModel.Text("blueberry_whole", "blueberry", Res.string.blueberry),
+                CardModel.Text("blueberry_half", "blueberry", Res.string.blueberry)
             )
         )
         assertEquals(expected, result)
@@ -126,8 +139,8 @@ class CardRepositoryTest : AppTest() {
 
         // then
         val expected = CardPairModel(
-            CardModel.Image("banana_whole", "banana", 1, 1),
-            CardModel.Image("banana_half", "banana", 1, 1)
+            CardModel.Image("banana_whole", "banana", Res.string.banana, 1),
+            CardModel.Image("banana_half", "banana", Res.string.banana, 1)
         )
         assertEquals(expected, result)
     }

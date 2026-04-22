@@ -29,6 +29,7 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.empty
 import com.wojdor.memolki.shared.resources.leave_daily_challenge_body
 import com.wojdor.memolki.shared.resources.leave_daily_challenge_title
 import com.wojdor.memolki.shared.resources.leave_game_body
@@ -128,7 +129,7 @@ private fun CardsGridWithText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .alpha(animatedTextAlpha),
-                        text = stringResource(state.lastCardPressed.textRes.takeIf { it != 0 } ?: R.string.empty),
+                        text = composeStringResource(state.lastCardPressed.textRes),
                         style = MaterialTheme.typography.displayMedium,
                     )
                 }
@@ -167,7 +168,7 @@ private fun CardDetails(state: GameState) {
                             .clip(FullRoundedShape)
                             .background(colorResource(R.color.primary))
                             .padding(vertical = spacingL, horizontal = spacingXL),
-                        text = stringResource(state.lastCardPressed.textRes.takeIf { it != 0 } ?: R.string.empty),
+                        text = composeStringResource(state.lastCardPressed.textRes),
                         style = MaterialTheme.typography.displayMedium,
                     )
                 }
@@ -250,7 +251,7 @@ private fun StartGameContentPreview() {
                     CardModel.Text(
                         id = "id",
                         pairId = "pairId",
-                        textRes = R.string.empty
+                        textRes = Res.string.empty
                     )
                 }
             )
@@ -360,7 +361,7 @@ private fun getPreviewCards(matchedCount: Int = 6) = List(6) {
     CardModel.Image(
         id = "id",
         pairId = "pairId",
-        textRes = R.string.empty,
+        textRes = Res.string.empty,
         imageRes = if (it % 2 == 0) R.drawable.img_test_whole else R.drawable.img_test_half,
         isFlippedFront = true,
         isPairMatched = it < matchedCount

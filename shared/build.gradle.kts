@@ -71,6 +71,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    flavorDimensions += "version"
+    productFlavors {
+        create("fruitHalf") { dimension = "version" }
+        create("vegetableHalf") { dimension = "version" }
+        create("mammalSide") { dimension = "version" }
+        create("birdSide") { dimension = "version" }
+    }
 }
 
 room {

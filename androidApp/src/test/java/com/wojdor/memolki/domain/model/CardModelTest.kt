@@ -1,5 +1,8 @@
 package com.wojdor.memolki.domain.model
 
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.empty
+
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
@@ -28,7 +31,7 @@ class CardModelTest {
     @Test
     fun `Text copyState copies with new state`() {
         // given
-        val card = CardModel.Text("id", "pairId", 0)
+        val card = CardModel.Text("id", "pairId", Res.string.empty)
 
         // when
         val result = card.copyState(isFlippedFront = true, isPairMatched = true)
@@ -41,7 +44,7 @@ class CardModelTest {
     @Test
     fun `Image copyState copies with new state`() {
         // given
-        val card = CardModel.Image("id", "pairId", 0, 0)
+        val card = CardModel.Image("id", "pairId", Res.string.empty, 0)
 
         // when
         val result = card.copyState(isMatchAnimating = true, isMistakeShaking = true)

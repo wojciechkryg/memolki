@@ -1,6 +1,7 @@
 package com.wojdor.memolki.data.local.card
 
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
@@ -14,12 +15,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_dog_side",
-                    textRes = R.string.domestic_dog,
+                    textRes = Res.string.domestic_dog,
                     imageRes = R.drawable.img_domestic_dog_side
                 ),
                 CardEntity.Image(
                     id = "domestic_dog_front",
-                    textRes = R.string.domestic_dog,
+                    textRes = Res.string.domestic_dog,
                     imageRes = R.drawable.img_domestic_dog_front
                 )
             )
@@ -29,12 +30,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_cat_side",
-                    textRes = R.string.domestic_cat,
+                    textRes = Res.string.domestic_cat,
                     imageRes = R.drawable.img_domestic_cat_side
                 ),
                 CardEntity.Image(
                     id = "domestic_cat_front",
-                    textRes = R.string.domestic_cat,
+                    textRes = Res.string.domestic_cat,
                     imageRes = R.drawable.img_domestic_cat_front
                 )
             )
@@ -44,12 +45,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "african_lion_side",
-                    textRes = R.string.african_lion,
+                    textRes = Res.string.african_lion,
                     imageRes = R.drawable.img_african_lion_side
                 ),
                 CardEntity.Image(
                     id = "african_lion_front",
-                    textRes = R.string.african_lion,
+                    textRes = Res.string.african_lion,
                     imageRes = R.drawable.img_african_lion_front
                 )
             )
@@ -59,12 +60,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "african_bush_elephant_side",
-                    textRes = R.string.african_bush_elephant,
+                    textRes = Res.string.african_bush_elephant,
                     imageRes = R.drawable.img_african_bush_elephant_side
                 ),
                 CardEntity.Image(
                     id = "african_bush_elephant_front",
-                    textRes = R.string.african_bush_elephant,
+                    textRes = Res.string.african_bush_elephant,
                     imageRes = R.drawable.img_african_bush_elephant_front
                 )
             )
@@ -74,12 +75,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "siberian_tiger_side",
-                    textRes = R.string.siberian_tiger,
+                    textRes = Res.string.siberian_tiger,
                     imageRes = R.drawable.img_siberian_tiger_side
                 ),
                 CardEntity.Image(
                     id = "siberian_tiger_front",
-                    textRes = R.string.siberian_tiger,
+                    textRes = Res.string.siberian_tiger,
                     imageRes = R.drawable.img_siberian_tiger_front
                 )
             )
@@ -89,12 +90,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_horse_side",
-                    textRes = R.string.domestic_horse,
+                    textRes = Res.string.domestic_horse,
                     imageRes = R.drawable.img_domestic_horse_side
                 ),
                 CardEntity.Image(
                     id = "domestic_horse_front",
-                    textRes = R.string.domestic_horse,
+                    textRes = Res.string.domestic_horse,
                     imageRes = R.drawable.img_domestic_horse_front
                 )
             )
@@ -104,12 +105,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_cow_side",
-                    textRes = R.string.domestic_cow,
+                    textRes = Res.string.domestic_cow,
                     imageRes = R.drawable.img_domestic_cow_side
                 ),
                 CardEntity.Image(
                     id = "domestic_cow_front",
-                    textRes = R.string.domestic_cow,
+                    textRes = Res.string.domestic_cow,
                     imageRes = R.drawable.img_domestic_cow_front
                 )
             )
@@ -119,12 +120,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "red_kangaroo_side",
-                    textRes = R.string.red_kangaroo,
+                    textRes = Res.string.red_kangaroo,
                     imageRes = R.drawable.img_red_kangaroo_side
                 ),
                 CardEntity.Image(
                     id = "red_kangaroo_front",
-                    textRes = R.string.red_kangaroo,
+                    textRes = Res.string.red_kangaroo,
                     imageRes = R.drawable.img_red_kangaroo_front
                 )
             )
@@ -134,12 +135,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "brown_bear_side",
-                    textRes = R.string.brown_bear,
+                    textRes = Res.string.brown_bear,
                     imageRes = R.drawable.img_brown_bear_side
                 ),
                 CardEntity.Image(
                     id = "brown_bear_front",
-                    textRes = R.string.brown_bear,
+                    textRes = Res.string.brown_bear,
                     imageRes = R.drawable.img_brown_bear_front
                 )
             )
@@ -149,12 +150,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "common_bottlenose_dolphin_side",
-                    textRes = R.string.common_bottlenose_dolphin,
+                    textRes = Res.string.common_bottlenose_dolphin,
                     imageRes = R.drawable.img_common_bottlenose_dolphin_side
                 ),
                 CardEntity.Image(
                     id = "common_bottlenose_dolphin_front",
-                    textRes = R.string.common_bottlenose_dolphin,
+                    textRes = Res.string.common_bottlenose_dolphin,
                     imageRes = R.drawable.img_common_bottlenose_dolphin_front
                 )
             )
@@ -164,12 +165,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "koala_side",
-                    textRes = R.string.koala,
+                    textRes = Res.string.koala,
                     imageRes = R.drawable.img_koala_side
                 ),
                 CardEntity.Image(
                     id = "koala_front",
-                    textRes = R.string.koala,
+                    textRes = Res.string.koala,
                     imageRes = R.drawable.img_koala_front
                 )
             )
@@ -179,12 +180,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "giant_panda_side",
-                    textRes = R.string.giant_panda,
+                    textRes = Res.string.giant_panda,
                     imageRes = R.drawable.img_giant_panda_side
                 ),
                 CardEntity.Image(
                     id = "giant_panda_front",
-                    textRes = R.string.giant_panda,
+                    textRes = Res.string.giant_panda,
                     imageRes = R.drawable.img_giant_panda_front
                 )
             )
@@ -194,12 +195,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "gray_wolf_side",
-                    textRes = R.string.gray_wolf,
+                    textRes = Res.string.gray_wolf,
                     imageRes = R.drawable.img_gray_wolf_side
                 ),
                 CardEntity.Image(
                     id = "gray_wolf_front",
-                    textRes = R.string.gray_wolf,
+                    textRes = Res.string.gray_wolf,
                     imageRes = R.drawable.img_gray_wolf_front
                 )
             )
@@ -209,12 +210,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_goat_side",
-                    textRes = R.string.domestic_goat,
+                    textRes = Res.string.domestic_goat,
                     imageRes = R.drawable.img_domestic_goat_side
                 ),
                 CardEntity.Image(
                     id = "domestic_goat_front",
-                    textRes = R.string.domestic_goat,
+                    textRes = Res.string.domestic_goat,
                     imageRes = R.drawable.img_domestic_goat_front
                 )
             )
@@ -224,12 +225,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_sheep_side",
-                    textRes = R.string.domestic_sheep,
+                    textRes = Res.string.domestic_sheep,
                     imageRes = R.drawable.img_domestic_sheep_side
                 ),
                 CardEntity.Image(
                     id = "domestic_sheep_front",
-                    textRes = R.string.domestic_sheep,
+                    textRes = Res.string.domestic_sheep,
                     imageRes = R.drawable.img_domestic_sheep_front
                 )
             )
@@ -239,12 +240,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "giraffe_side",
-                    textRes = R.string.giraffe,
+                    textRes = Res.string.giraffe,
                     imageRes = R.drawable.img_giraffe_side
                 ),
                 CardEntity.Image(
                     id = "giraffe_front",
-                    textRes = R.string.giraffe,
+                    textRes = Res.string.giraffe,
                     imageRes = R.drawable.img_giraffe_front
                 )
             )
@@ -254,12 +255,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "hippopotamus_side",
-                    textRes = R.string.hippopotamus,
+                    textRes = Res.string.hippopotamus,
                     imageRes = R.drawable.img_hippopotamus_side
                 ),
                 CardEntity.Image(
                     id = "hippopotamus_front",
-                    textRes = R.string.hippopotamus,
+                    textRes = Res.string.hippopotamus,
                     imageRes = R.drawable.img_hippopotamus_front
                 )
             )
@@ -269,12 +270,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "orca_side",
-                    textRes = R.string.orca,
+                    textRes = Res.string.orca,
                     imageRes = R.drawable.img_orca_side
                 ),
                 CardEntity.Image(
                     id = "orca_front",
-                    textRes = R.string.orca,
+                    textRes = Res.string.orca,
                     imageRes = R.drawable.img_orca_front
                 )
             )
@@ -284,12 +285,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "common_chimpanzee_side",
-                    textRes = R.string.common_chimpanzee,
+                    textRes = Res.string.common_chimpanzee,
                     imageRes = R.drawable.img_common_chimpanzee_side
                 ),
                 CardEntity.Image(
                     id = "common_chimpanzee_front",
-                    textRes = R.string.common_chimpanzee,
+                    textRes = Res.string.common_chimpanzee,
                     imageRes = R.drawable.img_common_chimpanzee_front
                 )
             )
@@ -299,12 +300,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "western_lowland_gorilla_side",
-                    textRes = R.string.western_lowland_gorilla,
+                    textRes = Res.string.western_lowland_gorilla,
                     imageRes = R.drawable.img_western_lowland_gorilla_side
                 ),
                 CardEntity.Image(
                     id = "western_lowland_gorilla_front",
-                    textRes = R.string.western_lowland_gorilla,
+                    textRes = Res.string.western_lowland_gorilla,
                     imageRes = R.drawable.img_western_lowland_gorilla_front
                 )
             )
@@ -314,12 +315,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "bornean_orangutan_side",
-                    textRes = R.string.bornean_orangutan,
+                    textRes = Res.string.bornean_orangutan,
                     imageRes = R.drawable.img_bornean_orangutan_side
                 ),
                 CardEntity.Image(
                     id = "bornean_orangutan_front",
-                    textRes = R.string.bornean_orangutan,
+                    textRes = Res.string.bornean_orangutan,
                     imageRes = R.drawable.img_bornean_orangutan_front
                 )
             )
@@ -329,12 +330,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_pig_side",
-                    textRes = R.string.domestic_pig,
+                    textRes = Res.string.domestic_pig,
                     imageRes = R.drawable.img_domestic_pig_side
                 ),
                 CardEntity.Image(
                     id = "domestic_pig_front",
-                    textRes = R.string.domestic_pig,
+                    textRes = Res.string.domestic_pig,
                     imageRes = R.drawable.img_domestic_pig_front
                 )
             )
@@ -344,12 +345,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "plains_zebra_side",
-                    textRes = R.string.plains_zebra,
+                    textRes = Res.string.plains_zebra,
                     imageRes = R.drawable.img_plains_zebra_side
                 ),
                 CardEntity.Image(
                     id = "plains_zebra_front",
-                    textRes = R.string.plains_zebra,
+                    textRes = Res.string.plains_zebra,
                     imageRes = R.drawable.img_plains_zebra_front
                 )
             )
@@ -359,12 +360,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "cheetah_side",
-                    textRes = R.string.cheetah,
+                    textRes = Res.string.cheetah,
                     imageRes = R.drawable.img_cheetah_side
                 ),
                 CardEntity.Image(
                     id = "cheetah_front",
-                    textRes = R.string.cheetah,
+                    textRes = Res.string.cheetah,
                     imageRes = R.drawable.img_cheetah_front
                 )
             )
@@ -374,12 +375,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "white_rhinoceros_side",
-                    textRes = R.string.white_rhinoceros,
+                    textRes = Res.string.white_rhinoceros,
                     imageRes = R.drawable.img_white_rhinoceros_side
                 ),
                 CardEntity.Image(
                     id = "white_rhinoceros_front",
-                    textRes = R.string.white_rhinoceros,
+                    textRes = Res.string.white_rhinoceros,
                     imageRes = R.drawable.img_white_rhinoceros_front
                 )
             )
@@ -389,12 +390,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "cougar_side",
-                    textRes = R.string.cougar,
+                    textRes = Res.string.cougar,
                     imageRes = R.drawable.img_cougar_side
                 ),
                 CardEntity.Image(
                     id = "cougar_front",
-                    textRes = R.string.cougar,
+                    textRes = Res.string.cougar,
                     imageRes = R.drawable.img_cougar_front
                 )
             )
@@ -404,12 +405,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "red_fox_side",
-                    textRes = R.string.red_fox,
+                    textRes = Res.string.red_fox,
                     imageRes = R.drawable.img_red_fox_side
                 ),
                 CardEntity.Image(
                     id = "red_fox_front",
-                    textRes = R.string.red_fox,
+                    textRes = Res.string.red_fox,
                     imageRes = R.drawable.img_red_fox_front
                 )
             )
@@ -419,12 +420,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "polar_bear_side",
-                    textRes = R.string.polar_bear,
+                    textRes = Res.string.polar_bear,
                     imageRes = R.drawable.img_polar_bear_side
                 ),
                 CardEntity.Image(
                     id = "polar_bear_front",
-                    textRes = R.string.polar_bear,
+                    textRes = Res.string.polar_bear,
                     imageRes = R.drawable.img_polar_bear_front
                 )
             )
@@ -434,12 +435,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "indian_elephant_side",
-                    textRes = R.string.indian_elephant,
+                    textRes = Res.string.indian_elephant,
                     imageRes = R.drawable.img_indian_elephant_side
                 ),
                 CardEntity.Image(
                     id = "indian_elephant_front",
-                    textRes = R.string.indian_elephant,
+                    textRes = Res.string.indian_elephant,
                     imageRes = R.drawable.img_indian_elephant_front
                 )
             )
@@ -449,12 +450,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "domestic_rabbit_side",
-                    textRes = R.string.domestic_rabbit,
+                    textRes = Res.string.domestic_rabbit,
                     imageRes = R.drawable.img_domestic_rabbit_side
                 ),
                 CardEntity.Image(
                     id = "domestic_rabbit_front",
-                    textRes = R.string.domestic_rabbit,
+                    textRes = Res.string.domestic_rabbit,
                     imageRes = R.drawable.img_domestic_rabbit_front
                 )
             )
@@ -464,12 +465,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "european_hare_side",
-                    textRes = R.string.european_hare,
+                    textRes = Res.string.european_hare,
                     imageRes = R.drawable.img_european_hare_side
                 ),
                 CardEntity.Image(
                     id = "european_hare_front",
-                    textRes = R.string.european_hare,
+                    textRes = Res.string.european_hare,
                     imageRes = R.drawable.img_european_hare_front
                 )
             )
@@ -479,12 +480,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "bactrian_camel_side",
-                    textRes = R.string.bactrian_camel,
+                    textRes = Res.string.bactrian_camel,
                     imageRes = R.drawable.img_bactrian_camel_side
                 ),
                 CardEntity.Image(
                     id = "bactrian_camel_front",
-                    textRes = R.string.bactrian_camel,
+                    textRes = Res.string.bactrian_camel,
                     imageRes = R.drawable.img_bactrian_camel_front
                 )
             )
@@ -494,12 +495,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "american_bison_side",
-                    textRes = R.string.american_bison,
+                    textRes = Res.string.american_bison,
                     imageRes = R.drawable.img_american_bison_side
                 ),
                 CardEntity.Image(
                     id = "american_bison_front",
-                    textRes = R.string.american_bison,
+                    textRes = Res.string.american_bison,
                     imageRes = R.drawable.img_american_bison_front
                 )
             )
@@ -509,12 +510,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "moose_side",
-                    textRes = R.string.moose,
+                    textRes = Res.string.moose,
                     imageRes = R.drawable.img_moose_side
                 ),
                 CardEntity.Image(
                     id = "moose_front",
-                    textRes = R.string.moose,
+                    textRes = Res.string.moose,
                     imageRes = R.drawable.img_moose_front
                 )
             )
@@ -524,12 +525,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "wild_boar_side",
-                    textRes = R.string.wild_boar,
+                    textRes = Res.string.wild_boar,
                     imageRes = R.drawable.img_wild_boar_side
                 ),
                 CardEntity.Image(
                     id = "wild_boar_front",
-                    textRes = R.string.wild_boar,
+                    textRes = Res.string.wild_boar,
                     imageRes = R.drawable.img_wild_boar_front
                 )
             )
@@ -539,12 +540,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "blue_whale_side",
-                    textRes = R.string.blue_whale,
+                    textRes = Res.string.blue_whale,
                     imageRes = R.drawable.img_blue_whale_side
                 ),
                 CardEntity.Image(
                     id = "blue_whale_front",
-                    textRes = R.string.blue_whale,
+                    textRes = Res.string.blue_whale,
                     imageRes = R.drawable.img_blue_whale_front
                 )
             )
@@ -554,12 +555,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "sperm_whale_side",
-                    textRes = R.string.sperm_whale,
+                    textRes = Res.string.sperm_whale,
                     imageRes = R.drawable.img_sperm_whale_side
                 ),
                 CardEntity.Image(
                     id = "sperm_whale_front",
-                    textRes = R.string.sperm_whale,
+                    textRes = Res.string.sperm_whale,
                     imageRes = R.drawable.img_sperm_whale_front
                 )
             )
@@ -569,12 +570,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "african_buffalo_side",
-                    textRes = R.string.african_buffalo,
+                    textRes = Res.string.african_buffalo,
                     imageRes = R.drawable.img_african_buffalo_side
                 ),
                 CardEntity.Image(
                     id = "african_buffalo_front",
-                    textRes = R.string.african_buffalo,
+                    textRes = Res.string.african_buffalo,
                     imageRes = R.drawable.img_african_buffalo_front
                 )
             )
@@ -584,12 +585,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "capybara_side",
-                    textRes = R.string.capybara,
+                    textRes = Res.string.capybara,
                     imageRes = R.drawable.img_capybara_side
                 ),
                 CardEntity.Image(
                     id = "capybara_front",
-                    textRes = R.string.capybara,
+                    textRes = Res.string.capybara,
                     imageRes = R.drawable.img_capybara_front
                 )
             )
@@ -599,12 +600,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "european_beaver_side",
-                    textRes = R.string.european_beaver,
+                    textRes = Res.string.european_beaver,
                     imageRes = R.drawable.img_european_beaver_side
                 ),
                 CardEntity.Image(
                     id = "european_beaver_front",
-                    textRes = R.string.european_beaver,
+                    textRes = Res.string.european_beaver,
                     imageRes = R.drawable.img_european_beaver_front
                 )
             )
@@ -614,12 +615,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "eurasian_red_squirrel_side",
-                    textRes = R.string.eurasian_red_squirrel,
+                    textRes = Res.string.eurasian_red_squirrel,
                     imageRes = R.drawable.img_eurasian_red_squirrel_side
                 ),
                 CardEntity.Image(
                     id = "eurasian_red_squirrel_front",
-                    textRes = R.string.eurasian_red_squirrel,
+                    textRes = Res.string.eurasian_red_squirrel,
                     imageRes = R.drawable.img_eurasian_red_squirrel_front
                 )
             )
@@ -629,12 +630,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "northern_white_breasted_hedgehog_side",
-                    textRes = R.string.northern_white_breasted_hedgehog,
+                    textRes = Res.string.northern_white_breasted_hedgehog,
                     imageRes = R.drawable.img_northern_white_breasted_hedgehog_side
                 ),
                 CardEntity.Image(
                     id = "northern_white_breasted_hedgehog_front",
-                    textRes = R.string.northern_white_breasted_hedgehog,
+                    textRes = Res.string.northern_white_breasted_hedgehog,
                     imageRes = R.drawable.img_northern_white_breasted_hedgehog_front
                 )
             )
@@ -644,12 +645,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "platypus_side",
-                    textRes = R.string.platypus,
+                    textRes = Res.string.platypus,
                     imageRes = R.drawable.img_platypus_side
                 ),
                 CardEntity.Image(
                     id = "platypus_front",
-                    textRes = R.string.platypus,
+                    textRes = Res.string.platypus,
                     imageRes = R.drawable.img_platypus_front
                 )
             )
@@ -659,12 +660,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "tasmanian_devil_side",
-                    textRes = R.string.tasmanian_devil,
+                    textRes = Res.string.tasmanian_devil,
                     imageRes = R.drawable.img_tasmanian_devil_side
                 ),
                 CardEntity.Image(
                     id = "tasmanian_devil_front",
-                    textRes = R.string.tasmanian_devil,
+                    textRes = Res.string.tasmanian_devil,
                     imageRes = R.drawable.img_tasmanian_devil_front
                 )
             )
@@ -674,12 +675,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "meerkat_side",
-                    textRes = R.string.meerkat,
+                    textRes = Res.string.meerkat,
                     imageRes = R.drawable.img_meerkat_side
                 ),
                 CardEntity.Image(
                     id = "meerkat_front",
-                    textRes = R.string.meerkat,
+                    textRes = Res.string.meerkat,
                     imageRes = R.drawable.img_meerkat_front
                 )
             )
@@ -689,12 +690,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "virginia_opossum_side",
-                    textRes = R.string.virginia_opossum,
+                    textRes = Res.string.virginia_opossum,
                     imageRes = R.drawable.img_virginia_opossum_side
                 ),
                 CardEntity.Image(
                     id = "virginia_opossum_front",
-                    textRes = R.string.virginia_opossum,
+                    textRes = Res.string.virginia_opossum,
                     imageRes = R.drawable.img_virginia_opossum_front
                 )
             )
@@ -704,12 +705,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "european_otter_side",
-                    textRes = R.string.european_otter,
+                    textRes = Res.string.european_otter,
                     imageRes = R.drawable.img_european_otter_side
                 ),
                 CardEntity.Image(
                     id = "european_otter_front",
-                    textRes = R.string.european_otter,
+                    textRes = Res.string.european_otter,
                     imageRes = R.drawable.img_european_otter_front
                 )
             )
@@ -719,12 +720,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "red_deer_side",
-                    textRes = R.string.red_deer,
+                    textRes = Res.string.red_deer,
                     imageRes = R.drawable.img_red_deer_side
                 ),
                 CardEntity.Image(
                     id = "red_deer_front",
-                    textRes = R.string.red_deer,
+                    textRes = Res.string.red_deer,
                     imageRes = R.drawable.img_red_deer_front
                 )
             )
@@ -734,12 +735,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "ring_tailed_lemur_side",
-                    textRes = R.string.ring_tailed_lemur,
+                    textRes = Res.string.ring_tailed_lemur,
                     imageRes = R.drawable.img_ring_tailed_lemur_side
                 ),
                 CardEntity.Image(
                     id = "ring_tailed_lemur_front",
-                    textRes = R.string.ring_tailed_lemur,
+                    textRes = Res.string.ring_tailed_lemur,
                     imageRes = R.drawable.img_ring_tailed_lemur_front
                 )
             )
@@ -749,12 +750,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "japanese_macaque_side",
-                    textRes = R.string.japanese_macaque,
+                    textRes = Res.string.japanese_macaque,
                     imageRes = R.drawable.img_japanese_macaque_side
                 ),
                 CardEntity.Image(
                     id = "japanese_macaque_front",
-                    textRes = R.string.japanese_macaque,
+                    textRes = Res.string.japanese_macaque,
                     imageRes = R.drawable.img_japanese_macaque_front
                 )
             )
@@ -764,12 +765,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "common_seal_side",
-                    textRes = R.string.common_seal,
+                    textRes = Res.string.common_seal,
                     imageRes = R.drawable.img_common_seal_side
                 ),
                 CardEntity.Image(
                     id = "common_seal_front",
-                    textRes = R.string.common_seal,
+                    textRes = Res.string.common_seal,
                     imageRes = R.drawable.img_common_seal_front
                 )
             )
@@ -779,12 +780,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "walrus_side",
-                    textRes = R.string.walrus,
+                    textRes = Res.string.walrus,
                     imageRes = R.drawable.img_walrus_side
                 ),
                 CardEntity.Image(
                     id = "walrus_front",
-                    textRes = R.string.walrus,
+                    textRes = Res.string.walrus,
                     imageRes = R.drawable.img_walrus_front
                 )
             )
@@ -794,12 +795,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "west_indian_manatee_side",
-                    textRes = R.string.west_indian_manatee,
+                    textRes = Res.string.west_indian_manatee,
                     imageRes = R.drawable.img_west_indian_manatee_side
                 ),
                 CardEntity.Image(
                     id = "west_indian_manatee_front",
-                    textRes = R.string.west_indian_manatee,
+                    textRes = Res.string.west_indian_manatee,
                     imageRes = R.drawable.img_west_indian_manatee_front
                 )
             )
@@ -809,12 +810,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "dugong_side",
-                    textRes = R.string.dugong,
+                    textRes = Res.string.dugong,
                     imageRes = R.drawable.img_dugong_side
                 ),
                 CardEntity.Image(
                     id = "dugong_front",
-                    textRes = R.string.dugong,
+                    textRes = Res.string.dugong,
                     imageRes = R.drawable.img_dugong_front
                 )
             )
@@ -824,12 +825,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "giant_anteater_side",
-                    textRes = R.string.giant_anteater,
+                    textRes = Res.string.giant_anteater,
                     imageRes = R.drawable.img_giant_anteater_side
                 ),
                 CardEntity.Image(
                     id = "giant_anteater_front",
-                    textRes = R.string.giant_anteater,
+                    textRes = Res.string.giant_anteater,
                     imageRes = R.drawable.img_giant_anteater_front
                 )
             )
@@ -839,12 +840,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "brown_throated_sloth_side",
-                    textRes = R.string.brown_throated_sloth,
+                    textRes = Res.string.brown_throated_sloth,
                     imageRes = R.drawable.img_brown_throated_sloth_side
                 ),
                 CardEntity.Image(
                     id = "brown_throated_sloth_front",
-                    textRes = R.string.brown_throated_sloth,
+                    textRes = Res.string.brown_throated_sloth,
                     imageRes = R.drawable.img_brown_throated_sloth_front
                 )
             )
@@ -854,12 +855,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "narwhal_side",
-                    textRes = R.string.narwhal,
+                    textRes = Res.string.narwhal,
                     imageRes = R.drawable.img_narwhal_side
                 ),
                 CardEntity.Image(
                     id = "narwhal_front",
-                    textRes = R.string.narwhal,
+                    textRes = Res.string.narwhal,
                     imageRes = R.drawable.img_narwhal_front
                 )
             )
@@ -869,12 +870,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "european_badger_side",
-                    textRes = R.string.european_badger,
+                    textRes = Res.string.european_badger,
                     imageRes = R.drawable.img_european_badger_side
                 ),
                 CardEntity.Image(
                     id = "european_badger_front",
-                    textRes = R.string.european_badger,
+                    textRes = Res.string.european_badger,
                     imageRes = R.drawable.img_european_badger_front
                 )
             )
@@ -884,12 +885,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "malayan_tapir_side",
-                    textRes = R.string.malayan_tapir,
+                    textRes = Res.string.malayan_tapir,
                     imageRes = R.drawable.img_malayan_tapir_side
                 ),
                 CardEntity.Image(
                     id = "malayan_tapir_front",
-                    textRes = R.string.malayan_tapir,
+                    textRes = Res.string.malayan_tapir,
                     imageRes = R.drawable.img_malayan_tapir_front
                 )
             )
@@ -899,12 +900,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "white_handed_gibbon_side",
-                    textRes = R.string.white_handed_gibbon,
+                    textRes = Res.string.white_handed_gibbon,
                     imageRes = R.drawable.img_white_handed_gibbon_side
                 ),
                 CardEntity.Image(
                     id = "white_handed_gibbon_front",
-                    textRes = R.string.white_handed_gibbon,
+                    textRes = Res.string.white_handed_gibbon,
                     imageRes = R.drawable.img_white_handed_gibbon_front
                 )
             )
@@ -914,12 +915,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "alpaca_side",
-                    textRes = R.string.alpaca,
+                    textRes = Res.string.alpaca,
                     imageRes = R.drawable.img_alpaca_side
                 ),
                 CardEntity.Image(
                     id = "alpaca_front",
-                    textRes = R.string.alpaca,
+                    textRes = Res.string.alpaca,
                     imageRes = R.drawable.img_alpaca_front
                 )
             )
@@ -929,12 +930,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "sea_otter_side",
-                    textRes = R.string.sea_otter,
+                    textRes = Res.string.sea_otter,
                     imageRes = R.drawable.img_sea_otter_side
                 ),
                 CardEntity.Image(
                     id = "sea_otter_front",
-                    textRes = R.string.sea_otter,
+                    textRes = Res.string.sea_otter,
                     imageRes = R.drawable.img_sea_otter_front
                 )
             )
@@ -944,12 +945,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "common_wombat_side",
-                    textRes = R.string.common_wombat,
+                    textRes = Res.string.common_wombat,
                     imageRes = R.drawable.img_common_wombat_side
                 ),
                 CardEntity.Image(
                     id = "common_wombat_front",
-                    textRes = R.string.common_wombat,
+                    textRes = Res.string.common_wombat,
                     imageRes = R.drawable.img_common_wombat_front
                 )
             )
@@ -959,12 +960,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "brown_rat_side",
-                    textRes = R.string.brown_rat,
+                    textRes = Res.string.brown_rat,
                     imageRes = R.drawable.img_brown_rat_side
                 ),
                 CardEntity.Image(
                     id = "brown_rat_front",
-                    textRes = R.string.brown_rat,
+                    textRes = Res.string.brown_rat,
                     imageRes = R.drawable.img_brown_rat_front
                 )
             )
@@ -974,12 +975,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "house_mouse_side",
-                    textRes = R.string.house_mouse,
+                    textRes = Res.string.house_mouse,
                     imageRes = R.drawable.img_house_mouse_side
                 ),
                 CardEntity.Image(
                     id = "house_mouse_front",
-                    textRes = R.string.house_mouse,
+                    textRes = Res.string.house_mouse,
                     imageRes = R.drawable.img_house_mouse_front
                 )
             )
@@ -989,12 +990,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "european_mole_side",
-                    textRes = R.string.european_mole,
+                    textRes = Res.string.european_mole,
                     imageRes = R.drawable.img_european_mole_side
                 ),
                 CardEntity.Image(
                     id = "european_mole_front",
-                    textRes = R.string.european_mole,
+                    textRes = Res.string.european_mole,
                     imageRes = R.drawable.img_european_mole_front
                 )
             )
@@ -1004,12 +1005,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "brown_long_eared_bat_side",
-                    textRes = R.string.brown_long_eared_bat,
+                    textRes = Res.string.brown_long_eared_bat,
                     imageRes = R.drawable.img_brown_long_eared_bat_side
                 ),
                 CardEntity.Image(
                     id = "brown_long_eared_bat_front",
-                    textRes = R.string.brown_long_eared_bat,
+                    textRes = Res.string.brown_long_eared_bat,
                     imageRes = R.drawable.img_brown_long_eared_bat_front
                 )
             )
@@ -1019,12 +1020,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "egyptian_fruit_bat_side",
-                    textRes = R.string.egyptian_fruit_bat,
+                    textRes = Res.string.egyptian_fruit_bat,
                     imageRes = R.drawable.img_egyptian_fruit_bat_side
                 ),
                 CardEntity.Image(
                     id = "egyptian_fruit_bat_front",
-                    textRes = R.string.egyptian_fruit_bat,
+                    textRes = Res.string.egyptian_fruit_bat,
                     imageRes = R.drawable.img_egyptian_fruit_bat_front
                 )
             )
@@ -1034,12 +1035,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "vicuna_side",
-                    textRes = R.string.vicuna,
+                    textRes = Res.string.vicuna,
                     imageRes = R.drawable.img_vicuna_side
                 ),
                 CardEntity.Image(
                     id = "vicuna_front",
-                    textRes = R.string.vicuna,
+                    textRes = Res.string.vicuna,
                     imageRes = R.drawable.img_vicuna_front
                 )
             )
@@ -1049,12 +1050,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "giant_armadillo_side",
-                    textRes = R.string.giant_armadillo,
+                    textRes = Res.string.giant_armadillo,
                     imageRes = R.drawable.img_giant_armadillo_side
                 ),
                 CardEntity.Image(
                     id = "giant_armadillo_front",
-                    textRes = R.string.giant_armadillo,
+                    textRes = Res.string.giant_armadillo,
                     imageRes = R.drawable.img_giant_armadillo_front
                 )
             )
@@ -1064,12 +1065,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "arctic_hare_side",
-                    textRes = R.string.arctic_hare,
+                    textRes = Res.string.arctic_hare,
                     imageRes = R.drawable.img_arctic_hare_side
                 ),
                 CardEntity.Image(
                     id = "arctic_hare_front",
-                    textRes = R.string.arctic_hare,
+                    textRes = Res.string.arctic_hare,
                     imageRes = R.drawable.img_arctic_hare_front
                 )
             )
@@ -1079,12 +1080,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "fennec_fox_side",
-                    textRes = R.string.fennec_fox,
+                    textRes = Res.string.fennec_fox,
                     imageRes = R.drawable.img_fennec_fox_side
                 ),
                 CardEntity.Image(
                     id = "fennec_fox_front",
-                    textRes = R.string.fennec_fox,
+                    textRes = Res.string.fennec_fox,
                     imageRes = R.drawable.img_fennec_fox_front
                 )
             )
@@ -1094,12 +1095,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "cape_hyrax_side",
-                    textRes = R.string.cape_hyrax,
+                    textRes = Res.string.cape_hyrax,
                     imageRes = R.drawable.img_cape_hyrax_side
                 ),
                 CardEntity.Image(
                     id = "cape_hyrax_front",
-                    textRes = R.string.cape_hyrax,
+                    textRes = Res.string.cape_hyrax,
                     imageRes = R.drawable.img_cape_hyrax_front
                 )
             )
@@ -1109,12 +1110,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "elephant_shrew_side",
-                    textRes = R.string.elephant_shrew,
+                    textRes = Res.string.elephant_shrew,
                     imageRes = R.drawable.img_elephant_shrew_side
                 ),
                 CardEntity.Image(
                     id = "elephant_shrew_front",
-                    textRes = R.string.elephant_shrew,
+                    textRes = Res.string.elephant_shrew,
                     imageRes = R.drawable.img_elephant_shrew_front
                 )
             )
@@ -1124,12 +1125,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "sunda_colugo_side",
-                    textRes = R.string.sunda_colugo,
+                    textRes = Res.string.sunda_colugo,
                     imageRes = R.drawable.img_sunda_colugo_side
                 ),
                 CardEntity.Image(
                     id = "sunda_colugo_front",
-                    textRes = R.string.sunda_colugo,
+                    textRes = Res.string.sunda_colugo,
                     imageRes = R.drawable.img_sunda_colugo_front
                 )
             )
@@ -1139,12 +1140,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "chinese_pangolin_side",
-                    textRes = R.string.chinese_pangolin,
+                    textRes = Res.string.chinese_pangolin,
                     imageRes = R.drawable.img_chinese_pangolin_side
                 ),
                 CardEntity.Image(
                     id = "chinese_pangolin_front",
-                    textRes = R.string.chinese_pangolin,
+                    textRes = Res.string.chinese_pangolin,
                     imageRes = R.drawable.img_chinese_pangolin_front
                 )
             )
@@ -1154,12 +1155,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "short_beaked_echidna_side",
-                    textRes = R.string.short_beaked_echidna,
+                    textRes = Res.string.short_beaked_echidna,
                     imageRes = R.drawable.img_short_beaked_echidna_side
                 ),
                 CardEntity.Image(
                     id = "short_beaked_echidna_front",
-                    textRes = R.string.short_beaked_echidna,
+                    textRes = Res.string.short_beaked_echidna,
                     imageRes = R.drawable.img_short_beaked_echidna_front
                 )
             )
@@ -1169,12 +1170,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "lesser_chinchilla_side",
-                    textRes = R.string.lesser_chinchilla,
+                    textRes = Res.string.lesser_chinchilla,
                     imageRes = R.drawable.img_lesser_chinchilla_side
                 ),
                 CardEntity.Image(
                     id = "lesser_chinchilla_front",
-                    textRes = R.string.lesser_chinchilla,
+                    textRes = Res.string.lesser_chinchilla,
                     imageRes = R.drawable.img_lesser_chinchilla_front
                 )
             )
@@ -1184,12 +1185,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "indian_crested_porcupine_side",
-                    textRes = R.string.indian_crested_porcupine,
+                    textRes = Res.string.indian_crested_porcupine,
                     imageRes = R.drawable.img_indian_crested_porcupine_side
                 ),
                 CardEntity.Image(
                     id = "indian_crested_porcupine_front",
-                    textRes = R.string.indian_crested_porcupine,
+                    textRes = Res.string.indian_crested_porcupine,
                     imageRes = R.drawable.img_indian_crested_porcupine_front
                 )
             )
@@ -1199,12 +1200,12 @@ class AllCardPairsLocalDataSource @Inject constructor() : AllCardPairsDataSource
             pair = Pair(
                 CardEntity.Image(
                     id = "golden_mole_side",
-                    textRes = R.string.golden_mole,
+                    textRes = Res.string.golden_mole,
                     imageRes = R.drawable.img_golden_mole_side
                 ),
                 CardEntity.Image(
                     id = "golden_mole_front",
-                    textRes = R.string.golden_mole,
+                    textRes = Res.string.golden_mole,
                     imageRes = R.drawable.img_golden_mole_front
                 )
             )

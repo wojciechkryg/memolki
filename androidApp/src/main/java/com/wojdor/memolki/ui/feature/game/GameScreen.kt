@@ -11,6 +11,7 @@ import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
@@ -136,7 +137,7 @@ private fun GameScreenGrid2x3Preview() {
                     CardModel.Text(
                         id = "id",
                         pairId = "pairId",
-                        textRes = R.string.empty
+                        textRes = Res.string.empty
                     )
                 }
             )
@@ -155,7 +156,7 @@ private fun GameScreenGrid3x4Preview() {
                     CardModel.Text(
                         id = "id",
                         pairId = "pairId",
-                        textRes = R.string.empty
+                        textRes = Res.string.empty
                     )
                 }
             )
@@ -174,7 +175,7 @@ private fun GameScreenGrid4x4Preview() {
                     CardModel.Text(
                         id = "id",
                         pairId = "pairId",
-                        textRes = R.string.empty
+                        textRes = Res.string.empty
                     )
                 }
             )
@@ -193,7 +194,7 @@ private fun GameScreenGrid4x5Preview() {
                     CardModel.Text(
                         id = "id",
                         pairId = "pairId",
-                        textRes = R.string.empty
+                        textRes = Res.string.empty
                     )
 
                 }
@@ -213,7 +214,7 @@ private fun GameScreenGrid4x6Preview() {
                     CardModel.Text(
                         id = "id",
                         pairId = "pairId",
-                        textRes = R.string.empty
+                        textRes = Res.string.empty
                     )
                 }
             )
@@ -232,7 +233,7 @@ private fun GameScreenGrid5x6Preview() {
                     CardModel.Text(
                         id = "id",
                         pairId = "pairId",
-                        textRes = R.string.empty
+                        textRes = Res.string.empty
                     )
                 }
             )

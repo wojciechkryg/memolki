@@ -131,7 +131,7 @@ Sealed classes with `@Serializable`, often including:
 - Abstract properties in the sealed parent
 - Data class subclasses for concrete types (each also annotated `@Serializable`)
 - `object Empty` sentinel for default/initial values (also `@Serializable`)
-- Resource IDs: `StringResource` / `DrawableResource` / `Color` typed fields serialize via `StringResourceSerializer` / `DrawableResourceSerializer` / `ColorSerializer` in `:shared/commonMain/util/serializer/` (strings encode via `StringResource.key`, drawables via reverse-lookup in `Res.allDrawableResources`, colors via underlying `ULong` value). Apply via `@file:UseSerializers(...)` at the top of each model file — no per-field annotation. `CardModel` still holds `Int` resource IDs pending flavor-specific card strings/drawables moving to `composeResources`. `CardModel.Empty.textRes = 0` remains as a sentinel until then.
+- Resource IDs: `StringResource` / `DrawableResource` / `Color` typed fields serialize via `StringResourceSerializer` / `DrawableResourceSerializer` / `ColorSerializer` in `:shared/commonMain/util/serializer/` (strings encode via `StringResource.key`, drawables via reverse-lookup in `Res.allDrawableResources`, colors via underlying `ULong` value). Apply via `@file:UseSerializers(...)` at the top of each model file — no per-field annotation. `CardModel.imageRes` still holds `Int` (flavor-specific card drawables pending migration to composeResources flavor source sets).
 
 Reference: `shared/src/commonMain/.../domain/model/CardModel.kt`
 
@@ -444,9 +444,9 @@ Each locale file must translate every key from the default `strings.xml`.
 
 ### 2. Flavor-specific card names
 
-Located in `androidApp/src/{flavorName}/res/values/strings.xml` (English default) and `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` per language. Contains only card names for that flavor (e.g. `banana`, `apple`).
+Located in `:shared/src/android{Flavor}/composeResources/values/strings.xml` (English default) and `:shared/src/android{Flavor}/composeResources/values-{locale}/strings.xml` per language — one set per flavor (`androidFruitHalf`, `androidVegetableHalf`, `androidMammalSide`, `androidBirdSide`). Consumed via `Res.string.apple`, `Res.string.banana`, etc. from `AllCardPairsLocalDataSource` in each `androidApp/src/{flavor}/java/.../data/local/card/` source set.
 
-Each flavor has its own set of translated card names across all supported locales.
+`androidApp/src/{flavor}/res/values*/strings.xml` now only carries the single `app_name` alias (`@string/app_name_{flavor}`) that the manifest consumes.
 
 ### 3. Shared drawables
 

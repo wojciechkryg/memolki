@@ -1,6 +1,6 @@
 package com.wojdor.memolki.ui.feature.cardpairdetails.component
 
-import androidx.annotation.StringRes
+import org.jetbrains.compose.resources.StringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,9 +12,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.ui.component.AutoSizeText
@@ -67,7 +68,7 @@ private const val CARD_WEIGHT = 3f
 private const val TEXT_WEIGHT = 1f
 
 @Composable
-private fun TextDetails(modifier: Modifier, @StringRes textRes: Int) {
+private fun TextDetails(modifier: Modifier, textRes: StringResource) {
     AutoSizeText(
         modifier = modifier.padding(spacingS),
         text = stringResource(textRes),
@@ -84,13 +85,13 @@ private fun CardPairDetailsContentImagesSameTextPreview() {
                 CardModel.Image(
                     "banana_whole",
                     "banana",
-                    R.string.new_game,
+                    Res.string.banana,
                     R.drawable.img_test_whole
                 ),
                 CardModel.Image(
                     "banana_half",
                     "banana",
-                    R.string.new_game,
+                    Res.string.banana,
                     R.drawable.img_test_half
                 )
             )
@@ -107,13 +108,13 @@ private fun CardPairDetailsContentImagesDifferentTextPreview() {
                 CardModel.Image(
                     "banana_whole",
                     "banana",
-                    R.string.menu,
+                    Res.string.banana,
                     R.drawable.img_test_whole
                 ),
                 CardModel.Image(
                     "banana_half",
                     "banana",
-                    R.string.new_game,
+                    Res.string.apple,
                     R.drawable.img_test_half
                 )
             )
@@ -130,12 +131,12 @@ private fun CardPairDetailsContentImageAndTextPreview() {
                 CardModel.Text(
                     "banana_whole",
                     "banana",
-                    R.string.menu,
+                    Res.string.banana,
                 ),
                 CardModel.Image(
                     "banana_half",
                     "banana",
-                    R.string.menu,
+                    Res.string.banana,
                     R.drawable.img_test_whole
                 )
             )
@@ -152,12 +153,12 @@ private fun CardPairDetailsContentTextsPreview() {
                 CardModel.Text(
                     "banana_whole",
                     "banana",
-                    R.string.menu,
+                    Res.string.banana,
                 ),
                 CardModel.Text(
                     "banana_half",
                     "banana",
-                    R.string.new_game,
+                    Res.string.banana,
                 )
             )
         )
