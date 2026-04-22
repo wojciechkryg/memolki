@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.chooseboard.component
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Row
@@ -17,20 +16,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
-import org.jetbrains.compose.resources.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.component.ForceLtr
 import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.theme.AppTheme
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChooseBoardItem(
-    @StringRes textId: Int,
+    textId: StringResource,
     isEnabled: Boolean = true,
     onClick: () -> Unit = {},
     onLockedClick: () -> Unit = {}
@@ -61,7 +60,7 @@ fun ChooseBoardItem(
             Icon(
                 modifier = Modifier.size(LOCKED_ICON_SIZE),
                 painter = painterResource(Res.drawable.ic_lock),
-                contentDescription = stringResource(R.string.content_description_locked)
+                contentDescription = stringResource(Res.string.content_description_locked)
             )
         }
         ForceLtr {
@@ -83,7 +82,7 @@ private val LOCKED_ICON_SIZE = 48.dp
 @Composable
 private fun ChooseBoardItemDisabledPreview() {
     AppTheme {
-        ChooseBoardItem(R.string.board2x3, isEnabled = false)
+        ChooseBoardItem(Res.string.board2x3, isEnabled = false)
     }
 }
 
@@ -91,6 +90,6 @@ private fun ChooseBoardItemDisabledPreview() {
 @Composable
 private fun ChooseBoardItemEnabledPreview() {
     AppTheme {
-        ChooseBoardItem(R.string.board2x3, isEnabled = true)
+        ChooseBoardItem(Res.string.board2x3, isEnabled = true)
     }
 }

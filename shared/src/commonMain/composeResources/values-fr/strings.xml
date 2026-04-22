@@ -39,10 +39,10 @@
     <string name="notification_channel_reminders">Rappels</string>
 
     <string-array name="notification_reminder_titles">
-        <item>🧠 Comment va ta mémoire aujourd\'hui ?</item>
-        <item>🃏 Tes cartes s\'ennuient de toi !</item>
+        <item>🧠 Comment va ta mémoire aujourd'hui ?</item>
+        <item>🃏 Tes cartes s'ennuient de toi !</item>
         <item>🎴 Ta collection est incomplète !</item>
-        <item>✨ L\'heure du défi !</item>
+        <item>✨ L'heure du défi !</item>
         <item>🃏 Prêt à retourner des cartes ?</item>
     </string-array>
     <string-array name="notification_reminder_bodies">
@@ -55,13 +55,13 @@
 
     <string-array name="notification_ad_reward_titles">
         <item>💰 Ta récompense en pièces est prête !</item>
-        <item>✨ Des pièces t\'attendent !</item>
-        <item>🏆 C\'est l\'heure de récupérer ta récompense !</item>
+        <item>✨ Des pièces t'attendent !</item>
+        <item>🏆 C'est l'heure de récupérer ta récompense !</item>
         <item>💰 Tes pièces sont arrivées !</item>
         <item>✨ Récompense débloquée !</item>
     </string-array>
     <string-array name="notification_ad_reward_bodies">
-        <item>Des pièces gratuites t\'attendent !</item>
+        <item>Des pièces gratuites t'attendent !</item>
         <item>Récupère ta récompense maintenant !</item>
         <item>Tes pièces sont prêtes !</item>
         <item>Regarde une autre pub pour plus de pièces</item>
@@ -69,7 +69,7 @@
     </string-array>
 
     <string name="enable_notifications_title">Débloque plus de récompenses !</string>
-    <string name="enable_notifications_body">Reçois des notifications quand les pièces sont prêtes à être collectées et de nouvelles cartes attendent d\'être débloquées !</string>
+    <string name="enable_notifications_body">Reçois des notifications quand les pièces sont prêtes à être collectées et de nouvelles cartes attendent d'être débloquées !</string>
     <string name="enable_notifications_enable">Activer</string>
     <string name="enable_notifications_later">Plus tard</string>
     <string-array name="notification_daily_streak_titles">
@@ -77,7 +77,7 @@
         <item>🎁 Ta récompense quotidienne est prête !</item>
         <item>💰 Pièces gratuites dans la boutique !</item>
         <item>🔥 Ne perds pas ta série !</item>
-        <item>🎁 La récompense du jour t\'attend !</item>
+        <item>🎁 La récompense du jour t'attend !</item>
     </string-array>
     <string-array name="notification_daily_streak_bodies">
         <item>Collecte tes pièces avant la fin du jour !</item>
@@ -97,16 +97,16 @@
     <string name="daily_challenge">Défi quotidien</string>
     <string name="daily_challenge_compare">Comparer</string>
     <string-array name="notification_daily_challenge_titles">
-        <item>🃏 N\'oublie pas ton défi quotidien !</item>
-        <item>⭐ Le défi quotidien t\'attend !</item>
+        <item>🃏 N'oublie pas ton défi quotidien !</item>
+        <item>⭐ Le défi quotidien t'attend !</item>
         <item>🧠 Prêt pour le défi du jour ?</item>
         <item>💪 Ton entraînement cérébral quotidien !</item>
-        <item>🏆 Défie-toi aujourd\'hui !</item>
+        <item>🏆 Défie-toi aujourd'hui !</item>
     </string-array>
     <string-array name="notification_daily_challenge_bodies">
         <item>Teste ta mémoire avec le plateau unique du jour</item>
-        <item>Peux-tu battre le score d\'hier ?</item>
-        <item>Un nouveau puzzle t\'attend</item>
+        <item>Peux-tu battre le score d'hier ?</item>
+        <item>Un nouveau puzzle t'attend</item>
         <item>Trouve toutes les paires et partage tes résultats</item>
         <item>Tout le monde a le même plateau — comment vas-tu te comparer ?</item>
     </string-array>
@@ -118,7 +118,7 @@
     <string name="level_count">niveau %d</string>
 
     <string name="leave_daily_challenge_title">Quitter le défi du jour ?</string>
-    <string name="leave_daily_challenge_body">Tu ne pourras pas réessayer aujourd\'hui</string>
+    <string name="leave_daily_challenge_body">Tu ne pourras pas réessayer aujourd'hui</string>
     <string name="leave_game_title">Quitter la partie ?</string>
     <string name="leave_game_body">Ta progression sera perdue</string>
     <string name="leave_game_stay">Rester</string>

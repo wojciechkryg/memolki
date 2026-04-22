@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.domain.model.SettingModel
@@ -64,14 +64,14 @@ fun ToggleSettingButton(
             ) {
                 Icon(
                     modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = setting.resId),
+                    painter = painterResource(setting.resId),
                     contentDescription = stringResource(setting.textId)
                 )
                 AnimateDisabledStrikeThrough(setting)
             }
             Spacer(modifier = Modifier.size(spacingXS))
             Text(
-                text = stringResource(id = setting.textId).lowercase(),
+                text = stringResource(setting.textId).lowercase(),
                 style = MaterialTheme.typography.displaySmall
             )
         }

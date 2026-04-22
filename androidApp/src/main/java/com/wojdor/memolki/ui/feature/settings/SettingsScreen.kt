@@ -13,8 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.SettingModel
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.setting_language
 import com.wojdor.memolki.ui.app.navigateToChangeLanguage
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.BaseMenuItem
@@ -72,7 +73,7 @@ private fun SettingsScreen(
             }
             Spacer(modifier = Modifier.height(spacingXL))
         }
-        BaseMenuItem(textId = R.string.setting_language) {
+        BaseMenuItem(textId = Res.string.setting_language) {
             callbacks.onLanguageClick()
         }
     }

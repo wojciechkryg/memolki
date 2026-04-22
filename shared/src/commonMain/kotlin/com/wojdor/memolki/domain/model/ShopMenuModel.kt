@@ -1,30 +1,39 @@
+@file:UseSerializers(StringResourceSerializer::class)
+
 package com.wojdor.memolki.domain.model
 
-import androidx.annotation.StringRes
-import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.daily_reward_day
+import com.wojdor.memolki.shared.resources.shop_buy
+import com.wojdor.memolki.shared.resources.shop_obtain
+import com.wojdor.memolki.shared.resources.shop_unlock_all_cards
+import com.wojdor.memolki.util.serializer.StringResourceSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
+import org.jetbrains.compose.resources.StringResource
 
-// TODO(compose-resources): move to commonMain once Phase 13 lets us replace R.string.* in subclass super-constructors with Res.*
 @Serializable
-sealed class ShopMenuModel(@field:StringRes val textId: Int) {
+sealed class ShopMenuModel(
+    val textId: StringResource
+) {
     @Serializable
     data class DailyReward(
         override val isAvailable: Boolean,
         val streakDay: Int,
         val coinsToGrant: Long
-    ) : ShopMenuModel(R.string.daily_reward_day)
+    ) : ShopMenuModel(Res.string.daily_reward_day)
 
     @Serializable
     data class WatchAd(
         override val isAvailable: Boolean,
         val coinsToGrant: Long
-    ) : ShopMenuModel(R.string.shop_obtain)
+    ) : ShopMenuModel(Res.string.shop_obtain)
 
     @Serializable
     data class BuyCoinsSmallAmount(
         val formattedPrice: String,
         val coinsToGrant: Long
-    ) : ShopMenuModel(R.string.shop_buy) {
+    ) : ShopMenuModel(Res.string.shop_buy) {
 
         override val isAvailable: Boolean
             get() = formattedPrice.isNotBlank()
@@ -34,7 +43,7 @@ sealed class ShopMenuModel(@field:StringRes val textId: Int) {
     data class BuyCoinsBigAmount(
         val formattedPrice: String,
         val coinsToGrant: Long
-    ) : ShopMenuModel(R.string.shop_buy) {
+    ) : ShopMenuModel(Res.string.shop_buy) {
 
         override val isAvailable: Boolean
             get() = formattedPrice.isNotBlank()
@@ -43,7 +52,7 @@ sealed class ShopMenuModel(@field:StringRes val textId: Int) {
     @Serializable
     data class BuyAllCards(
         val formattedPrice: String
-    ) : ShopMenuModel(R.string.shop_unlock_all_cards) {
+    ) : ShopMenuModel(Res.string.shop_unlock_all_cards) {
 
         override val isAvailable: Boolean
             get() = formattedPrice.isNotBlank()

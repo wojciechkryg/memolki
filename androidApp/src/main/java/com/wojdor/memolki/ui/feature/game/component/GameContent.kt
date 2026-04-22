@@ -28,6 +28,14 @@ import androidx.compose.ui.window.DialogProperties
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.leave_daily_challenge_body
+import com.wojdor.memolki.shared.resources.leave_daily_challenge_title
+import com.wojdor.memolki.shared.resources.leave_game_body
+import com.wojdor.memolki.shared.resources.leave_game_leave
+import com.wojdor.memolki.shared.resources.leave_game_stay
+import com.wojdor.memolki.shared.resources.leave_game_title
+import org.jetbrains.compose.resources.stringResource as composeStringResource
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
@@ -171,9 +179,9 @@ private fun CardDetails(state: GameState) {
 @Composable
 private fun LeaveConfirmation(isDailyChallenge: Boolean, callbacks: GameCallbacks) {
     val titleRes =
-        if (isDailyChallenge) R.string.leave_daily_challenge_title else R.string.leave_game_title
+        if (isDailyChallenge) Res.string.leave_daily_challenge_title else Res.string.leave_game_title
     val bodyRes =
-        if (isDailyChallenge) R.string.leave_daily_challenge_body else R.string.leave_game_body
+        if (isDailyChallenge) Res.string.leave_daily_challenge_body else Res.string.leave_game_body
     Dialog(
         onDismissRequest = callbacks.onLeaveConfirmationDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -191,22 +199,22 @@ private fun LeaveConfirmation(isDailyChallenge: Boolean, callbacks: GameCallback
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AutoSizeText(
-                    text = stringResource(titleRes),
+                    text = composeStringResource(titleRes),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(spacingM))
                 AutoSizeText(
-                    text = stringResource(bodyRes),
+                    text = composeStringResource(bodyRes),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.height(spacingXL))
                 BaseMenuItem(
-                    textId = R.string.leave_game_stay,
+                    textId = Res.string.leave_game_stay,
                     onClick = callbacks.onLeaveConfirmationDismiss
                 )
                 Spacer(modifier = Modifier.height(spacingL))
                 BaseMenuItem(
-                    textId = R.string.leave_game_leave,
+                    textId = Res.string.leave_game_leave,
                     textStyle = MaterialTheme.typography.bodyLarge,
                     alpha = 0.5f,
                     onClick = callbacks.onLeaveConfirmationConfirm

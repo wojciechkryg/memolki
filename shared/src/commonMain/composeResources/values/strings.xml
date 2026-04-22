@@ -40,7 +40,7 @@
     <string name="notification_channel_reminders">Reminders</string>
 
     <string-array name="notification_reminder_titles">
-        <item>🧠 How\'s your memory today?</item>
+        <item>🧠 How's your memory today?</item>
         <item>🃏 Your cards miss you!</item>
         <item>🎴 Your collection is incomplete!</item>
         <item>✨ Time for a challenge!</item>
@@ -70,15 +70,15 @@
     </string-array>
 
     <string-array name="notification_daily_challenge_titles">
-        <item>🃏 Don\'t forget your Daily Challenge!</item>
+        <item>🃏 Don't forget your Daily Challenge!</item>
         <item>⭐ Daily Challenge awaits!</item>
-        <item>🧠 Ready for today\'s challenge?</item>
+        <item>🧠 Ready for today's challenge?</item>
         <item>💪 Your daily brain workout!</item>
         <item>🏆 Challenge yourself today!</item>
     </string-array>
     <string-array name="notification_daily_challenge_bodies">
-        <item>Test your memory with today\'s unique board</item>
-        <item>Can you beat yesterday\'s score?</item>
+        <item>Test your memory with today's unique board</item>
+        <item>Can you beat yesterday's score?</item>
         <item>A new puzzle is waiting for you</item>
         <item>Match all pairs and share your results</item>
         <item>Everyone gets the same board — how will you compare?</item>
@@ -90,14 +90,14 @@
         <item>🔥 Keep your streak alive!</item>
         <item>🎁 Your daily reward is ready!</item>
         <item>💰 Free coins in the shop!</item>
-        <item>🔥 Don\'t lose your streak!</item>
-        <item>🎁 Today\'s reward is waiting!</item>
+        <item>🔥 Don't lose your streak!</item>
+        <item>🎁 Today's reward is waiting!</item>
     </string-array>
     <string-array name="notification_daily_streak_bodies">
         <item>Collect your coins before the day ends!</item>
         <item>Visit the shop to claim your reward</item>
         <item>Your streak is on the line!</item>
-        <item>Don\'t break your streak!</item>
+        <item>Don't break your streak!</item>
         <item>Open the shop and grab your coins</item>
     </string-array>
 
@@ -124,7 +124,7 @@
     </plurals>
 
     <string name="leave_daily_challenge_title">Leave daily challenge?</string>
-    <string name="leave_daily_challenge_body">You won\'t be able to retry today</string>
+    <string name="leave_daily_challenge_body">You won't be able to retry today</string>
     <string name="leave_game_title">Leave game?</string>
     <string name="leave_game_body">Your progress will be lost</string>
     <string name="leave_game_stay">Stay</string>

@@ -21,7 +21,7 @@
     <string name="shop_buy">Купити %d</string>
     <string name="shop_unlock_all_cards">Розблокувати всі карти</string>
     <string name="shop_purchase_failed_error">Покупка не вдалася</string>
-    <string name="shop_connection_error">Помилка з\'єднання</string>
+    <string name="shop_connection_error">Помилка з'єднання</string>
     <string name="setting_music">Музика</string>
     <string name="setting_sound">Звук</string>
     <string name="setting_vibration">Вібрація</string>
@@ -39,7 +39,7 @@
     <string name="notification_channel_reminders">Нагадування</string>
 
     <string-array name="notification_reminder_titles">
-        <item>🧠 Як твоя пам\'ять сьогодні?</item>
+        <item>🧠 Як твоя пам'ять сьогодні?</item>
         <item>🃏 Твої картки сумують!</item>
         <item>🎴 Твоя колекція не завершена!</item>
         <item>✨ Час для випробування!</item>
@@ -48,7 +48,7 @@
     <string-array name="notification_reminder_bodies">
         <item>Швидка гра дуже допомагає</item>
         <item>Повертайся і знайди пари!</item>
-        <item>Перевір пам\'ять у швидкому раунді</item>
+        <item>Перевір пам'ять у швидкому раунді</item>
         <item>Перемішай, переверни і знайди!</item>
         <item>Тримай мозок у тонусі!</item>
     </string-array>
@@ -104,7 +104,7 @@
         <item>🏆 Кинь собі виклик сьогодні!</item>
     </string-array>
     <string-array name="notification_daily_challenge_bodies">
-        <item>Перевір свою пам\'ять на сьогоднішній унікальній дошці</item>
+        <item>Перевір свою пам'ять на сьогоднішній унікальній дошці</item>
         <item>Зможеш побити вчорашній результат?</item>
         <item>Нова головоломка чекає на тебе</item>
         <item>Знайди всі пари та поділись результатами</item>
