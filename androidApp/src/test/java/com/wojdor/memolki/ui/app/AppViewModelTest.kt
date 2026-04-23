@@ -147,7 +147,7 @@ class AppViewModelTest : AppTest() {
     fun `when daily challenge not played today then hasPlayedTodayDailyChallenge returns false`() =
         runTest {
             // given
-            val epochDay = fakeTimeProvider.currentLocalDate().toEpochDay()
+            val epochDay = fakeTimeProvider.currentLocalDate().toEpochDays()
             coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns false
             coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns null
 
@@ -162,7 +162,7 @@ class AppViewModelTest : AppTest() {
     fun `when daily challenge played today then hasPlayedTodayDailyChallenge returns true`() =
         runTest {
             // given
-            val epochDay = fakeTimeProvider.currentLocalDate().toEpochDay()
+            val epochDay = fakeTimeProvider.currentLocalDate().toEpochDays()
             coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns true
             coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns epochDay
 

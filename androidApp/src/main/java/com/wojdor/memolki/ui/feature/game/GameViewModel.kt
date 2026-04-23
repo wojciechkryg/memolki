@@ -108,7 +108,7 @@ class GameViewModel(
 
     private fun onDailyChallengeStart() {
         if (uiState.value.cards.isNotEmpty()) return
-        val epochDay = timeProvider.currentLocalDate().toEpochDay()
+        val epochDay = timeProvider.currentLocalDate().toEpochDays()
         hasPlayedTodayDailyChallengeUseCase().onEach { result ->
             result.onSuccess { hasPlayed ->
                 if (hasPlayed) {

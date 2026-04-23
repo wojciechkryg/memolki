@@ -18,7 +18,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -56,7 +56,7 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when save daily challenge then insert entity with correct epoch day`() = runTest {
         // given
-        val today = LocalDate.of(2026, 3, 26)
+        val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
         val model = DailyChallengeModel(
             mistakeCount = 3,
@@ -71,7 +71,7 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
         // then
         assertEquals(Result.success(Unit), result)
         val expectedEntity = DailyChallengeEntity(
-            epochDay = today.toEpochDay(),
+            epochDay = today.toEpochDays(),
             mistakeCount = 3,
             starCount = 2,
             timeMillis = 45000L,
@@ -83,7 +83,7 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when save daily challenge then schedule next daily challenge notification`() = runTest {
         // given
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 3, 26)
 
         // when
         sut(DailyChallengeModel()).first()

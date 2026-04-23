@@ -40,7 +40,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -546,7 +546,7 @@ class GameViewModelTest : AppTest() {
     fun `when OnBoardStart with isDailyChallenge true then logDailyChallengeStart is called`() =
         runTest {
             // given
-            val epochDay = LocalDate.of(2026, 3, 26).toEpochDay()
+            val epochDay = LocalDate(2026, 3, 26).toEpochDays()
             every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
                 Result.success(false)
             )
@@ -669,7 +669,7 @@ class GameViewModelTest : AppTest() {
     fun `when game is left during daily challenge then logDailyChallengeAbandoned is called`() =
         runTest {
             // given
-            val epochDay = LocalDate.of(2026, 3, 26).toEpochDay()
+            val epochDay = LocalDate(2026, 3, 26).toEpochDays()
             val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
             every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
                 Result.success(false)

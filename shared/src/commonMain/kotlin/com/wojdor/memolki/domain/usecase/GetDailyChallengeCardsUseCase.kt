@@ -21,7 +21,7 @@ class GetDailyChallengeCardsUseCase(
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun execute(board: BoardModel) = flow {
         val pairCount = (board.columns * board.rows) / 2
-        val epochDay = timeProvider.currentLocalDate().toEpochDay()
+        val epochDay = timeProvider.currentLocalDate().toEpochDays()
         val flavorSalt = packageNameProvider.providePackageName().hashCode().toLong()
         val seed = if (RECORDING_MODE) 0L else epochDay xor flavorSalt
         val allCardPairs = cardRepository.getAllCardPairs()

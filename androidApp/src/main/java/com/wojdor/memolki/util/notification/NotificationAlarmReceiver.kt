@@ -111,7 +111,7 @@ class NotificationAlarmReceiver : BroadcastReceiver(), KoinComponent {
         context: Context,
         localizedContext: Context
     ) {
-        val epochDay = timeProvider.currentLocalDate().toEpochDay()
+        val epochDay = timeProvider.currentLocalDate().toEpochDays()
         val hasPlayed = dailyChallengeRepository.hasPlayed(epochDay)
         if (hasPlayed) return
         val titles =

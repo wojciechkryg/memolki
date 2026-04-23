@@ -123,7 +123,7 @@ Reference examples:
 - Simple: `shared/src/commonMain/.../domain/usecase/GetCoinsUseCase.kt`
 - With parameter: `shared/src/commonMain/.../domain/usecase/ToggleSettingsUseCase.kt`
 
-Six daily-challenge use cases still live in `:androidApp` because they depend on `TimeProvider` (which uses `java.time`): `CheckDailyLoginStreakUseCase`, `CollectDailyStreakRewardUseCase`, `GetDailyChallengeCardsUseCase`, `GetTodayDailyChallengeUseCase`, `HasPlayedTodayDailyChallengeUseCase`, `SaveDailyChallengeUseCase`. They move once `TimeProvider` migrates to `kotlinx.datetime`.
+All domain use cases now live in `:shared/commonMain`.
 
 ### Domain Models
 
@@ -269,7 +269,7 @@ Structure — most providers are multiplatform via `expect/actual`:
 - **`actual open class`** in `shared/src/androidMain/...` with the real Android implementation (takes `Context` in constructor where needed, wired via `get()` in Koin)
 - **`actual open class`** in `shared/src/iosMain/...` — stub implementation. Each stub carries a `TODO(ios):` marker pointing at the real iOS API to use later (e.g. `UNUserNotificationCenter`, `NSLocale`, `UIApplication.canOpenURL`).
 
-Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`. `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` and `PushNotificationProvider` still live in `:androidApp` — `TimeProvider` moves after the `java.time → kotlinx.datetime` swap; `PushNotificationProvider` is staying Android-only since it wraps `FirebaseMessaging` topic subscription and Android-specific language-tag handling.
+Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`. `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` is a plain `open class` in `commonMain` backed by `kotlinx.datetime` + `kotlin.time.Clock` — returns `kotlinx.datetime.LocalDate` (use `.toEpochDays()`, `.atStartOfDayIn(TimeZone)`, `DateTimeUnit.DAY` at call sites). `PushNotificationProvider` is staying Android-only since it wraps `FirebaseMessaging` topic subscription and Android-specific language-tag handling.
 
 ### Platform services (Billing / Ads / Notifications / PlayGames)
 

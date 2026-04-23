@@ -15,7 +15,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -40,9 +40,9 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when entry exists for today then return model`() = runTest {
         // given
-        val today = LocalDate.of(2026, 3, 26)
+        val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDay()
+        val epochDay = today.toEpochDays()
         val entity = DailyChallengeEntity(
             epochDay = epochDay,
             mistakeCount = 3,
@@ -69,9 +69,9 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when no entry exists for today then return failure`() = runTest {
         // given
-        val today = LocalDate.of(2026, 3, 26)
+        val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDay()
+        val epochDay = today.toEpochDays()
         coEvery { dailyChallengeDao.getResult(epochDay) } returns null
 
         // when / then

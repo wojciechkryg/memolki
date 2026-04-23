@@ -17,7 +17,7 @@ class SaveDailyChallengeUseCase(
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override fun execute(result: DailyChallengeModel) = flow {
-        val epochDay = timeProvider.currentLocalDate().toEpochDay()
+        val epochDay = timeProvider.currentLocalDate().toEpochDays()
         dailyChallengeRepository.saveResult(epochDay, result)
         notificationRepository.scheduleNextDailyChallengeNotification()
         emit(Result.success(Unit))

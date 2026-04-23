@@ -4,7 +4,7 @@ import android.content.Context
 import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.util.provider.TimeProvider
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.LocalDate
 
 class DailyChallengeShareFormatter(
     private val context: Context,
@@ -23,8 +23,7 @@ class DailyChallengeShareFormatter(
         grid: List<List<Boolean>>
     ): String {
         val appName = context.getString(R.string.app_name)
-        val date = timeProvider.localDateFromEpochDay(result.epochDay).format(DATE_FORMAT)
-            .replace("/", DIVISION_SLASH)
+        val date = formatDate(timeProvider.localDateFromEpochDay(result.epochDay))
         val stars = starsEmoji(result.starCount)
         val mistakeText = context.resources.getQuantityString(
             R.plurals.daily_challenge_mistakes,
@@ -44,6 +43,12 @@ class DailyChallengeShareFormatter(
         }
     }
 
+    private fun formatDate(date: LocalDate): String {
+        val day = date.day.toString().padStart(2, '0')
+        val month = date.monthNumber.toString().padStart(2, '0')
+        return "$day$DIVISION_SLASH$month$DIVISION_SLASH${date.year}"
+    }
+
     private fun starsEmoji(starCount: Int): String = when (starCount) {
         3 -> "⭐⭐⭐"
         2 -> "⭐⭐"
@@ -60,7 +65,6 @@ class DailyChallengeShareFormatter(
 
     companion object {
         private const val MAX_PERFECT_FLIPS = 2
-        private val DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         // Unicode look-alikes to prevent auto-linking in messaging apps
         private const val DIVISION_SLASH = "\u2215"
         private const val RATIO = "\u2236"

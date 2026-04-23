@@ -7,6 +7,10 @@ import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atStartOfDayIn
+import kotlinx.datetime.minus
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -61,10 +65,10 @@ class CheckDailyLoginStreakUseCaseTest : AppTest() {
     @Test
     fun `when consecutive day then streak increments`() = runTest {
         // given
-        val yesterday = fakeTimeProvider.mockCurrentDate.minusDays(1)
+        val yesterday = fakeTimeProvider.mockCurrentDate.minus(1, DateTimeUnit.DAY)
         userRepository.setDailyStreakData(
             2L,
-            yesterday.atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+            yesterday.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
         )
 
         // when
@@ -82,10 +86,10 @@ class CheckDailyLoginStreakUseCaseTest : AppTest() {
     @Test
     fun `when gap of two days then streak resets to 1`() = runTest {
         // given
-        val twoDaysAgo = fakeTimeProvider.mockCurrentDate.minusDays(2)
+        val twoDaysAgo = fakeTimeProvider.mockCurrentDate.minus(2, DateTimeUnit.DAY)
         userRepository.setDailyStreakData(
             5L,
-            twoDaysAgo.atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+            twoDaysAgo.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
         )
 
         // when
@@ -103,10 +107,10 @@ class CheckDailyLoginStreakUseCaseTest : AppTest() {
     @Test
     fun `when streak reaches max reward day then coins are capped`() = runTest {
         // given
-        val yesterday = fakeTimeProvider.mockCurrentDate.minusDays(1)
+        val yesterday = fakeTimeProvider.mockCurrentDate.minus(1, DateTimeUnit.DAY)
         userRepository.setDailyStreakData(
             4L,
-            yesterday.atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+            yesterday.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
         )
 
         // when

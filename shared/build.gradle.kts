@@ -31,7 +31,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.datetime)
+            api(libs.kotlinx.datetime)
             implementation(libs.androidx.datastore.preferences.core)
             api(libs.androidx.room.runtime)
             api(libs.androidx.sqlite.bundled)

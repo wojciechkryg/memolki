@@ -11,7 +11,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -36,9 +36,9 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when played today then return true`() = runTest {
         // given
-        val today = LocalDate.of(2026, 3, 26)
+        val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDay()
+        val epochDay = today.toEpochDays()
         coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns true
         coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns epochDay
 
@@ -52,9 +52,9 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when not played today then return false`() = runTest {
         // given
-        val today = LocalDate.of(2026, 3, 26)
+        val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDay()
+        val epochDay = today.toEpochDays()
         coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns false
         coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns null
 
@@ -68,10 +68,10 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when date rolled back then return true`() = runTest {
         // given
-        val today = LocalDate.of(2026, 3, 24)
+        val today = LocalDate(2026, 3, 24)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDay()
-        val futureEpochDay = LocalDate.of(2026, 3, 26).toEpochDay()
+        val epochDay = today.toEpochDays()
+        val futureEpochDay = LocalDate(2026, 3, 26).toEpochDays()
         coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns false
         coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns futureEpochDay
 

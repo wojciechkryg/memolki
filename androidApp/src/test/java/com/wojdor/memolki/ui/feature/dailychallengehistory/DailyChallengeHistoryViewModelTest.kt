@@ -21,7 +21,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -44,7 +44,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 4, 11)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 4, 11)
         coEvery { dailyChallengeDao.getAll() } returns emptyList()
     }
 
@@ -70,7 +70,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        val expected = LocalDate.of(2026, 4, 11).toEpochDay()
+        val expected = LocalDate(2026, 4, 11).toEpochDays()
         assertEquals(expected, sut.uiState.value.todayEpochDay)
     }
 

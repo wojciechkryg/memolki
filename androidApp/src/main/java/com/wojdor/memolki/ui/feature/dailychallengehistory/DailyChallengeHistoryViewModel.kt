@@ -37,7 +37,7 @@ class DailyChallengeHistoryViewModel(
     }
 
     private fun loadHistory() {
-        val todayEpochDay = timeProvider.currentLocalDate().toEpochDay()
+        val todayEpochDay = timeProvider.currentLocalDate().toEpochDays()
         sendState { copy(todayEpochDay = todayEpochDay) }
         analytics.logDailyChallengeHistoryOpened()
         getAllDailyChallengesUseCase().onEach { result ->

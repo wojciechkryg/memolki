@@ -14,7 +14,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 import kotlin.random.Random
 import org.koin.test.inject
 
@@ -46,7 +46,7 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     fun `when get cards for level then return correct number of cards`() = runTest {
         // given
         val board = BoardModel.Grid2x3()
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 3, 26)
 
         // when / then
         val expectedCardCount = board.columns * board.rows
@@ -60,7 +60,7 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     fun `when get cards for larger level then return correct number of cards`() = runTest {
         // given
         val board = BoardModel.Grid4x4()
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 3, 26)
 
         // when / then
         val expectedCardCount = board.columns * board.rows
@@ -74,7 +74,7 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     fun `when same date then return same cards`() = runTest {
         // given
         val board = BoardModel.Grid2x3()
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 3, 26)
 
         // when
         var result1: List<*>? = null
@@ -98,13 +98,13 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
         val board = BoardModel.Grid2x3()
 
         // when
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 3, 26)
         var result1: List<*>? = null
         sut(board).test {
             result1 = awaitItem().getOrThrow()
             awaitComplete()
         }
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 27)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 3, 27)
         var result2: List<*>? = null
         sut(board).test {
             result2 = awaitItem().getOrThrow()
@@ -119,7 +119,7 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     fun `when different flavor on same date then return different card order`() = runTest {
         // given
         val board = BoardModel.Grid2x3()
-        fakeTimeProvider.mockCurrentDate = LocalDate.of(2026, 3, 26)
+        fakeTimeProvider.mockCurrentDate = LocalDate(2026, 3, 26)
 
         // when
         fakePackageNameProvider.mockPackageName = "com.wojdor.memolki.fruithalf"
@@ -143,8 +143,8 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     fun `when cards are within grace period then they are deprioritized`() = runTest {
         // given
         val board = BoardModel.Grid2x3()
-        val testDate = LocalDate.of(2026, 3, 26)
-        val testEpochDay = testDate.toEpochDay()
+        val testDate = LocalDate(2026, 3, 26)
+        val testEpochDay = testDate.toEpochDays()
         fakeTimeProvider.mockCurrentDate = testDate
         val fakeDataSource = FakeAllCardPairsDataSource()
         fakeDataSource.addedEpochDayOverrides = mapOf(
