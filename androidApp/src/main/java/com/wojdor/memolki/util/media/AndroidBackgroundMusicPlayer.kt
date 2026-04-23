@@ -14,11 +14,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class BackgroundMusicPlayer(
+class AndroidBackgroundMusicPlayer(
     private val context: Context,
-    private val coroutineDispatcher: CoroutineDispatcher,
+    coroutineDispatcher: CoroutineDispatcher,
     private val observeMusicEnabledUseCase: ObserveMusicEnabledUseCase
-) : DefaultLifecycleObserver {
+) : BackgroundMusicPlayer, DefaultLifecycleObserver {
 
     // Fix for the default looping mechanism of MediaPlayer that causes a small gap between loops
     // by using two MediaPlayers and switching between them we can achieve gapless looping
@@ -61,7 +61,7 @@ class BackgroundMusicPlayer(
         pause()
     }
 
-    fun start() {
+    override fun start() {
         if (!isMusicEnabled || (currentPlayer?.isPlaying == true && !isFadingOut)) return
 
         volumeJob?.cancel()
@@ -86,7 +86,7 @@ class BackgroundMusicPlayer(
         }
     }
 
-    fun pause() {
+    override fun pause() {
         if (currentPlayer?.isPlaying == true) {
             volumeJob?.cancel()
             isFadingOut = true

@@ -8,11 +8,11 @@ import kotlin.concurrent.atomics.AtomicInt
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
 
 @OptIn(ExperimentalAtomicApi::class)
-class CardFlipPlayer(
+class AndroidCardFlipPlayer(
     context: Context,
     coroutineDispatcher: CoroutineDispatcher,
     observeSoundEnabledUseCase: ObserveSoundEnabledUseCase
-) : SoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase) {
+) : AndroidSoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase), CardFlipPlayer {
 
     private val sounds = listOf(
         R.raw.sound_card_flip_1,

@@ -27,7 +27,7 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.LocalScreenHeight
 import com.wojdor.memolki.ui.theme.LocalScreenWidth
 import com.wojdor.memolki.ui.theme.AppColors
-import com.wojdor.memolki.util.media.BackgroundMusicPlayer
+import com.wojdor.memolki.util.media.AndroidBackgroundMusicPlayer
 import com.wojdor.memolki.util.notification.DeepLinkBuilder
 import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
 import com.wojdor.memolki.util.notification.AndroidNotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
@@ -39,7 +39,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AppActivity : ComponentActivity() {
 
     private val viewModel: AppViewModel by viewModel()
-    private val backgroundMusicPlayer: BackgroundMusicPlayer by inject()
+    private val backgroundMusicPlayer: AndroidBackgroundMusicPlayer by inject()
     private val inAppUpdate: InAppUpdate by inject()
     private val notificationScheduler: AndroidNotificationScheduler by inject()
 

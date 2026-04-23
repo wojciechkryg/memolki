@@ -5,11 +5,11 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.usecase.ObserveSoundEnabledUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 
-class CoinsPlayer(
+class AndroidCardPairMatchedPlayer(
     context: Context,
     coroutineDispatcher: CoroutineDispatcher,
     observeSoundEnabledUseCase: ObserveSoundEnabledUseCase
-) : SoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase) {
+) : AndroidSoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase), CardPairMatchedPlayer {
 
-    override val soundId: Int = R.raw.sound_coins
+    override val soundId: Int = R.raw.sound_card_pair_matched
 }

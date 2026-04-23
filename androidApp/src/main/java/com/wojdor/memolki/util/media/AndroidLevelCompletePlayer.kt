@@ -5,11 +5,11 @@ import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.usecase.ObserveSoundEnabledUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 
-class LevelCompletePlayer(
+class AndroidLevelCompletePlayer(
     context: Context,
     coroutineDispatcher: CoroutineDispatcher,
     observeSoundEnabledUseCase: ObserveSoundEnabledUseCase
-) : SoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase) {
+) : AndroidSoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase), LevelCompletePlayer {
 
     override val soundId: Int = R.raw.sound_level_complete
 }

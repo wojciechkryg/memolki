@@ -12,11 +12,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-open class HapticFeedback(
+class AndroidHapticFeedback(
     private val context: Context,
-    private val coroutineDispatcher: CoroutineDispatcher,
+    coroutineDispatcher: CoroutineDispatcher,
     private val getSettingsUseCase: GetSettingsUseCase
-) {
+) : HapticFeedback {
     private val scope = CoroutineScope(coroutineDispatcher + SupervisorJob())
     private var isVibrationEnabled: Boolean = false
 
@@ -46,7 +46,7 @@ open class HapticFeedback(
         }
     }
 
-    open fun vibrateLow() {
+    override fun vibrateLow() {
         if (!isVibrationEnabled) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(
@@ -61,7 +61,7 @@ open class HapticFeedback(
         }
     }
 
-    open fun vibrateStrong() {
+    override fun vibrateStrong() {
         if (!isVibrationEnabled) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(

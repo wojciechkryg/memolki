@@ -105,6 +105,12 @@ import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.formatter.TimeFormatter
+import com.wojdor.memolki.util.media.AndroidBackgroundMusicPlayer
+import com.wojdor.memolki.util.media.AndroidCardFlipPlayer
+import com.wojdor.memolki.util.media.AndroidCardPairMatchedPlayer
+import com.wojdor.memolki.util.media.AndroidCoinsPlayer
+import com.wojdor.memolki.util.media.AndroidHapticFeedback
+import com.wojdor.memolki.util.media.AndroidLevelCompletePlayer
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
@@ -186,14 +192,14 @@ val appKoinModule = module {
     singleOf(::InAppUpdate)
     singleOf(::NotificationCreator)
     singleOf(::AndroidNotificationScheduler) { bind<NotificationScheduler>() }
-    singleOf(::HapticFeedback)
-    singleOf(::BackgroundMusicPlayer)
+    singleOf(::AndroidHapticFeedback) { bind<HapticFeedback>() }
+    singleOf(::AndroidBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
     singleOf(::AdsInitializer)
     singleOf(::AndroidAllRewardedAds) { bind<AllRewardedAds>() }
-    single { CardFlipPlayer(get(), get(MainDispatcher), get()) }
-    single { CardPairMatchedPlayer(get(), get(MainDispatcher), get()) }
-    single { CoinsPlayer(get(), get(MainDispatcher), get()) }
-    single { LevelCompletePlayer(get(), get(MainDispatcher), get()) }
+    single<CardFlipPlayer> { AndroidCardFlipPlayer(get(), get(MainDispatcher), get()) }
+    single<CardPairMatchedPlayer> { AndroidCardPairMatchedPlayer(get(), get(MainDispatcher), get()) }
+    single<CoinsPlayer> { AndroidCoinsPlayer(get(), get(MainDispatcher), get()) }
+    single<LevelCompletePlayer> { AndroidLevelCompletePlayer(get(), get(MainDispatcher), get()) }
 
     factoryOf(::CasualShareFormatter)
     factoryOf(::DailyChallengeShareFormatter)

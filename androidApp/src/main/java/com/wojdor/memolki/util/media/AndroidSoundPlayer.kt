@@ -11,11 +11,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-abstract class SoundPlayer(
+abstract class AndroidSoundPlayer(
     private val context: Context,
     coroutineDispatcher: CoroutineDispatcher,
     private val observeSoundEnabledUseCase: ObserveSoundEnabledUseCase
-) {
+) : SoundPlayer {
     @get:RawRes
     abstract val soundId: Int
     private val scope = CoroutineScope(coroutineDispatcher + SupervisorJob())
@@ -36,12 +36,12 @@ abstract class SoundPlayer(
         }
     }
 
-    suspend fun playDelayed() {
+    override suspend fun playDelayed() {
         delay(PLAY_DELAY)
         play()
     }
 
-    fun play() {
+    override fun play() {
         if (isSoundEnabled) {
             MediaPlayer.create(context, soundId).apply {
                 setAudioAttributes(

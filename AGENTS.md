@@ -281,6 +281,9 @@ Bigger Android-only subsystems are exposed to ViewModels as **commonMain interfa
 | `ui/ads/RewardedAd` + `ui/ads/AllRewardedAds` | `AndroidRewardedAd`/`AndroidAllRewardedAds` (AdMob). `show(activity, …)` is an Android-only extension in `ui/ads/RewardedAdExtensions.kt` | `NoopAllRewardedAds` |
 | `util/notification/NotificationScheduler` | `AndroidNotificationScheduler` (`AlarmManager` + lifecycle observer) | `NoopNotificationScheduler` |
 | `util/playgames/GooglePlayGames` | `AndroidGooglePlayGames` (Play Games SDK, tracks Activity) | `NoopGooglePlayGames` |
+| `util/media/HapticFeedback` | `AndroidHapticFeedback` (`Vibrator` / `VibratorManager`) | `NoopHapticFeedback` |
+| `util/media/BackgroundMusicPlayer` | `AndroidBackgroundMusicPlayer` (`MediaPlayer`, lifecycle observer, gapless loop) | `NoopBackgroundMusicPlayer` |
+| `util/media/SoundPlayer` + `CardFlipPlayer` / `CardPairMatchedPlayer` / `CoinsPlayer` / `LevelCompletePlayer` | `AndroidSoundPlayer` (`MediaPlayer`) + `AndroidCardFlipPlayer` / `AndroidCardPairMatchedPlayer` / `AndroidCoinsPlayer` / `AndroidLevelCompletePlayer` | `NoopSoundPlayer` + 4 `Noop*Player` stubs |
 
 `InAppUpdate` stays Android-only — only `AppActivity` calls it, and iOS relies on App Store, so no common interface.
 
