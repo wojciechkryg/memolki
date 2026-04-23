@@ -121,7 +121,9 @@ Conventions:
 
 Reference examples:
 - Simple: `shared/src/commonMain/.../domain/usecase/GetCoinsUseCase.kt`
-- With parameter: `androidApp/src/main/.../domain/usecase/ToggleSettingsUseCase.kt` (use cases referencing androidMain-only repos/providers still live in `:androidApp` pending later phases)
+- With parameter: `shared/src/commonMain/.../domain/usecase/ToggleSettingsUseCase.kt`
+
+Six daily-challenge use cases still live in `:androidApp` because they depend on `TimeProvider` (which uses `java.time`): `CheckDailyLoginStreakUseCase`, `CollectDailyStreakRewardUseCase`, `GetDailyChallengeCardsUseCase`, `GetTodayDailyChallengeUseCase`, `HasPlayedTodayDailyChallengeUseCase`, `SaveDailyChallengeUseCase`. They move once `TimeProvider` migrates to `kotlinx.datetime`.
 
 ### Domain Models
 
@@ -137,11 +139,11 @@ Reference: `shared/src/commonMain/.../domain/model/CardModel.kt`
 
 ### Data Layer
 
-- **Persistence:** Two storage mechanisms (both currently live in `:androidApp` — phase 8 migrates them to `:shared`):
-  - **Encrypted DataStore Preferences** (`data/local/datastore/`) — for key-value settings and user data (coins, streaks, unlocked cards). Uses `data/crypto/Encryptor` (interface now in `:shared/commonMain`, Android impl `BaseEncryptor` in `:androidApp`) for sensitive values. Never use SharedPreferences.
+- **Persistence:** Two storage mechanisms (both live in `:shared/commonMain`):
+  - **Encrypted DataStore Preferences** (`data/local/datastore/`) — for key-value settings and user data (coins, streaks, unlocked cards). Uses `data/crypto/Encryptor` (interface in `:shared/commonMain`, Android impl `BaseEncryptor` in `:androidApp`) for sensitive values. Never use SharedPreferences.
   - **Room Database** (`data/local/database/`) — for structured, growing data (e.g. daily challenge results). `AppDatabase` in `data/local/database/`, entities and DAOs in subdirectories. Registered in `AppKoinModule`. Database version tracked as `private const val DATABASE_VERSION` in `AppDatabase.kt`. When bumping `DATABASE_VERSION`, add a proper migration to preserve user data.
 - **Entities:** DataStore entities in `data/entity/`, mapped via `data/mapper/`. Room entities live next to their DAOs in `data/local/database/`.
-- **Repositories:** in `data/repository/`, orchestrate data sources from `data/local/`. Repositories map between data entities and domain models — never expose Room entities or DataStore keys in the public API
+- **Repositories:** in `:shared/commonMain/data/repository/`, orchestrate data sources from `data/local/`. Repositories map between data entities and domain models — never expose Room entities or DataStore keys in the public API
 - **Backup & Restore:** `res/xml/backup_rules.xml` (API < 31) and `res/xml/data_extraction_rules.xml` (API 31+) include the `sharedpref` and `database` domains, plus the `file` domain with `path="datastore/"`. When adding a new persistence mechanism, update both files
 
 ### MVI Pattern

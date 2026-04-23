@@ -34,7 +34,7 @@ sealed class AppModel {
 
     companion object {
 
-        fun all() = listOf(
+        fun all(): List<AppModel> = listOf(
             FruitHalf,
             VegetableHalf,
             MammalSide,

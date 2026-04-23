@@ -10,7 +10,7 @@ class GetMenuUseCase(
 ) : BaseUseCase<List<MenuModel>>(coroutineDispatcher) {
 
     override fun execute() = flow {
-        val menuItems = listOf(
+        val menuItems = listOf<MenuModel>(
             MenuModel.Play,
             MenuModel.Collection,
             MenuModel.Leaderboard,
