@@ -28,6 +28,7 @@ import com.wojdor.memolki.ui.theme.LocalScreenHeight
 import com.wojdor.memolki.ui.theme.LocalScreenWidth
 import com.wojdor.memolki.ui.theme.AppColors
 import com.wojdor.memolki.util.media.AndroidBackgroundMusicPlayer
+import com.wojdor.memolki.util.notification.DeepLink
 import com.wojdor.memolki.util.notification.DeepLinkBuilder
 import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
 import com.wojdor.memolki.util.notification.AndroidNotificationScheduler.Companion.EXTRA_NOTIFICATION_TYPE
@@ -43,7 +44,7 @@ class AppActivity : ComponentActivity() {
     private val inAppUpdate: InAppUpdate by inject()
     private val notificationScheduler: AndroidNotificationScheduler by inject()
 
-    private val newIntentState = mutableStateOf<Intent?>(null)
+    private val deepLinkState = mutableStateOf<DeepLink?>(null)
 
     companion object {
         private const val EXTRA_SHORTCUT_ID = "shortcut_id"
@@ -56,7 +57,7 @@ class AppActivity : ComponentActivity() {
             notificationType = intent?.getStringExtra(EXTRA_NOTIFICATION_TYPE),
             shortcutId = intent?.getStringExtra(EXTRA_SHORTCUT_ID)
         )
-        resolveDeepLinkIntent(intent)?.let { newIntentState.value = it }
+        deepLinkState.value = resolveDeepLink(intent)
         lifecycle.addObserver(backgroundMusicPlayer)
         lifecycle.addObserver(notificationScheduler)
         installSplashScreen()
@@ -89,8 +90,8 @@ class AppActivity : ComponentActivity() {
                                 content = { innerPadding ->
                                     Box(modifier = Modifier.padding(innerPadding)) {
                                         AppNavigation(
-                                            onNewIntent = newIntentState.value,
-                                            onIntentHandled = { newIntentState.value = null },
+                                            deepLink = deepLinkState.value,
+                                            onDeepLinkHandled = { deepLinkState.value = null },
                                             hasPlayedTodayDailyChallenge = { viewModel.hasPlayedTodayDailyChallenge() }
                                         )
                                     }
@@ -107,20 +108,26 @@ class AppActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        newIntentState.value = resolveDeepLinkIntent(intent) ?: intent
+        deepLinkState.value = resolveDeepLink(intent)
         viewModel.onAppOpen(
             notificationType = intent.getStringExtra(EXTRA_NOTIFICATION_TYPE),
             shortcutId = intent.getStringExtra(EXTRA_SHORTCUT_ID)
         )
     }
 
-    private fun resolveDeepLinkIntent(intent: Intent?): Intent? {
+    private fun resolveDeepLink(intent: Intent?): DeepLink? {
         if (intent == null) return null
-        if (intent.action == Intent.ACTION_VIEW && intent.data != null) return intent
+        val data = if (intent.action == Intent.ACTION_VIEW) intent.data else null
+        if (data != null) {
+            val host = data.host ?: return null
+            return DeepLink(host = host, pathSegments = data.pathSegments.orEmpty())
+        }
         val screen = intent.getStringExtra(DeepLinkBuilder.EXTRA_SCREEN) ?: return null
         val board = intent.getStringExtra(DeepLinkBuilder.EXTRA_BOARD)
-        val deepLinkUri = DeepLinkBuilder.buildUri(screen, board) ?: return null
-        return Intent(Intent.ACTION_VIEW, deepLinkUri.toUri(), this, AppActivity::class.java)
+        val uriString = DeepLinkBuilder.buildUri(screen, board) ?: return null
+        val uri = uriString.toUri()
+        val host = uri.host ?: return null
+        return DeepLink(host = host, pathSegments = uri.pathSegments.orEmpty())
     }
 
     override fun onResume() {

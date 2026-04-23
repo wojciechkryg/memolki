@@ -249,14 +249,14 @@ Every screen and reusable component has `@Preview` functions. Conventions:
 
 ### Navigation
 
-Jetpack Compose Navigation with nested graphs (flows) in `ui/app/AppNavigation.kt`:
+Jetpack Navigation Multiplatform (`org.jetbrains.androidx.navigation:navigation-compose`, same API as Android's `androidx.navigation.compose`) with nested graphs (flows) in `ui/app/AppNavigation.kt`:
 - **Game flow:** ChooseBoard → Game → EndGame (ViewModels shared via flow scope)
 - **Collection flow:** Collection → Shop → CardPairDetails
 - **Settings flow:** Settings → ChangeLanguage
 
 Shared ViewModels within a flow are scoped to the navigation graph's back stack entry (see `getGameViewModel()` pattern).
 
-Routes with arguments use path segments: `"route/{argName}"`. Navigation uses `.replace("{argName}", value)`. See `Route.ENABLE_NOTIFICATIONS` and `Route.GAME` for the pattern. Deep link navigation is handled by `navigateFromDeepLink()` in `AppNavigation.kt`, which parses the URI and calls the appropriate `navigateTo*` function — preserving MENU on the back stack.
+Routes with arguments use path segments: `"route/{argName}"`. Navigation uses `.replace("{argName}", value)`. See `Route.ENABLE_NOTIFICATIONS` and `Route.GAME` for the pattern. Deep link navigation is handled by `navigateFromDeepLink()` in `AppNavigation.kt`, which receives a platform-neutral `DeepLink(host, pathSegments)` and calls the appropriate `navigateTo*` function — preserving MENU on the back stack. `AppActivity.resolveDeepLink()` performs the Android `Intent` → `DeepLink` conversion.
 
 Navigation animations are centralized in `ui/app/NavAnimation.kt` (directional slides, consistent 500ms tween).
 
@@ -665,7 +665,7 @@ Notifications can open specific screens via `--screen` and `--board` options:
 ```
 Screens: `shop`, `collection`, `more_apps`, `game`, `daily_challenge`. Boards (game only): `2x3`, `3x4`, `4x4`, `4x5`, `4x6`, `5x6`, `biggest` (biggest unlocked board — also the default when `--board` is omitted).
 
-Deep link flow: script sends data-only FCM payload → `PushNotificationService.onMessageReceived` creates notification with `ACTION_VIEW` intent → `AppActivity.resolveDeepLinkIntent` converts FCM extras to deep link URI → `AppNavigation.navigateFromDeepLink` routes to the correct screen. Data-only payloads (no `notification` field) are used so `onMessageReceived` is always called regardless of foreground/background state.
+Deep link flow: script sends data-only FCM payload → `PushNotificationService.onMessageReceived` creates notification with `ACTION_VIEW` intent → `AppActivity.resolveDeepLink` converts the intent to a common `DeepLink(host, pathSegments)` → `AppNavigation.navigateFromDeepLink` routes to the correct screen. Data-only payloads (no `notification` field) are used so `onMessageReceived` is always called regardless of foreground/background state.
 
 Deep link URIs use `DeepLinkBuilder` (`shared/.../util/notification/DeepLinkBuilder.kt`, commonMain object) as the single source of truth for URI construction and screen constants.
 

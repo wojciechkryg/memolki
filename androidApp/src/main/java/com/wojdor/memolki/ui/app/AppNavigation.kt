@@ -1,11 +1,10 @@
 package com.wojdor.memolki.ui.app
 
-import android.content.Intent
 import androidx.compose.animation.EnterExitState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -32,19 +31,20 @@ import com.wojdor.memolki.ui.feature.menu.MenuScreen
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsScreen
 import com.wojdor.memolki.ui.feature.settings.SettingsScreen
 import com.wojdor.memolki.ui.feature.shop.ShopScreen
+import com.wojdor.memolki.util.notification.DeepLink
 import com.wojdor.memolki.util.notification.DeepLinkBuilder
 
 @Composable
 fun AppNavigation(
-    onNewIntent: Intent? = null,
-    onIntentHandled: () -> Unit = {},
+    deepLink: DeepLink? = null,
+    onDeepLinkHandled: () -> Unit = {},
     hasPlayedTodayDailyChallenge: suspend () -> Boolean = { true }
 ) {
     val navController = rememberNavController()
-    LaunchedEffect(onNewIntent) {
-        onNewIntent?.let {
+    LaunchedEffect(deepLink) {
+        deepLink?.let {
             navigateFromDeepLink(navController, it, hasPlayedTodayDailyChallenge)
-            onIntentHandled()
+            onDeepLinkHandled()
         }
     }
     NavHost(navController, startDestination = Route.MENU) {
@@ -393,17 +393,15 @@ private fun NavController.navigateToGameFromDeepLink(board: String) {
 
 private suspend fun navigateFromDeepLink(
     navController: NavController,
-    intent: Intent,
+    deepLink: DeepLink,
     hasPlayedTodayDailyChallenge: suspend () -> Boolean
 ) {
-    val screen = intent.data?.host ?: return
-    val pathSegments = intent.data?.pathSegments.orEmpty()
-    when (screen) {
+    when (deepLink.host) {
         DeepLinkBuilder.SCREEN_SHOP -> navController.navigateToShop()
         DeepLinkBuilder.SCREEN_COLLECTION -> navController.navigateToCollection()
         DeepLinkBuilder.SCREEN_MORE_APPS -> navController.navigateToMoreApps()
         DeepLinkBuilder.SCREEN_GAME -> {
-            val board = pathSegments.firstOrNull().orEmpty()
+            val board = deepLink.pathSegments.firstOrNull().orEmpty()
             navController.navigateToGameFromDeepLink(board)
         }
 
