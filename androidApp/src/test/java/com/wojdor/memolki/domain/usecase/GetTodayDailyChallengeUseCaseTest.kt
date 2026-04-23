@@ -16,6 +16,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import kotlinx.datetime.LocalDate
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -30,11 +31,7 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GetTodayDailyChallengeUseCase(
-            testDispatcher,
-            DailyChallengeRepository(dailyChallengeDao),
-            fakeTimeProvider
-        )
+        sut = get()
     }
 
     @Test

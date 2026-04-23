@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -26,11 +27,7 @@ class NotificationRepositoryTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = NotificationRepository(
-            encryptor,
-            notificationLocalDataSource,
-            fakeNotificationScheduler
-        )
+        sut = get()
     }
 
     @Test

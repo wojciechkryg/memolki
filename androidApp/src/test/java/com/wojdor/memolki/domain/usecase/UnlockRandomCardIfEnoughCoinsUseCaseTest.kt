@@ -10,6 +10,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -27,12 +28,7 @@ class UnlockRandomCardIfEnoughCoinsUseCaseTest : AppTest() {
 
     override fun setup() {
         super.setup()
-        sut = UnlockRandomCardIfEnoughCoinsUseCase(
-            testDispatcher,
-            calculateNextCardPairCostUseCase,
-            unlockRandomCardUseCase,
-            userRepository
-        )
+        sut = get()
     }
 
     @Test

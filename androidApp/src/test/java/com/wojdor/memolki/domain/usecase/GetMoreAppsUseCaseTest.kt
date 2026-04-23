@@ -11,6 +11,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetMoreAppsUseCaseTest : AppTest() {
@@ -21,7 +22,7 @@ class GetMoreAppsUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GetMoreAppsUseCase(testDispatcher, packageNameProvider)
+        sut = get()
     }
 
     @Test

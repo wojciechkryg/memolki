@@ -13,6 +13,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -27,7 +28,7 @@ class GetBiggestUnlockedBoardUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GetBiggestUnlockedBoardUseCase(testDispatcher, getBoardsUseCase)
+        sut = get()
     }
 
     @Test

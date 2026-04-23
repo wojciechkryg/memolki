@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.cardpairdetails
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.test.AppTest
@@ -10,19 +9,17 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.koin.test.inject
+import org.koin.test.get
 
 @ExperimentalCoroutinesApi
 class CardPairDetailsViewModelTest : AppTest() {
-
-    private val savedStateHandle: SavedStateHandle by inject()
 
     private lateinit var viewModel: CardPairDetailsViewModel
 
     @Before
     override fun setup() {
         super.setup()
-        viewModel = CardPairDetailsViewModel(savedStateHandle)
+        viewModel = get()
     }
 
     @Test

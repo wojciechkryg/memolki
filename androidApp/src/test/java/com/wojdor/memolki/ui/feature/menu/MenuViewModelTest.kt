@@ -1,15 +1,8 @@
 package com.wojdor.memolki.ui.feature.menu
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.MenuModel
-import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
-import com.wojdor.memolki.domain.usecase.GetMenuUseCase
-import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
-import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
-import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
-import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseBoardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
@@ -32,28 +25,14 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class MenuViewModelTest : AppTest() {
 
-    private val savedStateHandle: SavedStateHandle by inject()
-
     private val hapticFeedback: HapticFeedback by inject()
-    private val getMenuUseCase: GetMenuUseCase by inject()
-
-    private val getMoreAppsUseCase: GetMoreAppsUseCase by inject()
-
-    private val getTotalCoinsUseCase: GetTotalCoinsUseCase by inject()
-
-    private val getTotalCardPairsMatchedUseCase: GetTotalCardPairsMatchedUseCase by inject()
-
-    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
-
     private val analytics: Analytics by inject()
-
-    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase by inject()
-
     private val userRepository: UserRepository by inject()
 
     private lateinit var sut: MenuViewModel
@@ -61,17 +40,7 @@ class MenuViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = MenuViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            getMenuUseCase,
-            getMoreAppsUseCase,
-            getTotalCoinsUseCase,
-            getTotalCardPairsMatchedUseCase,
-            getTotalGamesPlayedUseCase,
-            checkDailyLoginStreakUseCase
-        )
+        sut = get()
     }
 
     @Test
@@ -258,17 +227,7 @@ class MenuViewModelTest : AppTest() {
         repeat(3) { userRepository.incrementTotalGamesPlayed() }
         testScheduler.advanceUntilIdle()
 
-        sut = MenuViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            getMenuUseCase,
-            getMoreAppsUseCase,
-            getTotalCoinsUseCase,
-            getTotalCardPairsMatchedUseCase,
-            getTotalGamesPlayedUseCase,
-            checkDailyLoginStreakUseCase
-        )
+        sut = get()
         testScheduler.advanceUntilIdle()
 
         // then

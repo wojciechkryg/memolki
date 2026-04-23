@@ -11,6 +11,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -23,7 +24,7 @@ class RewardCoinsForShareUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = RewardCoinsForShareUseCase(testDispatcher, userRepository)
+        sut = get()
     }
 
     @Test

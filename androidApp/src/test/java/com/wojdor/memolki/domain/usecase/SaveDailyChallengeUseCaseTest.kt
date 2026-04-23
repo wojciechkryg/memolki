@@ -19,6 +19,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import kotlinx.datetime.LocalDate
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -45,12 +46,7 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
             notificationLocalDataSource,
             fakeNotificationScheduler
         )
-        sut = SaveDailyChallengeUseCase(
-            testDispatcher,
-            DailyChallengeRepository(dailyChallengeDao),
-            notificationRepository,
-            fakeTimeProvider
-        )
+        sut = get()
     }
 
     @Test

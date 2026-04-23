@@ -105,6 +105,8 @@ import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.formatter.TimeFormatter
+import com.wojdor.memolki.util.resource.AppStringProvider
+import com.wojdor.memolki.util.resource.StringProvider
 import com.wojdor.memolki.util.media.AndroidBackgroundMusicPlayer
 import com.wojdor.memolki.util.media.AndroidCardFlipPlayer
 import com.wojdor.memolki.util.media.AndroidCardPairMatchedPlayer
@@ -201,6 +203,7 @@ val appKoinModule = module {
     single<CoinsPlayer> { AndroidCoinsPlayer(get(), get(MainDispatcher), get()) }
     single<LevelCompletePlayer> { AndroidLevelCompletePlayer(get(), get(MainDispatcher), get()) }
 
+    singleOf(::AppStringProvider) { bind<StringProvider>() }
     factoryOf(::CasualShareFormatter)
     factoryOf(::DailyChallengeShareFormatter)
     factoryOf(::TimeFormatter)

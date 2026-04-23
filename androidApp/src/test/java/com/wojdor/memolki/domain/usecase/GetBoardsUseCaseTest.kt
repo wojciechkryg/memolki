@@ -11,6 +11,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -25,10 +26,7 @@ class GetBoardsUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GetBoardsUseCase(
-            testDispatcher,
-            getUnlockedCardPairsCountUseCase
-        )
+        sut = get()
     }
 
     @Test

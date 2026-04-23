@@ -10,12 +10,14 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class EnableNotificationsViewModelTest : AppTest() {
 
     private val analytics: Analytics by inject()
+    private val savedStateHandle: SavedStateHandle by inject()
 
     private lateinit var sut: EnableNotificationsViewModel
 
@@ -25,8 +27,8 @@ class EnableNotificationsViewModelTest : AppTest() {
     }
 
     private fun createSut(destination: String = "game") {
-        val savedStateHandle = SavedStateHandle(mapOf("destination" to destination))
-        sut = EnableNotificationsViewModel(savedStateHandle, analytics)
+        savedStateHandle["destination"] = destination
+        sut = get()
     }
 
     @Test

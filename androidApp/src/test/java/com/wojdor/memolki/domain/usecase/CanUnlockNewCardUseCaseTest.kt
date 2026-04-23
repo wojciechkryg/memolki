@@ -9,6 +9,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -25,11 +26,7 @@ class CanUnlockNewCardUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = CanUnlockNewCardUseCase(
-            testDispatcher,
-            getCoinsUseCase,
-            calculateNextCardPairCostUseCase
-        )
+        sut = get()
     }
 
     @Test

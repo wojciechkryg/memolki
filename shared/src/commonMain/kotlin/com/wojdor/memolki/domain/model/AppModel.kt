@@ -8,6 +8,10 @@ package com.wojdor.memolki.domain.model
 
 import androidx.compose.ui.graphics.Color
 import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.app_name_bird_side
+import com.wojdor.memolki.shared.resources.app_name_fruit_half
+import com.wojdor.memolki.shared.resources.app_name_mammal_side
+import com.wojdor.memolki.shared.resources.app_name_vegetable_half
 import com.wojdor.memolki.shared.resources.ic_logo_bird_side
 import com.wojdor.memolki.shared.resources.ic_logo_fruit_half
 import com.wojdor.memolki.shared.resources.ic_logo_mammal_side
@@ -29,6 +33,7 @@ sealed class AppModel {
 
     abstract val imageRes: DrawableResource
     abstract val textRes: StringResource
+    abstract val appNameRes: StringResource
     abstract val color: Color
     abstract val appId: String
 
@@ -46,6 +51,7 @@ sealed class AppModel {
     object FruitHalf : AppModel() {
         override val imageRes: DrawableResource = Res.drawable.ic_logo_fruit_half
         override val textRes: StringResource = Res.string.suffix_fruit_half
+        override val appNameRes: StringResource = Res.string.app_name_fruit_half
         override val color: Color = Color(0xFFFFEAA1)
         override val appId: String = "com.wojdor.memolki.fruithalf"
     }
@@ -54,6 +60,7 @@ sealed class AppModel {
     object VegetableHalf : AppModel() {
         override val imageRes: DrawableResource = Res.drawable.ic_logo_vegetable_half
         override val textRes: StringResource = Res.string.suffix_vegetable_half
+        override val appNameRes: StringResource = Res.string.app_name_vegetable_half
         override val color: Color = Color(0xFFE6A0A0)
         override val appId: String = "com.wojdor.memolki.vegetablehalf"
     }
@@ -62,6 +69,7 @@ sealed class AppModel {
     object MammalSide : AppModel() {
         override val imageRes: DrawableResource = Res.drawable.ic_logo_mammal_side
         override val textRes: StringResource = Res.string.suffix_mammal_side
+        override val appNameRes: StringResource = Res.string.app_name_mammal_side
         override val color: Color = Color(0xFFE2BA8B)
         override val appId: String = "com.wojdor.memolki.mammalside"
     }
@@ -70,6 +78,7 @@ sealed class AppModel {
     object BirdSide : AppModel() {
         override val imageRes: DrawableResource = Res.drawable.ic_logo_bird_side
         override val textRes: StringResource = Res.string.suffix_bird_side
+        override val appNameRes: StringResource = Res.string.app_name_bird_side
         override val color: Color = Color(0xFFB1DBE7)
         override val appId: String = "com.wojdor.memolki.birdside"
     }

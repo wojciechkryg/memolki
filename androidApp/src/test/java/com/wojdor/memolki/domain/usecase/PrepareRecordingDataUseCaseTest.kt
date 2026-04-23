@@ -11,6 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -23,10 +24,7 @@ class PrepareRecordingDataUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = PrepareRecordingDataUseCase(
-            testDispatcher,
-            userRepository
-        )
+        sut = get()
     }
 
     @Test

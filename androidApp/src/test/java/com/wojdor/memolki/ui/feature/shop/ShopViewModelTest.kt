@@ -1,23 +1,10 @@
 package com.wojdor.memolki.ui.feature.shop
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.ShopMenuModel
-import com.wojdor.memolki.domain.usecase.CalculateCoinsForShopAdUseCase
-import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
-import com.wojdor.memolki.domain.usecase.CollectDailyStreakRewardUseCase
-import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
-import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
-import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
-import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
-import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
-import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePermissionProvider
-import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingProduct
@@ -28,7 +15,6 @@ import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,43 +25,19 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class ShopViewModelTest : AppTest() {
 
-    private val savedStateHandle: SavedStateHandle by inject()
-
     private val hapticFeedback: HapticFeedback by inject()
 
     private val coinsPlayer: CoinsPlayer by inject()
 
-    private val allRewardedAds: AllRewardedAds by inject()
-
     private val billingHandler: BillingHandler by inject()
-    private val isShopAdCooldownOverUseCase: IsShopAdCooldownOverUseCase by inject()
-
-    private val setLastShopAdShownTimestampUseCase: SetLastShopAdShownTimestampUseCase by inject()
-
-    private val getCoinsUseCase: GetCoinsUseCase by inject()
-
-    private val calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase by inject()
-
-    private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase by inject()
-
-    private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase by inject()
-
-    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase by inject()
-
-    private val getTotalCoinsUseCase: GetTotalCoinsUseCase by inject()
-
-    private val scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase by inject()
 
     private val notificationScheduler: NotificationScheduler by inject()
-
-    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase by inject()
-
-    private val collectDailyStreakRewardUseCase: CollectDailyStreakRewardUseCase by inject()
 
     private val analytics: Analytics by inject()
 
@@ -86,26 +48,7 @@ class ShopViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = ShopViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            coinsPlayer,
-            allRewardedAds,
-            billingHandler,
-            isShopAdCooldownOverUseCase,
-            setLastShopAdShownTimestampUseCase,
-            getCoinsUseCase,
-            calculateCoinsForShopAdUseCase,
-            rewardCoinsForShopAdUseCase,
-            rewardCoinsForShopPurchaseUseCase,
-            unlockAllCardPairsUseCase,
-            getTotalCoinsUseCase,
-            scheduleAdRewardNotificationUseCase,
-            notificationScheduler,
-            checkDailyLoginStreakUseCase,
-            collectDailyStreakRewardUseCase
-        )
+        sut = get()
     }
 
     @Test
@@ -134,26 +77,7 @@ class ShopViewModelTest : AppTest() {
         // given
         val listenerSlot = slot<BillingStatusListener>()
         every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
-        sut = ShopViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            coinsPlayer,
-            allRewardedAds,
-            billingHandler,
-            isShopAdCooldownOverUseCase,
-            setLastShopAdShownTimestampUseCase,
-            getCoinsUseCase,
-            calculateCoinsForShopAdUseCase,
-            rewardCoinsForShopAdUseCase,
-            rewardCoinsForShopPurchaseUseCase,
-            unlockAllCardPairsUseCase,
-            getTotalCoinsUseCase,
-            scheduleAdRewardNotificationUseCase,
-            notificationScheduler,
-            checkDailyLoginStreakUseCase,
-            collectDailyStreakRewardUseCase
-        )
+        sut = get()
         testScheduler.advanceUntilIdle()
         listenerSlot.captured.onProductsFetched(listOf(billingProduct("coins_small", priceMicros = 990_000L, currency = "USD")))
         testScheduler.advanceUntilIdle()
@@ -171,26 +95,7 @@ class ShopViewModelTest : AppTest() {
         // given
         val listenerSlot = slot<BillingStatusListener>()
         every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
-        sut = ShopViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            coinsPlayer,
-            allRewardedAds,
-            billingHandler,
-            isShopAdCooldownOverUseCase,
-            setLastShopAdShownTimestampUseCase,
-            getCoinsUseCase,
-            calculateCoinsForShopAdUseCase,
-            rewardCoinsForShopAdUseCase,
-            rewardCoinsForShopPurchaseUseCase,
-            unlockAllCardPairsUseCase,
-            getTotalCoinsUseCase,
-            scheduleAdRewardNotificationUseCase,
-            notificationScheduler,
-            checkDailyLoginStreakUseCase,
-            collectDailyStreakRewardUseCase
-        )
+        sut = get()
         testScheduler.advanceUntilIdle()
 
         // when
@@ -392,26 +297,7 @@ class ShopViewModelTest : AppTest() {
         every { billingHandler.nonConsumableProductIds } returns setOf(
             BillingHandler.IAP_UNLOCK_ALL_CARDS
         )
-        sut = ShopViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            coinsPlayer,
-            allRewardedAds,
-            billingHandler,
-            isShopAdCooldownOverUseCase,
-            setLastShopAdShownTimestampUseCase,
-            getCoinsUseCase,
-            calculateCoinsForShopAdUseCase,
-            rewardCoinsForShopAdUseCase,
-            rewardCoinsForShopPurchaseUseCase,
-            unlockAllCardPairsUseCase,
-            getTotalCoinsUseCase,
-            scheduleAdRewardNotificationUseCase,
-            notificationScheduler,
-            checkDailyLoginStreakUseCase,
-            collectDailyStreakRewardUseCase
-        )
+        sut = get()
         return listenerSlot.captured
     }
 

@@ -1,12 +1,6 @@
 package com.wojdor.memolki.ui.app
 
-import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
-import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
-import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
-import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
-import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
@@ -14,8 +8,6 @@ import com.wojdor.memolki.test.verifyOnce
 import io.mockk.coEvery
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
-import com.wojdor.memolki.util.provider.LocaleProvider
-import com.wojdor.memolki.util.provider.PermissionProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -23,28 +15,13 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class AppViewModelTest : AppTest() {
 
     private val analytics: Analytics by inject()
-
-    private val unlockAllNewCardPairsIfPurchasedUseCase: UnlockAllNewCardPairsIfPurchasedUseCase by inject()
-
-    private val localEncryptorKeyStore: LocalEncryptorKeyStore by inject()
-
-    private val prepareRecordingDataUseCase: PrepareRecordingDataUseCase by inject()
-
-    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
-
-    private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase by inject()
-
-    private val localeProvider: LocaleProvider by inject()
-
-    private val permissionProvider: PermissionProvider by inject()
-
-    private val hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase by inject()
 
     private val dailyChallengeDao: DailyChallengeDao by inject()
 
@@ -59,19 +36,7 @@ class AppViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = AppViewModel(
-            analytics,
-            unlockAllNewCardPairsIfPurchasedUseCase,
-            localEncryptorKeyStore,
-            prepareRecordingDataUseCase,
-            getTotalGamesPlayedUseCase,
-            getUnlockedCardPairsCountUseCase,
-            hasPlayedTodayDailyChallengeUseCase,
-            localeProvider,
-            permissionProvider,
-            pushNotificationProvider,
-            billingHandler
-        )
+        sut = get()
     }
 
     @Test

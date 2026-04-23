@@ -1,8 +1,6 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
-import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
@@ -10,23 +8,19 @@ import com.wojdor.memolki.test.fake.FakePackageNameProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
-import kotlinx.datetime.LocalDate
-import kotlin.random.Random
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class GetDailyChallengeCardsUseCaseTest : AppTest() {
 
-    private val cardRepository: CardRepository by inject()
-
-    private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
-
+    private val fakeAllCardPairsDataSource: FakeAllCardPairsDataSource by inject()
     private val fakeTimeProvider: FakeTimeProvider by inject()
-
     private val fakePackageNameProvider: FakePackageNameProvider by inject()
 
     private lateinit var sut: GetDailyChallengeCardsUseCase
@@ -34,12 +28,7 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GetDailyChallengeCardsUseCase(
-            testDispatcher,
-            cardRepository,
-            fakeTimeProvider,
-            fakePackageNameProvider
-        )
+        sut = get()
     }
 
     @Test
@@ -146,17 +135,10 @@ class GetDailyChallengeCardsUseCaseTest : AppTest() {
         val testDate = LocalDate(2026, 3, 26)
         val testEpochDay = testDate.toEpochDays()
         fakeTimeProvider.mockCurrentDate = testDate
-        val fakeDataSource = FakeAllCardPairsDataSource()
-        fakeDataSource.addedEpochDayOverrides = mapOf(
+        fakeAllCardPairsDataSource.addedEpochDayOverrides = mapOf(
             "banana" to testEpochDay - 10,
             "apple" to testEpochDay - 10,
             "strawberry" to testEpochDay - 10
-        )
-        sut = GetDailyChallengeCardsUseCase(
-            testDispatcher,
-            CardRepository(fakeDataSource, unlockedCardPairsLocalDataSource, Random(0)),
-            fakeTimeProvider,
-            fakePackageNameProvider
         )
         val pairCount = (board.columns * board.rows) / 2
 

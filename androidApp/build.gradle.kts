@@ -142,6 +142,78 @@ android {
     }
 }
 
+val composeResourcesMirrorDir = layout.buildDirectory.dir("generated/composeResourcesMirror/res")
+
+val mirrorComposeResourcesToAndroid by tasks.registering {
+    description = "Copies compose-resources values*/strings*.xml and drawable*/ into Android res so R.string/R.drawable mirror Res.string/Res.drawable."
+    group = "build"
+    val srcDir = project(":shared").file("src/commonMain/composeResources")
+    val outDir = composeResourcesMirrorDir
+    inputs.dir(srcDir)
+    outputs.dir(outDir)
+    doLast {
+        fun escape(content: String): String {
+            val out = StringBuilder(content.length + 32)
+            var i = 0
+            while (i < content.length) {
+                val ch = content[i]
+                when {
+                    ch == '<' && i + 1 < content.length && content[i + 1] == '?' -> {
+                        val end = content.indexOf("?>", i)
+                        if (end < 0) { out.append(content.substring(i)); return out.toString() }
+                        out.append(content, i, end + 2); i = end + 2
+                    }
+                    ch == '<' && content.regionMatches(i, "<!--", 0, 4) -> {
+                        val end = content.indexOf("-->", i)
+                        if (end < 0) { out.append(content.substring(i)); return out.toString() }
+                        out.append(content, i, end + 3); i = end + 3
+                    }
+                    ch == '<' -> {
+                        val end = content.indexOf('>', i)
+                        if (end < 0) { out.append(content.substring(i)); return out.toString() }
+                        out.append(content, i, end + 1); i = end + 1
+                    }
+                    else -> {
+                        val nextTag = content.indexOf('<', i)
+                        val endOfText = if (nextTag < 0) content.length else nextTag
+                        out.append(content.substring(i, endOfText).replace("'", "\\'"))
+                        i = endOfText
+                    }
+                }
+            }
+            return out.toString()
+        }
+        val out = outDir.get().asFile
+        out.deleteRecursively()
+        out.mkdirs()
+        srcDir.listFiles()?.filter { it.isDirectory }?.forEach { dir ->
+            when {
+                dir.name.startsWith("values") -> {
+                    val targetDir = out.resolve(dir.name).apply { mkdirs() }
+                    dir.listFiles()
+                        ?.filter { it.isFile && it.extension == "xml" }
+                        ?.forEach { xml ->
+                            targetDir.resolve(xml.name).writeText(escape(xml.readText()))
+                        }
+                }
+                dir.name.startsWith("drawable") -> {
+                    val targetDir = out.resolve(dir.name).apply { mkdirs() }
+                    dir.listFiles()
+                        ?.filter { it.isFile }
+                        ?.forEach { file ->
+                            file.copyTo(targetDir.resolve(file.name), overwrite = true)
+                        }
+                }
+            }
+        }
+    }
+}
+
+android.sourceSets.getByName("main").res.srcDir(composeResourcesMirrorDir.get().asFile)
+
+tasks.named("preBuild") { dependsOn(mirrorComposeResourcesToAndroid) }
+tasks.withType<Test>().configureEach { dependsOn(mirrorComposeResourcesToAndroid) }
+
 tasks.withType<Test>().configureEach {
     val include = project.findProperty("coverageTestFilter") as String?
     val exclude = project.findProperty("coverageTestExclude") as String?

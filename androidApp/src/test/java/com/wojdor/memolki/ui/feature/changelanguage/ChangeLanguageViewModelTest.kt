@@ -1,8 +1,6 @@
 package com.wojdor.memolki.ui.feature.changelanguage
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.wojdor.memolki.domain.usecase.GetLanguagesWithCurrentUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.verifyOnce
@@ -16,18 +14,15 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class ChangeLanguageViewModelTest : AppTest() {
 
-    private val savedStateHandle: SavedStateHandle by inject()
-
     private val analytics: Analytics by inject()
 
     private val hapticFeedback: HapticFeedback by inject()
-
-    private val getLanguagesWithCurrentUseCase: GetLanguagesWithCurrentUseCase by inject()
 
     private val localeProvider: LocaleProvider by inject()
 
@@ -36,13 +31,7 @@ class ChangeLanguageViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = ChangeLanguageViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            getLanguagesWithCurrentUseCase,
-            localeProvider
-        )
+        sut = get()
     }
 
     @Test

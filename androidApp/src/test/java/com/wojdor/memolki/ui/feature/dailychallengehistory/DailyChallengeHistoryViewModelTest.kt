@@ -1,15 +1,11 @@
 package com.wojdor.memolki.ui.feature.dailychallengehistory
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
-import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.domain.usecase.GetAllDailyChallengesUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeTimeProvider
-import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -22,12 +18,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import kotlinx.datetime.LocalDate
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class DailyChallengeHistoryViewModelTest : AppTest() {
-
-    private val savedStateHandle: SavedStateHandle by inject()
 
     private val analytics: Analytics by inject()
 
@@ -48,25 +43,10 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         coEvery { dailyChallengeDao.getAll() } returns emptyList()
     }
 
-    private fun createSut(): DailyChallengeHistoryViewModel {
-        val getAllDailyChallengesUseCase = GetAllDailyChallengesUseCase(
-            testDispatcher,
-            DailyChallengeRepository(dailyChallengeDao)
-        )
-        return DailyChallengeHistoryViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            getAllDailyChallengesUseCase,
-            dailyChallengeShareFormatter,
-            fakeTimeProvider
-        )
-    }
-
     @Test
     fun `when created then today epoch day is set`() = runTest {
         // when
-        sut = createSut()
+        sut = get()
         testScheduler.advanceUntilIdle()
 
         // then
@@ -77,7 +57,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Test
     fun `when created then history opened analytics is logged`() = runTest {
         // when
-        sut = createSut()
+        sut = get()
         testScheduler.advanceUntilIdle()
 
         // then
@@ -99,7 +79,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         coEvery { dailyChallengeDao.getAll() } returns entities
 
         // when
-        sut = createSut()
+        sut = get()
         testScheduler.advanceUntilIdle()
 
         // then
@@ -110,7 +90,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Test
     fun `when OnShareClick then share effect is sent with formatted text`() = runTest {
         // given
-        sut = createSut()
+        sut = get()
         testScheduler.advanceUntilIdle()
         val challenge = DailyChallengeModel(
             epochDay = 20001L,
@@ -134,7 +114,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Test
     fun `when OnShareClick then haptic feedback is triggered`() = runTest {
         // given
-        sut = createSut()
+        sut = get()
         testScheduler.advanceUntilIdle()
         val challenge = DailyChallengeModel(
             epochDay = 20001L,
@@ -155,7 +135,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Test
     fun `when OnShareClick then share analytics is logged`() = runTest {
         // given
-        sut = createSut()
+        sut = get()
         testScheduler.advanceUntilIdle()
         val challenge = DailyChallengeModel(
             epochDay = 20001L,
@@ -179,7 +159,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         coEvery { dailyChallengeDao.getAll() } throws RuntimeException("DB error")
 
         // when
-        sut = createSut()
+        sut = get()
         testScheduler.advanceUntilIdle()
 
         // then

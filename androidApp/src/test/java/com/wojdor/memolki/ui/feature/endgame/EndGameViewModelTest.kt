@@ -1,29 +1,16 @@
 package com.wojdor.memolki.ui.feature.endgame
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
-import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
-import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
-import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
-import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.HasReceivedShareRewardUseCase
-import com.wojdor.memolki.domain.usecase.IncrementTotalGamesPlayedUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
-import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.formatter.CasualShareFormatter
-import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
@@ -36,12 +23,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class EndGameViewModelTest : AppTest() {
-
-    private val savedStateHandle: SavedStateHandle by inject()
 
     private val levelCompletePlayer: LevelCompletePlayer by inject()
 
@@ -51,58 +37,16 @@ class EndGameViewModelTest : AppTest() {
 
     private val allRewardedAds: AllRewardedAds by inject()
 
-    private val reviewManager: ReviewManager by inject()
-    private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase by inject()
-
-    private val getCoinsUseCase: GetCoinsUseCase by inject()
-
-    private val rewardCoinsForBoardUseCase: RewardCoinsForBoardUseCase by inject()
-
-    private val getTotalCoinsUseCase: GetTotalCoinsUseCase by inject()
-
-    private val canUnlockNewCardUseCase: CanUnlockNewCardUseCase by inject()
-
-    private val shouldShowNotificationRequestUseCase: ShouldShowNotificationRequestUseCase by inject()
-
-    private val rewardCoinsForShareUseCase: RewardCoinsForShareUseCase by inject()
-
-    private val hasReceivedShareRewardUseCase: HasReceivedShareRewardUseCase by inject()
-
-    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
-
     private val userRepository: UserRepository by inject()
 
     private val analytics: Analytics by inject()
-
-    private val casualShareFormatter: CasualShareFormatter by inject()
-
-    private val dailyChallengeShareFormatter: DailyChallengeShareFormatter by inject()
 
     private lateinit var sut: EndGameViewModel
 
     @Before
     override fun setup() {
         super.setup()
-        sut = EndGameViewModel(
-            savedStateHandle,
-            analytics,
-            levelCompletePlayer,
-            coinsPlayer,
-            hapticFeedback,
-            allRewardedAds,
-            reviewManager,
-            incrementTotalGamesPlayedUseCase,
-            getTotalGamesPlayedUseCase,
-            getCoinsUseCase,
-            rewardCoinsForBoardUseCase,
-            getTotalCoinsUseCase,
-            canUnlockNewCardUseCase,
-            shouldShowNotificationRequestUseCase,
-            rewardCoinsForShareUseCase,
-            hasReceivedShareRewardUseCase,
-            casualShareFormatter,
-            dailyChallengeShareFormatter
-        )
+        sut = get()
     }
 
     @Test

@@ -1,16 +1,10 @@
 package com.wojdor.memolki.ui.feature.collection
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
-import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
-import com.wojdor.memolki.domain.usecase.GetCollectionDataUseCase
-import com.wojdor.memolki.domain.usecase.IncrementUnlockedCardPairsFromAdsCountUseCase
-import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
-import com.wojdor.memolki.domain.usecase.UnlockRandomCardUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakePermissionProvider
@@ -18,7 +12,6 @@ import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
-import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.coVerify
 import io.mockk.verify
@@ -28,30 +21,17 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class CollectionViewModelTest : AppTest() {
-
-    private val savedStateHandle: SavedStateHandle by inject()
 
     private val coinsPlayer: CoinsPlayer by inject()
 
     private val hapticFeedback: HapticFeedback by inject()
 
     private val allRewardedAds: AllRewardedAds by inject()
-
-    private val getCoinsUseCase: GetCoinsUseCase by inject()
-
-    private val getCollectionDataUseCase: GetCollectionDataUseCase by inject()
-
-    private val unlockRandomCardIfEnoughCoinsUseCase: UnlockRandomCardIfEnoughCoinsUseCase by inject()
-
-    private val unlockRandomCardUseCase: UnlockRandomCardUseCase by inject()
-
-    private val incrementUnlockedCardPairsFromAdsCountUseCase: IncrementUnlockedCardPairsFromAdsCountUseCase by inject()
-
-    private val notificationScheduler: NotificationScheduler by inject()
 
     private val userRepository: UserRepository by inject()
 
@@ -66,19 +46,7 @@ class CollectionViewModelTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = CollectionViewModel(
-            savedStateHandle,
-            analytics,
-            coinsPlayer,
-            hapticFeedback,
-            allRewardedAds,
-            getCoinsUseCase,
-            getCollectionDataUseCase,
-            unlockRandomCardIfEnoughCoinsUseCase,
-            unlockRandomCardUseCase,
-            incrementUnlockedCardPairsFromAdsCountUseCase,
-            notificationScheduler
-        )
+        sut = get()
     }
 
     @Test
@@ -479,19 +447,7 @@ class CollectionViewModelTest : AppTest() {
         listOf("watermelon", "mango", "peach", "pineapple", "blueberry").forEach {
             unlockedCardPairsLocalDataSource.addUnlockedCardPairId(it)
         }
-        sut = CollectionViewModel(
-            savedStateHandle,
-            analytics,
-            coinsPlayer,
-            hapticFeedback,
-            allRewardedAds,
-            getCoinsUseCase,
-            getCollectionDataUseCase,
-            unlockRandomCardIfEnoughCoinsUseCase,
-            unlockRandomCardUseCase,
-            incrementUnlockedCardPairsFromAdsCountUseCase,
-            notificationScheduler
-        )
+        sut = get()
 
         // when
         sut.uiState.test {

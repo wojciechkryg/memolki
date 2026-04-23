@@ -6,26 +6,19 @@ import com.wojdor.memolki.shared.resources.banana
 import com.wojdor.memolki.shared.resources.apple
 import com.wojdor.memolki.shared.resources.empty
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.StarCalculator
-import com.wojdor.memolki.domain.usecase.GetBiggestUnlockedBoardUseCase
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
-import com.wojdor.memolki.domain.usecase.GetLevelUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
-import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
-import com.wojdor.memolki.domain.usecase.IncrementLevelUseCase
-import com.wojdor.memolki.domain.usecase.IncrementTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.media.CardFlipPlayer
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.provider.TimeProvider
@@ -35,34 +28,28 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import kotlinx.datetime.LocalDate
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.module
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class GameViewModelTest : AppTest() {
 
-    private val savedStateHandle: SavedStateHandle by inject()
-
-    private val cardFlipPlayer: CardFlipPlayer by inject()
-
-    private val cardPairMatchedPlayer: CardPairMatchedPlayer by inject()
-
     private val hapticFeedback: HapticFeedback by inject()
+    private val cardPairMatchedPlayer: CardPairMatchedPlayer by inject()
+    private val timeProvider: TimeProvider by inject()
+    private val userRepository: UserRepository by inject()
+    private val analytics: Analytics by inject()
+
     @RelaxedMockK
     lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
-
-    private val incrementTotalCardPairsMatchedUseCase: IncrementTotalCardPairsMatchedUseCase by inject()
-
-    private val getLevelUseCase: GetLevelUseCase by inject()
-
-    private val incrementLevelUseCase: IncrementLevelUseCase by inject()
-
-    private val getBiggestUnlockedBoardUseCase: GetBiggestUnlockedBoardUseCase by inject()
 
     @RelaxedMockK
     lateinit var getDailyChallengeCardsUseCase: GetDailyChallengeCardsUseCase
@@ -76,43 +63,24 @@ class GameViewModelTest : AppTest() {
     @RelaxedMockK
     lateinit var getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase
 
-    private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase by inject()
-
-    private val timeProvider: TimeProvider by inject()
-
-    private val userRepository: UserRepository by inject()
-
-    private val analytics: Analytics by inject()
-
-    private val starCalculator: StarCalculator by inject()
-
     private lateinit var sut: GameViewModel
 
     @Before
     override fun setup() {
         super.setup()
-        sut = GameViewModel(
-            savedStateHandle,
-            analytics,
-            cardFlipPlayer,
-            cardPairMatchedPlayer,
-            hapticFeedback,
-            getShuffledUnlockedCardsUseCase,
-            incrementTotalCardPairsMatchedUseCase,
-            getLevelUseCase,
-            incrementLevelUseCase,
-            getBiggestUnlockedBoardUseCase,
-            getDailyChallengeCardsUseCase,
-            hasPlayedTodayDailyChallengeUseCase,
-            saveDailyChallengeUseCase,
-            getTodayDailyChallengeUseCase,
-            getTotalGamesPlayedUseCase,
-            timeProvider,
-            starCalculator
+        loadKoinModules(
+            module {
+                factory<GetShuffledUnlockedCardsUseCase> { getShuffledUnlockedCardsUseCase }
+                factory<GetDailyChallengeCardsUseCase> { getDailyChallengeCardsUseCase }
+                factory<HasPlayedTodayDailyChallengeUseCase> { hasPlayedTodayDailyChallengeUseCase }
+                factory<SaveDailyChallengeUseCase> { saveDailyChallengeUseCase }
+                factory<GetTodayDailyChallengeUseCase> { getTodayDailyChallengeUseCase }
+            }
         )
         every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
             Result.success(mockShuffledCardsWithSamePairIds())
         )
+        sut = get()
     }
 
     @Test

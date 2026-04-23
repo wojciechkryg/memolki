@@ -1,10 +1,7 @@
 package com.wojdor.memolki.ui.feature.moreapps
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.AppModel
-import com.wojdor.memolki.domain.usecase.GetMoreAppsUseCase
-import com.wojdor.memolki.domain.usecase.IsAppInstalledUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
 import com.wojdor.memolki.test.verifyOnce
@@ -18,39 +15,24 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class MoreAppsViewModelTest : AppTest() {
 
-    private val savedStateHandle: SavedStateHandle by inject()
-
     private val analytics: Analytics by inject()
 
     private val hapticFeedback: HapticFeedback by inject()
 
-    private val getMoreAppsUseCase: GetMoreAppsUseCase by inject()
-
     private val fakeAppInstalledProvider: FakeAppInstalledProvider by inject()
-
-    private lateinit var isAppInstalledUseCase: IsAppInstalledUseCase
 
     private lateinit var sut: MoreAppsViewModel
 
     @Before
     override fun setup() {
         super.setup()
-        isAppInstalledUseCase = IsAppInstalledUseCase(
-            testDispatcher,
-            fakeAppInstalledProvider
-        )
-        sut = MoreAppsViewModel(
-            savedStateHandle,
-            analytics,
-            hapticFeedback,
-            getMoreAppsUseCase,
-            isAppInstalledUseCase
-        )
+        sut = get()
     }
 
     @Test

@@ -355,7 +355,12 @@ Shared composables live in `ui/component/`. Before creating a new composable, ch
 Conventions:
 - Extend `AppTest`, annotate with `@ExperimentalCoroutinesApi`
 - Read Koin-managed dependencies with `private val foo: Foo by inject()`; use `@MockK` / `@RelaxedMockK` only for mocks local to the test
-- Construct SUT in `@Before setup()` (after `super.setup()` so Koin is started first)
+- **SUT resolution:** every binding for ViewModels, UseCases, Repositories, DataSources, and formatters is in `TestKoinModule`, so resolve the SUT via Koin — `private lateinit var sut: FooViewModel` + `sut = get()` in `@Before setup()` (after `super.setup()` so Koin is started first). Import `org.koin.test.get`. This keeps tests stable when a class's constructor changes. Only inject the dependencies you need in the test body (for `verify {}`, state mutations, assertions).
+- **SUT-injection edge cases:**
+  - If the test needs custom mocks that the SUT depends on, override the bindings in `setup()` with `loadKoinModules(module { factory<FooUseCase> { mockedInstance } })` BEFORE `sut = get()` (see `GameViewModelTest`).
+  - If the SUT reads from `SavedStateHandle` at init time, inject the handle, populate it (`savedStateHandle["key"] = value`) BEFORE `sut = get()` (see `EnableNotificationsViewModelTest`).
+  - If the scenario needs a tailored fake state, mutate the already-injected fake rather than constructing a new sub-dep (see `GetDailyChallengeCardsUseCaseTest` using `fakeAllCardPairsDataSource.addedEpochDayOverrides = ...`).
+  - For tests that don't extend `AppTest` (pure POJO like `TimeFormatterTest`), construct the SUT directly — Koin isn't involved.
 - Wrap tests in `runTest {}`, assert flows with Turbine's `.test { awaitItem() }`
 - For one-shot flows (e.g. `flow { emit(...) }`), call `awaitComplete()` after consuming items to avoid "Unconsumed events" errors
 - For long-lived flows (e.g. DataStore, StateFlow), no `awaitComplete()` needed
@@ -443,9 +448,14 @@ Translations exist at two independent levels:
 
 Canonical (and only) location is `:shared/src/commonMain/composeResources/values/strings.xml` (English default) and `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` per language. Use `stringResource(Res.string.foo)` from `org.jetbrains.compose.resources` (import `com.wojdor.memolki.shared.resources.*`). The Res class lives at `com.wojdor.memolki.shared.resources.Res`. Non-translatable UI entries (language names, board size labels, `empty`, `app_logo`, `new_card_to_unlock`) live in `:shared/src/commonMain/composeResources/values/strings_non_translatable.xml`.
 
-`androidApp/src/main/res/values*/strings.xml` now keeps only strings still consumed by Android-only code: manifest refs (`app_name`, `app_name_{flavor}`, `ad_mob_app_id`, `game_id`), PlayGames IDs (`leaderboard_*_id`), launcher shortcuts (`shortcut_daily_reward`, `shortcut_play`), notification arrays/plurals/channel, `CardModel` sentinels / Android-side toast+share strings (`empty`, `level_count`, `menu`, `new_game`, `share_casual`, `daily_reward_*`, `shop_*`, `watch_ad`, `notification_channel_reminders`), and the `ad_mob_*` unit IDs. Everything else has been deleted to eliminate drift.
+`androidApp/src/main/res/values*/strings.xml` no longer exists — the `mirrorComposeResourcesToAndroid` Gradle task (in `androidApp/build.gradle.kts`) copies every compose-resources `values*/strings*.xml` into `androidApp/build/generated/composeResourcesMirror/res/values*/` at build time (escaping apostrophes for AAPT2 inside text nodes). The generated dir is wired as an extra res source via `android.sourceSets.main.res.srcDir(...)`; both `preBuild` and all `Test` tasks depend on the mirror task so AAPT2 and Paparazzi's layoutlib see the same keys. Compose-resources is now the single source of truth; all Android framework callers (`R.string.*`, `R.plurals.*`, `R.array.*`) see a build-time mirror. Non-string Android-only resources (`colors.xml`, `themes.xml`, `splashscreen.xml`, notification icon, launcher assets) still live under `androidApp/src/main/res/` — per-flavor `app_name` aliases, `ad_mob_*` unit IDs, and `leaderboard_*_id` Play Games IDs remain in each flavor source set.
 
-Each locale file must translate every key from the default `strings.xml`.
+**Operational notes for the mirror task** — in day-to-day work you can forget it exists, but a few gotchas:
+- Add/edit translatable strings only in `:shared/src/commonMain/composeResources/values*/strings*.xml`. They automatically become both `Res.string.X` (compose-resources) and `R.string.X` (via the mirror) on the next build.
+- **Never add a string to both** `commonMain/composeResources` and `androidApp/src/main/res/` — AAPT2 fails with a duplicate-resource error.
+- The mirror only reads `commonMain/composeResources`. Flavor-specific `shared/src/android{Flavor}/composeResources/` (card names) are NOT mirrored to `R.string.*` — they're consumed only via `Res.string.*` from the flavor source sets' `AllCardPairsLocalDataSource`.
+- After `./gradlew clean`, the IDE may show unresolved `R.string.*` references until a build runs (the mirror dir is empty). A single `:androidApp:assembleFruitHalfDebug` or opening the Gradle Sync fixes it.
+- If the compose-resources XML format changes in a future plugin upgrade (e.g., new escaping semantics), update the `escape(content)` helper in `androidApp/build.gradle.kts` — today it only escapes `'` → `\'` inside text nodes.
 
 ### 2. Flavor-specific card names
 
@@ -455,7 +465,9 @@ Located in `:shared/src/android{Flavor}/composeResources/values/strings.xml` (En
 
 ### 3. Shared drawables
 
-Canonical location is `:shared/src/commonMain/composeResources/drawable/` and `…/drawable-{mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi}/`. Use `painterResource(Res.drawable.foo)` from `org.jetbrains.compose.resources`. The same files remain duplicated in `androidApp/src/main/res/drawable*/` until phase 13c removes them — update both copies when adding or changing a shared drawable. Kept Android-only in `androidApp/src/main/res/drawable*/`: `ic_notification` (manifest), `ic_launcher_monochrome`, `ic_shortcut_daily_reward*`, `ic_logo_splashscreen` (splash theme), and flavor logos `ic_logo_{flavor}` referenced from `AppModel`.
+Canonical (and only) location is `:shared/src/commonMain/composeResources/drawable/` and `…/drawable-{mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi}/`. Use `painterResource(Res.drawable.foo)` from `org.jetbrains.compose.resources` for Compose call sites. For Android framework callers (notification builder, adaptive icon, manifest, some composables still using `painterResource(R.drawable.foo)`), the same `mirrorComposeResourcesToAndroid` task copies every `drawable*/` file into `androidApp/build/generated/composeResourcesMirror/res/drawable*/` at build time — so `R.drawable.*` and `Res.drawable.*` stay in sync automatically. Same rules as strings: add/change drawables only in `commonMain/composeResources`, never duplicate a filename across the two locations (AAPT2 duplicate-resource error), flavor-specific drawables in `shared/src/android{Flavor}/composeResources/drawable*/` are NOT mirrored.
+
+Kept Android-only in `androidApp/src/main/res/drawable*/`: `ic_notification.xml` (manifest notification icon), `ic_launcher_monochrome.xml` (adaptive icon), `ic_logo_splashscreen.xml` (splash theme), and the three shortcut drawables (`ic_shortcut_daily_reward.png`, `.xml`, `_foreground.xml`) used by `res/xml/shortcuts.xml`. Flavor logos `ic_logo_{flavor}` live only in compose-resources now.
 
 ### Supported locales
 
@@ -469,7 +481,7 @@ Native language names (e.g. "Polski", "Deutsch") are in `main/res/values/strings
 
 ### Adding a new language
 
-1. Create `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` — translate all shared UI strings. Only mirror into `androidApp/src/main/res/values-{locale}/strings.xml` for the small set of keys still used from Android-side code (see the shared UI strings section above).
+1. Create `:shared/src/commonMain/composeResources/values-{locale}/strings.xml` — translate all shared UI strings. The `mirrorComposeResourcesToAndroid` task automatically syncs these into Android's R.string at build time, so no manual Android-side mirroring is needed.
 2. Create `androidApp/src/{flavorName}/res/values-{locale}/strings.xml` for **each flavor** — translate card names
 3. Add `language_{name}` entry (native name, `translatable="false"`) in `:shared/src/commonMain/composeResources/values/strings_non_translatable.xml`
 4. Add `LanguageModel(R.string.language_{name}, "{locale}")` to the list in `domain/usecase/GetSupportedLanguagesUseCase.kt`

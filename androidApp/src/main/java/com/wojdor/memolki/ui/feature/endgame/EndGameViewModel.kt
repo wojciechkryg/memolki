@@ -104,9 +104,11 @@ class EndGameViewModel(
                 logE("Failed to reward share coins", it)
             }
         }.launchIn(viewModelScope)
-        val state = uiState.value
-        val shareText = casualShareFormatter.format(state.board, state.level)
-        sendEffect(EndGameEffect.Share(shareText))
+        viewModelScope.launch {
+            val state = uiState.value
+            val shareText = casualShareFormatter.format(state.board, state.level)
+            sendEffect(EndGameEffect.Share(shareText))
+        }
     }
 
     private fun checkShareRewardAvailable() {
@@ -397,9 +399,11 @@ class EndGameViewModel(
     private fun onDailyChallengeShareClick() {
         val state = uiState.value
         val result = state.dailyChallenge
-        val shareText = dailyChallengeShareFormatter.format(result)
-        sendEffect(EndGameEffect.ShareDailyChallenge(shareText))
-        analytics.logDailyChallengeShare(result.epochDay, result.starCount)
+        viewModelScope.launch {
+            val shareText = dailyChallengeShareFormatter.format(result)
+            sendEffect(EndGameEffect.ShareDailyChallenge(shareText))
+            analytics.logDailyChallengeShare(result.epochDay, result.starCount)
+        }
     }
 
     companion object {

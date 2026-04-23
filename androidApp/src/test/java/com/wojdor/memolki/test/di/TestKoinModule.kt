@@ -85,6 +85,7 @@ import com.wojdor.memolki.test.fake.FakeEncryptor
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
+import com.wojdor.memolki.test.fake.FakeStringProvider
 import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
@@ -107,6 +108,7 @@ import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
+import com.wojdor.memolki.util.resource.StringProvider
 import com.wojdor.memolki.util.formatter.TimeFormatter
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.media.CardFlipPlayer
@@ -190,6 +192,7 @@ val testKoinModule = module {
     singleOf(::SettingsRepository)
     singleOf(::UserRepository)
 
+    singleOf(::FakeStringProvider) { bind<StringProvider>() }
     factoryOf(::CasualShareFormatter)
     factoryOf(::DailyChallengeShareFormatter)
     factoryOf(::TimeFormatter)

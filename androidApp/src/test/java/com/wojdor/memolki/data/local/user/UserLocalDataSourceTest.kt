@@ -11,6 +11,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -23,7 +24,7 @@ class UserLocalDataSourceTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = UserLocalDataSource(dataStore)
+        sut = get()
     }
 
     @Test

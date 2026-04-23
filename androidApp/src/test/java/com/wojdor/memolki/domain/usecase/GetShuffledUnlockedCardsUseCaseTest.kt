@@ -11,6 +11,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import kotlin.random.Random
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -25,11 +26,7 @@ class GetShuffledUnlockedCardsUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = GetShuffledUnlockedCardsUseCase(
-            testDispatcher,
-            cardRepository,
-            Random(0)
-        )
+        sut = get()
     }
 
     @Test

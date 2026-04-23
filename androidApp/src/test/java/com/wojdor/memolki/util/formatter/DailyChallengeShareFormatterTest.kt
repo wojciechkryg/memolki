@@ -1,32 +1,31 @@
 package com.wojdor.memolki.util.formatter
 
-import android.content.Context
-import android.content.res.Resources
 import com.wojdor.memolki.domain.model.DailyChallengeModel
-import com.wojdor.memolki.test.fake.FakeTimeProvider
-import io.mockk.every
-import io.mockk.mockk
-import org.junit.Assert.assertEquals
+import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.fake.FakePackageNameProvider
+import com.wojdor.memolki.util.provider.TimeProvider
+import com.wojdor.memolki.util.resource.StringProvider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.inject
 
-class DailyChallengeShareFormatterTest {
+@ExperimentalCoroutinesApi
+class DailyChallengeShareFormatterTest : AppTest() {
 
-    private val context: Context = mockk(relaxed = true)
-    private val resources: Resources = mockk(relaxed = true)
-    private val timeProvider = FakeTimeProvider()
-    private val timeFormatter = TimeFormatter()
+    private val packageNameProvider: FakePackageNameProvider by inject()
+    private val timeProvider: TimeProvider by inject()
+    private val timeFormatter: TimeFormatter by inject()
+    private val stringProvider: StringProvider by inject()
+
     private lateinit var sut: DailyChallengeShareFormatter
 
     @Before
-    fun setup() {
-        every { context.resources } returns resources
-        every { context.getString(any()) } returns "TestApp"
-        every { context.packageName } returns "com.test"
-        every { resources.getQuantityString(any(), any(), any()) } returns "2 mistakes"
-        sut = DailyChallengeShareFormatter(context, timeProvider, timeFormatter)
+    override fun setup() {
+        super.setup()
+        sut = DailyChallengeShareFormatter(packageNameProvider, timeProvider, timeFormatter, stringProvider)
     }
 
     @Test
@@ -35,7 +34,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(starCount = 3)
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("⭐⭐⭐"))
@@ -47,7 +46,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(starCount = 2)
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("⭐⭐"))
@@ -60,7 +59,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(starCount = 1)
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("⭐"))
@@ -73,7 +72,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(cardFlipCounts = listOf(listOf(1, 3)))
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("🟩"))
@@ -86,7 +85,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(cardFlipCounts = listOf(listOf(1, 2), listOf(2, 1)))
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("🟩"))
@@ -99,7 +98,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(cardFlipCounts = listOf(listOf(3, 4), listOf(5, 3)))
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("🟥"))
@@ -114,7 +113,7 @@ class DailyChallengeShareFormatterTest {
         )
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("🟩🟩\n🟥🟥"))
@@ -126,7 +125,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(epochDay = 100L)
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         assertTrue(text.contains("\u2215"))
@@ -140,7 +139,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(timeMillis = 65_000L)
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         val timeLine = text.lines()[1]
@@ -154,7 +153,7 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(timeMillis = 5_123L)
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         val timeLine = text.lines()[1]
@@ -174,14 +173,14 @@ class DailyChallengeShareFormatterTest {
         )
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         val lines = text.lines()
-        assertTrue(lines[0].startsWith("🃏 TestApp"))
+        assertTrue(lines[0].startsWith("🃏 $TEST_APP_NAME"))
         assertTrue(lines[1].startsWith("⏱️"))
         assertTrue(lines[2].contains("⭐"))
-        assertTrue(lines[2].contains("2 mistakes"))
+        assertTrue(lines[2].contains(TEST_MISTAKE_TEXT))
         assertTrue(lines[3].contains("🟩") || lines[3].contains("🟥"))
         assertTrue(lines.last().contains("play.google.com"))
     }
@@ -192,10 +191,10 @@ class DailyChallengeShareFormatterTest {
         val result = createModel()
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
-        assertTrue(text.contains("https://play.google.com/store/apps/details?id=com.test"))
+        assertTrue(text.contains("https://play.google.com/store/apps/details?id=${packageNameProvider.mockPackageName}"))
     }
 
     @Test
@@ -204,22 +203,29 @@ class DailyChallengeShareFormatterTest {
         val result = createModel(epochDay = 20088L)
 
         // when
-        val text = sut.format(result)
+        val text = format(result)
 
         // then
         val dateLine = text.lines().first()
-        assertTrue(dateLine.contains("TestApp"))
+        assertTrue(dateLine.contains(TEST_APP_NAME))
         assertTrue(dateLine.contains("31"))
         assertTrue(dateLine.contains("12"))
         assertTrue(dateLine.contains("2024"))
     }
 
+    private fun format(result: DailyChallengeModel): String = sut.formatText(
+        result = result,
+        appName = TEST_APP_NAME,
+        mistakeText = TEST_MISTAKE_TEXT,
+        packageName = packageNameProvider.mockPackageName
+    )
+
     private fun createModel(
         starCount: Int = 2,
         mistakeCount: Int = 2,
-        timeMillis: Long = 5000L,
-        epochDay: Long = 100L,
-        cardFlipCounts: List<List<Int>> = listOf(listOf(1, 3))
+        timeMillis: Long = 60_000L,
+        epochDay: Long = 0L,
+        cardFlipCounts: List<List<Int>> = listOf(listOf(1, 1))
     ) = DailyChallengeModel(
         starCount = starCount,
         mistakeCount = mistakeCount,
@@ -227,4 +233,9 @@ class DailyChallengeShareFormatterTest {
         epochDay = epochDay,
         cardFlipCounts = cardFlipCounts
     )
+
+    companion object {
+        private const val TEST_APP_NAME = "TestApp"
+        private const val TEST_MISTAKE_TEXT = "2 mistakes"
+    }
 }

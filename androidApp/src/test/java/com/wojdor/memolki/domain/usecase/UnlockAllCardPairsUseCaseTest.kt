@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -20,7 +21,7 @@ class UnlockAllCardPairsUseCaseTest : AppTest() {
     @Before
     override fun setup() {
         super.setup()
-        sut = UnlockAllCardPairsUseCase(testDispatcher, cardRepository)
+        sut = get()
     }
 
     @Test

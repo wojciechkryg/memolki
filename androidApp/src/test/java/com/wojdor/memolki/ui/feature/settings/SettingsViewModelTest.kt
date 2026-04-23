@@ -1,10 +1,7 @@
 package com.wojdor.memolki.ui.feature.settings
 
-import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.SettingModel
-import com.wojdor.memolki.domain.usecase.GetSettingsUseCase
-import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
@@ -16,32 +13,22 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.test.get
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
 class SettingsViewModelTest : AppTest() {
 
-    private val savedStateHandle: SavedStateHandle by inject()
-
     private val hapticFeedback: HapticFeedback by inject()
 
     private val backgroundMusicPlayer: BackgroundMusicPlayer by inject()
 
-    private val getSettingsUseCase: GetSettingsUseCase by inject()
-
-    private val toggleSettingsUseCase: ToggleSettingsUseCase by inject()
     private lateinit var viewModel: SettingsViewModel
 
     @Before
     override fun setup() {
         super.setup()
-        viewModel = SettingsViewModel(
-            savedStateHandle,
-            hapticFeedback,
-            backgroundMusicPlayer,
-            getSettingsUseCase,
-            toggleSettingsUseCase
-        )
+        viewModel = get()
     }
 
     @Test
