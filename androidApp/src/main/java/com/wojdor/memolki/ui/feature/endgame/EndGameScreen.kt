@@ -11,8 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
-import com.google.android.play.core.review.ReviewInfo
-import com.google.android.play.core.review.ReviewManager
 import org.koin.compose.koinInject
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
@@ -30,7 +28,7 @@ import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.extension.shareText
-import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
 
 @Composable
@@ -61,7 +59,7 @@ private fun HandleEffect(
 ) {
     val activity = LocalActivity.current
     val coroutineScope = rememberCoroutineScope()
-    val googlePlayGames = koinInject<GooglePlayGames>()
+    val gameServices = koinInject<GameServices>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.boardModel)
@@ -73,12 +71,8 @@ private fun HandleEffect(
             )
 
             is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
-            is EndGameEffect.RequestReview -> activity?.let {
-                launchReviewFlow(it, effect.reviewManager, effect.reviewInfo)
-            }
-
             is EndGameEffect.SendTotalCoinsScore -> coroutineScope.launch {
-                googlePlayGames.submitTotalCoins(effect.totalCoins)
+                gameServices.submitTotalCoins(effect.totalCoins)
             }
 
             is EndGameEffect.Share -> activity?.shareText(effect.text)
@@ -114,14 +108,6 @@ private fun showAd(
         onGrantReward = { viewModel.sendIntent(EndGameIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(EndGameIntent.OnAdDismiss(it)) }
     )
-}
-
-private fun launchReviewFlow(
-    activity: Activity,
-    reviewManager: ReviewManager,
-    reviewInfo: ReviewInfo
-) {
-    reviewManager.launchReviewFlow(activity, reviewInfo)
 }
 
 @Composable

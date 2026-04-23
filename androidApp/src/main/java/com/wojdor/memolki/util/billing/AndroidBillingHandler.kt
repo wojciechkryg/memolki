@@ -1,9 +1,6 @@
 package com.wojdor.memolki.util.billing
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
-import android.os.Bundle
 import android.util.Base64
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -24,6 +21,7 @@ import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_COINS_BIG
 import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_COINS_SMALL
 import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_UNLOCK_ALL_CARDS
 import com.wojdor.memolki.util.extension.logE
+import com.wojdor.memolki.util.provider.ActivityProvider
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -31,7 +29,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
-import java.lang.ref.WeakReference
 import java.nio.charset.StandardCharsets
 import java.security.KeyFactory
 import java.security.PublicKey
@@ -41,6 +38,7 @@ import kotlin.coroutines.resume
 
 open class AndroidBillingHandler(
     private val context: Context,
+    private val activityProvider: ActivityProvider,
     private val dispatcher: CoroutineDispatcher
 ) : BillingHandler, PurchasesUpdatedListener {
 
@@ -49,32 +47,11 @@ open class AndroidBillingHandler(
     private val connectionLock = Any()
     private var listener: BillingStatusListener? = null
     private var cachedProducts: List<ProductDetails> = emptyList()
-    private var currentActivityRef: WeakReference<Activity>? = null
     @Volatile
     private var connectionReady = CompletableDeferred<Boolean>()
 
     override val consumableProductIds = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
     override val nonConsumableProductIds = setOf(IAP_UNLOCK_ALL_CARDS)
-
-    init {
-        (context.applicationContext as? Application)?.registerActivityLifecycleCallbacks(
-            object : Application.ActivityLifecycleCallbacks {
-                override fun onActivityResumed(activity: Activity) {
-                    currentActivityRef = WeakReference(activity)
-                }
-
-                override fun onActivityPaused(activity: Activity) {
-                    if (currentActivityRef?.get() === activity) currentActivityRef = null
-                }
-
-                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
-                override fun onActivityStarted(activity: Activity) = Unit
-                override fun onActivityStopped(activity: Activity) = Unit
-                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
-                override fun onActivityDestroyed(activity: Activity) = Unit
-            }
-        )
-    }
 
     override fun startConnection(listener: BillingStatusListener) {
         this.listener = listener
@@ -156,7 +133,7 @@ open class AndroidBillingHandler(
     }
 
     override fun launchBillingFlow(product: BillingProduct) {
-        val activity = currentActivityRef?.get() ?: run {
+        val activity = activityProvider.current ?: run {
             listener?.onPurchaseFailed()
             return
         }

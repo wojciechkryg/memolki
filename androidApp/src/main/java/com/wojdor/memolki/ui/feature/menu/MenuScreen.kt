@@ -19,7 +19,7 @@ import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.menu.component.MenuContent
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,18 +41,18 @@ private fun HandleEffect(
     viewModel: MenuViewModel,
     navController: NavController
 ) {
-    val googlePlayGames = koinInject<GooglePlayGames>()
+    val gameServices = koinInject<GameServices>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             MenuEffect.OpenChooseBoardScreen -> navController.navigateToChooseBoard()
             MenuEffect.OpenCollectionScreen -> navController.navigateToCollection()
-            MenuEffect.OpenLeaderboardScreen -> openLeaderboardScreen(viewModel, googlePlayGames)
+            MenuEffect.OpenLeaderboardScreen -> openLeaderboardScreen(viewModel, gameServices)
             is MenuEffect.SendTotalCoinsScore -> viewModel.viewModelScope.launch {
-                googlePlayGames.submitTotalCoins(effect.totalCoins)
+                gameServices.submitTotalCoins(effect.totalCoins)
             }
 
             is MenuEffect.SendTotalCardPairsMatchedScore -> viewModel.viewModelScope.launch {
-                googlePlayGames.submitTotalCardPairsMatched(effect.totalCardPairsMatched)
+                gameServices.submitTotalCardPairsMatched(effect.totalCardPairsMatched)
             }
 
             MenuEffect.OpenSettingsScreen -> navController.navigateToSettings()
@@ -64,14 +64,14 @@ private fun HandleEffect(
 
 private fun openLeaderboardScreen(
     viewModel: MenuViewModel,
-    googlePlayGames: GooglePlayGames
+    gameServices: GameServices
 ) {
     viewModel.viewModelScope.launch {
-        if (!googlePlayGames.isAuthenticated()) {
-            googlePlayGames.signIn()
+        if (!gameServices.isAuthenticated()) {
+            gameServices.signIn()
         }
-        if (googlePlayGames.isAuthenticated()) {
-            googlePlayGames.openLeaderboard()
+        if (gameServices.isAuthenticated()) {
+            gameServices.openLeaderboard()
         }
     }
 }

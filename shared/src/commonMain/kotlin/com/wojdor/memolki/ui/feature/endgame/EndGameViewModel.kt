@@ -2,7 +2,6 @@ package com.wojdor.memolki.ui.feature.endgame
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.google.android.play.core.review.ReviewManager
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.domain.usecase.CanUnlockNewCardUseCase
@@ -26,6 +25,7 @@ import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
+import com.wojdor.memolki.util.review.InAppReviewer
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -38,7 +38,7 @@ class EndGameViewModel(
     private val coinsPlayer: CoinsPlayer,
     private val hapticFeedback: HapticFeedback,
     private val allRewardedAds: AllRewardedAds,
-    private val reviewManager: ReviewManager,
+    private val inAppReviewer: InAppReviewer,
     private val incrementTotalGamesPlayedUseCase: IncrementTotalGamesPlayedUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
     private val getCoinsUseCase: GetCoinsUseCase,
@@ -180,12 +180,7 @@ class EndGameViewModel(
     private suspend fun requestReview() {
         val totalGamesPlayed = getTotalGamesPlayedUseCase().first().getOrDefault(0L)
         if (totalGamesPlayed >= MIN_GAMES_PLAYED_TO_ASK_REVIEW) {
-            val request = reviewManager.requestReviewFlow()
-            request.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    sendEffect(EndGameEffect.RequestReview(reviewManager, request.result))
-                }
-            }
+            inAppReviewer.request()
         }
     }
 

@@ -21,7 +21,7 @@ import com.wojdor.memolki.ui.feature.endgame.EndGameIntent
 import com.wojdor.memolki.ui.feature.endgame.EndGameViewModel
 import com.wojdor.memolki.ui.feature.game.component.GameContent
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
 
 @Composable
@@ -42,7 +42,7 @@ private fun HandleEffect(
     navController: NavController
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val googlePlayGames = koinInject<GooglePlayGames>()
+    val gameServices = koinInject<GameServices>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is GameEffect.OpenEndGameScreen -> openEndGameScreen(
@@ -52,7 +52,7 @@ private fun HandleEffect(
             )
 
             is GameEffect.SendTotalCardPairsMatchedScore -> coroutineScope.launch {
-                googlePlayGames.submitTotalCardPairsMatched(effect.totalCardPairsMatched)
+                gameServices.submitTotalCardPairsMatched(effect.totalCardPairsMatched)
             }
 
             is GameEffect.OnPairMatched -> viewModel.playMatchSound()

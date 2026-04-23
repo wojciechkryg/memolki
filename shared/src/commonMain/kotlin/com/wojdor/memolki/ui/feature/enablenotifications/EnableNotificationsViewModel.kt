@@ -1,7 +1,7 @@
 package com.wojdor.memolki.ui.feature.enablenotifications
 
 import androidx.lifecycle.SavedStateHandle
-import com.wojdor.memolki.ui.app.AppNavigation
+import com.wojdor.memolki.ui.app.NavArg
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.util.analytics.Analytics
 
@@ -15,9 +15,9 @@ class EnableNotificationsViewModel(
 ) {
 
     private val destination = EnableNotificationDestination.fromRoute(
-        savedStateHandle.get<String>(AppNavigation.DESTINATION_ARG).orEmpty()
+        savedStateHandle.get<String>(NavArg.DESTINATION).orEmpty()
     )
-    private val boardId = savedStateHandle.get<String>(AppNavigation.BOARD_ARG).orEmpty()
+    private val boardId = savedStateHandle.get<String>(NavArg.BOARD).orEmpty()
 
     override fun onIntent(intent: EnableNotificationsIntent) {
         when (intent) {

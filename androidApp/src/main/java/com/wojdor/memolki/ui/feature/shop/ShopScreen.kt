@@ -24,7 +24,7 @@ import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.extension.showToast
-import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
 
 @Composable
@@ -44,7 +44,7 @@ private fun HandleEffect(
 ) {
     val activity = LocalActivity.current
     val billingHandler = koinInject<BillingHandler>()
-    val googlePlayGames = koinInject<GooglePlayGames>()
+    val gameServices = koinInject<GameServices>()
     val purchaseFailedText = stringResource(Res.string.shop_purchase_failed_error)
     val connectionErrorText = stringResource(Res.string.shop_connection_error)
     CollectUiEffects(viewModel) { effect ->
@@ -65,7 +65,7 @@ private fun HandleEffect(
             is ShopEffect.ShowPurchaseFailedError -> activity?.showToast(purchaseFailedText)
             is ShopEffect.ShowConnectionError -> activity?.showToast(connectionErrorText)
             is ShopEffect.SendTotalCoinsScore -> viewModel.viewModelScope.launch {
-                googlePlayGames.submitTotalCoins(effect.totalCoins)
+                gameServices.submitTotalCoins(effect.totalCoins)
             }
         }
     }

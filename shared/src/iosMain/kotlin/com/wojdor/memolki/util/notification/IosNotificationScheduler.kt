@@ -1,7 +1,7 @@
 package com.wojdor.memolki.util.notification
 
 // TODO(kmp-ios): replace with a UserNotifications-backed impl when iOS notifications ship.
-class NoopNotificationScheduler : NotificationScheduler {
+class IosNotificationScheduler : NotificationScheduler {
     override fun scheduleReminderNotification() = Unit
     override fun scheduleAdRewardNotification() = Unit
     override fun scheduleStreakNotification() = Unit

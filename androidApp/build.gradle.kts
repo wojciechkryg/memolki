@@ -251,7 +251,7 @@ kover {
                     "com.wojdor.memolki.util.media",
                     "com.wojdor.memolki.util.billing",
                     "com.wojdor.memolki.util.update",
-                    "com.wojdor.memolki.util.playgames",
+                    "com.wojdor.memolki.util.gameservices",
                     "com.wojdor.memolki.data.crypto",
                     "com.wojdor.memolki.data.local.database",
                     "com.wojdor.memolki.util.provider",

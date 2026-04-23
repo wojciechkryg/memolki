@@ -1,51 +1,23 @@
-package com.wojdor.memolki.util.playgames
+package com.wojdor.memolki.util.gameservices
 
-import android.app.Activity
-import android.app.Application
-import android.content.Context
-import android.os.Bundle
 import androidx.annotation.StringRes
 import com.google.android.gms.games.PlayGames
 import com.wojdor.memolki.BuildConfig
 import com.wojdor.memolki.R
 import com.wojdor.memolki.util.extension.logE
+import com.wojdor.memolki.util.provider.ActivityProvider
 import kotlinx.coroutines.tasks.await
-import java.lang.ref.WeakReference
 
-open class AndroidGooglePlayGames(context: Context) : GooglePlayGames {
-
-    private var currentActivityRef: WeakReference<Activity>? = null
-
-    init {
-        (context.applicationContext as? Application)?.registerActivityLifecycleCallbacks(
-            object : Application.ActivityLifecycleCallbacks {
-                override fun onActivityResumed(activity: Activity) {
-                    currentActivityRef = WeakReference(activity)
-                }
-
-                override fun onActivityPaused(activity: Activity) {
-                    if (currentActivityRef?.get() === activity) currentActivityRef = null
-                }
-
-                override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
-                override fun onActivityStarted(activity: Activity) = Unit
-                override fun onActivityStopped(activity: Activity) = Unit
-                override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
-                override fun onActivityDestroyed(activity: Activity) = Unit
-            }
-        )
-    }
-
-    private fun requireActivity(): Activity? = currentActivityRef?.get()
+open class AndroidGameServices(private val activityProvider: ActivityProvider) : GameServices {
 
     override suspend fun signIn() {
-        val activity = requireActivity() ?: return
+        val activity = activityProvider.current ?: return
         val gamesSignInClient = PlayGames.getGamesSignInClient(activity)
         gamesSignInClient.signIn().await()
     }
 
     override suspend fun isAuthenticated(): Boolean {
-        val activity = requireActivity() ?: return false
+        val activity = activityProvider.current ?: return false
         val gamesSignInClient = PlayGames.getGamesSignInClient(activity)
         return gamesSignInClient.isAuthenticated.await().isAuthenticated
     }
@@ -59,7 +31,7 @@ open class AndroidGooglePlayGames(context: Context) : GooglePlayGames {
     }
 
     override suspend fun openLeaderboard() {
-        val activity = requireActivity() ?: return
+        val activity = activityProvider.current ?: return
         val intent = PlayGames.getLeaderboardsClient(activity).allLeaderboardsIntent.await()
         activity.startActivity(intent)
     }
@@ -69,7 +41,7 @@ open class AndroidGooglePlayGames(context: Context) : GooglePlayGames {
             logE("Cannot submit score in debug build", IllegalStateException())
             return
         }
-        val activity = requireActivity() ?: return
+        val activity = activityProvider.current ?: return
         if (isAuthenticated()) {
             val leaderboardsClient = PlayGames.getLeaderboardsClient(activity)
             leaderboardsClient.submitScore(

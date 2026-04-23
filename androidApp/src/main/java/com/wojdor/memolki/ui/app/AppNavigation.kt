@@ -120,7 +120,7 @@ private fun NavGraphBuilder.chooseBoardScreen(navController: NavController) {
 private fun NavGraphBuilder.gameScreen(navController: NavController) {
     composable(
         route = Route.GAME,
-        arguments = listOf(navArgument(AppNavigation.BOARD_ARG) {
+        arguments = listOf(navArgument(NavArg.BOARD) {
             type = NavType.StringType
         }),
         enterTransition = {
@@ -137,7 +137,7 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
             }
         }
     ) { backStackEntry ->
-        val boardId = backStackEntry.arguments?.getString(AppNavigation.BOARD_ARG)
+        val boardId = backStackEntry.arguments?.getString(NavArg.BOARD)
         val isDailyChallenge = boardId == DAILY_CHALLENGE_BOARD_ID
         val gameViewModel = getGameViewModel(backStackEntry, navController)
         LaunchedEffect(boardId) {
@@ -193,8 +193,8 @@ private fun NavGraphBuilder.enableNotificationsScreen(navController: NavControll
     composable(
         route = Route.ENABLE_NOTIFICATIONS,
         arguments = listOf(
-            navArgument(AppNavigation.DESTINATION_ARG) { type = NavType.StringType },
-            navArgument(AppNavigation.BOARD_ARG) { type = NavType.StringType }
+            navArgument(NavArg.DESTINATION) { type = NavType.StringType },
+            navArgument(NavArg.BOARD) { type = NavType.StringType }
         ),
         enterTransition = { slideInBottom },
         exitTransition = { slideOutBottom }
@@ -336,7 +336,7 @@ fun NavController.navigateToMoreApps() {
 }
 
 fun NavController.navigateToGame(boardId: String) {
-    navigate(Route.GAME.replace("{${AppNavigation.BOARD_ARG}}", boardId)) {
+    navigate(Route.GAME.replace("{${NavArg.BOARD}}", boardId)) {
         removeFromBackStack(Route.CHOOSE_BOARD)
     }
 }
@@ -354,7 +354,7 @@ fun NavController.navigateToMenu() {
 }
 
 fun NavController.navigateToGameFromEndGame(boardId: String) {
-    navigate(Route.GAME.replace("{${AppNavigation.BOARD_ARG}}", boardId)) {
+    navigate(Route.GAME.replace("{${NavArg.BOARD}}", boardId)) {
         removeFromBackStack(Route.END_GAME)
     }
 }
@@ -380,13 +380,13 @@ fun NavController.navigateToCardPairDetailsScreen() {
 fun NavController.navigateToEnableNotifications(destination: String, boardId: String = "") {
     navigate(
         Route.ENABLE_NOTIFICATIONS
-            .replace("{${AppNavigation.DESTINATION_ARG}}", destination)
-            .replace("{${AppNavigation.BOARD_ARG}}", boardId)
+            .replace("{${NavArg.DESTINATION}}", destination)
+            .replace("{${NavArg.BOARD}}", boardId)
     )
 }
 
 private fun NavController.navigateToGameFromDeepLink(board: String) {
-    navigate(Route.GAME.replace("{${AppNavigation.BOARD_ARG}}", board)) {
+    navigate(Route.GAME.replace("{${NavArg.BOARD}}", board)) {
         removeFromBackStack(Route.MENU, isInclusive = false)
     }
 }
@@ -460,7 +460,7 @@ internal object Route {
     const val MENU = "menu"
     const val CHOOSE_BOARD = "choose_board"
     const val GAME_BASE = "game"
-    const val GAME = "$GAME_BASE/{${AppNavigation.BOARD_ARG}}"
+    const val GAME = "$GAME_BASE/{${NavArg.BOARD}}"
     const val END_GAME = "end_game"
     const val COLLECTION = "collection"
     const val SHOP = "shop"
@@ -470,16 +470,11 @@ internal object Route {
     const val MORE_APPS = "more_apps"
     const val DAILY_CHALLENGE_HISTORY = "daily_challenge_history"
     const val ENABLE_NOTIFICATIONS =
-        "enable_notifications/{${AppNavigation.DESTINATION_ARG}}/{${AppNavigation.BOARD_ARG}}"
+        "enable_notifications/{${NavArg.DESTINATION}}/{${NavArg.BOARD}}"
 }
 
 private object RouteFlow {
     const val GAME = "game_flow"
     const val COLLECTION = "collection_flow"
     const val SETTINGS = "settings_flow"
-}
-
-object AppNavigation {
-    const val DESTINATION_ARG = "destination"
-    const val BOARD_ARG = "board"
 }

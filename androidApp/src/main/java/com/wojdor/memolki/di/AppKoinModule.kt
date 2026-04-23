@@ -6,8 +6,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.wojdor.memolki.data.local.database.databaseBuilder
-import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.messaging.FirebaseMessaging
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.analytics
@@ -122,8 +120,9 @@ import com.wojdor.memolki.util.media.LevelCompletePlayer
 import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationCreator
 import com.wojdor.memolki.util.notification.NotificationScheduler
-import com.wojdor.memolki.util.playgames.AndroidGooglePlayGames
-import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.gameservices.AndroidGameServices
+import com.wojdor.memolki.util.gameservices.GameServices
+import com.wojdor.memolki.util.provider.ActivityProvider
 import com.wojdor.memolki.util.provider.AppForegroundProvider
 import com.wojdor.memolki.util.provider.AppInstalledProvider
 import com.wojdor.memolki.util.provider.LocaleProvider
@@ -132,6 +131,8 @@ import com.wojdor.memolki.util.provider.PermissionProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.provider.TimeProvider
+import com.wojdor.memolki.util.review.AndroidInAppReviewer
+import com.wojdor.memolki.util.review.InAppReviewer
 import com.wojdor.memolki.util.update.InAppUpdate
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -156,7 +157,6 @@ val appKoinModule = module {
     single { if (RECORDING_MODE) Random(0) else Random.Default }
     single { Firebase.analytics }
     single { FirebaseMessaging.getInstance() }
-    single<ReviewManager> { ReviewManagerFactory.create(get()) }
     single<DataStore<Preferences>> { get<Context>().dataStore }
     single {
         databaseBuilder(get<Context>())
@@ -180,6 +180,7 @@ val appKoinModule = module {
     singleOf(::SettingsRepository)
     singleOf(::UserRepository)
 
+    singleOf(::ActivityProvider)
     singleOf(::AppForegroundProvider)
     singleOf(::AppInstalledProvider)
     singleOf(::LocaleProvider)
@@ -190,7 +191,8 @@ val appKoinModule = module {
 
     singleOf(::Analytics)
     singleOf(::AndroidBillingHandler) { bind<BillingHandler>() }
-    singleOf(::AndroidGooglePlayGames) { bind<GooglePlayGames>() }
+    singleOf(::AndroidGameServices) { bind<GameServices>() }
+    singleOf(::AndroidInAppReviewer) { bind<InAppReviewer>() }
     singleOf(::InAppUpdate)
     singleOf(::NotificationCreator)
     singleOf(::AndroidNotificationScheduler) { bind<NotificationScheduler>() }

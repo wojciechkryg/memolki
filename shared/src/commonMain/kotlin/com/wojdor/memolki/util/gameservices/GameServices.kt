@@ -1,6 +1,6 @@
-package com.wojdor.memolki.util.playgames
+package com.wojdor.memolki.util.gameservices
 
-interface GooglePlayGames {
+interface GameServices {
     suspend fun signIn()
     suspend fun isAuthenticated(): Boolean
     suspend fun submitTotalCoins(totalCoins: Long)

@@ -1,15 +1,15 @@
 package com.wojdor.memolki.ui.ads
 
 // TODO(kmp-ios): replace with a real AdMob (or alternative) impl when iOS ads ship.
-class NoopAllRewardedAds : AllRewardedAds {
-    override val endGameCoinsAd: RewardedAd = NoopRewardedAd
-    override val collectionCardPairAd: RewardedAd = NoopRewardedAd
-    override val shopCoinsAd: RewardedAd = NoopRewardedAd
+class IosAllRewardedAds : AllRewardedAds {
+    override val endGameCoinsAd: RewardedAd = IosRewardedAd
+    override val collectionCardPairAd: RewardedAd = IosRewardedAd
+    override val shopCoinsAd: RewardedAd = IosRewardedAd
 
     override fun loadAllAds() = Unit
 }
 
-private object NoopRewardedAd : RewardedAd {
+private object IosRewardedAd : RewardedAd {
     override val isLoaded: Boolean = false
 
     override fun loadAndNotify(

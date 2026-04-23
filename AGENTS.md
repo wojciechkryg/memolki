@@ -148,7 +148,7 @@ Reference: `shared/src/commonMain/.../domain/model/CardModel.kt`
 
 ### MVI Pattern
 
-Each feature screen follows this structure under `ui/feature/{name}/`. The MVI data classes and most ViewModels live in `:shared/commonMain`; Screens still live in `:androidApp`. Three ViewModels are still pinned to `:androidApp`: `DailyChallengeHistoryViewModel` (uses `DailyChallengeShareFormatter`), `EnableNotificationsViewModel` (uses `AppNavigation.DESTINATION_ARG`), `EndGameViewModel` (uses `ReviewManager`, `EndGameEffect.SendTotalCoinsScore` which is still in `:androidApp`, and the two share formatters). `EndGameEffect` is also the only Effect still in `:androidApp`.
+Each feature screen follows this structure under `ui/feature/{name}/`. All MVI data classes (State/Intent/Effect/Callbacks) and all 13 ViewModels live in `:shared/commonMain`. Only Screens remain in `:androidApp`.
 
 | File | Module | Purpose |
 |---|---|---|
@@ -156,7 +156,7 @@ Each feature screen follows this structure under `ui/feature/{name}/`. The MVI d
 | `{Name}Intent.kt` | `:shared/commonMain` | Sealed class implementing `UiIntent`, entries named `On[Action]` |
 | `{Name}Effect.kt` | `:shared/commonMain` | Sealed class implementing `UiEffect` for one-shot side effects (navigation, toasts, showing overlays) |
 | `{Name}Callbacks.kt` | `:shared/commonMain` | (optional) Data class grouping lambdas for the screen, defaults to `= {}` |
-| `{Name}ViewModel.kt` | `:shared/commonMain` (most) / `:androidApp` (pending blockers) | Plain class extending `MviViewModel<Intent, State>` — bound in `AppKoinModule` via `viewModelOf(::{Name}ViewModel)` |
+| `{Name}ViewModel.kt` | `:shared/commonMain` | Plain class extending `MviViewModel<Intent, State>` — bound in `AppKoinModule` via `viewModelOf(::{Name}ViewModel)` |
 | `{Name}Screen.kt` | `:androidApp` | `@Composable` with three-level hierarchy (see below) |
 
 **Base class:** `MviViewModel` (`shared/src/commonMain/.../ui/base/MviViewModel.kt`) manages intent→state flow via `sendIntent()`, `onIntent()`, `sendState { copy(...) }`, `sendEffect()`. State is persisted through `SavedStateHandle` as a JSON string via `kotlinx.serialization` — each ViewModel passes `FooState.serializer()` into its `super(...)` call. Malformed saved JSON (e.g. after a state-schema change) falls back to the initial state. Lives in commonMain thanks to multiplatform `androidx.lifecycle` artifacts.
@@ -275,19 +275,22 @@ Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProv
 
 Bigger Android-only subsystems are exposed to ViewModels as **commonMain interfaces** with Android impls in `:androidApp` and iOS no-op impls in `shared/iosMain`. ViewModels and use cases never touch `Activity`, `ProductDetails`, `PendingIntent`, etc. directly — the Android impl tracks the current `Activity` internally via `ActivityLifecycleCallbacks` where needed.
 
+**Naming convention for platform impls:** commonMain interface carries the bare name (e.g. `BillingHandler`); Android impl is prefixed `Android*` (`AndroidBillingHandler`), iOS impl is prefixed `Ios*` (`IosBillingHandler`).
+
 | Interface (commonMain) | Android impl (`:androidApp`) | iOS stub (`shared/iosMain`) |
 |---|---|---|
-| `util/billing/BillingHandler` + `BillingProduct` + `BillingStatusListener` | `AndroidBillingHandler` (Play Billing, tracks Activity) | `NoopBillingHandler` |
-| `ui/ads/RewardedAd` + `ui/ads/AllRewardedAds` | `AndroidRewardedAd`/`AndroidAllRewardedAds` (AdMob). `show(activity, …)` is an Android-only extension in `ui/ads/RewardedAdExtensions.kt` | `NoopAllRewardedAds` |
-| `util/notification/NotificationScheduler` | `AndroidNotificationScheduler` (`AlarmManager` + lifecycle observer) | `NoopNotificationScheduler` |
-| `util/playgames/GooglePlayGames` | `AndroidGooglePlayGames` (Play Games SDK, tracks Activity) | `NoopGooglePlayGames` |
-| `util/media/HapticFeedback` | `AndroidHapticFeedback` (`Vibrator` / `VibratorManager`) | `NoopHapticFeedback` |
-| `util/media/BackgroundMusicPlayer` | `AndroidBackgroundMusicPlayer` (`MediaPlayer`, lifecycle observer, gapless loop) | `NoopBackgroundMusicPlayer` |
-| `util/media/SoundPlayer` + `CardFlipPlayer` / `CardPairMatchedPlayer` / `CoinsPlayer` / `LevelCompletePlayer` | `AndroidSoundPlayer` (`MediaPlayer`) + `AndroidCardFlipPlayer` / `AndroidCardPairMatchedPlayer` / `AndroidCoinsPlayer` / `AndroidLevelCompletePlayer` | `NoopSoundPlayer` + 4 `Noop*Player` stubs |
+| `util/billing/BillingHandler` + `BillingProduct` + `BillingStatusListener` | `AndroidBillingHandler` (Play Billing, tracks Activity) | `IosBillingHandler` |
+| `ui/ads/RewardedAd` + `ui/ads/AllRewardedAds` | `AndroidRewardedAd`/`AndroidAllRewardedAds` (AdMob). `show(activity, …)` is an Android-only extension in `ui/ads/RewardedAdExtensions.kt` | `IosAllRewardedAds` |
+| `util/notification/NotificationScheduler` | `AndroidNotificationScheduler` (`AlarmManager` + lifecycle observer) | `IosNotificationScheduler` |
+| `util/gameservices/GameServices` | `AndroidGameServices` (Play Games SDK, tracks Activity) | `IosGameServices` (GameKit, stub) |
+| `util/media/HapticFeedback` | `AndroidHapticFeedback` (`Vibrator` / `VibratorManager`) | `IosHapticFeedback` |
+| `util/media/BackgroundMusicPlayer` | `AndroidBackgroundMusicPlayer` (`MediaPlayer`, lifecycle observer, gapless loop) | `IosBackgroundMusicPlayer` |
+| `util/media/SoundPlayer` + `CardFlipPlayer` / `CardPairMatchedPlayer` / `CoinsPlayer` / `LevelCompletePlayer` | `AndroidSoundPlayer` (`MediaPlayer`) + `AndroidCardFlipPlayer` / `AndroidCardPairMatchedPlayer` / `AndroidCoinsPlayer` / `AndroidLevelCompletePlayer` | `IosSoundPlayer` + 4 `Ios*Player` stubs |
+| `util/review/InAppReviewer` | `AndroidInAppReviewer` (Play Core `ReviewManager`, tracks Activity) | `IosInAppReviewer` |
 
 `InAppUpdate` stays Android-only — only `AppActivity` calls it, and iOS relies on App Store, so no common interface.
 
-MVI effects only carry common types (`BillingProduct`, `Long`, `RewardedAd` interface) — they no longer ship concrete Android objects to screens. Screens inject `BillingHandler`/`GooglePlayGames` via `koinInject<>()` when handling effects.
+MVI effects only carry common types (`BillingProduct`, `Long`, `RewardedAd` interface) — they no longer ship concrete Android objects to screens. Screens inject `BillingHandler`/`GameServices` via `koinInject<>()` when handling effects.
 
 Testing:
 - Each provider has a corresponding `Fake{Name}` class in `shared/src/androidMain` OR `androidApp/src/test/fake/` (currently still all in `androidApp/test/fake/`) that extends the Android `actual` class, passing `mockk()` as the context where needed
@@ -348,7 +351,7 @@ Shared composables live in `ui/component/`. Before creating a new composable, ch
 
 - **Framework:** JUnit 4 + Turbine (Flow testing) + MockK + Koin Test (`KoinTest`)
 - **Base class:** `AppTest` (`test/AppTest.kt`) — implements `KoinTest`; starts Koin with `testKoinModule` in `@Before` and `stopKoin()` in `@After`; sets `Dispatchers.setMain(testDispatcher)` with the injected `StandardTestDispatcher`; initializes MockK annotations.
-- **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) mirrors `AppKoinModule` with fakes (`FakeEncryptor`, `FakeLocaleProvider`, `FakeTimeProvider`, `FakeNotificationScheduler`, etc. bound to their interfaces) + `relaxedMockk()` for platform dependencies tests rarely exercise directly (`HapticFeedback`, `BillingHandler` (interface), `Analytics`, `GooglePlayGames` (interface), Firebase, media players, `AllRewardedAds` (interface)). `Random(0)` for deterministic randomness. One `StandardTestDispatcher` shared across IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned.
+- **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) mirrors `AppKoinModule` with fakes (`FakeEncryptor`, `FakeLocaleProvider`, `FakeTimeProvider`, `FakeNotificationScheduler`, etc. bound to their interfaces) + `relaxedMockk()` for platform dependencies tests rarely exercise directly (`HapticFeedback`, `BillingHandler` (interface), `Analytics`, `GameServices` (interface), Firebase, media players, `AllRewardedAds` (interface)). `Random(0)` for deterministic randomness. One `StandardTestDispatcher` shared across IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned.
 - **Test utilities:** `test/TestUtils.kt` — `relaxedMockk<T>()`, `verifyOnce()`, `coVerifyOnce()`
 - **Test naming:** backtick-quoted descriptive names: `` `when X then Y` ``
 

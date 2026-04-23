@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.SavedStateHandle
-import com.google.android.play.core.review.ReviewManager
 import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
@@ -117,7 +116,7 @@ import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
 import com.wojdor.memolki.util.notification.NotificationScheduler
-import com.wojdor.memolki.util.playgames.GooglePlayGames
+import com.wojdor.memolki.util.gameservices.GameServices
 import com.wojdor.memolki.util.provider.AppForegroundProvider
 import com.wojdor.memolki.util.provider.AppInstalledProvider
 import com.wojdor.memolki.util.provider.LocaleProvider
@@ -125,6 +124,7 @@ import com.wojdor.memolki.util.provider.PackageNameProvider
 import com.wojdor.memolki.util.provider.PermissionProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import com.wojdor.memolki.util.provider.TimeProvider
+import com.wojdor.memolki.util.review.InAppReviewer
 import io.mockk.every
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -174,8 +174,8 @@ val testKoinModule = module {
         }
     }
     single<BillingHandler> { relaxedMockk() }
-    single<ReviewManager> { relaxedMockk() }
-    single<GooglePlayGames> { relaxedMockk() }
+    single<InAppReviewer> { relaxedMockk() }
+    single<GameServices> { relaxedMockk() }
     single<FirebaseMessaging> { relaxedMockk() }
     single<Analytics> { relaxedMockk() }
     single<DailyChallengeDao> { relaxedMockk() }
