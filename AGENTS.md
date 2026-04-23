@@ -148,7 +148,7 @@ Reference: `shared/src/commonMain/.../domain/model/CardModel.kt`
 
 ### MVI Pattern
 
-Each feature screen follows this structure under `ui/feature/{name}/`. The MVI data classes (`State`/`Intent`/`Effect`/`Callbacks`) live in `:shared/commonMain` so they can drive both platforms; `ViewModel` and `Screen` currently still live in `:androidApp`. `EndGameEffect` is the only Effect still in `:androidApp` — it references `ReviewManager`/`ReviewInfo` and moves once that's abstracted.
+Each feature screen follows this structure under `ui/feature/{name}/`. The MVI data classes and most ViewModels live in `:shared/commonMain`; Screens still live in `:androidApp`. Three ViewModels are still pinned to `:androidApp`: `DailyChallengeHistoryViewModel` (uses `DailyChallengeShareFormatter`), `EnableNotificationsViewModel` (uses `AppNavigation.DESTINATION_ARG`), `EndGameViewModel` (uses `ReviewManager`, `EndGameEffect.SendTotalCoinsScore` which is still in `:androidApp`, and the two share formatters). `EndGameEffect` is also the only Effect still in `:androidApp`.
 
 | File | Module | Purpose |
 |---|---|---|
@@ -156,7 +156,7 @@ Each feature screen follows this structure under `ui/feature/{name}/`. The MVI d
 | `{Name}Intent.kt` | `:shared/commonMain` | Sealed class implementing `UiIntent`, entries named `On[Action]` |
 | `{Name}Effect.kt` | `:shared/commonMain` | Sealed class implementing `UiEffect` for one-shot side effects (navigation, toasts, showing overlays) |
 | `{Name}Callbacks.kt` | `:shared/commonMain` | (optional) Data class grouping lambdas for the screen, defaults to `= {}` |
-| `{Name}ViewModel.kt` | `:androidApp` | Plain class extending `MviViewModel<Intent, State>` — bound in `AppKoinModule` via `viewModelOf(::{Name}ViewModel)` |
+| `{Name}ViewModel.kt` | `:shared/commonMain` (most) / `:androidApp` (pending blockers) | Plain class extending `MviViewModel<Intent, State>` — bound in `AppKoinModule` via `viewModelOf(::{Name}ViewModel)` |
 | `{Name}Screen.kt` | `:androidApp` | `@Composable` with three-level hierarchy (see below) |
 
 **Base class:** `MviViewModel` (`shared/src/commonMain/.../ui/base/MviViewModel.kt`) manages intent→state flow via `sendIntent()`, `onIntent()`, `sendState { copy(...) }`, `sendEffect()`. State is persisted through `SavedStateHandle` as a JSON string via `kotlinx.serialization` — each ViewModel passes `FooState.serializer()` into its `super(...)` call. Malformed saved JSON (e.g. after a state-schema change) falls back to the initial state. Lives in commonMain thanks to multiplatform `androidx.lifecycle` artifacts.
