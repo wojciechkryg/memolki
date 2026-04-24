@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalDensity
 import org.jetbrains.compose.resources.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.launch

@@ -10,10 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.wojdor.memolki.R
+import androidx.compose.ui.unit.dp
 
 @Composable
-fun FadeEffectBottom(modifier: Modifier) {
+fun FadeEffectTop(modifier: Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -21,11 +21,13 @@ fun FadeEffectBottom(modifier: Modifier) {
             .background(
                 brush = Brush.verticalGradient(
                     listOf(
-                        Color.Transparent,
-                        AppColors.Primary
+                        AppColors.Primary,
+                        Color.Transparent
                     )
                 )
             )
     )
 }
+
+internal val FADE_EFFECT_HEIGHT = 6.dp
 

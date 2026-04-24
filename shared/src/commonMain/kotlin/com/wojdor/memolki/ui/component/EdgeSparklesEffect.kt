@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import com.wojdor.memolki.R
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 

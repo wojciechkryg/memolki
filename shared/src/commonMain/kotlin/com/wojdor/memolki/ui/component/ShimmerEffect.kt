@@ -16,7 +16,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.wojdor.memolki.R
 
 fun Modifier.shimmerEffect(): Modifier = composed {
     val fontColor = AppColors.Font
