@@ -26,13 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.pluralStringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
-import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.DailyChallengeModel
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.component.CoinsAmount
@@ -47,6 +43,9 @@ import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.pluralStringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun DailyChallengeEndGameContent(
