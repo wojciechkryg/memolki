@@ -5,11 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,25 +19,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
-import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.EdgeSparklesEffect
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.game.component.CARD_BORDER_SIZE
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.isLargeScreen
 import com.wojdor.memolki.ui.theme.spacingL
-import com.wojdor.memolki.ui.theme.spacingXS
 import com.wojdor.memolki.util.throttleClick
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun CollectionUnlockCardPairWithCoins(
+fun CollectionUnlockCardPairWithAd(
     modifier: Modifier = Modifier,
-    collectionCardPairModel: CollectionCardPairModel.LockedToUnlockWithCoins,
     onClick: () -> Unit = {}
 ) {
     Box(
@@ -46,60 +44,53 @@ fun CollectionUnlockCardPairWithCoins(
             .bounceClickEffect()
             .clip(rotatedCardPairShape)
             .clickable(
-                onClickLabel = stringResource(Res.string.accessibility_unlock_with_coins),
+                onClickLabel = stringResource(Res.string.accessibility_unlock_with_ad),
                 onClick = throttleClick(onClick = onClick)
             )
             .padding(vertical = CARD_PAIR_VERTICAL_PADDING),
         contentAlignment = Alignment.Center
     ) {
-        CollectionLockedCard(
-            modifier = cardLeftModifier
-        )
+        CollectionLockedCard(modifier = cardLeftModifier)
         Box(
             modifier = cardRightModifier,
             contentAlignment = Alignment.Center
         ) {
             CollectionLockedCard()
-            UnlockWithCoins(collectionCardPairModel)
+            EdgeSparklesEffect(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(CARD_BORDER_SIZE)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.White.copy(alpha = 0.5F), CardShape)
+                        .padding(6.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        modifier = Modifier.size(64.dp),
+                        painter = painterResource(Res.drawable.ic_ads),
+                        contentDescription = stringResource(Res.string.watch_ad),
+                    )
+                    AutoSizeText(
+                        text = stringResource(Res.string.watch_ad).lowercase(),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
         }
     }
 }
 
-@Composable
-private fun UnlockWithCoins(
-    collectionCardPairModel: CollectionCardPairModel.LockedToUnlockWithCoins
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(CARD_BORDER_SIZE)
-            .background(color = Color.White.copy(alpha = 0.5f), CardShape)
-            .padding(6.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Image(
-            modifier = Modifier.size(COIN_ICON_SIZE),
-            painter = painterResource(Res.drawable.ic_coin),
-            contentDescription = stringResource(Res.string.coins),
-        )
-        AutoSizeText(
-            modifier = Modifier.padding(start = spacingXS),
-            text = collectionCardPairModel.coins.toString(),
-            style = MaterialTheme.typography.headlineMedium,
-        )
-    }
-}
-
-private val COIN_ICON_SIZE = 32.dp
-
 @Preview
 @Composable
-fun CollectionUnlockCardPairWithCoinsPreview() {
+fun CollectionUnlockCardPairWithAdPreview() {
     AppTheme {
-        CollectionUnlockCardPairWithCoins(
-            modifier = Modifier.size(192.dp),
-            collectionCardPairModel = CollectionCardPairModel.LockedToUnlockWithCoins(coins = 100)
+        CollectionUnlockCardPairWithAd(
+            modifier = Modifier.width(192.dp),
         )
     }
 }
+
