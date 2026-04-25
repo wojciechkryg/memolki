@@ -9,25 +9,25 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.ui.shape.RotatedCardPairShape
 import com.wojdor.memolki.ui.theme.CardShape
 
-internal const val CARD_SIZE_FRACTION = 0.65f
-internal val CARD_OFFSET_HORIZONTAL = 24.dp
-internal val CARD_OFFSET_VERTICAL = 4.dp
-internal const val CARD_ROTATION = 10f
-internal val CARD_PAIR_VERTICAL_PADDING = CARD_ROTATION.dp
+const val CARD_SIZE_FRACTION = 0.65f
+val CARD_OFFSET_HORIZONTAL = 24.dp
+val CARD_OFFSET_VERTICAL = 4.dp
+const val CARD_ROTATION = 10f
+val CARD_PAIR_VERTICAL_PADDING = CARD_ROTATION.dp
 
-internal val cardLeftModifier = Modifier
+val cardLeftModifier = Modifier
     .fillMaxWidth(CARD_SIZE_FRACTION)
     .aspectRatio(1f)
     .rotate(CARD_ROTATION)
     .offset(x = CARD_OFFSET_HORIZONTAL, y = -CARD_OFFSET_VERTICAL)
 
-internal val cardRightModifier = Modifier
+val cardRightModifier = Modifier
     .fillMaxWidth(CARD_SIZE_FRACTION)
     .aspectRatio(1f)
     .rotate(-CARD_ROTATION)
     .offset(x = -CARD_OFFSET_HORIZONTAL, y = -CARD_OFFSET_VERTICAL)
 
-internal val rotatedCardPairShape = RotatedCardPairShape(
+val rotatedCardPairShape = RotatedCardPairShape(
     cardShape = CardShape,
     cardWidthFraction = CARD_SIZE_FRACTION,
     rotation = CARD_ROTATION,

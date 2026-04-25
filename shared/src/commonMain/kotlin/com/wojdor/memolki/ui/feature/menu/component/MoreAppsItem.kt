@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.shared.resources.Res
@@ -35,6 +34,7 @@ import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.util.throttleClick
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MoreAppsItem(

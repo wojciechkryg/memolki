@@ -16,16 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.component.ForceLtr
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.component.rememberShakeOffset
 import com.wojdor.memolki.ui.theme.AppTheme
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ChooseBoardItem(
@@ -78,18 +79,22 @@ fun ChooseBoardItem(
 
 private val LOCKED_ICON_SIZE = 48.dp
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ChooseBoardItemDisabledPreview() {
     AppTheme {
-        ChooseBoardItem(Res.string.board2x3, isEnabled = false)
+        PreviewBackground {
+            ChooseBoardItem(Res.string.board2x3, isEnabled = false)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ChooseBoardItemEnabledPreview() {
     AppTheme {
-        ChooseBoardItem(Res.string.board2x3, isEnabled = true)
+        PreviewBackground {
+            ChooseBoardItem(Res.string.board2x3, isEnabled = true)
+        }
     }
 }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.ui.component.FadeEffectBottom
 import com.wojdor.memolki.ui.component.FadeEffectTop
@@ -17,6 +16,7 @@ import com.wojdor.memolki.ui.feature.moreapps.MoreAppsCallbacks
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsState
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MoreAppsContent(
