@@ -15,12 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.extension.containsWhitespace
 import kotlin.math.min
 import kotlin.math.sqrt
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AutoSizeText(
@@ -77,7 +77,6 @@ fun AutoSizeText(
 
 private const val SOFT_WRAP_SCALE_FACTOR = 0.95f
 
-// Preview doesn't work in Android Studio, but it can be rendered properly on the device
 @Preview
 @Composable
 private fun AutoSizeTextBigPreview() {
@@ -90,7 +89,6 @@ private fun AutoSizeTextBigPreview() {
     }
 }
 
-// Preview doesn't work in Android Studio, but it can be rendered properly on the device
 @Preview
 @Composable
 private fun AutoSizeTextMediumPreview() {
@@ -103,7 +101,6 @@ private fun AutoSizeTextMediumPreview() {
     }
 }
 
-// Preview doesn't work in Android Studio, but it can be rendered properly on the device
 @Preview
 @Composable
 private fun AutoSizeTextSmallPreview() {

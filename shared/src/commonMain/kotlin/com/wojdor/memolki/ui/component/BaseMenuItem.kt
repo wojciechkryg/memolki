@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.app_logo
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.throttleClick
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BaseMenuItem(
@@ -41,18 +41,22 @@ fun BaseMenuItem(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun BaseMenuItemPreview() {
     AppTheme {
-        BaseMenuItem(Res.string.app_logo)
+        PreviewBackground {
+            BaseMenuItem(Res.string.app_logo)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun BaseMenuItemDisabledPreview() {
     AppTheme {
-        BaseMenuItem(Res.string.app_logo, isEnabled = false)
+        PreviewBackground {
+            BaseMenuItem(Res.string.app_logo, isEnabled = false)
+        }
     }
 }

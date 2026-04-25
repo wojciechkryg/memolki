@@ -3,6 +3,7 @@ package com.wojdor.memolki.ui.component
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,13 +11,13 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
-import com.wojdor.memolki.R
-import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.AppColors
-import kotlinx.coroutines.delay
+import com.wojdor.memolki.ui.theme.AppTheme
 import kotlin.random.Random
+import kotlinx.coroutines.delay
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SparklesOverlay(isActive: Boolean) {
@@ -74,13 +75,13 @@ private const val OVERLAY_SPARKLE_STROKE = 2f
 private const val OVERLAY_SPARKLE_CORNER = 6f
 private const val MARGIN = 0.05f
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun SparklesOverlayPreview() {
     AppTheme {
         val density = LocalDensity.current.density
         val fontColor = AppColors.Font
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        Canvas(modifier = Modifier.fillMaxSize().background(Color.White)) {
             val positions = listOf(
                 Triple(0.12f, 0.15f, 7f),
                 Triple(0.45f, 0.12f, 9f),

@@ -20,11 +20,12 @@ import org.junit.runner.RunWith
 import sergio.sastre.composable.preview.scanner.android.AndroidComposablePreviewScanner
 import sergio.sastre.composable.preview.scanner.android.AndroidPreviewInfo
 import sergio.sastre.composable.preview.scanner.core.preview.ComposablePreview
+import sergio.sastre.composable.preview.scanner.jvm.JvmAnnotationScanner
 
 @RunWith(TestParameterInjector::class)
 class PreviewTest(
     @TestParameter(valuesProvider = PreviewProvider::class)
-    private val preview: ComposablePreview<AndroidPreviewInfo>
+    private val preview: ComposablePreview<*>
 ) {
 
     @get:Rule
@@ -42,7 +43,8 @@ class PreviewTest(
     @Test
     fun snap() {
         paparazzi.snapshot {
-            if (preview.previewInfo.showBackground) {
+            val showBackground = (preview.previewInfo as? AndroidPreviewInfo)?.showBackground == true
+            if (showBackground) {
                 Box(modifier = Modifier.background(Color.White)) {
                     preview()
                 }
@@ -53,10 +55,16 @@ class PreviewTest(
     }
 
     class PreviewProvider : TestParameter.TestParameterValuesProvider {
-        override fun provideValues(): List<ComposablePreview<AndroidPreviewInfo>> =
-            AndroidComposablePreviewScanner()
+        override fun provideValues(): List<ComposablePreview<*>> {
+            val androidPreviews = AndroidComposablePreviewScanner()
                 .scanPackageTrees("com.wojdor.memolki.ui")
                 .includePrivatePreviews()
                 .getPreviews()
+            val cmpPreviews = JvmAnnotationScanner("org.jetbrains.compose.ui.tooling.preview.Preview")
+                .scanPackageTrees("com.wojdor.memolki.ui")
+                .includePrivatePreviews()
+                .getPreviews()
+            return androidPreviews + cmpPreviews
+        }
     }
 }

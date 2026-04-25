@@ -316,5 +316,6 @@ dependencies {
 
     testImplementation(libs.paparazzi)
     testImplementation(libs.composable.preview.scanner)
+    testImplementation(libs.composable.preview.scanner.jvm)
     testImplementation(libs.test.parameter.injector)
 }

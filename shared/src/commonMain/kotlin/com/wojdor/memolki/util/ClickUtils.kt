@@ -1,11 +1,11 @@
 package com.wojdor.memolki.util
 
-import android.os.SystemClock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlin.time.TimeSource
 
 private const val THROTTLE_TIME_MS = 1000L
 
@@ -14,12 +14,12 @@ fun throttleClick(
     onClick: () -> Unit,
     throttleTimeMs: Long = THROTTLE_TIME_MS
 ): () -> Unit {
-    var lastClickTime by remember { mutableLongStateOf(0L) }
-
+    var lastClickMark by remember { mutableStateOf<TimeSource.Monotonic.ValueTimeMark?>(null) }
     return {
-        val currentTime = SystemClock.elapsedRealtime()
-        if (currentTime - lastClickTime > throttleTimeMs) {
-            lastClickTime = currentTime
+        val now = TimeSource.Monotonic.markNow()
+        val previous = lastClickMark
+        if (previous == null || (now - previous).inWholeMilliseconds > throttleTimeMs) {
+            lastClickMark = now
             onClick()
         }
     }

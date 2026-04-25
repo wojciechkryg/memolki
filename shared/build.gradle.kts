@@ -43,6 +43,7 @@ kotlin {
             api(compose.material3)
             api(compose.ui)
             api(compose.components.resources)
+            api(compose.components.uiToolingPreview)
             api(libs.androidx.navigation.compose)
             api(libs.koin.compose.viewmodel)
         }

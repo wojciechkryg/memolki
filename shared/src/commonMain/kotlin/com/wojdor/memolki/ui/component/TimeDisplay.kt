@@ -8,9 +8,9 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.formatter.TimeFormatter
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 private val timeFormatter = TimeFormatter()
 
@@ -34,10 +34,12 @@ fun TimeDisplay(
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun TimeDisplayPreview() {
     AppTheme {
-        TimeDisplay(timeMillis = 83456L)
+        PreviewBackground {
+            TimeDisplay(timeMillis = 83456L)
+        }
     }
 }
