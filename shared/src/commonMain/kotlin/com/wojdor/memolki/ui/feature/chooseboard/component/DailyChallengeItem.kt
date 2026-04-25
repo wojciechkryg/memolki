@@ -28,20 +28,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.ForceLtr
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.rememberShakeOffset
+import com.wojdor.memolki.ui.theme.AppColors
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CheckboxShape
 import com.wojdor.memolki.ui.theme.spacingL
-import com.wojdor.memolki.ui.theme.AppColors
 import com.wojdor.memolki.util.throttleClick
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun DailyChallengeItem(
@@ -158,34 +158,42 @@ private fun HistoryButton(onClick: () -> Unit) {
 
 private val CHECKBOX_SIZE = 24.dp
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun DailyChallengeItemAvailablePreview() {
     AppTheme {
-        DailyChallengeItem(isCompleted = false)
+        PreviewBackground {
+            DailyChallengeItem(isCompleted = false)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun DailyChallengeItemCompletedPreview() {
     AppTheme {
-        DailyChallengeItem(isCompleted = true)
+        PreviewBackground {
+            DailyChallengeItem(isCompleted = true)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun DailyChallengeItemWithHistoryPreview() {
     AppTheme {
-        DailyChallengeItem(isCompleted = false, showHistoryIcon = true)
+        PreviewBackground {
+            DailyChallengeItem(isCompleted = false, showHistoryIcon = true)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun DailyChallengeItemCompletedWithHistoryPreview() {
     AppTheme {
-        DailyChallengeItem(isCompleted = true, showHistoryIcon = true)
+        PreviewBackground {
+            DailyChallengeItem(isCompleted = true, showHistoryIcon = true)
+        }
     }
 }

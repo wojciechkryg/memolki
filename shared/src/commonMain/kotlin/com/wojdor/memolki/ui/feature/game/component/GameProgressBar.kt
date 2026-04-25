@@ -13,12 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
+import com.wojdor.memolki.ui.component.PreviewBackground
+import com.wojdor.memolki.ui.theme.AppColors
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.FullRoundedShape
-import com.wojdor.memolki.ui.theme.AppColors
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun GameProgressBar(
@@ -55,26 +55,32 @@ fun GameProgressBar(
 private val PROGRESS_BAR_HEIGHT = 10.dp
 private const val MIN_VISIBLE_FRACTION = 0.05f
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun GameProgressBarEmptyPreview() {
     AppTheme {
-        GameProgressBar(progress = 0f)
+        PreviewBackground {
+            GameProgressBar(progress = 0f)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun GameProgressBarHalfPreview() {
     AppTheme {
-        GameProgressBar(progress = 0.5f)
+        PreviewBackground {
+            GameProgressBar(progress = 0.5f)
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun GameProgressBarFullPreview() {
     AppTheme {
-        GameProgressBar(progress = 1f)
+        PreviewBackground {
+            GameProgressBar(progress = 1f)
+        }
     }
 }
