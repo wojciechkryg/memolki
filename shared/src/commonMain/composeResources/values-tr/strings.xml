@@ -129,4 +129,7 @@
     <string name="play">Oyna</string>
     <string name="daily_reward">Günlük ödül</string>
     <string name="daily_challenge_history">Geçmiş</string>
+    <string name="banana">Muz</string>
+    <string name="apple">Elma</string>
+    <string name="strawberry">Çilek</string>
 </resources>

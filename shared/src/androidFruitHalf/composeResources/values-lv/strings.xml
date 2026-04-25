@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="banana">Banāns</string>
-    <string name="apple">Ābols</string>
-    <string name="strawberry">Zemene</string>
     <string name="orange">Apelsīns</string>
     <string name="grape">Vīnoga</string>
     <string name="watermelon">Arbūzs</string>

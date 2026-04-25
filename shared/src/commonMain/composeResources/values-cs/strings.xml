@@ -131,4 +131,7 @@
     <string name="play">Hrát</string>
     <string name="daily_reward">Denní odměna</string>
     <string name="daily_challenge_history">Historie</string>
+    <string name="banana">Banán</string>
+    <string name="apple">Jablko</string>
+    <string name="strawberry">Jahoda</string>
 </resources>

@@ -15,17 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.painterResource
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
-import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CardModel
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_WHOLE
+import com.wojdor.memolki.ui.component.cardImagePainter
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingS
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun FrontCardItem(
@@ -90,7 +90,7 @@ private fun FrontCardItemImage(card: CardModel.Image) {
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(card.imageRes),
+            painter = cardImagePainter(card.imageRes),
             contentDescription = stringResource(card.textRes)
         )
     }
@@ -122,7 +122,7 @@ private fun FrontCardItemImagePreview() {
                 id = "banana",
                 pairId = "banana",
                 textRes = Res.string.banana,
-                imageRes = R.drawable.img_test_whole
+                imageRes = PREVIEW_IMAGE_WHOLE,
             ),
             onPress = {}
         )

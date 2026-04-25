@@ -9,12 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
-import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.feature.collection.getCollectionStateForPreview
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
@@ -22,6 +19,8 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.isLargeScreen
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.util.throttleClick
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CollectionUnlockedCardPair(

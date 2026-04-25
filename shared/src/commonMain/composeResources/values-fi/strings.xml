@@ -129,4 +129,7 @@
     <string name="play">Pelaa</string>
     <string name="daily_reward">Päivittäinen palkinto</string>
     <string name="daily_challenge_history">Historia</string>
+    <string name="banana">Banaani</string>
+    <string name="apple">Omena</string>
+    <string name="strawberry">Mansikka</string>
 </resources>

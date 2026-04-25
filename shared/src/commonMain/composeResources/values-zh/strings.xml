@@ -128,4 +128,7 @@
     <string name="play">开始</string>
     <string name="daily_reward">每日奖励</string>
     <string name="daily_challenge_history">历史</string>
+    <string name="banana">香蕉</string>
+    <string name="apple">苹果</string>
+    <string name="strawberry">草莓</string>
 </resources>

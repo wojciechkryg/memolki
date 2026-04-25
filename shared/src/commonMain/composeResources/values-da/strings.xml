@@ -129,4 +129,7 @@
     <string name="play">Spil</string>
     <string name="daily_reward">Daglig belønning</string>
     <string name="daily_challenge_history">Historik</string>
+    <string name="banana">Banan</string>
+    <string name="apple">Æble</string>
+    <string name="strawberry">Jordbær</string>
 </resources>

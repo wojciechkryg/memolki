@@ -131,4 +131,7 @@
     <string name="play">Igraj</string>
     <string name="daily_reward">Dnevna nagrada</string>
     <string name="daily_challenge_history">Zgodovina</string>
+    <string name="banana">Banana</string>
+    <string name="apple">Jabolko</string>
+    <string name="strawberry">Jagoda</string>
 </resources>

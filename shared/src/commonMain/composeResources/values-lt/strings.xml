@@ -131,4 +131,7 @@
     <string name="play">Žaisti</string>
     <string name="daily_reward">Dienos atlygis</string>
     <string name="daily_challenge_history">Istorija</string>
+    <string name="banana">Bananas</string>
+    <string name="apple">Obuolys</string>
+    <string name="strawberry">Braškė</string>
 </resources>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="banana">Chuối</string>
-    <string name="apple">Táo</string>
-    <string name="strawberry">Dâu tây</string>
     <string name="orange">Cam</string>
     <string name="grape">Nho</string>
     <string name="watermelon">Dưa hấu</string>

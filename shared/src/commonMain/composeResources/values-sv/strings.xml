@@ -129,4 +129,7 @@
     <string name="play">Spela</string>
     <string name="daily_reward">Daglig belöning</string>
     <string name="daily_challenge_history">Historik</string>
+    <string name="banana">Banan</string>
+    <string name="apple">Äpple</string>
+    <string name="strawberry">Jordgubbe</string>
 </resources>

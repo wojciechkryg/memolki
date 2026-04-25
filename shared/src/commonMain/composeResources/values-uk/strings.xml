@@ -131,4 +131,7 @@
     <string name="play">Грати</string>
     <string name="daily_reward">Щоденна нагорода</string>
     <string name="daily_challenge_history">Історія</string>
+    <string name="banana">Банан</string>
+    <string name="apple">Яблуко</string>
+    <string name="strawberry">Полуниця</string>
 </resources>

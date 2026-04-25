@@ -134,4 +134,7 @@
     <string name="next">Next</string>
     <string name="play">Play</string>
     <string name="daily_reward">Daily Reward</string>
+    <string name="banana">Banana</string>
+    <string name="apple">Apple</string>
+    <string name="strawberry">Strawberry</string>
 </resources>

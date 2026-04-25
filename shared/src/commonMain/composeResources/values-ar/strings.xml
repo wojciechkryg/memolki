@@ -133,4 +133,7 @@
     <string name="play">العب</string>
     <string name="daily_reward">المكافأة اليومية</string>
     <string name="daily_challenge_history">السجل</string>
+    <string name="banana">موز</string>
+    <string name="apple">تفاح</string>
+    <string name="strawberry">فراولة</string>
 </resources>

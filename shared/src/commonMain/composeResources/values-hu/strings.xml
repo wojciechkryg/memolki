@@ -129,4 +129,7 @@
     <string name="play">Játék</string>
     <string name="daily_reward">Napi jutalom</string>
     <string name="daily_challenge_history">Előzmények</string>
+    <string name="banana">Banán</string>
+    <string name="apple">Alma</string>
+    <string name="strawberry">Eper</string>
 </resources>

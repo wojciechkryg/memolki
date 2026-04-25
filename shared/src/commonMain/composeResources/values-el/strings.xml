@@ -129,4 +129,7 @@
     <string name="play">Παίξε</string>
     <string name="daily_reward">Ημερήσια ανταμοιβή</string>
     <string name="daily_challenge_history">Ιστορικό</string>
+    <string name="banana">Μπανάνα</string>
+    <string name="apple">Μήλο</string>
+    <string name="strawberry">Φράουλα</string>
 </resources>

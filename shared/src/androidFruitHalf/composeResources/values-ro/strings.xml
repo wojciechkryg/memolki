@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="banana">Banană</string>
-    <string name="apple">Măr</string>
-    <string name="strawberry">Căpșună</string>
     <string name="orange">Portocală</string>
     <string name="grape">Strugure</string>
     <string name="watermelon">Pepene verde</string>

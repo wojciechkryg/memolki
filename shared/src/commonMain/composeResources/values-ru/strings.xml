@@ -131,4 +131,7 @@
     <string name="play">Играть</string>
     <string name="daily_reward">Ежедневная награда</string>
     <string name="daily_challenge_history">История</string>
+    <string name="banana">Банан</string>
+    <string name="apple">Яблоко</string>
+    <string name="strawberry">Клубника</string>
 </resources>

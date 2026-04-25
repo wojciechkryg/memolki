@@ -128,4 +128,7 @@
     <string name="play">플레이</string>
     <string name="daily_reward">일일 보상</string>
     <string name="daily_challenge_history">기록</string>
+    <string name="banana">바나나</string>
+    <string name="apple">사과</string>
+    <string name="strawberry">딸기</string>
 </resources>

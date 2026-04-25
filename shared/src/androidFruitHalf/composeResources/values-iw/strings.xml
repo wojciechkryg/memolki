@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="banana">בננה</string>
-    <string name="apple">תפוח</string>
-    <string name="strawberry">תות</string>
     <string name="orange">תפוז</string>
     <string name="grape">ענבים</string>
     <string name="watermelon">אבטיח</string>

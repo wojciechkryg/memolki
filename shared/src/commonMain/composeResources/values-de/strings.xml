@@ -129,4 +129,7 @@
     <string name="play">Spielen</string>
     <string name="daily_reward">Tägliche Belohnung</string>
     <string name="daily_challenge_history">Verlauf</string>
+    <string name="banana">Banane</string>
+    <string name="apple">Apfel</string>
+    <string name="strawberry">Erdbeere</string>
 </resources>

@@ -131,4 +131,7 @@
     <string name="play">שחק</string>
     <string name="daily_reward">פרס יומי</string>
     <string name="daily_challenge_history">היסטוריה</string>
+    <string name="banana">בננה</string>
+    <string name="apple">תפוח</string>
+    <string name="strawberry">תות</string>
 </resources>

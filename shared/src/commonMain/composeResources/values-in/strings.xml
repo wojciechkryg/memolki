@@ -128,4 +128,7 @@
     <string name="play">Main</string>
     <string name="daily_reward">Hadiah harian</string>
     <string name="daily_challenge_history">Riwayat</string>
+    <string name="banana">Pisang</string>
+    <string name="apple">Apel</string>
+    <string name="strawberry">Stroberi</string>
 </resources>

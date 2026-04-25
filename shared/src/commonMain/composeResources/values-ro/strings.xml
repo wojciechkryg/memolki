@@ -130,4 +130,7 @@
     <string name="play">Joacă</string>
     <string name="daily_reward">Recompensă zilnică</string>
     <string name="daily_challenge_history">Istoric</string>
+    <string name="banana">Banană</string>
+    <string name="apple">Măr</string>
+    <string name="strawberry">Căpșună</string>
 </resources>

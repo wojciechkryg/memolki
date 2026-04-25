@@ -128,4 +128,7 @@
     <string name="play">Chơi</string>
     <string name="daily_reward">Phần thưởng hàng ngày</string>
     <string name="daily_challenge_history">Lịch sử</string>
+    <string name="banana">Chuối</string>
+    <string name="apple">Táo</string>
+    <string name="strawberry">Dâu tây</string>
 </resources>

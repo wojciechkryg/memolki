@@ -130,4 +130,7 @@
     <string name="play">Spēlēt</string>
     <string name="daily_reward">Dienas balva</string>
     <string name="daily_challenge_history">Vēsture</string>
+    <string name="banana">Banāns</string>
+    <string name="apple">Ābols</string>
+    <string name="strawberry">Zemene</string>
 </resources>

@@ -128,4 +128,7 @@
     <string name="play">プレイ</string>
     <string name="daily_reward">デイリー報酬</string>
     <string name="daily_challenge_history">履歴</string>
+    <string name="banana">バナナ</string>
+    <string name="apple">リンゴ</string>
+    <string name="strawberry">イチゴ</string>
 </resources>

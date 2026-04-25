@@ -129,4 +129,7 @@
     <string name="play">खेलें</string>
     <string name="daily_reward">दैनिक पुरस्कार</string>
     <string name="daily_challenge_history">इतिहास</string>
+    <string name="banana">केला</string>
+    <string name="apple">सेब</string>
+    <string name="strawberry">स्ट्रॉबेरी</string>
 </resources>

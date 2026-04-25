@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="banana">Μπανάνα</string>
-    <string name="apple">Μήλο</string>
-    <string name="strawberry">Φράουλα</string>
     <string name="orange">Πορτοκάλι</string>
     <string name="grape">Σταφύλι</string>
     <string name="watermelon">Καρπούζι</string>
