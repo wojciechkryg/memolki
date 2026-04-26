@@ -7,7 +7,7 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
-class BaseEncryptor(
+class AndroidEncryptor(
     private val localKeyStore: AndroidLocalEncryptorKeyStore
 ) : Encryptor {
 

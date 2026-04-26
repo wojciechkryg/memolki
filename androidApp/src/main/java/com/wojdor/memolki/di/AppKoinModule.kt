@@ -7,7 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.data.crypto.AndroidLocalEncryptorKeyStore
-import com.wojdor.memolki.data.crypto.BaseEncryptor
+import com.wojdor.memolki.data.crypto.AndroidEncryptor
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
 import com.wojdor.memolki.data.local.card.AllCardPairsLocalDataSource
@@ -84,7 +84,7 @@ val appKoinModule = module {
     }
     single { get<AppDatabase>().dailyChallengeDao() }
 
-    singleOf(::BaseEncryptor) { bind<Encryptor>() }
+    singleOf(::AndroidEncryptor) { bind<Encryptor>() }
     singleOf(::AndroidLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
 
     singleOf(::AllCardPairsLocalDataSource) { bind<AllCardPairsDataSource>() }
