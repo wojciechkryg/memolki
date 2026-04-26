@@ -1,13 +1,10 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
-import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.relaxedMockk
-import io.mockk.coEvery
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
@@ -19,7 +16,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class GetAllDailyChallengesUseCaseTest : AppTest() {
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private lateinit var sut: GetAllDailyChallengesUseCase
 
@@ -32,14 +29,16 @@ class GetAllDailyChallengesUseCaseTest : AppTest() {
     @Test
     fun `when entries exist then return all models`() = runTest {
         // given
-        val entities = listOf(
+        dailyChallengeDao.insertResult(
             DailyChallengeEntity(
                 epochDay = 20001L,
                 mistakeCount = 0,
                 starCount = 3,
                 timeMillis = 45000L,
                 cardFlipCounts = "2,2;2,2"
-            ),
+            )
+        )
+        dailyChallengeDao.insertResult(
             DailyChallengeEntity(
                 epochDay = 20000L,
                 mistakeCount = 3,
@@ -48,7 +47,6 @@ class GetAllDailyChallengesUseCaseTest : AppTest() {
                 cardFlipCounts = "2,3;4,2"
             )
         )
-        coEvery { dailyChallengeDao.getAll() } returns entities
 
         val expected = listOf(
             DailyChallengeModel(
@@ -77,9 +75,6 @@ class GetAllDailyChallengesUseCaseTest : AppTest() {
 
     @Test
     fun `when no entries exist then return empty list`() = runTest {
-        // given
-        coEvery { dailyChallengeDao.getAll() } returns emptyList()
-
         // when
         sut().test {
             // then

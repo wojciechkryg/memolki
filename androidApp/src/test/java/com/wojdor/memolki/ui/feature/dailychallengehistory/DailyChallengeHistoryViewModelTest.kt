@@ -1,15 +1,14 @@
 package com.wojdor.memolki.ui.feature.dailychallengehistory
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
-import com.wojdor.memolki.test.fake.FakeHapticFeedback
-import io.mockk.coEvery
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -28,7 +27,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private val dailyChallengeShareFormatter: DailyChallengeShareFormatter by inject()
 
@@ -40,7 +39,6 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     override fun setup() {
         super.setup()
         fakeTimeProvider.mockCurrentDate = LocalDate(2026, 4, 11)
-        coEvery { dailyChallengeDao.getAll() } returns emptyList()
     }
 
     @Test
@@ -67,7 +65,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Test
     fun `when challenges exist then state is updated`() = runTest {
         // given
-        val entities = listOf(
+        dailyChallengeDao.insertResult(
             DailyChallengeEntity(
                 epochDay = 20001L,
                 mistakeCount = 0,
@@ -76,7 +74,6 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
                 cardFlipCounts = "2,2;2,2"
             )
         )
-        coEvery { dailyChallengeDao.getAll() } returns entities
 
         // when
         sut = get()
@@ -156,7 +153,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
     @Test
     fun `when loadHistory fails then challenges remain empty`() = runTest {
         // given
-        coEvery { dailyChallengeDao.getAll() } throws RuntimeException("DB error")
+        dailyChallengeDao.failureOnGetAll = RuntimeException("DB error")
 
         // when
         sut = get()

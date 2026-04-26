@@ -5,6 +5,7 @@ import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntit
 
 class FakeDailyChallengeDao : DailyChallengeDao {
     private val entities = mutableMapOf<Long, DailyChallengeEntity>()
+    var failureOnGetAll: Throwable? = null
 
     override suspend fun getResult(epochDay: Long): DailyChallengeEntity? = entities[epochDay]
 
@@ -16,8 +17,10 @@ class FakeDailyChallengeDao : DailyChallengeDao {
 
     override suspend fun getLastPlayedEpochDay(): Long? = entities.keys.maxOrNull()
 
-    override suspend fun getAll(): List<DailyChallengeEntity> =
-        entities.values.filter { it.starCount > 0 }.sortedByDescending { it.epochDay }
+    override suspend fun getAll(): List<DailyChallengeEntity> {
+        failureOnGetAll?.let { throw it }
+        return entities.values.filter { it.starCount > 0 }.sortedByDescending { it.epochDay }
+    }
 
     override suspend fun hasAnyCompleted(): Boolean = entities.values.any { it.starCount > 0 }
 }

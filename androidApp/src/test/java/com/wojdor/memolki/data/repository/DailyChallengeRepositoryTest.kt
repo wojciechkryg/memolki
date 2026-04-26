@@ -1,11 +1,10 @@
 package com.wojdor.memolki.data.repository
 
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.coVerifyOnce
-import io.mockk.coEvery
+import com.wojdor.memolki.test.dailyChallengeEntity
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
@@ -20,7 +19,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class DailyChallengeRepositoryTest : AppTest() {
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private lateinit var sut: DailyChallengeRepository
 
@@ -34,7 +33,7 @@ class DailyChallengeRepositoryTest : AppTest() {
     fun `when has played for epoch day then return true`() = runTest {
         // given
         val epochDay = 20000L
-        coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns true
+        dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = epochDay))
 
         // when
         val result = sut.hasPlayed(epochDay)
@@ -47,7 +46,6 @@ class DailyChallengeRepositoryTest : AppTest() {
     fun `when has not played for epoch day then return false`() = runTest {
         // given
         val epochDay = 20000L
-        coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns false
 
         // when
         val result = sut.hasPlayed(epochDay)
@@ -60,14 +58,15 @@ class DailyChallengeRepositoryTest : AppTest() {
     fun `when get result for epoch day with entry then return model`() = runTest {
         // given
         val epochDay = 20000L
-        val entity = DailyChallengeEntity(
-            epochDay = epochDay,
-            mistakeCount = 3,
-            starCount = 2,
-            timeMillis = 45000L,
-            cardFlipCounts = "1,2;3,4"
+        dailyChallengeDao.insertResult(
+            DailyChallengeEntity(
+                epochDay = epochDay,
+                mistakeCount = 3,
+                starCount = 2,
+                timeMillis = 45000L,
+                cardFlipCounts = "1,2;3,4"
+            )
         )
-        coEvery { dailyChallengeDao.getResult(epochDay) } returns entity
 
         // when
         val result = sut.getResult(epochDay)
@@ -85,12 +84,8 @@ class DailyChallengeRepositoryTest : AppTest() {
 
     @Test
     fun `when get result for epoch day without entry then return null`() = runTest {
-        // given
-        val epochDay = 20000L
-        coEvery { dailyChallengeDao.getResult(epochDay) } returns null
-
         // when
-        val result = sut.getResult(epochDay)
+        val result = sut.getResult(20000L)
 
         // then
         assertNull(result)
@@ -119,27 +114,25 @@ class DailyChallengeRepositoryTest : AppTest() {
             timeMillis = 45000L,
             cardFlipCounts = "1,2;3,4"
         )
-        coVerifyOnce { dailyChallengeDao.insertResult(expectedEntity) }
+        assertEquals(expectedEntity, dailyChallengeDao.getResult(epochDay))
     }
 
     @Test
     fun `when get last played epoch day with entries then return max epoch day`() = runTest {
         // given
-        val lastPlayedEpochDay = 20005L
-        coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns lastPlayedEpochDay
+        dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = 20003L))
+        dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = 20005L))
+        dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = 20001L))
 
         // when
         val result = sut.getLastPlayedEpochDay()
 
         // then
-        assertEquals(lastPlayedEpochDay, result)
+        assertEquals(20005L, result)
     }
 
     @Test
     fun `when get last played epoch day without entries then return null`() = runTest {
-        // given
-        coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns null
-
         // when
         val result = sut.getLastPlayedEpochDay()
 
@@ -150,14 +143,16 @@ class DailyChallengeRepositoryTest : AppTest() {
     @Test
     fun `when get all results with entries then return mapped models`() = runTest {
         // given
-        val entities = listOf(
+        dailyChallengeDao.insertResult(
             DailyChallengeEntity(
                 epochDay = 20001L,
                 mistakeCount = 0,
                 starCount = 3,
                 timeMillis = 45000L,
                 cardFlipCounts = "2,2;2,2"
-            ),
+            )
+        )
+        dailyChallengeDao.insertResult(
             DailyChallengeEntity(
                 epochDay = 20000L,
                 mistakeCount = 3,
@@ -166,7 +161,6 @@ class DailyChallengeRepositoryTest : AppTest() {
                 cardFlipCounts = "2,3;4,2"
             )
         )
-        coEvery { dailyChallengeDao.getAll() } returns entities
 
         // when
         val result = sut.getAll()
@@ -179,9 +173,6 @@ class DailyChallengeRepositoryTest : AppTest() {
 
     @Test
     fun `when get all results without entries then return empty list`() = runTest {
-        // given
-        coEvery { dailyChallengeDao.getAll() } returns emptyList()
-
         // when
         val result = sut.getAll()
 
@@ -192,7 +183,7 @@ class DailyChallengeRepositoryTest : AppTest() {
     @Test
     fun `when has any result with entries then return true`() = runTest {
         // given
-        coEvery { dailyChallengeDao.hasAnyCompleted() } returns true
+        dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = 20000L))
 
         // when
         val result = sut.hasAnyCompleted()
@@ -203,13 +194,11 @@ class DailyChallengeRepositoryTest : AppTest() {
 
     @Test
     fun `when has any result without entries then return false`() = runTest {
-        // given
-        coEvery { dailyChallengeDao.hasAnyCompleted() } returns false
-
         // when
         val result = sut.hasAnyCompleted()
 
         // then
         assertFalse(result)
     }
+
 }

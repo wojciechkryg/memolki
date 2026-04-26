@@ -1,14 +1,11 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
-import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakeTimeProvider
-import com.wojdor.memolki.test.relaxedMockk
-import io.mockk.coEvery
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
@@ -22,7 +19,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class GetTodayDailyChallengeUseCaseTest : AppTest() {
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private val fakeTimeProvider: FakeTimeProvider by inject()
 
@@ -40,14 +37,15 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
         val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
         val epochDay = today.toEpochDays()
-        val entity = DailyChallengeEntity(
-            epochDay = epochDay,
-            mistakeCount = 3,
-            starCount = 2,
-            timeMillis = 45000L,
-            cardFlipCounts = "1,2;3,4"
+        dailyChallengeDao.insertResult(
+            DailyChallengeEntity(
+                epochDay = epochDay,
+                mistakeCount = 3,
+                starCount = 2,
+                timeMillis = 45000L,
+                cardFlipCounts = "1,2;3,4"
+            )
         )
-        coEvery { dailyChallengeDao.getResult(epochDay) } returns entity
 
         // when / then
         val expected = DailyChallengeModel(
@@ -68,8 +66,6 @@ class GetTodayDailyChallengeUseCaseTest : AppTest() {
         // given
         val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDays()
-        coEvery { dailyChallengeDao.getResult(epochDay) } returns null
 
         // when / then
         sut().test {

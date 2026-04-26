@@ -1,11 +1,11 @@
 package com.wojdor.memolki.ui.app
 
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.dailyChallengeEntity
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.verifyOnce
-import io.mockk.coEvery
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.provider.PushNotificationProvider
@@ -23,7 +23,7 @@ class AppViewModelTest : AppTest() {
 
     private val analytics: Analytics by inject()
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private val fakeTimeProvider: FakeTimeProvider by inject()
 
@@ -111,11 +111,6 @@ class AppViewModelTest : AppTest() {
     @Test
     fun `when daily challenge not played today then hasPlayedTodayDailyChallenge returns false`() =
         runTest {
-            // given
-            val epochDay = fakeTimeProvider.currentLocalDate().toEpochDays()
-            coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns false
-            coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns null
-
             // when
             val result = sut.hasPlayedTodayDailyChallenge()
 
@@ -128,8 +123,7 @@ class AppViewModelTest : AppTest() {
         runTest {
             // given
             val epochDay = fakeTimeProvider.currentLocalDate().toEpochDays()
-            coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns true
-            coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns epochDay
+            dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = epochDay))
 
             // when
             val result = sut.hasPlayedTodayDailyChallenge()

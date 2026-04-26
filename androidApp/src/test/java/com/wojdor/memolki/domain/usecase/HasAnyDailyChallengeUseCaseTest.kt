@@ -1,11 +1,9 @@
 package com.wojdor.memolki.domain.usecase
 
 import app.cash.turbine.test
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
-import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.relaxedMockk
-import io.mockk.coEvery
+import com.wojdor.memolki.test.dailyChallengeEntity
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertFalse
@@ -18,7 +16,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class HasAnyDailyChallengeUseCaseTest : AppTest() {
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private lateinit var sut: HasAnyDailyChallengeUseCase
 
@@ -31,7 +29,7 @@ class HasAnyDailyChallengeUseCaseTest : AppTest() {
     @Test
     fun `when entries exist then return true`() = runTest {
         // given
-        coEvery { dailyChallengeDao.hasAnyCompleted() } returns true
+        dailyChallengeDao.insertResult(dailyChallengeEntity(starCount = 3))
 
         // when
         sut().test {
@@ -43,9 +41,6 @@ class HasAnyDailyChallengeUseCaseTest : AppTest() {
 
     @Test
     fun `when no entries exist then return false`() = runTest {
-        // given
-        coEvery { dailyChallengeDao.hasAnyCompleted() } returns false
-
         // when
         sut().test {
             // then
@@ -53,4 +48,5 @@ class HasAnyDailyChallengeUseCaseTest : AppTest() {
             awaitComplete()
         }
     }
+
 }

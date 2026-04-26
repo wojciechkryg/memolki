@@ -1,10 +1,9 @@
 package com.wojdor.memolki.domain.usecase
 
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
-import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.dailyChallengeEntity
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakeTimeProvider
-import io.mockk.coEvery
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -18,7 +17,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private val fakeTimeProvider: FakeTimeProvider by inject()
 
@@ -35,9 +34,7 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
         // given
         val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDays()
-        coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns true
-        coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns epochDay
+        dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = today.toEpochDays()))
 
         // when
         val result = sut().first()
@@ -51,9 +48,6 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
         // given
         val today = LocalDate(2026, 3, 26)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDays()
-        coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns false
-        coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns null
 
         // when
         val result = sut().first()
@@ -67,10 +61,7 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
         // given
         val today = LocalDate(2026, 3, 24)
         fakeTimeProvider.mockCurrentDate = today
-        val epochDay = today.toEpochDays()
-        val futureEpochDay = LocalDate(2026, 3, 26).toEpochDays()
-        coEvery { dailyChallengeDao.hasPlayed(epochDay) } returns false
-        coEvery { dailyChallengeDao.getLastPlayedEpochDay() } returns futureEpochDay
+        dailyChallengeDao.insertResult(dailyChallengeEntity(epochDay = LocalDate(2026, 3, 26).toEpochDays()))
 
         // when
         val result = sut().first()
@@ -78,4 +69,5 @@ class HasPlayedTodayDailyChallengeUseCaseTest : AppTest() {
         // then
         assertEquals(Result.success(true), result)
     }
+
 }

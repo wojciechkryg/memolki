@@ -1,17 +1,14 @@
 package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.crypto.Encryptor
-import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeEntity
 import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSource
-import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.data.repository.NotificationRepository
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.coVerifyOnce
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakeTimeProvider
-import com.wojdor.memolki.test.relaxedMockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -25,7 +22,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class SaveDailyChallengeUseCaseTest : AppTest() {
 
-    private val dailyChallengeDao: DailyChallengeDao by inject()
+    private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
     private val fakeTimeProvider: FakeTimeProvider by inject()
 
@@ -73,7 +70,7 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
             timeMillis = 45000L,
             cardFlipCounts = "1,2;3,4"
         )
-        coVerifyOnce { dailyChallengeDao.insertResult(expectedEntity) }
+        assertEquals(expectedEntity, dailyChallengeDao.getResult(today.toEpochDays()))
     }
 
     @Test

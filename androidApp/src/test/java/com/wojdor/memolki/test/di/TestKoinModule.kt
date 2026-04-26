@@ -103,7 +103,7 @@ val testKoinModule = module {
         }
     }
     single<BillingHandler> { relaxedMockk() }
-    single<DailyChallengeDao> { relaxedMockk() }
+    singleOf(::FakeDailyChallengeDao) { bind<DailyChallengeDao>() }
     single<FirebaseMessaging> { relaxedMockk() }
     single<Analytics> { relaxedMockk() }
 }
