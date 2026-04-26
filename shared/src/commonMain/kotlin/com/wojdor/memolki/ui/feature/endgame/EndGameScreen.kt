@@ -5,11 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
-import org.koin.compose.koinInject
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
@@ -19,6 +16,7 @@ import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.endgame.component.CasualEndGameContent
 import com.wojdor.memolki.ui.feature.endgame.component.DailyChallengeEndGameContent
 import com.wojdor.memolki.ui.feature.game.GameIntent
@@ -27,6 +25,9 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.extension.TextSharer
 import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun EndGameScreen(
@@ -136,100 +137,110 @@ private fun EndGameScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun EndGameScreenPreview() {
     AppTheme {
-        EndGameScreen(
-            state = EndGameState(
-                board = BoardModel.Grid2x3(),
-                rewardedCoins = 1234,
-                currentCoins = 5678,
-                menu = listOf(
-                    EndGameMenuModel.Next,
-                    EndGameMenuModel.Menu
+        PreviewBackground {
+            EndGameScreen(
+                state = EndGameState(
+                    board = BoardModel.Grid2x3(),
+                    rewardedCoins = 1234,
+                    currentCoins = 5678,
+                    menu = listOf(
+                        EndGameMenuModel.Next,
+                        EndGameMenuModel.Menu
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun EndGameScreenWithAdPreview() {
     AppTheme {
-        EndGameScreen(
-            state = EndGameState(
-                board = BoardModel.Grid2x3(),
-                rewardedCoins = 1234,
-                currentCoins = 5678,
-                menu = listOf(
-                    EndGameMenuModel.WatchAd,
-                    EndGameMenuModel.UnlockNewCard,
-                    EndGameMenuModel.Next,
-                    EndGameMenuModel.Menu
+        PreviewBackground {
+            EndGameScreen(
+                state = EndGameState(
+                    board = BoardModel.Grid2x3(),
+                    rewardedCoins = 1234,
+                    currentCoins = 5678,
+                    menu = listOf(
+                        EndGameMenuModel.WatchAd,
+                        EndGameMenuModel.UnlockNewCard,
+                        EndGameMenuModel.Next,
+                        EndGameMenuModel.Menu
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun EndGameScreenDailyChallengeThreeStarsPreview() {
     AppTheme {
-        EndGameScreen(
-            state = EndGameState(
-                dailyChallenge = DailyChallengeModel(
-                    mistakeCount = 0,
-                    starCount = 3,
-                    timeMillis = 83456L,
-                    epochDay = 42L
-                ),
-                isDailyChallenge = true,
-                rewardedCoins = 1234,
-                currentCoins = 5678
+        PreviewBackground {
+            EndGameScreen(
+                state = EndGameState(
+                    dailyChallenge = DailyChallengeModel(
+                        mistakeCount = 0,
+                        starCount = 3,
+                        timeMillis = 83456L,
+                        epochDay = 42L
+                    ),
+                    isDailyChallenge = true,
+                    rewardedCoins = 1234,
+                    currentCoins = 5678
+                )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun EndGameScreenDailyChallengeTwoStarsPreview() {
     AppTheme {
-        EndGameScreen(
-            state = EndGameState(
-                dailyChallenge = DailyChallengeModel(
-                    mistakeCount = 3,
-                    starCount = 2,
-                    timeMillis = 152789L,
-                    epochDay = 15L
-                ),
-                isDailyChallenge = true,
-                rewardedCoins = 1234,
-                currentCoins = 5678
+        PreviewBackground {
+            EndGameScreen(
+                state = EndGameState(
+                    dailyChallenge = DailyChallengeModel(
+                        mistakeCount = 3,
+                        starCount = 2,
+                        timeMillis = 152789L,
+                        epochDay = 15L
+                    ),
+                    isDailyChallenge = true,
+                    rewardedCoins = 1234,
+                    currentCoins = 5678
+                )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun EndGameScreenDailyChallengeOneStarPreview() {
     AppTheme {
-        EndGameScreen(
-            state = EndGameState(
-                dailyChallenge = DailyChallengeModel(
-                    mistakeCount = 5,
-                    starCount = 1,
-                    timeMillis = 245123L,
-                    epochDay = 7L
-                ),
-                isDailyChallenge = true,
-                rewardedCoins = 1234,
-                currentCoins = 5678
+        PreviewBackground {
+            EndGameScreen(
+                state = EndGameState(
+                    dailyChallenge = DailyChallengeModel(
+                        mistakeCount = 5,
+                        starCount = 1,
+                        timeMillis = 245123L,
+                        epochDay = 7L
+                    ),
+                    isDailyChallenge = true,
+                    rewardedCoins = 1234,
+                    currentCoins = 5678
+                )
             )
-        )
+        }
     }
 }

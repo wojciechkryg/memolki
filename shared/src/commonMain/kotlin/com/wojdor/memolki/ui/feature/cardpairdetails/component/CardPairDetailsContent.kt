@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.cardpairdetails.component
 
-import org.jetbrains.compose.resources.StringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,17 +11,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.ui.component.AutoSizeText
+import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_HALF
+import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_WHOLE
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CardPairDetailsContent(cardPairModel: CardPairModel) {
@@ -76,91 +78,99 @@ private fun TextDetails(modifier: Modifier, textRes: StringResource) {
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun CardPairDetailsContentImagesSameTextPreview() {
     AppTheme {
-        CardPairDetailsContent(
-            cardPairModel = CardPairModel(
-                CardModel.Image(
-                    "banana_whole",
-                    "banana",
-                    Res.string.banana,
-                    R.drawable.img_test_whole
-                ),
-                CardModel.Image(
-                    "banana_half",
-                    "banana",
-                    Res.string.banana,
-                    R.drawable.img_test_half
+        PreviewBackground {
+            CardPairDetailsContent(
+                cardPairModel = CardPairModel(
+                    CardModel.Image(
+                        "banana_whole",
+                        "banana",
+                        Res.string.banana,
+                        PREVIEW_IMAGE_WHOLE
+                    ),
+                    CardModel.Image(
+                        "banana_half",
+                        "banana",
+                        Res.string.banana,
+                        PREVIEW_IMAGE_HALF
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun CardPairDetailsContentImagesDifferentTextPreview() {
     AppTheme {
-        CardPairDetailsContent(
-            cardPairModel = CardPairModel(
-                CardModel.Image(
-                    "banana_whole",
-                    "banana",
-                    Res.string.banana,
-                    R.drawable.img_test_whole
-                ),
-                CardModel.Image(
-                    "banana_half",
-                    "banana",
-                    Res.string.apple,
-                    R.drawable.img_test_half
+        PreviewBackground {
+            CardPairDetailsContent(
+                cardPairModel = CardPairModel(
+                    CardModel.Image(
+                        "banana_whole",
+                        "banana",
+                        Res.string.banana,
+                        PREVIEW_IMAGE_WHOLE
+                    ),
+                    CardModel.Image(
+                        "banana_half",
+                        "banana",
+                        Res.string.apple,
+                        PREVIEW_IMAGE_HALF
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun CardPairDetailsContentImageAndTextPreview() {
     AppTheme {
-        CardPairDetailsContent(
-            cardPairModel = CardPairModel(
-                CardModel.Text(
-                    "banana_whole",
-                    "banana",
-                    Res.string.banana,
-                ),
-                CardModel.Image(
-                    "banana_half",
-                    "banana",
-                    Res.string.banana,
-                    R.drawable.img_test_whole
+        PreviewBackground {
+            CardPairDetailsContent(
+                cardPairModel = CardPairModel(
+                    CardModel.Text(
+                        "banana_whole",
+                        "banana",
+                        Res.string.banana,
+                    ),
+                    CardModel.Image(
+                        "banana_half",
+                        "banana",
+                        Res.string.banana,
+                        PREVIEW_IMAGE_WHOLE
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun CardPairDetailsContentTextsPreview() {
     AppTheme {
-        CardPairDetailsContent(
-            cardPairModel = CardPairModel(
-                CardModel.Text(
-                    "banana_whole",
-                    "banana",
-                    Res.string.banana,
-                ),
-                CardModel.Text(
-                    "banana_half",
-                    "banana",
-                    Res.string.banana,
+        PreviewBackground {
+            CardPairDetailsContent(
+                cardPairModel = CardPairModel(
+                    CardModel.Text(
+                        "banana_whole",
+                        "banana",
+                        Res.string.banana,
+                    ),
+                    CardModel.Text(
+                        "banana_half",
+                        "banana",
+                        Res.string.banana,
+                    )
                 )
             )
-        )
+        }
     }
 }
