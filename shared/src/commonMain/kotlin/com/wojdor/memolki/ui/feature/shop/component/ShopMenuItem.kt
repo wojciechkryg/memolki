@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.shop.component
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -20,13 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.res.painterResource
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
-import com.wojdor.memolki.shared.resources.*
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.coins
+import com.wojdor.memolki.shared.resources.ic_ads
+import com.wojdor.memolki.shared.resources.ic_coins_pile_big
+import com.wojdor.memolki.shared.resources.ic_coins_pile_small
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.rememberShakeOffset
@@ -36,14 +35,18 @@ import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.throttleClick
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ShopMenuItem(
     modifier: Modifier = Modifier,
     priceText: String,
     descriptionText: String,
-    @DrawableRes leftDrawableRes: Int = NO_DRAWABLE,
-    @DrawableRes rightDrawableRes: Int,
+    leftDrawable: DrawableResource? = null,
+    rightDrawable: DrawableResource,
     onClick: () -> Unit = {},
     isEnabled: Boolean = true
 ) {
@@ -77,7 +80,7 @@ fun ShopMenuItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                if (leftDrawableRes != NO_DRAWABLE) {
+                if (leftDrawable != null) {
                     Column(
                         modifier = Modifier.weight(2f),
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -85,7 +88,7 @@ fun ShopMenuItem(
                         Image(
                             modifier = Modifier.size(64.dp),
                             alignment = Alignment.Center,
-                            painter = painterResource(leftDrawableRes),
+                            painter = painterResource(leftDrawable),
                             contentDescription = null
                         )
                         AutoSizeText(
@@ -114,14 +117,12 @@ fun ShopMenuItem(
             }
             Image(
                 modifier = Modifier.size(96.dp),
-                painter = painterResource(rightDrawableRes),
+                painter = painterResource(rightDrawable),
                 contentDescription = stringResource(Res.string.coins)
             )
         }
     }
 }
-
-private const val NO_DRAWABLE = -1
 
 @Preview
 @Composable
@@ -130,7 +131,7 @@ private fun ShopMenuItemShortPreview() {
         ShopMenuItem(
             priceText = "0.99 PLN",
             descriptionText = "Buy 500",
-            rightDrawableRes = R.drawable.ic_coins_pile_big
+            rightDrawable = Res.drawable.ic_coins_pile_big
         )
     }
 }
@@ -142,7 +143,7 @@ private fun ShopMenuItemLongPreview() {
         ShopMenuItem(
             priceText = "149.99 PLN",
             descriptionText = "Unlock everything that can be unlocked",
-            rightDrawableRes = R.drawable.ic_coins_pile_big
+            rightDrawable = Res.drawable.ic_coins_pile_big
         )
     }
 }
@@ -152,10 +153,10 @@ private fun ShopMenuItemLongPreview() {
 private fun ShopMenuItemAdsPreview() {
     AppTheme {
         ShopMenuItem(
-            leftDrawableRes = R.drawable.ic_ads,
+            leftDrawable = Res.drawable.ic_ads,
             priceText = "Watch Ad",
             descriptionText = "Obtain 500",
-            rightDrawableRes = R.drawable.ic_coins_pile_small
+            rightDrawable = Res.drawable.ic_coins_pile_small
         )
     }
 }

@@ -3,10 +3,6 @@ package com.wojdor.memolki.ui.feature.shop
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
-import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.ShopMenuModel
@@ -16,6 +12,7 @@ import com.wojdor.memolki.shared.resources.shop_purchase_failed_error
 import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -23,6 +20,10 @@ import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.extension.Toaster
 import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ShopScreen(
@@ -95,38 +96,42 @@ private fun ShopScreen(
     ShopContent(state, callbacks)
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ShopScreenPreview() {
     AppTheme {
-        ShopScreen(
-            state = ShopState(
-                coins = 1234,
-                menu = listOf(
-                    ShopMenuModel.WatchAd(true, 25),
-                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
-                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
-                    ShopMenuModel.BuyAllCards("$14.99")
+        PreviewBackground {
+            ShopScreen(
+                state = ShopState(
+                    coins = 1234,
+                    menu = listOf(
+                        ShopMenuModel.WatchAd(true, 25),
+                        ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                        ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                        ShopMenuModel.BuyAllCards("$14.99")
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ShopScreenNoAdPreview() {
     AppTheme {
-        ShopScreen(
-            state = ShopState(
-                coins = 1234,
-                menu = listOf(
-                    ShopMenuModel.WatchAd(false, 25),
-                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
-                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
-                    ShopMenuModel.BuyAllCards("$14.99")
+        PreviewBackground {
+            ShopScreen(
+                state = ShopState(
+                    coins = 1234,
+                    menu = listOf(
+                        ShopMenuModel.WatchAd(false, 25),
+                        ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                        ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                        ShopMenuModel.BuyAllCards("$14.99")
+                    )
                 )
             )
-        )
+        }
     }
 }

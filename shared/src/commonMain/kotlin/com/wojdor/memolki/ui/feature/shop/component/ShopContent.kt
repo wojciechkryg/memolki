@@ -14,14 +14,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.daily_reward_back_tomorrow
 import com.wojdor.memolki.shared.resources.daily_reward_collect
 import com.wojdor.memolki.shared.resources.daily_reward_day
+import com.wojdor.memolki.shared.resources.ic_ads
+import com.wojdor.memolki.shared.resources.ic_cards_stack
+import com.wojdor.memolki.shared.resources.ic_coins_pile_big
+import com.wojdor.memolki.shared.resources.ic_coins_pile_small
+import com.wojdor.memolki.shared.resources.ic_coins_sack
+import com.wojdor.memolki.shared.resources.ic_daily_reward
 import com.wojdor.memolki.shared.resources.shop_back_later
 import com.wojdor.memolki.shared.resources.shop_buy
 import com.wojdor.memolki.shared.resources.shop_obtain
@@ -29,10 +32,13 @@ import com.wojdor.memolki.shared.resources.shop_unlock_all_cards
 import com.wojdor.memolki.shared.resources.watch_ad
 import com.wojdor.memolki.ui.component.CoinsAmount
 import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.shop.ShopCallbacks
 import com.wojdor.memolki.ui.feature.shop.ShopState
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ShopContent(
@@ -79,8 +85,8 @@ fun ShopContent(
                                 } else {
                                     stringResource(Res.string.daily_reward_back_tomorrow)
                                 },
-                                leftDrawableRes = R.drawable.ic_daily_reward,
-                                rightDrawableRes = R.drawable.ic_coins_pile_small,
+                                leftDrawable = Res.drawable.ic_daily_reward,
+                                rightDrawable = Res.drawable.ic_coins_pile_small,
                                 onClick = callbacks.onDailyRewardCollectClick,
                                 isEnabled = menuItem.isAvailable
                             )
@@ -94,8 +100,8 @@ fun ShopContent(
                                 } else {
                                     stringResource(Res.string.shop_back_later)
                                 },
-                                leftDrawableRes = R.drawable.ic_ads,
-                                rightDrawableRes = R.drawable.ic_coins_pile_small,
+                                leftDrawable = Res.drawable.ic_ads,
+                                rightDrawable = Res.drawable.ic_coins_pile_small,
                                 onClick = callbacks.onWatchAdClick,
                                 isEnabled = menuItem.isAvailable
                             )
@@ -107,7 +113,7 @@ fun ShopContent(
                                 Res.string.shop_buy,
                                 menuItem.coinsToGrant
                             ),
-                            rightDrawableRes = R.drawable.ic_coins_pile_big,
+                            rightDrawable = Res.drawable.ic_coins_pile_big,
                             onClick = callbacks.onBuyCoinsSmallAmountClick,
                             isEnabled = menuItem.isAvailable
                         )
@@ -118,7 +124,7 @@ fun ShopContent(
                                 Res.string.shop_buy,
                                 menuItem.coinsToGrant
                             ),
-                            rightDrawableRes = R.drawable.ic_coins_sack,
+                            rightDrawable = Res.drawable.ic_coins_sack,
                             onClick = callbacks.onBuyCoinsBigAmountClick,
                             isEnabled = menuItem.isAvailable
                         )
@@ -126,7 +132,7 @@ fun ShopContent(
                         is ShopMenuModel.BuyAllCards -> ShopMenuItem(
                             priceText = menuItem.formattedPrice,
                             descriptionText = stringResource(Res.string.shop_unlock_all_cards),
-                            rightDrawableRes = R.drawable.ic_cards_stack,
+                            rightDrawable = Res.drawable.ic_cards_stack,
                             onClick = callbacks.onBuyAllCardsClick,
 
                             isEnabled = menuItem.isAvailable
@@ -138,40 +144,44 @@ fun ShopContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ShopContentPreview() {
     AppTheme {
-        ShopContent(
-            state = ShopState(
-                coins = 1234,
-                menu = listOf(
-                    ShopMenuModel.DailyReward(true, 3, 3),
-                    ShopMenuModel.WatchAd(true, 25),
-                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
-                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
-                    ShopMenuModel.BuyAllCards("$14.99")
+        PreviewBackground {
+            ShopContent(
+                state = ShopState(
+                    coins = 1234,
+                    menu = listOf(
+                        ShopMenuModel.DailyReward(true, 3, 3),
+                        ShopMenuModel.WatchAd(true, 25),
+                        ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                        ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                        ShopMenuModel.BuyAllCards("$14.99")
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ShopContentDailyRewardCollectedPreview() {
     AppTheme {
-        ShopContent(
-            state = ShopState(
-                coins = 1234,
-                menu = listOf(
-                    ShopMenuModel.DailyReward(false, 3, 0),
-                    ShopMenuModel.WatchAd(true, 25),
-                    ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
-                    ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
-                    ShopMenuModel.BuyAllCards("$14.99")
+        PreviewBackground {
+            ShopContent(
+                state = ShopState(
+                    coins = 1234,
+                    menu = listOf(
+                        ShopMenuModel.DailyReward(false, 3, 0),
+                        ShopMenuModel.WatchAd(true, 25),
+                        ShopMenuModel.BuyCoinsSmallAmount("$0.99", 500),
+                        ShopMenuModel.BuyCoinsBigAmount("$4.99", 3000),
+                        ShopMenuModel.BuyAllCards("$14.99")
+                    )
                 )
             )
-        )
+        }
     }
 }
