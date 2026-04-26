@@ -3,7 +3,10 @@ package com.wojdor.memolki.test.fake
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.RewardedAd
 
-class FakeRewardedAd(override val isLoaded: Boolean = false) : RewardedAd {
+class FakeRewardedAd(
+    override val isLoaded: Boolean = false,
+    var availabilityOnLoad: Boolean = false
+) : RewardedAd {
     var loadCount: Int = 0
         private set
     var showCount: Int = 0
@@ -14,7 +17,7 @@ class FakeRewardedAd(override val isLoaded: Boolean = false) : RewardedAd {
         onAvailabilityChanged: (isAvailable: Boolean) -> Unit
     ) {
         loadCount++
-        onAvailabilityChanged(false)
+        onAvailabilityChanged(availabilityOnLoad)
     }
 
     override fun show(
@@ -26,9 +29,9 @@ class FakeRewardedAd(override val isLoaded: Boolean = false) : RewardedAd {
 }
 
 class FakeAllRewardedAds : AllRewardedAds {
-    override val endGameCoinsAd: RewardedAd = FakeRewardedAd()
-    override val collectionCardPairAd: RewardedAd = FakeRewardedAd()
-    override val shopCoinsAd: RewardedAd = FakeRewardedAd()
+    override val endGameCoinsAd: FakeRewardedAd = FakeRewardedAd()
+    override val collectionCardPairAd: FakeRewardedAd = FakeRewardedAd()
+    override val shopCoinsAd: FakeRewardedAd = FakeRewardedAd()
 
     var loadAllAdsCount: Int = 0
         private set

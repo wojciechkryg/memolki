@@ -6,9 +6,7 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.test.relaxedMockk
-import com.wojdor.memolki.ui.ads.AllRewardedAds
-import com.wojdor.memolki.ui.ads.RewardedAd
+import com.wojdor.memolki.test.fake.FakeAllRewardedAds
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CoinsPlayer
@@ -35,7 +33,7 @@ class EndGameViewModelTest : AppTest() {
 
     private val coinsPlayer: CoinsPlayer by inject()
 
-    private val allRewardedAds: AllRewardedAds by inject()
+    private val allRewardedAds: FakeAllRewardedAds by inject()
 
     private val userRepository: UserRepository by inject()
 
@@ -96,16 +94,12 @@ class EndGameViewModelTest : AppTest() {
     @Test
     fun `when OnWatchAdClick intent is sent then ShowAd effect and haptic feedback are triggered`() =
         runTest {
-            // given
-            val rewardedAd = relaxedMockk<RewardedAd>()
-            every { allRewardedAds.endGameCoinsAd } returns rewardedAd
-
             sut.uiEffect.test {
                 // when
                 sut.sendIntent(EndGameIntent.OnWatchAdClick)
 
                 // then
-                assertEquals(EndGameEffect.ShowAd(rewardedAd), awaitItem())
+                assertEquals(EndGameEffect.ShowAd(allRewardedAds.endGameCoinsAd), awaitItem())
                 assertEquals(1, hapticFeedback.vibrateLowCount)
             }
         }
@@ -548,9 +542,7 @@ class EndGameViewModelTest : AppTest() {
             timeMillis = 5000L,
             cardFlipCounts = listOf(listOf(1, 2), listOf(3, 1))
         )
-        every { allRewardedAds.endGameCoinsAd.loadAndNotify(any(), any()) } answers {
-            secondArg<(Boolean) -> Unit>().invoke(true)
-        }
+        allRewardedAds.endGameCoinsAd.availabilityOnLoad = true
 
         // when
         sut.sendIntent(
@@ -625,9 +617,7 @@ class EndGameViewModelTest : AppTest() {
         runTest {
             // given
             userRepository.incrementTotalGamesPlayed()
-            every { allRewardedAds.endGameCoinsAd.loadAndNotify(any(), any()) } answers {
-                secondArg<(Boolean) -> Unit>().invoke(true)
-            }
+            allRewardedAds.endGameCoinsAd.availabilityOnLoad = true
 
             // when
             sut.sendIntent(

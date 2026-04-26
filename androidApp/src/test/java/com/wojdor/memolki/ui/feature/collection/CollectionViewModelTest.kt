@@ -8,7 +8,7 @@ import com.wojdor.memolki.domain.model.CollectionCardPairModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakePermissionProvider
-import com.wojdor.memolki.ui.ads.AllRewardedAds
+import com.wojdor.memolki.test.fake.FakeAllRewardedAds
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.test.fake.FakeCoinsPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
@@ -31,7 +31,7 @@ class CollectionViewModelTest : AppTest() {
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
-    private val allRewardedAds: AllRewardedAds by inject()
+    private val allRewardedAds: FakeAllRewardedAds by inject()
 
     private val userRepository: UserRepository by inject()
 

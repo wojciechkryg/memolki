@@ -93,15 +93,7 @@ val testKoinModule = module {
     singleOf(::FakeBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
     singleOf(::FakeCardPairMatchedPlayer) { bind<CardPairMatchedPlayer>() }
     singleOf(::FakeLevelCompletePlayer) { bind<LevelCompletePlayer>() }
-    single<AllRewardedAds> {
-        relaxedMockk<AllRewardedAds>().also { ads ->
-            listOf(ads.endGameCoinsAd, ads.collectionCardPairAd, ads.shopCoinsAd).forEach { ad ->
-                io.mockk.every { ad.loadAndNotify(any(), any()) } answers {
-                    secondArg<(Boolean) -> Unit>().invoke(false)
-                }
-            }
-        }
-    }
+    singleOf(::FakeAllRewardedAds) { bind<AllRewardedAds>() }
     single<BillingHandler> { relaxedMockk() }
     singleOf(::FakeDailyChallengeDao) { bind<DailyChallengeDao>() }
     single<FirebaseMessaging> { relaxedMockk() }
