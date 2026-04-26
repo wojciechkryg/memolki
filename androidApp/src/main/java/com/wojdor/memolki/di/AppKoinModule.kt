@@ -9,6 +9,7 @@ import com.wojdor.memolki.data.local.database.databaseBuilder
 import com.google.firebase.messaging.FirebaseMessaging
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.analytics
+import com.wojdor.memolki.data.crypto.AndroidLocalEncryptorKeyStore
 import com.wojdor.memolki.data.crypto.BaseEncryptor
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
@@ -136,6 +137,7 @@ import com.wojdor.memolki.util.provider.AppInstalledProvider
 import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.util.provider.PackageNameProvider
 import com.wojdor.memolki.util.provider.PermissionProvider
+import com.wojdor.memolki.util.provider.AndroidPushNotificationProvider
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import com.wojdor.memolki.util.provider.TimeProvider
@@ -174,7 +176,7 @@ val appKoinModule = module {
     single { get<AppDatabase>().dailyChallengeDao() }
 
     singleOf(::BaseEncryptor) { bind<Encryptor>() }
-    singleOf(::LocalEncryptorKeyStore)
+    singleOf(::AndroidLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
 
     singleOf(::AllCardPairsLocalDataSource) { bind<AllCardPairsDataSource>() }
     singleOf(::UnlockedCardPairsLocalDataSource)
@@ -194,7 +196,7 @@ val appKoinModule = module {
     singleOf(::LocaleProvider)
     singleOf(::PackageNameProvider)
     singleOf(::PermissionProvider)
-    singleOf(::PushNotificationProvider)
+    singleOf(::AndroidPushNotificationProvider) { bind<PushNotificationProvider>() }
     singleOf(::TimeProvider)
 
     singleOf(::Analytics)

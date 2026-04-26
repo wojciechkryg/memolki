@@ -8,7 +8,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 class BaseEncryptor(
-    private val localKeyStore: LocalEncryptorKeyStore
+    private val localKeyStore: AndroidLocalEncryptorKeyStore
 ) : Encryptor {
 
     override suspend fun encrypt(value: Long): String {

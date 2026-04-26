@@ -12,14 +12,14 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
 
-class LocalEncryptorKeyStore(
+class AndroidLocalEncryptorKeyStore(
     private val dataStore: DataStore<Preferences>
-) {
+) : LocalEncryptorKeyStore {
 
     private var cachedKey: SecretKey? = null
     private val mutex = Mutex()
 
-    suspend fun initialize() {
+    override suspend fun initialize() {
         getSecretKey()
     }
 
