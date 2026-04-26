@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.dailychallengehistory
 
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,9 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
 import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
@@ -30,7 +29,7 @@ import com.wojdor.memolki.ui.feature.dailychallengehistory.component.DailyChalle
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
-import com.wojdor.memolki.util.extension.shareText
+import com.wojdor.memolki.util.extension.TextSharer
 import java.time.LocalDate
 
 @Composable
@@ -48,10 +47,10 @@ private fun HandleEffect(
     viewModel: DailyChallengeHistoryViewModel,
     navController: NavController
 ) {
-    val activity = LocalActivity.current
+    val textSharer = koinInject<TextSharer>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            is DailyChallengeHistoryEffect.ShareDailyChallenge -> activity?.shareText(effect.text)
+            is DailyChallengeHistoryEffect.ShareDailyChallenge -> textSharer.share(effect.text)
         }
     }
 }

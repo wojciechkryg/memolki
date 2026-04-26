@@ -100,6 +100,10 @@ import com.wojdor.memolki.ui.feature.shop.ShopViewModel
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.AndroidBillingHandler
 import com.wojdor.memolki.util.billing.BillingHandler
+import com.wojdor.memolki.util.extension.AndroidTextSharer
+import com.wojdor.memolki.util.extension.AndroidToaster
+import com.wojdor.memolki.util.extension.TextSharer
+import com.wojdor.memolki.util.extension.Toaster
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.formatter.TimeFormatter
@@ -193,6 +197,8 @@ val appKoinModule = module {
     singleOf(::AndroidBillingHandler) { bind<BillingHandler>() }
     singleOf(::AndroidGameServices) { bind<GameServices>() }
     singleOf(::AndroidInAppReviewer) { bind<InAppReviewer>() }
+    singleOf(::AndroidTextSharer) { bind<TextSharer>() }
+    singleOf(::AndroidToaster) { bind<Toaster>() }
     singleOf(::InAppUpdate)
     singleOf(::NotificationCreator)
     singleOf(::AndroidNotificationScheduler) { bind<NotificationScheduler>() }

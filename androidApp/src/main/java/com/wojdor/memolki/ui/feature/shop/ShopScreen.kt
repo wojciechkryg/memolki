@@ -1,7 +1,5 @@
 package com.wojdor.memolki.ui.feature.shop
 
-import android.app.Activity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,14 +14,13 @@ import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.shop_connection_error
 import com.wojdor.memolki.shared.resources.shop_purchase_failed_error
 import com.wojdor.memolki.ui.ads.RewardedAd
-import com.wojdor.memolki.ui.ads.show
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.feature.shop.component.ShopContent
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.billing.BillingHandler
-import com.wojdor.memolki.util.extension.showToast
+import com.wojdor.memolki.util.extension.Toaster
 import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
 
@@ -42,9 +39,9 @@ private fun HandleEffect(
     viewModel: ShopViewModel,
     navController: NavController
 ) {
-    val activity = LocalActivity.current
     val billingHandler = koinInject<BillingHandler>()
     val gameServices = koinInject<GameServices>()
+    val toaster = koinInject<Toaster>()
     val purchaseFailedText = stringResource(Res.string.shop_purchase_failed_error)
     val connectionErrorText = stringResource(Res.string.shop_connection_error)
     CollectUiEffects(viewModel) { effect ->
@@ -52,18 +49,12 @@ private fun HandleEffect(
             is ShopEffect.OpenEnableNotificationsScreen ->
                 navController.navigateToEnableNotifications(EnableNotificationDestination.SHOP.route)
 
-            is ShopEffect.ShowAd -> activity?.let {
-                onWatchAdClick(
-                    it,
-                    viewModel,
-                    effect.rewardedAd
-                )
-            }
+            is ShopEffect.ShowAd -> onWatchAdClick(viewModel, effect.rewardedAd)
 
             is ShopEffect.LaunchBilling -> billingHandler.launchBillingFlow(effect.product)
 
-            is ShopEffect.ShowPurchaseFailedError -> activity?.showToast(purchaseFailedText)
-            is ShopEffect.ShowConnectionError -> activity?.showToast(connectionErrorText)
+            is ShopEffect.ShowPurchaseFailedError -> toaster.show(purchaseFailedText)
+            is ShopEffect.ShowConnectionError -> toaster.show(connectionErrorText)
             is ShopEffect.SendTotalCoinsScore -> viewModel.viewModelScope.launch {
                 gameServices.submitTotalCoins(effect.totalCoins)
             }
@@ -72,12 +63,10 @@ private fun HandleEffect(
 }
 
 private fun onWatchAdClick(
-    activity: Activity,
     viewModel: ShopViewModel,
     rewardedAd: RewardedAd
 ) {
     rewardedAd.show(
-        activity,
         onGrantReward = { viewModel.sendIntent(ShopIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(ShopIntent.OnAdDismiss(it)) }
     )

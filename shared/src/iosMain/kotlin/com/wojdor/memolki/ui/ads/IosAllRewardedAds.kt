@@ -18,4 +18,9 @@ private object IosRewardedAd : RewardedAd {
     ) {
         onAvailabilityChanged(false)
     }
+
+    override fun show(
+        onGrantReward: () -> Unit,
+        onAdDismiss: (wasRewardGranted: Boolean) -> Unit
+    ) = Unit
 }

@@ -7,4 +7,9 @@ interface RewardedAd {
         wasRewardGranted: Boolean = false,
         onAvailabilityChanged: (isAvailable: Boolean) -> Unit
     )
+
+    fun show(
+        onGrantReward: () -> Unit,
+        onAdDismiss: (wasRewardGranted: Boolean) -> Unit = {}
+    )
 }

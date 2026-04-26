@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.ads
 
-import android.app.Activity
 import android.content.Context
 import androidx.annotation.StringRes
 import com.google.android.gms.ads.AdError
@@ -8,10 +7,12 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.wojdor.memolki.util.provider.ActivityProvider
 import com.google.android.gms.ads.rewarded.RewardedAd as GoogleRewardedAd
 
 open class AndroidRewardedAd(
     private val context: Context,
+    private val activityProvider: ActivityProvider,
     @param:StringRes private val adUnitRes: Int,
     private val onPaidEvent: (valueMicros: Long, currencyCode: String, adUnitId: String, adSource: String?) -> Unit = { _, _, _, _ -> }
 ) : RewardedAd {
@@ -69,12 +70,12 @@ open class AndroidRewardedAd(
         }
     }
 
-    fun show(
-        activity: Activity,
+    override fun show(
         onGrantReward: () -> Unit,
-        onAdDismiss: (wasRewardGranted: Boolean) -> Unit = {}
+        onAdDismiss: (wasRewardGranted: Boolean) -> Unit
     ) {
         var wasRewardGranted = false
+        val activity = activityProvider.current ?: return
         if (!isLoaded || activity.isFinishing || activity.isDestroyed) {
             return
         }

@@ -1,29 +1,25 @@
 package com.wojdor.memolki.ui.feature.collection
 
-import android.app.Activity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
-import com.wojdor.memolki.shared.resources.*
-import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.domain.model.CollectionCardPairModel
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.ads.RewardedAd
-import com.wojdor.memolki.ui.ads.show
 import com.wojdor.memolki.ui.app.navigateToCardPairDetailsScreen
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsIntent
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.collection.component.CollectionContent
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.ui.theme.AppTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun CollectionScreen(
@@ -42,7 +38,6 @@ private fun HandleEffect(
     cardPairDetailsViewModel: CardPairDetailsViewModel,
     navController: NavController
 ) {
-    val activity = LocalActivity.current
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is CollectionEffect.OpenShopScreen -> navController.navigateToShop()
@@ -57,7 +52,7 @@ private fun HandleEffect(
                     effect.cardPairModel
                 )
 
-            is CollectionEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
+            is CollectionEffect.ShowAd -> showAd(viewModel, effect.rewardedAd)
         }
     }
 }
@@ -83,12 +78,10 @@ private fun openCardPairDetailsScreen(
 }
 
 private fun showAd(
-    activity: Activity,
     viewModel: CollectionViewModel,
     rewardedAd: RewardedAd
 ) {
     rewardedAd.show(
-        activity,
         onGrantReward = { viewModel.sendIntent(CollectionIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(CollectionIntent.OnAdDismiss(it)) }
     )
@@ -124,13 +117,15 @@ fun CollectionScreen(
     CollectionContent(state, callbacks)
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun CollectionPreview() {
     AppTheme {
-        CollectionContent(
-            state = getCollectionStateForPreview()
-        )
+        PreviewBackground {
+            CollectionContent(
+                state = getCollectionStateForPreview()
+            )
+        }
     }
 }
 

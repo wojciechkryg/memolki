@@ -1,7 +1,5 @@
 package com.wojdor.memolki.ui.feature.endgame
 
-import android.app.Activity
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,7 +14,6 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.ui.ads.RewardedAd
-import com.wojdor.memolki.ui.ads.show
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToEnableNotifications
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
@@ -27,7 +24,7 @@ import com.wojdor.memolki.ui.feature.endgame.component.DailyChallengeEndGameCont
 import com.wojdor.memolki.ui.feature.game.GameIntent
 import com.wojdor.memolki.ui.feature.game.GameViewModel
 import com.wojdor.memolki.ui.theme.AppTheme
-import com.wojdor.memolki.util.extension.shareText
+import com.wojdor.memolki.util.extension.TextSharer
 import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
 
@@ -57,9 +54,9 @@ private fun HandleEffect(
     viewModel: EndGameViewModel,
     navController: NavController
 ) {
-    val activity = LocalActivity.current
     val coroutineScope = rememberCoroutineScope()
     val gameServices = koinInject<GameServices>()
+    val textSharer = koinInject<TextSharer>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
             is EndGameEffect.OpenGameScreen -> openGameScreen(navController, effect.boardModel)
@@ -70,13 +67,13 @@ private fun HandleEffect(
                 effect
             )
 
-            is EndGameEffect.ShowAd -> activity?.let { showAd(it, viewModel, effect.rewardedAd) }
+            is EndGameEffect.ShowAd -> showAd(viewModel, effect.rewardedAd)
             is EndGameEffect.SendTotalCoinsScore -> coroutineScope.launch {
                 gameServices.submitTotalCoins(effect.totalCoins)
             }
 
-            is EndGameEffect.Share -> activity?.shareText(effect.text)
-            is EndGameEffect.ShareDailyChallenge -> activity?.shareText(effect.text)
+            is EndGameEffect.Share -> textSharer.share(effect.text)
+            is EndGameEffect.ShareDailyChallenge -> textSharer.share(effect.text)
         }
     }
 }
@@ -99,12 +96,10 @@ private fun openEnableNotificationsScreen(
 }
 
 private fun showAd(
-    activity: Activity,
     viewModel: EndGameViewModel,
     rewardedAd: RewardedAd
 ) {
     rewardedAd.show(
-        activity,
         onGrantReward = { viewModel.sendIntent(EndGameIntent.OnAdReward) },
         onAdDismiss = { viewModel.sendIntent(EndGameIntent.OnAdDismiss(it)) }
     )

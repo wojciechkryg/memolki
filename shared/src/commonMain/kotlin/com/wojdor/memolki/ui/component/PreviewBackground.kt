@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-internal fun PreviewBackground(content: @Composable () -> Unit) {
+fun PreviewBackground(content: @Composable () -> Unit) {
     Box(modifier = Modifier.background(Color.White)) {
         content()
     }
