@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class AdsInitializer(
+class AndroidAdsInitializer(
     private val context: Context,
     private val coroutineDispatcher: CoroutineDispatcher,
     private val allRewardedAds: AllRewardedAds

@@ -15,7 +15,7 @@ import com.wojdor.memolki.data.local.database.AppDatabase
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.databaseBuilder
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
-import com.wojdor.memolki.ui.ads.AdsInitializer
+import com.wojdor.memolki.ui.ads.AndroidAdsInitializer
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.AndroidAllRewardedAds
 import com.wojdor.memolki.util.AndroidAppOpener
@@ -105,7 +105,7 @@ val appKoinModule = module {
     singleOf(::AndroidNotificationScheduler) { bind<NotificationScheduler>() }
     singleOf(::AndroidHapticFeedback) { bind<HapticFeedback>() }
     singleOf(::AndroidBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
-    singleOf(::AdsInitializer)
+    singleOf(::AndroidAdsInitializer)
     singleOf(::AndroidAllRewardedAds) { bind<AllRewardedAds>() }
     single<CardFlipPlayer> { AndroidCardFlipPlayer(get(), get(MainDispatcher), get()) }
     single<CardPairMatchedPlayer> { AndroidCardPairMatchedPlayer(get(), get(MainDispatcher), get()) }

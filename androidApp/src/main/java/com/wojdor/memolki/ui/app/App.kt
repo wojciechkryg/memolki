@@ -8,7 +8,7 @@ import dev.gitlive.firebase.crashlytics.crashlytics
 import com.wojdor.memolki.di.DATA_STORE_NAME
 import com.wojdor.memolki.di.appKoinModule
 import com.wojdor.memolki.di.sharedKoinModule
-import com.wojdor.memolki.ui.ads.AdsInitializer
+import com.wojdor.memolki.ui.ads.AndroidAdsInitializer
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -16,7 +16,7 @@ import java.io.File
 
 class App : Application() {
 
-    private val adsInitializer: AdsInitializer by inject()
+    private val adsInitializer: AndroidAdsInitializer by inject()
 
     override fun onCreate() {
         super.onCreate()
