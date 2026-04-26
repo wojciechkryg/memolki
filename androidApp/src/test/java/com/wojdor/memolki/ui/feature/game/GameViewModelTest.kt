@@ -375,7 +375,7 @@ class GameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logBoardStart(columns = 2, rows = 3) }
+        verify { analytics.logBoardStart(match { it is BoardModel.Grid2x3 }) }
     }
 
     @Test
@@ -399,8 +399,7 @@ class GameViewModelTest : AppTest() {
         // then
         verify {
             analytics.logBoardComplete(
-                columns = 2,
-                rows = 3,
+                board = match { it is BoardModel.Grid2x3 },
                 mistakeCount = 0,
                 level = any(),
                 totalGamesCount = any()
@@ -421,7 +420,7 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logBoardAbandoned(columns = 2, rows = 3) }
+            verify { analytics.logBoardAbandoned(match { it is BoardModel.Grid2x3 }) }
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -445,7 +444,7 @@ class GameViewModelTest : AppTest() {
         sut.sendIntent(GameIntent.OnGameLeave)
 
         // then
-        verify(exactly = 0) { analytics.logBoardAbandoned(any(), any()) }
+        verify(exactly = 0) { analytics.logBoardAbandoned(any()) }
     }
 
     @Test
@@ -660,7 +659,7 @@ class GameViewModelTest : AppTest() {
 
                 // then
                 verify { analytics.logDailyChallengeAbandoned(epochDay) }
-                verify(exactly = 0) { analytics.logBoardAbandoned(any(), any()) }
+                verify(exactly = 0) { analytics.logBoardAbandoned(any()) }
                 cancelAndIgnoreRemainingEvents()
             }
         }

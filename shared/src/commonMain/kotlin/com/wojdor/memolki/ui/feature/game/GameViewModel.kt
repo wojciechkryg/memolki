@@ -84,7 +84,7 @@ class GameViewModel(
     }
 
     private fun shuffleUnlockedCards(board: BoardModel) {
-        analytics.logBoardStart(board.columns, board.rows)
+        analytics.logBoardStart(board)
         getShuffledUnlockedCardsUseCase(board).onEach {
             it.onSuccess { cards ->
                 sendState {
@@ -253,8 +253,7 @@ class GameViewModel(
                 viewModelScope.launch {
                     val totalGames = getTotalGamesPlayedUseCase().first().getOrNull()
                     analytics.logBoardComplete(
-                        columns = state.board.columns,
-                        rows = state.board.rows,
+                        board = state.board,
                         mistakeCount = state.mistakeCount,
                         level = state.level,
                         totalGamesCount = totalGames?.plus(1)
@@ -463,7 +462,7 @@ class GameViewModel(
             if (uiState.value.isDailyChallenge) {
                 analytics.logDailyChallengeAbandoned(state.epochDay)
             } else {
-                analytics.logBoardAbandoned(state.board.columns, state.board.rows)
+                analytics.logBoardAbandoned(state.board)
             }
         }
     }

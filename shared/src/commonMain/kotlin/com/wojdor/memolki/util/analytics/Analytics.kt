@@ -1,26 +1,24 @@
 package com.wojdor.memolki.util.analytics
 
+import com.wojdor.memolki.domain.model.BoardModel
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 
 open class Analytics(
     private val firebaseAnalytics: FirebaseAnalytics
 ) {
 
-    // TODO(kmp-phase13): revert logBoard* signatures to take BoardModel once it moves to commonMain.
-    // Passing columns/rows here is a workaround because BoardModel still holds R.string refs.
-    fun logBoardStart(columns: Int, rows: Int) {
+    fun logBoardStart(board: BoardModel) {
         firebaseAnalytics.logEvent(
             Event.BOARD_STARTED,
             mapOf(
-                Key.LEVEL_SIZE to "${columns}x${rows}",
-                Key.CARD_COUNT to columns * rows
+                Key.LEVEL_SIZE to "${board.columns}x${board.rows}",
+                Key.CARD_COUNT to board.columns * board.rows
             )
         )
     }
 
     fun logBoardComplete(
-        columns: Int,
-        rows: Int,
+        board: BoardModel,
         mistakeCount: Int,
         level: Long,
         totalGamesCount: Long?
@@ -28,8 +26,8 @@ open class Analytics(
         firebaseAnalytics.logEvent(
             Event.BOARD_COMPLETED,
             buildMap {
-                put(Key.LEVEL_SIZE, "${columns}x${rows}")
-                put(Key.CARD_COUNT, columns * rows)
+                put(Key.LEVEL_SIZE, "${board.columns}x${board.rows}")
+                put(Key.CARD_COUNT, board.columns * board.rows)
                 put(Key.MISMATCH_COUNT, mistakeCount)
                 put(Key.LEVEL, level)
                 totalGamesCount?.let { put(Key.TOTAL_GAMES_COUNT, it) }
@@ -37,10 +35,10 @@ open class Analytics(
         )
     }
 
-    fun logBoardAbandoned(columns: Int, rows: Int) {
+    fun logBoardAbandoned(board: BoardModel) {
         firebaseAnalytics.logEvent(
             Event.BOARD_ABANDONED,
-            mapOf(Key.LEVEL_SIZE to "${columns}x${rows}")
+            mapOf(Key.LEVEL_SIZE to "${board.columns}x${board.rows}")
         )
     }
 
