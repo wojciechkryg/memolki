@@ -10,7 +10,7 @@ import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingProduct
 import com.wojdor.memolki.util.billing.BillingStatusListener
 import com.wojdor.memolki.test.fake.FakeCoinsPlayer
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.coVerify
@@ -31,7 +31,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class ShopViewModelTest : AppTest() {
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private val coinsPlayer: FakeCoinsPlayer by inject()
 
@@ -123,7 +123,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test
@@ -252,7 +252,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test

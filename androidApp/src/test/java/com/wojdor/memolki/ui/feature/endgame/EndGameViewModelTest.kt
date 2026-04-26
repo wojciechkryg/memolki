@@ -12,7 +12,7 @@ import com.wojdor.memolki.ui.ads.RewardedAd
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CoinsPlayer
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.media.LevelCompletePlayer
 import io.mockk.every
 import io.mockk.verify
@@ -31,7 +31,7 @@ class EndGameViewModelTest : AppTest() {
 
     private val levelCompletePlayer: LevelCompletePlayer by inject()
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private val coinsPlayer: CoinsPlayer by inject()
 
@@ -106,7 +106,7 @@ class EndGameViewModelTest : AppTest() {
 
                 // then
                 assertEquals(EndGameEffect.ShowAd(rewardedAd), awaitItem())
-                verify { hapticFeedback.vibrateLow() }
+                assertEquals(1, hapticFeedback.vibrateLowCount)
             }
         }
 
@@ -214,7 +214,7 @@ class EndGameViewModelTest : AppTest() {
 
                 // then
                 assertEquals(EndGameEffect.OpenGameScreen(boardModel), awaitItem())
-                verify { hapticFeedback.vibrateLow() }
+                assertEquals(1, hapticFeedback.vibrateLowCount)
             }
         }
 
@@ -227,7 +227,7 @@ class EndGameViewModelTest : AppTest() {
 
                 // then
                 assertEquals(EndGameEffect.OpenMenuScreen, awaitItem())
-                verify { hapticFeedback.vibrateLow() }
+                assertEquals(1, hapticFeedback.vibrateLowCount)
             }
         }
 
@@ -254,7 +254,7 @@ class EndGameViewModelTest : AppTest() {
 
                 // then
                 assertEquals(EndGameEffect.OpenMenuScreen, awaitItem())
-                verify { hapticFeedback.vibrateLow() }
+                assertEquals(1, hapticFeedback.vibrateLowCount)
             }
         }
 
@@ -267,7 +267,7 @@ class EndGameViewModelTest : AppTest() {
 
                 // then
                 assertEquals(EndGameEffect.OpenCollectionScreen, awaitItem())
-                verify { hapticFeedback.vibrateLow() }
+                assertEquals(1, hapticFeedback.vibrateLowCount)
             }
         }
 

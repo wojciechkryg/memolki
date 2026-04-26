@@ -5,7 +5,7 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.LocaleProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -22,7 +22,7 @@ class ChangeLanguageViewModelTest : AppTest() {
 
     private val analytics: Analytics by inject()
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private val localeProvider: LocaleProvider by inject()
 
@@ -95,7 +95,7 @@ class ChangeLanguageViewModelTest : AppTest() {
         }
 
         // then
-        verifyOnce { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test

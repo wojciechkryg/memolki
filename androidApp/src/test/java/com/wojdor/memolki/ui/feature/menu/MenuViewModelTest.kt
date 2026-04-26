@@ -16,7 +16,7 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnPlayClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -31,7 +31,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class MenuViewModelTest : AppTest() {
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
     private val analytics: Analytics by inject()
     private val userRepository: UserRepository by inject()
 
@@ -170,7 +170,7 @@ class MenuViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test
@@ -180,7 +180,7 @@ class MenuViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test
@@ -190,7 +190,7 @@ class MenuViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test

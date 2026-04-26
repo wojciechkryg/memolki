@@ -8,7 +8,7 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import io.mockk.coEvery
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +26,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
 
     private val analytics: Analytics by inject()
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private val dailyChallengeDao: DailyChallengeDao by inject()
 
@@ -129,7 +129,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test

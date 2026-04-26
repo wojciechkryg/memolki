@@ -69,11 +69,9 @@ val testKoinModule = module {
     single<CoroutineDispatcher> { StandardTestDispatcher() }
     single<CoroutineDispatcher>(DefaultDispatcher) { get<CoroutineDispatcher>() }
     single<CoroutineDispatcher>(MainDispatcher) { get<CoroutineDispatcher>() }
-
     single { SavedStateHandle() }
     single<Context> { relaxedMockk() }
     single { Random(0) }
-
     singleOf(::FakeEncryptor) { bind<Encryptor>() }
     singleOf(::FakeAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
     singleOf(::FakeDataStore) { bind<DataStore<Preferences>>() }
@@ -86,14 +84,12 @@ val testKoinModule = module {
     singleOf(::FakePushNotificationProvider) { bind<PushNotificationProvider>() }
     singleOf(::FakeTimeProvider) { bind<TimeProvider>() }
     singleOf(::FakeStringProvider) { bind<StringProvider>() }
-
     singleOf(::FakeCoinsPlayer) { bind<CoinsPlayer>() }
     singleOf(::FakeCardFlipPlayer) { bind<CardFlipPlayer>() }
+    singleOf(::FakeHapticFeedback) { bind<HapticFeedback>() }
     singleOf(::FakeInAppReviewer) { bind<InAppReviewer>() }
     singleOf(::FakeGameServices) { bind<GameServices>() }
     singleOf(::FakeLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
-
-    single<HapticFeedback> { relaxedMockk() }
     single<BackgroundMusicPlayer> { relaxedMockk() }
     single<CardPairMatchedPlayer> { relaxedMockk() }
     single<LevelCompletePlayer> { relaxedMockk() }

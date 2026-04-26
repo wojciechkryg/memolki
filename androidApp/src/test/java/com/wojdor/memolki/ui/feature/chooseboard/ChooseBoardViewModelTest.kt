@@ -11,7 +11,7 @@ import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChalle
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeHistoryClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnLockedBoardClick
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -28,7 +28,7 @@ class ChooseBoardViewModelTest : AppTest() {
 
     private val analytics: Analytics by inject()
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private lateinit var sut: ChooseBoardViewModel
 
@@ -96,7 +96,7 @@ class ChooseBoardViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { hapticFeedback.vibrateLow() }
+            assertEquals(1, hapticFeedback.vibrateLowCount)
         }
 
     @Test
@@ -107,7 +107,7 @@ class ChooseBoardViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { hapticFeedback.vibrateLow() }
+            assertEquals(1, hapticFeedback.vibrateLowCount)
         }
 
     @Test
@@ -141,7 +141,7 @@ class ChooseBoardViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { hapticFeedback.vibrateLow() }
+            assertEquals(1, hapticFeedback.vibrateLowCount)
         }
 
     @Test

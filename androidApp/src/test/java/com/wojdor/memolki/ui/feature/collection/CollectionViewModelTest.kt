@@ -11,7 +11,7 @@ import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.test.fake.FakeCoinsPlayer
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.PermissionProvider
 import io.mockk.coVerify
 import io.mockk.verify
@@ -29,7 +29,7 @@ class CollectionViewModelTest : AppTest() {
 
     private val coinsPlayer: FakeCoinsPlayer by inject()
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private val allRewardedAds: AllRewardedAds by inject()
 
@@ -155,7 +155,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test
@@ -170,7 +170,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test
@@ -229,7 +229,7 @@ class CollectionViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { hapticFeedback.vibrateLow() }
+            assertEquals(1, hapticFeedback.vibrateLowCount)
         }
 
     @Test
@@ -303,7 +303,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test

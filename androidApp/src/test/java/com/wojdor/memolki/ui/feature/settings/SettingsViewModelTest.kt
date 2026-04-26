@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.util.media.BackgroundMusicPlayer
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -19,7 +19,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class SettingsViewModelTest : AppTest() {
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private val backgroundMusicPlayer: BackgroundMusicPlayer by inject()
 
@@ -63,7 +63,7 @@ class SettingsViewModelTest : AppTest() {
         val updatedSound = viewModel.uiState.value.settings
             .filterIsInstance<SettingModel.Sound>().first()
         assertFalse(updatedSound.isEnabled)
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test
@@ -135,7 +135,7 @@ class SettingsViewModelTest : AppTest() {
         val updatedVibration = viewModel.uiState.value.settings
             .filterIsInstance<SettingModel.Vibration>().first()
         assertFalse(updatedVibration.isEnabled)
-        verify { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 
     @Test

@@ -20,7 +20,7 @@ import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CardPairMatchedPlayer
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.TimeProvider
 import io.mockk.every
 import io.mockk.impl.annotations.RelaxedMockK
@@ -42,7 +42,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class GameViewModelTest : AppTest() {
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
     private val cardPairMatchedPlayer: CardPairMatchedPlayer by inject()
     private val timeProvider: TimeProvider by inject()
     private val userRepository: UserRepository by inject()
@@ -583,7 +583,7 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { hapticFeedback.vibrateLow() }
+            assertEquals(1, hapticFeedback.vibrateLowCount)
         }
 
     @Test

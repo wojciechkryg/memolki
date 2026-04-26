@@ -9,7 +9,7 @@ import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.OpenApp
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.ShowAppInstall
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsIntent.OnAppClick
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.media.HapticFeedback
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
@@ -23,7 +23,7 @@ class MoreAppsViewModelTest : AppTest() {
 
     private val analytics: Analytics by inject()
 
-    private val hapticFeedback: HapticFeedback by inject()
+    private val hapticFeedback: FakeHapticFeedback by inject()
 
     private val fakeAppInstalledProvider: FakeAppInstalledProvider by inject()
 
@@ -125,6 +125,6 @@ class MoreAppsViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verifyOnce { hapticFeedback.vibrateLow() }
+        assertEquals(1, hapticFeedback.vibrateLowCount)
     }
 }

@@ -100,22 +100,18 @@ val sharedKoinModule = module {
     singleOf(::NotificationLocalDataSource)
     singleOf(::SettingsLocalDataSource)
     singleOf(::UserLocalDataSource)
-
     singleOf(::CardRepository)
     singleOf(::DailyChallengeRepository)
     singleOf(::NotificationRepository)
     singleOf(::SettingsRepository)
     singleOf(::UserRepository)
-
     singleOf(::Analytics)
     singleOf(::TimeProvider)
     singleOf(::AppStringProvider) { bind<StringProvider>() }
-
     factoryOf(::CasualShareFormatter)
     factoryOf(::DailyChallengeShareFormatter)
     factoryOf(::TimeFormatter)
     factoryOf(::StarCalculator)
-
     factoryOf(::CalculateCoinsForShopAdUseCase)
     factoryOf(::CanUnlockNewCardUseCase)
     factoryOf(::CheckDailyLoginStreakUseCase)
@@ -156,7 +152,6 @@ val sharedKoinModule = module {
     factoryOf(::UnlockAllNewCardPairsIfPurchasedUseCase)
     factoryOf(::UnlockRandomCardIfEnoughCoinsUseCase)
     factoryOf(::UnlockRandomCardUseCase)
-
     factory { CalculateNextCardPairCostUseCase(get(DefaultDispatcher), get(), get(), get()) }
     factory { GetAllCardPairsCountUseCase(get(DefaultDispatcher), get()) }
     factory { GetAllCardPairsUseCase(get(DefaultDispatcher), get()) }
@@ -171,9 +166,7 @@ val sharedKoinModule = module {
     factory { ObserveMusicEnabledUseCase(get(DefaultDispatcher), get()) }
     factory { ObserveSoundEnabledUseCase(get(DefaultDispatcher), get()) }
     factory { ToggleSettingsUseCase(get(DefaultDispatcher), get()) }
-
     factory { ChangeLanguageUseCase(get(MainDispatcher), get()) }
-
     viewModelOf(::AppViewModel)
     viewModelOf(::CardPairDetailsViewModel)
     viewModelOf(::ChangeLanguageViewModel)

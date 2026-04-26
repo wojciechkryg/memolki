@@ -83,12 +83,9 @@ val appKoinModule = module {
             .build()
     }
     single { get<AppDatabase>().dailyChallengeDao() }
-
     singleOf(::AndroidEncryptor) { bind<Encryptor>() }
     singleOf(::AndroidLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
-
     singleOf(::AllCardPairsLocalDataSource) { bind<AllCardPairsDataSource>() }
-
     singleOf(::ActivityProvider)
     singleOf(::AppForegroundProvider)
     singleOf(::AppInstalledProvider)
@@ -96,7 +93,6 @@ val appKoinModule = module {
     singleOf(::PackageNameProvider)
     singleOf(::PermissionProvider)
     singleOf(::AndroidPushNotificationProvider) { bind<PushNotificationProvider>() }
-
     singleOf(::AndroidBillingHandler) { bind<BillingHandler>() }
     singleOf(::AndroidGameServices) { bind<GameServices>() }
     singleOf(::AndroidInAppReviewer) { bind<InAppReviewer>() }

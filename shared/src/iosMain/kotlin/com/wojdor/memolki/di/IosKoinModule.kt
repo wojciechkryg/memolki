@@ -91,19 +91,15 @@ val iosKoinModule = module {
             .build()
     }
     single { get<AppDatabase>().dailyChallengeDao() }
-
     singleOf(::IosEncryptor) { bind<Encryptor>() }
     singleOf(::IosLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
-
     singleOf(::IosAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
-
     singleOf(::AppForegroundProvider)
     singleOf(::AppInstalledProvider)
     singleOf(::LocaleProvider)
     singleOf(::PackageNameProvider)
     singleOf(::PermissionProvider)
     singleOf(::IosPushNotificationProvider) { bind<PushNotificationProvider>() }
-
     singleOf(::IosBillingHandler) { bind<BillingHandler>() }
     singleOf(::IosGameServices) { bind<GameServices>() }
     singleOf(::IosInAppReviewer) { bind<InAppReviewer>() }
