@@ -13,7 +13,7 @@ import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDesti
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
-import com.wojdor.memolki.util.media.LevelCompletePlayer
+import com.wojdor.memolki.test.fake.FakeLevelCompletePlayer
 import io.mockk.every
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,7 +29,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class EndGameViewModelTest : AppTest() {
 
-    private val levelCompletePlayer: LevelCompletePlayer by inject()
+    private val levelCompletePlayer: FakeLevelCompletePlayer by inject()
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
@@ -369,7 +369,7 @@ class EndGameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { levelCompletePlayer.play() }
+        assertEquals(1, levelCompletePlayer.playCount)
     }
 
     @Test

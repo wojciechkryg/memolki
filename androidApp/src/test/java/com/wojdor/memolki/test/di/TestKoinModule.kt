@@ -90,9 +90,9 @@ val testKoinModule = module {
     singleOf(::FakeInAppReviewer) { bind<InAppReviewer>() }
     singleOf(::FakeGameServices) { bind<GameServices>() }
     singleOf(::FakeLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
-    single<BackgroundMusicPlayer> { relaxedMockk() }
-    single<CardPairMatchedPlayer> { relaxedMockk() }
-    single<LevelCompletePlayer> { relaxedMockk() }
+    singleOf(::FakeBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
+    singleOf(::FakeCardPairMatchedPlayer) { bind<CardPairMatchedPlayer>() }
+    singleOf(::FakeLevelCompletePlayer) { bind<LevelCompletePlayer>() }
     single<AllRewardedAds> {
         relaxedMockk<AllRewardedAds>().also { ads ->
             listOf(ads.endGameCoinsAd, ads.collectionCardPairAd, ads.shopCoinsAd).forEach { ad ->

@@ -3,9 +3,8 @@ package com.wojdor.memolki.ui.feature.settings
 import app.cash.turbine.test
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.util.media.BackgroundMusicPlayer
+import com.wojdor.memolki.test.fake.FakeBackgroundMusicPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
@@ -21,7 +20,7 @@ class SettingsViewModelTest : AppTest() {
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
-    private val backgroundMusicPlayer: BackgroundMusicPlayer by inject()
+    private val backgroundMusicPlayer: FakeBackgroundMusicPlayer by inject()
 
     private lateinit var viewModel: SettingsViewModel
 
@@ -96,7 +95,7 @@ class SettingsViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { backgroundMusicPlayer.pause() }
+        assertEquals(1, backgroundMusicPlayer.pauseCount)
     }
 
     @Test
@@ -116,7 +115,7 @@ class SettingsViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { backgroundMusicPlayer.start() }
+        assertEquals(1, backgroundMusicPlayer.startCount)
     }
 
     @Test

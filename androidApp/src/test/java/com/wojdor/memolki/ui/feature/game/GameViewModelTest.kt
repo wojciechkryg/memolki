@@ -19,7 +19,7 @@ import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.media.CardPairMatchedPlayer
+import com.wojdor.memolki.test.fake.FakeCardPairMatchedPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.TimeProvider
 import io.mockk.every
@@ -43,7 +43,7 @@ import org.koin.test.inject
 class GameViewModelTest : AppTest() {
 
     private val hapticFeedback: FakeHapticFeedback by inject()
-    private val cardPairMatchedPlayer: CardPairMatchedPlayer by inject()
+    private val cardPairMatchedPlayer: FakeCardPairMatchedPlayer by inject()
     private val timeProvider: TimeProvider by inject()
     private val userRepository: UserRepository by inject()
     private val analytics: Analytics by inject()
@@ -961,7 +961,7 @@ class GameViewModelTest : AppTest() {
         sut.playMatchSound()
 
         // then
-        verify { cardPairMatchedPlayer.play() }
+        assertEquals(1, cardPairMatchedPlayer.playCount)
     }
 
     @Test
