@@ -1,5 +1,6 @@
 package com.wojdor.memolki.test
 
+import com.wojdor.memolki.di.sharedKoinModule
 import com.wojdor.memolki.test.di.testKoinModule
 import io.mockk.MockKAnnotations
 import io.mockk.unmockkAll
@@ -22,7 +23,7 @@ abstract class AppTest : KoinTest {
 
     @BeforeTest
     open fun setup() {
-        startKoin { modules(testKoinModule) }
+        startKoin { modules(sharedKoinModule, testKoinModule) }
         Dispatchers.setMain(testDispatcher)
         MockKAnnotations.init(this)
     }
