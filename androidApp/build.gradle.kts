@@ -307,6 +307,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
 
     testImplementation(libs.junit)
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.mockk.android)

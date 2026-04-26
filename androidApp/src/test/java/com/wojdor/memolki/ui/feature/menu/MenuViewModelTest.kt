@@ -20,11 +20,11 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 import org.koin.test.inject
 
@@ -37,7 +37,7 @@ class MenuViewModelTest : AppTest() {
 
     private lateinit var sut: MenuViewModel
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = get()

@@ -2,8 +2,8 @@ package com.wojdor.memolki.data.mapper
 
 import com.wojdor.memolki.test.AppTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.Test
 
 @ExperimentalCoroutinesApi
 class CardFlipCountsMapperTest : AppTest() {

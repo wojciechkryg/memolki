@@ -8,11 +8,11 @@ import com.wojdor.memolki.util.media.HapticFeedback
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 import org.koin.test.inject
 
@@ -25,7 +25,7 @@ class SettingsViewModelTest : AppTest() {
 
     private lateinit var viewModel: SettingsViewModel
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         viewModel = get()

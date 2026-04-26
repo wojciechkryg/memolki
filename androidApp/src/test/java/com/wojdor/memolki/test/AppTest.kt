@@ -8,8 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -20,14 +20,14 @@ abstract class AppTest : KoinTest {
 
     protected val testDispatcher: CoroutineDispatcher by inject()
 
-    @Before
+    @BeforeTest
     open fun setup() {
         startKoin { modules(testKoinModule) }
         Dispatchers.setMain(testDispatcher)
         MockKAnnotations.init(this)
     }
 
-    @After
+    @AfterTest
     open fun tearDown() {
         stopKoin()
         unmockkAll()

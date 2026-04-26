@@ -7,9 +7,9 @@ import com.wojdor.memolki.test.fake.FakePermissionProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 import org.koin.test.inject
 
@@ -24,7 +24,7 @@ class ShouldShowNotificationRequestUseCaseTest : AppTest() {
 
     private lateinit var sut: ShouldShowNotificationRequestUseCase
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = get()

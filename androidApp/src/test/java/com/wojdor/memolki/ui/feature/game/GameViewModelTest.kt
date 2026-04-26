@@ -29,11 +29,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 import org.koin.test.get
@@ -65,7 +65,7 @@ class GameViewModelTest : AppTest() {
 
     private lateinit var sut: GameViewModel
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         loadKoinModules(
@@ -757,7 +757,7 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             val mistakeCount = sut.uiState.value.mistakeCount
-            assertTrue("Expected 1-4 mistakes, got $mistakeCount", mistakeCount in 1..4)
+            assertTrue(mistakeCount in 1..4, "Expected 1-4 mistakes, got $mistakeCount")
             assertTrue(sut.uiState.value.isGameFinished)
 
             // when
@@ -821,8 +821,8 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             assertTrue(
-                "Expected 5+ mistakes, got ${sut.uiState.value.mistakeCount}",
-                sut.uiState.value.mistakeCount >= 5
+                sut.uiState.value.mistakeCount >= 5,
+                "Expected 5+ mistakes, got ${sut.uiState.value.mistakeCount}"
             )
             assertTrue(sut.uiState.value.isGameFinished)
 
@@ -866,8 +866,8 @@ class GameViewModelTest : AppTest() {
 
             // then
             assertTrue(
-                "Expected mistake count > 0, got ${sut.uiState.value.mistakeCount}",
-                sut.uiState.value.mistakeCount > 0
+                sut.uiState.value.mistakeCount > 0,
+                "Expected mistake count > 0, got ${sut.uiState.value.mistakeCount}"
             )
         }
 

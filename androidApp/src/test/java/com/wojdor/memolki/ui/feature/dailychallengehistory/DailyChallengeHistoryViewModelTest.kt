@@ -13,10 +13,10 @@ import io.mockk.coEvery
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlinx.datetime.LocalDate
 import org.koin.test.get
 import org.koin.test.inject
@@ -36,7 +36,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
 
     private lateinit var sut: DailyChallengeHistoryViewModel
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         fakeTimeProvider.mockCurrentDate = LocalDate(2026, 4, 11)

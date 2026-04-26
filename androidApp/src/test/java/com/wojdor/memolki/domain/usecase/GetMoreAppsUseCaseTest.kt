@@ -8,9 +8,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -19,7 +19,7 @@ class GetMoreAppsUseCaseTest : AppTest() {
     private val packageNameProvider: PackageNameProvider = mockk()
     private lateinit var sut: GetMoreAppsUseCase
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = get()

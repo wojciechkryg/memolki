@@ -4,7 +4,7 @@ import com.wojdor.memolki.domain.model.BoardModel
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.Test
+import kotlin.test.Test
 
 class AnalyticsTest {
 

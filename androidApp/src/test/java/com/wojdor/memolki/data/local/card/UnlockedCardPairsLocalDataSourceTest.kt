@@ -8,9 +8,10 @@ import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSo
 import com.wojdor.memolki.test.AppTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.koin.test.get
 import org.koin.test.inject
 
@@ -23,7 +24,7 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
 
     private lateinit var sut: UnlockedCardPairsLocalDataSource
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = get()
@@ -43,7 +44,7 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
                 "orange",
                 "grape"
             )
-            Assert.assertEquals(expected, result)
+            assertEquals(expected, result)
         }
 
     @Test
@@ -83,7 +84,7 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
                 "blueberry",
                 "lemon"
             )
-            Assert.assertEquals(expected, result)
+            assertEquals(expected, result)
         }
 
     @Test
@@ -96,7 +97,7 @@ class UnlockedCardPairsLocalDataSourceTest : AppTest() {
         val result = sut.getUnlockedCardPairIds()
 
         // then
-        Assert.assertEquals(6, result.size)
-        Assert.assertTrue(result.contains("lemon"))
+        assertEquals(6, result.size)
+        assertTrue(result.contains("lemon"))
     }
 }

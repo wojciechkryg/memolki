@@ -3,10 +3,10 @@ package com.wojdor.memolki.domain.model
 import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.empty
 
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertSame
-import org.junit.Assert.assertTrue
-import org.junit.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertSame
+import kotlin.test.assertTrue
+import kotlin.test.Test
 
 class CardModelTest {
 

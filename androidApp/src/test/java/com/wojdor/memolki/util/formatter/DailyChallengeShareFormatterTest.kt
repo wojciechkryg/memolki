@@ -6,10 +6,10 @@ import com.wojdor.memolki.test.fake.FakePackageNameProvider
 import com.wojdor.memolki.util.provider.TimeProvider
 import com.wojdor.memolki.util.resource.StringProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.inject
 
 @ExperimentalCoroutinesApi
@@ -22,7 +22,7 @@ class DailyChallengeShareFormatterTest : AppTest() {
 
     private lateinit var sut: DailyChallengeShareFormatter
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = DailyChallengeShareFormatter(packageNameProvider, timeProvider, timeFormatter, stringProvider)

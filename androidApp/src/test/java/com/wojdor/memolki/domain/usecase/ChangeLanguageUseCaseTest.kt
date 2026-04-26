@@ -5,10 +5,10 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 import org.koin.test.inject
 
@@ -19,7 +19,7 @@ class ChangeLanguageUseCaseTest : AppTest() {
 
     private lateinit var sut: ChangeLanguageUseCase
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = get()

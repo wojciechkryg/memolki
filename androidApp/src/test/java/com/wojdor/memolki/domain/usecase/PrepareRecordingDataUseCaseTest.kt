@@ -6,11 +6,11 @@ import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.junit.Assume.assumeTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 import org.koin.test.inject
 
@@ -21,7 +21,7 @@ class PrepareRecordingDataUseCaseTest : AppTest() {
 
     private lateinit var sut: PrepareRecordingDataUseCase
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = get()

@@ -8,10 +8,10 @@ import com.wojdor.memolki.test.relaxedMockk
 import io.mockk.coEvery
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 import org.koin.test.inject
 
@@ -22,7 +22,7 @@ class HasAnyDailyChallengeUseCaseTest : AppTest() {
 
     private lateinit var sut: HasAnyDailyChallengeUseCase
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         sut = get()

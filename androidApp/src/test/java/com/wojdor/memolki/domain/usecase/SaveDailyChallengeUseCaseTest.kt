@@ -15,9 +15,9 @@ import com.wojdor.memolki.test.relaxedMockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlinx.datetime.LocalDate
 import org.koin.test.get
 import org.koin.test.inject
@@ -38,7 +38,7 @@ class SaveDailyChallengeUseCaseTest : AppTest() {
     private lateinit var notificationRepository: NotificationRepository
     private lateinit var sut: SaveDailyChallengeUseCase
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         notificationRepository = NotificationRepository(

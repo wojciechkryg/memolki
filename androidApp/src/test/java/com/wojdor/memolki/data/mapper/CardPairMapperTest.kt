@@ -9,8 +9,8 @@ import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.test.AppTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.Test
 
 @ExperimentalCoroutinesApi
 class CardPairMapperTest : AppTest() {

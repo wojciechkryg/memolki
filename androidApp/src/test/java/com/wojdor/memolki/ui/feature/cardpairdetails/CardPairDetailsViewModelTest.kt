@@ -6,9 +6,9 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.koin.test.get
 
 @ExperimentalCoroutinesApi
@@ -16,7 +16,7 @@ class CardPairDetailsViewModelTest : AppTest() {
 
     private lateinit var viewModel: CardPairDetailsViewModel
 
-    @Before
+    @BeforeTest
     override fun setup() {
         super.setup()
         viewModel = get()
