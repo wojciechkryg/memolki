@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import androidx.savedstate.read
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsScreen
 import com.wojdor.memolki.ui.feature.cardpairdetails.CardPairDetailsViewModel
 import com.wojdor.memolki.ui.feature.changelanguage.ChangeLanguageScreen
@@ -137,7 +138,7 @@ private fun NavGraphBuilder.gameScreen(navController: NavController) {
             }
         }
     ) { backStackEntry ->
-        val boardId = backStackEntry.arguments?.getString(NavArg.BOARD)
+        val boardId = backStackEntry.arguments?.read { getStringOrNull(NavArg.BOARD) }
         val isDailyChallenge = boardId == DAILY_CHALLENGE_BOARD_ID
         val gameViewModel = getGameViewModel(backStackEntry, navController)
         LaunchedEffect(boardId) {
