@@ -7,10 +7,11 @@ import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.util.analytics.Analytics
-import com.wojdor.memolki.util.billing.BillingHandler
+import com.wojdor.memolki.test.fake.FakeBillingHandler
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.test.BeforeTest
@@ -29,7 +30,7 @@ class AppViewModelTest : AppTest() {
 
     private val pushNotificationProvider: PushNotificationProvider by inject()
 
-    private val billingHandler: BillingHandler by inject()
+    private val billingHandler: FakeBillingHandler by inject()
 
     private lateinit var sut: AppViewModel
 
@@ -86,7 +87,7 @@ class AppViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verifyOnce { billingHandler.ensureConnected() }
+        assertEquals(1, billingHandler.ensureConnectedCount)
     }
 
     @Test

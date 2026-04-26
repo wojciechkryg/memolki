@@ -2,8 +2,8 @@ package com.wojdor.memolki.domain.usecase
 
 import com.wojdor.memolki.data.repository.CardRepository
 import com.wojdor.memolki.test.AppTest
+import com.wojdor.memolki.test.fake.FakeBillingHandler
 import com.wojdor.memolki.util.billing.BillingHandler
-import io.mockk.coEvery
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -16,7 +16,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
 
-    private val billingHandler: BillingHandler by inject()
+    private val billingHandler: FakeBillingHandler by inject()
 
     private val cardRepository: CardRepository by inject()
 
@@ -34,7 +34,7 @@ class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
     fun `when there are locked cards and unlock all is purchased then unlock all card pairs`() =
         runTest {
             // given
-            coEvery { billingHandler.isPurchased(BillingHandler.IAP_UNLOCK_ALL_CARDS) } returns true
+            billingHandler.purchasedProducts.add(BillingHandler.IAP_UNLOCK_ALL_CARDS)
 
             // when
             val result = sut().first()
@@ -47,9 +47,6 @@ class UnlockAllNewCardPairsIfPurchasedUseCaseTest : AppTest() {
     @Test
     fun `when there are locked cards and unlock all is not purchased then do not unlock all card pairs`() =
         runTest {
-            // given
-            coEvery { billingHandler.isPurchased(BillingHandler.IAP_UNLOCK_ALL_CARDS) } returns false
-
             // when
             val result = sut().first()
 

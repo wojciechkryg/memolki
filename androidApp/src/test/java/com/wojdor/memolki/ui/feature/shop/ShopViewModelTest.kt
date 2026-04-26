@@ -6,6 +6,7 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeBillingHandler
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingProduct
 import com.wojdor.memolki.util.billing.BillingStatusListener
@@ -35,7 +36,7 @@ class ShopViewModelTest : AppTest() {
 
     private val coinsPlayer: FakeCoinsPlayer by inject()
 
-    private val billingHandler: BillingHandler by inject()
+    private val billingHandler: FakeBillingHandler by inject()
 
     private val notificationScheduler: NotificationScheduler by inject()
 
@@ -75,15 +76,14 @@ class ShopViewModelTest : AppTest() {
     @Test
     fun `when purchase is completed then logPurchaseCompleted is called`() = runTest {
         // given
-        val listenerSlot = slot<BillingStatusListener>()
-        every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
         sut = get()
         testScheduler.advanceUntilIdle()
-        listenerSlot.captured.onProductsFetched(listOf(billingProduct("coins_small", priceMicros = 990_000L, currency = "USD")))
+        val listener = billingHandler.capturedListener!!
+        listener.onProductsFetched(listOf(billingProduct("coins_small", priceMicros = 990_000L, currency = "USD")))
         testScheduler.advanceUntilIdle()
 
         // when
-        listenerSlot.captured.onPurchaseSuccessful("coins_small")
+        listener.onPurchaseSuccessful("coins_small")
         testScheduler.advanceUntilIdle()
 
         // then
@@ -93,13 +93,11 @@ class ShopViewModelTest : AppTest() {
     @Test
     fun `when purchase fails then logPurchaseFailed is called`() = runTest {
         // given
-        val listenerSlot = slot<BillingStatusListener>()
-        every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
         sut = get()
         testScheduler.advanceUntilIdle()
 
         // when
-        listenerSlot.captured.onPurchaseFailed()
+        billingHandler.capturedListener!!.onPurchaseFailed()
         testScheduler.advanceUntilIdle()
 
         // then
@@ -288,17 +286,8 @@ class ShopViewModelTest : AppTest() {
     )
 
     private fun createSutWithCapturedBillingListener(): BillingStatusListener {
-        val listenerSlot = slot<BillingStatusListener>()
-        every { billingHandler.startConnection(capture(listenerSlot)) } answers {}
-        every { billingHandler.consumableProductIds } returns setOf(
-            BillingHandler.IAP_COINS_SMALL,
-            BillingHandler.IAP_COINS_BIG
-        )
-        every { billingHandler.nonConsumableProductIds } returns setOf(
-            BillingHandler.IAP_UNLOCK_ALL_CARDS
-        )
         sut = get()
-        return listenerSlot.captured
+        return billingHandler.capturedListener!!
     }
 
     @Test
@@ -510,12 +499,12 @@ class ShopViewModelTest : AppTest() {
     fun `when onPurchaseSuccessful with unknown consumable then coins are not rewarded`() =
         runTest {
             // given
-            val listener = createSutWithCapturedBillingListener()
-            every { billingHandler.consumableProductIds } returns setOf(
+            billingHandler.consumableProductIds = setOf(
                 BillingHandler.IAP_COINS_SMALL,
                 BillingHandler.IAP_COINS_BIG,
                 "unknown_consumable"
             )
+            val listener = createSutWithCapturedBillingListener()
             testScheduler.advanceUntilIdle()
 
             // when

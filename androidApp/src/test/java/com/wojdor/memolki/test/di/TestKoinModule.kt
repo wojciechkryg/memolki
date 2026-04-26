@@ -94,7 +94,7 @@ val testKoinModule = module {
     singleOf(::FakeCardPairMatchedPlayer) { bind<CardPairMatchedPlayer>() }
     singleOf(::FakeLevelCompletePlayer) { bind<LevelCompletePlayer>() }
     singleOf(::FakeAllRewardedAds) { bind<AllRewardedAds>() }
-    single<BillingHandler> { relaxedMockk() }
+    singleOf(::FakeBillingHandler) { bind<BillingHandler>() }
     singleOf(::FakeDailyChallengeDao) { bind<DailyChallengeDao>() }
     single<FirebaseMessaging> { relaxedMockk() }
     single<Analytics> { relaxedMockk() }

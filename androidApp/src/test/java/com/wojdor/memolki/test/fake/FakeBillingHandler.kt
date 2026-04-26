@@ -8,16 +8,22 @@ import com.wojdor.memolki.util.billing.BillingProduct
 import com.wojdor.memolki.util.billing.BillingStatusListener
 
 class FakeBillingHandler : BillingHandler {
-    override val consumableProductIds: Set<String> = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
-    override val nonConsumableProductIds: Set<String> = setOf(IAP_UNLOCK_ALL_CARDS)
+    override var consumableProductIds: Set<String> = setOf(IAP_COINS_SMALL, IAP_COINS_BIG)
+    override var nonConsumableProductIds: Set<String> = setOf(IAP_UNLOCK_ALL_CARDS)
 
     var purchasedProducts: MutableSet<String> = mutableSetOf()
+    var capturedListener: BillingStatusListener? = null
+        private set
+    var ensureConnectedCount: Int = 0
+        private set
 
     override fun startConnection(listener: BillingStatusListener) {
-        listener.onConnectionStatusChanged(true)
+        capturedListener = listener
     }
 
-    override fun ensureConnected() = Unit
+    override fun ensureConnected() {
+        ensureConnectedCount++
+    }
 
     override fun launchBillingFlow(product: BillingProduct) = Unit
 
