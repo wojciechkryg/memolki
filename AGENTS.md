@@ -114,9 +114,9 @@ Both return `Flow<Result<R>>` via `operator fun invoke()`. Override `execute()` 
 
 Conventions:
 - Named `[Verb][Noun]UseCase` (e.g. `GetSettingsUseCase`, `ToggleSettingsUseCase`)
-- Plain constructor — no `@Inject` (Koin wires dependencies by type from `AppKoinModule`)
+- Plain constructor — no `@Inject` (Koin wires dependencies by type; ViewModels are bound in `sharedKoinModule`, Android impls in `appKoinModule`)
 - **Dispatcher is always the 1st constructor parameter** — type `CoroutineDispatcher`
-- Dispatcher choice: unqualified (defaults to `Dispatchers.IO`) for anything touching system services, repositories, or I/O; inject `get(DefaultDispatcher)` for pure in-memory computation; `get(MainDispatcher)` only when the API requires the main thread. The `DefaultDispatcher` and `MainDispatcher` named qualifiers are defined in `di/AppKoinModule.kt` alongside the module.
+- Dispatcher choice: unqualified (defaults to `Dispatchers.IO`) for anything touching system services, repositories, or I/O; inject `get(DefaultDispatcher)` for pure in-memory computation; `get(MainDispatcher)` only when the API requires the main thread. The `DefaultDispatcher` and `MainDispatcher` named qualifiers are defined in `shared/src/commonMain/.../di/SharedKoinModule.kt`; the actual `Dispatchers.IO/Default/Main` bindings are platform-specific (Android: `appKoinModule`, iOS: `iosKoinModule`).
 - **Do NOT use `runCatching`** — the base class `.catch` block handles exceptions and reports to Crashlytics (see Analytics & Crashlytics section)
 
 Reference examples:
@@ -156,7 +156,7 @@ Each feature screen follows this structure under `ui/feature/{name}/`. All MVI d
 | `{Name}Intent.kt` | `:shared/commonMain` | Sealed class implementing `UiIntent`, entries named `On[Action]` |
 | `{Name}Effect.kt` | `:shared/commonMain` | Sealed class implementing `UiEffect` for one-shot side effects (navigation, toasts, showing overlays) |
 | `{Name}Callbacks.kt` | `:shared/commonMain` | (optional) Data class grouping lambdas for the screen, defaults to `= {}` |
-| `{Name}ViewModel.kt` | `:shared/commonMain` | Plain class extending `MviViewModel<Intent, State>` — bound in `AppKoinModule` via `viewModelOf(::{Name}ViewModel)` |
+| `{Name}ViewModel.kt` | `:shared/commonMain` | Plain class extending `MviViewModel<Intent, State>` — bound in `sharedKoinModule` via `viewModelOf(::{Name}ViewModel)` |
 | `{Name}Screen.kt` | `:androidApp` | `@Composable` with three-level hierarchy (see below) |
 
 **Base class:** `MviViewModel` (`shared/src/commonMain/.../ui/base/MviViewModel.kt`) manages intent→state flow via `sendIntent()`, `onIntent()`, `sendState { copy(...) }`, `sendEffect()`. State is persisted through `SavedStateHandle` as a JSON string via `kotlinx.serialization` — each ViewModel passes `FooState.serializer()` into its `super(...)` call. Malformed saved JSON (e.g. after a state-schema change) falls back to the initial state. Lives in commonMain thanks to multiplatform `androidx.lifecycle` artifacts.
@@ -302,21 +302,18 @@ Examples: `LocaleProvider` (commonMain expect + androidMain/iosMain actuals) / `
 
 ### Dependency Injection
 
-**Koin** — no annotations, wired by constructor types. All bindings declared in `androidApp/src/main/.../di/AppKoinModule.kt`:
+**Koin** — no annotations, wired by constructor types. Bindings split across three modules so iOS can reuse the platform-agnostic half:
+- **`sharedKoinModule`** (`shared/src/commonMain/.../di/SharedKoinModule.kt`) — DataSources, Repositories, Analytics, TimeProvider, AppStringProvider, formatters, StarCalculator, all use cases, all ViewModels, `DefaultDispatcher` / `MainDispatcher` qualifiers.
+- **`appKoinModule`** (`androidApp/.../di/AppKoinModule.kt`) — Android-only bindings: `Dispatchers.IO/Default/Main`, `Random`, `Firebase.analytics`, `FirebaseMessaging`, `DataStore<Preferences>` factory, `AppDatabase` builder, `AndroidEncryptor`, `AndroidLocalEncryptorKeyStore`, `AllCardPairsLocalDataSource` (per-flavor), every `Android*` impl binding, `expect class` providers, and Android-only classes (`InAppUpdate`, `NotificationCreator`, `AdsInitializer`).
+- **`iosKoinModule`** (`shared/src/iosMain/.../di/IosKoinModule.kt`) — iOS counterparts of the Android-only bindings (Phase 13ae). Mostly stub impls.
+
+Binding styles used across modules:
 - 41 `factoryOf(::FooUseCase)` for IO-dispatcher use cases (auto-wires because the unqualified `CoroutineDispatcher` binding is `Dispatchers.IO`)
 - Explicit `factory { FooUseCase(get(DefaultDispatcher), get(), …) }` for the ~15 use cases that need `@DefaultDispatcher` / `@MainDispatcher`
 - `viewModelOf(::FooViewModel)` for the 13 ViewModels
 - `singleOf(::FooProvider)` / `singleOf(::FooRepository)` for providers, repositories, data sources, util classes, framework singletons
 
-`App.kt` starts Koin:
-```kotlin
-startKoin {
-    androidContext(this@App)
-    modules(appKoinModule)
-}
-```
-
-`AppActivity`, `PushNotificationService`, `NotificationAlarmReceiver`, `BootReceiver` implement `KoinComponent` and use `by inject()` / `by viewModel()` for field-style access.
+`App.kt` starts Koin with both `sharedKoinModule` and `appKoinModule`. `AppActivity`, `PushNotificationService`, `NotificationAlarmReceiver`, `BootReceiver` implement `KoinComponent` and use `by inject()` / `by viewModel()` for field-style access.
 
 Coroutine dispatchers:
 - **Unqualified** `CoroutineDispatcher` → `Dispatchers.IO` (default)
@@ -352,15 +349,15 @@ Shared composables live in `ui/component/`. Before creating a new composable, ch
 - **Framework:** `kotlin.test` (multiplatform) + Turbine (Flow testing) + MockK + Koin Test (`KoinTest`). On JVM `kotlin.test` runs through the JUnit 4 backend, so MockK / Koin / Turbine all keep working — `@get:Rule`, `@RunWith` and the tests that need them stay JUnit-imported (e.g. `PreviewTest` for Paparazzi).
 - **Imports — always `kotlin.test`, never `org.junit`:** use `import kotlin.test.Test`, `import kotlin.test.assertEquals`, `import kotlin.test.BeforeTest`, `import kotlin.test.AfterTest`. Annotate with `@Test`, `@BeforeTest`, `@AfterTest`. Never write `import org.junit.Test` / `org.junit.Assert.*` / `@Before` / `@After`. The only exceptions are tests that genuinely need JUnit-only constructs (`@get:Rule`, `@RunWith`, `org.junit.Assume.assumeTrue`) — keep those imports JUnit-side; everything else stays `kotlin.test`.
 - **`kotlin.test` arg order vs JUnit:** `assertTrue(actual, message)`, `assertFalse(actual, message)`, `assertEquals(expected, actual, message)` — the optional message is **last**, not first. JUnit had it first; flipping the args is the most common compile error when porting.
-- **Base class:** `AppTest` (`test/AppTest.kt`) — implements `KoinTest`; starts Koin with `testKoinModule` in `@Before` and `stopKoin()` in `@After`; sets `Dispatchers.setMain(testDispatcher)` with the injected `StandardTestDispatcher`; initializes MockK annotations.
-- **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) mirrors `AppKoinModule` with fakes (`FakeEncryptor`, `FakeLocaleProvider`, `FakeTimeProvider`, `FakeNotificationScheduler`, etc. bound to their interfaces) + `relaxedMockk()` for platform dependencies tests rarely exercise directly (`HapticFeedback`, `BillingHandler` (interface), `Analytics`, `GameServices` (interface), Firebase, media players, `AllRewardedAds` (interface)). `Random(0)` for deterministic randomness. One `StandardTestDispatcher` shared across IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned.
+- **Base class:** `AppTest` (`test/AppTest.kt`) — implements `KoinTest`; starts Koin in `@BeforeTest` with `modules(sharedKoinModule, testKoinModule)` and `stopKoin()` in `@AfterTest`; sets `Dispatchers.setMain(testDispatcher)` with the injected `StandardTestDispatcher`; initializes MockK annotations.
+- **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) **layers on top of `sharedKoinModule`** — it does NOT redeclare use cases / ViewModels / repositories / DataSources / formatters; those come unchanged from production. It only contains test-only state (`SavedStateHandle`, mocked `Context`, `Random(0)`), the test dispatcher (single `StandardTestDispatcher` shared across IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned), 12 fakes overriding shared bindings (`FakeEncryptor`, `Fake*Provider`, `FakeAllCardPairsDataSource`, `FakeDataStore`, `FakeStringProvider`), and 12 `relaxedMockk()`s for platform deps tests rarely exercise (`HapticFeedback`, `BillingHandler`, `Analytics`, `GameServices`, `InAppReviewer`, sound players, `FirebaseMessaging`, `DailyChallengeDao`, `LocalEncryptorKeyStore`, `AllRewardedAds`). Koin's later-module-wins behavior makes overrides apply on top of the production graph.
 - **Test utilities:** `test/TestUtils.kt` — `relaxedMockk<T>()`, `verifyOnce()`, `coVerifyOnce()`
 - **Test naming:** backtick-quoted descriptive names: `` `when X then Y` ``
 
 Conventions:
 - Extend `AppTest`, annotate with `@ExperimentalCoroutinesApi`
 - Read Koin-managed dependencies with `private val foo: Foo by inject()`; use `@MockK` / `@RelaxedMockK` only for mocks local to the test
-- **SUT resolution:** every binding for ViewModels, UseCases, Repositories, DataSources, and formatters is in `TestKoinModule`, so resolve the SUT via Koin — `private lateinit var sut: FooViewModel` + `sut = get()` in `@Before setup()` (after `super.setup()` so Koin is started first). Import `org.koin.test.get`. This keeps tests stable when a class's constructor changes. Only inject the dependencies you need in the test body (for `verify {}`, state mutations, assertions).
+- **SUT resolution:** every binding for ViewModels, UseCases, Repositories, DataSources, and formatters lives in `sharedKoinModule` (loaded by `AppTest` alongside `TestKoinModule`), so resolve the SUT via Koin — `private lateinit var sut: FooViewModel` + `sut = get()` in `@BeforeTest setup()` (after `super.setup()` so Koin is started first). Import `org.koin.test.get`. This keeps tests stable when a class's constructor changes. Only inject the dependencies you need in the test body (for `verify {}`, state mutations, assertions).
 - **SUT-injection edge cases:**
   - If the test needs custom mocks that the SUT depends on, override the bindings in `setup()` with `loadKoinModules(module { factory<FooUseCase> { mockedInstance } })` BEFORE `sut = get()` (see `GameViewModelTest`).
   - If the SUT reads from `SavedStateHandle` at init time, inject the handle, populate it (`savedStateHandle["key"] = value`) BEFORE `sut = get()` (see `EnableNotificationsViewModelTest`).
