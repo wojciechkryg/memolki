@@ -20,11 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.shared.resources.Res
@@ -36,7 +34,9 @@ import com.wojdor.memolki.shared.resources.leave_game_body
 import com.wojdor.memolki.shared.resources.leave_game_leave
 import com.wojdor.memolki.shared.resources.leave_game_stay
 import com.wojdor.memolki.shared.resources.leave_game_title
-import org.jetbrains.compose.resources.stringResource as composeStringResource
+import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_HALF
+import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_WHOLE
+import org.jetbrains.compose.resources.stringResource
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.BaseMenuItem
 import com.wojdor.memolki.ui.feature.game.GameCallbacks
@@ -104,7 +104,7 @@ private fun CardsGridWithText(
                 ) {
                     if (!state.isDailyChallenge) {
                         AutoSizeText(
-                            text = composeStringResource(Res.string.level_count, state.level),
+                            text = stringResource(Res.string.level_count, state.level),
                             style = MaterialTheme.typography.headlineSmall
                         )
                     }
@@ -130,7 +130,7 @@ private fun CardsGridWithText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .alpha(animatedTextAlpha),
-                        text = composeStringResource(state.lastCardPressed.textRes),
+                        text = stringResource(state.lastCardPressed.textRes),
                         style = MaterialTheme.typography.displayMedium,
                     )
                 }
@@ -169,7 +169,7 @@ private fun CardDetails(state: GameState) {
                             .clip(FullRoundedShape)
                             .background(AppColors.Primary)
                             .padding(vertical = spacingL, horizontal = spacingXL),
-                        text = composeStringResource(state.lastCardPressed.textRes),
+                        text = stringResource(state.lastCardPressed.textRes),
                         style = MaterialTheme.typography.displayMedium,
                     )
                 }
@@ -201,12 +201,12 @@ private fun LeaveConfirmation(isDailyChallenge: Boolean, callbacks: GameCallback
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AutoSizeText(
-                    text = composeStringResource(titleRes),
+                    text = stringResource(titleRes),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(spacingM))
                 AutoSizeText(
-                    text = composeStringResource(bodyRes),
+                    text = stringResource(bodyRes),
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.height(spacingXL))
@@ -363,7 +363,7 @@ private fun getPreviewCards(matchedCount: Int = 6) = List(6) {
         id = "id",
         pairId = "pairId",
         textRes = Res.string.empty,
-        imageRes = if (it % 2 == 0) R.drawable.img_test_whole else R.drawable.img_test_half,
+        imageRes = if (it % 2 == 0) PREVIEW_IMAGE_WHOLE else PREVIEW_IMAGE_HALF,
         isFlippedFront = true,
         isPairMatched = it < matchedCount
     )
