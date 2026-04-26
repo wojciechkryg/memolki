@@ -12,10 +12,22 @@ import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.di.DefaultDispatcher
 import com.wojdor.memolki.di.MainDispatcher
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
+import com.wojdor.memolki.test.fake.FakeAllRewardedAds
 import com.wojdor.memolki.test.fake.FakeAppForegroundProvider
 import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
+import com.wojdor.memolki.test.fake.FakeBackgroundMusicPlayer
+import com.wojdor.memolki.test.fake.FakeBillingHandler
+import com.wojdor.memolki.test.fake.FakeCardFlipPlayer
+import com.wojdor.memolki.test.fake.FakeCardPairMatchedPlayer
+import com.wojdor.memolki.test.fake.FakeCoinsPlayer
+import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakeDataStore
 import com.wojdor.memolki.test.fake.FakeEncryptor
+import com.wojdor.memolki.test.fake.FakeGameServices
+import com.wojdor.memolki.test.fake.FakeHapticFeedback
+import com.wojdor.memolki.test.fake.FakeInAppReviewer
+import com.wojdor.memolki.test.fake.FakeLevelCompletePlayer
+import com.wojdor.memolki.test.fake.FakeLocalEncryptorKeyStore
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
@@ -44,7 +56,6 @@ import com.wojdor.memolki.util.provider.PushNotificationProvider
 import com.wojdor.memolki.util.provider.TimeProvider
 import com.wojdor.memolki.util.resource.StringProvider
 import com.wojdor.memolki.util.review.InAppReviewer
-import io.mockk.every
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -76,26 +87,27 @@ val testKoinModule = module {
     singleOf(::FakeTimeProvider) { bind<TimeProvider>() }
     singleOf(::FakeStringProvider) { bind<StringProvider>() }
 
+    singleOf(::FakeCoinsPlayer) { bind<CoinsPlayer>() }
+    singleOf(::FakeCardFlipPlayer) { bind<CardFlipPlayer>() }
+    singleOf(::FakeInAppReviewer) { bind<InAppReviewer>() }
+    singleOf(::FakeGameServices) { bind<GameServices>() }
+    singleOf(::FakeLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
+
     single<HapticFeedback> { relaxedMockk() }
     single<BackgroundMusicPlayer> { relaxedMockk() }
-    single<CoinsPlayer> { relaxedMockk() }
-    single<CardFlipPlayer> { relaxedMockk() }
     single<CardPairMatchedPlayer> { relaxedMockk() }
     single<LevelCompletePlayer> { relaxedMockk() }
     single<AllRewardedAds> {
         relaxedMockk<AllRewardedAds>().also { ads ->
             listOf(ads.endGameCoinsAd, ads.collectionCardPairAd, ads.shopCoinsAd).forEach { ad ->
-                every { ad.loadAndNotify(any(), any()) } answers {
+                io.mockk.every { ad.loadAndNotify(any(), any()) } answers {
                     secondArg<(Boolean) -> Unit>().invoke(false)
                 }
             }
         }
     }
     single<BillingHandler> { relaxedMockk() }
-    single<InAppReviewer> { relaxedMockk() }
-    single<GameServices> { relaxedMockk() }
+    single<DailyChallengeDao> { relaxedMockk() }
     single<FirebaseMessaging> { relaxedMockk() }
     single<Analytics> { relaxedMockk() }
-    single<DailyChallengeDao> { relaxedMockk() }
-    single<LocalEncryptorKeyStore> { relaxedMockk() }
 }

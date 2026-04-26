@@ -9,7 +9,7 @@ import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingProduct
 import com.wojdor.memolki.util.billing.BillingStatusListener
-import com.wojdor.memolki.util.media.CoinsPlayer
+import com.wojdor.memolki.test.fake.FakeCoinsPlayer
 import com.wojdor.memolki.util.media.HapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
@@ -33,7 +33,7 @@ class ShopViewModelTest : AppTest() {
 
     private val hapticFeedback: HapticFeedback by inject()
 
-    private val coinsPlayer: CoinsPlayer by inject()
+    private val coinsPlayer: FakeCoinsPlayer by inject()
 
     private val billingHandler: BillingHandler by inject()
 
@@ -187,7 +187,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        coVerify { coinsPlayer.playDelayed() }
+        assertEquals(1, coinsPlayer.playDelayedCount)
     }
 
     @Test
@@ -262,7 +262,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        coVerify { coinsPlayer.playDelayed() }
+        assertEquals(1, coinsPlayer.playDelayedCount)
     }
 
     @Test
@@ -524,7 +524,7 @@ class ShopViewModelTest : AppTest() {
 
             // then
             verify(exactly = 0) { analytics.logPurchaseCompleted(any(), any(), any()) }
-            coVerify(exactly = 0) { coinsPlayer.playDelayed() }
+            assertEquals(0, coinsPlayer.playDelayedCount)
         }
 
     @Test
