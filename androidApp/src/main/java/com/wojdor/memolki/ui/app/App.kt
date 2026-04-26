@@ -7,6 +7,7 @@ import dev.gitlive.firebase.analytics.analytics
 import dev.gitlive.firebase.crashlytics.crashlytics
 import com.wojdor.memolki.di.DATA_STORE_NAME
 import com.wojdor.memolki.di.appKoinModule
+import com.wojdor.memolki.di.sharedKoinModule
 import com.wojdor.memolki.ui.ads.AdsInitializer
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -22,7 +23,7 @@ class App : Application() {
         migrateLegacyDataStoreFile()
         startKoin {
             androidContext(this@App)
-            modules(appKoinModule)
+            modules(sharedKoinModule, appKoinModule)
         }
         disableFirebaseInDebug()
         initializeAds()
