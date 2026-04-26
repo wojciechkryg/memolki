@@ -12,6 +12,7 @@ import com.android.ide.common.rendering.api.SessionParams.RenderingMode
 import com.android.resources.NightMode
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
+import com.wojdor.memolki.util.formatter.AndroidEpochDayFormatter
 import com.wojdor.memolki.util.formatter.EpochDayFormatter
 import org.jetbrains.compose.resources.setResourceReaderAndroidContext
 import org.junit.After
@@ -46,7 +47,7 @@ class PreviewTest(
         startKoin {
             modules(
                 module {
-                    single<EpochDayFormatter> { com.wojdor.memolki.util.formatter.AndroidEpochDayFormatter() }
+                    single<EpochDayFormatter> { AndroidEpochDayFormatter() }
                 }
             )
         }

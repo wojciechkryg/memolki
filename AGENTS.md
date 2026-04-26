@@ -724,6 +724,12 @@ Use cases must **NOT** use `runCatching` to wrap their logic. The base class (`B
 - **No unnecessary blank lines** — do not add blank lines inside function bodies, between consecutive property declarations, or between tightly related statements. One blank line is fine between top-level declarations (functions, classes) and between logical sections, but avoid multiple consecutive blank lines or blank lines that add no readability value.
 - **Small, focused functions** — extract logic into small, well-named private functions rather than writing long blocks with deep nesting. Prefer flat, readable code with minimal indentation levels.
 - **Every file ends with a single newline** — always ensure exactly one trailing newline at the end of every file.
+- **Always use imports, never fully qualified names** — write `import com.foo.Bar` + `Bar()` at call sites, not `com.foo.Bar()` inline. The only exception is the file-level `@file:OptIn(...)` annotation. Applies everywhere: production code, tests, Koin modules, even one-shot references.
+
+### KMP file naming
+
+- **Plain filenames in every source set** — `expect`/`actual` files all share the same simple name (`Foo.kt`) in `commonMain`, `androidMain`, `iosMain`. Do NOT add `.android.kt` / `.ios.kt` / `.jvm.kt` suffixes; the source-set directory already disambiguates the platform.
+- **Class naming**: `expect` declarations stay unprefixed (`interface Foo` or `expect class Foo`). Concrete platform classes that implement a common interface use the platform prefix — `AndroidFoo`, `IosFoo` — to mirror existing types like `AndroidBillingHandler`, `AndroidGameServices`, `AndroidEpochDayFormatter`.
 
 ## Key Conventions
 

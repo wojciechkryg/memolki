@@ -15,22 +15,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
-import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.DailyChallengeModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.FadeEffectBottom
 import com.wojdor.memolki.ui.component.FadeEffectTop
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.dailychallengehistory.component.DailyChallengeHistoryItem
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.extension.TextSharer
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DailyChallengeHistoryScreen(
@@ -113,12 +114,13 @@ private fun HistoryList(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun DailyChallengeHistoryScreenPreview() {
-    val todayEpochDay = LocalDate.of(2026, 4, 11).toEpochDay()
+    val todayEpochDay = LocalDate(2026, 4, 11).toEpochDays().toLong()
     AppTheme {
-        DailyChallengeHistoryScreen(
+        PreviewBackground {
+            DailyChallengeHistoryScreen(
             state = DailyChallengeHistoryState(
                 todayEpochDay = todayEpochDay,
                 challenges = listOf(
@@ -160,6 +162,7 @@ private fun DailyChallengeHistoryScreenPreview() {
                     )
                 )
             )
-        )
+            )
+        }
     }
 }

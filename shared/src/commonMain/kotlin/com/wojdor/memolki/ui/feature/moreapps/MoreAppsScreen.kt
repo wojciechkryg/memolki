@@ -1,19 +1,17 @@
 package com.wojdor.memolki.ui.feature.moreapps
 
-import android.app.Activity
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.net.toUri
-import org.koin.androidx.compose.koinViewModel
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.moreapps.component.MoreAppsContent
 import com.wojdor.memolki.ui.theme.AppTheme
+import com.wojdor.memolki.util.AppOpener
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun MoreAppsScreen(
@@ -28,49 +26,12 @@ fun MoreAppsScreen(
 private fun HandleEffect(
     viewModel: MoreAppsViewModel
 ) {
-    val activity = LocalActivity.current
+    val appOpener = koinInject<AppOpener>()
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            is MoreAppsEffect.ShowAppInstall -> activity?.let {
-                showAppInstall(it, effect.app)
-            }
-
-            is MoreAppsEffect.OpenApp -> activity?.let {
-                openApp(it, effect.app)
-            }
+            is MoreAppsEffect.ShowAppInstall -> appOpener.showAppInstall(effect.app.appId)
+            is MoreAppsEffect.OpenApp -> appOpener.openApp(effect.app.appId)
         }
-    }
-}
-
-private fun showAppInstall(
-    activity: Activity,
-    app: AppModel
-) {
-    val id = app.appId
-    try {
-        activity.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                "market://details?id=$id".toUri()
-            )
-        )
-    } catch (error: ActivityNotFoundException) {
-        activity.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                "https://play.google.com/store/apps/details?id=$id".toUri()
-            )
-        )
-    }
-}
-
-private fun openApp(
-    activity: Activity,
-    app: AppModel
-) {
-    activity.packageManager.getLaunchIntentForPackage(app.appId)?.let {
-        it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        activity.startActivity(it)
     }
 }
 
@@ -93,13 +54,15 @@ private fun MoreAppsScreen(
     MoreAppsContent(state, callbacks)
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun MoreAppsScreenPreview() {
     AppTheme {
-        MoreAppsScreen(
-            state = MoreAppsState(AppModel.all()),
-            callbacks = MoreAppsCallbacks()
-        )
+        PreviewBackground {
+            MoreAppsScreen(
+                state = MoreAppsState(AppModel.all()),
+                callbacks = MoreAppsCallbacks()
+            )
+        }
     }
 }

@@ -1,11 +1,5 @@
 package com.wojdor.memolki.ui.feature.enablenotifications
 
-import android.Manifest
-import android.os.Build
-import androidx.activity.compose.BackHandler
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -32,21 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToGameFromEndGame
 import com.wojdor.memolki.ui.app.navigateToMenu
 import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.BackHandler
 import com.wojdor.memolki.ui.component.EdgeSparklesEffect
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.component.shimmerEffect
@@ -56,8 +47,13 @@ import com.wojdor.memolki.ui.theme.animated
 import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingXL
+import com.wojdor.memolki.util.permission.rememberNotificationPermissionRequester
 import com.wojdor.memolki.util.throttleClick
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun EnableNotificationsScreen(
@@ -75,15 +71,12 @@ private fun HandleEffect(
     viewModel: EnableNotificationsViewModel,
     navController: NavController
 ) {
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
+    val permissionRequester = rememberNotificationPermissionRequester { isGranted ->
         viewModel.sendIntent(EnableNotificationsIntent.OnPermissionResult(isGranted))
     }
     CollectUiEffects(viewModel) { effect ->
         when (effect) {
-            EnableNotificationsEffect.RequestNotificationPermission ->
-                requestNotificationPermission(permissionLauncher, viewModel)
+            EnableNotificationsEffect.RequestNotificationPermission -> permissionRequester.request()
 
             is EnableNotificationsEffect.NavigateToGame -> navController.navigateToGameFromEndGame(
                 effect.boardId
@@ -93,17 +86,6 @@ private fun HandleEffect(
             EnableNotificationsEffect.NavigateToCollection -> navController.navigateToCollection()
             EnableNotificationsEffect.NavigateToShop -> navController.navigateToShop()
         }
-    }
-}
-
-private fun requestNotificationPermission(
-    permissionLauncher: ManagedActivityResultLauncher<String, Boolean>,
-    viewModel: EnableNotificationsViewModel
-) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-    } else {
-        viewModel.sendIntent(EnableNotificationsIntent.OnPermissionResult(true))
     }
 }
 
@@ -195,12 +177,14 @@ private fun EnableNotificationsScreen(
 
 private const val LATER_BUTTON_DELAY = 3000L
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun EnableNotificationsScreenPreview() {
     AppTheme {
-        EnableNotificationsScreen(
-            state = EnableNotificationsState()
-        )
+        PreviewBackground {
+            EnableNotificationsScreen(
+                state = EnableNotificationsState()
+            )
+        }
     }
 }
