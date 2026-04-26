@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,15 +16,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
-import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.app_logo
+import com.wojdor.memolki.shared.resources.ic_leaderboard
+import com.wojdor.memolki.shared.resources.ic_settings
+import com.wojdor.memolki.shared.resources.leaderboard
+import com.wojdor.memolki.shared.resources.settings
 import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
-import com.wojdor.memolki.ui.component.XmlDrawable
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.menu.MenuCallbacks
 import com.wojdor.memolki.ui.feature.menu.MenuState
@@ -32,6 +35,9 @@ import com.wojdor.memolki.ui.theme.spacingL
 import com.wojdor.memolki.ui.theme.spacingM
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.provider.RecordingModeProvider.RECORDING_MODE
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MenuContent(
@@ -43,12 +49,14 @@ fun MenuContent(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            XmlDrawable(
+            val logoApp = state.currentApp ?: AppModel.FruitHalf
+            Image(
                 modifier = Modifier
                     .size(320.dp)
                     .weight(2f),
-                drawableRes = R.drawable.ic_logo,
+                painter = painterResource(logoApp.imageRes),
                 alignment = Alignment.BottomCenter,
+                contentScale = ContentScale.Fit,
                 contentDescription = stringResource(Res.string.app_logo)
             )
             Spacer(modifier = Modifier.weight(0.4f))
@@ -90,7 +98,7 @@ fun MenuContent(
                                 )
 
                                 is MenuModel.Leaderboard -> IconItem(
-                                    iconRes = R.drawable.ic_leaderboard,
+                                    iconRes = Res.drawable.ic_leaderboard,
                                     contentDescription = stringResource(Res.string.leaderboard),
                                     onClick = callbacks.onLeaderboardClick
                                 )
@@ -121,7 +129,7 @@ fun MenuContent(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(end = spacingL, bottom = settingsBottomPadding),
-            iconRes = R.drawable.ic_settings,
+            iconRes = Res.drawable.ic_settings,
             size = 32.dp,
             contentDescription = stringResource(Res.string.settings),
             onClick = callbacks.onSettingsClick
@@ -135,13 +143,14 @@ private fun MenuContentPreview() {
     AppTheme {
         MenuContent(
             state = MenuState(
-                listOf(
+                menu = listOf(
                     MenuModel.Play,
                     MenuModel.Collection,
                     MenuModel.Leaderboard,
                     MenuModel.Settings
                 ),
-                AppModel.VegetableHalf
+                currentApp = AppModel.FruitHalf,
+                otherAppModel = AppModel.VegetableHalf
             ),
             callbacks = MenuCallbacks()
         )
@@ -154,12 +163,13 @@ private fun MenuContentWithoutMoreAppsPreview() {
     AppTheme {
         MenuContent(
             state = MenuState(
-                listOf(
+                menu = listOf(
                     MenuModel.Play,
                     MenuModel.Collection,
                     MenuModel.Leaderboard,
                     MenuModel.Settings
-                )
+                ),
+                currentApp = AppModel.FruitHalf
             ),
             callbacks = MenuCallbacks()
         )

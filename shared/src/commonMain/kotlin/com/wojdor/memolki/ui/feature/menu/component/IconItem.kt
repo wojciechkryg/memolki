@@ -1,6 +1,5 @@
 package com.wojdor.memolki.ui.feature.menu.component
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -14,20 +13,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.wojdor.memolki.R
+import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.ic_leaderboard
 import com.wojdor.memolki.ui.component.bounceClickEffect
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.util.throttleClick
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun IconItem(
     modifier: Modifier = Modifier,
-    @DrawableRes iconRes: Int,
+    iconRes: DrawableResource,
     size: Dp = 96.dp,
     contentDescription: String? = null,
     onClick: () -> Unit = {}
@@ -56,6 +57,6 @@ fun IconItem(
 @Composable
 private fun IconItemPreview() {
     AppTheme {
-        IconItem(iconRes = R.drawable.ic_leaderboard)
+        IconItem(iconRes = Res.drawable.ic_leaderboard)
     }
 }

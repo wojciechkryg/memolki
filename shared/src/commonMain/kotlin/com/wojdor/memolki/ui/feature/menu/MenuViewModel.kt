@@ -2,6 +2,7 @@ package com.wojdor.memolki.ui.feature.menu
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.wojdor.memolki.domain.model.AppModel
 import com.wojdor.memolki.domain.model.MenuModel
 import com.wojdor.memolki.domain.usecase.CheckDailyLoginStreakUseCase
 import com.wojdor.memolki.domain.usecase.GetMenuUseCase
@@ -10,6 +11,7 @@ import com.wojdor.memolki.domain.usecase.GetTotalCardPairsMatchedUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalGamesPlayedUseCase
 import com.wojdor.memolki.ui.base.MviViewModel
+import com.wojdor.memolki.util.provider.PackageNameProvider
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenChooseBoardScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenCollectionScreen
 import com.wojdor.memolki.ui.feature.menu.MenuEffect.OpenLeaderboardScreen
@@ -39,7 +41,8 @@ class MenuViewModel(
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val getTotalCardPairsMatchedUseCase: GetTotalCardPairsMatchedUseCase,
     private val getTotalGamesPlayedUseCase: GetTotalGamesPlayedUseCase,
-    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase
+    private val checkDailyLoginStreakUseCase: CheckDailyLoginStreakUseCase,
+    private val packageNameProvider: PackageNameProvider
 ) : MviViewModel<MenuIntent, MenuState>(
     savedStateHandle,
     MenuState.serializer(),
@@ -47,7 +50,13 @@ class MenuViewModel(
 ) {
 
     init {
+        sendState { copy(currentApp = resolveCurrentApp()) }
         loadMenu()
+    }
+
+    private fun resolveCurrentApp(): AppModel? {
+        val packageName = packageNameProvider.providePackageName()
+        return AppModel.all().firstOrNull { it.appId == packageName }
     }
 
     override fun onIntent(intent: MenuIntent) {

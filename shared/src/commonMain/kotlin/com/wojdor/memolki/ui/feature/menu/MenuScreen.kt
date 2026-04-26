@@ -3,9 +3,6 @@ package com.wojdor.memolki.ui.feature.menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
-import org.koin.androidx.compose.koinViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -17,10 +14,14 @@ import com.wojdor.memolki.ui.app.navigateToMoreApps
 import com.wojdor.memolki.ui.app.navigateToSettings
 import com.wojdor.memolki.ui.app.navigateToShop
 import com.wojdor.memolki.ui.base.CollectUiEffects
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.menu.component.MenuContent
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.util.gameservices.GameServices
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun MenuScreen(
@@ -100,39 +101,45 @@ private fun MenuScreen(
     MenuContent(state, callbacks)
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun MenuScreenPreview() {
     AppTheme {
-        MenuScreen(
-            state = MenuState(
-                listOf(
-                    MenuModel.Play,
-                    MenuModel.Collection,
-                    MenuModel.Leaderboard,
-                    MenuModel.Settings
+        PreviewBackground {
+            MenuScreen(
+                state = MenuState(
+                    menu = listOf(
+                        MenuModel.Play,
+                        MenuModel.Collection,
+                        MenuModel.Leaderboard,
+                        MenuModel.Settings
+                    ),
+                    currentApp = AppModel.FruitHalf,
+                    otherAppModel = AppModel.VegetableHalf
                 ),
-                AppModel.VegetableHalf
-            ),
-            callbacks = MenuCallbacks()
-        )
+                callbacks = MenuCallbacks()
+            )
+        }
     }
 }
 
 @Composable
-@Preview(showBackground = true)
+@Preview
 private fun MenuScreenWithoutMoreAppsPreview() {
     AppTheme {
-        MenuScreen(
-            state = MenuState(
-                listOf(
-                    MenuModel.Play,
-                    MenuModel.Collection,
-                    MenuModel.Leaderboard,
-                    MenuModel.Settings
-                )
-            ),
-            callbacks = MenuCallbacks()
-        )
+        PreviewBackground {
+            MenuScreen(
+                state = MenuState(
+                    menu = listOf(
+                        MenuModel.Play,
+                        MenuModel.Collection,
+                        MenuModel.Leaderboard,
+                        MenuModel.Settings
+                    ),
+                    currentApp = AppModel.FruitHalf
+                ),
+                callbacks = MenuCallbacks()
+            )
+        }
     }
 }

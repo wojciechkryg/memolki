@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MenuState(
     val menu: List<MenuModel> = emptyList(),
+    val currentApp: AppModel? = null,
     val otherAppModel: AppModel? = null,
     val hasPlayedAnyGame: Boolean = false
 ) : UiState
