@@ -1,21 +1,14 @@
+@file:JvmName("LoggerAndroid")
+
 package com.wojdor.memolki.util.extension
 
 import android.util.Log
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.crashlytics.crashlytics
+import kotlin.jvm.JvmName
 
-actual fun Any.logD(message: String) {
-    Log.d(this::class.simpleName, message)
+internal actual fun logD(tag: String, message: String) {
+    Log.d(tag, message)
 }
 
-actual fun Any.logE(message: String, throwable: Throwable) {
-    val tag = this::class.simpleName ?: "Unknown"
+internal actual fun logE(tag: String, message: String, throwable: Throwable) {
     runCatching { Log.e(tag, message, throwable) }
-    runCatching {
-        Firebase.crashlytics.apply {
-            setCustomKey("source", tag)
-            log("[$tag] $message")
-            recordException(throwable)
-        }
-    }
 }
