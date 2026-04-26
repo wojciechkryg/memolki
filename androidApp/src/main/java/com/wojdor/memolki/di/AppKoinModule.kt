@@ -104,8 +104,12 @@ import com.wojdor.memolki.util.extension.AndroidTextSharer
 import com.wojdor.memolki.util.extension.AndroidToaster
 import com.wojdor.memolki.util.extension.TextSharer
 import com.wojdor.memolki.util.extension.Toaster
+import com.wojdor.memolki.util.AndroidAppOpener
+import com.wojdor.memolki.util.AppOpener
+import com.wojdor.memolki.util.formatter.AndroidEpochDayFormatter
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
+import com.wojdor.memolki.util.formatter.EpochDayFormatter
 import com.wojdor.memolki.util.formatter.TimeFormatter
 import com.wojdor.memolki.util.resource.AppStringProvider
 import com.wojdor.memolki.util.resource.StringProvider
@@ -199,6 +203,8 @@ val appKoinModule = module {
     singleOf(::AndroidInAppReviewer) { bind<InAppReviewer>() }
     singleOf(::AndroidTextSharer) { bind<TextSharer>() }
     singleOf(::AndroidToaster) { bind<Toaster>() }
+    singleOf(::AndroidAppOpener) { bind<AppOpener>() }
+    singleOf(::AndroidEpochDayFormatter) { bind<EpochDayFormatter>() }
     singleOf(::InAppUpdate)
     singleOf(::NotificationCreator)
     singleOf(::AndroidNotificationScheduler) { bind<NotificationScheduler>() }

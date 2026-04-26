@@ -12,11 +12,16 @@ import com.android.ide.common.rendering.api.SessionParams.RenderingMode
 import com.android.resources.NightMode
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
+import com.wojdor.memolki.util.formatter.EpochDayFormatter
 import org.jetbrains.compose.resources.setResourceReaderAndroidContext
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
 import sergio.sastre.composable.preview.scanner.android.AndroidComposablePreviewScanner
 import sergio.sastre.composable.preview.scanner.android.AndroidPreviewInfo
 import sergio.sastre.composable.preview.scanner.core.preview.ComposablePreview
@@ -38,6 +43,18 @@ class PreviewTest(
     @Before
     fun configureComposeResources() {
         setResourceReaderAndroidContext(paparazzi.context)
+        startKoin {
+            modules(
+                module {
+                    single<EpochDayFormatter> { com.wojdor.memolki.util.formatter.AndroidEpochDayFormatter() }
+                }
+            )
+        }
+    }
+
+    @After
+    fun stopKoinAfterTest() {
+        stopKoin()
     }
 
     @Test
