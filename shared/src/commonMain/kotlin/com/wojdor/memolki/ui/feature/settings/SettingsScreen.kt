@@ -10,8 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.SettingModel
 import com.wojdor.memolki.shared.resources.Res
@@ -19,9 +17,12 @@ import com.wojdor.memolki.shared.resources.setting_language
 import com.wojdor.memolki.ui.app.navigateToChangeLanguage
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.BaseMenuItem
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.settings.component.ToggleSettingButton
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingXL
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SettingsScreen(
@@ -79,34 +80,38 @@ private fun SettingsScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun SettingsScreenPreview() {
     AppTheme {
-        SettingsScreen(
-            state = SettingsState(
-                listOf(
-                    SettingModel.Music(true),
-                    SettingModel.Sound(true),
-                    SettingModel.Vibration(true)
+        PreviewBackground {
+            SettingsScreen(
+                state = SettingsState(
+                    listOf(
+                        SettingModel.Music(true),
+                        SettingModel.Sound(true),
+                        SettingModel.Vibration(true)
+                    )
                 )
             )
-        )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun SettingsScreenDisabledPreview() {
     AppTheme {
-        SettingsScreen(
-            state = SettingsState(
-                listOf(
-                    SettingModel.Music(false),
-                    SettingModel.Sound(false),
-                    SettingModel.Vibration(false)
+        PreviewBackground {
+            SettingsScreen(
+                state = SettingsState(
+                    listOf(
+                        SettingModel.Music(false),
+                        SettingModel.Sound(false),
+                        SettingModel.Vibration(false)
+                    )
                 )
             )
-        )
+        }
     }
 }

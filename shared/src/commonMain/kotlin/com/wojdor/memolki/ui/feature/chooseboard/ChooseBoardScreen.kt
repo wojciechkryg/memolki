@@ -13,19 +13,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
-import com.wojdor.memolki.R
-import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.BoardModel
+import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.app.navigateToCollection
 import com.wojdor.memolki.ui.app.navigateToDailyChallenge
 import com.wojdor.memolki.ui.app.navigateToDailyChallengeHistory
 import com.wojdor.memolki.ui.app.navigateToGame
 import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.EdgeSparklesEffectWhen
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.component.pulseEffect
 import com.wojdor.memolki.ui.feature.chooseboard.component.ChooseBoardItem
 import com.wojdor.memolki.ui.feature.chooseboard.component.DailyChallengeItem
@@ -33,6 +30,9 @@ import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingS
 import com.wojdor.memolki.ui.theme.spacingXL
 import com.wojdor.memolki.ui.theme.spacingXXXL
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ChooseBoardScreen(
@@ -129,46 +129,50 @@ private fun ChooseBoardScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ChooseBoardScreenPreview() {
     AppTheme {
-        ChooseBoardScreen(
-            state = ChooseBoardState(
-                boards = listOf(
-                    BoardModel.Grid2x3(isUnlocked = true),
-                    BoardModel.Grid3x4(isUnlocked = true),
-                    BoardModel.Grid4x4(),
-                    BoardModel.Grid4x5(),
-                    BoardModel.Grid4x6(),
-                    BoardModel.Grid5x6()
+        PreviewBackground {
+            ChooseBoardScreen(
+                state = ChooseBoardState(
+                    boards = listOf(
+                        BoardModel.Grid2x3(isUnlocked = true),
+                        BoardModel.Grid3x4(isUnlocked = true),
+                        BoardModel.Grid4x4(),
+                        BoardModel.Grid4x5(),
+                        BoardModel.Grid4x6(),
+                        BoardModel.Grid5x6()
+                    ),
+                    hasPlayedAnyGame = true
                 ),
-                hasPlayedAnyGame = true
-            ),
-            callbacks = ChooseBoardCallbacks()
-        )
+                callbacks = ChooseBoardCallbacks()
+            )
+        }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ChooseBoardScreenDailyChallengeCompletedPreview() {
     AppTheme {
-        ChooseBoardScreen(
-            state = ChooseBoardState(
-                boards = listOf(
-                    BoardModel.Grid2x3(isUnlocked = true),
-                    BoardModel.Grid3x4(isUnlocked = true),
-                    BoardModel.Grid4x4(),
-                    BoardModel.Grid4x5(),
-                    BoardModel.Grid4x6(),
-                    BoardModel.Grid5x6()
+        PreviewBackground {
+            ChooseBoardScreen(
+                state = ChooseBoardState(
+                    boards = listOf(
+                        BoardModel.Grid2x3(isUnlocked = true),
+                        BoardModel.Grid3x4(isUnlocked = true),
+                        BoardModel.Grid4x4(),
+                        BoardModel.Grid4x5(),
+                        BoardModel.Grid4x6(),
+                        BoardModel.Grid5x6()
+                    ),
+                    isDailyChallengeCompleted = true,
+                    hasDailyChallengeHistory = true,
+                    hasPlayedAnyGame = true
                 ),
-                isDailyChallengeCompleted = true,
-                hasDailyChallengeHistory = true,
-                hasPlayedAnyGame = true
-            ),
-            callbacks = ChooseBoardCallbacks()
-        )
+                callbacks = ChooseBoardCallbacks()
+            )
+        }
     }
 }

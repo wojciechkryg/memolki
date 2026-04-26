@@ -12,8 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.koinViewModel
 import androidx.navigation.NavController
 import com.wojdor.memolki.domain.model.LanguageModel
 import com.wojdor.memolki.shared.resources.Res
@@ -29,9 +27,12 @@ import com.wojdor.memolki.ui.base.CollectUiEffects
 import com.wojdor.memolki.ui.component.FadeEffectBottom
 import com.wojdor.memolki.ui.component.FadeEffectTop
 import com.wojdor.memolki.ui.component.FullScreenOverlay
+import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.changelanguage.component.LanguageButton
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.spacingM
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ChangeLanguageScreen(
@@ -105,25 +106,27 @@ private fun ChangeLanguageScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ChangeLanguageScreenPreview() {
     AppTheme {
-        val currentLanguage = LanguageModel(Res.string.language_english, "en")
-        ChangeLanguageScreen(
-            state = ChangeLanguageState(
-                languages = listOf(
-                    LanguageModel(Res.string.language_arabic, "ar"),
-                    LanguageModel(Res.string.language_czech, "cs"),
-                    LanguageModel(Res.string.language_danish, "da"),
-                    LanguageModel(Res.string.language_german, "de"),
-                    LanguageModel(Res.string.language_greek, "el"),
-                    currentLanguage,
-                    LanguageModel(Res.string.language_spanish, "es"),
-                    LanguageModel(Res.string.language_estonian, "et")
-                ),
-                currentLanguage = currentLanguage
+        PreviewBackground {
+            val currentLanguage = LanguageModel(Res.string.language_english, "en")
+            ChangeLanguageScreen(
+                state = ChangeLanguageState(
+                    languages = listOf(
+                        LanguageModel(Res.string.language_arabic, "ar"),
+                        LanguageModel(Res.string.language_czech, "cs"),
+                        LanguageModel(Res.string.language_danish, "da"),
+                        LanguageModel(Res.string.language_german, "de"),
+                        LanguageModel(Res.string.language_greek, "el"),
+                        currentLanguage,
+                        LanguageModel(Res.string.language_spanish, "es"),
+                        LanguageModel(Res.string.language_estonian, "et")
+                    ),
+                    currentLanguage = currentLanguage
+                )
             )
-        )
+        }
     }
 }
