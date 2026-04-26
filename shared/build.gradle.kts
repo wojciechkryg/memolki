@@ -48,6 +48,7 @@ kotlin {
             api(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
+            implementation(kotlin("test"))
         }
         androidMain.dependencies {
             implementation(project.dependencies.platform(libs.firebase.bom))

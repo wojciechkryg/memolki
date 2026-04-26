@@ -3,8 +3,8 @@ package com.wojdor.memolki.domain.model
 import com.wojdor.memolki.domain.model.StarCalculator.Companion.MAX_STARS
 import com.wojdor.memolki.domain.model.StarCalculator.Companion.MIN_STARS
 import com.wojdor.memolki.domain.model.StarCalculator.Companion.TWO_STARS
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class StarCalculatorTest {
 
