@@ -4,7 +4,6 @@ import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSource
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
-import com.wojdor.memolki.test.relaxedMockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals

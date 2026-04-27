@@ -2,8 +2,6 @@ package com.wojdor.memolki.test
 
 import com.wojdor.memolki.di.sharedKoinModule
 import com.wojdor.memolki.test.di.testKoinModule
-import io.mockk.MockKAnnotations
-import io.mockk.unmockkAll
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,13 +23,11 @@ abstract class AppTest : KoinTest {
     open fun setup() {
         startKoin { modules(sharedKoinModule, testKoinModule) }
         Dispatchers.setMain(testDispatcher)
-        MockKAnnotations.init(this)
     }
 
     @AfterTest
     open fun tearDown() {
         stopKoin()
-        unmockkAll()
         Dispatchers.resetMain()
     }
 }

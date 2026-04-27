@@ -3,7 +3,6 @@ package com.wojdor.memolki.ui.feature.changelanguage
 import app.cash.turbine.test
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
-import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.LocaleProvider

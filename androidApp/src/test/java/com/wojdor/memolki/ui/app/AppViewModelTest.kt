@@ -5,7 +5,6 @@ import com.wojdor.memolki.test.dailyChallengeEntity
 import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
-import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeBillingHandler
 import com.wojdor.memolki.util.provider.PushNotificationProvider
