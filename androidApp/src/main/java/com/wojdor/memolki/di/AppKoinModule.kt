@@ -46,6 +46,7 @@ import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationCreator
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.ActivityProvider
+import com.wojdor.memolki.util.provider.AndroidAppForegroundProvider
 import com.wojdor.memolki.util.provider.AndroidAppInstalledProvider
 import com.wojdor.memolki.util.provider.AndroidLocaleProvider
 import com.wojdor.memolki.util.provider.AndroidPackageNameProvider
@@ -96,7 +97,7 @@ val appKoinModule = module {
     singleOf(::AllCardPairsLocalDataSource) { bind<AllCardPairsDataSource>() }
 
     singleOf(::ActivityProvider)
-    singleOf(::AppForegroundProvider)
+    singleOf(::AndroidAppForegroundProvider) { bind<AppForegroundProvider>() }
     singleOf(::AndroidAppInstalledProvider) { bind<AppInstalledProvider>() }
     singleOf(::AndroidLocaleProvider) { bind<LocaleProvider>() }
     singleOf(::AndroidPackageNameProvider) { bind<PackageNameProvider>() }

@@ -1,7 +1,7 @@
 package com.wojdor.memolki.util.provider
 
-actual open class AppForegroundProvider actual constructor() {
+class IosAppForegroundProvider : AppForegroundProvider {
 
     // TODO(ios): detect foreground via UIApplication.sharedApplication.applicationState.
-    actual open fun isAppInForeground(): Boolean = true
+    override fun isAppInForeground(): Boolean = true
 }

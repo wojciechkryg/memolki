@@ -42,6 +42,7 @@ import com.wojdor.memolki.util.notification.IosNotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.AppForegroundProvider
 import com.wojdor.memolki.util.provider.AppInstalledProvider
+import com.wojdor.memolki.util.provider.IosAppForegroundProvider
 import com.wojdor.memolki.util.provider.IosAppInstalledProvider
 import com.wojdor.memolki.util.provider.IosLocaleProvider
 import com.wojdor.memolki.util.provider.IosPackageNameProvider
@@ -103,7 +104,7 @@ val iosKoinModule = module {
 
     singleOf(::IosAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
 
-    singleOf(::AppForegroundProvider)
+    singleOf(::IosAppForegroundProvider) { bind<AppForegroundProvider>() }
     singleOf(::IosAppInstalledProvider) { bind<AppInstalledProvider>() }
     singleOf(::IosLocaleProvider) { bind<LocaleProvider>() }
     singleOf(::IosPackageNameProvider) { bind<PackageNameProvider>() }
