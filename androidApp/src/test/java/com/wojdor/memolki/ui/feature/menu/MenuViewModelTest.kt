@@ -15,9 +15,8 @@ import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnLeaderboardClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnMoreAppsClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnPlayClick
 import com.wojdor.memolki.ui.feature.menu.MenuIntent.OnSettingsClick
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
@@ -32,7 +31,7 @@ import org.koin.test.inject
 class MenuViewModelTest : AppTest() {
 
     private val hapticFeedback: FakeHapticFeedback by inject()
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
     private val userRepository: UserRepository by inject()
 
     private lateinit var sut: MenuViewModel
@@ -128,7 +127,7 @@ class MenuViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logLeaderboardOpened() }
+        assertEquals(1, analytics.leaderboardOpenedCount)
     }
 
     @Test
@@ -138,7 +137,7 @@ class MenuViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logMoreAppsClicked() }
+        assertEquals(1, analytics.moreAppsClickedCount)
     }
 
     @Test
@@ -160,7 +159,7 @@ class MenuViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logShopOpenedFromDailyReward() }
+        assertEquals(1, analytics.shopOpenedFromDailyRewardCount)
     }
 
     @Test

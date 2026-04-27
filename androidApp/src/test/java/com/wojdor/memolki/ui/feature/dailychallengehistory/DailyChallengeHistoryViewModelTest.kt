@@ -7,7 +7,7 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.test.fake.FakeTimeProvider
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,7 +23,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class DailyChallengeHistoryViewModelTest : AppTest() {
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
@@ -59,7 +59,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logDailyChallengeHistoryOpened() }
+        assertEquals(1, analytics.dailyChallengeHistoryOpenedCount)
     }
 
     @Test
@@ -147,7 +147,7 @@ class DailyChallengeHistoryViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logDailyChallengeHistoryShareClicked(20001L) }
+        assertEquals(20001L, analytics.lastDailyChallengeHistoryShareClicked)
     }
 
     @Test

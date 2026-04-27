@@ -78,6 +78,7 @@ import com.wojdor.memolki.ui.feature.menu.MenuViewModel
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsViewModel
 import com.wojdor.memolki.ui.feature.settings.SettingsViewModel
 import com.wojdor.memolki.ui.feature.shop.ShopViewModel
+import com.wojdor.memolki.util.analytics.AppAnalytics
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
@@ -105,7 +106,7 @@ val sharedKoinModule = module {
     singleOf(::NotificationRepository)
     singleOf(::SettingsRepository)
     singleOf(::UserRepository)
-    singleOf(::Analytics)
+    singleOf(::AppAnalytics) { bind<Analytics>() }
     singleOf(::TimeProvider)
     singleOf(::AppStringProvider) { bind<StringProvider>() }
     factoryOf(::CasualShareFormatter)

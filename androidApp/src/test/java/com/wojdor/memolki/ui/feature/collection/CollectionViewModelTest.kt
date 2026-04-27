@@ -9,7 +9,7 @@ import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.test.fake.FakeAllRewardedAds
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeCoinsPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.PermissionProvider
@@ -18,6 +18,8 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -37,7 +39,7 @@ class CollectionViewModelTest : AppTest() {
 
     private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource by inject()
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private val permissionProvider: PermissionProvider by inject()
 
@@ -112,7 +114,7 @@ class CollectionViewModelTest : AppTest() {
             awaitItem()
 
             // then
-            verify(exactly = 1) { analytics.logCollectionViewed(any(), any()) }
+            assertNotNull(analytics.lastCollectionViewed)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -135,7 +137,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logCardUnlockedWithCoins(any(), any()) }
+        assertNotNull(analytics.lastCardUnlockedWithCoins)
     }
 
     @Test
@@ -145,7 +147,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logShopOpenedFromCollection() }
+        assertEquals(1, analytics.shopOpenedFromCollectionCount)
     }
 
     @Test
@@ -185,7 +187,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logCardPairDetailsViewed() }
+        assertEquals(1, analytics.cardPairDetailsViewedCount)
     }
 
     @Test
@@ -272,7 +274,7 @@ class CollectionViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logInsufficientCoinsShown(any(), any()) }
+            assertNotNull(analytics.lastInsufficientCoinsShown)
         }
 
     @Test
@@ -293,7 +295,7 @@ class CollectionViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logShopOpenedFromInsufficientCoins() }
+            assertEquals(1, analytics.shopOpenedFromInsufficientCoinsCount)
         }
 
     @Test
@@ -313,7 +315,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logAdShown("collection") }
+        assertEquals("collection", analytics.lastAdShown)
     }
 
     @Test
@@ -343,7 +345,7 @@ class CollectionViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logAdDismissed("collection", true) }
+            assertEquals("collection" to true, analytics.lastAdDismissed)
         }
 
     @Test
@@ -361,7 +363,7 @@ class CollectionViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logAdDismissed("collection", false) }
+            assertEquals("collection" to false, analytics.lastAdDismissed)
         }
 
     @Test
@@ -401,7 +403,7 @@ class CollectionViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify(exactly = 0) { analytics.logCardUnlockedWithAd(any(), any()) }
+            assertNull(analytics.lastCardUnlockedWithAd)
         }
 
     @Test
@@ -496,7 +498,7 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logCardUnlockedWithAd(any(), any()) }
+        assertNotNull(analytics.lastCardUnlockedWithAd)
     }
 
     @Test
@@ -513,6 +515,6 @@ class CollectionViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logAdRewardFromCollection() }
+        assertEquals(1, analytics.adRewardFromCollectionCount)
     }
 }

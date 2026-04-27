@@ -8,7 +8,7 @@ import com.wojdor.memolki.domain.model.EndGameMenuModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAllRewardedAds
 import com.wojdor.memolki.ui.feature.enablenotifications.EnableNotificationDestination
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.test.fake.FakeLevelCompletePlayer
@@ -18,6 +18,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -37,7 +38,7 @@ class EndGameViewModelTest : AppTest() {
 
     private val userRepository: UserRepository by inject()
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private lateinit var sut: EndGameViewModel
 
@@ -111,7 +112,7 @@ class EndGameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logShareClicked(any()) }
+        assertNotNull(analytics.lastShareClicked)
     }
 
     @Test
@@ -125,7 +126,7 @@ class EndGameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logAdRewardFromEndGame() }
+        assertEquals(1, analytics.adRewardFromEndGameCount)
     }
 
     @Test
@@ -353,7 +354,7 @@ class EndGameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logDailyChallengeShare(100L, 3) }
+        assertEquals(100L to 3, analytics.lastDailyChallengeShare)
     }
 
     @Test
@@ -414,7 +415,7 @@ class EndGameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logAdDismissed("daily_challenge_end_game", false) }
+            assertEquals("daily_challenge_end_game" to false, analytics.lastAdDismissed)
         }
 
     @Test
@@ -446,7 +447,7 @@ class EndGameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logAdDismissed("end_game", false) }
+            assertEquals("end_game" to false, analytics.lastAdDismissed)
         }
 
     @Test
@@ -508,7 +509,7 @@ class EndGameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logShareClicked(true) }
+        assertEquals(true, analytics.lastShareClicked)
     }
 
     @Test
@@ -577,7 +578,7 @@ class EndGameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logAdShown("daily_challenge_end_game") }
+            assertEquals("daily_challenge_end_game", analytics.lastAdShown)
         }
 
     @Test
@@ -609,7 +610,7 @@ class EndGameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logAdDismissed("end_game", true) }
+            assertEquals("end_game" to true, analytics.lastAdDismissed)
         }
 
     @Test

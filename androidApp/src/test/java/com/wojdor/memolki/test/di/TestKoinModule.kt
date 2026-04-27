@@ -13,6 +13,7 @@ import com.wojdor.memolki.di.DefaultDispatcher
 import com.wojdor.memolki.di.MainDispatcher
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeAllRewardedAds
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeAppForegroundProvider
 import com.wojdor.memolki.test.fake.FakeAppInstalledProvider
 import com.wojdor.memolki.test.fake.FakeBackgroundMusicPlayer
@@ -70,7 +71,6 @@ val testKoinModule = module {
     single<CoroutineDispatcher>(DefaultDispatcher) { get<CoroutineDispatcher>() }
     single<CoroutineDispatcher>(MainDispatcher) { get<CoroutineDispatcher>() }
     single { SavedStateHandle() }
-    single<Context> { relaxedMockk() }
     single { Random(0) }
     singleOf(::FakeEncryptor) { bind<Encryptor>() }
     singleOf(::FakeAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
@@ -96,6 +96,5 @@ val testKoinModule = module {
     singleOf(::FakeAllRewardedAds) { bind<AllRewardedAds>() }
     singleOf(::FakeBillingHandler) { bind<BillingHandler>() }
     singleOf(::FakeDailyChallengeDao) { bind<DailyChallengeDao>() }
-    single<FirebaseMessaging> { relaxedMockk() }
-    single<Analytics> { relaxedMockk() }
+    singleOf(::FakeAnalytics) { bind<Analytics>() }
 }

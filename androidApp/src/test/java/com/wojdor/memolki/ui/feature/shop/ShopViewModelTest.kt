@@ -5,7 +5,7 @@ import com.wojdor.memolki.domain.model.ShopMenuModel
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePermissionProvider
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeBillingHandler
 import com.wojdor.memolki.util.billing.BillingHandler
 import com.wojdor.memolki.util.billing.BillingProduct
@@ -22,6 +22,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.test.BeforeTest
@@ -40,7 +41,7 @@ class ShopViewModelTest : AppTest() {
 
     private val notificationScheduler: NotificationScheduler by inject()
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private val permissionProvider: PermissionProvider by inject()
 
@@ -87,7 +88,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logPurchaseCompleted(product = "coins_small", priceMicros = 990_000L, currencyCode = "USD") }
+        assertEquals(Triple("coins_small", 990_000L, "USD"), analytics.lastPurchaseCompleted)
     }
 
     @Test
@@ -101,7 +102,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logPurchaseFailed() }
+        assertEquals(1, analytics.purchaseFailedCount)
     }
 
     @Test
@@ -111,7 +112,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logAdRewardFromShop() }
+        assertEquals(1, analytics.adRewardFromShopCount)
     }
 
     @Test
@@ -131,7 +132,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logAdShown("shop") }
+        assertEquals("shop", analytics.lastAdShown)
     }
 
     @Test
@@ -164,7 +165,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logAdDismissed("shop", true) }
+        assertEquals("shop" to true, analytics.lastAdDismissed)
     }
 
     @Test
@@ -175,7 +176,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logAdRewardFromShop() }
+            assertEquals(1, analytics.adRewardFromShopCount)
         }
 
     @Test
@@ -195,7 +196,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logAdDismissed("shop", false) }
+        assertEquals("shop" to false, analytics.lastAdDismissed)
     }
 
     @Test
@@ -205,7 +206,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify(exactly = 0) { analytics.logAdRewardFromShop() }
+        assertEquals(0, analytics.adRewardFromShopCount)
     }
 
     @Test
@@ -304,7 +305,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_COINS_SMALL, priceMicros = 990_000L, currencyCode = "USD") }
+            assertEquals(Triple(BillingHandler.IAP_COINS_SMALL, 990_000L, "USD"), analytics.lastPurchaseCompleted)
         }
 
     @Test
@@ -336,7 +337,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_COINS_BIG, priceMicros = 4_990_000L, currencyCode = "USD") }
+            assertEquals(Triple(BillingHandler.IAP_COINS_BIG, 4_990_000L, "USD"), analytics.lastPurchaseCompleted)
         }
 
     @Test
@@ -353,7 +354,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logPurchaseCompleted(product = BillingHandler.IAP_UNLOCK_ALL_CARDS, priceMicros = 14_990_000L, currencyCode = "USD") }
+            assertEquals(Triple(BillingHandler.IAP_UNLOCK_ALL_CARDS, 14_990_000L, "USD"), analytics.lastPurchaseCompleted)
         }
 
     @Test
@@ -383,7 +384,7 @@ class ShopViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logPurchaseFailed() }
+        assertEquals(1, analytics.purchaseFailedCount)
     }
 
     @Test
@@ -512,7 +513,7 @@ class ShopViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify(exactly = 0) { analytics.logPurchaseCompleted(any(), any(), any()) }
+            assertNull(analytics.lastPurchaseCompleted)
             assertEquals(0, coinsPlayer.playDelayedCount)
         }
 

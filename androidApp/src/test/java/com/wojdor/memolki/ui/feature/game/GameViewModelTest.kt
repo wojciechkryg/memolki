@@ -18,7 +18,7 @@ import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeCardPairMatchedPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.TimeProvider
@@ -30,6 +30,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.assertNotNull
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.test.BeforeTest
@@ -46,7 +48,7 @@ class GameViewModelTest : AppTest() {
     private val cardPairMatchedPlayer: FakeCardPairMatchedPlayer by inject()
     private val timeProvider: TimeProvider by inject()
     private val userRepository: UserRepository by inject()
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     @RelaxedMockK
     lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
@@ -375,7 +377,7 @@ class GameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logBoardStart(match { it is BoardModel.Grid2x3 }) }
+        assertTrue(analytics.lastBoardStart is BoardModel.Grid2x3)
     }
 
     @Test
@@ -397,14 +399,9 @@ class GameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify {
-            analytics.logBoardComplete(
-                board = match { it is BoardModel.Grid2x3 },
-                mistakeCount = 0,
-                level = any(),
-                totalGamesCount = any()
-            )
-        }
+        val (board, mistakeCount) = analytics.lastBoardComplete!!
+        assertTrue(board is BoardModel.Grid2x3)
+        assertEquals(0, mistakeCount)
     }
 
     @Test
@@ -420,7 +417,7 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logBoardAbandoned(match { it is BoardModel.Grid2x3 }) }
+            assertTrue(analytics.lastBoardAbandoned is BoardModel.Grid2x3)
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -444,7 +441,7 @@ class GameViewModelTest : AppTest() {
         sut.sendIntent(GameIntent.OnGameLeave)
 
         // then
-        verify(exactly = 0) { analytics.logBoardAbandoned(any()) }
+        assertNull(analytics.lastBoardAbandoned)
     }
 
     @Test
@@ -529,7 +526,7 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logDailyChallengeStart(epochDay) }
+            assertEquals(epochDay, analytics.lastDailyChallengeStart)
         }
 
     @Test
@@ -658,8 +655,8 @@ class GameViewModelTest : AppTest() {
                 testScheduler.advanceUntilIdle()
 
                 // then
-                verify { analytics.logDailyChallengeAbandoned(epochDay) }
-                verify(exactly = 0) { analytics.logBoardAbandoned(any()) }
+                assertEquals(epochDay, analytics.lastDailyChallengeAbandoned)
+                assertNull(analytics.lastBoardAbandoned)
                 cancelAndIgnoreRemainingEvents()
             }
         }
@@ -926,7 +923,7 @@ class GameViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logDailyChallengeAlreadyPlayed(any()) }
+            assertNotNull(analytics.lastDailyChallengeAlreadyPlayed)
         }
 
     @Test

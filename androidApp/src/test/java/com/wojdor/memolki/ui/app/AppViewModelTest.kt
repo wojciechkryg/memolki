@@ -6,12 +6,13 @@ import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakePushNotificationProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.verifyOnce
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeBillingHandler
 import com.wojdor.memolki.util.provider.PushNotificationProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.test.BeforeTest
@@ -22,7 +23,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class AppViewModelTest : AppTest() {
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private val dailyChallengeDao: FakeDailyChallengeDao by inject()
 
@@ -47,7 +48,7 @@ class AppViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verifyOnce { analytics.logAppSessionStart(any(), any()) }
+        assertNotNull(analytics.lastAppSessionStart)
     }
 
     @Test
@@ -57,7 +58,7 @@ class AppViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verifyOnce { analytics.setUserLanguage(any()) }
+        assertNotNull(analytics.lastUserLanguage)
     }
 
     @Test
@@ -67,7 +68,7 @@ class AppViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verifyOnce { analytics.setNotificationPermission(any()) }
+        assertNotNull(analytics.lastNotificationPermission)
     }
 
     @Test
@@ -96,7 +97,7 @@ class AppViewModelTest : AppTest() {
         sut.onAppOpen("test_notification", "test_shortcut")
 
         // then
-        verifyOnce { analytics.logAppOpened("test_notification", "test_shortcut") }
+        assertEquals("test_notification" to "test_shortcut", analytics.lastAppOpened)
     }
 
     @Test
@@ -106,7 +107,7 @@ class AppViewModelTest : AppTest() {
             sut.onAppOpen(null)
 
             // then
-            verifyOnce { analytics.logAppOpened(null, null) }
+            assertEquals(null to null, analytics.lastAppOpened)
         }
 
     @Test

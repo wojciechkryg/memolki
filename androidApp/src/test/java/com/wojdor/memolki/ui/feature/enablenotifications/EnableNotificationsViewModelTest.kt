@@ -3,7 +3,7 @@ package com.wojdor.memolki.ui.feature.enablenotifications
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import com.wojdor.memolki.test.AppTest
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -16,7 +16,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class EnableNotificationsViewModelTest : AppTest() {
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
     private val savedStateHandle: SavedStateHandle by inject()
 
     private lateinit var sut: EnableNotificationsViewModel
@@ -115,7 +115,7 @@ class EnableNotificationsViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logNotificationEnabled(true) }
+            assertEquals(true, analytics.lastNotificationEnabled)
         }
 
     @Test
@@ -129,7 +129,7 @@ class EnableNotificationsViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logNotificationEnabled(false) }
+            assertEquals(false, analytics.lastNotificationEnabled)
         }
 
     @Test
@@ -142,7 +142,7 @@ class EnableNotificationsViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify { analytics.logNotificationEnabled(false) }
+        assertEquals(false, analytics.lastNotificationEnabled)
     }
 
     @Test

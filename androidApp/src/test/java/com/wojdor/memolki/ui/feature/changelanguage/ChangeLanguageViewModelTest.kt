@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeLocaleProvider
 import com.wojdor.memolki.test.verifyOnce
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.provider.LocaleProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +20,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class ChangeLanguageViewModelTest : AppTest() {
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
@@ -135,7 +135,7 @@ class ChangeLanguageViewModelTest : AppTest() {
 
             // then
             assertEquals("pl", localeProvider.getLanguageTag())
-            verifyOnce { analytics.logLanguageChanged("en", "pl") }
+            assertEquals("en" to "pl", analytics.lastLanguageChanged)
             cancelAndIgnoreRemainingEvents()
         }
     }

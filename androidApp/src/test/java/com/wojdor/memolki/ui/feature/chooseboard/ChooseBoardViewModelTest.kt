@@ -10,7 +10,7 @@ import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnBoardClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChallengeHistoryClick
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnLockedBoardClick
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +26,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class ChooseBoardViewModelTest : AppTest() {
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
@@ -85,7 +85,7 @@ class ChooseBoardViewModelTest : AppTest() {
             testScheduler.advanceUntilIdle()
 
             // then
-            verify { analytics.logCollectionOpenedFromLockedBoard() }
+            assertEquals(1, analytics.collectionOpenedFromLockedBoardCount)
         }
 
     @Test

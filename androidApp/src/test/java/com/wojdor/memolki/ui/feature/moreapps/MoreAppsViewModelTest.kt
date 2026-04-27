@@ -8,7 +8,7 @@ import com.wojdor.memolki.test.verifyOnce
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.OpenApp
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsEffect.ShowAppInstall
 import com.wojdor.memolki.ui.feature.moreapps.MoreAppsIntent.OnAppClick
-import com.wojdor.memolki.util.analytics.Analytics
+import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -21,7 +21,7 @@ import org.koin.test.inject
 @ExperimentalCoroutinesApi
 class MoreAppsViewModelTest : AppTest() {
 
-    private val analytics: Analytics by inject()
+    private val analytics: FakeAnalytics by inject()
 
     private val hapticFeedback: FakeHapticFeedback by inject()
 
@@ -78,7 +78,7 @@ class MoreAppsViewModelTest : AppTest() {
                 awaitItem()
 
                 // then
-                verifyOnce { analytics.logCrossPromotionAppOpened(app.appId) }
+                assertEquals(app.appId, analytics.lastCrossPromotionAppOpened)
             }
         }
 
@@ -95,7 +95,7 @@ class MoreAppsViewModelTest : AppTest() {
                 awaitItem()
 
                 // then
-                verifyOnce { analytics.logCrossPromotionStoreOpened(app.appId) }
+                assertEquals(app.appId, analytics.lastCrossPromotionStoreOpened)
             }
         }
 
