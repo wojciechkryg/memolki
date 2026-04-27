@@ -2,8 +2,8 @@ package com.wojdor.memolki.util.provider
 
 import platform.Foundation.NSBundle
 
-actual open class PackageNameProvider {
+class IosPackageNameProvider : PackageNameProvider {
 
-    actual open fun providePackageName(): String =
+    override fun providePackageName(): String =
         NSBundle.mainBundle.bundleIdentifier.orEmpty()
 }

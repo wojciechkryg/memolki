@@ -3,11 +3,11 @@ package com.wojdor.memolki.util.provider
 import android.content.Context
 import android.content.pm.PackageManager
 
-actual open class AppInstalledProvider(
+class AndroidAppInstalledProvider(
     private val context: Context
-) {
+) : AppInstalledProvider {
 
-    actual open fun isAppInstalled(packageName: String): Boolean {
+    override fun isAppInstalled(packageName: String): Boolean {
         return try {
             context.packageManager.getPackageInfo(packageName, 0)
             true

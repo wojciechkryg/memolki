@@ -80,29 +80,38 @@ val testKoinModule = module {
     single<CoroutineDispatcher>(MainDispatcher) { get<CoroutineDispatcher>() }
     single { SavedStateHandle() }
     single { Random(0) }
-    singleOf(::FakeEncryptor) { bind<Encryptor>() }
-    singleOf(::FakeAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
+
     singleOf(::FakeDataStore) { bind<DataStore<Preferences>>() }
+    singleOf(::FakeDailyChallengeDao) { bind<DailyChallengeDao>() }
+
+    singleOf(::FakeEncryptor) { bind<Encryptor>() }
+    singleOf(::FakeLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
+
+    singleOf(::FakeAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
+
+    singleOf(::FakeAnalytics) { bind<Analytics>() }
+
+    singleOf(::FakeTimeProvider) { bind<TimeProvider>() }
+    singleOf(::FakeStringProvider) { bind<StringProvider>() }
     singleOf(::FakeAppForegroundProvider) { bind<AppForegroundProvider>() }
     singleOf(::FakeAppInstalledProvider) { bind<AppInstalledProvider>() }
     singleOf(::FakeLocaleProvider) { bind<LocaleProvider>() }
-    singleOf(::FakeNotificationScheduler) { bind<NotificationScheduler>() }
     singleOf(::FakePackageNameProvider) { bind<PackageNameProvider>() }
     singleOf(::FakePermissionProvider) { bind<PermissionProvider>() }
     singleOf(::FakePushNotificationProvider) { bind<PushNotificationProvider>() }
-    singleOf(::FakeTimeProvider) { bind<TimeProvider>() }
-    singleOf(::FakeStringProvider) { bind<StringProvider>() }
-    singleOf(::FakeCoinsPlayer) { bind<CoinsPlayer>() }
-    singleOf(::FakeCardFlipPlayer) { bind<CardFlipPlayer>() }
-    singleOf(::FakeHapticFeedback) { bind<HapticFeedback>() }
-    singleOf(::FakeInAppReviewer) { bind<InAppReviewer>() }
-    singleOf(::FakeGameServices) { bind<GameServices>() }
-    singleOf(::FakeLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
-    singleOf(::FakeBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
-    singleOf(::FakeCardPairMatchedPlayer) { bind<CardPairMatchedPlayer>() }
-    singleOf(::FakeLevelCompletePlayer) { bind<LevelCompletePlayer>() }
-    singleOf(::FakeAllRewardedAds) { bind<AllRewardedAds>() }
+
     singleOf(::FakeBillingHandler) { bind<BillingHandler>() }
-    singleOf(::FakeDailyChallengeDao) { bind<DailyChallengeDao>() }
-    singleOf(::FakeAnalytics) { bind<Analytics>() }
+    singleOf(::FakeGameServices) { bind<GameServices>() }
+    singleOf(::FakeInAppReviewer) { bind<InAppReviewer>() }
+
+    singleOf(::FakeNotificationScheduler) { bind<NotificationScheduler>() }
+
+    singleOf(::FakeHapticFeedback) { bind<HapticFeedback>() }
+    singleOf(::FakeBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
+    singleOf(::FakeCardFlipPlayer) { bind<CardFlipPlayer>() }
+    singleOf(::FakeCardPairMatchedPlayer) { bind<CardPairMatchedPlayer>() }
+    singleOf(::FakeCoinsPlayer) { bind<CoinsPlayer>() }
+    singleOf(::FakeLevelCompletePlayer) { bind<LevelCompletePlayer>() }
+
+    singleOf(::FakeAllRewardedAds) { bind<AllRewardedAds>() }
 }

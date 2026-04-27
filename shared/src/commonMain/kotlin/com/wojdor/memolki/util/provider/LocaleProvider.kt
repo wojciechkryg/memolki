@@ -1,6 +1,6 @@
 package com.wojdor.memolki.util.provider
 
-expect open class LocaleProvider {
-    open fun getLanguageTag(): String
-    open fun setLanguageTag(tag: String)
+interface LocaleProvider {
+    fun getLanguageTag(): String
+    fun setLanguageTag(tag: String)
 }

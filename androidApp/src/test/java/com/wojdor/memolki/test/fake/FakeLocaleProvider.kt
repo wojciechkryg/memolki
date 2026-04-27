@@ -1,9 +1,8 @@
 package com.wojdor.memolki.test.fake
 
 import com.wojdor.memolki.util.provider.LocaleProvider
-import io.mockk.mockk
 
-class FakeLocaleProvider : LocaleProvider(mockk()) {
+class FakeLocaleProvider : LocaleProvider {
 
     private var languageTag = DEFAULT_LANGUAGE_TAG
     var shouldThrowOnSet = false

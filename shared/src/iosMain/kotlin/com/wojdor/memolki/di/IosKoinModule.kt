@@ -42,6 +42,10 @@ import com.wojdor.memolki.util.notification.IosNotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.AppForegroundProvider
 import com.wojdor.memolki.util.provider.AppInstalledProvider
+import com.wojdor.memolki.util.provider.IosAppInstalledProvider
+import com.wojdor.memolki.util.provider.IosLocaleProvider
+import com.wojdor.memolki.util.provider.IosPackageNameProvider
+import com.wojdor.memolki.util.provider.IosPermissionProvider
 import com.wojdor.memolki.util.provider.IosPushNotificationProvider
 import com.wojdor.memolki.util.provider.LocaleProvider
 import com.wojdor.memolki.util.provider.PackageNameProvider
@@ -83,7 +87,9 @@ val iosKoinModule = module {
     single<CoroutineDispatcher>(DefaultDispatcher) { Dispatchers.Default }
     single<CoroutineDispatcher>(MainDispatcher) { Dispatchers.Main }
     single { Random.Default }
+
     single { Firebase.analytics }
+
     single<DataStore<Preferences>> { createIosDataStore() }
     single {
         databaseBuilder()
@@ -91,15 +97,19 @@ val iosKoinModule = module {
             .build()
     }
     single { get<AppDatabase>().dailyChallengeDao() }
+
     singleOf(::IosEncryptor) { bind<Encryptor>() }
     singleOf(::IosLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
+
     singleOf(::IosAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
+
     singleOf(::AppForegroundProvider)
-    singleOf(::AppInstalledProvider)
-    singleOf(::LocaleProvider)
-    singleOf(::PackageNameProvider)
-    singleOf(::PermissionProvider)
+    singleOf(::IosAppInstalledProvider) { bind<AppInstalledProvider>() }
+    singleOf(::IosLocaleProvider) { bind<LocaleProvider>() }
+    singleOf(::IosPackageNameProvider) { bind<PackageNameProvider>() }
+    singleOf(::IosPermissionProvider) { bind<PermissionProvider>() }
     singleOf(::IosPushNotificationProvider) { bind<PushNotificationProvider>() }
+
     singleOf(::IosBillingHandler) { bind<BillingHandler>() }
     singleOf(::IosGameServices) { bind<GameServices>() }
     singleOf(::IosInAppReviewer) { bind<InAppReviewer>() }
@@ -107,12 +117,15 @@ val iosKoinModule = module {
     singleOf(::IosToaster) { bind<Toaster>() }
     singleOf(::IosAppOpener) { bind<AppOpener>() }
     singleOf(::IosEpochDayFormatter) { bind<EpochDayFormatter>() }
+
     singleOf(::IosNotificationScheduler) { bind<NotificationScheduler>() }
+
     singleOf(::IosHapticFeedback) { bind<HapticFeedback>() }
     singleOf(::IosBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
-    singleOf(::IosAllRewardedAds) { bind<AllRewardedAds>() }
     singleOf(::IosCardFlipPlayer) { bind<CardFlipPlayer>() }
     singleOf(::IosCardPairMatchedPlayer) { bind<CardPairMatchedPlayer>() }
     singleOf(::IosCoinsPlayer) { bind<CoinsPlayer>() }
     singleOf(::IosLevelCompletePlayer) { bind<LevelCompletePlayer>() }
+
+    singleOf(::IosAllRewardedAds) { bind<AllRewardedAds>() }
 }

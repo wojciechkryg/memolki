@@ -46,6 +46,10 @@ import com.wojdor.memolki.util.notification.AndroidNotificationScheduler
 import com.wojdor.memolki.util.notification.NotificationCreator
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.ActivityProvider
+import com.wojdor.memolki.util.provider.AndroidAppInstalledProvider
+import com.wojdor.memolki.util.provider.AndroidLocaleProvider
+import com.wojdor.memolki.util.provider.AndroidPackageNameProvider
+import com.wojdor.memolki.util.provider.AndroidPermissionProvider
 import com.wojdor.memolki.util.provider.AndroidPushNotificationProvider
 import com.wojdor.memolki.util.provider.AppForegroundProvider
 import com.wojdor.memolki.util.provider.AppInstalledProvider
@@ -74,8 +78,10 @@ val appKoinModule = module {
     single<CoroutineDispatcher>(DefaultDispatcher) { Dispatchers.Default }
     single<CoroutineDispatcher>(MainDispatcher) { Dispatchers.Main }
     single { if (RECORDING_MODE) Random(0) else Random.Default }
+
     single { Firebase.analytics }
     single { FirebaseMessaging.getInstance() }
+
     single<DataStore<Preferences>> { get<Context>().dataStore }
     single {
         databaseBuilder(get<Context>())
@@ -83,16 +89,20 @@ val appKoinModule = module {
             .build()
     }
     single { get<AppDatabase>().dailyChallengeDao() }
+
     singleOf(::AndroidEncryptor) { bind<Encryptor>() }
     singleOf(::AndroidLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
+
     singleOf(::AllCardPairsLocalDataSource) { bind<AllCardPairsDataSource>() }
+
     singleOf(::ActivityProvider)
     singleOf(::AppForegroundProvider)
-    singleOf(::AppInstalledProvider)
-    singleOf(::LocaleProvider)
-    singleOf(::PackageNameProvider)
-    singleOf(::PermissionProvider)
+    singleOf(::AndroidAppInstalledProvider) { bind<AppInstalledProvider>() }
+    singleOf(::AndroidLocaleProvider) { bind<LocaleProvider>() }
+    singleOf(::AndroidPackageNameProvider) { bind<PackageNameProvider>() }
+    singleOf(::AndroidPermissionProvider) { bind<PermissionProvider>() }
     singleOf(::AndroidPushNotificationProvider) { bind<PushNotificationProvider>() }
+
     singleOf(::AndroidBillingHandler) { bind<BillingHandler>() }
     singleOf(::AndroidGameServices) { bind<GameServices>() }
     singleOf(::AndroidInAppReviewer) { bind<InAppReviewer>() }
@@ -101,14 +111,17 @@ val appKoinModule = module {
     singleOf(::AndroidAppOpener) { bind<AppOpener>() }
     singleOf(::AndroidEpochDayFormatter) { bind<EpochDayFormatter>() }
     singleOf(::InAppUpdate)
+
     singleOf(::NotificationCreator)
     singleOf(::AndroidNotificationScheduler) { bind<NotificationScheduler>() }
+
     singleOf(::AndroidHapticFeedback) { bind<HapticFeedback>() }
     singleOf(::AndroidBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
-    singleOf(::AndroidAdsInitializer)
-    singleOf(::AndroidAllRewardedAds) { bind<AllRewardedAds>() }
     single<CardFlipPlayer> { AndroidCardFlipPlayer(get(), get(MainDispatcher), get()) }
     single<CardPairMatchedPlayer> { AndroidCardPairMatchedPlayer(get(), get(MainDispatcher), get()) }
     single<CoinsPlayer> { AndroidCoinsPlayer(get(), get(MainDispatcher), get()) }
     single<LevelCompletePlayer> { AndroidLevelCompletePlayer(get(), get(MainDispatcher), get()) }
+
+    singleOf(::AndroidAdsInitializer)
+    singleOf(::AndroidAllRewardedAds) { bind<AllRewardedAds>() }
 }
