@@ -5,12 +5,12 @@ import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 
-class GetUnlockedCardPairsCountUseCase(
+open class GetUnlockedCardPairsCountUseCase(
     coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository
 ) : BaseUseCase<Int>(coroutineDispatcher) {
 
-    override fun execute() = flow {
+    open override fun execute() = flow {
         emit(Result.success(cardRepository.getUnlockedCardPairs().size))
     }
 }

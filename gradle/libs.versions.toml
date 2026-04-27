@@ -33,7 +33,6 @@ mediationIronsource = "9.4.0.0"
 mediationLiftoff = "7.7.2.0"
 mediationMintegral = "17.1.41.0"
 mediationUnity = "4.17.0.0"
-mockk = "1.14.9"
 gradlePlayPublisher = "4.0.0"
 navigationCompose = "2.9.2"
 playServicesAds = "25.2.0"
@@ -91,8 +90,6 @@ mediation-ironsource = { group = "com.google.ads.mediation", name = "ironsource"
 mediation-liftoff = { group = "com.google.ads.mediation", name = "vungle", version.ref = "mediationLiftoff" }
 mediation-mintegral = { group = "com.google.ads.mediation", name = "mintegral", version.ref = "mediationMintegral" }
 mediation-unity = { group = "com.google.ads.mediation", name = "unity", version.ref = "mediationUnity" }
-mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 play-services-games = { group = "com.google.android.gms", name = "play-services-games-v2", version.ref = "playServicesGames" }

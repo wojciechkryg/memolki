@@ -4,10 +4,8 @@ import app.cash.turbine.test
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.test.AppTest
-import io.mockk.every
-import io.mockk.mockk
+import com.wojdor.memolki.test.fake.FakeGetBoardsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -84,12 +82,13 @@ class GetBiggestUnlockedBoardUseCaseTest : AppTest() {
             BoardModel.Grid3x4(isUnlocked = false),
             BoardModel.Grid4x4(isUnlocked = false)
         )
-        val mockGetBoards = mockk<GetBoardsUseCase>()
-        every { mockGetBoards() } returns flowOf(Result.success(allLocked))
-        val sutWithMock = GetBiggestUnlockedBoardUseCase(testDispatcher, mockGetBoards)
+        val fakeGetBoards = FakeGetBoardsUseCase(testDispatcher, get()).apply {
+            result = Result.success(allLocked)
+        }
+        val sutWithFake = GetBiggestUnlockedBoardUseCase(testDispatcher, fakeGetBoards)
 
         // when
-        sutWithMock("auto").test {
+        sutWithFake("auto").test {
             // then
             val result = awaitItem()
             assertTrue(result.isSuccess)

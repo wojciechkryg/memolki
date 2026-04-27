@@ -5,12 +5,12 @@ import com.wojdor.memolki.domain.usecase.base.BaseUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.map
 
-class GetBoardsUseCase(
+open class GetBoardsUseCase(
     coroutineDispatcher: CoroutineDispatcher,
     private val getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
 ) : BaseUseCase<List<BoardModel>>(coroutineDispatcher) {
 
-    override fun execute() =
+    open override fun execute() =
         getUnlockedCardPairsCountUseCase().map { result ->
             result.map { unlockedCardPairsCount ->
                 prepareBoards(unlockedCardPairsCount)

@@ -311,8 +311,6 @@ dependencies {
     testImplementation(kotlin("test-junit"))
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
-    testImplementation(libs.mockk.android)
-    testImplementation(libs.mockk.agent)
     testImplementation(libs.koin.test)
     testImplementation(libs.koin.test.junit4)
 

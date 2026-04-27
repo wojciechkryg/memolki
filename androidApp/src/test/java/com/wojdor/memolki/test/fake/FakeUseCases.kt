@@ -6,9 +6,11 @@ import com.wojdor.memolki.data.repository.NotificationRepository
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.DailyChallengeModel
+import com.wojdor.memolki.domain.usecase.GetBoardsUseCase
 import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
 import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
+import com.wojdor.memolki.domain.usecase.GetUnlockedCardPairsCountUseCase
 import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.util.provider.PackageNameProvider
@@ -75,4 +77,20 @@ class FakeGetTodayDailyChallengeUseCase(
 ) : GetTodayDailyChallengeUseCase(coroutineDispatcher, dailyChallengeRepository, timeProvider) {
     var result: Result<DailyChallengeModel> = Result.failure(IllegalStateException("not configured"))
     override fun execute(): Flow<Result<DailyChallengeModel>> = flowOf(result)
+}
+
+class FakeGetBoardsUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
+    getUnlockedCardPairsCountUseCase: GetUnlockedCardPairsCountUseCase
+) : GetBoardsUseCase(coroutineDispatcher, getUnlockedCardPairsCountUseCase) {
+    var result: Result<List<BoardModel>> = Result.success(emptyList())
+    override fun execute(): Flow<Result<List<BoardModel>>> = flowOf(result)
+}
+
+class FakeGetUnlockedCardPairsCountUseCase(
+    coroutineDispatcher: CoroutineDispatcher,
+    cardRepository: CardRepository
+) : GetUnlockedCardPairsCountUseCase(coroutineDispatcher, cardRepository) {
+    var result: Result<Int> = Result.success(0)
+    override fun execute(): Flow<Result<Int>> = flowOf(result)
 }

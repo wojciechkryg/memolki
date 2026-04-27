@@ -6,13 +6,13 @@ import com.wojdor.memolki.data.mapper.toModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import kotlin.random.Random
 
-class CardRepository(
+open class CardRepository(
     private val allCardPairsDataSource: AllCardPairsDataSource,
     private val unlockedCardPairsLocalDataSource: UnlockedCardPairsLocalDataSource,
     private val random: Random
 ) {
 
-    fun getAllCardPairs() = allCardPairsDataSource.getAllCardPairs().toModel()
+    open fun getAllCardPairs() = allCardPairsDataSource.getAllCardPairs().toModel()
 
     suspend fun getUnlockedCardPairs(): List<CardPairModel> {
         val unlockedCardPairIds = unlockedCardPairsLocalDataSource.getUnlockedCardPairIds()
