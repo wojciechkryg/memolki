@@ -12,8 +12,6 @@ import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.util.media.CoinsPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.test.fake.FakeLevelCompletePlayer
-import io.mockk.every
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest

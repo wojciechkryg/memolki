@@ -9,7 +9,6 @@ import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.test.fake.FakeTimeProvider
 import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals

@@ -12,7 +12,6 @@ import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnDailyChalle
 import com.wojdor.memolki.ui.feature.chooseboard.ChooseBoardIntent.OnLockedBoardClick
 import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlin.test.assertEquals

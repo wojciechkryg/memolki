@@ -14,10 +14,6 @@ import com.wojdor.memolki.test.fake.FakeCoinsPlayer
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
 import com.wojdor.memolki.util.notification.NotificationScheduler
 import com.wojdor.memolki.util.provider.PermissionProvider
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.slot
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
