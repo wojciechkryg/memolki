@@ -8,14 +8,14 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlin.random.Random
 
-class GetShuffledUnlockedCardsUseCase(
+open class GetShuffledUnlockedCardsUseCase(
     coroutineDispatcher: CoroutineDispatcher,
     private val cardRepository: CardRepository,
     private val random: Random
 ) : BaseParameterUseCase<BoardModel, List<CardModel>>(coroutineDispatcher) {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun execute(board: BoardModel) = flow {
+    open override fun execute(board: BoardModel) = flow {
         val cardPairIdsCount = (board.rows * board.columns) / 2
         val randomUnlockedCardPairIds =
             cardRepository.getRandomUnlockedCardPairIds(cardPairIdsCount)

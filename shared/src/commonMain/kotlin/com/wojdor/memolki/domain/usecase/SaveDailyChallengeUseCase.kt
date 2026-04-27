@@ -8,7 +8,7 @@ import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 
-class SaveDailyChallengeUseCase(
+open class SaveDailyChallengeUseCase(
     coroutineDispatcher: CoroutineDispatcher,
     private val dailyChallengeRepository: DailyChallengeRepository,
     private val notificationRepository: NotificationRepository,
@@ -16,7 +16,7 @@ class SaveDailyChallengeUseCase(
 ) : BaseParameterUseCase<DailyChallengeModel, Unit>(coroutineDispatcher) {
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-    override fun execute(result: DailyChallengeModel) = flow {
+    open override fun execute(result: DailyChallengeModel) = flow {
         val epochDay = timeProvider.currentLocalDate().toEpochDays()
         dailyChallengeRepository.saveResult(epochDay, result)
         notificationRepository.scheduleNextDailyChallengeNotification()

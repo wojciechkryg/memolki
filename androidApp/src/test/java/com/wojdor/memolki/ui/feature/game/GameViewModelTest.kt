@@ -7,6 +7,9 @@ import com.wojdor.memolki.shared.resources.apple
 import com.wojdor.memolki.shared.resources.empty
 
 import app.cash.turbine.test
+import com.wojdor.memolki.data.repository.CardRepository
+import com.wojdor.memolki.data.repository.DailyChallengeRepository
+import com.wojdor.memolki.data.repository.NotificationRepository
 import com.wojdor.memolki.data.repository.UserRepository
 import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
@@ -20,13 +23,17 @@ import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.AppTest
 import com.wojdor.memolki.test.fake.FakeAnalytics
 import com.wojdor.memolki.test.fake.FakeCardPairMatchedPlayer
+import com.wojdor.memolki.test.fake.FakeGetDailyChallengeCardsUseCase
+import com.wojdor.memolki.test.fake.FakeGetShuffledUnlockedCardsUseCase
+import com.wojdor.memolki.test.fake.FakeGetTodayDailyChallengeUseCase
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
+import com.wojdor.memolki.test.fake.FakeHasPlayedTodayDailyChallengeUseCase
+import com.wojdor.memolki.test.fake.FakeSaveDailyChallengeUseCase
+import com.wojdor.memolki.util.provider.PackageNameProvider
 import com.wojdor.memolki.util.provider.TimeProvider
-import io.mockk.every
-import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.verify
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlin.random.Random
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
 import kotlin.test.assertEquals
@@ -49,27 +56,39 @@ class GameViewModelTest : AppTest() {
     private val timeProvider: TimeProvider by inject()
     private val userRepository: UserRepository by inject()
     private val analytics: FakeAnalytics by inject()
+    private val coroutineDispatcher: CoroutineDispatcher by inject()
+    private val cardRepository: CardRepository by inject()
+    private val dailyChallengeRepository: DailyChallengeRepository by inject()
+    private val notificationRepository: NotificationRepository by inject()
+    private val packageNameProvider: PackageNameProvider by inject()
+    private val random: Random by inject()
 
-    @RelaxedMockK
-    lateinit var getShuffledUnlockedCardsUseCase: GetShuffledUnlockedCardsUseCase
-
-    @RelaxedMockK
-    lateinit var getDailyChallengeCardsUseCase: GetDailyChallengeCardsUseCase
-
-    @RelaxedMockK
-    lateinit var hasPlayedTodayDailyChallengeUseCase: HasPlayedTodayDailyChallengeUseCase
-
-    @RelaxedMockK
-    lateinit var saveDailyChallengeUseCase: SaveDailyChallengeUseCase
-
-    @RelaxedMockK
-    lateinit var getTodayDailyChallengeUseCase: GetTodayDailyChallengeUseCase
+    private lateinit var getShuffledUnlockedCardsUseCase: FakeGetShuffledUnlockedCardsUseCase
+    private lateinit var getDailyChallengeCardsUseCase: FakeGetDailyChallengeCardsUseCase
+    private lateinit var hasPlayedTodayDailyChallengeUseCase: FakeHasPlayedTodayDailyChallengeUseCase
+    private lateinit var saveDailyChallengeUseCase: FakeSaveDailyChallengeUseCase
+    private lateinit var getTodayDailyChallengeUseCase: FakeGetTodayDailyChallengeUseCase
 
     private lateinit var sut: GameViewModel
 
     @BeforeTest
     override fun setup() {
         super.setup()
+        getShuffledUnlockedCardsUseCase = FakeGetShuffledUnlockedCardsUseCase(
+            coroutineDispatcher, cardRepository, random
+        )
+        getDailyChallengeCardsUseCase = FakeGetDailyChallengeCardsUseCase(
+            coroutineDispatcher, cardRepository, timeProvider, packageNameProvider
+        )
+        hasPlayedTodayDailyChallengeUseCase = FakeHasPlayedTodayDailyChallengeUseCase(
+            coroutineDispatcher, dailyChallengeRepository, timeProvider
+        )
+        saveDailyChallengeUseCase = FakeSaveDailyChallengeUseCase(
+            coroutineDispatcher, dailyChallengeRepository, notificationRepository, timeProvider
+        )
+        getTodayDailyChallengeUseCase = FakeGetTodayDailyChallengeUseCase(
+            coroutineDispatcher, dailyChallengeRepository, timeProvider
+        )
         loadKoinModules(
             module {
                 factory<GetShuffledUnlockedCardsUseCase> { getShuffledUnlockedCardsUseCase }
@@ -79,9 +98,7 @@ class GameViewModelTest : AppTest() {
                 factory<GetTodayDailyChallengeUseCase> { getTodayDailyChallengeUseCase }
             }
         )
-        every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
-            Result.success(mockShuffledCardsWithSamePairIds())
-        )
+        getShuffledUnlockedCardsUseCase.result = Result.success(mockShuffledCardsWithSamePairIds())
         sut = get()
     }
 
@@ -261,9 +278,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
-                    Result.success(mockShuffledCardsWithSameIds())
-                )
+                getShuffledUnlockedCardsUseCase.result = Result.success(mockShuffledCardsWithSameIds())
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
 
@@ -303,9 +318,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
-                    Result.success(mockShuffledCardsWithSameIds())
-                )
+                getShuffledUnlockedCardsUseCase.result = Result.success(mockShuffledCardsWithSameIds())
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
 
@@ -483,15 +496,10 @@ class GameViewModelTest : AppTest() {
         runTest {
             // given
             val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(false)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(false
             )
-            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
-                Result.success(Unit)
-            )
-            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
-                Result.success(dailyChallengeCards)
-            )
+            saveDailyChallengeUseCase.result = Result.success(Unit)
+            getDailyChallengeCardsUseCase.result = Result.success(dailyChallengeCards)
 
             sut.uiState.test {
                 // when
@@ -511,15 +519,10 @@ class GameViewModelTest : AppTest() {
         runTest {
             // given
             val epochDay = LocalDate(2026, 3, 26).toEpochDays()
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(false)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(false
             )
-            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
-                Result.success(Unit)
-            )
-            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
-                Result.success(mockShuffledCardsWithSamePairIds())
-            )
+            saveDailyChallengeUseCase.result = Result.success(Unit)
+            getDailyChallengeCardsUseCase.result = Result.success(mockShuffledCardsWithSamePairIds())
 
             // when
             sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
@@ -534,9 +537,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
-                    Result.success(mockShuffledCardsWithSameIds())
-                )
+                getShuffledUnlockedCardsUseCase.result = Result.success(mockShuffledCardsWithSameIds())
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
@@ -563,9 +564,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
-                    Result.success(mockShuffledCardsWithSameIds())
-                )
+                getShuffledUnlockedCardsUseCase.result = Result.success(mockShuffledCardsWithSameIds())
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
@@ -588,9 +587,7 @@ class GameViewModelTest : AppTest() {
         runTest {
             sut.uiState.test {
                 // given
-                every { getShuffledUnlockedCardsUseCase.invoke(any()) } returns flowOf(
-                    Result.success(mockShuffledCardsWithSameIds())
-                )
+                getShuffledUnlockedCardsUseCase.result = Result.success(mockShuffledCardsWithSameIds())
                 sut.sendIntent(GameIntent.OnBoardStart("2x3"))
                 skipItems(1)
                 sut.sendIntent(GameIntent.OnBackCardClick(awaitItem().cards[0]))
@@ -635,15 +632,10 @@ class GameViewModelTest : AppTest() {
             // given
             val epochDay = LocalDate(2026, 3, 26).toEpochDays()
             val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(false)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(false
             )
-            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
-                Result.success(Unit)
-            )
-            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
-                Result.success(dailyChallengeCards)
-            )
+            saveDailyChallengeUseCase.result = Result.success(Unit)
+            getDailyChallengeCardsUseCase.result = Result.success(dailyChallengeCards)
 
             sut.uiState.test {
                 sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
@@ -666,15 +658,10 @@ class GameViewModelTest : AppTest() {
         runTest {
             // given
             val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(false)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(false
             )
-            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
-                Result.success(Unit)
-            )
-            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
-                Result.success(dailyChallengeCards)
-            )
+            saveDailyChallengeUseCase.result = Result.success(Unit)
+            getDailyChallengeCardsUseCase.result = Result.success(dailyChallengeCards)
 
             sut.uiState.test {
                 sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
@@ -713,15 +700,10 @@ class GameViewModelTest : AppTest() {
         runTest {
             // given
             val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(false)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(false
             )
-            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
-                Result.success(Unit)
-            )
-            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
-                Result.success(dailyChallengeCards)
-            )
+            saveDailyChallengeUseCase.result = Result.success(Unit)
+            getDailyChallengeCardsUseCase.result = Result.success(dailyChallengeCards)
 
             sut.uiState.test {
                 sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
@@ -775,15 +757,10 @@ class GameViewModelTest : AppTest() {
         runTest {
             // given
             val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(false)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(false
             )
-            every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
-                Result.success(Unit)
-            )
-            every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
-                Result.success(dailyChallengeCards)
-            )
+            saveDailyChallengeUseCase.result = Result.success(Unit)
+            getDailyChallengeCardsUseCase.result = Result.success(dailyChallengeCards)
 
             sut.uiState.test {
                 sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
@@ -879,11 +856,9 @@ class GameViewModelTest : AppTest() {
                 epochDay = 0L,
                 cardFlipCounts = listOf(listOf(1, 2), listOf(3, 1))
             )
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(true)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(true
             )
-            every { getTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(todayChallenge)
+            getTodayDailyChallengeUseCase.result = Result.success(todayChallenge
             )
 
             sut.uiEffect.test {
@@ -903,17 +878,15 @@ class GameViewModelTest : AppTest() {
     fun `when daily challenge already played then logDailyChallengeAlreadyPlayed is called`() =
         runTest {
             // given
-            every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(true)
+            hasPlayedTodayDailyChallengeUseCase.result = Result.success(true
             )
-            every { getTodayDailyChallengeUseCase.invoke() } returns flowOf(
-                Result.success(
+            getTodayDailyChallengeUseCase.result = Result.success(
                     DailyChallengeModel(
                         mistakeCount = 0,
                         starCount = 3,
                         timeMillis = 5000L,
                         epochDay = 0L,
-                        cardFlipCounts = listOf(listOf(1))
+                        cardFlipCounts = listOf(listOf(1)
                     )
                 )
             )
@@ -930,15 +903,10 @@ class GameViewModelTest : AppTest() {
     fun `when daily challenge start with cards already loaded then does nothing`() = runTest {
         // given
         val dailyChallengeCards = mockShuffledCardsWithSamePairIds()
-        every { hasPlayedTodayDailyChallengeUseCase.invoke() } returns flowOf(
-            Result.success(false)
+        hasPlayedTodayDailyChallengeUseCase.result = Result.success(false
         )
-        every { saveDailyChallengeUseCase.invoke(any()) } returns flowOf(
-            Result.success(Unit)
-        )
-        every { getDailyChallengeCardsUseCase.invoke(any()) } returns flowOf(
-            Result.success(dailyChallengeCards)
-        )
+        saveDailyChallengeUseCase.result = Result.success(Unit)
+        getDailyChallengeCardsUseCase.result = Result.success(dailyChallengeCards)
 
         sut.sendIntent(GameIntent.OnBoardStart("", isDailyChallenge = true))
         testScheduler.advanceUntilIdle()
@@ -949,7 +917,7 @@ class GameViewModelTest : AppTest() {
         testScheduler.advanceUntilIdle()
 
         // then
-        verify(exactly = 1) { hasPlayedTodayDailyChallengeUseCase.invoke() }
+        assertEquals(1, hasPlayedTodayDailyChallengeUseCase.invocationCount)
     }
 
     @Test

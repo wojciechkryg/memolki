@@ -1,16 +1,19 @@
 package com.wojdor.memolki.test.di
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.lifecycle.SavedStateHandle
-import com.google.firebase.messaging.FirebaseMessaging
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.di.DefaultDispatcher
 import com.wojdor.memolki.di.MainDispatcher
+import com.wojdor.memolki.domain.usecase.GetDailyChallengeCardsUseCase
+import com.wojdor.memolki.domain.usecase.GetShuffledUnlockedCardsUseCase
+import com.wojdor.memolki.domain.usecase.GetTodayDailyChallengeUseCase
+import com.wojdor.memolki.domain.usecase.HasPlayedTodayDailyChallengeUseCase
+import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.test.fake.FakeAllCardPairsDataSource
 import com.wojdor.memolki.test.fake.FakeAllRewardedAds
 import com.wojdor.memolki.test.fake.FakeAnalytics
@@ -25,7 +28,11 @@ import com.wojdor.memolki.test.fake.FakeDailyChallengeDao
 import com.wojdor.memolki.test.fake.FakeDataStore
 import com.wojdor.memolki.test.fake.FakeEncryptor
 import com.wojdor.memolki.test.fake.FakeGameServices
+import com.wojdor.memolki.test.fake.FakeGetDailyChallengeCardsUseCase
+import com.wojdor.memolki.test.fake.FakeGetShuffledUnlockedCardsUseCase
+import com.wojdor.memolki.test.fake.FakeGetTodayDailyChallengeUseCase
 import com.wojdor.memolki.test.fake.FakeHapticFeedback
+import com.wojdor.memolki.test.fake.FakeHasPlayedTodayDailyChallengeUseCase
 import com.wojdor.memolki.test.fake.FakeInAppReviewer
 import com.wojdor.memolki.test.fake.FakeLevelCompletePlayer
 import com.wojdor.memolki.test.fake.FakeLocalEncryptorKeyStore
@@ -34,9 +41,9 @@ import com.wojdor.memolki.test.fake.FakeNotificationScheduler
 import com.wojdor.memolki.test.fake.FakePackageNameProvider
 import com.wojdor.memolki.test.fake.FakePermissionProvider
 import com.wojdor.memolki.test.fake.FakePushNotificationProvider
+import com.wojdor.memolki.test.fake.FakeSaveDailyChallengeUseCase
 import com.wojdor.memolki.test.fake.FakeStringProvider
 import com.wojdor.memolki.test.fake.FakeTimeProvider
-import com.wojdor.memolki.test.relaxedMockk
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.billing.BillingHandler
@@ -61,6 +68,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import kotlin.random.Random

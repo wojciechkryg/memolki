@@ -6,13 +6,13 @@ import com.wojdor.memolki.util.provider.TimeProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 
-class HasPlayedTodayDailyChallengeUseCase(
+open class HasPlayedTodayDailyChallengeUseCase(
     coroutineDispatcher: CoroutineDispatcher,
     private val dailyChallengeRepository: DailyChallengeRepository,
     private val timeProvider: TimeProvider
 ) : BaseUseCase<Boolean>(coroutineDispatcher) {
 
-    override fun execute() = flow {
+    open override fun execute() = flow {
         val epochDay = timeProvider.currentLocalDate().toEpochDays()
         val lastPlayedEpochDay = dailyChallengeRepository.getLastPlayedEpochDay()
         val isDateRolledBack = lastPlayedEpochDay != null && epochDay < lastPlayedEpochDay
