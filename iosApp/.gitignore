@@ -1,0 +1,14 @@
+# Xcode-generated artifacts
+iosApp.xcodeproj/
+iosApp.xcworkspace/
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+
+# CocoaPods (added in a later phase)
+Pods/
+Podfile.lock
+
+# macOS
+.DS_Store
