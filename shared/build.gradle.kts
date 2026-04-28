@@ -38,6 +38,7 @@ kotlin {
         pod("FirebaseCore") { version = "11.15.0" }
         pod("FirebaseAnalytics") { version = "11.15.0" }
         pod("FirebaseCrashlytics") { version = "11.15.0" }
+        pod("FirebaseMessaging") { version = "11.15.0" }
         pod("FirebaseInstallations") { linkOnly = true }
         pod("GoogleUtilities") { linkOnly = true }
         pod("nanopb") { linkOnly = true }
@@ -54,6 +55,7 @@ kotlin {
             api(libs.koin.core)
             api(libs.gitlive.firebase.analytics)
             api(libs.gitlive.firebase.crashlytics)
+            api(libs.gitlive.firebase.messaging)
             api(compose.runtime)
             api(compose.foundation)
             api(compose.material3)

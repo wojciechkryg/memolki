@@ -72,6 +72,7 @@ firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashly
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 gitlive-firebase-analytics = { group = "dev.gitlive", name = "firebase-analytics", version.ref = "gitliveFirebase" }
 gitlive-firebase-crashlytics = { group = "dev.gitlive", name = "firebase-crashlytics", version.ref = "gitliveFirebase" }
+gitlive-firebase-messaging = { group = "dev.gitlive", name = "firebase-messaging", version.ref = "gitliveFirebase" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
