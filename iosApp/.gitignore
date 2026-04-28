@@ -6,7 +6,7 @@ DerivedData/
 xcuserdata/
 *.xcuserstate
 
-# CocoaPods (added in a later phase)
+# CocoaPods
 Pods/
 Podfile.lock
 

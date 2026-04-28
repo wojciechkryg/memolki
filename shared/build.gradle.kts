@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
+    kotlin("native.cocoapods")
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -21,14 +22,25 @@ kotlin {
         }
     }
 
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { target ->
-        target.binaries.framework {
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        version = "1.3.35"
+        summary = "Memolki shared KMP module"
+        homepage = "https://github.com/wojdorz/memolki"
+        ios.deploymentTarget = "15.0"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "Shared"
-            isStatic = true
+            isStatic = false
         }
+        pod("FirebaseCore") { version = "11.15.0" }
+        pod("FirebaseAnalytics") { version = "11.15.0" }
+        pod("FirebaseCrashlytics") { version = "11.15.0" }
+        pod("FirebaseInstallations") { linkOnly = true }
+        pod("GoogleUtilities") { linkOnly = true }
+        pod("nanopb") { linkOnly = true }
     }
 
     sourceSets {

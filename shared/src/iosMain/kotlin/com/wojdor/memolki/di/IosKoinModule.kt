@@ -87,7 +87,7 @@ val iosKoinModule = module {
     single<CoroutineDispatcher> { Dispatchers.Default }
     single<CoroutineDispatcher>(DefaultDispatcher) { Dispatchers.Default }
     single<CoroutineDispatcher>(MainDispatcher) { Dispatchers.Main }
-    single { Random.Default }
+    single<Random> { Random.Default }
 
     single { Firebase.analytics }
 

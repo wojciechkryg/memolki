@@ -46,3 +46,6 @@ token.json
 video_urls.json
 ads_assets_progress.json
 google-ads.yaml
+
+# Kotlin/Native CocoaPods plugin auto-generated files
+shared/shared.podspec
