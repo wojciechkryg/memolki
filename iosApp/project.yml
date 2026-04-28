@@ -9,23 +9,25 @@ settings:
     SWIFT_VERSION: "5.9"
     DEVELOPMENT_LANGUAGE: en
     ENABLE_USER_SCRIPT_SANDBOXING: NO
-targets:
-  iosApp:
+
+targetTemplates:
+  iosAppFlavor:
     type: application
     platform: iOS
     sources:
       - path: iosApp
+        excludes:
+          - "Localizations/**"
     info:
       path: iosApp/Info.plist
       properties:
         UILaunchScreen: {}
-        CFBundleDisplayName: Memolki
+        CFBundleDisplayName: $(BUNDLE_DISPLAY_NAME)
         CFBundleShortVersionString: "1.3.35"
         CFBundleVersion: "1003035"
         CADisableMinimumFrameDurationOnPhone: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.wojdor.memolki.fruithalf
         MARKETING_VERSION: "1.3.35"
         CURRENT_PROJECT_VERSION: "1003035"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -37,3 +39,37 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+
+targets:
+  iosApp-FruitHalf:
+    templates: [iosAppFlavor]
+    sources:
+      - path: iosApp/Localizations/FruitHalf
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wojdor.memolki.fruithalf
+        BUNDLE_DISPLAY_NAME: "memolki • fruits"
+  iosApp-VegetableHalf:
+    templates: [iosAppFlavor]
+    sources:
+      - path: iosApp/Localizations/VegetableHalf
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wojdor.memolki.vegetablehalf
+        BUNDLE_DISPLAY_NAME: "memolki • vegetables"
+  iosApp-MammalSide:
+    templates: [iosAppFlavor]
+    sources:
+      - path: iosApp/Localizations/MammalSide
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wojdor.memolki.mammalside
+        BUNDLE_DISPLAY_NAME: "memolki • mammals"
+  iosApp-BirdSide:
+    templates: [iosAppFlavor]
+    sources:
+      - path: iosApp/Localizations/BirdSide
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wojdor.memolki.birdside
+        BUNDLE_DISPLAY_NAME: "memolki • birds"

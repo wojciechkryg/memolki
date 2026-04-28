@@ -2,11 +2,20 @@ source 'https://cdn.cocoapods.org'
 
 platform :ios, '15.0'
 
-target 'iosApp' do
+abstract_target 'iosApp' do
   use_frameworks! :linkage => :dynamic
   pod 'shared', :path => '../shared'
   pod 'FirebaseCore', '11.15.0'
   pod 'FirebaseAnalytics', '11.15.0'
   pod 'FirebaseCrashlytics', '11.15.0'
   pod 'FirebaseMessaging', '11.15.0'
+
+  target 'iosApp-FruitHalf' do
+  end
+  target 'iosApp-VegetableHalf' do
+  end
+  target 'iosApp-MammalSide' do
+  end
+  target 'iosApp-BirdSide' do
+  end
 end
