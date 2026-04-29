@@ -1,12 +1,13 @@
 # 🃏 memolki
 
-> A production Android memory card game built with Jetpack Compose, published on Google Play in multiple themed flavors with multi-language support.
+> A production memory card game built with Kotlin Multiplatform + Compose Multiplatform, published on Google Play in multiple themed flavors with multi-language support. iOS support is in active development.
 
 ![Build](https://github.com/wojciechkryg/memolki/actions/workflows/pull_request.yml/badge.svg)
 ![Merge](https://github.com/wojciechkryg/memolki/actions/workflows/merge.yml/badge.svg)
 ![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/wojciechkryg/50dd6c0bdbfeddc1279c185252d2f170/raw/memolki-coverage.json)
 <br>
 ![Android](https://img.shields.io/badge/API-23%2B-34A853?logo=android&logoColor=white)
+![iOS](https://img.shields.io/badge/iOS-15%2B-000000?logo=apple&logoColor=white)
 
 ## 📲 Google Play
 
@@ -35,7 +36,7 @@
 
 ## 🎯 Overview
 
-Memolki is a card-matching memory game where players flip cards to find matching pairs. The app ships as **multiple themed flavors** — each with unique branding, card artwork, and Play Store listing — all powered by a shared game engine.
+Memolki is a card-matching memory game where players flip cards to find matching pairs. The app ships as **multiple themed flavors** — each with unique branding, card artwork, and Play Store listing — all powered by a shared Kotlin Multiplatform game engine and Compose Multiplatform UI.
 
 ## ✨ Features
 
@@ -46,38 +47,53 @@ Memolki is a card-matching memory game where players flip cards to find matching
 - Deterministic seeding for daily challenges (same puzzle for all players)
 
 **Engagement & Social**
-- Google Play Games integration — leaderboards and achievements
+- Google Play Games integration — leaderboards and achievements (Game Center on iOS, in progress)
 - Share results with friends (earns bonus coins)
 - Daily login streaks with reminder notifications
-- App shortcuts for quick access to daily challenge and shop
+- App shortcuts for quick access to daily challenge and shop (Android)
 
 **Monetization**
-- Ad-supported with multiple mediation partners (Unity, IronSource, Liftoff, InMobi, Mintegral)
-- In-app review prompts via Google Play In-App Review API
-- Google Play Billing integration
+- AdMob rewarded ads (Android live, iOS in progress)
+- In-app review prompts via Google Play In-App Review API / `SKStoreReviewController`
+- Google Play Billing on Android, StoreKit 2 on iOS (in progress)
 
 **Localization**
 - Multi-language support including RTL (Arabic, Hebrew)
 - In-app language switching without restart
-- Per-flavor card name translations
+- Per-flavor card name translations via Compose Resources
 
 **Notifications**
-- Firebase Cloud Messaging with topic-based subscriptions
+- Firebase Cloud Messaging with topic-based subscriptions (per-flavor + per-language)
 - Deep link routing to specific screens (shop, daily challenge, collection)
-- Local alarm reminders (daily challenge, streak)
+- Local notification reminders (daily challenge, streak)
+
+## 🧩 Module Structure
+
+```
+memolki/
+├── shared/        Kotlin Multiplatform library
+│   ├── commonMain/   UI (Compose Multiplatform), ViewModels, use cases, repositories, models
+│   ├── androidMain/  Android `actual` impls (Encryptor, providers, media players, etc.)
+│   ├── iosMain/      iOS `actual` impls (Keychain, AVAudioPlayer, UNUserNotificationCenter, …)
+│   └── {flavor}Main/ Per-flavor card catalog + card images via composeResources
+├── androidApp/    Android app shell (AppActivity, manifest, receivers, flavor source sets)
+└── iosApp/        iOS app shell (SwiftUI @main App, Compose host, 4 Xcode schemes)
+```
+
+The active iOS flavor is selected per-Xcode-scheme via a pre-action that writes `iosApp/.active-flavor` before `:shared:syncFramework` runs — this lets the framework bundle only one flavor's resources at a time, keeping `.app` size lean.
 
 ## 🏗️ Architecture
 
 **MVI + Clean Architecture** with strict unidirectional data flow:
 
 ```
-UI Layer (Jetpack Compose)
+UI Layer (Compose Multiplatform — commonMain)
         ↓ Intent
 Domain Layer (Use Cases → Flow<Result<T>>)
         ↓
 Data Layer (Repositories → DataSources)
         ↓ State
-UI Layer (Jetpack Compose)
+UI Layer (Compose Multiplatform — commonMain)
 ```
 
 ### Screen Structure
@@ -88,56 +104,95 @@ Every feature screen follows a consistent **3-level composable hierarchy**:
 2. **Effect handler** — processes one-shot side effects (navigation, toasts)
 3. **State handler** — wires callbacks to intents, renders stateless UI
 
-This pattern enforces separation of concerns, enables previews for every screen, and keeps navigation logic isolated.
+This pattern enforces separation of concerns, enables previews for every screen, and keeps navigation logic isolated. All Screens, ViewModels, and MVI types live in `:shared/commonMain` — Android and iOS share the same composables.
 
 ### Key Design Decisions
 
 - **Use Cases** — each encapsulates a single business operation, returns `Flow<Result<T>>`
 - **Strict layer boundaries** — domain never imports data-layer internals
-- **Injectable dispatchers** — coroutine dispatchers injected via Hilt qualifiers, never hardcoded
-- **Provider pattern** — Android framework calls abstracted behind interfaces for testability
-- **Encrypted DataStore** — AES encryption for sensitive persistent data (coins, streaks)
-- **Room Database** — structured storage for daily challenge history with proper migrations
+- **Injectable dispatchers** — coroutine dispatchers injected via Koin named qualifiers (`DefaultDispatcher`, `MainDispatcher`), never hardcoded
+- **expect/actual** — platform APIs (Encryptor, audio, notifications, billing, ads, game services) declared as `commonMain` interfaces with `Android*` / `Ios*` implementations
+- **Encrypted DataStore** — AES-GCM authenticated encryption for sensitive persistent data (coins, streaks)
+- **Room Database** — KMP-compatible structured storage for daily challenge history with proper migrations
 
 ## 🛠️ Tech Stack
 
 | Category | Technology |
 |----------|-----------|
-| **Language** | Kotlin |
-| **UI** | Jetpack Compose + Material 3 |
+| **Language** | Kotlin (Multiplatform) |
+| **UI** | Compose Multiplatform + Material 3 (commonMain — Android & iOS) |
 | **Architecture** | MVI + Clean Architecture |
-| **DI** | Hilt (Dagger 2) with KSP |
-| **Navigation** | Navigation Compose |
-| **Persistence** | DataStore (encrypted) + Room |
+| **DI** | Koin (no annotations — constructor-based, wired in `sharedKoinModule` / `appKoinModule` / `iosKoinModule`) |
+| **Navigation** | Navigation Compose (Multiplatform) |
+| **Persistence** | DataStore Preferences (encrypted) + Room (KMP) |
 | **Async** | Kotlin Coroutines + Flow |
-| **Analytics** | Firebase Analytics + Crashlytics |
-| **Messaging** | Firebase Cloud Messaging |
-| **Ads** | AdMob with multi-network mediation |
+| **Resources** | `compose-resources` (commonMain + per-flavor source sets) |
+| **Analytics** | Firebase Analytics + Crashlytics (GitLive KMP wrapper + native iOS pods) |
+| **Messaging** | Firebase Cloud Messaging (Android: native FirebaseMessaging, iOS: APNs + FCM via GitLive) |
+| **Ads** | AdMob (Android live, iOS in progress) |
 | **Play Services** | Games v2, Auth, Billing, In-App Review, In-App Updates |
+| **iOS Native** | StoreKit 2, GameKit, CryptoKit + Keychain, AVFoundation (in progress) |
+| **iOS Tooling** | xcodegen + CocoaPods (via Kotlin's `native.cocoapods` plugin) |
 | **Build** | Gradle with version catalog, ProGuard/R8 |
 | **CI/CD** | GitHub Actions + Gradle Play Publisher |
-| **Testing** | JUnit 4, MockK, Turbine, Paparazzi |
+| **Testing** | JUnit 4, hand-written Fakes, Turbine, Paparazzi |
 | **Coverage** | Kover with badge generation |
+
+## 🧱 Build & Run
+
+### Android
+
+```bash
+# Build a flavor (Debug)
+./gradlew :androidApp:assembleFruitHalfDebug
+
+# Install + launch on connected device/emulator
+./gradlew :androidApp:installFruitHalfDebug && \
+  adb shell am start -n com.wojdor.memolki.fruithalf/com.wojdor.memolki.ui.app.AppActivity
+```
+
+### iOS
+
+```bash
+# 1. Generate the Xcode project from project.yml
+cd iosApp && xcodegen generate
+
+# 2. Install pods (also runs :shared:syncFramework via the Kotlin cocoapods plugin)
+pod install
+
+# 3. Open the workspace and run any of the 4 schemes:
+#    iosApp-FruitHalf, iosApp-VegetableHalf, iosApp-MammalSide, iosApp-BirdSide
+open iosApp.xcworkspace
+
+# Or build from CLI:
+xcodebuild -workspace iosApp.xcworkspace \
+  -scheme iosApp-FruitHalf \
+  -sdk iphonesimulator \
+  -destination "platform=iOS Simulator,name=iPhone 17 Pro" \
+  CODE_SIGNING_ALLOWED=NO build
+```
+
+Each Xcode scheme has a pre-action that writes its flavor name to `iosApp/.active-flavor`, which `shared/build.gradle.kts` reads to wire the per-flavor source set into `iosMain` for that build.
 
 ## 🧪 Testing
 
 Covers the full business logic layer:
 
-- **Unit tests** for all ViewModels, Use Cases, Repositories, and DataSources
-- **Screenshot tests** via Paparazzi — snapshot verification for all `@Preview` composables
-- **Fake pattern** — Android framework calls abstracted via Provider interfaces, each with a corresponding Fake implementation
+- **Unit tests** for all ViewModels, Use Cases, Repositories, and DataSources (in `:shared/commonTest` where possible, `:androidApp`/`:shared/androidUnitTest` for Android-specific glue)
+- **Screenshot tests** via Paparazzi — snapshot verification for all `@Preview` composables (Android-only, recorded against the `fruitHalf` flavor)
+- **Fakes-first** — platform calls (`Context`, `LocaleManager`, `PackageManager`, etc.) abstracted via commonMain interfaces / `expect`-`actual` providers, each with a hand-written `FakeFoo` for tests
 - **Flow testing** with Turbine for async assertions
 - **Parameterized tests** via Test Parameter Injector
 
 ```bash
-# Run all unit tests
-./gradlew testFruitHalfDebugUnitTest
+# Run all unit tests for a flavor
+./gradlew :androidApp:testFruitHalfDebugUnitTest
 
 # Verify screenshot tests
-./gradlew verifyPaparazziFruitHalfDebug
+./gradlew :androidApp:verifyPaparazziFruitHalfDebug
 
 # Generate coverage report
-./gradlew koverXmlReportFruitHalfDebug
+./gradlew :androidApp:koverXmlReportFruitHalfDebug
 ```
 
 ## 🔄 CI/CD
@@ -150,13 +205,13 @@ Covers the full business logic layer:
 
 ## 🛡️ Anti-Cheat & Security
 
-- **Encrypted game state** — all critical values (coins, levels, streaks, matched pairs) stored with AES-256-GCM authenticated encryption via a custom `Encryptor` layer on top of DataStore
-- **IAP signature verification** — purchase validation using RSA + SHA1 against the Google Play billing public key, with proactive hacked signature detection that rejects tampered billing systems
-- **R8 obfuscation** — release builds use ProGuard/R8 with resource shrinking enabled to hinder reverse engineering
+- **Encrypted game state** — all critical values (coins, levels, streaks, matched pairs) stored with AES-256-GCM authenticated encryption via a custom `Encryptor` layer on top of DataStore. Android uses Tink-backed `AndroidKeyStore`; iOS uses CryptoKit + Keychain (in progress)
+- **IAP signature verification** — Android purchase validation using RSA + SHA1 against the Google Play billing public key, with proactive hacked-signature detection that rejects tampered billing systems. iOS will use StoreKit 2's `Transaction.verificationResult` (in progress)
+- **R8 obfuscation** — Android release builds use ProGuard/R8 with resource shrinking enabled to hinder reverse engineering
 
 ## 🎨 Custom Compose Components
 
-Reusable composable library including:
+Reusable composable library (all in `:shared/commonMain`):
 
 - **Animations** — `PulseEffect`, `ShakeEffect`, `ShimmerEffect`, `SparklesOverlay`, `EdgeSparklesEffect`
 - **Card flip** — `Flippable` with 3D rotation animation
@@ -173,10 +228,11 @@ Reusable composable library including:
 | `scripts/listing/` | Play Store listing fetch/update across all flavors and languages |
 | `scripts/notifications/` | FCM push notification sender |
 | `scripts/image_generation/` | Card image resizing across density buckets |
+| `scripts/youtube/` | YouTube thumbnail generation and upload |
 
 ## 📚 Documentation
 
-Detailed docs live in [`docs/`](./docs/docs.md) covering logo generation, card image preparation, app icon setup, flavor onboarding, Play Store listing management, screenshot & video automation, and more.
+Detailed docs live in [`docs/`](./docs/docs.md) covering setup, logo generation, card image preparation, app icon setup, flavor onboarding, Play Store listing management, screenshot & video automation, and more.
 
 ## 📄 License
 

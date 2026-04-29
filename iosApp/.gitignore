@@ -10,5 +10,8 @@ xcuserdata/
 Pods/
 Podfile.lock
 
+# Per-Xcode-scheme active flavor marker (written by scheme pre-action)
+.active-flavor
+
 # macOS
 .DS_Store

@@ -2,19 +2,20 @@
 
 1. Setup new flavor in the app:
     - add the new flavor to the `flavorConfigs` list in `androidApp/build.gradle.kts`
+    - add the new flavor to the `productFlavors` block in `shared/build.gradle.kts` (and to the `flavorNames` list in the `afterEvaluate` block — this wires the per-flavor source set into `iosMain` when active)
     - add the new flavor package name to the `queries` in `AndroidManifest.xml`
 
 1. Prepare images:
-    - prepare card images as described [here](/docs_images)
-    - prepare logo images as described [here](/docs_logo)
+    - prepare card images as described [here](./docs_images.md)
+    - prepare logo images as described [here](./docs_logo.md)
 
 1. Add all images, strings, colors:
-    - copy paste the images to the new flavor folder
-    - create the strings in the new flavor folder
-    - create the colors in the new flavor folder
-    - create a flavor specific `AllCardPairsLocalDataSource.class` in the `data/local/card_pairs`
-      folder
-    - add the new app in the `AppModel` and include it in the `all` function
+    - drop card images into `shared/src/{flavor}Main/composeResources/drawable/` (single source for both Android and iOS via Compose Resources)
+    - drop card name strings into `shared/src/{flavor}Main/composeResources/values{-locale}/strings.xml`
+    - create the per-flavor primary color in `shared/src/{flavor}Main/kotlin/.../ui/theme/AppPrimary.kt` (`internal actual val AppPrimary: Color = ...`)
+    - create a flavor-specific `CardCatalog.kt` in `shared/src/{flavor}Main/kotlin/com/wojdor/memolki/data/local/card/` that implements `AllCardPairsDataSource`
+    - copy Android-specific launcher/notification icons into `androidApp/src/{flavor}/res/`
+    - add the new app in `AppModel` (commonMain) and include it in the `all` function
 
 1. Add app icon:
     - add prepared app icon by adding a new Image Asset
@@ -120,6 +121,15 @@
       ./scripts/listing/update_listings.sh {flavorCamelCase}
       ```
     - see [docs_listing.md](docs_listing.md) for details
+
+1. Setup the new flavor on iOS:
+    - add a new entry to `iosApp/Configs/{Flavor}.xcconfig` with `PRODUCT_BUNDLE_IDENTIFIER = com.wojdor.memolki.{flavor}` and the matching display name
+    - add a new target/scheme entry in `iosApp/project.yml` mirroring the existing flavors (config + scheme block with the pre-action that writes the camelCase flavor name to `iosApp/.active-flavor`)
+    - regenerate the Xcode project: `cd iosApp && xcodegen generate`
+    - register the iOS bundle in the Firebase Console (same project as Android), download `GoogleService-Info.plist`, and save it as `iosApp/iosApp/Resources/GoogleService-Info-{Flavor}.plist`
+    - add the per-flavor `AppIcon-{Flavor}.appiconset` to `iosApp/iosApp/Assets.xcassets/`
+    - localize the display name in `iosApp/iosApp/Resources/{lang}.lproj/InfoPlist.strings` for each supported language
+    - run `pod install` and verify the new scheme builds: `xcodebuild -workspace iosApp.xcworkspace -scheme iosApp-{Flavor} -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 17 Pro" CODE_SIGNING_ALLOWED=NO build`
 
 1. Push build:
     - change the `minor` version to the `minor + 1` and `patch` to `0`

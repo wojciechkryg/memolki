@@ -1,12 +1,14 @@
-@file:UseSerializers(StringResourceSerializer::class)
+@file:UseSerializers(StringResourceSerializer::class, DrawableResourceSerializer::class)
 
 package com.wojdor.memolki.domain.model
 
 import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.empty
+import com.wojdor.memolki.util.serializer.DrawableResourceSerializer
 import com.wojdor.memolki.util.serializer.StringResourceSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
 @Serializable
@@ -70,7 +72,7 @@ sealed class CardModel {
         override val id: String,
         override val pairId: String,
         override val textRes: StringResource,
-        val imageRes: Int,
+        val imageRes: DrawableResource,
         override val isFlippedFront: Boolean = false,
         override val isPairMatched: Boolean = false,
         override val isMatchAnimating: Boolean = false,

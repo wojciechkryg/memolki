@@ -1,5 +1,6 @@
 package com.wojdor.memolki.data.entity
 
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
 sealed class CardEntity {
@@ -15,6 +16,6 @@ sealed class CardEntity {
     data class Image(
         override val id: String,
         override val textRes: StringResource,
-        val imageRes: Int
+        val imageRes: DrawableResource
     ) : CardEntity()
 }

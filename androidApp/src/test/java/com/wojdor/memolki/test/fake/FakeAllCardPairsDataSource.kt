@@ -4,6 +4,7 @@ import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.data.entity.CardPairEntity
 import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.img_test_whole
 import com.wojdor.memolki.shared.resources.apple
 import com.wojdor.memolki.shared.resources.banana
 import com.wojdor.memolki.shared.resources.blueberry
@@ -27,12 +28,12 @@ class FakeAllCardPairsDataSource : AllCardPairsDataSource {
     private fun baseCardPairs() = listOf(
         CardPairEntity(
             "banana",
-            CardEntity.Image("banana_whole", Res.string.banana, 1) to
-                    CardEntity.Image("banana_half", Res.string.banana, 1)
+            CardEntity.Image("banana_whole", Res.string.banana, Res.drawable.img_test_whole) to
+                    CardEntity.Image("banana_half", Res.string.banana, Res.drawable.img_test_whole)
         ),
         CardPairEntity(
             "apple",
-            CardEntity.Image("apple_whole", Res.string.apple, 2) to
+            CardEntity.Image("apple_whole", Res.string.apple, Res.drawable.img_test_whole) to
                     CardEntity.Text("apple_half", Res.string.apple)
         ),
         CardPairEntity(

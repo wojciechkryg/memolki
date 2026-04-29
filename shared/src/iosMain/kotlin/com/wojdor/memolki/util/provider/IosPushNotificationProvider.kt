@@ -4,27 +4,29 @@ import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.messaging.messaging
 import kotlinx.coroutines.flow.first
-import platform.Foundation.NSBundle
 
 class IosPushNotificationProvider(
+    private val packageNameProvider: PackageNameProvider,
     private val localeProvider: LocaleProvider,
     private val userLocalDataSource: UserLocalDataSource
 ) : PushNotificationProvider {
 
     override suspend fun subscribeToTopics() {
-        val flavor = bundleIdentifierFlavor() ?: return
+        val flavorTopic = packageNameProvider.providePackageName()
+            .substringAfterLast('.')
+            .lowercase()
+            .takeIf { it.isNotEmpty() } ?: return
         val language = localeProvider.getLanguageTag()
         runCatching {
-            Firebase.messaging.subscribeToTopic(flavor)
+            Firebase.messaging.subscribeToTopic(flavorTopic)
             val previousLanguage = userLocalDataSource.fcmLanguageTopic.first()
-            if (previousLanguage != null && previousLanguage != language) {
-                Firebase.messaging.unsubscribeFromTopic("lang_$previousLanguage")
+            if (previousLanguage != language) {
+                if (previousLanguage != null) {
+                    Firebase.messaging.unsubscribeFromTopic("lang_$previousLanguage")
+                }
+                Firebase.messaging.subscribeToTopic("lang_$language")
+                userLocalDataSource.setFcmLanguageTopic(language)
             }
-            Firebase.messaging.subscribeToTopic("lang_$language")
-            userLocalDataSource.setFcmLanguageTopic(language)
         }
     }
-
-    private fun bundleIdentifierFlavor(): String? =
-        NSBundle.mainBundle.bundleIdentifier?.substringAfterLast('.')?.lowercase()
 }

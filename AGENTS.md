@@ -26,7 +26,7 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Project Overview
 
-Memolki is an Android card-matching memory game built with Jetpack Compose. It ships as multiple app flavors (each with a unique theme, package name, and billing key). Check `androidApp/build.gradle.kts` for the current list of flavors under `productFlavors`.
+Memolki is a card-matching memory game built with Kotlin Multiplatform + Compose Multiplatform. The Android app ships on Google Play; the iOS app is in active development (phases 14b–14e of the migration are complete; AdMob, StoreKit, GameKit, and full platform-impl coverage are in progress). It ships as multiple app flavors — each with a unique theme, bundle/package name, and billing keys. Check `androidApp/build.gradle.kts` and `shared/build.gradle.kts` for the current list of flavors under `productFlavors`.
 
 ## Documentation
 
@@ -34,6 +34,7 @@ Detailed docs live in `docs/`. Consult the relevant doc before working in that a
 
 | Doc | Topic |
 |-----|-------|
+| [`docs/docs_setup.md`](docs/docs_setup.md) | Local environment setup (`secrets.properties`, `google-services.json`, iOS toolchain) |
 | [`docs/docs_logo.md`](docs/docs_logo.md) | Logo generation and specifications |
 | [`docs/docs_images.md`](docs/docs_images.md) | Card image generation, resizing, and density buckets |
 | [`docs/docs_icons.md`](docs/docs_icons.md) | App icon setup and guidelines |
@@ -49,7 +50,7 @@ The **default flavor** is `fruitHalf` — use it for builds, tests, and installs
 
 After making changes, always install and launch the app on the connected device/emulator to verify the build works at runtime (not just compilation).
 
-The app lives in the `:androidApp` Gradle module (shared KMP-ready code will live in `:shared`). Task names below work unqualified (no other module exposes `assembleFruitHalfDebug` etc.), but can be prefixed with `:androidApp:` for clarity.
+The app lives in two Gradle modules: `:androidApp` (Android shell) and `:shared` (Kotlin Multiplatform library — Compose Multiplatform UI, ViewModels, use cases, repositories, models, plus per-flavor source sets for card images and strings). The iOS app shell is in the non-Gradle `iosApp/` directory. Android task names below work unqualified (no other module exposes `assembleFruitHalfDebug` etc.), but can be prefixed with `:androidApp:` for clarity.
 
 ```bash
 # Build debug APK
@@ -82,13 +83,37 @@ The app lives in the `:androidApp` Gradle module (shared KMP-ready code will liv
 
 After making UI changes, always run `verifyPaparazziFruitHalfDebug` alongside the build/install step. If screenshots differ intentionally, run `recordPaparazziFruitHalfDebug` to update the references and commit the updated PNGs.
 
+### iOS build commands
+
+```bash
+# Verify the iOS framework links for the active flavor (fast feedback loop)
+./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
+
+# Generate Xcode project from project.yml (after editing project.yml or adding a flavor)
+cd iosApp && xcodegen generate
+
+# Install / refresh CocoaPods (also runs :shared:syncFramework via the cocoapods plugin)
+cd iosApp && pod install
+
+# Build a flavor scheme for the simulator (no signing needed)
+xcodebuild -workspace iosApp/iosApp.xcworkspace \
+  -scheme iosApp-FruitHalf \
+  -sdk iphonesimulator \
+  -destination "platform=iOS Simulator,name=iPhone 17 Pro" \
+  CODE_SIGNING_ALLOWED=NO build
+```
+
+The active iOS flavor is selected per-Xcode-scheme via a pre-action that writes `iosApp/.active-flavor` (read by `shared/build.gradle.kts` via `providers.fileContents()`). When invoking Gradle directly without Xcode, override with `IOS_FLAVOR=birdSide` env or `-PiosFlavor=birdSide`. Schemes: `iosApp-FruitHalf`, `iosApp-VegetableHalf`, `iosApp-MammalSide`, `iosApp-BirdSide`.
+
 ## Setup
 
 A `secrets.properties` file is needed in the root directory with:
 - `<FLAVOR_UPPER_SNAKE>_BILLING_KEY` entry for each flavor (see `androidApp/build.gradle.kts`)
 - `FIREBASE_PROJECT_ID` — required by `scripts/notifications/send_push_notification.sh`
 
-Adding a new flavor has a checklist in `docs/docs_new_app_flavor_setup.md`.
+For iOS: install `xcodegen` and `cocoapods` via Homebrew, place per-flavor `GoogleService-Info-{Flavor}.plist` files under `iosApp/iosApp/Resources/`, then `cd iosApp && xcodegen generate && pod install`. Full setup in [`docs/docs_setup.md`](docs/docs_setup.md).
+
+Adding a new flavor has a checklist in `docs/docs_new_app_flavor_setup.md` (covers both Android and iOS).
 
 ## Architecture
 
@@ -98,9 +123,10 @@ Adding a new flavor has a checklist in `docs/docs_new_app_flavor_setup.md`.
 UI (Compose) → Domain (Use Cases) → Data (Repositories → DataSources)
 ```
 
-- `:androidApp` hosts the Android app (Activity, manifest, services, receivers, flavor source sets, Paparazzi).
-- `:shared` is a Kotlin Multiplatform library (`commonMain` / `androidMain` / `iosMain`) that holds portable code. An iOS app target is scaffolded separately in phase 14.
-- Code lives in `:shared/commonMain` when it can be authored once and consumed on both platforms; in `:shared/androidMain` (or `:shared/iosMain`) when a platform-specific `actual` is needed for an `expect` declaration; in `:androidApp` when it's genuinely Android-only (UI composables, manifest-bound receivers, flavor data).
+- `:androidApp` hosts the Android app (Activity, manifest, services, receivers, Android-only flavor `res/`, Paparazzi).
+- `:shared` is a Kotlin Multiplatform library (`commonMain` / `androidMain` / `iosMain` plus per-flavor `{flavor}Main` source sets) holding portable code: Compose Multiplatform UI, ViewModels, use cases, repositories, models, card images, and strings.
+- `iosApp/` is the iOS app shell (SwiftUI `@main App`, Compose host, 4 Xcode schemes, CocoaPods). It is not a Gradle module — `:shared` produces a dynamic framework consumed via the Kotlin `native.cocoapods` plugin.
+- Code lives in `:shared/commonMain` when it can be authored once and consumed on both platforms; in `:shared/androidMain` (or `:shared/iosMain`) when a platform-specific `actual` is needed for an `expect` declaration; in `:shared/{flavor}Main/` for per-flavor card catalogs, drawables, and strings (visible from the matching Android variant and from `iosMain` when that flavor is active); in `:androidApp` when it's genuinely Android-only (Activity, manifest-bound receivers, launcher icons).
 
 **Layer boundaries are strict:** Use cases depend only on repositories (and other use cases) — never import data-layer internals (`data/local/database/` entities, `data/mapper/`). Repositories are responsible for mapping between data entities and domain models.
 
@@ -267,13 +293,13 @@ Android framework calls (e.g. `Context`, `LocaleManager`, `PackageManager`) are 
 Structure — most providers are multiplatform via `expect/actual`:
 - **`expect open class`** in `shared/src/commonMain/.../util/provider/` declares the API shape
 - **`actual open class`** in `shared/src/androidMain/...` with the real Android implementation (takes `Context` in constructor where needed, wired via `get()` in Koin)
-- **`actual open class`** in `shared/src/iosMain/...` — stub implementation. Each stub carries a `TODO(ios):` marker pointing at the real iOS API to use later (e.g. `UNUserNotificationCenter`, `NSLocale`, `UIApplication.canOpenURL`).
+- **`actual open class`** in `shared/src/iosMain/...` with the iOS implementation (real where shipped, stub for pending phases — pending stubs carry a `TODO(kmp-ios):` marker pointing at the iOS API to use, e.g. `StoreKit`, `GameKit`, `Google-Mobile-Ads-SDK`).
 
-Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`. `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` is a plain `open class` in `commonMain` backed by `kotlinx.datetime` + `kotlin.time.Clock` — returns `kotlinx.datetime.LocalDate` (use `.toEpochDays()`, `.atStartOfDayIn(TimeZone)`, `DateTimeUnit.DAY` at call sites). `PushNotificationProvider` is staying Android-only since it wraps `FirebaseMessaging` topic subscription and Android-specific language-tag handling.
+Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProvider`, `LocaleProvider`, `PackageNameProvider`, `PermissionProvider`, `PushNotificationProvider` (Android wraps `FirebaseMessaging`, iOS uses GitLive's `dev.gitlive:firebase-messaging` for APNs/FCM topic subscription). `RecordingModeProvider` is a plain `object` in `commonMain` (single `const val`, no platform diff). `TimeProvider` is a plain `open class` in `commonMain` backed by `kotlinx.datetime` + `kotlin.time.Clock` — returns `kotlinx.datetime.LocalDate` (use `.toEpochDays()`, `.atStartOfDayIn(TimeZone)`, `DateTimeUnit.DAY` at call sites).
 
 ### Platform services (Billing / Ads / Notifications / PlayGames)
 
-Bigger Android-only subsystems are exposed to ViewModels as **commonMain interfaces** with Android impls in `:androidApp` and iOS no-op impls in `shared/iosMain`. ViewModels and use cases never touch `Activity`, `ProductDetails`, `PendingIntent`, etc. directly — the Android impl tracks the current `Activity` internally via `ActivityLifecycleCallbacks` where needed.
+Bigger platform subsystems are exposed to ViewModels as **commonMain interfaces** with `Android*` impls in `:androidApp`/`:shared/androidMain` and `Ios*` impls in `:shared/iosMain` (some still stubs, see iOS migration phases below). ViewModels and use cases never touch `Activity`, `ProductDetails`, `PendingIntent`, `UIApplication`, `GADRewardedAd`, etc. directly — the Android impl tracks the current `Activity` internally via `ActivityLifecycleCallbacks` where needed; the iOS impl reaches the topmost `UIViewController` similarly when presenting native UI.
 
 **Naming convention for platform impls:** commonMain interface carries the bare name (e.g. `BillingHandler`); Android impl is prefixed `Android*` (`AndroidBillingHandler`), iOS impl is prefixed `Ios*` (`IosBillingHandler`).
 
@@ -293,12 +319,12 @@ Bigger Android-only subsystems are exposed to ViewModels as **commonMain interfa
 MVI effects only carry common types (`BillingProduct`, `Long`, `RewardedAd` interface) — they no longer ship concrete Android objects to screens. Screens inject `BillingHandler`/`GameServices` via `koinInject<>()` when handling effects.
 
 Testing:
-- Each provider has a corresponding `Fake{Name}` class in `shared/src/androidMain` OR `androidApp/src/test/fake/` (currently still all in `androidApp/test/fake/`) that extends the Android `actual` class, passing `mockk()` as the context where needed
+- Each provider/handler/service has a corresponding hand-written `Fake{Name}` class in `androidApp/src/test/.../test/fake/` that implements the commonMain interface (or extends the `expect/actual` class) directly — no MockK
 - Fakes are **fully functional** — they hold state via private vars and override all methods with real behavior (no mocks, no no-ops)
 - Fakes are bound in `TestKoinModule` via `singleOf(::FakeFoo) { bind<FooProvider>() }`
 - Tests read the fake via `val fakeLocaleProvider: FakeLocaleProvider by inject()` and use it to control state directly. `FooProvider by inject()` is also valid when the test only needs the public contract.
 
-Examples: `LocaleProvider` (commonMain expect + androidMain/iosMain actuals) / `FakeLocaleProvider` (androidApp/test/fake, extends Android actual)
+Examples: `LocaleProvider` (commonMain expect + androidMain/iosMain actuals) / `FakeLocaleProvider` (androidApp/test/fake)
 
 ### Dependency Injection
 
@@ -346,25 +372,24 @@ Shared composables live in `ui/component/`. Before creating a new composable, ch
 
 ## Testing
 
-- **Framework:** `kotlin.test` (multiplatform) + Turbine (Flow testing) + MockK + Koin Test (`KoinTest`). On JVM `kotlin.test` runs through the JUnit 4 backend, so MockK / Koin / Turbine all keep working — `@get:Rule`, `@RunWith` and the tests that need them stay JUnit-imported (e.g. `PreviewTest` for Paparazzi).
+- **Framework:** `kotlin.test` (multiplatform) + Turbine (Flow testing) + Koin Test (`KoinTest`). On JVM `kotlin.test` runs through the JUnit 4 backend, so Koin / Turbine all keep working — `@get:Rule`, `@RunWith` and the tests that need them stay JUnit-imported (e.g. `PreviewTest` for Paparazzi). **No MockK** — every test double is a hand-written Fake.
 - **Imports — always `kotlin.test`, never `org.junit`:** use `import kotlin.test.Test`, `import kotlin.test.assertEquals`, `import kotlin.test.BeforeTest`, `import kotlin.test.AfterTest`. Annotate with `@Test`, `@BeforeTest`, `@AfterTest`. Never write `import org.junit.Test` / `org.junit.Assert.*` / `@Before` / `@After`. The only exceptions are tests that genuinely need JUnit-only constructs (`@get:Rule`, `@RunWith`, `org.junit.Assume.assumeTrue`) — keep those imports JUnit-side; everything else stays `kotlin.test`.
 - **`kotlin.test` arg order vs JUnit:** `assertTrue(actual, message)`, `assertFalse(actual, message)`, `assertEquals(expected, actual, message)` — the optional message is **last**, not first. JUnit had it first; flipping the args is the most common compile error when porting.
-- **Base class:** `AppTest` (`test/AppTest.kt`) — implements `KoinTest`; starts Koin in `@BeforeTest` with `modules(sharedKoinModule, testKoinModule)` and `stopKoin()` in `@AfterTest`; sets `Dispatchers.setMain(testDispatcher)` with the injected `StandardTestDispatcher`; initializes MockK annotations.
+- **Base class:** `AppTest` (`test/AppTest.kt`) — implements `KoinTest`; starts Koin in `@BeforeTest` with `modules(sharedKoinModule, testKoinModule)` and `stopKoin()` in `@AfterTest`; sets `Dispatchers.setMain(testDispatcher)` with the injected `StandardTestDispatcher`.
 - **Test DI:** `TestKoinModule` (`test/di/TestKoinModule.kt`) **layers on top of `sharedKoinModule`** — it does NOT redeclare use cases / ViewModels / repositories / DataSources / formatters; those come unchanged from production. Koin's later-module-wins behavior makes overrides apply on top of the production graph. The module contains:
   - The test dispatcher: single `StandardTestDispatcher` shared across the unqualified IO / `DefaultDispatcher` / `MainDispatcher` qualifiers so `runTest` and `Dispatchers.setMain` stay aligned.
   - Test-only deps: `SavedStateHandle`, `Random(0)` (deterministic).
-  - **Fakes** (preferred over mocks — record call counts / state, override shared bindings): `FakeEncryptor`, `Fake*Provider` (`AppForeground`/`AppInstalled`/`Locale`/`Notification`/`PackageName`/`Permission`/`PushNotification`/`Time`), `FakeAllCardPairsDataSource`, `FakeDataStore`, `FakeStringProvider`, `FakeHapticFeedback`, `FakeBackgroundMusicPlayer`, sound players (`FakeCardFlipPlayer`/`FakeCardPairMatchedPlayer`/`FakeCoinsPlayer`/`FakeLevelCompletePlayer`), `FakeAllRewardedAds` (with configurable `FakeRewardedAd`s), `FakeBillingHandler` (captures `BillingStatusListener`), `FakeInAppReviewer`, `FakeGameServices`, `FakeLocalEncryptorKeyStore`, `FakeDailyChallengeDao` (in-memory `MutableMap<Long, DailyChallengeEntity>`).
-  - **MockK** (`relaxedMockk()`) only for genuinely system-specific concrete classes that can't be hand-faked: `Context` (Android-only, abstract), `FirebaseMessaging` (final JVM class), `Analytics` (open class but its `FirebaseAnalytics` dep is GitLive `expect class`).
-- **Test utilities:** `test/TestUtils.kt` — `relaxedMockk<T>()`, `verifyOnce()`, `coVerifyOnce()`. Test fixtures: `test/TestEntities.kt` — `dailyChallengeEntity(...)` builder with default args.
-- **Fakes-first principle:** when a binding can be hand-faked instead of mocked, prefer the Fake. Variables typed as the concrete `FakeFoo` (not the interface) so test bodies can read its `*Count` counters / `captured*` slots / state-mutation fields. New deps that need a Fake: add a class in `androidApp/src/test/.../test/fake/`, bind it in `TestKoinModule`. Reach for MockK only for system-specific finals (`Context`, `FirebaseMessaging`, `FirebaseAnalytics` via `Analytics`).
+  - **Fakes** (every test double is hand-written — record call counts / state, override shared bindings): `FakeEncryptor`, `FakeLocalEncryptorKeyStore`, `FakeAnalytics`, `Fake*Provider` (`AppForeground`/`AppInstalled`/`Locale`/`PackageName`/`Permission`/`PushNotification`/`String`/`Time`), `FakeAllCardPairsDataSource`, `FakeDataStore`, `FakeHapticFeedback`, `FakeBackgroundMusicPlayer`, sound players (`FakeCardFlipPlayer`/`FakeCardPairMatchedPlayer`/`FakeCoinsPlayer`/`FakeLevelCompletePlayer`), `FakeAllRewardedAds` (with configurable `FakeRewardedAd`s), `FakeBillingHandler` (captures `BillingStatusListener`), `FakeInAppReviewer`, `FakeGameServices`, `FakeNotificationScheduler`, `FakeDailyChallengeDao` (in-memory `MutableMap<Long, DailyChallengeEntity>`), plus per-test fake use cases (`FakeGetDailyChallengeCardsUseCase`, etc.).
+- **Test fixtures:** `test/TestEntities.kt` — `dailyChallengeEntity(...)` builder with default args.
+- **Fakes-first principle:** every test double is a hand-written Fake — there is no MockK in the project. Variables typed as the concrete `FakeFoo` (not the interface) so test bodies can read its `*Count` counters / `captured*` slots / state-mutation fields. New deps that need a Fake: add a class in `androidApp/src/test/.../test/fake/`, bind it in `TestKoinModule`.
 - **Test naming:** backtick-quoted descriptive names: `` `when X then Y` ``
 
 Conventions:
 - Extend `AppTest`, annotate with `@ExperimentalCoroutinesApi`
-- Read Koin-managed dependencies with `private val foo: Foo by inject()`; use `@MockK` / `@RelaxedMockK` only for mocks local to the test
-- **SUT resolution:** every binding for ViewModels, UseCases, Repositories, DataSources, and formatters lives in `sharedKoinModule` (loaded by `AppTest` alongside `TestKoinModule`), so resolve the SUT via Koin — `private lateinit var sut: FooViewModel` + `sut = get()` in `@BeforeTest setup()` (after `super.setup()` so Koin is started first). Import `org.koin.test.get`. This keeps tests stable when a class's constructor changes. Only inject the dependencies you need in the test body (for `verify {}`, state mutations, assertions).
+- Read Koin-managed dependencies with `private val foo: Foo by inject()` — typically the concrete `FakeFoo` so the test can read counters/state directly
+- **SUT resolution:** every binding for ViewModels, UseCases, Repositories, DataSources, and formatters lives in `sharedKoinModule` (loaded by `AppTest` alongside `TestKoinModule`), so resolve the SUT via Koin — `private lateinit var sut: FooViewModel` + `sut = get()` in `@BeforeTest setup()` (after `super.setup()` so Koin is started first). Import `org.koin.test.get`. This keeps tests stable when a class's constructor changes. Only inject the dependencies you need in the test body (for state mutations, assertions on Fake counters).
 - **SUT-injection edge cases:**
-  - If the test needs custom mocks that the SUT depends on, override the bindings in `setup()` with `loadKoinModules(module { factory<FooUseCase> { mockedInstance } })` BEFORE `sut = get()` (see `GameViewModelTest`).
+  - If the test needs to override a binding with a custom Fake instance, override in `setup()` with `loadKoinModules(module { factory<FooUseCase> { customFakeInstance } })` BEFORE `sut = get()` (see `GameViewModelTest`).
   - If the SUT reads from `SavedStateHandle` at init time, inject the handle, populate it (`savedStateHandle["key"] = value`) BEFORE `sut = get()` (see `EnableNotificationsViewModelTest`).
   - If the scenario needs a tailored fake state, mutate the already-injected fake rather than constructing a new sub-dep (see `GetDailyChallengeCardsUseCaseTest` using `fakeAllCardPairsDataSource.addedEpochDayOverrides = ...`).
   - For tests that don't extend `AppTest` (pure POJO like `TimeFormatterTest`), construct the SUT directly — Koin isn't involved.
@@ -373,7 +398,7 @@ Conventions:
 - For long-lived flows (e.g. DataStore, StateFlow), no `awaitComplete()` needed
 - Comments in tests are **only** `// given`, `// when`, `// then` — no other comments (no inline explanations, no `// region`/`// endregion`, no trailing descriptions)
 - Use `assertTrue()`/`assertFalse()` — never `assertEquals(true, ...)` or `assertEquals(false, ...)`
-- For static Android APIs (e.g. `AppCompatDelegate`), use `mockkStatic(...)` in `@Before`
+- For static Android APIs (e.g. `AppCompatDelegate`), wrap the call in a Provider interface with a Fake — keeps tests off MockK
 - **Fake scoping:** Koin `singleOf(::FakeFoo) { bind<Foo>() }` binds the fake as a singleton behind both the concrete Fake class AND the interface/parent class. `by inject()` returns the same instance each time, so injecting `FakeLocaleProvider` and `LocaleProvider` in the same test yields the same object — no risk of divergent instances. When testing a UseCase that depends on other UseCases that use Fakes, use the Koin-provided instance instead of constructing child UseCases manually.
 
 ### Common mistakes
@@ -708,7 +733,7 @@ Scheduled work:
 Firebase Analytics and Crashlytics are integrated via `google-services.json` (in `androidApp/`, gitignored). The common Kotlin SDK is **GitLive Firebase** (`dev.gitlive:firebase-analytics`, `dev.gitlive:firebase-crashlytics`) declared in `:shared`'s `commonMain` so both layers are KMP-ready; GitLive delegates to the Google Android SDKs under the hood. Both are **disabled in debug builds** via `App.kt` (`disableFirebaseInDebug()`) — only release builds send data.
 
 ### Analytics
-All custom events are logged through `shared/src/commonMain/.../util/analytics/Analytics.kt`. Injected into ViewModels as the **second constructor parameter** (after `savedStateHandle`). In tests, provided as `relaxedMockk()` from `TestKoinModule` (Analytics stays mocked because its `FirebaseAnalytics` dep is GitLive `expect class`) — verify calls with `verify { analytics.logX() }`.
+All custom events are logged through `shared/src/commonMain/.../util/analytics/Analytics.kt`. Injected into ViewModels as the **second constructor parameter** (after `savedStateHandle`). In tests, provided as `FakeAnalytics` from `TestKoinModule` — assert calls by reading the fake's recorded events (e.g. `fakeAnalytics.loggedEvents`).
 
 Event names, parameter keys, and values are organized in `private object Event`, `private object Key`, and `private object Value` inside `Analytics.kt`. Callers use typed helper methods (e.g. `logAdRewardFromShop()`, `logCardUnlockedWithCoins()`) — no raw string literals at call sites. Parameters are passed as `Map<String, Any>` to GitLive's `logEvent` (no Android `Bundle`).
 
@@ -761,7 +786,7 @@ Recurring errors to avoid — check this list before submitting changes.
 - **`first()` is fine for one-shot BaseUseCase flows:** `BaseUseCase.execute()` emits exactly once; `.first()` is idiomatic for these. Only avoid `first()` on continuous flows (DataStore, combine, etc.)
 - **No `getOrNull()` / `getOrThrow()`:** Handle results with `.onSuccess { }` / `.onFailure { }`
 - **Compose use cases with sequential `first()`, not `combine()`:** Nesting `combine()` inside `BaseUseCase.execute()` creates layered `flowOn` chains that break `StandardTestDispatcher` in tests. Use `flow { val x = otherUseCase().first().getOrThrow(); ... }` instead (see `UnlockRandomCardIfEnoughCoinsUseCase`)
-- **Don't hack production code to fix test issues:** If `relaxedMockk` swallows a call, stub it properly in `TestKoinModule` — don't convert member functions to extensions or restructure production code as a workaround
+- **Don't hack production code to fix test issues:** If a Fake is missing behavior the test depends on, extend the Fake — don't convert member functions to extensions or restructure production code as a workaround
 - **Fix root causes, don't scatter suppressions:** If a warning appears in many files, fix the source (e.g. `const val` → `val`) instead of adding `@Suppress` everywhere
 
 ### Testing

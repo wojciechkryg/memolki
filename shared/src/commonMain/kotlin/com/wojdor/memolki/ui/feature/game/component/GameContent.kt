@@ -27,6 +27,8 @@ import com.wojdor.memolki.domain.model.BoardModel
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.empty
+import com.wojdor.memolki.shared.resources.img_test_half
+import com.wojdor.memolki.shared.resources.img_test_whole
 import com.wojdor.memolki.shared.resources.level_count
 import com.wojdor.memolki.shared.resources.leave_daily_challenge_body
 import com.wojdor.memolki.shared.resources.leave_daily_challenge_title
@@ -34,8 +36,6 @@ import com.wojdor.memolki.shared.resources.leave_game_body
 import com.wojdor.memolki.shared.resources.leave_game_leave
 import com.wojdor.memolki.shared.resources.leave_game_stay
 import com.wojdor.memolki.shared.resources.leave_game_title
-import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_HALF
-import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_WHOLE
 import org.jetbrains.compose.resources.stringResource
 import com.wojdor.memolki.ui.component.AutoSizeText
 import com.wojdor.memolki.ui.component.BaseMenuItem
@@ -363,7 +363,7 @@ private fun getPreviewCards(matchedCount: Int = 6) = List(6) {
         id = "id",
         pairId = "pairId",
         textRes = Res.string.empty,
-        imageRes = if (it % 2 == 0) PREVIEW_IMAGE_WHOLE else PREVIEW_IMAGE_HALF,
+        imageRes = if (it % 2 == 0) Res.drawable.img_test_whole else Res.drawable.img_test_half,
         isFlippedFront = true,
         isPairMatched = it < matchedCount
     )

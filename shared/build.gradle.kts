@@ -12,6 +12,10 @@ plugins {
 }
 
 kotlin {
+    // Custom source sets disable the default hierarchy auto-detection,
+    // so apply it explicitly to keep iosArm64/iosSimulatorArm64 → iosMain → commonMain.
+    applyDefaultHierarchyTemplate()
+
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
@@ -77,6 +81,34 @@ kotlin {
             implementation(libs.androidx.lifecycle.process)
         }
         iosMain.dependencies {
+        }
+
+    }
+}
+
+// Per-flavor sourceSets: android<Flavor>Main + iosMain (active flavor only) → <flavor>Main → commonMain.
+// iOS active flavor is read from iosApp/.active-flavor (written by each Xcode scheme's pre-action
+// before :shared:syncFramework runs). Using providers.fileContents() so the configuration cache
+// invalidates when the file content changes, otherwise scheme switches would silently reuse stale config.
+val activeFlavorFile = rootProject.layout.projectDirectory.file("iosApp/.active-flavor")
+val activeIosFlavor: String =
+    (System.getenv("IOS_FLAVOR")
+        ?: providers.gradleProperty("iosFlavor").orNull
+        ?: providers.fileContents(activeFlavorFile).asText.orNull?.trim()?.takeIf { it.isNotEmpty() })
+        ?.replaceFirstChar(Char::lowercaseChar)
+        ?: "fruitHalf"
+
+afterEvaluate {
+    val flavorNames = listOf("fruitHalf", "vegetableHalf", "mammalSide", "birdSide")
+    kotlin.sourceSets.apply {
+        flavorNames.forEach { flavor ->
+            val flavorMain = maybeCreate("${flavor}Main").apply {
+                dependsOn(getByName("commonMain"))
+            }
+            findByName("android${flavor.replaceFirstChar(Char::uppercaseChar)}")?.dependsOn(flavorMain)
+            if (flavor == activeIosFlavor) {
+                getByName("iosMain").dependsOn(flavorMain)
+            }
         }
     }
 }

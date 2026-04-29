@@ -13,6 +13,9 @@
 
     <string name="new_card_to_unlock" translatable="false">New!</string>
 
+    <string name="test_whole" translatable="false">Banana</string>
+    <string name="test_half" translatable="false">Apple</string>
+
     <string name="language_english" translatable="false">English</string>
     <string name="language_arabic" translatable="false">العربية</string>
     <string name="language_czech" translatable="false">Čeština</string>

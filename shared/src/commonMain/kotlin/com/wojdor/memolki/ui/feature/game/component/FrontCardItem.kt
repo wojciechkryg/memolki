@@ -19,8 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.ui.component.AutoSizeText
-import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_WHOLE
-import com.wojdor.memolki.ui.component.cardImagePainter
+import org.jetbrains.compose.resources.painterResource
 import com.wojdor.memolki.ui.theme.AppTheme
 import com.wojdor.memolki.ui.theme.CardShape
 import com.wojdor.memolki.ui.theme.spacingS
@@ -90,7 +89,7 @@ private fun FrontCardItemImage(card: CardModel.Image) {
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = cardImagePainter(card.imageRes),
+            painter = painterResource(card.imageRes),
             contentDescription = stringResource(card.textRes)
         )
     }
@@ -105,7 +104,7 @@ private fun FrontCardItemTextPreview() {
             CardModel.Text(
                 id = "banana",
                 pairId = "banana",
-                textRes = Res.string.banana
+                textRes = Res.string.test_whole
             ),
             onPress = {}
         )
@@ -121,8 +120,8 @@ private fun FrontCardItemImagePreview() {
             CardModel.Image(
                 id = "banana",
                 pairId = "banana",
-                textRes = Res.string.banana,
-                imageRes = PREVIEW_IMAGE_WHOLE,
+                textRes = Res.string.test_whole,
+                imageRes = Res.drawable.img_test_whole,
             ),
             onPress = {}
         )

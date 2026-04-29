@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 object AppColors {
     val Font: Color = Color.Black
     val Border: Color = Color.Black
-    val Primary: Color get() = AppPrimary
+    val Primary: Color = AppPrimary
 }
 
 internal expect val AppPrimary: Color

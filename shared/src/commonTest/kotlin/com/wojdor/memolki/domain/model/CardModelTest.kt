@@ -2,6 +2,7 @@ package com.wojdor.memolki.domain.model
 
 import com.wojdor.memolki.shared.resources.Res
 import com.wojdor.memolki.shared.resources.empty
+import com.wojdor.memolki.shared.resources.img_test_whole
 
 import kotlin.test.assertFalse
 import kotlin.test.assertSame
@@ -44,7 +45,7 @@ class CardModelTest {
     @Test
     fun `Image copyState copies with new state`() {
         // given
-        val card = CardModel.Image("id", "pairId", Res.string.empty, 0)
+        val card = CardModel.Image("id", "pairId", Res.string.empty, Res.drawable.img_test_whole)
 
         // when
         val result = card.copyState(isMatchAnimating = true, isMistakeShaking = true)

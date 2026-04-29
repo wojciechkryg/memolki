@@ -21,3 +21,41 @@ PLAY_SERVICE_ACCOUNT_PATH=/path/to/play-service-account.json
 ## `google-services.json`
 
 Add the `google-services.json` file in the `androidApp/` directory (download from Firebase console).
+
+## iOS toolchain
+
+Required to build the iOS app:
+
+- **Xcode 15+** (current Compose Multiplatform target is iOS 15)
+- **xcodegen** — generates `iosApp.xcodeproj` from `iosApp/project.yml`:
+  ```bash
+  brew install xcodegen
+  ```
+- **CocoaPods** — installed pods are wired through Kotlin's `native.cocoapods` plugin:
+  ```bash
+  brew install cocoapods
+  ```
+
+### `GoogleService-Info.plist` (per flavor)
+
+Each iOS flavor needs its own Firebase plist downloaded from the Firebase Console for the matching bundle ID (`com.wojdor.memolki.{flavor}`). Place them in:
+
+```
+iosApp/iosApp/Resources/GoogleService-Info-FruitHalf.plist
+iosApp/iosApp/Resources/GoogleService-Info-VegetableHalf.plist
+iosApp/iosApp/Resources/GoogleService-Info-MammalSide.plist
+iosApp/iosApp/Resources/GoogleService-Info-BirdSide.plist
+```
+
+A per-scheme Copy Files build phase renames the active flavor's plist to `GoogleService-Info.plist` inside the app bundle so `FirebaseApp.configure()` finds it.
+
+### Generate the Xcode project
+
+```bash
+cd iosApp
+xcodegen generate     # produces iosApp.xcodeproj from project.yml
+pod install           # also runs :shared:syncFramework via the Kotlin cocoapods plugin
+open iosApp.xcworkspace
+```
+
+Pick one of the four schemes (`iosApp-FruitHalf`, `iosApp-VegetableHalf`, `iosApp-MammalSide`, `iosApp-BirdSide`) before running. Each scheme's pre-action writes its flavor name to `iosApp/.active-flavor`, which `shared/build.gradle.kts` reads to wire the per-flavor source set into `iosMain`.

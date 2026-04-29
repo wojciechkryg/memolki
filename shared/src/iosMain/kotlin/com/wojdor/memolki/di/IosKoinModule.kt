@@ -8,10 +8,10 @@ import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.crypto.IosEncryptor
 import com.wojdor.memolki.data.crypto.IosLocalEncryptorKeyStore
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
-import com.wojdor.memolki.data.local.card.IosAllCardPairsDataSource
+import com.wojdor.memolki.data.local.card.CardCatalog
+import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.data.local.database.AppDatabase
 import com.wojdor.memolki.data.local.database.databaseBuilder
-import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.IosAllRewardedAds
 import com.wojdor.memolki.util.AppOpener
@@ -98,11 +98,10 @@ val iosKoinModule = module {
             .build()
     }
     single { get<AppDatabase>().dailyChallengeDao() }
+    single<AllCardPairsDataSource> { CardCatalog }
 
     singleOf(::IosEncryptor) { bind<Encryptor>() }
     singleOf(::IosLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
-
-    singleOf(::IosAllCardPairsDataSource) { bind<AllCardPairsDataSource>() }
 
     singleOf(::IosAppForegroundProvider) { bind<AppForegroundProvider>() }
     singleOf(::IosAppInstalledProvider) { bind<AppInstalledProvider>() }

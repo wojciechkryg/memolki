@@ -3,6 +3,7 @@ package com.wojdor.memolki.data.mapper
 import com.wojdor.memolki.data.entity.CardEntity
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.img_test_whole
 import com.wojdor.memolki.shared.resources.empty
 import com.wojdor.memolki.test.AppTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -15,13 +16,13 @@ class CardMapperTest : AppTest() {
     @Test
     fun `when map card entity image then return card model image`() {
         // given
-        val sut = CardEntity.Image("id", Res.string.empty, 321)
+        val sut = CardEntity.Image("id", Res.string.empty, Res.drawable.img_test_whole)
 
         // when
         val result = sut.toModel("pairId")
 
         // then
-        val expected = CardModel.Image("id", "pairId", Res.string.empty, 321)
+        val expected = CardModel.Image("id", "pairId", Res.string.empty, Res.drawable.img_test_whole)
         assertEquals(expected, result)
     }
 

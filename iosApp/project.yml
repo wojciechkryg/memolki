@@ -4,6 +4,7 @@ options:
   deploymentTarget:
     iOS: "15.0"
   createIntermediateGroups: true
+  schemePathPrefix: ""
 settings:
   base:
     SWIFT_VERSION: "5.9"
@@ -73,3 +74,89 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.wojdor.memolki.birdside
         BUNDLE_DISPLAY_NAME: "memolki • birds"
+
+# Each scheme writes its flavor to iosApp/.active-flavor BEFORE the build runs.
+# shared/build.gradle.kts reads that file at configuration time so the Pods
+# script_phase (:shared:syncFramework) builds with only the active flavor's
+# <flavor>Main source set joining iosMain — per-flavor lean iOS framework.
+schemes:
+  iosApp-FruitHalf:
+    build:
+      preActions:
+        - name: "Set active iOS flavor"
+          script: |
+            cd "${SRCROOT}"
+            echo fruitHalf > .active-flavor
+          settingsTarget: iosApp-FruitHalf
+      targets:
+        iosApp-FruitHalf: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+  iosApp-VegetableHalf:
+    build:
+      preActions:
+        - name: "Set active iOS flavor"
+          script: |
+            cd "${SRCROOT}"
+            echo vegetableHalf > .active-flavor
+          settingsTarget: iosApp-VegetableHalf
+      targets:
+        iosApp-VegetableHalf: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+  iosApp-MammalSide:
+    build:
+      preActions:
+        - name: "Set active iOS flavor"
+          script: |
+            cd "${SRCROOT}"
+            echo mammalSide > .active-flavor
+          settingsTarget: iosApp-MammalSide
+      targets:
+        iosApp-MammalSide: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+  iosApp-BirdSide:
+    build:
+      preActions:
+        - name: "Set active iOS flavor"
+          script: |
+            cd "${SRCROOT}"
+            echo birdSide > .active-flavor
+          settingsTarget: iosApp-BirdSide
+      targets:
+        iosApp-BirdSide: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

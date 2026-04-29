@@ -15,8 +15,6 @@ import com.wojdor.memolki.shared.resources.*
 import com.wojdor.memolki.domain.model.CardModel
 import com.wojdor.memolki.domain.model.CardPairModel
 import com.wojdor.memolki.ui.component.AutoSizeText
-import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_HALF
-import com.wojdor.memolki.ui.component.PREVIEW_IMAGE_WHOLE
 import com.wojdor.memolki.ui.component.PreviewBackground
 import com.wojdor.memolki.ui.feature.game.component.FrontCardItem
 import com.wojdor.memolki.ui.theme.AppTheme
@@ -88,14 +86,14 @@ private fun CardPairDetailsContentImagesSameTextPreview() {
                     CardModel.Image(
                         "banana_whole",
                         "banana",
-                        Res.string.banana,
-                        PREVIEW_IMAGE_WHOLE
+                        Res.string.test_whole,
+                        Res.drawable.img_test_whole
                     ),
                     CardModel.Image(
                         "banana_half",
                         "banana",
-                        Res.string.banana,
-                        PREVIEW_IMAGE_HALF
+                        Res.string.test_whole,
+                        Res.drawable.img_test_half
                     )
                 )
             )
@@ -113,14 +111,14 @@ private fun CardPairDetailsContentImagesDifferentTextPreview() {
                     CardModel.Image(
                         "banana_whole",
                         "banana",
-                        Res.string.banana,
-                        PREVIEW_IMAGE_WHOLE
+                        Res.string.test_whole,
+                        Res.drawable.img_test_whole
                     ),
                     CardModel.Image(
                         "banana_half",
                         "banana",
-                        Res.string.apple,
-                        PREVIEW_IMAGE_HALF
+                        Res.string.test_half,
+                        Res.drawable.img_test_half
                     )
                 )
             )
@@ -138,13 +136,13 @@ private fun CardPairDetailsContentImageAndTextPreview() {
                     CardModel.Text(
                         "banana_whole",
                         "banana",
-                        Res.string.banana,
+                        Res.string.test_whole,
                     ),
                     CardModel.Image(
                         "banana_half",
                         "banana",
-                        Res.string.banana,
-                        PREVIEW_IMAGE_WHOLE
+                        Res.string.test_whole,
+                        Res.drawable.img_test_whole
                     )
                 )
             )
@@ -162,12 +160,12 @@ private fun CardPairDetailsContentTextsPreview() {
                     CardModel.Text(
                         "banana_whole",
                         "banana",
-                        Res.string.banana,
+                        Res.string.test_whole,
                     ),
                     CardModel.Text(
                         "banana_half",
                         "banana",
-                        Res.string.banana,
+                        Res.string.test_whole,
                     )
                 )
             )

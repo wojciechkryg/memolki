@@ -1,6 +1,7 @@
 package com.wojdor.memolki.data.repository
 
 import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.img_test_whole
 import com.wojdor.memolki.shared.resources.watermelon
 import com.wojdor.memolki.shared.resources.strawberry
 import com.wojdor.memolki.shared.resources.pineapple
@@ -55,11 +56,11 @@ class CardRepositoryTest : AppTest() {
         // then
         val expected = listOf(
             CardPairModel(
-                CardModel.Image("banana_whole", "banana", Res.string.banana, 1),
-                CardModel.Image("banana_half", "banana", Res.string.banana, 1)
+                CardModel.Image("banana_whole", "banana", Res.string.banana, Res.drawable.img_test_whole),
+                CardModel.Image("banana_half", "banana", Res.string.banana, Res.drawable.img_test_whole)
             ),
             CardPairModel(
-                CardModel.Image("apple_whole", "apple", Res.string.apple, 2),
+                CardModel.Image("apple_whole", "apple", Res.string.apple, Res.drawable.img_test_whole),
                 CardModel.Text("apple_half", "apple", Res.string.apple)
             ),
             CardPairModel(
@@ -136,8 +137,8 @@ class CardRepositoryTest : AppTest() {
 
         // then
         val expected = CardPairModel(
-            CardModel.Image("banana_whole", "banana", Res.string.banana, 1),
-            CardModel.Image("banana_half", "banana", Res.string.banana, 1)
+            CardModel.Image("banana_whole", "banana", Res.string.banana, Res.drawable.img_test_whole),
+            CardModel.Image("banana_half", "banana", Res.string.banana, Res.drawable.img_test_whole)
         )
         assertEquals(expected, result)
     }

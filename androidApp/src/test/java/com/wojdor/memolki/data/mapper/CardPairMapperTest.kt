@@ -1,6 +1,7 @@
 package com.wojdor.memolki.data.mapper
 
 import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.img_test_whole
 import com.wojdor.memolki.shared.resources.empty
 
 import com.wojdor.memolki.data.entity.CardEntity
@@ -20,7 +21,7 @@ class CardPairMapperTest : AppTest() {
         // given
         val sut = CardPairEntity(
             id = "pairId",
-            pair = CardEntity.Image("id", Res.string.empty, 321) to
+            pair = CardEntity.Image("id", Res.string.empty, Res.drawable.img_test_whole) to
                     CardEntity.Text("id", Res.string.empty),
             addedEpochDay = 20439L
         )
@@ -30,7 +31,7 @@ class CardPairMapperTest : AppTest() {
 
         // then
         val expected = CardPairModel(
-            CardModel.Image("id", "pairId", Res.string.empty, 321),
+            CardModel.Image("id", "pairId", Res.string.empty, Res.drawable.img_test_whole),
             CardModel.Text("id", "pairId", Res.string.empty),
             addedEpochDay = 20439L
         )

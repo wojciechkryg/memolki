@@ -1,6 +1,7 @@
 package com.wojdor.memolki.ui.feature.game
 
 import com.wojdor.memolki.shared.resources.Res
+import com.wojdor.memolki.shared.resources.img_test_whole
 import com.wojdor.memolki.shared.resources.strawberry
 import com.wojdor.memolki.shared.resources.banana
 import com.wojdor.memolki.shared.resources.apple
@@ -1059,9 +1060,9 @@ class GameViewModelTest : AppTest() {
 
     private fun mockShuffledCardsWithSamePairIds(): List<CardModel> {
         return listOf(
-            CardModel.Image("banana_whole", "banana", Res.string.banana, 1),
-            CardModel.Image("banana_half", "banana", Res.string.banana, 1),
-            CardModel.Image("apple_whole", "apple", Res.string.apple, 2),
+            CardModel.Image("banana_whole", "banana", Res.string.banana, Res.drawable.img_test_whole),
+            CardModel.Image("banana_half", "banana", Res.string.banana, Res.drawable.img_test_whole),
+            CardModel.Image("apple_whole", "apple", Res.string.apple, Res.drawable.img_test_whole),
             CardModel.Text("apple_half", "apple", Res.string.apple),
             CardModel.Text("strawberry_whole", "strawberry", Res.string.strawberry),
             CardModel.Text("strawberry_half", "strawberry", Res.string.strawberry)
@@ -1070,14 +1071,14 @@ class GameViewModelTest : AppTest() {
 
     private fun mockShuffledCardsWithSameIds(): List<CardModel> {
         return listOf(
-            CardModel.Image("john_snow", "john_snow", Res.string.empty, 1),
-            CardModel.Image("stark", "john_snow", Res.string.empty, 1),
-            CardModel.Image("arya_stark", "arya_stark", Res.string.empty, 2),
-            CardModel.Image("stark", "arya_stark", Res.string.empty, 1),
+            CardModel.Image("john_snow", "john_snow", Res.string.empty, Res.drawable.img_test_whole),
+            CardModel.Image("stark", "john_snow", Res.string.empty, Res.drawable.img_test_whole),
+            CardModel.Image("arya_stark", "arya_stark", Res.string.empty, Res.drawable.img_test_whole),
+            CardModel.Image("stark", "arya_stark", Res.string.empty, Res.drawable.img_test_whole),
             CardModel.Text("sansa_stark", "sansa_stark", Res.string.empty),
-            CardModel.Image("stark", "sansa_stark", Res.string.empty, 1),
+            CardModel.Image("stark", "sansa_stark", Res.string.empty, Res.drawable.img_test_whole),
             CardModel.Text("daenerys_targaryen", "daenerys_targaryen", Res.string.empty),
-            CardModel.Image("targaryen", "daenerys_targaryen", Res.string.empty, 1),
+            CardModel.Image("targaryen", "daenerys_targaryen", Res.string.empty, Res.drawable.img_test_whole),
         )
     }
 }

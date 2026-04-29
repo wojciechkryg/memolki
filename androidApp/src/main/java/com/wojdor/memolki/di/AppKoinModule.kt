@@ -10,11 +10,11 @@ import com.wojdor.memolki.data.crypto.AndroidLocalEncryptorKeyStore
 import com.wojdor.memolki.data.crypto.AndroidEncryptor
 import com.wojdor.memolki.data.crypto.Encryptor
 import com.wojdor.memolki.data.crypto.LocalEncryptorKeyStore
-import com.wojdor.memolki.data.local.card.AllCardPairsLocalDataSource
+import com.wojdor.memolki.data.local.card.CardCatalog
+import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.data.local.database.AppDatabase
 import com.wojdor.memolki.data.local.database.dailychallenge.DailyChallengeDao
 import com.wojdor.memolki.data.local.database.databaseBuilder
-import com.wojdor.memolki.data.local.datastore.card.AllCardPairsDataSource
 import com.wojdor.memolki.ui.ads.AndroidAdsInitializer
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.ads.AndroidAllRewardedAds
@@ -90,11 +90,10 @@ val appKoinModule = module {
             .build()
     }
     single { get<AppDatabase>().dailyChallengeDao() }
+    single<AllCardPairsDataSource> { CardCatalog }
 
     singleOf(::AndroidEncryptor) { bind<Encryptor>() }
     singleOf(::AndroidLocalEncryptorKeyStore) { bind<LocalEncryptorKeyStore>() }
-
-    singleOf(::AllCardPairsLocalDataSource) { bind<AllCardPairsDataSource>() }
 
     singleOf(::ActivityProvider)
     singleOf(::AndroidAppForegroundProvider) { bind<AppForegroundProvider>() }
