@@ -8,6 +8,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -37,11 +38,11 @@ import com.wojdor.memolki.util.notification.DeepLinkBuilder
 
 @Composable
 fun AppNavigation(
+    navController: NavHostController = rememberNavController(),
     deepLink: DeepLink? = null,
     onDeepLinkHandled: () -> Unit = {},
     hasPlayedTodayDailyChallenge: suspend () -> Boolean = { true }
 ) {
-    val navController = rememberNavController()
     LaunchedEffect(deepLink) {
         deepLink?.let {
             navigateFromDeepLink(navController, it, hasPlayedTodayDailyChallenge)
