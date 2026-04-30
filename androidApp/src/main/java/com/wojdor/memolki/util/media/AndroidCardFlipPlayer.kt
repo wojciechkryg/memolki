@@ -1,33 +1,29 @@
 package com.wojdor.memolki.util.media
 
 import android.content.Context
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.usecase.ObserveSoundEnabledUseCase
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlin.concurrent.atomics.AtomicInt
-import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.random.Random
 
-@OptIn(ExperimentalAtomicApi::class)
 class AndroidCardFlipPlayer(
     context: Context,
     coroutineDispatcher: CoroutineDispatcher,
     observeSoundEnabledUseCase: ObserveSoundEnabledUseCase
 ) : AndroidSoundPlayer(context, coroutineDispatcher, observeSoundEnabledUseCase), CardFlipPlayer {
 
-    private val sounds = listOf(
-        R.raw.sound_card_flip_1,
-        R.raw.sound_card_flip_2,
-        R.raw.sound_card_flip_3,
-        R.raw.sound_card_flip_4
-    )
+    private var lastIndex: Int = -1
 
-    private var lastSoundId = AtomicInt(0)
-
-    override val soundId: Int
+    override val soundName: String
         get() {
-            val last = lastSoundId.load()
-            val nextSound = sounds.filter { it != last }.random()
-            lastSoundId.store(nextSound)
-            return nextSound
+            val variants = SoundAssets.SOUND_CARD_FLIP_VARIANTS
+            val index = if (lastIndex < 0) {
+                Random.nextInt(variants.size)
+            } else {
+                var i = Random.nextInt(variants.size - 1)
+                if (i >= lastIndex) i++
+                i
+            }
+            lastIndex = index
+            return variants[index]
         }
 }

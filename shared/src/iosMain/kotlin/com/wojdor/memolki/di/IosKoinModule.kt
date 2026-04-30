@@ -121,7 +121,9 @@ val iosKoinModule = module {
     singleOf(::IosNotificationScheduler) { bind<NotificationScheduler>() }
 
     singleOf(::IosHapticFeedback) { bind<HapticFeedback>() }
-    singleOf(::IosBackgroundMusicPlayer) { bind<BackgroundMusicPlayer>() }
+    single<BackgroundMusicPlayer>(createdAtStart = true) {
+        IosBackgroundMusicPlayer(get(), get())
+    }
     singleOf(::IosCardFlipPlayer) { bind<CardFlipPlayer>() }
     singleOf(::IosCardPairMatchedPlayer) { bind<CardPairMatchedPlayer>() }
     singleOf(::IosCoinsPlayer) { bind<CoinsPlayer>() }

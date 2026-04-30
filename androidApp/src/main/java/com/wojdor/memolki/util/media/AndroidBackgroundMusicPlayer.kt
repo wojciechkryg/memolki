@@ -5,7 +5,6 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import com.wojdor.memolki.R
 import com.wojdor.memolki.domain.usecase.ObserveMusicEnabledUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -75,11 +74,11 @@ class AndroidBackgroundMusicPlayer(
                 setVolume(NO_VOLUME)
                 it.start()
             }
-            fadeVolume(BACKGROUND_MUSIC_VOLUME, FADE_DURATION_MS)
+            fadeVolume(MediaConstants.BACKGROUND_MUSIC_VOLUME, MediaConstants.MUSIC_FADE_DURATION_MS)
             it.setNextMediaPlayer(null)
             nextPlayer?.release()
             nextPlayer = createPlayer().apply {
-                setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME)
+                setVolume(MediaConstants.BACKGROUND_MUSIC_VOLUME, MediaConstants.BACKGROUND_MUSIC_VOLUME)
             }
             it.setNextMediaPlayer(nextPlayer)
             it.setOnCompletionListener(onCompletionListener)
@@ -90,7 +89,7 @@ class AndroidBackgroundMusicPlayer(
         if (currentPlayer?.isPlaying == true) {
             volumeJob?.cancel()
             isFadingOut = true
-            fadeVolume(NO_VOLUME, FADE_DURATION_MS) {
+            fadeVolume(NO_VOLUME, MediaConstants.MUSIC_FADE_DURATION_MS) {
                 if (isFadingOut) {
                     currentPlayer?.pause()
                     isFadingOut = false
@@ -103,7 +102,7 @@ class AndroidBackgroundMusicPlayer(
         if (currentPlayer?.isPlaying == true) {
             volumeJob?.cancel()
             isFadingOut = true
-            fadeVolume(NO_VOLUME, FADE_DURATION_MS) {
+            fadeVolume(NO_VOLUME, MediaConstants.MUSIC_FADE_DURATION_MS) {
                 if (isFadingOut) {
                     releasePlayers()
                 }
@@ -131,13 +130,19 @@ class AndroidBackgroundMusicPlayer(
         nextPlayer = null
     }
 
-    private fun createPlayer() = MediaPlayer.create(context, R.raw.music_background).apply {
-        setAudioAttributes(
-            AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build()
-        )
+    private fun createPlayer(): MediaPlayer {
+        val afd = context.openAudioAsset(SoundAssets.MUSIC_BACKGROUND)
+        return MediaPlayer().apply {
+            setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+            afd.close()
+            setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
+            prepare()
+        }
     }
 
     private fun fadeVolume(to: Float, duration: Long, onEnd: () -> Unit = {}) {
@@ -165,7 +170,7 @@ class AndroidBackgroundMusicPlayer(
         MediaPlayer.OnCompletionListener {
             currentPlayer = nextPlayer
             nextPlayer = createPlayer().apply {
-                setVolume(BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME)
+                setVolume(MediaConstants.BACKGROUND_MUSIC_VOLUME, MediaConstants.BACKGROUND_MUSIC_VOLUME)
             }
             currentPlayer?.setNextMediaPlayer(nextPlayer)
             currentPlayer?.setOnCompletionListener(onCompletionListener)
@@ -173,9 +178,7 @@ class AndroidBackgroundMusicPlayer(
         }
 
     companion object {
-        private const val BACKGROUND_MUSIC_VOLUME = 0.25f
         private const val NO_VOLUME = 0.0f
-        private const val FADE_DURATION_MS = 500L
         private const val FADE_STEP_DURATION = 50L
     }
 }
