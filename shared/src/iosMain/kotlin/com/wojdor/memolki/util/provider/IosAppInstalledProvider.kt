@@ -1,7 +1,12 @@
 package com.wojdor.memolki.util.provider
 
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
+
 class IosAppInstalledProvider : AppInstalledProvider {
 
-    // TODO(ios): check via UIApplication.canOpenURL with a URL scheme (requires LSApplicationQueriesSchemes).
-    override fun isAppInstalled(packageName: String): Boolean = false
+    override fun isAppInstalled(packageName: String): Boolean {
+        val url = NSURL.URLWithString("$packageName://") ?: return false
+        return UIApplication.sharedApplication.canOpenURL(url)
+    }
 }

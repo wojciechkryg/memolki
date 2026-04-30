@@ -1,7 +1,10 @@
 package com.wojdor.memolki.util.provider
 
+import platform.UIKit.UIApplication
+import platform.UIKit.UIApplicationState
+
 class IosAppForegroundProvider : AppForegroundProvider {
 
-    // TODO(ios): detect foreground via UIApplication.sharedApplication.applicationState.
-    override fun isAppInForeground(): Boolean = true
+    override fun isAppInForeground(): Boolean =
+        UIApplication.sharedApplication.applicationState == UIApplicationState.UIApplicationStateActive
 }

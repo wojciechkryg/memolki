@@ -1,6 +1,15 @@
 package com.wojdor.memolki.util.review
 
-// TODO(kmp-ios): replace with SKStoreReviewController.requestReview() when iOS review flow ships.
+import platform.StoreKit.SKStoreReviewController
+import platform.UIKit.UIApplication
+import platform.UIKit.UIWindowScene
+
 class IosInAppReviewer : InAppReviewer {
-    override suspend fun request() = Unit
+
+    override suspend fun request() {
+        val scene = UIApplication.sharedApplication.connectedScenes
+            .firstOrNull { it is UIWindowScene } as? UIWindowScene
+            ?: return
+        SKStoreReviewController.requestReviewInScene(scene)
+    }
 }

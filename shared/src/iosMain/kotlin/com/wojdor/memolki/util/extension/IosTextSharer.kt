@@ -1,6 +1,15 @@
 package com.wojdor.memolki.util.extension
 
-// TODO(kmp-ios): replace with UIActivityViewController-backed share sheet when iOS share ships.
+import platform.UIKit.UIActivityViewController
+
 class IosTextSharer : TextSharer {
-    override fun share(text: String) = Unit
+
+    override fun share(text: String) {
+        val top = topViewController() ?: return
+        val activityVc = UIActivityViewController(
+            activityItems = listOf(text),
+            applicationActivities = null,
+        )
+        top.presentViewController(activityVc, animated = true, completion = null)
+    }
 }
