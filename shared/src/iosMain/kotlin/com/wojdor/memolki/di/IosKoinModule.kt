@@ -118,7 +118,9 @@ val iosKoinModule = module {
     singleOf(::IosAppOpener) { bind<AppOpener>() }
     singleOf(::IosEpochDayFormatter) { bind<EpochDayFormatter>() }
 
-    singleOf(::IosNotificationScheduler) { bind<NotificationScheduler>() }
+    single<NotificationScheduler> {
+        IosNotificationScheduler(get(MainDispatcher), get(), get(), get())
+    }
 
     singleOf(::IosHapticFeedback) { bind<HapticFeedback>() }
     single<BackgroundMusicPlayer>(createdAtStart = true) {

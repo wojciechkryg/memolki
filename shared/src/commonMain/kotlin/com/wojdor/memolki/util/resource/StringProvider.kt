@@ -1,6 +1,7 @@
 package com.wojdor.memolki.util.resource
 
 import org.jetbrains.compose.resources.PluralStringResource
+import org.jetbrains.compose.resources.StringArrayResource
 import org.jetbrains.compose.resources.StringResource
 
 interface StringProvider {
@@ -10,4 +11,6 @@ interface StringProvider {
         quantity: Int,
         vararg formatArgs: Any
     ): String
+
+    suspend fun getStringArray(resource: StringArrayResource): List<String>
 }

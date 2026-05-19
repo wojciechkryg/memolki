@@ -2,6 +2,10 @@ package com.wojdor.memolki.util.permission
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import platform.UserNotifications.UNAuthorizationOptionAlert
+import platform.UserNotifications.UNAuthorizationOptionBadge
+import platform.UserNotifications.UNAuthorizationOptionSound
+import platform.UserNotifications.UNUserNotificationCenter
 
 @Composable
 actual fun rememberNotificationPermissionRequester(
@@ -10,11 +14,15 @@ actual fun rememberNotificationPermissionRequester(
     IosNotificationPermissionRequester(onResult)
 }
 
-// TODO(kmp-ios): wire up UNUserNotificationCenter.requestAuthorization when iOS push lands.
 private class IosNotificationPermissionRequester(
     private val onResult: (Boolean) -> Unit
 ) : NotificationPermissionRequester {
     override fun request() {
-        onResult(false)
+        UNUserNotificationCenter.currentNotificationCenter().requestAuthorizationWithOptions(
+            options = UNAuthorizationOptionAlert or
+                UNAuthorizationOptionBadge or
+                UNAuthorizationOptionSound,
+            completionHandler = { granted, _ -> onResult(granted) }
+        )
     }
 }

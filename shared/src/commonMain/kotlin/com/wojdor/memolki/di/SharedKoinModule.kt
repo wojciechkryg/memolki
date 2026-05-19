@@ -83,6 +83,7 @@ import com.wojdor.memolki.util.analytics.Analytics
 import com.wojdor.memolki.util.formatter.CasualShareFormatter
 import com.wojdor.memolki.util.formatter.DailyChallengeShareFormatter
 import com.wojdor.memolki.util.formatter.TimeFormatter
+import com.wojdor.memolki.util.notification.NotificationStrings
 import com.wojdor.memolki.util.provider.TimeProvider
 import com.wojdor.memolki.util.resource.AppStringProvider
 import com.wojdor.memolki.util.resource.StringProvider
@@ -112,6 +113,7 @@ val sharedKoinModule = module {
 
     singleOf(::TimeProvider)
     singleOf(::AppStringProvider) { bind<StringProvider>() }
+    singleOf(::NotificationStrings)
 
     factoryOf(::StarCalculator)
     factoryOf(::CasualShareFormatter)
