@@ -3,13 +3,18 @@ import Shared
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
+import GoogleMobileAds
+import AppTrackingTransparency
 
 @main
 struct iosAppApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     init() {
-        InitKoinKt.doInitKoin()
+        InitKoinKt.doInitKoin(
+            storeKitBridge: StoreKitBridge(),
+            rewardedAdsBridge: RewardedAdsBridge()
+        )
     }
 
     var body: some Scene {
@@ -25,6 +30,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         guard Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") != nil else {
             return true
         }
@@ -33,6 +39,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
         return true
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        ATTrackingManager.requestTrackingAuthorization { _ in }
     }
 
     func application(

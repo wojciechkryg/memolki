@@ -22,6 +22,17 @@
 	<string>1.3.35</string>
 	<key>CFBundleVersion</key>
 	<string>1003035</string>
+	<key>GADApplicationIdentifier</key>
+	<string>$(GAD_APPLICATION_IDENTIFIER)</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Your data will be used to deliver more relevant ads.</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>

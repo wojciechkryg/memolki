@@ -9,6 +9,7 @@ abstract_target 'iosApp' do
   pod 'FirebaseAnalytics', '11.15.0'
   pod 'FirebaseCrashlytics', '11.15.0'
   pod 'FirebaseMessaging', '11.15.0'
+  pod 'Google-Mobile-Ads-SDK', '~> 11.13'
 
   target 'iosApp-FruitHalf' do
   end

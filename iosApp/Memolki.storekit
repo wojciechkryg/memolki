@@ -1,0 +1,58 @@
+{
+  "identifier" : "A1B2C3D4-1111-2222-3333-444455556666",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "A1B2C3D4-0001-0001-0001-000000000001",
+      "localizations" : [
+        {
+          "description" : "A small pack of coins",
+          "displayName" : "Small Coin Pack",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "coins_small",
+      "referenceName" : "Small Coin Pack",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "A1B2C3D4-0002-0002-0002-000000000002",
+      "localizations" : [
+        {
+          "description" : "A big pack of coins",
+          "displayName" : "Big Coin Pack",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "coins_big",
+      "referenceName" : "Big Coin Pack",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "A1B2C3D4-0003-0003-0003-000000000003",
+      "localizations" : [
+        {
+          "description" : "Unlock all card packs",
+          "displayName" : "Unlock All Cards",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "unlock_all_cards",
+      "referenceName" : "Unlock All Cards",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+  },
+  "subscriptionGroups" : [],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

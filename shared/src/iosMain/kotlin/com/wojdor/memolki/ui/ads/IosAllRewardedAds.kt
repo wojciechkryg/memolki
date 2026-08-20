@@ -1,26 +1,62 @@
 package com.wojdor.memolki.ui.ads
 
-// TODO(kmp-ios): replace with a real AdMob (or alternative) impl when iOS ads ship.
-class IosAllRewardedAds : AllRewardedAds {
-    override val endGameCoinsAd: RewardedAd = IosRewardedAd
-    override val collectionCardPairAd: RewardedAd = IosRewardedAd
-    override val shopCoinsAd: RewardedAd = IosRewardedAd
+class IosAllRewardedAds(
+    private val bridge: IosRewardedAdsBridge
+) : AllRewardedAds {
 
-    override fun loadAllAds() = Unit
+    override val endGameCoinsAd: RewardedAd = IosRewardedAd(AD_UNIT_END_GAME_COINS, bridge)
+    override val collectionCardPairAd: RewardedAd = IosRewardedAd(AD_UNIT_COLLECTION_CARD_PAIR, bridge)
+    override val shopCoinsAd: RewardedAd = IosRewardedAd(AD_UNIT_SHOP_COINS, bridge)
+
+    override fun loadAllAds() {
+        endGameCoinsAd.loadAndNotify(onAvailabilityChanged = {})
+        collectionCardPairAd.loadAndNotify(onAvailabilityChanged = {})
+        shopCoinsAd.loadAndNotify(onAvailabilityChanged = {})
+    }
+
+    private companion object {
+        // TODO(kmp-ios): swap for real per-flavor AdMob rewarded ad unit IDs; currently Google's test unit.
+        private const val TEST_REWARDED_AD_UNIT = "ca-app-pub-3940256099942544/1712485313"
+        private const val AD_UNIT_END_GAME_COINS = TEST_REWARDED_AD_UNIT
+        private const val AD_UNIT_COLLECTION_CARD_PAIR = TEST_REWARDED_AD_UNIT
+        private const val AD_UNIT_SHOP_COINS = TEST_REWARDED_AD_UNIT
+    }
 }
 
-private object IosRewardedAd : RewardedAd {
-    override val isLoaded: Boolean = false
+private class IosRewardedAd(
+    private val adUnitId: String,
+    private val bridge: IosRewardedAdsBridge
+) : RewardedAd {
+
+    override val isLoaded: Boolean
+        get() = bridge.isLoaded(adUnitId)
 
     override fun loadAndNotify(
         wasRewardGranted: Boolean,
         onAvailabilityChanged: (isAvailable: Boolean) -> Unit
     ) {
-        onAvailabilityChanged(false)
+        if (isLoaded && !wasRewardGranted) {
+            onAvailabilityChanged(true)
+        } else {
+            onAvailabilityChanged(false)
+            if (!wasRewardGranted) {
+                bridge.load(adUnitId, onAvailabilityChanged)
+            }
+        }
     }
 
     override fun show(
         onGrantReward: () -> Unit,
         onAdDismiss: (wasRewardGranted: Boolean) -> Unit
-    ) = Unit
+    ) {
+        var wasRewardGranted = false
+        bridge.show(
+            adUnitId,
+            onReward = {
+                wasRewardGranted = true
+                onGrantReward()
+            },
+            onDismiss = { onAdDismiss(wasRewardGranted) }
+        )
+    }
 }

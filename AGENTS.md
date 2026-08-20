@@ -26,7 +26,7 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Project Overview
 
-Memolki is a card-matching memory game built with Kotlin Multiplatform + Compose Multiplatform. The Android app ships on Google Play; the iOS app is in active development (phases 14b–14e of the migration are complete; AdMob, StoreKit, GameKit, and full platform-impl coverage are in progress). It ships as multiple app flavors — each with a unique theme, bundle/package name, and billing keys. Check `androidApp/build.gradle.kts` and `shared/build.gradle.kts` for the current list of flavors under `productFlavors`.
+Memolki is a card-matching memory game built with Kotlin Multiplatform + Compose Multiplatform. The Android app ships on Google Play; the iOS app is in active development (migration phases through 14m complete — audio, notifications, encryption, GameKit leaderboards, StoreKit 2 IAP, and AdMob rewarded ads are all implemented; AdMob/StoreKit currently use Google test / local `.storekit` placeholder IDs pending AdMob + App Store Connect console setup). It ships as multiple app flavors — each with a unique theme, bundle/package name, and billing keys. Check `androidApp/build.gradle.kts` and `shared/build.gradle.kts` for the current list of flavors under `productFlavors`.
 
 ## Documentation
 
@@ -299,19 +299,21 @@ Providers currently on expect/actual: `AppForegroundProvider`, `AppInstalledProv
 
 ### Platform services (Billing / Ads / Notifications / PlayGames)
 
-Bigger platform subsystems are exposed to ViewModels as **commonMain interfaces** with `Android*` impls in `:androidApp`/`:shared/androidMain` and `Ios*` impls in `:shared/iosMain` (some still stubs, see iOS migration phases below). ViewModels and use cases never touch `Activity`, `ProductDetails`, `PendingIntent`, `UIApplication`, `GADRewardedAd`, etc. directly — the Android impl tracks the current `Activity` internally via `ActivityLifecycleCallbacks` where needed; the iOS impl reaches the topmost `UIViewController` similarly when presenting native UI.
+Bigger platform subsystems are exposed to ViewModels as **commonMain interfaces** with `Android*` impls in `:androidApp`/`:shared/androidMain` and `Ios*` impls in `:shared/iosMain`. ViewModels and use cases never touch `Activity`, `ProductDetails`, `PendingIntent`, `UIApplication`, `GADRewardedAd`, etc. directly — the Android impl tracks the current `Activity` internally via `ActivityLifecycleCallbacks` where needed; the iOS impl reaches the topmost `UIViewController` similarly when presenting native UI.
+
+StoreKit 2 and the Google Mobile Ads SDK are Swift-only / not in the Kotlin/Native bindings, so `IosBillingHandler` and `IosAllRewardedAds` delegate to **Swift bridges** (`StoreKitBridge`/`RewardedAdsBridge` in `iosApp/iosApp/`) through callback-based Kotlin interfaces (`IosStoreKitBridge`/`IosRewardedAdsBridge`) that Swift implements and passes into `doInitKoin(storeKitBridge:rewardedAdsBridge:)`. GameKit, CommonCrypto, and the Security framework are reachable directly from `iosMain` (no bridge).
 
 **Naming convention for platform impls:** commonMain interface carries the bare name (e.g. `BillingHandler`); Android impl is prefixed `Android*` (`AndroidBillingHandler`), iOS impl is prefixed `Ios*` (`IosBillingHandler`).
 
-| Interface (commonMain) | Android impl (`:androidApp`) | iOS stub (`shared/iosMain`) |
+| Interface (commonMain) | Android impl (`:androidApp`) | iOS impl (`shared/iosMain`) |
 |---|---|---|
-| `util/billing/BillingHandler` + `BillingProduct` + `BillingStatusListener` | `AndroidBillingHandler` (Play Billing, tracks Activity) | `IosBillingHandler` |
-| `ui/ads/RewardedAd` + `ui/ads/AllRewardedAds` | `AndroidRewardedAd`/`AndroidAllRewardedAds` (AdMob). `show(activity, …)` is an Android-only extension in `ui/ads/RewardedAdExtensions.kt` | `IosAllRewardedAds` |
+| `util/billing/BillingHandler` + `BillingProduct` + `BillingStatusListener` | `AndroidBillingHandler` (Play Billing, tracks Activity) | `IosBillingHandler` → `StoreKitBridge.swift` (StoreKit 2) |
+| `ui/ads/RewardedAd` + `ui/ads/AllRewardedAds` | `AndroidRewardedAd`/`AndroidAllRewardedAds` (AdMob). `show(activity, …)` is an Android-only extension in `ui/ads/RewardedAdExtensions.kt` | `IosAllRewardedAds` → `RewardedAdsBridge.swift` (`GADRewardedAd`) |
 | `util/notification/NotificationScheduler` | `AndroidNotificationScheduler` (`AlarmManager` + lifecycle observer) | `IosNotificationScheduler` |
-| `util/gameservices/GameServices` | `AndroidGameServices` (Play Games SDK, tracks Activity) | `IosGameServices` (GameKit, stub) |
+| `util/gameservices/GameServices` | `AndroidGameServices` (Play Games SDK, tracks Activity) | `IosGameServices` (GameKit: auth + `submitScore` + `GKGameCenterViewController`) |
 | `util/media/HapticFeedback` | `AndroidHapticFeedback` (`Vibrator` / `VibratorManager`) | `IosHapticFeedback` |
 | `util/media/BackgroundMusicPlayer` | `AndroidBackgroundMusicPlayer` (`MediaPlayer`, lifecycle observer, gapless loop) | `IosBackgroundMusicPlayer` |
-| `util/media/SoundPlayer` + `CardFlipPlayer` / `CardPairMatchedPlayer` / `CoinsPlayer` / `LevelCompletePlayer` | `AndroidSoundPlayer` (`MediaPlayer`) + `AndroidCardFlipPlayer` / `AndroidCardPairMatchedPlayer` / `AndroidCoinsPlayer` / `AndroidLevelCompletePlayer` | `IosSoundPlayer` + 4 `Ios*Player` stubs |
+| `util/media/SoundPlayer` + `CardFlipPlayer` / `CardPairMatchedPlayer` / `CoinsPlayer` / `LevelCompletePlayer` | `AndroidSoundPlayer` (`MediaPlayer`) + `AndroidCardFlipPlayer` / `AndroidCardPairMatchedPlayer` / `AndroidCoinsPlayer` / `AndroidLevelCompletePlayer` | `IosSoundPlayer` + 4 `Ios*Player` |
 | `util/review/InAppReviewer` | `AndroidInAppReviewer` (Play Core `ReviewManager`, tracks Activity) | `IosInAppReviewer` |
 
 `InAppUpdate` stays Android-only — only `AppActivity` calls it, and iOS relies on App Store, so no common interface.
@@ -331,7 +333,7 @@ Examples: `LocaleProvider` (commonMain expect + androidMain/iosMain actuals) / `
 **Koin** — no annotations, wired by constructor types. Bindings split across three modules so iOS can reuse the platform-agnostic half:
 - **`sharedKoinModule`** (`shared/src/commonMain/.../di/SharedKoinModule.kt`) — DataSources, Repositories, Analytics, TimeProvider, AppStringProvider, formatters, StarCalculator, all use cases, all ViewModels, `DefaultDispatcher` / `MainDispatcher` qualifiers.
 - **`appKoinModule`** (`androidApp/.../di/AppKoinModule.kt`) — Android-only bindings: `Dispatchers.IO/Default/Main`, `Random`, `Firebase.analytics`, `FirebaseMessaging`, `DataStore<Preferences>` factory, `AppDatabase` builder, `AndroidEncryptor`, `AndroidLocalEncryptorKeyStore`, `AllCardPairsLocalDataSource` (per-flavor), every `Android*` impl binding, `expect class` providers, and Android-only classes (`InAppUpdate`, `NotificationCreator`, `AdsInitializer`).
-- **`iosKoinModule`** (`shared/src/iosMain/.../di/IosKoinModule.kt`) — iOS counterparts of the Android-only bindings (Phase 13ae). Mostly stub impls.
+- **`iosKoinModule`** (`shared/src/iosMain/.../di/IosKoinModule.kt`) — iOS counterparts of the Android-only bindings. Real impls; the StoreKit 2 and AdMob Swift bridges are provided by Swift and registered via `initKoin(storeKitBridge, rewardedAdsBridge)` (`InitKoin.kt`).
 
 Binding styles used across modules:
 - 41 `factoryOf(::FooUseCase)` for IO-dispatcher use cases (auto-wires because the unqualified `CoroutineDispatcher` binding is `Dispatchers.IO`)
@@ -724,9 +726,11 @@ Scheduled work:
 
 ## CI/CD
 
-- **PR (`.github/workflows/pull_request.yml`):** Runs unit tests with coverage report on pull requests (skips for `chore/` commits)
+- **PR (`.github/workflows/pull_request.yml`):** Runs Android unit tests with coverage report (`ubuntu-latest`) and an iOS build smoke test for the FruitHalf scheme (`macos-15`). Both jobs skip for `chore/` commits. The `unit-test` gate fails the PR if either upstream job fails.
 - **Coverage (`.github/workflows/coverage.yml`):** Generates unit test and screenshot test coverage badges on merge to main (via Gist + shields.io)
-- **Merge to main (`.github/workflows/merge.yml`):** Builds release bundles for all flavors and uploads to Google Play, then auto-bumps version and creates a chore PR
+- **Merge to main (`.github/workflows/merge.yml`):** Builds release Android bundles for all 4 flavors and uploads to Google Play, builds release iOS `.app` bundles for all 4 schemes (macos-15, simulator destination, no signing) and uploads as artifacts (`ios-app-<Flavor>`, 14-day retention; TestFlight upload deferred), then auto-bumps version and creates a chore PR.
+
+The iOS jobs do **not** require any signing or Firebase secret on macOS runners — Firebase initialization is gated on `GoogleService-Info.plist` existing (see `iosApp/iosApp/iosAppApp.swift`). Each job runs `pod install --repo-update` then `xcodegen generate` before `xcodebuild`. The shared framework is synced via the `:shared:syncFramework` script phase during `xcodebuild` (no separate Gradle call needed).
 
 ## Analytics & Crashlytics
 

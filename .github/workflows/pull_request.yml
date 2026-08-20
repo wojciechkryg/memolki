@@ -56,8 +56,47 @@ jobs:
           path: androidApp/build/paparazzi/failures/
           retention-days: 14
 
+  ios-build:
+    runs-on: macos-15
+    if: ${{ !startsWith(github.head_ref, 'chore/') }}
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Pod install
+        working-directory: iosApp
+        run: pod install --repo-update
+
+      - name: Generate Xcode project
+        working-directory: iosApp
+        run: xcodegen generate
+
+      - name: Build FruitHalf scheme
+        working-directory: iosApp
+        run: |
+          xcodebuild build \
+            -workspace iosApp.xcworkspace \
+            -scheme iosApp-FruitHalf \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "generic/platform=iOS Simulator" \
+            CODE_SIGNING_ALLOWED=NO
+
   unit-test:
-    needs: [tests-execution]
+    needs: [tests-execution, ios-build]
     runs-on: ubuntu-latest
     if: ${{ always() }}
     steps:
@@ -68,5 +107,15 @@ jobs:
             echo "✅ All checks passed or were intentionally skipped."
           else
             echo "❌ tests-execution finished with result: $result"
+            exit 1
+          fi
+
+      - name: Verify ios-build outcome
+        run: |
+          result="${{ needs.ios-build.result }}"
+          if [[ "$result" == "success" || "$result" == "skipped" ]]; then
+            echo "✅ iOS build passed or was intentionally skipped."
+          else
+            echo "❌ ios-build finished with result: $result"
             exit 1
           fi
