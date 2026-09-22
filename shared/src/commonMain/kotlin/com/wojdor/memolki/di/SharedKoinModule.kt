@@ -5,6 +5,7 @@ import com.wojdor.memolki.data.repository.DailyChallengeRepository
 import com.wojdor.memolki.data.repository.NotificationRepository
 import com.wojdor.memolki.data.repository.SettingsRepository
 import com.wojdor.memolki.data.repository.UserRepository
+import com.wojdor.memolki.data.local.datastore.billing.BillingLocalDataSource
 import com.wojdor.memolki.data.local.datastore.card.UnlockedCardPairsLocalDataSource
 import com.wojdor.memolki.data.local.datastore.notification.NotificationLocalDataSource
 import com.wojdor.memolki.data.local.datastore.settings.SettingsLocalDataSource
@@ -55,12 +56,12 @@ import com.wojdor.memolki.domain.usecase.PrepareRecordingDataUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForBoardUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShareUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.SaveDailyChallengeUseCase
 import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
 import com.wojdor.memolki.domain.usecase.ShouldShowNotificationRequestUseCase
 import com.wojdor.memolki.domain.usecase.ToggleSettingsUseCase
+import com.wojdor.memolki.domain.usecase.GrantPurchaseRewardUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.domain.usecase.UnlockAllNewCardPairsIfPurchasedUseCase
 import com.wojdor.memolki.domain.usecase.UnlockRandomCardIfEnoughCoinsUseCase
@@ -98,6 +99,7 @@ val DefaultDispatcher = named("default")
 val MainDispatcher = named("main")
 
 val sharedKoinModule = module {
+    singleOf(::BillingLocalDataSource)
     singleOf(::UnlockedCardPairsLocalDataSource)
     singleOf(::NotificationLocalDataSource)
     singleOf(::SettingsLocalDataSource)
@@ -151,7 +153,7 @@ val sharedKoinModule = module {
     factoryOf(::RewardCoinsForBoardUseCase)
     factoryOf(::RewardCoinsForShareUseCase)
     factoryOf(::RewardCoinsForShopAdUseCase)
-    factoryOf(::RewardCoinsForShopPurchaseUseCase)
+    factoryOf(::GrantPurchaseRewardUseCase)
     factoryOf(::SaveDailyChallengeUseCase)
     factoryOf(::ScheduleAdRewardNotificationUseCase)
     factoryOf(::SetLastShopAdShownTimestampUseCase)

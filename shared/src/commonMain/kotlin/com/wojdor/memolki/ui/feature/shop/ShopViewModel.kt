@@ -10,10 +10,8 @@ import com.wojdor.memolki.domain.usecase.GetCoinsUseCase
 import com.wojdor.memolki.domain.usecase.GetTotalCoinsUseCase
 import com.wojdor.memolki.domain.usecase.IsShopAdCooldownOverUseCase
 import com.wojdor.memolki.domain.usecase.RewardCoinsForShopAdUseCase
-import com.wojdor.memolki.domain.usecase.RewardCoinsForShopPurchaseUseCase
 import com.wojdor.memolki.domain.usecase.ScheduleAdRewardNotificationUseCase
 import com.wojdor.memolki.domain.usecase.SetLastShopAdShownTimestampUseCase
-import com.wojdor.memolki.domain.usecase.UnlockAllCardPairsUseCase
 import com.wojdor.memolki.ui.ads.AllRewardedAds
 import com.wojdor.memolki.ui.base.MviViewModel
 import com.wojdor.memolki.ui.feature.shop.ShopEffect.SendTotalCoinsScore
@@ -43,8 +41,6 @@ class ShopViewModel(
     private val getCoinsUseCase: GetCoinsUseCase,
     private val calculateCoinsForShopAdUseCase: CalculateCoinsForShopAdUseCase,
     private val rewardCoinsForShopAdUseCase: RewardCoinsForShopAdUseCase,
-    private val rewardCoinsForShopPurchaseUseCase: RewardCoinsForShopPurchaseUseCase,
-    private val unlockAllCardPairsUseCase: UnlockAllCardPairsUseCase,
     private val getTotalCoinsUseCase: GetTotalCoinsUseCase,
     private val scheduleAdRewardNotificationUseCase: ScheduleAdRewardNotificationUseCase,
     private val notificationScheduler: NotificationScheduler,
@@ -177,25 +173,6 @@ class ShopViewModel(
         }
     }
 
-    private fun rewardCoins(coins: Long) {
-        rewardCoinsForShopPurchaseUseCase(coins).onEach { result ->
-            result.onSuccess {
-                sendTotalCoinsScore()
-                coinsPlayer.playDelayed()
-                loadData(animateCoins = true)
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun unlockAllCardPairs() {
-        unlockAllCardPairsUseCase().onEach {
-            it.onSuccess {
-                coinsPlayer.playDelayed()
-                loadData()
-            }
-        }.launchIn(viewModelScope)
-    }
-
     private fun rewardCoinsForAd() {
         rewardCoinsForShopAdUseCase().onEach { result ->
             result.onSuccess {
@@ -269,11 +246,11 @@ class ShopViewModel(
                 ShopMenuModel.WatchAd(isAdAvailable, adCoins),
                 ShopMenuModel.BuyCoinsSmallAmount(
                     prices[BillingHandler.IAP_COINS_SMALL] ?: DEFAULT_PRICE,
-                    SMALL_PURCHASE_COINS_REWARD
+                    BillingHandler.COINS_SMALL_REWARD
                 ),
                 ShopMenuModel.BuyCoinsBigAmount(
                     prices[BillingHandler.IAP_COINS_BIG] ?: DEFAULT_PRICE,
-                    BIG_PURCHASE_COINS_REWARD
+                    BillingHandler.COINS_BIG_REWARD
                 ),
                 ShopMenuModel.BuyAllCards(
                     prices[BillingHandler.IAP_UNLOCK_ALL_CARDS] ?: DEFAULT_PRICE
@@ -305,21 +282,25 @@ class ShopViewModel(
                 currencyCode = product.currencyCode
             )
         }
+        // The reward itself is granted in the billing layer (GrantPurchaseRewardUseCase) —
+        // this callback only drives UI feedback.
         when (productId) {
             in billingHandler.consumableProductIds -> {
-                val coins = when (productId) {
-                    BillingHandler.IAP_COINS_SMALL -> SMALL_PURCHASE_COINS_REWARD
-                    BillingHandler.IAP_COINS_BIG -> BIG_PURCHASE_COINS_REWARD
-                    else -> DEFAULT_COINS_AMOUNT
-                }
-                if (coins > DEFAULT_COINS_AMOUNT)
-                    rewardCoins(coins)
+                sendTotalCoinsScore()
+                viewModelScope.launch { coinsPlayer.playDelayed() }
+                loadData(animateCoins = true)
             }
 
             in billingHandler.nonConsumableProductIds -> {
-                unlockAllCardPairs()
+                viewModelScope.launch { coinsPlayer.playDelayed() }
+                loadData()
             }
         }
+    }
+
+    override fun onCleared() {
+        billingHandler.clearListener()
+        super.onCleared()
     }
 
     private fun onPurchaseFailed() {
@@ -335,9 +316,6 @@ class ShopViewModel(
 
     companion object {
         const val DEFAULT_PRICE = "???"
-        const val SMALL_PURCHASE_COINS_REWARD = 500L
-        const val BIG_PURCHASE_COINS_REWARD = 3000L
-        private const val DEFAULT_COINS_AMOUNT = 0L
         private const val PLACEMENT = "shop"
     }
 }

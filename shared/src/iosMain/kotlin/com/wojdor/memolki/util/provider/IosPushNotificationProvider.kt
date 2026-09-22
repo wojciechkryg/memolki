@@ -1,10 +1,13 @@
 package com.wojdor.memolki.util.provider
 
+import cocoapods.FirebaseCore.FIRApp
 import com.wojdor.memolki.data.local.datastore.user.UserLocalDataSource
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.messaging.messaging
+import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.flow.first
 
+@OptIn(ExperimentalForeignApi::class)
 class IosPushNotificationProvider(
     private val packageNameProvider: PackageNameProvider,
     private val localeProvider: LocaleProvider,
@@ -12,6 +15,8 @@ class IosPushNotificationProvider(
 ) : PushNotificationProvider {
 
     override suspend fun subscribeToTopics() {
+        // FIRMessaging raises an ObjC exception (uncatchable from Kotlin) on an unconfigured app.
+        if (FIRApp.defaultApp() == null) return
         val flavorTopic = packageNameProvider.providePackageName()
             .substringAfterLast('.')
             .lowercase()

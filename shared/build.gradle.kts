@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -71,6 +72,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
         }
         androidMain.dependencies {
             implementation(project.dependencies.platform(libs.firebase.bom))

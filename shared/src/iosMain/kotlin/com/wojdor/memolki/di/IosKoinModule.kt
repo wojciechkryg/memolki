@@ -110,7 +110,7 @@ val iosKoinModule = module {
     singleOf(::IosPermissionProvider) { bind<PermissionProvider>() }
     singleOf(::IosPushNotificationProvider) { bind<PushNotificationProvider>() }
 
-    singleOf(::IosBillingHandler) { bind<BillingHandler>() }
+    single<BillingHandler> { IosBillingHandler(get(), get(), get(MainDispatcher)) }
     single<GameServices> { IosGameServices(get(MainDispatcher)) }
     singleOf(::IosInAppReviewer) { bind<InAppReviewer>() }
     singleOf(::IosTextSharer) { bind<TextSharer>() }

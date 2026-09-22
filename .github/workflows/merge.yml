@@ -62,10 +62,8 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
-      # Note: r0adkll/upload-google-play has no Node 24 release yet.
-      # Monitor https://github.com/r0adkll/upload-google-play for updates before June 2026.
       - name: Upload to Google Play
-        uses: r0adkll/upload-google-play@v1.1.3
+        uses: r0adkll/upload-google-play@v1.1.4
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
@@ -76,7 +74,7 @@ jobs:
       - name: Upload to Internal App Sharing
         id: internal_sharing
         continue-on-error: true
-        uses: r0adkll/upload-google-play@v1.1.3
+        uses: r0adkll/upload-google-play@v1.1.4
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           packageName: com.wojdor.memolki.${{ env.lowercase_flavor }}
@@ -110,13 +108,16 @@ jobs:
       - name: Install xcodegen
         run: brew install xcodegen
 
-      - name: Pod install
-        working-directory: iosApp
-        run: pod install --repo-update
+      - name: Generate dummy framework for pod install
+        run: ./gradlew :shared:generateDummyFramework
 
       - name: Generate Xcode project
         working-directory: iosApp
         run: xcodegen generate
+
+      - name: Pod install
+        working-directory: iosApp
+        run: pod install --repo-update
 
       - name: Build ${{ matrix.flavor }} scheme
         working-directory: iosApp

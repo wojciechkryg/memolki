@@ -5,6 +5,19 @@ import Shared
 final class StoreKitBridge: NSObject, IosStoreKitBridge {
 
     private var productCache: [String: Product] = [:]
+    private var pendingTransactions: [String: Transaction] = [:]
+    private var transactionHandler: ((String, String) -> Void)?
+    private var transactionListenerTask: Task<Void, Never>?
+
+    func setTransactionHandler(handler: @escaping (String, String) -> Void) {
+        transactionHandler = handler
+        startTransactionListener()
+    }
+
+    func finishTransaction(transactionId: String) {
+        guard let transaction = pendingTransactions.removeValue(forKey: transactionId) else { return }
+        Task { await transaction.finish() }
+    }
 
     func products(productIds: [String], completion: @escaping ([BillingProduct]) -> Void) {
         Task {
@@ -22,6 +35,27 @@ final class StoreKitBridge: NSObject, IosStoreKitBridge {
         Task {
             completion(KotlinBoolean(bool: await checkEntitlement(productId)))
         }
+    }
+
+    private func startTransactionListener() {
+        guard transactionListenerTask == nil else { return }
+        transactionListenerTask = Task { [weak self] in
+            for await result in Transaction.unfinished {
+                self?.deliver(result)
+            }
+            for await result in Transaction.updates {
+                self?.deliver(result)
+            }
+        }
+    }
+
+    // Kotlin grants the reward first and only then calls finishTransaction, so an
+    // interrupted grant is redelivered through Transaction.unfinished on next launch.
+    private func deliver(_ result: VerificationResult<Transaction>) {
+        guard case .verified(let transaction) = result else { return }
+        let transactionId = String(transaction.id)
+        pendingTransactions[transactionId] = transaction
+        transactionHandler?(transaction.productID, transactionId)
     }
 
     private func fetchProducts(_ ids: [String]) async -> [BillingProduct] {
@@ -58,10 +92,16 @@ final class StoreKitBridge: NSObject, IosStoreKitBridge {
         do {
             guard let product = try await resolveProduct(productId) else { return false }
             let result = try await product.purchase()
-            guard case .success(let verification) = result,
-                  case .verified(let transaction) = verification else { return false }
-            await transaction.finish()
-            return true
+            switch result {
+            case .success(let verification):
+                deliver(verification)
+                return true
+            case .pending:
+                // Ask-to-buy — the outcome arrives later through Transaction.updates.
+                return true
+            default:
+                return false
+            }
         } catch {
             return false
         }

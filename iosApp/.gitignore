@@ -13,5 +13,8 @@ Podfile.lock
 # Per-Xcode-scheme active flavor marker (written by scheme pre-action)
 .active-flavor
 
+# Firebase per-flavor configs (downloaded from the Firebase Console, never committed)
+GoogleService-Info-*.plist
+
 # macOS
 .DS_Store

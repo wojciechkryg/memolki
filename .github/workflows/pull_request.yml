@@ -25,7 +25,7 @@ jobs:
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > androidApp/google-services.json
 
       - name: Run unit tests with coverage
-        run: ./gradlew koverXmlReportFruitHalfDebug -PcoverageTestExclude='com.wojdor.memolki.screenshot.*' --build-cache
+        run: ./gradlew :shared:testFruitHalfDebugUnitTest koverXmlReportFruitHalfDebug -PcoverageTestExclude='com.wojdor.memolki.screenshot.*' --build-cache
 
       - name: Add coverage to summary
         if: always()
@@ -42,14 +42,15 @@ jobs:
             fi
           fi
 
-      # TODO: Remove continue-on-error once Paparazzi 2.0.0-alpha05 adds AGP 9 support
-      # Tracked: https://github.com/cashapp/paparazzi/pull/2198
+      # TODO: Remove continue-on-error once a Paparazzi release ships AGP 9 support
+      # (2.0.0-alpha05 supports only pre-AGP-9 consumers). Tracked: https://github.com/cashapp/paparazzi/pull/2198
       - name: Verify screenshot tests
+        id: paparazzi
         continue-on-error: true
         run: ./gradlew verifyPaparazziFruitHalfDebug --build-cache
 
       - name: Upload screenshot failures
-        if: failure()
+        if: steps.paparazzi.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: screenshot-failures
@@ -76,13 +77,16 @@ jobs:
       - name: Install xcodegen
         run: brew install xcodegen
 
-      - name: Pod install
-        working-directory: iosApp
-        run: pod install --repo-update
+      - name: Generate dummy framework for pod install
+        run: ./gradlew :shared:generateDummyFramework
 
       - name: Generate Xcode project
         working-directory: iosApp
         run: xcodegen generate
+
+      - name: Pod install
+        working-directory: iosApp
+        run: pod install --repo-update
 
       - name: Build FruitHalf scheme
         working-directory: iosApp

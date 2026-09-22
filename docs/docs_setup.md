@@ -47,7 +47,7 @@ iosApp/iosApp/Resources/GoogleService-Info-MammalSide.plist
 iosApp/iosApp/Resources/GoogleService-Info-BirdSide.plist
 ```
 
-A per-scheme Copy Files build phase renames the active flavor's plist to `GoogleService-Info.plist` inside the app bundle so `FirebaseApp.configure()` finds it.
+A "Copy Firebase plist for active flavor" post-build script (defined in `project.yml`, so it survives `xcodegen generate`) copies the target's plist into the app bundle as `GoogleService-Info.plist` so `FirebaseApp.configure()` finds it. If the plist is missing the build succeeds with a warning and Firebase stays disabled (the guard in `iosAppApp.swift`).
 
 ### Generate the Xcode project
 

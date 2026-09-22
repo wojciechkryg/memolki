@@ -21,6 +21,10 @@ class FakeBillingHandler : BillingHandler {
         capturedListener = listener
     }
 
+    override fun clearListener() {
+        capturedListener = null
+    }
+
     override fun ensureConnected() {
         ensureConnectedCount++
     }

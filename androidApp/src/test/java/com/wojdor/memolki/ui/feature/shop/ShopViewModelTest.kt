@@ -493,7 +493,7 @@ class ShopViewModelTest : AppTest() {
         }
 
     @Test
-    fun `when onPurchaseSuccessful with unknown consumable then coins are not rewarded`() =
+    fun `when onPurchaseSuccessful with unfetched product then purchase analytics is not logged`() =
         runTest {
             // given
             billingHandler.consumableProductIds = setOf(
@@ -510,7 +510,6 @@ class ShopViewModelTest : AppTest() {
 
             // then
             assertNull(analytics.lastPurchaseCompleted)
-            assertEquals(0, coinsPlayer.playDelayedCount)
         }
 
     @Test

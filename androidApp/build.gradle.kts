@@ -272,6 +272,7 @@ kover {
 
 dependencies {
     implementation(project(":shared"))
+    kover(project(":shared"))
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)

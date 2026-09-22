@@ -730,7 +730,7 @@ Scheduled work:
 - **Coverage (`.github/workflows/coverage.yml`):** Generates unit test and screenshot test coverage badges on merge to main (via Gist + shields.io)
 - **Merge to main (`.github/workflows/merge.yml`):** Builds release Android bundles for all 4 flavors and uploads to Google Play, builds release iOS `.app` bundles for all 4 schemes (macos-15, simulator destination, no signing) and uploads as artifacts (`ios-app-<Flavor>`, 14-day retention; TestFlight upload deferred), then auto-bumps version and creates a chore PR.
 
-The iOS jobs do **not** require any signing or Firebase secret on macOS runners — Firebase initialization is gated on `GoogleService-Info.plist` existing (see `iosApp/iosApp/iosAppApp.swift`). Each job runs `pod install --repo-update` then `xcodegen generate` before `xcodebuild`. The shared framework is synced via the `:shared:syncFramework` script phase during `xcodebuild` (no separate Gradle call needed).
+The iOS jobs do **not** require any signing or Firebase secret on macOS runners — Firebase initialization is gated on `GoogleService-Info.plist` existing (see `iosApp/iosApp/iosAppApp.swift`). Each job runs `:shared:generateDummyFramework` (the podspec refuses to resolve without a framework on disk), then `xcodegen generate` (the `.xcodeproj` is gitignored), then `pod install --repo-update`, then `xcodebuild`. The real shared framework is synced via the `:shared:syncFramework` script phase during `xcodebuild`.
 
 ## Analytics & Crashlytics
 

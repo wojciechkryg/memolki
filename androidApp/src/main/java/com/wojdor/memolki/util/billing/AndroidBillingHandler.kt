@@ -17,6 +17,7 @@ import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.wojdor.memolki.BuildConfig
+import com.wojdor.memolki.domain.usecase.GrantPurchaseRewardUseCase
 import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_COINS_BIG
 import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_COINS_SMALL
 import com.wojdor.memolki.util.billing.BillingHandler.Companion.IAP_UNLOCK_ALL_CARDS
@@ -25,7 +26,9 @@ import com.wojdor.memolki.util.provider.ActivityProvider
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
@@ -39,11 +42,12 @@ import kotlin.coroutines.resume
 open class AndroidBillingHandler(
     private val context: Context,
     private val activityProvider: ActivityProvider,
-    private val dispatcher: CoroutineDispatcher
+    private val dispatcher: CoroutineDispatcher,
+    private val grantPurchaseRewardUseCase: GrantPurchaseRewardUseCase
 ) : BillingHandler, PurchasesUpdatedListener {
 
     private lateinit var billingClient: BillingClient
-    private val scope = CoroutineScope(dispatcher)
+    private val scope = CoroutineScope(SupervisorJob() + dispatcher)
     private val connectionLock = Any()
     private var listener: BillingStatusListener? = null
     private var cachedProducts: List<ProductDetails> = emptyList()
@@ -65,6 +69,10 @@ open class AndroidBillingHandler(
             return
         }
         connectInternal()
+    }
+
+    override fun clearListener() {
+        listener = null
     }
 
     override fun ensureConnected() {
@@ -179,6 +187,16 @@ open class AndroidBillingHandler(
             return
         }
         if (verifyHackedSignature()) {
+            listener?.onPurchaseFailed()
+            return
+        }
+        // Grant BEFORE consuming/acknowledging so the reward survives a dead listener or process;
+        // GrantPurchaseRewardUseCase dedups by purchase id, so redelivery cannot double-grant.
+        val purchaseId = purchase.orderId ?: purchase.purchaseToken
+        val granted = grantPurchaseRewardUseCase(
+            GrantPurchaseRewardUseCase.Params(productId, purchaseId)
+        ).first()
+        if (granted.isFailure) {
             listener?.onPurchaseFailed()
             return
         }

@@ -19,6 +19,7 @@ targetTemplates:
       - path: iosApp
         excludes:
           - "Localizations/**"
+          - "Resources/GoogleService-Info-*.plist"
     info:
       path: iosApp/Info.plist
       properties:
@@ -44,6 +45,19 @@ targetTemplates:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+    postBuildScripts:
+      - name: "Copy Firebase plist for active flavor"
+        script: |
+          FLAVOR="${TARGET_NAME#iosApp-}"
+          SRC="${SRCROOT}/iosApp/Resources/GoogleService-Info-${FLAVOR}.plist"
+          DST="${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist"
+          if [ -f "$SRC" ]; then
+            cp "$SRC" "$DST"
+          else
+            rm -f "$DST"
+            echo "warning: ${SRC} not found — Firebase stays disabled in this build"
+          fi
+        basedOnDependencyAnalysis: false
 
 targets:
   iosApp-FruitHalf:
