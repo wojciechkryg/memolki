@@ -19,6 +19,7 @@ This file provides guidance to AI coding agents when working with code in this r
 | "record all videos" | `./scripts/recording/record_all_videos.sh` |
 | "upload videos" | `./scripts/youtube/upload_videos.sh` |
 | "write video urls" | `./scripts/youtube/write_video_urls.sh` |
+| "set thumbnails" | `./scripts/youtube/set_thumbnails.sh` |
 | "add ads video assets" | `./scripts/youtube/add_ads_video_assets.sh` |
 | "run video pipeline" | `./scripts/youtube/run_pipeline.sh` |
 | "video setup" | `./scripts/youtube/setup.sh` |

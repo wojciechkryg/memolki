@@ -37,6 +37,7 @@ This checks Python packages, credentials, video files, and upload progress.
 
 ```bash
 pip3 install google-api-python-client google-auth-oauthlib    # YouTube API
+pip3 install Pillow                                            # Thumbnail composition
 pip3 install google-ads                                        # Google Ads API (optional)
 ```
 
@@ -103,6 +104,18 @@ The pipeline runs these steps in order:
 
 Creates `video-url.txt` in each `app/src/{flavor}/play/listings/{locale}/` directory.
 
+#### Set custom YouTube thumbnails
+
+```bash
+./scripts/youtube/set_thumbnails.sh                            # All flavors
+./scripts/youtube/set_thumbnails.sh --flavor fruit_half        # Single flavor
+./scripts/youtube/set_thumbnails.sh --dry-run                  # Preview
+```
+
+Composes a 720×1280 portrait thumbnail per video from the matching locale's `feature-graphic/1.png`: flavor-colored background, `memolki` logo + cards centered on top, localized pills detected and centered below. Uses Pillow — no ffmpeg required.
+
+**Rate limit:** YouTube allows ~10 thumbnail sets per day per channel before `uploadRateLimitExceeded`. The script is **resumable** via `thumbnails_progress.json` — re-run daily until all are set. Requires a phone-verified YouTube account ([verify here](https://www.youtube.com/verify)).
+
 #### Add videos to Google Ads campaigns
 
 ```bash
@@ -121,6 +134,7 @@ The script auto-matches flavors to campaigns by name (e.g. campaign containing "
 |------|----------|------------|
 | `scripts/youtube/video_urls.json` | `flavor/locale` → YouTube URL | Yes |
 | `scripts/youtube/ads_assets_progress.json` | Google Ads asset linking progress | Yes |
+| `scripts/youtube/thumbnails_progress.json` | Thumbnail upload progress (rate-limited resume) | Yes |
 | `scripts/youtube/token.json` | YouTube OAuth2 token | Yes |
 | `scripts/youtube/google-ads.yaml` | Google Ads API credentials | Yes |
 
@@ -154,6 +168,8 @@ scripts/youtube/
 ├── upload_videos.sh            # Upload videos to YouTube
 ├── upload_videos.py            # ↳ Python implementation
 ├── write_video_urls.sh         # Write YouTube URLs to Play Store listing files
+├── set_thumbnails.sh           # Set custom thumbnails on uploaded videos
+├── set_thumbnails.py           # ↳ Python implementation (PIL-based composition)
 ├── add_ads_video_assets.sh     # Add YouTube videos as Google Ads campaign assets
 ├── add_ads_video_assets.py     # ↳ Python implementation
 ├── generate_refresh_token.sh   # Generate OAuth refresh token for Google Ads API
@@ -162,6 +178,7 @@ scripts/youtube/
 ├── google-ads.yaml             # Google Ads API config (gitignored, created by setup.sh)
 ├── token.json                  # YouTube OAuth token (gitignored, auto-generated)
 ├── video_urls.json             # Upload mapping (gitignored, auto-generated)
+├── thumbnails_progress.json    # Thumbnail upload progress (gitignored, auto-generated)
 └── ads_assets_progress.json    # Ads linking progress (gitignored, auto-generated)
 ```
 
