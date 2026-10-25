@@ -45,4 +45,5 @@ client_secret*.json
 token.json
 video_urls.json
 ads_assets_progress.json
+thumbnails_progress.json
 google-ads.yaml
