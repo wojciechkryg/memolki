@@ -49,7 +49,7 @@ android {
 
     defaultConfig {
         applicationId = "com.wojdor.memolki"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 36
         versionCode = 1003036
         versionName = "1.3.36"
@@ -148,6 +148,8 @@ tasks.withType<Test>().configureEach {
     val exclude = project.findProperty("coverageTestExclude") as String?
     if (include != null) filter { includeTestsMatching(include) }
     if (exclude != null) filter { excludeTestsMatching(exclude) }
+    systemProperty("user.language", "en")
+    systemProperty("user.country", "US")
 }
 
 kover {

@@ -42,10 +42,7 @@ jobs:
             fi
           fi
 
-      # TODO: Remove continue-on-error once Paparazzi 2.0.0-alpha05 adds AGP 9 support
-      # Tracked: https://github.com/cashapp/paparazzi/pull/2198
       - name: Verify screenshot tests
-        continue-on-error: true
         run: ./gradlew verifyPaparazziFruitHalfDebug --build-cache
 
       - name: Upload screenshot failures
@@ -54,6 +51,7 @@ jobs:
         with:
           name: screenshot-failures
           path: app/build/paparazzi/failures/
+          if-no-files-found: ignore
           retention-days: 14
 
   unit-test:
