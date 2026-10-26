@@ -1,8 +1,8 @@
 package com.wojdor.memolki.ui.ads
 
 import android.content.Context
+import com.google.android.gms.ads.AgeRestrictedTreatment
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import com.wojdor.memolki.di.coroutine.IoDispatcher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,8 +28,7 @@ class AdsInitializer @Inject constructor(
         CoroutineScope(coroutineDispatcher).launch {
             val requestConfiguration = MobileAds.getRequestConfiguration()
                 .toBuilder()
-                .setTagForChildDirectedTreatment(RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
-                .setTagForUnderAgeOfConsent(RequestConfiguration.TAG_FOR_UNDER_AGE_OF_CONSENT_TRUE)
+                .setAgeRestrictedTreatment(AgeRestrictedTreatment.CHILD)
                 .build()
             MobileAds.setRequestConfiguration(requestConfiguration)
             MobileAds.initialize(context)

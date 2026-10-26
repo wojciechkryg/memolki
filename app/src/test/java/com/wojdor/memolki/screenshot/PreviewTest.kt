@@ -25,7 +25,7 @@ class PreviewTest(
 
     @get:Rule
     val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.PIXEL_5.copy(nightMode = NightMode.NOTNIGHT),
+        deviceConfig = DeviceConfig.PIXEL_5.copy(nightMode = NightMode.NOTNIGHT, locale = "en"),
         renderingMode = RenderingMode.SHRINK,
         maxPercentDifference = 0.001
     )
